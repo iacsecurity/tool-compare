@@ -18,7 +18,20 @@ This repository has a set of test-cases and a main script, called [run_all_tools
 which runs the above-listed tools against each of the test-cases. This allows any potential user
 to see what the tool can do, and how it compares, before even installing it.
 
-## Contributing to this repo
+## Test case catch rate
+The table below compares the different tools' catch rates for the test cases included in this repository.
+
+### Best Practices
+| Test Case                                                                                                                         | Checkov               | Indeni Cloudrail      | Kics                  | Snyk                  | Terrascan             | Tfsec                 |
+|-----------                                                                                                                        |---------              |------------------     |------                 |------                 |-----------            |-------                |
+|[deploy_ec2_to_default_vpc](/best-practices/deploy_ec2_to_default_vpc)                                                             | :heavy_check_mark:    | :heavy_check_mark:    | :heavy_check_mark:    | :x:                   | :heavy_check_mark:    | :heavy_check_mark:    |
+|[deploy_redshift_in_ec2_classic_mode](/best-practices/deploy_redshift_in_ec2_classic_mode)                                         | :x:                   | :heavy_check_mark:    | :x:                   | :x:                   | :x:                   | :x:                   |
+|[security_group_no_description_for_rules](/best-practices/security_group_no_description_for_rules)                                 | :x:                   | :heavy_check_mark:    | :x:                   | :x:                   | :x:                   | :x:                   |
+|[security_group_no_description_for_security_group](/best-practices/security_group_no_description_for_security_group)               | :x:                   | :heavy_check_mark:    | :x:                   | :heavy_check_mark:    | :x:                   | :heavy_check_mark:    |
+|[tag_all_items](/best-practices/tag_all_items)                                                                                     | :x:                   | :heavy_check_mark:    | :x:                   | :x:                   | :x:                   | :x:                   |
+|[using_public_amis](/best-practices/using_public_amis)                                                                             | :x:                   | :heavy_check_mark:    | :x:                   | :x:                   | :x:                   | :x:                   |
+
+## Contributing
 Anyone can contribute to this repository. The main areas of contribution are:
 
 * Adding an additional tool - simply add the tool to this readme and the `run_all_tools.sh` script. Then,
