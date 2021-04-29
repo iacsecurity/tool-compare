@@ -1,0 +1,72 @@
+
+Check 1
+
+  [AWS009][WARNING] Resource 'aws_security_group.default' defines a fully open egress security group.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_security_group_rule_include_description_rule/no_description_for_security_group/main.tf:32
+
+      29 |     from_port   = 0
+      30 |     to_port     = 0
+      31 |     protocol    = "-1"
+      32 |     cidr_blocks = ["0.0.0.0/0"]
+      33 |   }
+      34 | 
+      35 |   tags = {
+
+   See https://tfsec.dev/docs/aws/AWS009/ for more information. 
+
+Check 2
+
+  [AWS018][ERROR] Resource 'aws_security_group.default' should include a description for auditing purposes.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_security_group_rule_include_description_rule/no_description_for_security_group/main.tf:15-38
+
+      12 | 
+      13 | }
+      14 | 
+      15 | resource "aws_security_group" "default" {
+      16 |   name        = "examplerulename"
+      17 |   vpc_id      = aws_vpc.vpc.id
+      18 | 
+      19 |   ingress {
+      20 |     description = "This is an inbound rule for something...."
+      21 |     from_port   = 443
+      22 |     to_port     = 443
+      23 |     protocol    = "tcp"
+      24 |     cidr_blocks = ["10.0.0.0/24"]
+      25 |   }
+      26 | 
+      27 |   egress {
+      28 |     description = "this is an egress rule for something else...."
+      29 |     from_port   = 0
+      30 |     to_port     = 0
+      31 |     protocol    = "-1"
+      32 |     cidr_blocks = ["0.0.0.0/0"]
+      33 |   }
+      34 | 
+      35 |   tags = {
+      36 |     Name = "example_rule_with_descriptions"
+      37 |   }
+      38 | }
+      39 | 
+      40 | resource "aws_subnet" "subnet" {
+      41 |   vpc_id     = aws_vpc.vpc.id
+
+   See https://tfsec.dev/docs/aws/AWS018/ for more information. 
+
+  times
+  ------------------------------------------
+  disk i/o             715.834µs
+  parsing HCL          4.542µs
+  evaluating values    61.709µs
+  running checks       218.833µs
+
+  counts
+  ------------------------------------------
+  files loaded         1
+  blocks               7
+  evaluated blocks     7
+  modules              0
+  module blocks        0
+  ignored checks       0
+
+2 potential problems detected.
+

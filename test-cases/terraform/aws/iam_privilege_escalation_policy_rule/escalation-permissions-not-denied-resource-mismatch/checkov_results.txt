@@ -1,0 +1,64 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.46 
+
+terraform scan results:
+
+Passed checks: 5, Failed checks: 2, Skipped checks: 0
+
+Check: CKV_AWS_40: "Ensure IAM policies are attached only to groups or roles (Reducing access management complexity may in-turn reduce opportunity for a principal to inadvertently receive or retain excessive privileges.)"
+	FAILED for resource: aws_iam_user_policy.allow-policy
+	File: /main.tf:11-29
+	Guide: https://docs.bridgecrew.io/docs/iam_16-iam-policy-privileges-1
+
+		11 | resource "aws_iam_user_policy" "allow-policy" {
+		12 |   name = "allow-policy"
+		13 |   user = aws_iam_user.user-1.name
+		14 | 
+		15 |   policy = <<-EOF
+		16 |   {
+		17 |     "Version": "2012-10-17",
+		18 |     "Statement": [
+		19 |       {
+		20 |         "Action": [
+		21 |           "iam:CreateAccessKey"
+		22 |         ],
+		23 |         "Effect": "Allow",
+		24 |         "Resource": "*"
+		25 |       }
+		26 |     ]
+		27 |   }
+		28 |   EOF
+		29 | }
+
+
+Check: CKV_AWS_40: "Ensure IAM policies are attached only to groups or roles (Reducing access management complexity may in-turn reduce opportunity for a principal to inadvertently receive or retain excessive privileges.)"
+	FAILED for resource: aws_iam_user_policy.deny-policy
+	File: /main.tf:31-49
+	Guide: https://docs.bridgecrew.io/docs/iam_16-iam-policy-privileges-1
+
+		31 | resource "aws_iam_user_policy" "deny-policy" {
+		32 |   name = "deny-policy"
+		33 |   user = aws_iam_user.user-1.name
+		34 | 
+		35 |   policy = <<-EOF
+		36 |   {
+		37 |     "Version": "2012-10-17",
+		38 |     "Statement": [
+		39 |       {
+		40 |         "Action": [
+		41 |           "iam:CreateAccessKey"
+		42 |         ],
+		43 |         "Effect": "Deny",
+		44 |         "Resource": "arn:aws:iam::111111111111:user/some-user"
+		45 |       }
+		46 |     ]
+		47 |   }
+		48 |   EOF
+		49 | }
+

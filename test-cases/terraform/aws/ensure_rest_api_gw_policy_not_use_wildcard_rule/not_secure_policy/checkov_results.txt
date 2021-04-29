@@ -1,0 +1,61 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.46 
+
+terraform scan results:
+
+Passed checks: 1, Failed checks: 4, Skipped checks: 0
+
+Check: CKV_AWS_59: "Ensure there is no open access to back-end resources through API"
+	FAILED for resource: aws_api_gateway_method.api_gw_method
+	File: /main.tf:50-55
+	Guide: https://docs.bridgecrew.io/docs/public_6-api-gateway-authorizer-set
+
+		50 | resource "aws_api_gateway_method" "api_gw_method" {
+		51 |   rest_api_id   = aws_api_gateway_rest_api.api_gw.id
+		52 |   resource_id   = aws_api_gateway_resource.api_gw_resource.id
+		53 |   http_method   = "GET"
+		54 |   authorization = "NONE"
+		55 | }
+
+
+Check: CKV_AWS_76: "Ensure API Gateway has Access Logging enabled"
+	FAILED for resource: aws_api_gateway_stage.api_gw_stage
+	File: /main.tf:72-76
+	Guide: https://docs.bridgecrew.io/docs/logging_17
+
+		72 | resource "aws_api_gateway_stage" "api_gw_stage" {
+		73 |   stage_name    = "prod"
+		74 |   rest_api_id   = aws_api_gateway_rest_api.api_gw.id
+		75 |   deployment_id = aws_api_gateway_deployment.api_gw_deploy.id
+		76 | }
+
+
+Check: CKV_AWS_73: "Ensure API Gateway has X-Ray Tracing enabled"
+	FAILED for resource: aws_api_gateway_stage.api_gw_stage
+	File: /main.tf:72-76
+	Guide: https://docs.bridgecrew.io/docs/logging_15
+
+		72 | resource "aws_api_gateway_stage" "api_gw_stage" {
+		73 |   stage_name    = "prod"
+		74 |   rest_api_id   = aws_api_gateway_rest_api.api_gw.id
+		75 |   deployment_id = aws_api_gateway_deployment.api_gw_deploy.id
+		76 | }
+
+
+Check: CKV_AWS_120: "Ensure API Gateway caching is enabled"
+	FAILED for resource: aws_api_gateway_stage.api_gw_stage
+	File: /main.tf:72-76
+
+		72 | resource "aws_api_gateway_stage" "api_gw_stage" {
+		73 |   stage_name    = "prod"
+		74 |   rest_api_id   = aws_api_gateway_rest_api.api_gw.id
+		75 |   deployment_id = aws_api_gateway_deployment.api_gw_deploy.id
+		76 | }
+
+

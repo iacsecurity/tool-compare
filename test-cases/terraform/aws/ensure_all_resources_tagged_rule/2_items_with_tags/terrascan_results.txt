@@ -1,0 +1,14 @@
+
+
+Scan Summary -
+
+	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/ensure_all_resources_tagged_rule/2_items_with_tags
+	IaC Type            :	terraform
+	Scanned At          :	2021-04-14 17:35:11.185799 +0000 UTC
+	Policies Validated  :	561
+	Violated Policies   :	0
+	Low                 :	0
+	Medium              :	0
+	High                :	0
+	
+

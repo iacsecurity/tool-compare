@@ -1,0 +1,147 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.46 
+
+terraform scan results:
+
+Passed checks: 9, Failed checks: 8, Skipped checks: 0
+
+Check: CKV_AWS_50: "X-ray tracing is enabled for Lambda"
+	FAILED for resource: aws_lambda_function.test_lambda
+	File: /main.tf:74-84
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_serverless_4
+
+		74 | resource "aws_lambda_function" "test_lambda" {
+		75 |   filename      = "${path.module}/Archive.zip"
+		76 |   function_name = "cloudrail_test_lambda"
+		77 |   role          = aws_iam_role.iam_for_lambda.arn
+		78 |   handler       = "main.handler"
+		79 |   runtime       = "python3.8"
+		80 | 
+		81 |   depends_on = [
+		82 |     aws_iam_role_policy_attachment.lambda_logs
+		83 |   ]
+		84 | }
+
+
+Check: CKV_AWS_115: "Ensure that AWS Lambda function is configured for function-level concurrent execution limit"
+	FAILED for resource: aws_lambda_function.test_lambda
+	File: /main.tf:74-84
+
+		74 | resource "aws_lambda_function" "test_lambda" {
+		75 |   filename      = "${path.module}/Archive.zip"
+		76 |   function_name = "cloudrail_test_lambda"
+		77 |   role          = aws_iam_role.iam_for_lambda.arn
+		78 |   handler       = "main.handler"
+		79 |   runtime       = "python3.8"
+		80 | 
+		81 |   depends_on = [
+		82 |     aws_iam_role_policy_attachment.lambda_logs
+		83 |   ]
+		84 | }
+
+
+Check: CKV_AWS_116: "Ensure that AWS Lambda function is configured for a Dead Letter Queue(DLQ)"
+	FAILED for resource: aws_lambda_function.test_lambda
+	File: /main.tf:74-84
+
+		74 | resource "aws_lambda_function" "test_lambda" {
+		75 |   filename      = "${path.module}/Archive.zip"
+		76 |   function_name = "cloudrail_test_lambda"
+		77 |   role          = aws_iam_role.iam_for_lambda.arn
+		78 |   handler       = "main.handler"
+		79 |   runtime       = "python3.8"
+		80 | 
+		81 |   depends_on = [
+		82 |     aws_iam_role_policy_attachment.lambda_logs
+		83 |   ]
+		84 | }
+
+
+Check: CKV_AWS_117: "Ensure that AWS Lambda function is configured inside a VPC"
+	FAILED for resource: aws_lambda_function.test_lambda
+	File: /main.tf:74-84
+
+		74 | resource "aws_lambda_function" "test_lambda" {
+		75 |   filename      = "${path.module}/Archive.zip"
+		76 |   function_name = "cloudrail_test_lambda"
+		77 |   role          = aws_iam_role.iam_for_lambda.arn
+		78 |   handler       = "main.handler"
+		79 |   runtime       = "python3.8"
+		80 | 
+		81 |   depends_on = [
+		82 |     aws_iam_role_policy_attachment.lambda_logs
+		83 |   ]
+		84 | }
+
+
+Check: CKV_AWS_50: "X-ray tracing is enabled for Lambda"
+	FAILED for resource: aws_lambda_function.test_lambda_2
+	File: /main.tf:91-101
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_serverless_4
+
+		91  | resource "aws_lambda_function" "test_lambda_2" {
+		92  |   filename      = "${path.module}/Archive.zip"
+		93  |   function_name = "cloudrail_test_lambda_2"
+		94  |   role          = aws_iam_role.iam_for_lambda_2.arn
+		95  |   handler       = "main.handler"
+		96  |   runtime       = "python3.8"
+		97  | 
+		98  |   depends_on = [
+		99  |     aws_iam_role_policy_attachment.lambda_logs_2
+		100 |   ]
+		101 | }
+
+Check: CKV_AWS_115: "Ensure that AWS Lambda function is configured for function-level concurrent execution limit"
+	FAILED for resource: aws_lambda_function.test_lambda_2
+	File: /main.tf:91-101
+
+		91  | resource "aws_lambda_function" "test_lambda_2" {
+		92  |   filename      = "${path.module}/Archive.zip"
+		93  |   function_name = "cloudrail_test_lambda_2"
+		94  |   role          = aws_iam_role.iam_for_lambda_2.arn
+		95  |   handler       = "main.handler"
+		96  |   runtime       = "python3.8"
+		97  | 
+		98  |   depends_on = [
+		99  |     aws_iam_role_policy_attachment.lambda_logs_2
+		100 |   ]
+		101 | }
+
+Check: CKV_AWS_116: "Ensure that AWS Lambda function is configured for a Dead Letter Queue(DLQ)"
+	FAILED for resource: aws_lambda_function.test_lambda_2
+	File: /main.tf:91-101
+
+		91  | resource "aws_lambda_function" "test_lambda_2" {
+		92  |   filename      = "${path.module}/Archive.zip"
+		93  |   function_name = "cloudrail_test_lambda_2"
+		94  |   role          = aws_iam_role.iam_for_lambda_2.arn
+		95  |   handler       = "main.handler"
+		96  |   runtime       = "python3.8"
+		97  | 
+		98  |   depends_on = [
+		99  |     aws_iam_role_policy_attachment.lambda_logs_2
+		100 |   ]
+		101 | }
+
+Check: CKV_AWS_117: "Ensure that AWS Lambda function is configured inside a VPC"
+	FAILED for resource: aws_lambda_function.test_lambda_2
+	File: /main.tf:91-101
+
+		91  | resource "aws_lambda_function" "test_lambda_2" {
+		92  |   filename      = "${path.module}/Archive.zip"
+		93  |   function_name = "cloudrail_test_lambda_2"
+		94  |   role          = aws_iam_role.iam_for_lambda_2.arn
+		95  |   handler       = "main.handler"
+		96  |   runtime       = "python3.8"
+		97  | 
+		98  |   depends_on = [
+		99  |     aws_iam_role_policy_attachment.lambda_logs_2
+		100 |   ]
+		101 | }
+

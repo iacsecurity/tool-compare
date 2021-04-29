@@ -1,0 +1,24 @@
+
+
+Violation Details -
+    
+	Description    :	Enable AWS CloudWatch Logs for APIs
+	File           :	main.tf
+	Line           :	44
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+
+Scan Summary -
+
+	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/non_encrypted_rest_api_cache_enabled
+	IaC Type            :	terraform
+	Scanned At          :	2021-04-14 17:33:57.935552 +0000 UTC
+	Policies Validated  :	561
+	Violated Policies   :	1
+	Low                 :	0
+	Medium              :	1
+	High                :	0
+	
+

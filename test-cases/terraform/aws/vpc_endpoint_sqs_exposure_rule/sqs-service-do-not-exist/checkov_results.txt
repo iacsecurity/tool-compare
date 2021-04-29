@@ -1,0 +1,63 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.46 
+
+terraform scan results:
+
+Passed checks: 7, Failed checks: 4, Skipped checks: 0
+
+Check: CKV_AWS_79: "Ensure Instance Metadata Service Version 1 is not enabled"
+	FAILED for resource: aws_instance.test-ec2-instance
+	File: /main.tf:79-84
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_31
+
+		79 | resource "aws_instance" "test-ec2-instance" {
+		80 |   ami = data.aws_ami.ubuntu.id
+		81 |   instance_type = "t2.micro"
+		82 |   subnet_id = aws_subnet.private-subnet.id
+		83 |   vpc_security_group_ids = [aws_security_group.local-network.id]
+		84 | }
+
+
+Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration EBS is securely encrypted"
+	FAILED for resource: aws_instance.test-ec2-instance
+	File: /main.tf:79-84
+	Guide: https://docs.bridgecrew.io/docs/general_13
+
+		79 | resource "aws_instance" "test-ec2-instance" {
+		80 |   ami = data.aws_ami.ubuntu.id
+		81 |   instance_type = "t2.micro"
+		82 |   subnet_id = aws_subnet.private-subnet.id
+		83 |   vpc_security_group_ids = [aws_security_group.local-network.id]
+		84 | }
+
+
+Check: CKV_AWS_126: "Ensure that detailed monitoring is enabled for EC2 instances"
+	FAILED for resource: aws_instance.test-ec2-instance
+	File: /main.tf:79-84
+
+		79 | resource "aws_instance" "test-ec2-instance" {
+		80 |   ami = data.aws_ami.ubuntu.id
+		81 |   instance_type = "t2.micro"
+		82 |   subnet_id = aws_subnet.private-subnet.id
+		83 |   vpc_security_group_ids = [aws_security_group.local-network.id]
+		84 | }
+
+
+Check: CKV_AWS_135: "Ensure that EC2 is EBS optimized"
+	FAILED for resource: aws_instance.test-ec2-instance
+	File: /main.tf:79-84
+
+		79 | resource "aws_instance" "test-ec2-instance" {
+		80 |   ami = data.aws_ami.ubuntu.id
+		81 |   instance_type = "t2.micro"
+		82 |   subnet_id = aws_subnet.private-subnet.id
+		83 |   vpc_security_group_ids = [aws_security_group.local-network.id]
+		84 | }
+
+

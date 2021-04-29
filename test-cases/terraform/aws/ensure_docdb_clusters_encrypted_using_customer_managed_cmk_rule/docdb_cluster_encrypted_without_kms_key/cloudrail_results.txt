@@ -1,0 +1,24 @@
+
+WARNINGs found:
+Rule: Ensure DocDB clusters being created are set to be encrypted at rest using customer-managed CMK
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_docdb_cluster.test1] (main.tf:5)
+     Violating Resource: [aws_docdb_cluster.test1]  (main.tf:5)
+
+     Evidence:
+             | The DocDB cluster aws_docdb_cluster.test1 is not set to be encrypted at rest using customer-managed CMK
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_docdb_cluster.test1] (main.tf:5)
+     Violating Resource: [aws_docdb_cluster.test1]  (main.tf:5)
+
+     Evidence:
+             | Resource DocumentDB Cluster aws_docdb_cluster.test1 does not have any tags set
+
+
+-----------------------------------------------

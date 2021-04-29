@@ -1,0 +1,74 @@
+
+WARNINGs found:
+Rule: Ensure IMDSv2 is used and IMDSv1 is disabled
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.ec2_2] (main.tf:124)
+     Violating Resource: [aws_instance.ec2_2]  (main.tf:124)
+
+     Evidence:
+             | The EC2 Instance aws_instance.ec2_2 is allowing IMDSv1
+
+
+   - Exposed Resource: [aws_instance.ec2] (main.tf:63)
+     Violating Resource: [aws_instance.ec2]  (main.tf:63)
+
+     Evidence:
+             | The EC2 Instance aws_instance.ec2 is allowing IMDSv1
+
+
+-----------------------------------------------
+Rule: Allow only private AMIs to be used
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.ec2_2] (main.tf:124)
+     Violating Resource: [ami-09943f9da1f1b7899]  (Not found in TF)
+
+     Evidence:
+             | The EC2 Instance aws_instance.ec2_2 uses AMI ami-09943f9da1f1b7899, which is public
+
+
+   - Exposed Resource: [aws_instance.ec2] (main.tf:63)
+     Violating Resource: [ami-09943f9da1f1b7899]  (Not found in TF)
+
+     Evidence:
+             | The EC2 Instance aws_instance.ec2 uses AMI ami-09943f9da1f1b7899, which is public
+
+
+-----------------------------------------------
+Rule: Ensure all security groups and rules have a description detailing the rule
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_security_group.default_2] (main.tf:77)
+     Violating Resource: [aws_security_group.default_2]  (main.tf:77)
+
+     Evidence:
+             | The Security group aws_security_group.default_2 does not have a description for the ingress rule of 10.10.0.0/24 for ports 443:443 using protocol tcp
+
+
+   - Exposed Resource: [aws_security_group.default] (main.tf:16)
+     Violating Resource: [aws_security_group.default]  (main.tf:16)
+
+     Evidence:
+             | The Security group aws_security_group.default does not have a description for the ingress rule of 10.0.0.0/24 for ports 443:443 using protocol tcp
+
+
+-----------------------------------------------
+Rule: Ensure all data stored in the Launch configuration EBS is securely encrypted
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.ec2_2] (main.tf:124)
+     Violating Resource: [aws_instance.ec2_2]  (main.tf:124)
+
+     Evidence:
+             | This rule evaluated aws_instance.ec2_2's configuration
+
+
+   - Exposed Resource: [aws_instance.ec2] (main.tf:63)
+     Violating Resource: [aws_instance.ec2]  (main.tf:63)
+
+     Evidence:
+             | This rule evaluated aws_instance.ec2's configuration
+
+
+-----------------------------------------------

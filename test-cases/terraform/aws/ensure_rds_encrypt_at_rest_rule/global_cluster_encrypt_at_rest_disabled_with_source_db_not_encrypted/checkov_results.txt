@@ -1,0 +1,58 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.46 
+
+terraform scan results:
+
+Passed checks: 1, Failed checks: 4, Skipped checks: 0
+
+Check: CKV_AWS_128: "Ensure that an Amazon RDS Clusters have AWS Identity and Access Management (IAM) authentication enabled"
+	FAILED for resource: aws_rds_cluster.rds-cluster-test
+	File: /main.tf:5-9
+
+		5 | resource "aws_rds_cluster" "rds-cluster-test" {
+		6 |   skip_final_snapshot = true
+		7 |   master_username = "asdfasdf"
+		8 |   master_password = "asdf1234!!"
+		9 | }
+
+
+Check: CKV_AWS_133: "Ensure that RDS instances has backup policy"
+	FAILED for resource: aws_rds_cluster.rds-cluster-test
+	File: /main.tf:5-9
+
+		5 | resource "aws_rds_cluster" "rds-cluster-test" {
+		6 |   skip_final_snapshot = true
+		7 |   master_username = "asdfasdf"
+		8 |   master_password = "asdf1234!!"
+		9 | }
+
+
+Check: CKV_AWS_139: "Ensure that RDS clusters have deletion protection enabled"
+	FAILED for resource: aws_rds_cluster.rds-cluster-test
+	File: /main.tf:5-9
+
+		5 | resource "aws_rds_cluster" "rds-cluster-test" {
+		6 |   skip_final_snapshot = true
+		7 |   master_username = "asdfasdf"
+		8 |   master_password = "asdf1234!!"
+		9 | }
+
+
+Check: CKV_AWS_96: "Ensure all data stored in Aurora is securely encrypted at rest"
+	FAILED for resource: aws_rds_cluster.rds-cluster-test
+	File: /main.tf:5-9
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_38
+
+		5 | resource "aws_rds_cluster" "rds-cluster-test" {
+		6 |   skip_final_snapshot = true
+		7 |   master_username = "asdfasdf"
+		8 |   master_password = "asdf1234!!"
+		9 | }
+
+

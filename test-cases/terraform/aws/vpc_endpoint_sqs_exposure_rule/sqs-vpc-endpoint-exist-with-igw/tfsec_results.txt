@@ -1,0 +1,64 @@
+
+Check 1
+
+  [AWS015][ERROR] Resource 'aws_sqs_queue.test-queue' defines an unencrypted SQS queue.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/vpc_endpoint_sqs_exposure_rule/sqs-vpc-endpoint-exist-with-igw/main.tf:20-22
+
+      17 |   security_group_ids = [module.public-vpc.public-internet-sg-id]
+      18 | }
+      19 | 
+      20 | resource "aws_sqs_queue" "test-queue" {
+      21 |   name = "test-queue"
+      22 | }
+      23 | 
+
+   See https://tfsec.dev/docs/aws/AWS015/ for more information. 
+
+Check 2
+
+  [AWS015][ERROR] Resource 'module.public-vpc:aws_sqs_queue.test-queue' defines an unencrypted SQS queue.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/vpc_endpoint_sqs_exposure_rule/sqs-vpc-endpoint-exist-with-igw/main.tf:20-22
+
+      17 |   security_group_ids = [module.public-vpc.public-internet-sg-id]
+      18 | }
+      19 | 
+      20 | resource "aws_sqs_queue" "test-queue" {
+      21 |   name = "test-queue"
+      22 | }
+      23 | 
+
+   See https://tfsec.dev/docs/aws/AWS015/ for more information. 
+
+Check 3
+
+  [AWS015][ERROR] Resource 'module.public-vpc:module.public-vpc:aws_sqs_queue.test-queue' defines an unencrypted SQS queue.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/vpc_endpoint_sqs_exposure_rule/sqs-vpc-endpoint-exist-with-igw/main.tf:20-22
+
+      17 |   security_group_ids = [module.public-vpc.public-internet-sg-id]
+      18 | }
+      19 | 
+      20 | resource "aws_sqs_queue" "test-queue" {
+      21 |   name = "test-queue"
+      22 | }
+      23 | 
+
+   See https://tfsec.dev/docs/aws/AWS015/ for more information. 
+
+  times
+  ------------------------------------------
+  disk i/o             1.189209ms
+  parsing HCL          8.416µs
+  evaluating values    120.584µs
+  running checks       351.958µs
+
+  counts
+  ------------------------------------------
+  files loaded         1
+  blocks               4
+  evaluated blocks     12
+  modules              2
+  module blocks        8
+  ignored checks       0
+
+3 potential problems detected.
+

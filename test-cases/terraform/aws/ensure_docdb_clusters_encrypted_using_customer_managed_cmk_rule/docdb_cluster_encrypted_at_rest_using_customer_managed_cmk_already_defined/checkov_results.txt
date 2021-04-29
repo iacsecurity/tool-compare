@@ -1,0 +1,29 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.46 
+
+terraform scan results:
+
+Passed checks: 2, Failed checks: 1, Skipped checks: 0
+
+Check: CKV_AWS_85: "Ensure DocDB Logging is enabled"
+	FAILED for resource: aws_docdb_cluster.test0
+	File: /main.tf:9-17
+	Guide: https://docs.bridgecrew.io/docs/logging_19
+
+		9  | resource "aws_docdb_cluster" "test0" {
+		10 |   cluster_identifier  = "my-docdb-cluster-test0"
+		11 |   engine              = "docdb"
+		12 |   master_username     = "foo"
+		13 |   master_password     = "mustbeeightchars"
+		14 |   skip_final_snapshot = true
+		15 |   storage_encrypted   = true
+		16 |   kms_key_id          = data.aws_kms_key.test.arn
+		17 | }
+
+

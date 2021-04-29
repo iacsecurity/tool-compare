@@ -1,0 +1,15 @@
+
+WARNINGs found:
+Rule: Disallow IAM permissions which can lead to privilege escalation
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [test_for_cloudrail-demo-repo] (Not found in TF)
+     Violating Resource: [aws_iam_group.group-1]  (main.tf:5)
+
+     Evidence:
+         sadcloud_superuser_policy
+             | is applied to arn:aws:iam::154724799477:group/group-1
+             | in conjunction with sadcloud_superuser_policy, AdministratorAccess granting the problematic permissions {'*'} which can allow for privilege escalation
+
+
+-----------------------------------------------

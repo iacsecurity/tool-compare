@@ -1,0 +1,22 @@
+
+WARNINGs found:
+Rule: Ensure RDS instances/clusters being created are set to be encrypted at rest
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_rds_global_cluster.global] (main.tf:11)
+     Violating Resource: [aws_rds_global_cluster.global]  (main.tf:11)
+
+     Evidence:
+         RDS Global Cluster
+             | RDS Global Cluster aws_rds_global_cluster.global is not set to use encrypt at rest
+
+
+   - Exposed Resource: [aws_rds_cluster.rds-cluster-test] (main.tf:5)
+     Violating Resource: [aws_rds_cluster.rds-cluster-test]  (main.tf:5)
+
+     Evidence:
+         RDS DB cluster
+             | RDS DB cluster aws_rds_cluster.rds-cluster-test is not set to use encrypt at rest
+
+
+-----------------------------------------------

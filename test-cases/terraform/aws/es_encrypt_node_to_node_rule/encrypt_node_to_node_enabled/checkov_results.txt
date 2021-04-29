@@ -1,0 +1,84 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.46 
+
+terraform scan results:
+
+Passed checks: 2, Failed checks: 4, Skipped checks: 0
+
+Check: CKV_AWS_137: "Ensure that Elasticsearch is configured inside a VPC"
+	FAILED for resource: aws_elasticsearch_domain.example
+	File: /main.tf:5-16
+
+		5  | resource "aws_elasticsearch_domain" "example" {
+		6  |   domain_name           = "cloudrail-encrypted-in-tran"
+		7  |   elasticsearch_version = "6.0"
+		8  | 
+		9  |   cluster_config {
+		10 |     instance_type = "i3.large.elasticsearch"
+		11 |   }
+		12 | 
+		13 |   node_to_node_encryption {
+		14 |     enabled = true
+		15 |   }
+		16 | }
+
+Check: CKV_AWS_84: "Ensure Elasticsearch Domain Logging is enabled"
+	FAILED for resource: aws_elasticsearch_domain.example
+	File: /main.tf:5-16
+	Guide: https://docs.bridgecrew.io/docs/elasticsearch_7
+
+		5  | resource "aws_elasticsearch_domain" "example" {
+		6  |   domain_name           = "cloudrail-encrypted-in-tran"
+		7  |   elasticsearch_version = "6.0"
+		8  | 
+		9  |   cluster_config {
+		10 |     instance_type = "i3.large.elasticsearch"
+		11 |   }
+		12 | 
+		13 |   node_to_node_encryption {
+		14 |     enabled = true
+		15 |   }
+		16 | }
+
+Check: CKV_AWS_83: "Ensure Elasticsearch Domain enforces HTTPS"
+	FAILED for resource: aws_elasticsearch_domain.example
+	File: /main.tf:5-16
+	Guide: https://docs.bridgecrew.io/docs/elasticsearch_6
+
+		5  | resource "aws_elasticsearch_domain" "example" {
+		6  |   domain_name           = "cloudrail-encrypted-in-tran"
+		7  |   elasticsearch_version = "6.0"
+		8  | 
+		9  |   cluster_config {
+		10 |     instance_type = "i3.large.elasticsearch"
+		11 |   }
+		12 | 
+		13 |   node_to_node_encryption {
+		14 |     enabled = true
+		15 |   }
+		16 | }
+
+Check: CKV_AWS_5: "Ensure all data stored in the Elasticsearch is securely encrypted at rest"
+	FAILED for resource: aws_elasticsearch_domain.example
+	File: /main.tf:5-16
+	Guide: https://docs.bridgecrew.io/docs/elasticsearch_3-enable-encryptionatrest
+
+		5  | resource "aws_elasticsearch_domain" "example" {
+		6  |   domain_name           = "cloudrail-encrypted-in-tran"
+		7  |   elasticsearch_version = "6.0"
+		8  | 
+		9  |   cluster_config {
+		10 |     instance_type = "i3.large.elasticsearch"
+		11 |   }
+		12 | 
+		13 |   node_to_node_encryption {
+		14 |     enabled = true
+		15 |   }
+		16 | }
+

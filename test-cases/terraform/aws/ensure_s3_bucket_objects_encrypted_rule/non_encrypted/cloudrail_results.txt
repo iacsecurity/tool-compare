@@ -1,0 +1,57 @@
+
+WARNINGs found:
+Rule: Ensure S3 buckets are set to be encrypted at rest
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.cloudrail] (main.tf:5)
+     Violating Resource: [aws_s3_bucket.cloudrail]  (main.tf:5)
+
+     Evidence:
+             | The S3 Bucket aws_s3_bucket.cloudrail is not set to be encrypted at rest
+
+
+-----------------------------------------------
+Rule: Ensure S3 buckets have versioning enabled
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.cloudrail] (main.tf:5)
+     Violating Resource: [aws_s3_bucket.cloudrail]  (main.tf:5)
+
+     Evidence:
+             | The S3 Bucket aws_s3_bucket.cloudrail does not have versioning enabled
+
+
+-----------------------------------------------
+Rule: Ensure S3 bucket objects are set to be encrypted at rest
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket_object.object] (main.tf:18)
+     Violating Resource: [aws_s3_bucket_object.object]  (main.tf:18)
+
+     Evidence:
+             | The S3 Bucket object aws_s3_bucket_object.object is not set to be encrypted at rest
+
+
+-----------------------------------------------
+Rule: Ensure use of S3 bucket policy, and no action wildcards are being used
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.cloudrail] (main.tf:5)
+     Violating Resource: [aws_s3_bucket.cloudrail]  (main.tf:5)
+
+     Evidence:
+             | There is no resource policy or no statements attached to aws_s3_bucket.cloudrail
+
+
+-----------------------------------------------
+Rule: Enforce use of HTTPS in S3 bucket policy
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.cloudrail] (main.tf:5)
+     Violating Resource: [aws_s3_bucket.cloudrail]  (main.tf:5)
+
+     Evidence:
+             | The S3 Bucket aws_s3_bucket.cloudrail does not have a policy with the aws:SecureTransport condition
+
+
+-----------------------------------------------

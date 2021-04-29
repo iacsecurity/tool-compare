@@ -1,0 +1,45 @@
+
+
+Violation Details -
+    
+	Description    :	Ensure VPC flow logging is enabled in all VPCs
+	File           :	main.tf
+	Line           :	7
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Use customer-managed KMS keys instead of AWS-managed keys, to have granular control over encrypting and encrypting data. Encrypt Redshift clusters with a Customer-managed KMS key. This is a recommended best practice.
+	File           :	main.tf
+	Line           :	89
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure Redshift clusters are not publicly accessible to minimize security risks.
+	File           :	main.tf
+	Line           :	89
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Unknown Port is exposed to the entire internet
+	File           :	main.tf
+	Line           :	11
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+
+Scan Summary -
+
+	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/public_access_db_redshift_rule/redshift_without_public_access
+	IaC Type            :	terraform
+	Scanned At          :	2021-04-14 17:33:29.9137 +0000 UTC
+	Policies Validated  :	561
+	Violated Policies   :	4
+	Low                 :	0
+	Medium              :	1
+	High                :	3
+	
+

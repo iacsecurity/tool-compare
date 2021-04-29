@@ -1,0 +1,31 @@
+
+
+Violation Details -
+    
+	Description    :	Ensure that your RDS database instances encrypt the underlying storage. Encrypted RDS instances use the industry standard AES-256 encryption algorithm to encrypt data on the server that hosts RDS DB instances. After data is encrypted, RDS handles authentication of access and descryption of data transparently with minimal impact on performance.
+	File           :	main.tf
+	Line           :	5
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that your RDS database has IAM Authentication enabled.
+	File           :	main.tf
+	Line           :	5
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+
+Scan Summary -
+
+	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/ensure_rds_encrypt_at_rest_rule/encrypt_at_rest_disabled
+	IaC Type            :	terraform
+	Scanned At          :	2021-04-14 17:33:26.255456 +0000 UTC
+	Policies Validated  :	561
+	Violated Policies   :	2
+	Low                 :	0
+	Medium              :	0
+	High                :	2
+	
+

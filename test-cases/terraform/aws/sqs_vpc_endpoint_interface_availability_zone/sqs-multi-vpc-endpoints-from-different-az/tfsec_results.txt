@@ -1,0 +1,61 @@
+
+Check 1
+
+  [AWS015][ERROR] Resource 'aws_sqs_queue.test-queue' defines an unencrypted SQS queue.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/sqs_vpc_endpoint_interface_availability_zone/sqs-multi-vpc-endpoints-from-different-az/main.tf:28-30
+
+      25 |   security_group_ids = [module.public-vpc.public-internet-sg-id]
+      26 | }
+      27 | 
+      28 | resource "aws_sqs_queue" "test-queue" {
+      29 |   name = "test-queue"
+      30 | }
+
+   See https://tfsec.dev/docs/aws/AWS015/ for more information. 
+
+Check 2
+
+  [AWS015][ERROR] Resource 'module.public-vpc:aws_sqs_queue.test-queue' defines an unencrypted SQS queue.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/sqs_vpc_endpoint_interface_availability_zone/sqs-multi-vpc-endpoints-from-different-az/main.tf:28-30
+
+      25 |   security_group_ids = [module.public-vpc.public-internet-sg-id]
+      26 | }
+      27 | 
+      28 | resource "aws_sqs_queue" "test-queue" {
+      29 |   name = "test-queue"
+      30 | }
+
+   See https://tfsec.dev/docs/aws/AWS015/ for more information. 
+
+Check 3
+
+  [AWS015][ERROR] Resource 'module.public-vpc:module.public-vpc:aws_sqs_queue.test-queue' defines an unencrypted SQS queue.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/sqs_vpc_endpoint_interface_availability_zone/sqs-multi-vpc-endpoints-from-different-az/main.tf:28-30
+
+      25 |   security_group_ids = [module.public-vpc.public-internet-sg-id]
+      26 | }
+      27 | 
+      28 | resource "aws_sqs_queue" "test-queue" {
+      29 |   name = "test-queue"
+      30 | }
+
+   See https://tfsec.dev/docs/aws/AWS015/ for more information. 
+
+  times
+  ------------------------------------------
+  disk i/o             3.31754ms
+  parsing HCL          9.292µs
+  evaluating values    236.75µs
+  running checks       410.709µs
+
+  counts
+  ------------------------------------------
+  files loaded         1
+  blocks               5
+  evaluated blocks     15
+  modules              2
+  module blocks        10
+  ignored checks       0
+
+3 potential problems detected.
+

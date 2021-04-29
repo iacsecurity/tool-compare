@@ -1,0 +1,78 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.46 
+
+terraform scan results:
+
+Passed checks: 6, Failed checks: 4, Skipped checks: 0
+
+Check: CKV_AWS_50: "X-ray tracing is enabled for Lambda"
+	FAILED for resource: aws_lambda_function.test_lambda
+	File: /main.tf:57-67
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_serverless_4
+
+		57 | resource "aws_lambda_function" "test_lambda" {
+		58 |   filename      = "${path.module}/Archive.zip"
+		59 |   function_name = local.lambda_name
+		60 |   role          = aws_iam_role.iam_for_lambda.arn
+		61 |   handler       = "main.handler"
+		62 |   runtime       = "python3.8"
+		63 | 
+		64 |   depends_on = [
+		65 |     aws_iam_role_policy_attachment.lambda_logs
+		66 |   ]
+		67 | }
+
+Check: CKV_AWS_115: "Ensure that AWS Lambda function is configured for function-level concurrent execution limit"
+	FAILED for resource: aws_lambda_function.test_lambda
+	File: /main.tf:57-67
+
+		57 | resource "aws_lambda_function" "test_lambda" {
+		58 |   filename      = "${path.module}/Archive.zip"
+		59 |   function_name = local.lambda_name
+		60 |   role          = aws_iam_role.iam_for_lambda.arn
+		61 |   handler       = "main.handler"
+		62 |   runtime       = "python3.8"
+		63 | 
+		64 |   depends_on = [
+		65 |     aws_iam_role_policy_attachment.lambda_logs
+		66 |   ]
+		67 | }
+
+Check: CKV_AWS_116: "Ensure that AWS Lambda function is configured for a Dead Letter Queue(DLQ)"
+	FAILED for resource: aws_lambda_function.test_lambda
+	File: /main.tf:57-67
+
+		57 | resource "aws_lambda_function" "test_lambda" {
+		58 |   filename      = "${path.module}/Archive.zip"
+		59 |   function_name = local.lambda_name
+		60 |   role          = aws_iam_role.iam_for_lambda.arn
+		61 |   handler       = "main.handler"
+		62 |   runtime       = "python3.8"
+		63 | 
+		64 |   depends_on = [
+		65 |     aws_iam_role_policy_attachment.lambda_logs
+		66 |   ]
+		67 | }
+
+Check: CKV_AWS_117: "Ensure that AWS Lambda function is configured inside a VPC"
+	FAILED for resource: aws_lambda_function.test_lambda
+	File: /main.tf:57-67
+
+		57 | resource "aws_lambda_function" "test_lambda" {
+		58 |   filename      = "${path.module}/Archive.zip"
+		59 |   function_name = local.lambda_name
+		60 |   role          = aws_iam_role.iam_for_lambda.arn
+		61 |   handler       = "main.handler"
+		62 |   runtime       = "python3.8"
+		63 | 
+		64 |   depends_on = [
+		65 |     aws_iam_role_policy_attachment.lambda_logs
+		66 |   ]
+		67 | }
+

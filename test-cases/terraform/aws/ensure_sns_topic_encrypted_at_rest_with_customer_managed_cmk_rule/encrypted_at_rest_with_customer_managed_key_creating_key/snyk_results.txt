@@ -1,0 +1,47 @@
+Failed to run the process ...
+{
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "policy": "",
+    "ignoreSettings": null,
+    "projectId": "",
+    "org": "y"
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "main.tf",
+  "projectName": "project",
+  "org": "y",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
+  "infrastructureAsCodeIssues": [
+    {
+      "id": "SNYK-CC-TF-14",
+      "title": "KMS key does not have key rotation enabled",
+      "type": "terraform",
+      "subType": "KMS",
+      "severity": "low",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "That your encryption keys are not being rotated by AWS",
+        "impact": "That data is being encrypted with a key which is valid for a longer period of time, resulting in a greater exposure window should that key be leaked",
+        "resolve": "Adding the `enable_key_rotation` attribute with a value of `true` to ensure your key is rotated"
+      },
+      "lineNumber": 5,
+      "path": [
+        "input",
+        "resource",
+        "aws_kms_key[test]",
+        "enable_key_rotation"
+      ]
+    }
+  ]
+}

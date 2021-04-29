@@ -1,0 +1,49 @@
+
+Check 1
+
+  [AWS009][WARNING] Resource 'aws_security_group.default' defines a fully open egress security group.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_security_group_rule_include_description_rule/multiple_items_for_rules/main.tf:32
+
+      29 |     from_port   = 0
+      30 |     to_port     = 0
+      31 |     protocol    = "-1"
+      32 |     cidr_blocks = ["0.0.0.0/0"]
+      33 |   }
+      34 | 
+      35 |   tags = {
+
+   See https://tfsec.dev/docs/aws/AWS009/ for more information. 
+
+Check 2
+
+  [AWS009][WARNING] Resource 'aws_security_group.default_2' defines a fully open egress security group.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_security_group_rule_include_description_rule/multiple_items_for_rules/main.tf:93
+
+      90 |     from_port   = 0
+      91 |     to_port     = 0
+      92 |     protocol    = "-1"
+      93 |     cidr_blocks = ["0.0.0.0/0"]
+      94 |   }
+      95 | 
+      96 |   tags = {
+
+   See https://tfsec.dev/docs/aws/AWS009/ for more information. 
+
+  times
+  ------------------------------------------
+  disk i/o             805.168µs
+  parsing HCL          4.875µs
+  evaluating values    90.875µs
+  running checks       393.708µs
+
+  counts
+  ------------------------------------------
+  files loaded         1
+  blocks               12
+  evaluated blocks     12
+  modules              0
+  module blocks        0
+  ignored checks       0
+
+2 potential problems detected.
+

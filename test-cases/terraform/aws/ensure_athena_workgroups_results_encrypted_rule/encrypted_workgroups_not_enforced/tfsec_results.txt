@@ -1,0 +1,153 @@
+
+Check 1
+
+  [AWS002][ERROR] Resource 'aws_s3_bucket.cloudrail_anthena_bucket_2' does not have logging enabled.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_athena_workgroups_results_encrypted_rule/encrypted_workgroups_not_enforced/main.tf:35-38
+
+      32 |   }
+      33 | }
+      34 | 
+      35 | resource "aws_s3_bucket" "cloudrail_anthena_bucket_2" {
+      36 |   bucket = "cloudrail-wg-encrypted-sse-s3-2"
+      37 |   acl    = "private"
+      38 | }
+      39 | 
+      40 | resource "aws_s3_bucket_public_access_block" "cloudrail_anthena_bucket_2" {
+      41 |   bucket                  = aws_s3_bucket.cloudrail_anthena_bucket_2.id
+
+   See https://tfsec.dev/docs/aws/AWS002/ for more information. 
+
+Check 2
+
+  [AWS017][ERROR] Resource 'aws_s3_bucket.cloudrail_anthena_bucket_2' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_athena_workgroups_results_encrypted_rule/encrypted_workgroups_not_enforced/main.tf:35-38
+
+      32 |   }
+      33 | }
+      34 | 
+      35 | resource "aws_s3_bucket" "cloudrail_anthena_bucket_2" {
+      36 |   bucket = "cloudrail-wg-encrypted-sse-s3-2"
+      37 |   acl    = "private"
+      38 | }
+      39 | 
+      40 | resource "aws_s3_bucket_public_access_block" "cloudrail_anthena_bucket_2" {
+      41 |   bucket                  = aws_s3_bucket.cloudrail_anthena_bucket_2.id
+
+   See https://tfsec.dev/docs/aws/AWS017/ for more information. 
+
+Check 3
+
+  [AWS077][ERROR] Resource 'aws_s3_bucket.cloudrail_anthena_bucket_2' does not have versioning enabled
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_athena_workgroups_results_encrypted_rule/encrypted_workgroups_not_enforced/main.tf:35-38
+
+      32 |   }
+      33 | }
+      34 | 
+      35 | resource "aws_s3_bucket" "cloudrail_anthena_bucket_2" {
+      36 |   bucket = "cloudrail-wg-encrypted-sse-s3-2"
+      37 |   acl    = "private"
+      38 | }
+      39 | 
+      40 | resource "aws_s3_bucket_public_access_block" "cloudrail_anthena_bucket_2" {
+      41 |   bucket                  = aws_s3_bucket.cloudrail_anthena_bucket_2.id
+
+   See https://tfsec.dev/docs/aws/AWS077/ for more information. 
+
+Check 4
+
+  [AWS002][ERROR] Resource 'aws_s3_bucket.cloudrail_anthena_bucket' does not have logging enabled.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_athena_workgroups_results_encrypted_rule/encrypted_workgroups_not_enforced/main.tf:5-8
+
+       2 |   region = "us-east-1"
+       3 | }
+       4 | 
+       5 | resource "aws_s3_bucket" "cloudrail_anthena_bucket" {
+       6 |   bucket = "cloudrail-wg-encrypted-sse-s3"
+       7 |   acl    = "private"
+       8 | }
+       9 | 
+      10 | resource "aws_s3_bucket_public_access_block" "cloudrail_anthena_bucket" {
+      11 |   bucket                  = aws_s3_bucket.cloudrail_anthena_bucket.id
+
+   See https://tfsec.dev/docs/aws/AWS002/ for more information. 
+
+Check 5
+
+  [AWS017][ERROR] Resource 'aws_s3_bucket.cloudrail_anthena_bucket' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_athena_workgroups_results_encrypted_rule/encrypted_workgroups_not_enforced/main.tf:5-8
+
+       2 |   region = "us-east-1"
+       3 | }
+       4 | 
+       5 | resource "aws_s3_bucket" "cloudrail_anthena_bucket" {
+       6 |   bucket = "cloudrail-wg-encrypted-sse-s3"
+       7 |   acl    = "private"
+       8 | }
+       9 | 
+      10 | resource "aws_s3_bucket_public_access_block" "cloudrail_anthena_bucket" {
+      11 |   bucket                  = aws_s3_bucket.cloudrail_anthena_bucket.id
+
+   See https://tfsec.dev/docs/aws/AWS017/ for more information. 
+
+Check 6
+
+  [AWS077][ERROR] Resource 'aws_s3_bucket.cloudrail_anthena_bucket' does not have versioning enabled
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_athena_workgroups_results_encrypted_rule/encrypted_workgroups_not_enforced/main.tf:5-8
+
+       2 |   region = "us-east-1"
+       3 | }
+       4 | 
+       5 | resource "aws_s3_bucket" "cloudrail_anthena_bucket" {
+       6 |   bucket = "cloudrail-wg-encrypted-sse-s3"
+       7 |   acl    = "private"
+       8 | }
+       9 | 
+      10 | resource "aws_s3_bucket_public_access_block" "cloudrail_anthena_bucket" {
+      11 |   bucket                  = aws_s3_bucket.cloudrail_anthena_bucket.id
+
+   See https://tfsec.dev/docs/aws/AWS077/ for more information. 
+
+Check 7
+
+  [AWS060][ERROR] Resource 'aws_athena_workgroup.cloudrail_wg' has enforce_workgroup_configuration set to false.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_athena_workgroups_results_encrypted_rule/encrypted_workgroups_not_enforced/main.tf:21-32
+
+      18 | resource "aws_athena_workgroup" "cloudrail_wg" {
+      19 |   name = "cloudrail-wg-encrypted-sse-s3"
+      20 | 
+      21 |   configuration {
+      22 |     enforce_workgroup_configuration    = false
+      23 |     publish_cloudwatch_metrics_enabled = true
+      24 | 
+      25 |     result_configuration {
+      26 |       output_location = "s3://{aws_s3_bucket.cloudrail_anthena_bucket.bucket}/output/"
+      27 | 
+      28 |       encryption_configuration {
+      29 |         encryption_option = "SSE_S3"
+      30 |       }
+      31 |     }
+      32 |   }
+      33 | }
+      34 | 
+      35 | resource "aws_s3_bucket" "cloudrail_anthena_bucket_2" {
+
+   See https://tfsec.dev/docs/aws/AWS060/ for more information. 
+
+  times
+  ------------------------------------------
+  disk i/o             670.791µs
+  parsing HCL          7.083µs
+  evaluating values    62.166µs
+  running checks       505.666µs
+
+  counts
+  ------------------------------------------
+  files loaded         1
+  blocks               7
+  evaluated blocks     7
+  modules              0
+  module blocks        0
+  ignored checks       0
+
+7 potential problems detected.
+

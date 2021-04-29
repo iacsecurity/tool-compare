@@ -1,0 +1,84 @@
+Failed to run the process ...
+{
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "policy": "",
+    "ignoreSettings": null,
+    "projectId": "",
+    "org": "y"
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "main.tf",
+  "projectName": "project",
+  "org": "y",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
+  "infrastructureAsCodeIssues": [
+    {
+      "id": "SNYK-CC-TF-130",
+      "title": "EC2 instance accepts IMDSv1",
+      "type": "terraform",
+      "subType": "EC2",
+      "severity": "low",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Instance Metadata Service v2 is not enforced",
+        "impact": "Metadata service may be vulnerable to reverse proxy/open firewall misconfigurations and server side request forgery attacks",
+        "resolve": "Set `metadata_options.http_tokens` attribute to `required`"
+      },
+      "lineNumber": 83,
+      "path": [
+        "resource",
+        "aws_instance[test]",
+        "metadata_options"
+      ]
+    },
+    {
+      "id": "SNYK-CC-TF-125",
+      "title": "DynamoDB point-in-time recovery disabled",
+      "type": "terraform",
+      "subType": "DynamoDB",
+      "severity": "medium",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "DynamoDB does not have Point-in-Time Recovery enabled",
+        "impact": "No automated backups of DynamoDB data",
+        "resolve": "Set `point_in_time_recovery.enabled` attribute to `true`"
+      },
+      "lineNumber": 90,
+      "path": [
+        "resource",
+        "aws_dynamodb_table[basic-dynamodb-table]"
+      ]
+    },
+    {
+      "id": "SNYK-CC-TF-53",
+      "title": "Non-Encrypted root block device",
+      "type": "terraform",
+      "subType": "EC2",
+      "severity": "medium",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "The root block device for ec2 instance is not encrypted",
+        "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+        "resolve": "Set `root_block_device.encrypted` attribute to `true`"
+      },
+      "lineNumber": 83,
+      "path": [
+        "resource",
+        "aws_instance[test]",
+        "root_block_device",
+        "encrypted"
+      ]
+    }
+  ]
+}

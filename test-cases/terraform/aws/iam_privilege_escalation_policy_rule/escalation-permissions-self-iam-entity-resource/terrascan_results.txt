@@ -1,0 +1,14 @@
+
+
+Scan Summary -
+
+	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/iam_privilege_escalation_policy_rule/escalation-permissions-self-iam-entity-resource
+	IaC Type            :	terraform
+	Scanned At          :	2021-04-14 17:34:31.957636 +0000 UTC
+	Policies Validated  :	561
+	Violated Policies   :	0
+	Low                 :	0
+	Medium              :	0
+	High                :	0
+	
+

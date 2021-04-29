@@ -1,9 +1,20 @@
 # Local .terraform directories
 **/.terraform/*
 
+# Lock files
+.terraform.lock.hcl
+
 # .tfstate files
 *.tfstate
 *.tfstate.*
+
+# Plan files generated for testing
+plan.out
+
+# Snyk files generated as part of execution
+snyk_report.*
+snyk-result.json
+snyk-error.log
 
 # Crash log files
 crash.log

@@ -1,0 +1,454 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.46 
+
+terraform scan results:
+
+Passed checks: 10, Failed checks: 9, Skipped checks: 0
+
+Check: CKV_AWS_19: "Ensure all data stored in the S3 bucket is securely encrypted at rest"
+	FAILED for resource: aws_s3_bucket.cdn-content
+	File: /main.tf:10-30
+	Guide: https://docs.bridgecrew.io/docs/s3_14-data-encrypted-at-rest
+
+		10 | resource "aws_s3_bucket" "cdn-content" {
+		11 |   bucket = local.name
+		12 |   acl    = "private"
+		13 |   policy = <<POLICY
+		14 | {
+		15 |   "Version": "2012-10-17",
+		16 |   "Id": "AllowCloudFrontOAI",
+		17 |   "Statement": [
+		18 |     {
+		19 |       "Sid": "AllowCloudFrontOAI",
+		20 |       "Effect": "Allow",
+		21 |       "Principal": {
+		22 |         "CanonicalUser": "${aws_cloudfront_origin_access_identity.oai.s3_canonical_user_id}"
+		23 |       },
+		24 |       "Action": "s3:GetObject",
+		25 |       "Resource": "arn:aws:s3:::${local.name}/*"
+		26 |     }
+		27 |   ]
+		28 | }
+		29 | POLICY
+		30 | }
+
+
+Check: CKV_AWS_144: "Ensure that S3 bucket has cross-region replication enabled"
+	FAILED for resource: aws_s3_bucket.cdn-content
+	File: /main.tf:10-30
+
+		10 | resource "aws_s3_bucket" "cdn-content" {
+		11 |   bucket = local.name
+		12 |   acl    = "private"
+		13 |   policy = <<POLICY
+		14 | {
+		15 |   "Version": "2012-10-17",
+		16 |   "Id": "AllowCloudFrontOAI",
+		17 |   "Statement": [
+		18 |     {
+		19 |       "Sid": "AllowCloudFrontOAI",
+		20 |       "Effect": "Allow",
+		21 |       "Principal": {
+		22 |         "CanonicalUser": "${aws_cloudfront_origin_access_identity.oai.s3_canonical_user_id}"
+		23 |       },
+		24 |       "Action": "s3:GetObject",
+		25 |       "Resource": "arn:aws:s3:::${local.name}/*"
+		26 |     }
+		27 |   ]
+		28 | }
+		29 | POLICY
+		30 | }
+
+
+Check: CKV_AWS_145: "Ensure that S3 buckets are encrypted with KMS by default"
+	FAILED for resource: aws_s3_bucket.cdn-content
+	File: /main.tf:10-30
+
+		10 | resource "aws_s3_bucket" "cdn-content" {
+		11 |   bucket = local.name
+		12 |   acl    = "private"
+		13 |   policy = <<POLICY
+		14 | {
+		15 |   "Version": "2012-10-17",
+		16 |   "Id": "AllowCloudFrontOAI",
+		17 |   "Statement": [
+		18 |     {
+		19 |       "Sid": "AllowCloudFrontOAI",
+		20 |       "Effect": "Allow",
+		21 |       "Principal": {
+		22 |         "CanonicalUser": "${aws_cloudfront_origin_access_identity.oai.s3_canonical_user_id}"
+		23 |       },
+		24 |       "Action": "s3:GetObject",
+		25 |       "Resource": "arn:aws:s3:::${local.name}/*"
+		26 |     }
+		27 |   ]
+		28 | }
+		29 | POLICY
+		30 | }
+
+
+Check: CKV_AWS_52: "Ensure S3 bucket has MFA delete enabled"
+	FAILED for resource: aws_s3_bucket.cdn-content
+	File: /main.tf:10-30
+
+		10 | resource "aws_s3_bucket" "cdn-content" {
+		11 |   bucket = local.name
+		12 |   acl    = "private"
+		13 |   policy = <<POLICY
+		14 | {
+		15 |   "Version": "2012-10-17",
+		16 |   "Id": "AllowCloudFrontOAI",
+		17 |   "Statement": [
+		18 |     {
+		19 |       "Sid": "AllowCloudFrontOAI",
+		20 |       "Effect": "Allow",
+		21 |       "Principal": {
+		22 |         "CanonicalUser": "${aws_cloudfront_origin_access_identity.oai.s3_canonical_user_id}"
+		23 |       },
+		24 |       "Action": "s3:GetObject",
+		25 |       "Resource": "arn:aws:s3:::${local.name}/*"
+		26 |     }
+		27 |   ]
+		28 | }
+		29 | POLICY
+		30 | }
+
+
+Check: CKV_AWS_18: "Ensure the S3 bucket has access logging enabled"
+	FAILED for resource: aws_s3_bucket.cdn-content
+	File: /main.tf:10-30
+	Guide: https://docs.bridgecrew.io/docs/s3_13-enable-logging
+
+		10 | resource "aws_s3_bucket" "cdn-content" {
+		11 |   bucket = local.name
+		12 |   acl    = "private"
+		13 |   policy = <<POLICY
+		14 | {
+		15 |   "Version": "2012-10-17",
+		16 |   "Id": "AllowCloudFrontOAI",
+		17 |   "Statement": [
+		18 |     {
+		19 |       "Sid": "AllowCloudFrontOAI",
+		20 |       "Effect": "Allow",
+		21 |       "Principal": {
+		22 |         "CanonicalUser": "${aws_cloudfront_origin_access_identity.oai.s3_canonical_user_id}"
+		23 |       },
+		24 |       "Action": "s3:GetObject",
+		25 |       "Resource": "arn:aws:s3:::${local.name}/*"
+		26 |     }
+		27 |   ]
+		28 | }
+		29 | POLICY
+		30 | }
+
+
+Check: CKV_AWS_21: "Ensure all data stored in the S3 bucket have versioning enabled"
+	FAILED for resource: aws_s3_bucket.cdn-content
+	File: /main.tf:10-30
+	Guide: https://docs.bridgecrew.io/docs/s3_16-enable-versioning
+
+		10 | resource "aws_s3_bucket" "cdn-content" {
+		11 |   bucket = local.name
+		12 |   acl    = "private"
+		13 |   policy = <<POLICY
+		14 | {
+		15 |   "Version": "2012-10-17",
+		16 |   "Id": "AllowCloudFrontOAI",
+		17 |   "Statement": [
+		18 |     {
+		19 |       "Sid": "AllowCloudFrontOAI",
+		20 |       "Effect": "Allow",
+		21 |       "Principal": {
+		22 |         "CanonicalUser": "${aws_cloudfront_origin_access_identity.oai.s3_canonical_user_id}"
+		23 |       },
+		24 |       "Action": "s3:GetObject",
+		25 |       "Resource": "arn:aws:s3:::${local.name}/*"
+		26 |     }
+		27 |   ]
+		28 | }
+		29 | POLICY
+		30 | }
+
+
+Check: CKV_AWS_86: "Ensure Cloudfront distribution has Access Logging enabled"
+	FAILED for resource: aws_cloudfront_distribution.s3_distribution
+	File: /main.tf:44-128
+	Guide: https://docs.bridgecrew.io/docs/logging_20
+
+		44  | resource "aws_cloudfront_distribution" "s3_distribution" {
+		45  |   enabled             = true
+		46  |   price_class         = "PriceClass_200"
+		47  |   default_root_object = "index.html"
+		48  |   comment             = local.name
+		49  | 
+		50  |   origin {
+		51  |     domain_name = aws_s3_bucket.cdn-content.bucket_regional_domain_name
+		52  |     origin_id   = local.s3_origin_id
+		53  | 
+		54  |     s3_origin_config {
+		55  |       origin_access_identity = join("",
+		56  |         ["origin-access-identity/cloudfront/",
+		57  |         aws_cloudfront_origin_access_identity.oai.id]
+		58  |       )
+		59  |     }
+		60  |   }
+		61  | 
+		62  |   custom_error_response {
+		63  |     error_caching_min_ttl = 300
+		64  |     error_code            = 403
+		65  |     response_code         = 404
+		66  |     response_page_path    = "/404.html"
+		67  |   }
+		68  | 
+		69  |   restrictions {
+		70  |     geo_restriction {
+		71  |       restriction_type = "none"
+		72  |     }
+		73  |   }
+		74  | 
+		75  |   viewer_certificate {
+		76  |     cloudfront_default_certificate = true
+		77  |   }
+		78  | 
+		79  |   default_cache_behavior {
+		80  |     allowed_methods        = ["GET", "HEAD", "OPTIONS"]
+		81  |     cached_methods         = ["GET", "HEAD"]
+		82  |     target_origin_id       = local.s3_origin_id
+		83  |     viewer_protocol_policy = "allow-all"
+		84  | 
+		85  |     forwarded_values {
+		86  |       query_string = false
+		87  | 
+		88  |       cookies {
+		89  |         forward = "none"
+		90  |       }
+		91  |     }
+		92  |   }
+		93  | 
+		94  |   # Cache behavior with precedence 0
+		95  |   ordered_cache_behavior {
+		96  |     path_pattern           = "/path01/*"
+		97  |     allowed_methods        = ["GET", "HEAD", "OPTIONS"]
+		98  |     cached_methods         = ["GET", "HEAD", "OPTIONS"]
+		99  |     target_origin_id       = local.s3_origin_id
+		100 |     viewer_protocol_policy = "allow-all"
+		101 | 
+		102 |     forwarded_values {
+		103 |       query_string = false
+		104 |       headers      = ["Origin"]
+		105 | 
+		106 |       cookies {
+		107 |         forward = "none"
+		108 |       }
+		109 |     }
+		110 |   }
+		111 | 
+		112 |   # Cache behavior with precedence 1
+		113 |   ordered_cache_behavior {
+		114 |     path_pattern           = "/path02/*"
+		115 |     allowed_methods        = ["GET", "HEAD", "OPTIONS"]
+		116 |     cached_methods         = ["GET", "HEAD"]
+		117 |     target_origin_id       = local.s3_origin_id
+		118 |     viewer_protocol_policy = "allow-all"
+		119 | 
+		120 |     forwarded_values {
+		121 |       query_string = false
+		122 | 
+		123 |       cookies {
+		124 |         forward = "none"
+		125 |       }
+		126 |     }
+		127 |   }
+		128 | }
+
+
+Check: CKV_AWS_68: "CloudFront Distribution should have WAF enabled"
+	FAILED for resource: aws_cloudfront_distribution.s3_distribution
+	File: /main.tf:44-128
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_27
+
+		44  | resource "aws_cloudfront_distribution" "s3_distribution" {
+		45  |   enabled             = true
+		46  |   price_class         = "PriceClass_200"
+		47  |   default_root_object = "index.html"
+		48  |   comment             = local.name
+		49  | 
+		50  |   origin {
+		51  |     domain_name = aws_s3_bucket.cdn-content.bucket_regional_domain_name
+		52  |     origin_id   = local.s3_origin_id
+		53  | 
+		54  |     s3_origin_config {
+		55  |       origin_access_identity = join("",
+		56  |         ["origin-access-identity/cloudfront/",
+		57  |         aws_cloudfront_origin_access_identity.oai.id]
+		58  |       )
+		59  |     }
+		60  |   }
+		61  | 
+		62  |   custom_error_response {
+		63  |     error_caching_min_ttl = 300
+		64  |     error_code            = 403
+		65  |     response_code         = 404
+		66  |     response_page_path    = "/404.html"
+		67  |   }
+		68  | 
+		69  |   restrictions {
+		70  |     geo_restriction {
+		71  |       restriction_type = "none"
+		72  |     }
+		73  |   }
+		74  | 
+		75  |   viewer_certificate {
+		76  |     cloudfront_default_certificate = true
+		77  |   }
+		78  | 
+		79  |   default_cache_behavior {
+		80  |     allowed_methods        = ["GET", "HEAD", "OPTIONS"]
+		81  |     cached_methods         = ["GET", "HEAD"]
+		82  |     target_origin_id       = local.s3_origin_id
+		83  |     viewer_protocol_policy = "allow-all"
+		84  | 
+		85  |     forwarded_values {
+		86  |       query_string = false
+		87  | 
+		88  |       cookies {
+		89  |         forward = "none"
+		90  |       }
+		91  |     }
+		92  |   }
+		93  | 
+		94  |   # Cache behavior with precedence 0
+		95  |   ordered_cache_behavior {
+		96  |     path_pattern           = "/path01/*"
+		97  |     allowed_methods        = ["GET", "HEAD", "OPTIONS"]
+		98  |     cached_methods         = ["GET", "HEAD", "OPTIONS"]
+		99  |     target_origin_id       = local.s3_origin_id
+		100 |     viewer_protocol_policy = "allow-all"
+		101 | 
+		102 |     forwarded_values {
+		103 |       query_string = false
+		104 |       headers      = ["Origin"]
+		105 | 
+		106 |       cookies {
+		107 |         forward = "none"
+		108 |       }
+		109 |     }
+		110 |   }
+		111 | 
+		112 |   # Cache behavior with precedence 1
+		113 |   ordered_cache_behavior {
+		114 |     path_pattern           = "/path02/*"
+		115 |     allowed_methods        = ["GET", "HEAD", "OPTIONS"]
+		116 |     cached_methods         = ["GET", "HEAD"]
+		117 |     target_origin_id       = local.s3_origin_id
+		118 |     viewer_protocol_policy = "allow-all"
+		119 | 
+		120 |     forwarded_values {
+		121 |       query_string = false
+		122 | 
+		123 |       cookies {
+		124 |         forward = "none"
+		125 |       }
+		126 |     }
+		127 |   }
+		128 | }
+
+
+Check: CKV_AWS_34: "Ensure cloudfront distribution ViewerProtocolPolicy is set to HTTPS"
+	FAILED for resource: aws_cloudfront_distribution.s3_distribution
+	File: /main.tf:44-128
+	Guide: https://docs.bridgecrew.io/docs/networking_32
+
+		44  | resource "aws_cloudfront_distribution" "s3_distribution" {
+		45  |   enabled             = true
+		46  |   price_class         = "PriceClass_200"
+		47  |   default_root_object = "index.html"
+		48  |   comment             = local.name
+		49  | 
+		50  |   origin {
+		51  |     domain_name = aws_s3_bucket.cdn-content.bucket_regional_domain_name
+		52  |     origin_id   = local.s3_origin_id
+		53  | 
+		54  |     s3_origin_config {
+		55  |       origin_access_identity = join("",
+		56  |         ["origin-access-identity/cloudfront/",
+		57  |         aws_cloudfront_origin_access_identity.oai.id]
+		58  |       )
+		59  |     }
+		60  |   }
+		61  | 
+		62  |   custom_error_response {
+		63  |     error_caching_min_ttl = 300
+		64  |     error_code            = 403
+		65  |     response_code         = 404
+		66  |     response_page_path    = "/404.html"
+		67  |   }
+		68  | 
+		69  |   restrictions {
+		70  |     geo_restriction {
+		71  |       restriction_type = "none"
+		72  |     }
+		73  |   }
+		74  | 
+		75  |   viewer_certificate {
+		76  |     cloudfront_default_certificate = true
+		77  |   }
+		78  | 
+		79  |   default_cache_behavior {
+		80  |     allowed_methods        = ["GET", "HEAD", "OPTIONS"]
+		81  |     cached_methods         = ["GET", "HEAD"]
+		82  |     target_origin_id       = local.s3_origin_id
+		83  |     viewer_protocol_policy = "allow-all"
+		84  | 
+		85  |     forwarded_values {
+		86  |       query_string = false
+		87  | 
+		88  |       cookies {
+		89  |         forward = "none"
+		90  |       }
+		91  |     }
+		92  |   }
+		93  | 
+		94  |   # Cache behavior with precedence 0
+		95  |   ordered_cache_behavior {
+		96  |     path_pattern           = "/path01/*"
+		97  |     allowed_methods        = ["GET", "HEAD", "OPTIONS"]
+		98  |     cached_methods         = ["GET", "HEAD", "OPTIONS"]
+		99  |     target_origin_id       = local.s3_origin_id
+		100 |     viewer_protocol_policy = "allow-all"
+		101 | 
+		102 |     forwarded_values {
+		103 |       query_string = false
+		104 |       headers      = ["Origin"]
+		105 | 
+		106 |       cookies {
+		107 |         forward = "none"
+		108 |       }
+		109 |     }
+		110 |   }
+		111 | 
+		112 |   # Cache behavior with precedence 1
+		113 |   ordered_cache_behavior {
+		114 |     path_pattern           = "/path02/*"
+		115 |     allowed_methods        = ["GET", "HEAD", "OPTIONS"]
+		116 |     cached_methods         = ["GET", "HEAD"]
+		117 |     target_origin_id       = local.s3_origin_id
+		118 |     viewer_protocol_policy = "allow-all"
+		119 | 
+		120 |     forwarded_values {
+		121 |       query_string = false
+		122 | 
+		123 |       cookies {
+		124 |         forward = "none"
+		125 |       }
+		126 |     }
+		127 |   }
+		128 | }
+
+

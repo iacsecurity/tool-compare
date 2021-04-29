@@ -1,0 +1,104 @@
+Failed to run the process ...
+{
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "policy": "",
+    "ignoreSettings": null,
+    "projectId": "",
+    "org": "y"
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "main.tf",
+  "projectName": "project",
+  "org": "y",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
+  "infrastructureAsCodeIssues": [
+    {
+      "id": "SNYK-CC-TF-56",
+      "title": "Missing description",
+      "type": "terraform",
+      "subType": "VPC",
+      "severity": "low",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "The description field is missing in the security group",
+        "impact": "Increases the security management overhead",
+        "resolve": "Set `description` attribute to meaningful statement"
+      },
+      "lineNumber": 9,
+      "path": [
+        "resource",
+        "aws_security_group[nondefault]",
+        "description"
+      ]
+    },
+    {
+      "id": "SNYK-CC-TF-50",
+      "title": "Resource is publicly accessible",
+      "type": "terraform",
+      "subType": "Public Access",
+      "severity": "high",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "AWS resource is publicly accessible",
+        "impact": "Increases attack vector reachability",
+        "resolve": "Set `publicly_accessible` attribute to `false`"
+      },
+      "lineNumber": 62,
+      "path": [
+        "resource",
+        "aws_db_instance[test]",
+        "publicly_accessible"
+      ]
+    },
+    {
+      "id": "SNYK-CC-TF-201",
+      "title": "Non-encrypted RDS instance at rest",
+      "type": "terraform",
+      "subType": "RDS",
+      "severity": "medium",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "The DB instance storage encrypted set by default to false",
+        "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+        "resolve": "Set `storage_encrypted` attribute to true"
+      },
+      "lineNumber": 60,
+      "path": [
+        "resource",
+        "aws_db_instance[test]",
+        "storage_encrypted"
+      ]
+    },
+    {
+      "id": "SNYK-CC-TF-1",
+      "title": "Security Group allows open ingress",
+      "type": "terraform",
+      "subType": "VPC",
+      "severity": "medium",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "That inbound traffic is allowed to a resource from any source instead of a restricted range",
+        "impact": "That potentially everyone can access your resource",
+        "resolve": "Updating the `cidr_block` attribute with a more restrictive IP range or a specific IP address to ensure traffic can only come from known sources. "
+      },
+      "lineNumber": 12,
+      "path": [
+        "input",
+        "resource",
+        "aws_security_group[nondefault]",
+        "ingress"
+      ]
+    }
+  ]
+}

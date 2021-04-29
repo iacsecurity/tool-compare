@@ -1,0 +1,38 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.46 
+
+terraform scan results:
+
+Passed checks: 3, Failed checks: 1, Skipped checks: 0
+
+Check: CKV_AWS_40: "Ensure IAM policies are attached only to groups or roles (Reducing access management complexity may in-turn reduce opportunity for a principal to inadvertently receive or retain excessive privileges.)"
+	FAILED for resource: aws_iam_user_policy.policy
+	File: /main.tf:9-27
+	Guide: https://docs.bridgecrew.io/docs/iam_16-iam-policy-privileges-1
+
+		9  | resource "aws_iam_user_policy" "policy" {
+		10 |   name = "inline-policy"
+		11 |   user = aws_iam_user.user-1.name
+		12 | 
+		13 |   policy = <<EOF
+		14 | {
+		15 |   "Version": "2012-10-17",
+		16 |   "Statement": [
+		17 |     {
+		18 |       "Action": [
+		19 |         "ec2:Describe*"
+		20 |       ],
+		21 |       "Effect": "Allow",
+		22 |       "Resource": "*"
+		23 |     }
+		24 |   ]
+		25 | }
+		26 | EOF
+		27 | }
+

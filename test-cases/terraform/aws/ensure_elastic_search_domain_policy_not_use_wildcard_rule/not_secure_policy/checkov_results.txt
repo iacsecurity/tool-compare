@@ -1,0 +1,76 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.46 
+
+terraform scan results:
+
+Passed checks: 2, Failed checks: 4, Skipped checks: 0
+
+Check: CKV_AWS_137: "Ensure that Elasticsearch is configured inside a VPC"
+	FAILED for resource: aws_elasticsearch_domain.es-not-secure-policy
+	File: /main.tf:5-13
+
+		5  | resource "aws_elasticsearch_domain" "es-not-secure-policy" {
+		6  |   domain_name = "es-not-secure-policy"
+		7  | 
+		8  |   ebs_options {
+		9  |     ebs_enabled = true
+		10 |     volume_size = 10
+		11 |     volume_type = "gp2"
+		12 |   }
+		13 | }
+
+
+Check: CKV_AWS_84: "Ensure Elasticsearch Domain Logging is enabled"
+	FAILED for resource: aws_elasticsearch_domain.es-not-secure-policy
+	File: /main.tf:5-13
+	Guide: https://docs.bridgecrew.io/docs/elasticsearch_7
+
+		5  | resource "aws_elasticsearch_domain" "es-not-secure-policy" {
+		6  |   domain_name = "es-not-secure-policy"
+		7  | 
+		8  |   ebs_options {
+		9  |     ebs_enabled = true
+		10 |     volume_size = 10
+		11 |     volume_type = "gp2"
+		12 |   }
+		13 | }
+
+
+Check: CKV_AWS_83: "Ensure Elasticsearch Domain enforces HTTPS"
+	FAILED for resource: aws_elasticsearch_domain.es-not-secure-policy
+	File: /main.tf:5-13
+	Guide: https://docs.bridgecrew.io/docs/elasticsearch_6
+
+		5  | resource "aws_elasticsearch_domain" "es-not-secure-policy" {
+		6  |   domain_name = "es-not-secure-policy"
+		7  | 
+		8  |   ebs_options {
+		9  |     ebs_enabled = true
+		10 |     volume_size = 10
+		11 |     volume_type = "gp2"
+		12 |   }
+		13 | }
+
+
+Check: CKV_AWS_5: "Ensure all data stored in the Elasticsearch is securely encrypted at rest"
+	FAILED for resource: aws_elasticsearch_domain.es-not-secure-policy
+	File: /main.tf:5-13
+	Guide: https://docs.bridgecrew.io/docs/elasticsearch_3-enable-encryptionatrest
+
+		5  | resource "aws_elasticsearch_domain" "es-not-secure-policy" {
+		6  |   domain_name = "es-not-secure-policy"
+		7  | 
+		8  |   ebs_options {
+		9  |     ebs_enabled = true
+		10 |     volume_size = 10
+		11 |     volume_type = "gp2"
+		12 |   }
+		13 | }
+
+

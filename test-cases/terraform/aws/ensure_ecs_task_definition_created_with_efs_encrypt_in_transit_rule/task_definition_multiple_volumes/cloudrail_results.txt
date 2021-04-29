@@ -1,0 +1,74 @@
+
+WARNINGs found:
+Rule: Ensure use of EFS file system policy, and no action wildcards are being used
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_efs_file_system.test_2] (main.tf:9)
+     Violating Resource: [aws_efs_file_system.test_2]  (main.tf:9)
+
+     Evidence:
+             | There is no resource policy or no statements attached to aws_efs_file_system.test_2
+
+
+   - Exposed Resource: [aws_efs_file_system.test] (main.tf:5)
+     Violating Resource: [aws_efs_file_system.test]  (main.tf:5)
+
+     Evidence:
+             | There is no resource policy or no statements attached to aws_efs_file_system.test
+
+
+-----------------------------------------------
+Rule: Ensure EFS filesystems being created are set to be encrypted at rest
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_efs_file_system.test_2] (main.tf:9)
+     Violating Resource: [aws_efs_file_system.test_2]  (main.tf:9)
+
+     Evidence:
+             | The EFS file system aws_efs_file_system.test_2 is not set to use encryption at rest
+
+
+   - Exposed Resource: [aws_efs_file_system.test] (main.tf:5)
+     Violating Resource: [aws_efs_file_system.test]  (main.tf:5)
+
+     Evidence:
+             | The EFS file system aws_efs_file_system.test is not set to use encryption at rest
+
+
+-----------------------------------------------
+Rule: Ensure ECS task definitions being created are set to encrypt in transit with EFS volumes
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_ecs_task_definition.service] (main.tf:13)
+     Violating Resource: [aws_ecs_task_definition.service]  (main.tf:13)
+
+     Evidence:
+             | The ECS task definition cloudrail-test-encryption is not set to use encryption in transit with EFS volumes: service-storage, service-storage_2
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 3 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_ecs_task_definition.service] (main.tf:13)
+     Violating Resource: [aws_ecs_task_definition.service]  (main.tf:13)
+
+     Evidence:
+             | Resource ECS task definition aws_ecs_task_definition.service does not have any tags set
+
+
+   - Exposed Resource: [aws_efs_file_system.test_2] (main.tf:9)
+     Violating Resource: [aws_efs_file_system.test_2]  (main.tf:9)
+
+     Evidence:
+             | Resource EFS file system aws_efs_file_system.test_2 does not have any tags set
+
+
+   - Exposed Resource: [aws_efs_file_system.test] (main.tf:5)
+     Violating Resource: [aws_efs_file_system.test]  (main.tf:5)
+
+     Evidence:
+             | Resource EFS file system aws_efs_file_system.test does not have any tags set
+
+
+-----------------------------------------------

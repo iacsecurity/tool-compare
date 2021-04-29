@@ -1,0 +1,75 @@
+
+WARNINGs found:
+Rule: Ensure CloudFront protocol version is a good one
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_cloudfront_distribution.s3_distribution] (main.tf:44)
+     Violating Resource: [aws_cloudfront_distribution.s3_distribution]  (main.tf:44)
+
+     Evidence:
+             | The CloudFront Distribution aws_cloudfront_distribution.s3_distribution is set to use a minimum protocol version of TLSv1 whereas TLSv1.2_2019 is the recommended minimum
+
+
+-----------------------------------------------
+Rule: Ensure S3 buckets are set to be encrypted at rest
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.cdn-content] (main.tf:10)
+     Violating Resource: [aws_s3_bucket.cdn-content]  (main.tf:10)
+
+     Evidence:
+             | The S3 Bucket aws_s3_bucket.cdn-content is not set to be encrypted at rest
+
+
+-----------------------------------------------
+Rule: Ensure S3 buckets have versioning enabled
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.cdn-content] (main.tf:10)
+     Violating Resource: [aws_s3_bucket.cdn-content]  (main.tf:10)
+
+     Evidence:
+             | The S3 Bucket aws_s3_bucket.cdn-content does not have versioning enabled
+
+
+-----------------------------------------------
+Rule: Ensure CloudFront Distribution being created are set to perform field-level encryption
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_cloudfront_distribution.s3_distribution] (main.tf:44)
+     Violating Resource: [aws_cloudfront_distribution.s3_distribution]  (main.tf:44)
+
+     Evidence:
+             | The CloudFront Distribution aws_cloudfront_distribution.s3_distribution is not set to use HTTPS to protect data in transit default_cache_behavior and in ['ordered_cache_behavior #1', 'ordered_cache_behavior #2']
+
+
+-----------------------------------------------
+Rule: Enforce use of HTTPS in S3 bucket policy
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.cdn-content] (main.tf:10)
+     Violating Resource: [aws_s3_bucket.cdn-content]  (main.tf:10)
+
+     Evidence:
+             | The S3 Bucket aws_s3_bucket.cdn-content does not have a policy with the aws:SecureTransport condition
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_cloudfront_distribution.s3_distribution] (main.tf:44)
+     Violating Resource: [aws_cloudfront_distribution.s3_distribution]  (main.tf:44)
+
+     Evidence:
+             | Resource CloudFront Distribution aws_cloudfront_distribution.s3_distribution does not have any tags set
+
+
+   - Exposed Resource: [aws_s3_bucket.cdn-content] (main.tf:10)
+     Violating Resource: [aws_s3_bucket.cdn-content]  (main.tf:10)
+
+     Evidence:
+             | Resource S3 Bucket aws_s3_bucket.cdn-content does not have any tags set
+
+
+-----------------------------------------------

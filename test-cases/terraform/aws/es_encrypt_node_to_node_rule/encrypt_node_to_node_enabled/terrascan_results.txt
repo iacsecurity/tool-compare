@@ -1,0 +1,31 @@
+
+
+Violation Details -
+    
+	Description    :	Enable AWS ElasticSearch Encryption At Rest
+	File           :	main.tf
+	Line           :	5
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that your AWS Elasticsearch clusters have enabled the support for publishing slow logs to AWS CloudWatch Logs. This feature enables you to publish slow logs from the indexing and search operations performed on your ES clusters and gain full insight into the performance of these operations.
+	File           :	main.tf
+	Line           :	5
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+
+Scan Summary -
+
+	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/es_encrypt_node_to_node_rule/encrypt_node_to_node_enabled
+	IaC Type            :	terraform
+	Scanned At          :	2021-04-14 17:35:08.786514 +0000 UTC
+	Policies Validated  :	561
+	Violated Policies   :	2
+	Low                 :	0
+	Medium              :	2
+	High                :	0
+	
+

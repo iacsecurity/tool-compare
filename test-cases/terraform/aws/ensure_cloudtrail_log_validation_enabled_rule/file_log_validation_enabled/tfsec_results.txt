@@ -1,0 +1,199 @@
+
+Check 1
+
+  [AWS063][WARNING] Resource 'aws_cloudtrail.foobar' does not set multi region trail config.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_cloudtrail_log_validation_enabled_rule/file_log_validation_enabled/main.tf:11-17
+
+       8 | 
+       9 | data "aws_caller_identity" "current" {}
+      10 | 
+      11 | resource "aws_cloudtrail" "foobar" {
+      12 |   name                          = local.name
+      13 |   s3_bucket_name                = aws_s3_bucket.foo.id
+      14 |   s3_key_prefix                 = "prefix"
+      15 |   include_global_service_events = false
+      16 |   enable_log_file_validation    = true
+      17 | }
+      18 | 
+      19 | resource "aws_s3_bucket" "foo" {
+      20 |   bucket        = local.name
+
+   See https://tfsec.dev/docs/aws/AWS063/ for more information. 
+
+Check 2
+
+  [AWS065][ERROR] Resource 'aws_cloudtrail.foobar' does not have a kms_key_id set.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_cloudtrail_log_validation_enabled_rule/file_log_validation_enabled/main.tf:11-17
+
+       8 | 
+       9 | data "aws_caller_identity" "current" {}
+      10 | 
+      11 | resource "aws_cloudtrail" "foobar" {
+      12 |   name                          = local.name
+      13 |   s3_bucket_name                = aws_s3_bucket.foo.id
+      14 |   s3_key_prefix                 = "prefix"
+      15 |   include_global_service_events = false
+      16 |   enable_log_file_validation    = true
+      17 | }
+      18 | 
+      19 | resource "aws_s3_bucket" "foo" {
+      20 |   bucket        = local.name
+
+   See https://tfsec.dev/docs/aws/AWS065/ for more information. 
+
+Check 3
+
+  [AWS002][ERROR] Resource 'aws_s3_bucket.foo' does not have logging enabled.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_cloudtrail_log_validation_enabled_rule/file_log_validation_enabled/main.tf:19-53
+
+      16 |   enable_log_file_validation    = true
+      17 | }
+      18 | 
+      19 | resource "aws_s3_bucket" "foo" {
+      20 |   bucket        = local.name
+      21 |   force_destroy = true
+      22 | 
+      23 |   policy = <<POLICY
+      24 | {
+      25 |     "Version": "2012-10-17",
+      26 |     "Statement": [
+      27 |         {
+      28 |             "Sid": "AWSCloudTrailAclCheck",
+      29 |             "Effect": "Allow",
+      30 |             "Principal": {
+      31 |               "Service": "cloudtrail.amazonaws.com"
+      32 |             },
+      33 |             "Action": "s3:GetBucketAcl",
+      34 |             "Resource": "arn:aws:s3:::${local.name}"
+      35 |         },
+      36 |         {
+      37 |             "Sid": "AWSCloudTrailWrite",
+      38 |             "Effect": "Allow",
+      39 |             "Principal": {
+      40 |               "Service": "cloudtrail.amazonaws.com"
+      41 |             },
+      42 |             "Action": "s3:PutObject",
+      43 |             "Resource": "arn:aws:s3:::${local.name}/prefix/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
+      44 |             "Condition": {
+      45 |                 "StringEquals": {
+      46 |                     "s3:x-amz-acl": "bucket-owner-full-control"
+      47 |                 }
+      48 |             }
+      49 |         }
+      50 |     ]
+      51 | }
+      52 | POLICY
+      53 | }
+
+   See https://tfsec.dev/docs/aws/AWS002/ for more information. 
+
+Check 4
+
+  [AWS017][ERROR] Resource 'aws_s3_bucket.foo' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_cloudtrail_log_validation_enabled_rule/file_log_validation_enabled/main.tf:19-53
+
+      16 |   enable_log_file_validation    = true
+      17 | }
+      18 | 
+      19 | resource "aws_s3_bucket" "foo" {
+      20 |   bucket        = local.name
+      21 |   force_destroy = true
+      22 | 
+      23 |   policy = <<POLICY
+      24 | {
+      25 |     "Version": "2012-10-17",
+      26 |     "Statement": [
+      27 |         {
+      28 |             "Sid": "AWSCloudTrailAclCheck",
+      29 |             "Effect": "Allow",
+      30 |             "Principal": {
+      31 |               "Service": "cloudtrail.amazonaws.com"
+      32 |             },
+      33 |             "Action": "s3:GetBucketAcl",
+      34 |             "Resource": "arn:aws:s3:::${local.name}"
+      35 |         },
+      36 |         {
+      37 |             "Sid": "AWSCloudTrailWrite",
+      38 |             "Effect": "Allow",
+      39 |             "Principal": {
+      40 |               "Service": "cloudtrail.amazonaws.com"
+      41 |             },
+      42 |             "Action": "s3:PutObject",
+      43 |             "Resource": "arn:aws:s3:::${local.name}/prefix/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
+      44 |             "Condition": {
+      45 |                 "StringEquals": {
+      46 |                     "s3:x-amz-acl": "bucket-owner-full-control"
+      47 |                 }
+      48 |             }
+      49 |         }
+      50 |     ]
+      51 | }
+      52 | POLICY
+      53 | }
+
+   See https://tfsec.dev/docs/aws/AWS017/ for more information. 
+
+Check 5
+
+  [AWS077][ERROR] Resource 'aws_s3_bucket.foo' does not have versioning enabled
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_cloudtrail_log_validation_enabled_rule/file_log_validation_enabled/main.tf:19-53
+
+      16 |   enable_log_file_validation    = true
+      17 | }
+      18 | 
+      19 | resource "aws_s3_bucket" "foo" {
+      20 |   bucket        = local.name
+      21 |   force_destroy = true
+      22 | 
+      23 |   policy = <<POLICY
+      24 | {
+      25 |     "Version": "2012-10-17",
+      26 |     "Statement": [
+      27 |         {
+      28 |             "Sid": "AWSCloudTrailAclCheck",
+      29 |             "Effect": "Allow",
+      30 |             "Principal": {
+      31 |               "Service": "cloudtrail.amazonaws.com"
+      32 |             },
+      33 |             "Action": "s3:GetBucketAcl",
+      34 |             "Resource": "arn:aws:s3:::${local.name}"
+      35 |         },
+      36 |         {
+      37 |             "Sid": "AWSCloudTrailWrite",
+      38 |             "Effect": "Allow",
+      39 |             "Principal": {
+      40 |               "Service": "cloudtrail.amazonaws.com"
+      41 |             },
+      42 |             "Action": "s3:PutObject",
+      43 |             "Resource": "arn:aws:s3:::${local.name}/prefix/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
+      44 |             "Condition": {
+      45 |                 "StringEquals": {
+      46 |                     "s3:x-amz-acl": "bucket-owner-full-control"
+      47 |                 }
+      48 |             }
+      49 |         }
+      50 |     ]
+      51 | }
+      52 | POLICY
+      53 | }
+
+   See https://tfsec.dev/docs/aws/AWS077/ for more information. 
+
+  times
+  ------------------------------------------
+  disk i/o             593.874µs
+  parsing HCL          3.833µs
+  evaluating values    56.375µs
+  running checks       711.75µs
+
+  counts
+  ------------------------------------------
+  files loaded         1
+  blocks               5
+  evaluated blocks     5
+  modules              0
+  module blocks        0
+  ignored checks       0
+
+5 potential problems detected.
+

@@ -1,0 +1,61 @@
+Failed to run the process ...
+{
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "policy": "",
+    "ignoreSettings": null,
+    "projectId": "",
+    "org": "y"
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "main.tf",
+  "projectName": "project",
+  "org": "y",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
+  "infrastructureAsCodeIssues": [
+    {
+      "id": "SNYK-CC-TF-116",
+      "title": "IAM Policy attached to user",
+      "type": "terraform",
+      "subType": "IAM",
+      "severity": "low",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "The IAM policy is directly attached to an user",
+        "impact": "Increases the security management overhead",
+        "resolve": "Attach policy to a group or role, instead of user. For example use `aws_iam_group_policy_attachment` resource"
+      },
+      "path": [
+        "resource",
+        "aws_iam_user_policy[allow-policy]"
+      ]
+    },
+    {
+      "id": "SNYK-CC-TF-116",
+      "title": "IAM Policy attached to user",
+      "type": "terraform",
+      "subType": "IAM",
+      "severity": "low",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "The IAM policy is directly attached to an user",
+        "impact": "Increases the security management overhead",
+        "resolve": "Attach policy to a group or role, instead of user. For example use `aws_iam_group_policy_attachment` resource"
+      },
+      "path": [
+        "resource",
+        "aws_iam_user_policy[deny-policy]"
+      ]
+    }
+  ]
+}

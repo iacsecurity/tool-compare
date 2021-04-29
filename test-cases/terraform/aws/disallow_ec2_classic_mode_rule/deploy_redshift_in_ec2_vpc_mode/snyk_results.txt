@@ -1,0 +1,65 @@
+Failed to run the process ...
+{
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "policy": "",
+    "ignoreSettings": null,
+    "projectId": "",
+    "org": "y"
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "main.tf",
+  "projectName": "project",
+  "org": "y",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
+  "infrastructureAsCodeIssues": [
+    {
+      "id": "SNYK-CC-TF-136",
+      "title": "Redshift cluster logging disabled",
+      "type": "terraform",
+      "subType": "Redshift",
+      "severity": "low",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Amazon Redshift cluster logging is not enabled",
+        "impact": "Audit records may not be available during investigation",
+        "resolve": "Set `logging.enabled` attribute to `true`"
+      },
+      "lineNumber": 28,
+      "path": [
+        "resource",
+        "aws_redshift_cluster[test]",
+        "logging"
+      ]
+    },
+    {
+      "id": "SNYK-CC-TF-108",
+      "title": "Non-encrypted Redshift DB at rest",
+      "type": "terraform",
+      "subType": "Redshift",
+      "severity": "medium",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Redshift DB is not encrypted",
+        "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+        "resolve": "Set `encrypted` attribute to `true`."
+      },
+      "lineNumber": 28,
+      "path": [
+        "resource",
+        "aws_redshift_cluster[test]",
+        "encrypted"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.46 
+
+terraform scan results:
+
+Passed checks: 3, Failed checks: 2, Skipped checks: 0
+
+Check: CKV_AWS_129: "Ensure that that respective logs of Amazon Relational Database Service (Amazon RDS) are enabled"
+	FAILED for resource: aws_db_instance.default
+	File: /main.tf:5-21
+
+		5  | resource "aws_db_instance" "default" {
+		6  |   allocated_storage    = 10
+		7  |   storage_type         = "gp2"
+		8  |   engine               = "mysql"
+		9  |   engine_version       = "5.7"
+		10 |   instance_class       = "db.t2.medium"
+		11 |   name                 = "mydb"
+		12 |   username             = "foo"
+		13 |   password             = "foobarbaz"
+		14 |   parameter_group_name = "default.mysql5.7"
+		15 |   skip_final_snapshot  = true
+		16 |   storage_encrypted    = true
+		17 | 
+		18 |   tags = {
+		19 |     Name = "cloudrail-test-encrypted"
+		20 |   }
+		21 | }
+
+
+Check: CKV_AWS_118: "Ensure that enhanced monitoring is enabled for Amazon RDS instances"
+	FAILED for resource: aws_db_instance.default
+	File: /main.tf:5-21
+
+		5  | resource "aws_db_instance" "default" {
+		6  |   allocated_storage    = 10
+		7  |   storage_type         = "gp2"
+		8  |   engine               = "mysql"
+		9  |   engine_version       = "5.7"
+		10 |   instance_class       = "db.t2.medium"
+		11 |   name                 = "mydb"
+		12 |   username             = "foo"
+		13 |   password             = "foobarbaz"
+		14 |   parameter_group_name = "default.mysql5.7"
+		15 |   skip_final_snapshot  = true
+		16 |   storage_encrypted    = true
+		17 | 
+		18 |   tags = {
+		19 |     Name = "cloudrail-test-encrypted"
+		20 |   }
+		21 | }
+
+

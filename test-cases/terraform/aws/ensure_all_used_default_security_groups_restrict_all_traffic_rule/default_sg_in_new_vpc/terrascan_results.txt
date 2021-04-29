@@ -1,0 +1,38 @@
+
+
+Violation Details -
+    
+	Description    :	Ensure that your AWS application is not deployed within the default Virtual Private Cloud in order to follow security best practices
+	File           :	main.tf
+	Line           :	31
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
+	File           :	main.tf
+	Line           :	31
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure VPC flow logging is enabled in all VPCs
+	File           :	main.tf
+	Line           :	14
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+
+Scan Summary -
+
+	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/ensure_all_used_default_security_groups_restrict_all_traffic_rule/default_sg_in_new_vpc
+	IaC Type            :	terraform
+	Scanned At          :	2021-04-14 17:33:44.739875 +0000 UTC
+	Policies Validated  :	561
+	Violated Policies   :	3
+	Low                 :	0
+	Medium              :	3
+	High                :	0
+	
+

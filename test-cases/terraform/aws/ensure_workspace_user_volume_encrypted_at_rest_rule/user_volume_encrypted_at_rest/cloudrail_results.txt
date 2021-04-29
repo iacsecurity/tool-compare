@@ -1,0 +1,31 @@
+
+WARNINGs found:
+Rule: Ensure Workspaces being created are set to encrypt root volume at rest
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_workspaces_workspace.test] (main.tf:76)
+     Violating Resource: [aws_workspaces_workspace.test]  (main.tf:76)
+
+     Evidence:
+             | The Workspace aws_workspaces_workspace.test is not set to encrypt root volume at rest
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_workspaces_workspace.test] (main.tf:76)
+     Violating Resource: [aws_workspaces_workspace.test]  (main.tf:76)
+
+     Evidence:
+             | Resource Workspace aws_workspaces_workspace.test does not have any tags set
+
+
+   - Exposed Resource: [aws_iam_role.workspaces_default] (main.tf:61)
+     Violating Resource: [aws_iam_role.workspaces_default]  (main.tf:61)
+
+     Evidence:
+             | Resource IAM Role aws_iam_role.workspaces_default does not have any tags set
+
+
+-----------------------------------------------

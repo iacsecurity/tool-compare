@@ -1,0 +1,39 @@
+
+WARNINGs found:
+Rule: Ensure all used default security groups of every VPC restrict all traffic
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_db_instance.default] (main.tf:5)
+     Violating Resource: [default]  (Not found in TF)
+
+     Evidence:
+         VPC vpc-00f7a3e5b1a2d87f0
+             | aws_db_instance.default uses ENI eni-pseudo-5a8b4ec4-56d0-4012-af24-e58dff87b0fd
+             | The ENI is secured by default Security group default and allows all traffic
+
+
+-----------------------------------------------
+Rule: Ensure the default VPC is not used
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_db_instance.default] (main.tf:5)
+     Violating Resource: [aws_db_instance.default]  (main.tf:5)
+
+     Evidence:
+         Default VPC
+             | aws_db_instance.default is defined within the default VPC.
+
+
+-----------------------------------------------
+Rule: Ensure RDS instances/clusters being created are set to be encrypted at rest
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_db_instance.default] (main.tf:5)
+     Violating Resource: [aws_db_instance.default]  (main.tf:5)
+
+     Evidence:
+         RDS Instance
+             | RDS Instance aws_db_instance.default is not set to use encrypt at rest
+
+
+-----------------------------------------------

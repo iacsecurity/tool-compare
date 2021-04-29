@@ -1,0 +1,37 @@
+
+WARNINGs found:
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_kms_key.secure_policy] (main.tf:5)
+     Violating Resource: [aws_kms_key.secure_policy]  (main.tf:5)
+
+     Evidence:
+             | Resource KMS key aws_kms_key.secure_policy does not have any tags set
+
+
+-----------------------------------------------
+Rule: Ensure IAM policies pass Access Analyzer policy validation without SECURITY and ERROR issues
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_kms_key.secure_policy] (main.tf:5)
+     Violating Resource: [aws_kms_key.secure_policy]  (main.tf:5)
+
+     Evidence:
+         Line 4, Col 8:
+             | Add a Principal element to the policy statement
+             | See https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-reference-policy-checks.html#access-analyzer-reference-policy-checks-error-missing-principal
+
+
+-----------------------------------------------
+Rule: Ensure rotation for customer created CMKs is enabled
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_kms_key.secure_policy] (main.tf:5)
+     Violating Resource: [aws_kms_key.secure_policy]  (main.tf:5)
+
+     Evidence:
+             | This rule evaluated aws_kms_key.secure_policy's configuration
+
+
+-----------------------------------------------

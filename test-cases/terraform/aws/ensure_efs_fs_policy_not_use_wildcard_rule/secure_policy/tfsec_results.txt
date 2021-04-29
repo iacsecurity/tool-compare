@@ -1,0 +1,40 @@
+
+Check 1
+
+  [AWS048][ERROR] Resource 'aws_efs_file_system.secure' does not specify if encryption should be used.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_efs_fs_policy_not_use_wildcard_rule/secure_policy/main.tf:5-11
+
+       2 |   region = "us-east-1"
+       3 | }
+       4 | 
+       5 | resource "aws_efs_file_system" "secure" {
+       6 |   creation_token = "efs-secure"
+       7 | 
+       8 |   tags = {
+       9 |     Name = "Secure"
+      10 |   }
+      11 | }
+      12 | 
+      13 | resource "aws_efs_file_system_policy" "secure_policy" {
+      14 |   file_system_id = aws_efs_file_system.secure.id
+
+   See https://tfsec.dev/docs/aws/AWS048/ for more information. 
+
+  times
+  ------------------------------------------
+  disk i/o             638.709µs
+  parsing HCL          3.541µs
+  evaluating values    46.291µs
+  running checks       170.5µs
+
+  counts
+  ------------------------------------------
+  files loaded         1
+  blocks               3
+  evaluated blocks     3
+  modules              0
+  module blocks        0
+  ignored checks       0
+
+1 potential problems detected.
+

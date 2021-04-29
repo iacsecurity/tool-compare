@@ -1,0 +1,121 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.46 
+
+terraform scan results:
+
+Passed checks: 13, Failed checks: 8, Skipped checks: 0
+
+Check: CKV_AWS_79: "Ensure Instance Metadata Service Version 1 is not enabled"
+	FAILED for resource: aws_instance.ec2
+	File: /main.tf:63-69
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_31
+
+		63 | resource "aws_instance" "ec2" {
+		64 |   ami = data.aws_ami.ubuntu.id
+		65 |   instance_type = "t2.micro"
+		66 |   subnet_id     = aws_subnet.subnet.id
+		67 |   vpc_security_group_ids  = [aws_security_group.default.id]
+		68 | 
+		69 | }
+
+
+Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration EBS is securely encrypted"
+	FAILED for resource: aws_instance.ec2
+	File: /main.tf:63-69
+	Guide: https://docs.bridgecrew.io/docs/general_13
+
+		63 | resource "aws_instance" "ec2" {
+		64 |   ami = data.aws_ami.ubuntu.id
+		65 |   instance_type = "t2.micro"
+		66 |   subnet_id     = aws_subnet.subnet.id
+		67 |   vpc_security_group_ids  = [aws_security_group.default.id]
+		68 | 
+		69 | }
+
+
+Check: CKV_AWS_126: "Ensure that detailed monitoring is enabled for EC2 instances"
+	FAILED for resource: aws_instance.ec2
+	File: /main.tf:63-69
+
+		63 | resource "aws_instance" "ec2" {
+		64 |   ami = data.aws_ami.ubuntu.id
+		65 |   instance_type = "t2.micro"
+		66 |   subnet_id     = aws_subnet.subnet.id
+		67 |   vpc_security_group_ids  = [aws_security_group.default.id]
+		68 | 
+		69 | }
+
+
+Check: CKV_AWS_135: "Ensure that EC2 is EBS optimized"
+	FAILED for resource: aws_instance.ec2
+	File: /main.tf:63-69
+
+		63 | resource "aws_instance" "ec2" {
+		64 |   ami = data.aws_ami.ubuntu.id
+		65 |   instance_type = "t2.micro"
+		66 |   subnet_id     = aws_subnet.subnet.id
+		67 |   vpc_security_group_ids  = [aws_security_group.default.id]
+		68 | 
+		69 | }
+
+
+Check: CKV_AWS_79: "Ensure Instance Metadata Service Version 1 is not enabled"
+	FAILED for resource: aws_instance.ec2_2
+	File: /main.tf:124-130
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_31
+
+		124 | resource "aws_instance" "ec2_2" {
+		125 |   ami = data.aws_ami.ubuntu_2.id
+		126 |   instance_type = "t2.micro"
+		127 |   subnet_id     = aws_subnet.subnet_2.id
+		128 |   vpc_security_group_ids  = [aws_security_group.default_2.id]
+		129 | 
+		130 | }
+
+
+Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration EBS is securely encrypted"
+	FAILED for resource: aws_instance.ec2_2
+	File: /main.tf:124-130
+	Guide: https://docs.bridgecrew.io/docs/general_13
+
+		124 | resource "aws_instance" "ec2_2" {
+		125 |   ami = data.aws_ami.ubuntu_2.id
+		126 |   instance_type = "t2.micro"
+		127 |   subnet_id     = aws_subnet.subnet_2.id
+		128 |   vpc_security_group_ids  = [aws_security_group.default_2.id]
+		129 | 
+		130 | }
+
+
+Check: CKV_AWS_126: "Ensure that detailed monitoring is enabled for EC2 instances"
+	FAILED for resource: aws_instance.ec2_2
+	File: /main.tf:124-130
+
+		124 | resource "aws_instance" "ec2_2" {
+		125 |   ami = data.aws_ami.ubuntu_2.id
+		126 |   instance_type = "t2.micro"
+		127 |   subnet_id     = aws_subnet.subnet_2.id
+		128 |   vpc_security_group_ids  = [aws_security_group.default_2.id]
+		129 | 
+		130 | }
+
+
+Check: CKV_AWS_135: "Ensure that EC2 is EBS optimized"
+	FAILED for resource: aws_instance.ec2_2
+	File: /main.tf:124-130
+
+		124 | resource "aws_instance" "ec2_2" {
+		125 |   ami = data.aws_ami.ubuntu_2.id
+		126 |   instance_type = "t2.micro"
+		127 |   subnet_id     = aws_subnet.subnet_2.id
+		128 |   vpc_security_group_ids  = [aws_security_group.default_2.id]
+		129 | 
+		130 | }
+
+

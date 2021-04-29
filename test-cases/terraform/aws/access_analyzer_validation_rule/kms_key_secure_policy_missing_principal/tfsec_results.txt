@@ -1,0 +1,53 @@
+
+Problem 1
+
+  [AWS019][WARNING] Resource 'aws_kms_key.secure_policy' does not have KMS Key auto-rotation enabled.
+  /src/main.tf:5-37
+
+       2 |   region = "us-east-1"
+       3 | }
+       4 | 
+       5 | resource "aws_kms_key" "secure_policy" {
+       6 |   description             = "KMS key + secure_policy"
+       7 |   deletion_window_in_days = 7
+       8 | 
+       9 |   policy = <<EOF
+      10 | {
+      11 |     "Version": "2008-10-17",
+      12 |     "Statement": [
+      13 |         {
+      14 |             "Sid": "Secure Policy",
+      15 |             "Effect": "Allow",
+      16 |             "Resource": "*",
+      17 |             "Action": [
+      18 |             "kms:Create*",
+      19 |             "kms:Describe*",
+      20 |             "kms:Enable*",
+      21 |             "kms:List*",
+      22 |             "kms:Put*",
+      23 |             "kms:Update*",
+      24 |             "kms:Revoke*",
+      25 |             "kms:Disable*",
+      26 |             "kms:Get*",
+      27 |             "kms:Delete*",
+      28 |             "kms:TagResource",
+      29 |             "kms:UntagResource",
+      30 |             "kms:ScheduleKeyDeletion",
+      31 |             "kms:CancelKeyDeletion"
+      32 |             ]
+      33 |         }
+      34 |     ]
+      35 | }
+      36 | EOF
+      37 | }
+
+   See https://tfsec.dev/docs/aws/AWS019/ for more information. 
+
+  disk i/o             27.24ms
+  parsing HCL          507µs
+  evaluating values    1.609ms
+  running checks       4.831ms
+  files loaded         1
+
+1 potential problems detected.
+

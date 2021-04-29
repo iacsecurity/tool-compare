@@ -1,0 +1,50 @@
+
+ERRORs found:
+Rule: Ensure all security groups and rules have a description detailing the rule
+Description: Cloudrail will review your security groups. If a security group is using a default description, or has a rule which does not include a description, this rule will trigger.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html to update the security group or security group rules description field.
+Remediation Steps - Terraform: For the aws_security_group and aws_security_group_rule resources, set description argument with a proper value.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_security_group.default] (main.tf:15)
+     Violating Resource: [aws_security_group.default]  (main.tf:15)
+
+     Evidence:
+             | The Security group aws_security_group.default does not have a non-default description
+
+
+-----------------------------------------------
+WARNINGs found:
+Rule: Ensure IMDSv2 is used and IMDSv1 is disabled
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.ec2] (main.tf:63)
+     Violating Resource: [aws_instance.ec2]  (main.tf:63)
+
+     Evidence:
+             | The EC2 Instance aws_instance.ec2 is allowing IMDSv1
+
+
+-----------------------------------------------
+Rule: Ensure all data stored in the Launch configuration EBS is securely encrypted
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.ec2] (main.tf:63)
+     Violating Resource: [aws_instance.ec2]  (main.tf:63)
+
+     Evidence:
+             | This rule evaluated aws_instance.ec2's configuration
+
+
+-----------------------------------------------
+Rule: Allow only private AMIs to be used
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.ec2] (main.tf:63)
+     Violating Resource: [ami-09943f9da1f1b7899]  (Not found in TF)
+
+     Evidence:
+             | The EC2 Instance aws_instance.ec2 uses AMI ami-09943f9da1f1b7899, which is public
+
+
+-----------------------------------------------

@@ -1,0 +1,14 @@
+
+
+Scan Summary -
+
+	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/ensure_docdb_clusters_encrypted_using_customer_managed_cmk_rule/docdb_cluster_encrypted_without_kms_key
+	IaC Type            :	terraform
+	Scanned At          :	2021-04-14 17:33:31.099556 +0000 UTC
+	Policies Validated  :	561
+	Violated Policies   :	0
+	Low                 :	0
+	Medium              :	0
+	High                :	0
+	
+

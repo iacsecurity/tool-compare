@@ -1,0 +1,38 @@
+
+
+Violation Details -
+    
+	Description    :	Lambda does not use KMS CMK key to protect environment variables.
+	File           :	main.tf
+	Line           :	5
+	Severity       :	High
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Lambda tracing is not enabled.
+	File           :	main.tf
+	Line           :	5
+	Severity       :	LOW
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Lambda function doesn't not include a VPC configuration.
+	File           :	main.tf
+	Line           :	5
+	Severity       :	Low
+	
+	-----------------------------------------------------------------------
+	
+
+Scan Summary -
+
+	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/ensure_lambda_function_policy_not_use_wildcard_rule/not_secure_policy
+	IaC Type            :	terraform
+	Scanned At          :	2021-04-14 17:34:55.696857 +0000 UTC
+	Policies Validated  :	561
+	Violated Policies   :	3
+	Low                 :	2
+	Medium              :	0
+	High                :	1
+	
+

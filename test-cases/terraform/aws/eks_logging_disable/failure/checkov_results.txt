@@ -1,0 +1,65 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.46 
+
+terraform scan results:
+
+Passed checks: 4, Failed checks: 4, Skipped checks: 0
+
+Check: CKV_AWS_39: "Ensure Amazon EKS public endpoint disabled"
+	FAILED for resource: aws_eks_cluster.test
+	File: /main.tf:20-26
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_kubernetes_2
+
+		20 | resource "aws_eks_cluster" "test" {
+		21 |   name = "test"
+		22 |   role_arn = aws_iam_role.eksrole.arn
+		23 |   vpc_config {
+		24 |     subnet_ids = [aws_subnet.subnet1.id]
+		25 |   }
+		26 | }
+
+Check: CKV_AWS_58: "Ensure EKS Cluster has Secrets Encryption Enabled"
+	FAILED for resource: aws_eks_cluster.test
+	File: /main.tf:20-26
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_kubernetes_3
+
+		20 | resource "aws_eks_cluster" "test" {
+		21 |   name = "test"
+		22 |   role_arn = aws_iam_role.eksrole.arn
+		23 |   vpc_config {
+		24 |     subnet_ids = [aws_subnet.subnet1.id]
+		25 |   }
+		26 | }
+
+Check: CKV_AWS_37: "Ensure Amazon EKS control plane logging enabled for all log types"
+	FAILED for resource: aws_eks_cluster.test
+	File: /main.tf:20-26
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_kubernetes_4
+
+		20 | resource "aws_eks_cluster" "test" {
+		21 |   name = "test"
+		22 |   role_arn = aws_iam_role.eksrole.arn
+		23 |   vpc_config {
+		24 |     subnet_ids = [aws_subnet.subnet1.id]
+		25 |   }
+		26 | }
+
+Check: CKV_AWS_38: "Ensure Amazon EKS public endpoint not accessible to 0.0.0.0/0"
+	FAILED for resource: aws_eks_cluster.test
+	File: /main.tf:20-26
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_kubernetes_1
+
+		20 | resource "aws_eks_cluster" "test" {
+		21 |   name = "test"
+		22 |   role_arn = aws_iam_role.eksrole.arn
+		23 |   vpc_config {
+		24 |     subnet_ids = [aws_subnet.subnet1.id]
+		25 |   }
+		26 | }
+

@@ -1,0 +1,134 @@
+
+Check 1
+
+  [AWS031][ERROR] Resource 'aws_elasticsearch_domain.es-not-secure-policy' defines an unencrypted Elasticsearch domain (missing encrypt_at_rest block).
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_elastic_search_domain_policy_not_use_wildcard_rule/not_secure_policy/main.tf:5-13
+
+       2 |   region = "us-east-1"
+       3 | }
+       4 | 
+       5 | resource "aws_elasticsearch_domain" "es-not-secure-policy" {
+       6 |   domain_name = "es-not-secure-policy"
+       7 | 
+       8 |   ebs_options {
+       9 |     ebs_enabled = true
+      10 |     volume_size = 10
+      11 |     volume_type = "gp2"
+      12 |   }
+      13 | }
+      14 | 
+      15 | resource "aws_elasticsearch_domain_policy" "main" {
+      16 |   domain_name = aws_elasticsearch_domain.es-not-secure-policy.domain_name
+
+   See https://tfsec.dev/docs/aws/AWS031/ for more information. 
+
+Check 2
+
+  [AWS032][ERROR] Resource 'aws_elasticsearch_domain.es-not-secure-policy' defines an Elasticsearch domain with plaintext traffic (missing node_to_node_encryption block).
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_elastic_search_domain_policy_not_use_wildcard_rule/not_secure_policy/main.tf:5-13
+
+       2 |   region = "us-east-1"
+       3 | }
+       4 | 
+       5 | resource "aws_elasticsearch_domain" "es-not-secure-policy" {
+       6 |   domain_name = "es-not-secure-policy"
+       7 | 
+       8 |   ebs_options {
+       9 |     ebs_enabled = true
+      10 |     volume_size = 10
+      11 |     volume_type = "gp2"
+      12 |   }
+      13 | }
+      14 | 
+      15 | resource "aws_elasticsearch_domain_policy" "main" {
+      16 |   domain_name = aws_elasticsearch_domain.es-not-secure-policy.domain_name
+
+   See https://tfsec.dev/docs/aws/AWS032/ for more information. 
+
+Check 3
+
+  [AWS033][ERROR] Resource 'aws_elasticsearch_domain.es-not-secure-policy' defines an Elasticsearch domain with plaintext traffic (missing domain_endpoint_options block).
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_elastic_search_domain_policy_not_use_wildcard_rule/not_secure_policy/main.tf:5-13
+
+       2 |   region = "us-east-1"
+       3 | }
+       4 | 
+       5 | resource "aws_elasticsearch_domain" "es-not-secure-policy" {
+       6 |   domain_name = "es-not-secure-policy"
+       7 | 
+       8 |   ebs_options {
+       9 |     ebs_enabled = true
+      10 |     volume_size = 10
+      11 |     volume_type = "gp2"
+      12 |   }
+      13 | }
+      14 | 
+      15 | resource "aws_elasticsearch_domain_policy" "main" {
+      16 |   domain_name = aws_elasticsearch_domain.es-not-secure-policy.domain_name
+
+   See https://tfsec.dev/docs/aws/AWS033/ for more information. 
+
+Check 4
+
+  [AWS055][ERROR] Resource 'aws_elasticsearch_domain.es-not-secure-policy' does not configure node to node encryption on the domain.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_elastic_search_domain_policy_not_use_wildcard_rule/not_secure_policy/main.tf:5-13
+
+       2 |   region = "us-east-1"
+       3 | }
+       4 | 
+       5 | resource "aws_elasticsearch_domain" "es-not-secure-policy" {
+       6 |   domain_name = "es-not-secure-policy"
+       7 | 
+       8 |   ebs_options {
+       9 |     ebs_enabled = true
+      10 |     volume_size = 10
+      11 |     volume_type = "gp2"
+      12 |   }
+      13 | }
+      14 | 
+      15 | resource "aws_elasticsearch_domain_policy" "main" {
+      16 |   domain_name = aws_elasticsearch_domain.es-not-secure-policy.domain_name
+
+   See https://tfsec.dev/docs/aws/AWS055/ for more information. 
+
+Check 5
+
+  [AWS057][ERROR] Resource 'aws_elasticsearch_domain.es-not-secure-policy' does not configure logging at rest on the domain.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_elastic_search_domain_policy_not_use_wildcard_rule/not_secure_policy/main.tf:5-13
+
+       2 |   region = "us-east-1"
+       3 | }
+       4 | 
+       5 | resource "aws_elasticsearch_domain" "es-not-secure-policy" {
+       6 |   domain_name = "es-not-secure-policy"
+       7 | 
+       8 |   ebs_options {
+       9 |     ebs_enabled = true
+      10 |     volume_size = 10
+      11 |     volume_type = "gp2"
+      12 |   }
+      13 | }
+      14 | 
+      15 | resource "aws_elasticsearch_domain_policy" "main" {
+      16 |   domain_name = aws_elasticsearch_domain.es-not-secure-policy.domain_name
+
+   See https://tfsec.dev/docs/aws/AWS057/ for more information. 
+
+  times
+  ------------------------------------------
+  disk i/o             558.123µs
+  parsing HCL          3.792µs
+  evaluating values    35.459µs
+  running checks       550.542µs
+
+  counts
+  ------------------------------------------
+  files loaded         1
+  blocks               3
+  evaluated blocks     3
+  modules              0
+  module blocks        0
+  ignored checks       0
+
+5 potential problems detected.
+

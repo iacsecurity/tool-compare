@@ -1,0 +1,64 @@
+
+Check 1
+
+  [AWS077][ERROR] Resource 'aws_s3_bucket.bucket' does not have versioning enabled
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_lambda_function_policy_not_use_wildcard_rule/secure_policy/main.tf:61-63
+
+      58 |   function_version = "$LATEST"
+      59 | }
+      60 | 
+      61 | resource "aws_s3_bucket" "bucket" {
+      62 |   bucket = "delete-me-eu-central-1"
+      63 | }
+      64 | 
+
+   See https://tfsec.dev/docs/aws/AWS077/ for more information. 
+
+Check 2
+
+  [AWS002][ERROR] Resource 'aws_s3_bucket.bucket' does not have logging enabled.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_lambda_function_policy_not_use_wildcard_rule/secure_policy/main.tf:61-63
+
+      58 |   function_version = "$LATEST"
+      59 | }
+      60 | 
+      61 | resource "aws_s3_bucket" "bucket" {
+      62 |   bucket = "delete-me-eu-central-1"
+      63 | }
+      64 | 
+
+   See https://tfsec.dev/docs/aws/AWS002/ for more information. 
+
+Check 3
+
+  [AWS017][ERROR] Resource 'aws_s3_bucket.bucket' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_lambda_function_policy_not_use_wildcard_rule/secure_policy/main.tf:61-63
+
+      58 |   function_version = "$LATEST"
+      59 | }
+      60 | 
+      61 | resource "aws_s3_bucket" "bucket" {
+      62 |   bucket = "delete-me-eu-central-1"
+      63 | }
+      64 | 
+
+   See https://tfsec.dev/docs/aws/AWS017/ for more information. 
+
+  times
+  ------------------------------------------
+  disk i/o             568.083µs
+  parsing HCL          4.083µs
+  evaluating values    107.959µs
+  running checks       300.542µs
+
+  counts
+  ------------------------------------------
+  files loaded         1
+  blocks               7
+  evaluated blocks     7
+  modules              0
+  module blocks        0
+  ignored checks       0
+
+3 potential problems detected.
+

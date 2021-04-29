@@ -1,0 +1,13 @@
+
+WARNINGs found:
+Rule: Ensure Amazon EKS control plane logging enabled for all log types
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_eks_cluster.test] (main.tf:20)
+     Violating Resource: [aws_eks_cluster.test]  (main.tf:20)
+
+     Evidence:
+             | This rule evaluated aws_eks_cluster.test's configuration
+
+
+-----------------------------------------------

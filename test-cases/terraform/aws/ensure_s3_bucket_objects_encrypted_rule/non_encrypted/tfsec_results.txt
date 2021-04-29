@@ -1,0 +1,73 @@
+
+Check 1
+
+  [AWS002][ERROR] Resource 'aws_s3_bucket.cloudrail' does not have logging enabled.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_s3_bucket_objects_encrypted_rule/non_encrypted/main.tf:5-8
+
+       2 |   region = "eu-west-1"
+       3 | }
+       4 | 
+       5 | resource "aws_s3_bucket" "cloudrail" {
+       6 |   bucket = "cloudrail-non-encrypted-czx7zxchs"
+       7 |   acl    = "private"
+       8 | }
+       9 | 
+      10 | resource "aws_s3_bucket_public_access_block" "cloudrail" {
+      11 |   bucket                  = aws_s3_bucket.cloudrail.id
+
+   See https://tfsec.dev/docs/aws/AWS002/ for more information. 
+
+Check 2
+
+  [AWS017][ERROR] Resource 'aws_s3_bucket.cloudrail' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_s3_bucket_objects_encrypted_rule/non_encrypted/main.tf:5-8
+
+       2 |   region = "eu-west-1"
+       3 | }
+       4 | 
+       5 | resource "aws_s3_bucket" "cloudrail" {
+       6 |   bucket = "cloudrail-non-encrypted-czx7zxchs"
+       7 |   acl    = "private"
+       8 | }
+       9 | 
+      10 | resource "aws_s3_bucket_public_access_block" "cloudrail" {
+      11 |   bucket                  = aws_s3_bucket.cloudrail.id
+
+   See https://tfsec.dev/docs/aws/AWS017/ for more information. 
+
+Check 3
+
+  [AWS077][ERROR] Resource 'aws_s3_bucket.cloudrail' does not have versioning enabled
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_s3_bucket_objects_encrypted_rule/non_encrypted/main.tf:5-8
+
+       2 |   region = "eu-west-1"
+       3 | }
+       4 | 
+       5 | resource "aws_s3_bucket" "cloudrail" {
+       6 |   bucket = "cloudrail-non-encrypted-czx7zxchs"
+       7 |   acl    = "private"
+       8 | }
+       9 | 
+      10 | resource "aws_s3_bucket_public_access_block" "cloudrail" {
+      11 |   bucket                  = aws_s3_bucket.cloudrail.id
+
+   See https://tfsec.dev/docs/aws/AWS077/ for more information. 
+
+  times
+  ------------------------------------------
+  disk i/o             398.167µs
+  parsing HCL          3.5µs
+  evaluating values    47.708µs
+  running checks       267.416µs
+
+  counts
+  ------------------------------------------
+  files loaded         1
+  blocks               4
+  evaluated blocks     4
+  modules              0
+  module blocks        0
+  ignored checks       0
+
+3 potential problems detected.
+

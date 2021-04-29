@@ -1,0 +1,15 @@
+<string>:1: SyntaxWarning: 'set' object is not subscriptable; perhaps you missed a comma?
+<string>:1: SyntaxWarning: 'set' object is not subscriptable; perhaps you missed a comma?
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.46 
+
+terraform scan results:
+
+Passed checks: 10, Failed checks: 0, Skipped checks: 0
+

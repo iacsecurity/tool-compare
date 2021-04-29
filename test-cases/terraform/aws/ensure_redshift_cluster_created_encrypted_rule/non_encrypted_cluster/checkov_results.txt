@@ -1,0 +1,64 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.46 
+
+terraform scan results:
+
+Passed checks: 2, Failed checks: 4, Skipped checks: 0
+
+Check: CKV_AWS_71: "Ensure Redshift Cluster logging is enabled"
+	FAILED for resource: aws_redshift_cluster.test
+	File: /main.tf:5-11
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_logging_12
+
+		5  | resource "aws_redshift_cluster" "test" {
+		6  |   cluster_identifier = "redshift-defaults-only"
+		7  |   node_type = "dc2.large"
+		8  |   master_password = "Test1234"
+		9  |   master_username = "test"
+		10 |   skip_final_snapshot = true
+		11 | }
+
+Check: CKV_AWS_142: "Ensure that Redshift cluster is encrypted by KMS"
+	FAILED for resource: aws_redshift_cluster.test
+	File: /main.tf:5-11
+
+		5  | resource "aws_redshift_cluster" "test" {
+		6  |   cluster_identifier = "redshift-defaults-only"
+		7  |   node_type = "dc2.large"
+		8  |   master_password = "Test1234"
+		9  |   master_username = "test"
+		10 |   skip_final_snapshot = true
+		11 | }
+
+Check: CKV_AWS_87: "Redshift cluster should not be publicly accessible"
+	FAILED for resource: aws_redshift_cluster.test
+	File: /main.tf:5-11
+	Guide: https://docs.bridgecrew.io/docs/public_9
+
+		5  | resource "aws_redshift_cluster" "test" {
+		6  |   cluster_identifier = "redshift-defaults-only"
+		7  |   node_type = "dc2.large"
+		8  |   master_password = "Test1234"
+		9  |   master_username = "test"
+		10 |   skip_final_snapshot = true
+		11 | }
+
+Check: CKV_AWS_64: "Ensure all data stored in the Redshift cluster is securely encrypted at rest"
+	FAILED for resource: aws_redshift_cluster.test
+	File: /main.tf:5-11
+	Guide: https://docs.bridgecrew.io/docs/general_25
+
+		5  | resource "aws_redshift_cluster" "test" {
+		6  |   cluster_identifier = "redshift-defaults-only"
+		7  |   node_type = "dc2.large"
+		8  |   master_password = "Test1234"
+		9  |   master_username = "test"
+		10 |   skip_final_snapshot = true
+		11 | }
+

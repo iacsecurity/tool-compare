@@ -1,0 +1,15 @@
+
+WARNINGs found:
+Rule: Disallow IAM permissions which can lead to privilege escalation
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [dev-yoni] (Not found in TF)
+     Violating Resource: [aws_iam_group_policy.allow-policy]  (main.tf:10)
+
+     Evidence:
+         aws_iam_group_policy.allow-policy
+             | is applied to arn:aws:iam::154724799477:group/group-1
+             | granting the problematic permissions {'iam:Create*'} which can allow for privilege escalation
+
+
+-----------------------------------------------

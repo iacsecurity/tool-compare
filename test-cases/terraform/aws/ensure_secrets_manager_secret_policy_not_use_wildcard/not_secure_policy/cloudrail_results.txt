@@ -1,0 +1,35 @@
+
+WARNINGs found:
+Rule: Ensure Secrets Manager secrets are encrypted at rest with customer-managed CMK
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_secretsmanager_secret.not_secure_policy] (main.tf:5)
+     Violating Resource: [aws_secretsmanager_secret.not_secure_policy]  (main.tf:5)
+
+     Evidence:
+             | The Secrets Manager secret not_secure_secret is not set to be encrypted at rest using customer-managed CMK
+
+
+-----------------------------------------------
+Rule: Ensure use of Secrets Manager secret policy, and no action wildcards are being used
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_secretsmanager_secret.not_secure_policy] (main.tf:5)
+     Violating Resource: [aws_secretsmanager_secret_policy.example]  (main.tf:9)
+
+     Evidence:
+             | The policy attached to the Secrets Manager Secret aws_secretsmanager_secret.not_secure_policy is using wildcard action secretsmanager:*
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_secretsmanager_secret.not_secure_policy] (main.tf:5)
+     Violating Resource: [aws_secretsmanager_secret.not_secure_policy]  (main.tf:5)
+
+     Evidence:
+             | Resource Secrets Manager Secret aws_secretsmanager_secret.not_secure_policy does not have any tags set
+
+
+-----------------------------------------------

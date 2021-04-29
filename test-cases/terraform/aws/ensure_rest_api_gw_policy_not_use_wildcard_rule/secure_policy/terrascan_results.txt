@@ -1,0 +1,24 @@
+
+
+Violation Details -
+    
+	Description    :	Enable AWS CloudWatch Logs for APIs
+	File           :	main.tf
+	Line           :	72
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+
+Scan Summary -
+
+	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/ensure_rest_api_gw_policy_not_use_wildcard_rule/secure_policy
+	IaC Type            :	terraform
+	Scanned At          :	2021-04-14 17:34:25.151008 +0000 UTC
+	Policies Validated  :	561
+	Violated Policies   :	1
+	Low                 :	0
+	Medium              :	1
+	High                :	0
+	
+

@@ -1,0 +1,28 @@
+
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.66 
+Update available 2.0.66 -> 2.0.67
+Run pip3 install -U checkov to update 
+
+
+terraform scan results:
+
+Passed checks: 3, Failed checks: 1, Skipped checks: 0
+
+Check: CKV_AWS_40: "Ensure IAM policies are attached only to groups or roles (Reducing access management complexity may in-turn reduce opportunity for a principal to inadvertently receive or retain excessive privileges.)"
+	FAILED for resource: aws_iam_user_policy_attachment.managed-policy-attach
+	File: /main.tf:28-31
+	Guide: https://docs.bridgecrew.io/docs/iam_16-iam-policy-privileges-1
+
+		28 | resource "aws_iam_user_policy_attachment" "managed-policy-attach" {
+		29 |   user       = aws_iam_user.user-1.name
+		30 |   policy_arn = aws_iam_policy.managed-policy.arn
+		31 | }
+
+

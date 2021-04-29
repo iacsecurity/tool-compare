@@ -1,0 +1,14 @@
+
+
+Scan Summary -
+
+	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/access_analyzer_validation_rule/iam_user_inline_policy_attach
+	IaC Type            :	terraform
+	Scanned At          :	2021-04-21 16:57:37.58985 +0000 UTC
+	Policies Validated  :	561
+	Violated Policies   :	0
+	Low                 :	0
+	Medium              :	0
+	High                :	0
+	
+

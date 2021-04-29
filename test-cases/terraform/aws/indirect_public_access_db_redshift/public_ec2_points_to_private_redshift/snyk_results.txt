@@ -1,0 +1,221 @@
+Failed to run the process ...
+{
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "policy": "",
+    "ignoreSettings": null,
+    "projectId": "",
+    "org": "y"
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "main.tf",
+  "projectName": "project",
+  "org": "y",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
+  "infrastructureAsCodeIssues": [
+    {
+      "id": "SNYK-CC-TF-73",
+      "title": "AWS Security Group allows open egress",
+      "type": "terraform",
+      "subType": "VPC",
+      "severity": "low",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "The inline security group rule allows open egress",
+        "impact": "Open egress can be used to exfiltrate data to unauthorized destinations, and enable access to potentially malicious resources",
+        "resolve": "Set `egress.cidr_blocks` attribute to specific ranges e.g. `192.168.1.0/24`"
+      },
+      "lineNumber": 122,
+      "path": [
+        "resource",
+        "aws_security_group[publicly_accessible_sg]",
+        "egress"
+      ]
+    },
+    {
+      "id": "SNYK-CC-TF-56",
+      "title": "Missing description",
+      "type": "terraform",
+      "subType": "VPC",
+      "severity": "low",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "The description field is missing in the security group",
+        "impact": "Increases the security management overhead",
+        "resolve": "Set `description` attribute to meaningful statement"
+      },
+      "lineNumber": 114,
+      "path": [
+        "resource",
+        "aws_security_group[publicly_accessible_sg]",
+        "description"
+      ]
+    },
+    {
+      "id": "SNYK-CC-TF-136",
+      "title": "Redshift cluster logging disabled",
+      "type": "terraform",
+      "subType": "Redshift",
+      "severity": "low",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Amazon Redshift cluster logging is not enabled",
+        "impact": "Audit records may not be available during investigation",
+        "resolve": "Set `logging.enabled` attribute to `true`"
+      },
+      "lineNumber": 103,
+      "path": [
+        "resource",
+        "aws_redshift_cluster[test]",
+        "logging"
+      ]
+    },
+    {
+      "id": "SNYK-CC-TF-41",
+      "title": "AWS Network ACL allows public access",
+      "type": "terraform",
+      "subType": "VPC",
+      "severity": "medium",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "That inbound traffic is allowed to a resource from any source instead of a restricted range",
+        "impact": "That potentially everyone can access your resource",
+        "resolve": "Set cidr_block to specific IP range only, e.g. `192.168.1.0/24`"
+      },
+      "lineNumber": 31,
+      "path": [
+        "resource",
+        "aws_network_acl[ec2_nacl]",
+        "ingress",
+        "cidr_block"
+      ]
+    },
+    {
+      "id": "SNYK-CC-TF-41",
+      "title": "AWS Network ACL allows public access",
+      "type": "terraform",
+      "subType": "VPC",
+      "severity": "medium",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "That inbound traffic is allowed to a resource from any source instead of a restricted range",
+        "impact": "That potentially everyone can access your resource",
+        "resolve": "Set cidr_block to specific IP range only, e.g. `192.168.1.0/24`"
+      },
+      "lineNumber": 58,
+      "path": [
+        "resource",
+        "aws_network_acl[redshift_eni2_nacl]",
+        "ingress",
+        "cidr_block"
+      ]
+    },
+    {
+      "id": "SNYK-CC-TF-108",
+      "title": "Non-encrypted Redshift DB at rest",
+      "type": "terraform",
+      "subType": "Redshift",
+      "severity": "medium",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Redshift DB is not encrypted",
+        "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+        "resolve": "Set `encrypted` attribute to `true`."
+      },
+      "lineNumber": 103,
+      "path": [
+        "resource",
+        "aws_redshift_cluster[test]",
+        "encrypted"
+      ]
+    },
+    {
+      "id": "SNYK-CC-TF-130",
+      "title": "EC2 instance accepts IMDSv1",
+      "type": "terraform",
+      "subType": "EC2",
+      "severity": "low",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Instance Metadata Service v2 is not enforced",
+        "impact": "Metadata service may be vulnerable to reverse proxy/open firewall misconfigurations and server side request forgery attacks",
+        "resolve": "Set `metadata_options.http_tokens` attribute to `required`"
+      },
+      "lineNumber": 131,
+      "path": [
+        "resource",
+        "aws_instance[public_ins]",
+        "metadata_options"
+      ]
+    },
+    {
+      "id": "SNYK-CC-TF-1",
+      "title": "Security Group allows open ingress",
+      "type": "terraform",
+      "subType": "VPC",
+      "severity": "medium",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "That inbound traffic is allowed to a resource from any source instead of a restricted range",
+        "impact": "That potentially everyone can access your resource",
+        "resolve": "Updating the `cidr_block` attribute with a more restrictive IP range or a specific IP address to ensure traffic can only come from known sources. "
+      },
+      "lineNumber": 116,
+      "path": [
+        "input",
+        "resource",
+        "aws_security_group[publicly_accessible_sg]",
+        "ingress"
+      ]
+    },
+    {
+      "id": "SNYK-CC-TF-53",
+      "title": "Non-Encrypted root block device",
+      "type": "terraform",
+      "subType": "EC2",
+      "severity": "medium",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "The root block device for ec2 instance is not encrypted",
+        "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+        "resolve": "Set `root_block_device.encrypted` attribute to `true`"
+      },
+      "lineNumber": 131,
+      "path": [
+        "resource",
+        "aws_instance[public_ins]",
+        "root_block_device",
+        "encrypted"
+      ]
+    },
+    {
+      "id": "SNYK-CC-TF-51",
+      "title": "Resource has public IP assigned",
+      "type": "terraform",
+      "subType": "EC2",
+      "severity": "low",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "AWS resource could be accessed externally via public IP",
+        "impact": "Increases attack vector reachability",
+        "resolve": "Set `associate_public_ip_address` attribute to `false`"
+      },
+      "lineNumber": 134,
+      "path": [
+        "resource",
+        "aws_instance[public_ins]",
+        "associate_public_ip_address"
+      ]
+    }
+  ]
+}

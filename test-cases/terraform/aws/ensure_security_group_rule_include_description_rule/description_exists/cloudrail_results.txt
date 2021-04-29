@@ -1,0 +1,35 @@
+
+WARNINGs found:
+Rule: Ensure IMDSv2 is used and IMDSv1 is disabled
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.ec2] (main.tf:64)
+     Violating Resource: [aws_instance.ec2]  (main.tf:64)
+
+     Evidence:
+             | The EC2 Instance aws_instance.ec2 is allowing IMDSv1
+
+
+-----------------------------------------------
+Rule: Ensure all data stored in the Launch configuration EBS is securely encrypted
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.ec2] (main.tf:64)
+     Violating Resource: [aws_instance.ec2]  (main.tf:64)
+
+     Evidence:
+             | This rule evaluated aws_instance.ec2's configuration
+
+
+-----------------------------------------------
+Rule: Allow only private AMIs to be used
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.ec2] (main.tf:64)
+     Violating Resource: [ami-09943f9da1f1b7899]  (Not found in TF)
+
+     Evidence:
+             | The EC2 Instance aws_instance.ec2 uses AMI ami-09943f9da1f1b7899, which is public
+
+
+-----------------------------------------------

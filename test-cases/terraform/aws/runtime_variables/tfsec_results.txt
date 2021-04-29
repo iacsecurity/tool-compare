@@ -1,0 +1,56 @@
+
+Check 1
+
+  [AWS018][ERROR] Resource 'aws_security_group.sg' should include a description for auditing purposes.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/runtime_variables/main.tf:35-43
+
+      32 |   }
+      33 | }
+      34 | 
+      35 | resource "aws_security_group" "sg" {
+      36 |   vpc_id = aws_vpc.vpc.id
+      37 |   ingress {
+      38 |     from_port = 22
+      39 |     protocol = "tcp"
+      40 |     to_port = 22
+      41 |     cidr_blocks = [var.source_cidr]
+      42 |   }
+      43 | }
+      44 | 
+      45 | resource "aws_internet_gateway" "igw" {
+      46 |   vpc_id = aws_vpc.vpc.id
+
+   See https://tfsec.dev/docs/aws/AWS018/ for more information. 
+
+Check 2
+
+  [AWS012][ERROR] Resource 'aws_instance.test' has a public IP address associated.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/runtime_variables/main.tf:67
+
+      64 |   instance_type = "t2.micro"
+      65 |   subnet_id     = aws_subnet.subnet.id
+      66 |   vpc_security_group_ids = [aws_security_group.sg.id]
+      67 |   associate_public_ip_address = true
+      68 | }
+      69 | 
+
+   See https://tfsec.dev/docs/aws/AWS012/ for more information. 
+
+  times
+  ------------------------------------------
+  disk i/o             559.249µs
+  parsing HCL          6.042µs
+  evaluating values    73.416µs
+  running checks       298.75µs
+
+  counts
+  ------------------------------------------
+  files loaded         1
+  blocks               10
+  evaluated blocks     10
+  modules              0
+  module blocks        0
+  ignored checks       0
+
+2 potential problems detected.
+

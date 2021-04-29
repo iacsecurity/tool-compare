@@ -1,0 +1,76 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.46 
+
+terraform scan results:
+
+Passed checks: 15, Failed checks: 6, Skipped checks: 0
+
+Check: CKV_AWS_19: "Ensure all data stored in the S3 bucket is securely encrypted at rest"
+	FAILED for resource: aws_s3_bucket.cloudrail
+	File: /main.tf:33-36
+	Guide: https://docs.bridgecrew.io/docs/s3_14-data-encrypted-at-rest
+
+		33 | resource "aws_s3_bucket" "cloudrail" {
+		34 |   bucket = "cloudrail-glue"
+		35 |   acl    = "private"
+		36 | }
+
+
+Check: CKV_AWS_144: "Ensure that S3 bucket has cross-region replication enabled"
+	FAILED for resource: aws_s3_bucket.cloudrail
+	File: /main.tf:33-36
+
+		33 | resource "aws_s3_bucket" "cloudrail" {
+		34 |   bucket = "cloudrail-glue"
+		35 |   acl    = "private"
+		36 | }
+
+
+Check: CKV_AWS_145: "Ensure that S3 buckets are encrypted with KMS by default"
+	FAILED for resource: aws_s3_bucket.cloudrail
+	File: /main.tf:33-36
+
+		33 | resource "aws_s3_bucket" "cloudrail" {
+		34 |   bucket = "cloudrail-glue"
+		35 |   acl    = "private"
+		36 | }
+
+
+Check: CKV_AWS_52: "Ensure S3 bucket has MFA delete enabled"
+	FAILED for resource: aws_s3_bucket.cloudrail
+	File: /main.tf:33-36
+
+		33 | resource "aws_s3_bucket" "cloudrail" {
+		34 |   bucket = "cloudrail-glue"
+		35 |   acl    = "private"
+		36 | }
+
+
+Check: CKV_AWS_18: "Ensure the S3 bucket has access logging enabled"
+	FAILED for resource: aws_s3_bucket.cloudrail
+	File: /main.tf:33-36
+	Guide: https://docs.bridgecrew.io/docs/s3_13-enable-logging
+
+		33 | resource "aws_s3_bucket" "cloudrail" {
+		34 |   bucket = "cloudrail-glue"
+		35 |   acl    = "private"
+		36 | }
+
+
+Check: CKV_AWS_21: "Ensure all data stored in the S3 bucket have versioning enabled"
+	FAILED for resource: aws_s3_bucket.cloudrail
+	File: /main.tf:33-36
+	Guide: https://docs.bridgecrew.io/docs/s3_16-enable-versioning
+
+		33 | resource "aws_s3_bucket" "cloudrail" {
+		34 |   bucket = "cloudrail-glue"
+		35 |   acl    = "private"
+		36 | }
+
+

@@ -1,0 +1,41 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.46 
+
+terraform scan results:
+
+Passed checks: 1, Failed checks: 2, Skipped checks: 0
+
+Check: CKV_AWS_26: "Ensure all data stored in the SNS topic is encrypted"
+	FAILED for resource: aws_sns_topic.cloudrail_1
+	File: /main.tf:5-11
+	Guide: https://docs.bridgecrew.io/docs/general_15
+
+		5  | resource "aws_sns_topic" "cloudrail_1" {
+		6  |   name = "sns_not_ecnrypted-1"
+		7  |   tags = {
+		8  |     Name = "Sns Topic Cloudrail Test",
+		9  |     Env = "Cloudrail Rules test"
+		10 |   }
+		11 | }
+
+
+Check: CKV_AWS_27: "Ensure all data stored in the SQS queue is encrypted"
+	FAILED for resource: aws_sqs_queue.cloudrail
+	File: /main.tf:13-19
+	Guide: https://docs.bridgecrew.io/docs/general_16-encrypt-sqs-queue
+
+		13 | resource "aws_sqs_queue" "cloudrail" {
+		14 |   name = "sqs_non_encrypted"
+		15 |   tags = {
+		16 |     Name = "Sqs Cloudrail Test",
+		17 |     Env = "Cloudrail Rules test"
+		18 |   }
+		19 | }
+
+

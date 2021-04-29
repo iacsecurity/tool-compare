@@ -1,0 +1,24 @@
+WARNING:root:Unable to load module (source="/terraform-tests-modules/private-vpc" version="latest"): /terraform-tests-modules/private-vpc
+2021-04-14 17:23:25,194 [MainThread  ] [WARNI]  Unable to load module (source="/terraform-tests-modules/private-vpc" version="latest"): /terraform-tests-modules/private-vpc
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.46 
+
+terraform scan results:
+
+Passed checks: 1, Failed checks: 1, Skipped checks: 0
+
+Check: CKV_AWS_27: "Ensure all data stored in the SQS queue is encrypted"
+	FAILED for resource: aws_sqs_queue.test-queue
+	File: /main.tf:19-21
+	Guide: https://docs.bridgecrew.io/docs/general_16-encrypt-sqs-queue
+
+		19 | resource "aws_sqs_queue" "test-queue" {
+		20 |   name = "test-queue"
+		21 | }
+

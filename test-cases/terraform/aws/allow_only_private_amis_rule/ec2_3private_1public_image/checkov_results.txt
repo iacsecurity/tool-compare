@@ -1,0 +1,216 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.46 
+
+terraform scan results:
+
+Passed checks: 9, Failed checks: 17, Skipped checks: 0
+
+Check: CKV_AWS_3: "Ensure all data stored in the EBS is securely encrypted"
+	FAILED for resource: aws_ebs_volume.example
+	File: /main.tf:15-22
+	Guide: https://docs.bridgecrew.io/docs/general_3-encrypt-eps-volume
+
+		15 | resource "aws_ebs_volume" "example" {
+		16 |   availability_zone = data.aws_availability_zones.available.names[0]
+		17 |   size              = 40
+		18 | 
+		19 |   tags = {
+		20 |     Name = "HelloWorld"
+		21 |   }
+		22 | }
+
+
+Check: CKV_AWS_79: "Ensure Instance Metadata Service Version 1 is not enabled"
+	FAILED for resource: aws_instance.example_with_new_ami
+	File: /main.tf:45-48
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_31
+
+		45 | resource "aws_instance" "example_with_new_ami" {
+		46 |   ami = aws_ami.example.id
+		47 |   instance_type = "t3.nano"
+		48 | }
+
+
+Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration EBS is securely encrypted"
+	FAILED for resource: aws_instance.example_with_new_ami
+	File: /main.tf:45-48
+	Guide: https://docs.bridgecrew.io/docs/general_13
+
+		45 | resource "aws_instance" "example_with_new_ami" {
+		46 |   ami = aws_ami.example.id
+		47 |   instance_type = "t3.nano"
+		48 | }
+
+
+Check: CKV_AWS_126: "Ensure that detailed monitoring is enabled for EC2 instances"
+	FAILED for resource: aws_instance.example_with_new_ami
+	File: /main.tf:45-48
+
+		45 | resource "aws_instance" "example_with_new_ami" {
+		46 |   ami = aws_ami.example.id
+		47 |   instance_type = "t3.nano"
+		48 | }
+
+
+Check: CKV_AWS_135: "Ensure that EC2 is EBS optimized"
+	FAILED for resource: aws_instance.example_with_new_ami
+	File: /main.tf:45-48
+
+		45 | resource "aws_instance" "example_with_new_ami" {
+		46 |   ami = aws_ami.example.id
+		47 |   instance_type = "t3.nano"
+		48 | }
+
+
+Check: CKV_AWS_79: "Ensure Instance Metadata Service Version 1 is not enabled"
+	FAILED for resource: aws_instance.example_with_copied_ami
+	File: /main.tf:80-84
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_31
+
+		80 | resource "aws_instance" "example_with_copied_ami" {
+		81 |   ami = aws_ami_copy.example.id
+		82 |   instance_type = "t3.nano"
+		83 |   
+		84 | }
+
+
+Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration EBS is securely encrypted"
+	FAILED for resource: aws_instance.example_with_copied_ami
+	File: /main.tf:80-84
+	Guide: https://docs.bridgecrew.io/docs/general_13
+
+		80 | resource "aws_instance" "example_with_copied_ami" {
+		81 |   ami = aws_ami_copy.example.id
+		82 |   instance_type = "t3.nano"
+		83 |   
+		84 | }
+
+
+Check: CKV_AWS_126: "Ensure that detailed monitoring is enabled for EC2 instances"
+	FAILED for resource: aws_instance.example_with_copied_ami
+	File: /main.tf:80-84
+
+		80 | resource "aws_instance" "example_with_copied_ami" {
+		81 |   ami = aws_ami_copy.example.id
+		82 |   instance_type = "t3.nano"
+		83 |   
+		84 | }
+
+
+Check: CKV_AWS_135: "Ensure that EC2 is EBS optimized"
+	FAILED for resource: aws_instance.example_with_copied_ami
+	File: /main.tf:80-84
+
+		80 | resource "aws_instance" "example_with_copied_ami" {
+		81 |   ami = aws_ami_copy.example.id
+		82 |   instance_type = "t3.nano"
+		83 |   
+		84 | }
+
+
+Check: CKV_AWS_79: "Ensure Instance Metadata Service Version 1 is not enabled"
+	FAILED for resource: aws_instance.example_with_ami_from_instance
+	File: /main.tf:93-96
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_31
+
+		93 | resource "aws_instance" "example_with_ami_from_instance" {
+		94 |   ami = aws_ami_from_instance.example.id
+		95 |   instance_type = "t3.nano"
+		96 | }
+
+
+Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration EBS is securely encrypted"
+	FAILED for resource: aws_instance.example_with_ami_from_instance
+	File: /main.tf:93-96
+	Guide: https://docs.bridgecrew.io/docs/general_13
+
+		93 | resource "aws_instance" "example_with_ami_from_instance" {
+		94 |   ami = aws_ami_from_instance.example.id
+		95 |   instance_type = "t3.nano"
+		96 | }
+
+
+Check: CKV_AWS_126: "Ensure that detailed monitoring is enabled for EC2 instances"
+	FAILED for resource: aws_instance.example_with_ami_from_instance
+	File: /main.tf:93-96
+
+		93 | resource "aws_instance" "example_with_ami_from_instance" {
+		94 |   ami = aws_ami_from_instance.example.id
+		95 |   instance_type = "t3.nano"
+		96 | }
+
+
+Check: CKV_AWS_135: "Ensure that EC2 is EBS optimized"
+	FAILED for resource: aws_instance.example_with_ami_from_instance
+	File: /main.tf:93-96
+
+		93 | resource "aws_instance" "example_with_ami_from_instance" {
+		94 |   ami = aws_ami_from_instance.example.id
+		95 |   instance_type = "t3.nano"
+		96 | }
+
+
+Check: CKV_AWS_79: "Ensure Instance Metadata Service Version 1 is not enabled"
+	FAILED for resource: aws_instance.public-ubuntu-from-data
+	File: /main.tf:98-105
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_31
+
+		98  | resource "aws_instance" "public-ubuntu-from-data" {
+		99  |   ami           = data.aws_ami.ubuntu.id
+		100 |   instance_type = "t2.micro"
+		101 |   
+		102 |   tags = {
+		103 |     Name = "public-ubuntu-from-data"
+		104 |   }
+		105 | }
+
+
+Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration EBS is securely encrypted"
+	FAILED for resource: aws_instance.public-ubuntu-from-data
+	File: /main.tf:98-105
+	Guide: https://docs.bridgecrew.io/docs/general_13
+
+		98  | resource "aws_instance" "public-ubuntu-from-data" {
+		99  |   ami           = data.aws_ami.ubuntu.id
+		100 |   instance_type = "t2.micro"
+		101 |   
+		102 |   tags = {
+		103 |     Name = "public-ubuntu-from-data"
+		104 |   }
+		105 | }
+
+
+Check: CKV_AWS_126: "Ensure that detailed monitoring is enabled for EC2 instances"
+	FAILED for resource: aws_instance.public-ubuntu-from-data
+	File: /main.tf:98-105
+
+		98  | resource "aws_instance" "public-ubuntu-from-data" {
+		99  |   ami           = data.aws_ami.ubuntu.id
+		100 |   instance_type = "t2.micro"
+		101 |   
+		102 |   tags = {
+		103 |     Name = "public-ubuntu-from-data"
+		104 |   }
+		105 | }
+
+
+Check: CKV_AWS_135: "Ensure that EC2 is EBS optimized"
+	FAILED for resource: aws_instance.public-ubuntu-from-data
+	File: /main.tf:98-105
+
+		98  | resource "aws_instance" "public-ubuntu-from-data" {
+		99  |   ami           = data.aws_ami.ubuntu.id
+		100 |   instance_type = "t2.micro"
+		101 |   
+		102 |   tags = {
+		103 |     Name = "public-ubuntu-from-data"
+		104 |   }
+		105 | }
+
+

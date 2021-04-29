@@ -1,0 +1,47 @@
+
+WARNINGs found:
+Rule: Ensure VPC Endpoint for S3 is enabled in all VPCs
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.foo] (main.tf:19)
+     Violating Resource: [sfdc-somestage-consoleme]  (Not found in TF)
+
+     Evidence:
+         The VPC
+             | sfdc-somestage-consoleme in region us-east-1 is in use but not leveraging S3 Endpoint Gateway
+
+
+-----------------------------------------------
+Rule: Ensure S3 buckets are set to be encrypted at rest
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.foo] (main.tf:19)
+     Violating Resource: [aws_s3_bucket.foo]  (main.tf:19)
+
+     Evidence:
+             | The S3 Bucket aws_s3_bucket.foo is not set to be encrypted at rest
+
+
+-----------------------------------------------
+Rule: Ensure CloudTrail trails are set to be encrypted at rest using SSE-KMS
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_cloudtrail.foobar] (main.tf:11)
+     Violating Resource: [aws_cloudtrail.foobar]  (main.tf:11)
+
+     Evidence:
+             | The CloudTrail trail aws_cloudtrail.foobar is not set to use encryption at rest with KMS CMK
+
+
+-----------------------------------------------
+Rule: Enforce use of HTTPS in S3 bucket policy
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.foo] (main.tf:19)
+     Violating Resource: [aws_s3_bucket.foo]  (main.tf:19)
+
+     Evidence:
+             | The S3 Bucket aws_s3_bucket.foo does not have a policy with the aws:SecureTransport condition
+
+
+-----------------------------------------------

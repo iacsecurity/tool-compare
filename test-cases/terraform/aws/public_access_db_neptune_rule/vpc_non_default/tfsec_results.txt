@@ -1,0 +1,36 @@
+
+Check 1
+
+  [AWS018][ERROR] Resource 'aws_security_group.nondefault' should include a description for auditing purposes.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/public_access_db_neptune_rule/vpc_non_default/main.tf:9-11
+
+       6 |   cidr_block = "10.1.1.0/24"
+       7 | }
+       8 | 
+       9 | resource "aws_security_group" "nondefault" {
+      10 |   vpc_id = aws_vpc.nondefault.id
+      11 | }
+      12 | 
+      13 | resource "aws_subnet" "nondefault_1" {
+      14 |   vpc_id = aws_vpc.nondefault.id
+
+   See https://tfsec.dev/docs/aws/AWS018/ for more information. 
+
+  times
+  ------------------------------------------
+  disk i/o             650.834µs
+  parsing HCL          4.375µs
+  evaluating values    109.584µs
+  running checks       243.667µs
+
+  counts
+  ------------------------------------------
+  files loaded         1
+  blocks               8
+  evaluated blocks     8
+  modules              0
+  module blocks        0
+  ignored checks       0
+
+1 potential problems detected.
+

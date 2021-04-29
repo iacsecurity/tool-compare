@@ -1,0 +1,38 @@
+
+
+Violation Details -
+    
+	Description    :	Enabling S3 versioning will enable easy recovery from both unintended user actions, like deletes and overwrites
+	File           :	main.tf
+	Line           :	51
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure VPC flow logging is enabled in all VPCs
+	File           :	main.tf
+	Line           :	9
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	S3 bucket Access is allowed to all AWS Account Users.
+	File           :	main.tf
+	Line           :	51
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+
+Scan Summary -
+
+	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/ensure_s3_bucket_policy_not_use_wildcard_rule/not_secure_policy
+	IaC Type            :	terraform
+	Scanned At          :	2021-04-14 17:34:28.392864 +0000 UTC
+	Policies Validated  :	561
+	Violated Policies   :	3
+	Low                 :	0
+	Medium              :	1
+	High                :	2
+	
+

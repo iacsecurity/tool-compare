@@ -1,0 +1,24 @@
+
+
+Violation Details -
+    
+	Description    :	Launch configuration uses IMDSv1 which vulnerable to SSRF
+	File           :	../../../../../../../../../var/folders/cr/rhs_4bsn231fpn5fpjxr8q7w0000gn/T/s4v8r0/workers.tf
+	Line           :	162
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+
+Scan Summary -
+
+	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/public_access_eks_api/eks_with_public_api
+	IaC Type            :	terraform
+	Scanned At          :	2021-04-14 17:34:47.498506 +0000 UTC
+	Policies Validated  :	561
+	Violated Policies   :	1
+	Low                 :	0
+	Medium              :	0
+	High                :	1
+	
+

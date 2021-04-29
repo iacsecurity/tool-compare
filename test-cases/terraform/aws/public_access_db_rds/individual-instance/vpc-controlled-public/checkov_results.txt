@@ -1,0 +1,142 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.46 
+
+terraform scan results:
+
+Passed checks: 3, Failed checks: 7, Skipped checks: 0
+
+Check: CKV_AWS_23: "Ensure every security groups rule has a description"
+	FAILED for resource: aws_security_group.nondefault
+	File: /main.tf:9-18
+	Guide: https://docs.bridgecrew.io/docs/networking_31
+
+		9  | resource "aws_security_group" "nondefault" {
+		10 |   vpc_id = aws_vpc.nondefault.id
+		11 | 
+		12 |     ingress {
+		13 |     from_port = 0
+		14 |     protocol = "TCP"
+		15 |     to_port = 65000
+		16 |     cidr_blocks = ["0.0.0.0/0"]
+		17 |   }
+		18 | }
+
+
+Check: CKV_AWS_24: "Ensure no security groups allow ingress from 0.0.0.0:0 to port 22"
+	FAILED for resource: aws_security_group.nondefault
+	File: /main.tf:9-18
+	Guide: https://docs.bridgecrew.io/docs/networking_1-port-security
+
+		9  | resource "aws_security_group" "nondefault" {
+		10 |   vpc_id = aws_vpc.nondefault.id
+		11 | 
+		12 |     ingress {
+		13 |     from_port = 0
+		14 |     protocol = "TCP"
+		15 |     to_port = 65000
+		16 |     cidr_blocks = ["0.0.0.0/0"]
+		17 |   }
+		18 | }
+
+
+Check: CKV_AWS_25: "Ensure no security groups allow ingress from 0.0.0.0:0 to port 3389"
+	FAILED for resource: aws_security_group.nondefault
+	File: /main.tf:9-18
+	Guide: https://docs.bridgecrew.io/docs/networking_2
+
+		9  | resource "aws_security_group" "nondefault" {
+		10 |   vpc_id = aws_vpc.nondefault.id
+		11 | 
+		12 |     ingress {
+		13 |     from_port = 0
+		14 |     protocol = "TCP"
+		15 |     to_port = 65000
+		16 |     cidr_blocks = ["0.0.0.0/0"]
+		17 |   }
+		18 | }
+
+
+Check: CKV_AWS_17: "Ensure all data stored in RDS is not publicly accessible"
+	FAILED for resource: aws_db_instance.test
+	File: /main.tf:60-65
+	Guide: https://docs.bridgecrew.io/docs/public_2
+
+		60 | resource "aws_db_instance" "test" {
+		61 |   instance_class = "db.t3.micro"
+		62 |   publicly_accessible = true
+		63 |   db_subnet_group_name = aws_db_subnet_group.nondefault.name
+		64 |   vpc_security_group_ids = [aws_security_group.nondefault.id]
+		65 | }
+
+Check: CKV_AWS_129: "Ensure that that respective logs of Amazon Relational Database Service (Amazon RDS) are enabled"
+	FAILED for resource: aws_db_instance.test
+	File: /main.tf:60-65
+
+		60 | resource "aws_db_instance" "test" {
+		61 |   instance_class = "db.t3.micro"
+		62 |   publicly_accessible = true
+		63 |   db_subnet_group_name = aws_db_subnet_group.nondefault.name
+		64 |   vpc_security_group_ids = [aws_security_group.nondefault.id]
+		65 | }
+
+Check: CKV_AWS_118: "Ensure that enhanced monitoring is enabled for Amazon RDS instances"
+	FAILED for resource: aws_db_instance.test
+	File: /main.tf:60-65
+
+		60 | resource "aws_db_instance" "test" {
+		61 |   instance_class = "db.t3.micro"
+		62 |   publicly_accessible = true
+		63 |   db_subnet_group_name = aws_db_subnet_group.nondefault.name
+		64 |   vpc_security_group_ids = [aws_security_group.nondefault.id]
+		65 | }
+
+Check: CKV_AWS_16: "Ensure all data stored in the RDS is securely encrypted at rest"
+	FAILED for resource: aws_db_instance.test
+	File: /main.tf:60-65
+	Guide: https://docs.bridgecrew.io/docs/general_4
+
+		60 | resource "aws_db_instance" "test" {
+		61 |   instance_class = "db.t3.micro"
+		62 |   publicly_accessible = true
+		63 |   db_subnet_group_name = aws_db_subnet_group.nondefault.name
+		64 |   vpc_security_group_ids = [aws_security_group.nondefault.id]
+		65 | }
+
+terraform_plan scan results:
+
+Passed checks: 3, Failed checks: 6, Skipped checks: 0
+
+Check: CKV_AWS_17: "Ensure all data stored in RDS is not publicly accessible"
+	FAILED for resource: aws_db_instance.test
+	File: /tf/tfplan.json:0-0
+	Guide: https://docs.bridgecrew.io/docs/public_2
+
+Check: CKV_AWS_129: "Ensure that that respective logs of Amazon Relational Database Service (Amazon RDS) are enabled"
+	FAILED for resource: aws_db_instance.test
+	File: /tf/tfplan.json:0-0
+
+Check: CKV_AWS_118: "Ensure that enhanced monitoring is enabled for Amazon RDS instances"
+	FAILED for resource: aws_db_instance.test
+	File: /tf/tfplan.json:0-0
+
+Check: CKV_AWS_16: "Ensure all data stored in the RDS is securely encrypted at rest"
+	FAILED for resource: aws_db_instance.test
+	File: /tf/tfplan.json:0-0
+	Guide: https://docs.bridgecrew.io/docs/general_4
+
+Check: CKV_AWS_24: "Ensure no security groups allow ingress from 0.0.0.0:0 to port 22"
+	FAILED for resource: aws_security_group.nondefault
+	File: /tf/tfplan.json:0-0
+	Guide: https://docs.bridgecrew.io/docs/networking_1-port-security
+
+Check: CKV_AWS_25: "Ensure no security groups allow ingress from 0.0.0.0:0 to port 3389"
+	FAILED for resource: aws_security_group.nondefault
+	File: /tf/tfplan.json:0-0
+	Guide: https://docs.bridgecrew.io/docs/networking_2
+

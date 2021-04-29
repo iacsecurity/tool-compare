@@ -1,0 +1,34 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.46 
+
+terraform scan results:
+
+Passed checks: 1, Failed checks: 2, Skipped checks: 0
+
+Check: CKV_AWS_132: "Ensure KMS have rotation policy"
+	FAILED for resource: aws_kms_key.test
+	File: /main.tf:5-8
+
+		5 | resource "aws_kms_key" "test" {
+		6 |   description             = "KMS key for SSM Parameter Store"
+		7 |   deletion_window_in_days = 7
+		8 | }
+
+
+Check: CKV_AWS_7: "Ensure rotation for customer created CMKs is enabled"
+	FAILED for resource: aws_kms_key.test
+	File: /main.tf:5-8
+	Guide: https://docs.bridgecrew.io/docs/logging_8
+
+		5 | resource "aws_kms_key" "test" {
+		6 |   description             = "KMS key for SSM Parameter Store"
+		7 |   deletion_window_in_days = 7
+		8 | }
+
+

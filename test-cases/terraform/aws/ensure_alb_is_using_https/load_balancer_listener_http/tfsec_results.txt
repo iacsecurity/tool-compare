@@ -1,0 +1,52 @@
+
+Check 1
+
+  [AWS005][WARNING] Resource 'aws_lb.alb_test' is exposed publicly.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_alb_is_using_https/load_balancer_listener_http/main.tf:60-63
+
+      57 |   protocol = "HTTP"
+      58 | }
+      59 | 
+      60 | resource "aws_lb" "alb_test" {
+      61 |   subnets = [aws_subnet.subnet1.id, aws_subnet.subnet2.id]
+      62 |   load_balancer_type = "application"
+      63 | }
+      64 | 
+      65 | resource "aws_lb_listener" "lb_listener_test" {
+      66 |   load_balancer_arn = aws_lb.alb_test.arn
+
+   See https://tfsec.dev/docs/aws/AWS005/ for more information. 
+
+Check 2
+
+  [AWS004][ERROR] Resource 'aws_lb_listener.lb_listener_test' uses plain HTTP instead of HTTPS.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_alb_is_using_https/load_balancer_listener_http/main.tf:68
+
+      65 | resource "aws_lb_listener" "lb_listener_test" {
+      66 |   load_balancer_arn = aws_lb.alb_test.arn
+      67 |   port              = "80"
+      68 |   protocol          = "HTTP"
+      69 | 
+      70 |   default_action {
+      71 |     type             = "forward"
+
+   See https://tfsec.dev/docs/aws/AWS004/ for more information. 
+
+  times
+  ------------------------------------------
+  disk i/o             632.166µs
+  parsing HCL          4.916µs
+  evaluating values    134.458µs
+  running checks       580.791µs
+
+  counts
+  ------------------------------------------
+  files loaded         1
+  blocks               12
+  evaluated blocks     12
+  modules              0
+  module blocks        0
+  ignored checks       0
+
+2 potential problems detected.
+

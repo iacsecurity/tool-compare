@@ -1,0 +1,24 @@
+
+WARNINGs found:
+Rule: Ensure EFS filesystems being created are set to be encrypted at rest
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_efs_file_system.secure] (main.tf:5)
+     Violating Resource: [aws_efs_file_system.secure]  (main.tf:5)
+
+     Evidence:
+             | The EFS file system aws_efs_file_system.secure is not set to use encryption at rest
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_efs_file_system.secure] (main.tf:5)
+     Violating Resource: [aws_efs_file_system.secure]  (main.tf:5)
+
+     Evidence:
+             | Resource EFS file system aws_efs_file_system.secure does not have any tags set other than "Name"
+
+
+-----------------------------------------------

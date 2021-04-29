@@ -1,0 +1,31 @@
+
+WARNINGs found:
+Rule: Ensure DynamoDB DAX clusters being created are set to be encrypted at rest
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_dax_cluster.cloudrail-test] (main.tf:25)
+     Violating Resource: [aws_dax_cluster.cloudrail-test]  (main.tf:25)
+
+     Evidence:
+             | The DynamoDB DAX cluster aws_dax_cluster.cloudrail-test is not set to be encrypted at rest
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_dax_cluster.cloudrail-test] (main.tf:25)
+     Violating Resource: [aws_dax_cluster.cloudrail-test]  (main.tf:25)
+
+     Evidence:
+             | Resource DynamoDB DAX cluster aws_dax_cluster.cloudrail-test does not have any tags set
+
+
+   - Exposed Resource: [aws_iam_role.dax] (main.tf:6)
+     Violating Resource: [aws_iam_role.dax]  (main.tf:6)
+
+     Evidence:
+             | Resource IAM Role aws_iam_role.dax does not have any tags set
+
+
+-----------------------------------------------

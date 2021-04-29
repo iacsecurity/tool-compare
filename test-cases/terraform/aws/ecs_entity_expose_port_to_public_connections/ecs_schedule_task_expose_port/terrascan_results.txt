@@ -1,0 +1,31 @@
+
+
+Violation Details -
+    
+	Description    :	Ensure VPC flow logging is enabled in all VPCs
+	File           :	main.tf
+	Line           :	11
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Unknown Port is exposed to the entire internet
+	File           :	main.tf
+	Line           :	68
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+
+Scan Summary -
+
+	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/ecs_entity_expose_port_to_public_connections/ecs_schedule_task_expose_port
+	IaC Type            :	terraform
+	Scanned At          :	2021-04-14 17:33:48.034146 +0000 UTC
+	Policies Validated  :	561
+	Violated Policies   :	2
+	Low                 :	0
+	Medium              :	1
+	High                :	1
+	
+

@@ -1,0 +1,84 @@
+Failed to run the process ...
+{
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "policy": "",
+    "ignoreSettings": null,
+    "projectId": "",
+    "org": "y"
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "main.tf",
+  "projectName": "project",
+  "org": "y",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
+  "infrastructureAsCodeIssues": [
+    {
+      "id": "SNYK-CC-TF-99",
+      "title": "API Gateway allows anonymous access",
+      "type": "terraform",
+      "subType": "API Gateway (REST APIs)",
+      "severity": "high",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "API gateway will accept http methods without authorization header",
+        "impact": "Anyone could potentially access resources behind the gateway",
+        "resolve": "Set `authorization` attribute to value other than `NONE`"
+      },
+      "lineNumber": 54,
+      "path": [
+        "resource",
+        "aws_api_gateway_method[api_gw_method]",
+        "authorization"
+      ]
+    },
+    {
+      "id": "SNYK-CC-TF-138",
+      "title": "API Gateway access logging disabled",
+      "type": "terraform",
+      "subType": "API Gateway (REST APIs)",
+      "severity": "low",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Amazon Api Gateway access logging is not enabled",
+        "impact": "Audit records may not be available during investigation",
+        "resolve": "Set `access_log_settings` attribute"
+      },
+      "lineNumber": 72,
+      "path": [
+        "resource",
+        "aws_api_gateway_stage[api_gw_stage]",
+        "access_log_settings"
+      ]
+    },
+    {
+      "id": "SNYK-CC-TF-129",
+      "title": "API Gateway X-Ray tracing disabled",
+      "type": "terraform",
+      "subType": "API Gateway (REST APIs)",
+      "severity": "low",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "X-Ray tracing is not enabled for this api gateway stage",
+        "impact": "Traces will not be collected for this api gateway, which can impede incident management",
+        "resolve": "Set `xray_tracing_enabled` attribute to `true`"
+      },
+      "lineNumber": 72,
+      "path": [
+        "resource",
+        "aws_api_gateway_stage[api_gw_stage]",
+        "xray_tracing_enabled"
+      ]
+    }
+  ]
+}

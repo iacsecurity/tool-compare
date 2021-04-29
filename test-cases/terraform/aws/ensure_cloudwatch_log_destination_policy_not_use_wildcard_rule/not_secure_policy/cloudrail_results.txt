@@ -1,0 +1,24 @@
+
+WARNINGs found:
+Rule: Ensure use of CloudWatch Logs destination policy, and no action wildcards are being used
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_cloudwatch_log_destination.test_destination] (main.tf:60)
+     Violating Resource: [aws_cloudwatch_log_destination_policy.test_destination_policy]  (main.tf:85)
+
+     Evidence:
+             | The policy attached to the CloudWatch Logs Destination aws_cloudwatch_log_destination.test_destination is using wildcard action logs:*
+
+
+-----------------------------------------------
+Rule: Ensure Kinesis streams are set to be encrypted at rest
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_kinesis_stream.kinesis_for_cloudwatch] (main.tf:49)
+     Violating Resource: [aws_kinesis_stream.kinesis_for_cloudwatch]  (main.tf:49)
+
+     Evidence:
+             | The Kinesis Data Stream aws_kinesis_stream.kinesis_for_cloudwatch is not set to use encryption at rest
+
+
+-----------------------------------------------

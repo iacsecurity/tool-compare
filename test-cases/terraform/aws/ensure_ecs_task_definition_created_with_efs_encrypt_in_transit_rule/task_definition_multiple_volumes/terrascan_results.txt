@@ -1,0 +1,14 @@
+
+
+Scan Summary -
+
+	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/ensure_ecs_task_definition_created_with_efs_encrypt_in_transit_rule/task_definition_multiple_volumes
+	IaC Type            :	terraform
+	Scanned At          :	2021-04-14 17:33:56.124195 +0000 UTC
+	Policies Validated  :	561
+	Violated Policies   :	0
+	Low                 :	0
+	Medium              :	0
+	High                :	0
+	
+

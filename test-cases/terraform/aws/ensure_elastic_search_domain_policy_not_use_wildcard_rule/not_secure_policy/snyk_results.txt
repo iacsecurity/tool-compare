@@ -1,0 +1,124 @@
+Failed to run the process ...
+{
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "policy": "",
+    "ignoreSettings": null,
+    "projectId": "",
+    "org": "y"
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "main.tf",
+  "projectName": "project",
+  "org": "y",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
+  "infrastructureAsCodeIssues": [
+    {
+      "id": "SNYK-CC-TF-66",
+      "title": "Node-to-node encryption is disabled",
+      "type": "terraform",
+      "subType": "ElasticSearch",
+      "severity": "medium",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "The inter-cluster traffic will not be encrypted in transit",
+        "impact": "The content could be intercepted and manipulated in transit",
+        "resolve": "Set `node_to_node_encryption.enabled` attribute to `true`"
+      },
+      "lineNumber": 5,
+      "path": [
+        "resource",
+        "aws_elasticsearch_domain[es-not-secure-policy]",
+        "node_to_node_encryption"
+      ]
+    },
+    {
+      "id": "SNYK-CC-TF-67",
+      "title": "Cluster does not enforce HTTPS",
+      "type": "terraform",
+      "subType": "ElasticSearch",
+      "severity": "medium",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "The HTTPS is not enforced for elasticsearch cluster",
+        "impact": "The content could be intercepted and manipulated in transit",
+        "resolve": "Set `domain_endpoint_options.enforce_https` attribute to `true`"
+      },
+      "lineNumber": 5,
+      "path": [
+        "resource",
+        "aws_elasticsearch_domain[es-not-secure-policy]",
+        "domain_endpoint_options",
+        "enforce_https"
+      ]
+    },
+    {
+      "id": "SNYK-CC-TF-65",
+      "title": "Encryption at rest is not supported by instance type",
+      "type": "terraform",
+      "subType": "ElasticSearch",
+      "severity": "medium",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "The instance type does not support encryption at rest",
+        "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+        "resolve": "Set `cluster_config.instance_type` attribute to supported instance type e.g. `c5.large.elasticsearch`, and set `encrypt_at_rest.enabled` attribute to `true`"
+      },
+      "lineNumber": 5,
+      "path": [
+        "resource",
+        "aws_elasticsearch_domain[es-not-secure-policy]",
+        "cluster_config",
+        "instance_type"
+      ]
+    },
+    {
+      "id": "SNYK-CC-TF-140",
+      "title": "Elasticsearch domain logging disabled",
+      "type": "terraform",
+      "subType": "ElasticSearch",
+      "severity": "low",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Amazon Elasticsearch domain logging is not enabled",
+        "impact": "Audit records may not be available during investigation",
+        "resolve": "Set `log_publishing_options` attribute"
+      },
+      "lineNumber": 5,
+      "path": [
+        "resource",
+        "aws_elasticsearch_domain[es-not-secure-policy]"
+      ]
+    },
+    {
+      "id": "SNYK-CC-TF-68",
+      "title": "Cluster does not enforce latest TLS/SSL policy",
+      "type": "terraform",
+      "subType": "ElasticSearch",
+      "severity": "medium",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "The elasticsearch cluster will accept older TLS/SSL cipher suits",
+        "impact": "Older cipher suites could be vulnerable to hijacking and information disclosure",
+        "resolve": "Set `domain_endpoint_options.tls_security_policy` attribute to `Policy-Min-TLS-1-2-2019-07`"
+      },
+      "lineNumber": 5,
+      "path": [
+        "resource",
+        "aws_elasticsearch_domain[es-not-secure-policy]",
+        "domain_endpoint_options",
+        "tls_security_policy"
+      ]
+    }
+  ]
+}

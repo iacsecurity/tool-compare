@@ -1,0 +1,118 @@
+
+WARNINGs found:
+Rule: Ensure CloudFront protocol version is a good one
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_cloudfront_distribution.s3_distribution] (main.tf:32)
+     Violating Resource: [aws_cloudfront_distribution.s3_distribution]  (main.tf:32)
+
+     Evidence:
+             | The CloudFront Distribution aws_cloudfront_distribution.s3_distribution is set to use a minimum protocol version of TLSv1 whereas TLSv1.2_2019 is the recommended minimum
+
+
+-----------------------------------------------
+Rule: Ensure CloudFront Distribution being created are set to encrypt in transit
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_cloudfront_distribution.s3_distribution] (main.tf:32)
+     Violating Resource: [aws_cloudfront_distribution.s3_distribution]  (main.tf:32)
+
+     Evidence:
+             | The CloudFront Distribution aws_cloudfront_distribution.s3_distribution is not set to use HTTPS to protect data in transit in default_cache_behavior
+
+
+-----------------------------------------------
+Rule: Ensure S3 buckets are set to be encrypted at rest
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.logging] (main.tf:5)
+     Violating Resource: [aws_s3_bucket.logging]  (main.tf:5)
+
+     Evidence:
+             | The S3 Bucket aws_s3_bucket.logging is not set to be encrypted at rest
+
+
+-----------------------------------------------
+Rule: Ensure S3 buckets have versioning enabled
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.dist] (main.tf:14)
+     Violating Resource: [aws_s3_bucket.dist]  (main.tf:14)
+
+     Evidence:
+             | The S3 Bucket aws_s3_bucket.dist does not have versioning enabled
+
+
+   - Exposed Resource: [aws_s3_bucket.logging] (main.tf:5)
+     Violating Resource: [aws_s3_bucket.logging]  (main.tf:5)
+
+     Evidence:
+             | The S3 Bucket aws_s3_bucket.logging does not have versioning enabled
+
+
+-----------------------------------------------
+Rule: Ensure use of S3 bucket policy, and no action wildcards are being used
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.dist] (main.tf:14)
+     Violating Resource: [aws_s3_bucket.dist]  (main.tf:14)
+
+     Evidence:
+             | There is no resource policy or no statements attached to aws_s3_bucket.dist
+
+
+   - Exposed Resource: [aws_s3_bucket.logging] (main.tf:5)
+     Violating Resource: [aws_s3_bucket.logging]  (main.tf:5)
+
+     Evidence:
+             | There is no resource policy or no statements attached to aws_s3_bucket.logging
+
+
+-----------------------------------------------
+Rule: Ensure CloudFront Distribution being created are set to perform field-level encryption
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_cloudfront_distribution.s3_distribution] (main.tf:32)
+     Violating Resource: [aws_cloudfront_distribution.s3_distribution]  (main.tf:32)
+
+     Evidence:
+             | The CloudFront Distribution aws_cloudfront_distribution.s3_distribution is not set to use HTTPS to protect data in transit default_cache_behavior and in ['ordered_cache_behavior #1', 'ordered_cache_behavior #2']
+
+
+-----------------------------------------------
+Rule: Enforce use of HTTPS in S3 bucket policy
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.dist] (main.tf:14)
+     Violating Resource: [aws_s3_bucket.dist]  (main.tf:14)
+
+     Evidence:
+             | The S3 Bucket aws_s3_bucket.dist does not have a policy with the aws:SecureTransport condition
+
+
+   - Exposed Resource: [aws_s3_bucket.logging] (main.tf:5)
+     Violating Resource: [aws_s3_bucket.logging]  (main.tf:5)
+
+     Evidence:
+             | The S3 Bucket aws_s3_bucket.logging does not have a policy with the aws:SecureTransport condition
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.dist] (main.tf:14)
+     Violating Resource: [aws_s3_bucket.dist]  (main.tf:14)
+
+     Evidence:
+             | Resource S3 Bucket aws_s3_bucket.dist does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [aws_s3_bucket.logging] (main.tf:5)
+     Violating Resource: [aws_s3_bucket.logging]  (main.tf:5)
+
+     Evidence:
+             | Resource S3 Bucket aws_s3_bucket.logging does not have any tags set other than "Name"
+
+
+-----------------------------------------------

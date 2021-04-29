@@ -1,0 +1,24 @@
+
+WARNINGs found:
+Rule: Ensure SNS topics are set to be encrypted at rest
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_sns_topic.aws_sns_topic] (main.tf:5)
+     Violating Resource: [aws_sns_topic.aws_sns_topic]  (main.tf:5)
+
+     Evidence:
+             | The SNS topic aws_sns_topic.aws_sns_topic is not set to use encryption at rest
+
+
+-----------------------------------------------
+Rule: Ensure use of S3 Glacier vault policy, and no action wildcards are being used
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_glacier_vault.not_secure_archive] (main.tf:9)
+     Violating Resource: [aws_glacier_vault.not_secure_archive]  (main.tf:9)
+
+     Evidence:
+             | The policy attached to the S3 Glacier Vault aws_glacier_vault.not_secure_archive is using wildcard action glacier:*
+
+
+-----------------------------------------------

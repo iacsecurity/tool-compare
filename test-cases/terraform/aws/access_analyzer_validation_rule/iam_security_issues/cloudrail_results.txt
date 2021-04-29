@@ -1,0 +1,53 @@
+
+WARNINGs found:
+Rule: Disallow IAM permissions which can lead to privilege escalation
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [test_for_cloudrail-demo-repo] (Not found in TF)
+     Violating Resource: [aws_iam_role_policy.allow-policy-1]  (main.tf:25)
+
+     Evidence:
+         aws_iam_role_policy.allow-policy-1
+             | is applied to arn:aws:iam::154724799477:role/role
+             | in conjunction with aws_iam_role_policy.allow-policy-1, aws_iam_role_policy.allow-policy-2 {'lambda:invokefunc*', 'iam:passrole', 'lambda:createfunction'} allows a hacker to trigger a Lambda function with a role they choose
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_iam_role.role] (main.tf:5)
+     Violating Resource: [aws_iam_role.role]  (main.tf:5)
+
+     Evidence:
+             | Resource IAM Role aws_iam_role.role does not have any tags set
+
+
+-----------------------------------------------
+Rule: Ensure IAM policies pass Access Analyzer policy validation without WARNING and SUGGESTION issues
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_iam_role.role] (main.tf:5)
+     Violating Resource: [aws_iam_role.role]  (main.tf:5)
+
+     Evidence:
+         Line 10, Col 17:
+             | Add a value to the empty string in the Sid element
+             | See https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-reference-policy-checks.html#access-analyzer-reference-policy-checks-suggestion-empty-sid-value
+
+
+-----------------------------------------------
+Rule: Ensure IAM policies pass Access Analyzer policy validation without SECURITY and ERROR issues
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_iam_role_policy.allow-policy-1] (main.tf:25)
+     Violating Resource: [aws_iam_role_policy.allow-policy-1]  (main.tf:25)
+
+     Evidence:
+         Line 6, Col 8:
+             | Using the iam:PassRole action with wildcards (*) in the resource can be overly permissive because it allows iam:PassRole permissions on multiple resources
+             | We recommend that you specify resource ARNs or add the iam:PassedToService condition key to your statement
+             | See https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-reference-policy-checks.html#access-analyzer-reference-policy-checks-security-warning-pass-role-with-star-in-resource
+
+
+-----------------------------------------------

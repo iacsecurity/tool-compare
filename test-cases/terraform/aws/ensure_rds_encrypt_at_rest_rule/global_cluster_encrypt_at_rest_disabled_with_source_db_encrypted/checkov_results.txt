@@ -1,0 +1,58 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.46 
+
+terraform scan results:
+
+Passed checks: 2, Failed checks: 3, Skipped checks: 0
+
+Check: CKV_AWS_128: "Ensure that an Amazon RDS Clusters have AWS Identity and Access Management (IAM) authentication enabled"
+	FAILED for resource: aws_rds_cluster.test
+	File: /main.tf:5-13
+
+		5  | resource "aws_rds_cluster" "test" {
+		6  |   cluster_identifier  = "cloudrail-test-encrypted"
+		7  |   availability_zones  = ["us-east-1a", "us-east-1b", "us-east-1c"]
+		8  |   database_name       = "cloudrail"
+		9  |   master_username     = "administrator"
+		10 |   master_password     = "cloudrail-TEST-password"
+		11 |   skip_final_snapshot = true
+		12 |   storage_encrypted   = true
+		13 | }
+
+
+Check: CKV_AWS_133: "Ensure that RDS instances has backup policy"
+	FAILED for resource: aws_rds_cluster.test
+	File: /main.tf:5-13
+
+		5  | resource "aws_rds_cluster" "test" {
+		6  |   cluster_identifier  = "cloudrail-test-encrypted"
+		7  |   availability_zones  = ["us-east-1a", "us-east-1b", "us-east-1c"]
+		8  |   database_name       = "cloudrail"
+		9  |   master_username     = "administrator"
+		10 |   master_password     = "cloudrail-TEST-password"
+		11 |   skip_final_snapshot = true
+		12 |   storage_encrypted   = true
+		13 | }
+
+
+Check: CKV_AWS_139: "Ensure that RDS clusters have deletion protection enabled"
+	FAILED for resource: aws_rds_cluster.test
+	File: /main.tf:5-13
+
+		5  | resource "aws_rds_cluster" "test" {
+		6  |   cluster_identifier  = "cloudrail-test-encrypted"
+		7  |   availability_zones  = ["us-east-1a", "us-east-1b", "us-east-1c"]
+		8  |   database_name       = "cloudrail"
+		9  |   master_username     = "administrator"
+		10 |   master_password     = "cloudrail-TEST-password"
+		11 |   skip_final_snapshot = true
+		12 |   storage_encrypted   = true
+		13 | }
+
+

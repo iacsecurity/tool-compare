@@ -1,0 +1,113 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.46 
+
+terraform scan results:
+
+Passed checks: 9, Failed checks: 8, Skipped checks: 0
+
+Check: CKV_AWS_79: "Ensure Instance Metadata Service Version 1 is not enabled"
+	FAILED for resource: aws_instance.pub_ins
+	File: /main.tf:99-105
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_31
+
+		99  | resource "aws_instance" "pub_ins" {
+		100 |   ami           = "${data.aws_ami.ubuntu.id}"
+		101 |   instance_type = "t2.micro"
+		102 |   subnet_id = module.vpc.public_subnets[0]
+		103 |   iam_instance_profile = aws_iam_instance_profile.test_profile.name
+		104 | 
+		105 | }
+
+
+Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration EBS is securely encrypted"
+	FAILED for resource: aws_instance.pub_ins
+	File: /main.tf:99-105
+	Guide: https://docs.bridgecrew.io/docs/general_13
+
+		99  | resource "aws_instance" "pub_ins" {
+		100 |   ami           = "${data.aws_ami.ubuntu.id}"
+		101 |   instance_type = "t2.micro"
+		102 |   subnet_id = module.vpc.public_subnets[0]
+		103 |   iam_instance_profile = aws_iam_instance_profile.test_profile.name
+		104 | 
+		105 | }
+
+
+Check: CKV_AWS_126: "Ensure that detailed monitoring is enabled for EC2 instances"
+	FAILED for resource: aws_instance.pub_ins
+	File: /main.tf:99-105
+
+		99  | resource "aws_instance" "pub_ins" {
+		100 |   ami           = "${data.aws_ami.ubuntu.id}"
+		101 |   instance_type = "t2.micro"
+		102 |   subnet_id = module.vpc.public_subnets[0]
+		103 |   iam_instance_profile = aws_iam_instance_profile.test_profile.name
+		104 | 
+		105 | }
+
+
+Check: CKV_AWS_135: "Ensure that EC2 is EBS optimized"
+	FAILED for resource: aws_instance.pub_ins
+	File: /main.tf:99-105
+
+		99  | resource "aws_instance" "pub_ins" {
+		100 |   ami           = "${data.aws_ami.ubuntu.id}"
+		101 |   instance_type = "t2.micro"
+		102 |   subnet_id = module.vpc.public_subnets[0]
+		103 |   iam_instance_profile = aws_iam_instance_profile.test_profile.name
+		104 | 
+		105 | }
+
+
+Check: CKV_AWS_79: "Ensure Instance Metadata Service Version 1 is not enabled"
+	FAILED for resource: aws_instance.priv_ins
+	File: /main.tf:107-112
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_31
+
+		107 | resource "aws_instance" "priv_ins" {
+		108 |   ami           = "${data.aws_ami.ubuntu.id}"
+		109 |   instance_type = "t2.micro"
+		110 |   subnet_id = module.vpc.private_subnets[0]
+		111 |   iam_instance_profile = aws_iam_instance_profile.test_profile.name
+		112 | }
+
+Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration EBS is securely encrypted"
+	FAILED for resource: aws_instance.priv_ins
+	File: /main.tf:107-112
+	Guide: https://docs.bridgecrew.io/docs/general_13
+
+		107 | resource "aws_instance" "priv_ins" {
+		108 |   ami           = "${data.aws_ami.ubuntu.id}"
+		109 |   instance_type = "t2.micro"
+		110 |   subnet_id = module.vpc.private_subnets[0]
+		111 |   iam_instance_profile = aws_iam_instance_profile.test_profile.name
+		112 | }
+
+Check: CKV_AWS_126: "Ensure that detailed monitoring is enabled for EC2 instances"
+	FAILED for resource: aws_instance.priv_ins
+	File: /main.tf:107-112
+
+		107 | resource "aws_instance" "priv_ins" {
+		108 |   ami           = "${data.aws_ami.ubuntu.id}"
+		109 |   instance_type = "t2.micro"
+		110 |   subnet_id = module.vpc.private_subnets[0]
+		111 |   iam_instance_profile = aws_iam_instance_profile.test_profile.name
+		112 | }
+
+Check: CKV_AWS_135: "Ensure that EC2 is EBS optimized"
+	FAILED for resource: aws_instance.priv_ins
+	File: /main.tf:107-112
+
+		107 | resource "aws_instance" "priv_ins" {
+		108 |   ami           = "${data.aws_ami.ubuntu.id}"
+		109 |   instance_type = "t2.micro"
+		110 |   subnet_id = module.vpc.private_subnets[0]
+		111 |   iam_instance_profile = aws_iam_instance_profile.test_profile.name
+		112 | }
+

@@ -1,0 +1,31 @@
+
+
+Violation Details -
+    
+	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
+	File           :	main.tf
+	Line           :	87
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure VPC flow logging is enabled in all VPCs
+	File           :	main.tf
+	Line           :	12
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+
+Scan Summary -
+
+	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/vpc_endpoint_ec2_exposure_rule/ec2-vpc-endpoint-without-dns-resolution
+	IaC Type            :	terraform
+	Scanned At          :	2021-04-14 17:33:43.506131 +0000 UTC
+	Policies Validated  :	561
+	Violated Policies   :	2
+	Low                 :	0
+	Medium              :	2
+	High                :	0
+	
+

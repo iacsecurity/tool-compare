@@ -1,0 +1,27 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.46 
+
+terraform scan results:
+
+Passed checks: 1, Failed checks: 1, Skipped checks: 0
+
+Check: CKV_AWS_66: "Ensure cloudwatch log groups specify retention days"
+	FAILED for resource: aws_cloudwatch_log_group.yada
+	File: /main.tf:5-12
+	Guide: https://docs.bridgecrew.io/docs/logging_13
+
+		5  | resource "aws_cloudwatch_log_group" "yada" {
+		6  |   name = "Yada"
+		7  | 
+		8  |   tags = {
+		9  |     Environment = "production"
+		10 |     Application = "serviceA"
+		11 |   }
+		12 | }
+

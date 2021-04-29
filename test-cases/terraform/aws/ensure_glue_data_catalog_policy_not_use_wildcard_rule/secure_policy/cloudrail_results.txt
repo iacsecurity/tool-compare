@@ -1,0 +1,83 @@
+
+WARNINGs found:
+Rule: Ensure VPC Endpoint for S3 is enabled in all VPCs
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.cloudrail] (main.tf:33)
+     Violating Resource: [my-vpc]  (Not found in TF)
+
+     Evidence:
+         The VPC
+             | my-vpc in region us-east-1 is in use but not leveraging S3 Endpoint Gateway
+
+
+-----------------------------------------------
+Rule: Ensure S3 buckets are set to be encrypted at rest
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.cloudrail] (main.tf:33)
+     Violating Resource: [aws_s3_bucket.cloudrail]  (main.tf:33)
+
+     Evidence:
+             | The S3 Bucket aws_s3_bucket.cloudrail is not set to be encrypted at rest
+
+
+-----------------------------------------------
+Rule: Ensure S3 buckets have versioning enabled
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.cloudrail] (main.tf:33)
+     Violating Resource: [aws_s3_bucket.cloudrail]  (main.tf:33)
+
+     Evidence:
+             | The S3 Bucket aws_s3_bucket.cloudrail does not have versioning enabled
+
+
+-----------------------------------------------
+Rule: Ensure use of S3 bucket policy, and no action wildcards are being used
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.cloudrail] (main.tf:33)
+     Violating Resource: [aws_s3_bucket.cloudrail]  (main.tf:33)
+
+     Evidence:
+             | There is no resource policy or no statements attached to aws_s3_bucket.cloudrail
+
+
+-----------------------------------------------
+Rule: Enforce use of HTTPS in S3 bucket policy
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.cloudrail] (main.tf:33)
+     Violating Resource: [aws_s3_bucket.cloudrail]  (main.tf:33)
+
+     Evidence:
+             | The S3 Bucket aws_s3_bucket.cloudrail does not have a policy with the aws:SecureTransport condition
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 3 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_glue_crawler.cloudrail_table_crawler] (main.tf:38)
+     Violating Resource: [aws_glue_crawler.cloudrail_table_crawler]  (main.tf:38)
+
+     Evidence:
+             | Resource Glue crawler aws_glue_crawler.cloudrail_table_crawler does not have any tags set
+
+
+   - Exposed Resource: [aws_s3_bucket.cloudrail] (main.tf:33)
+     Violating Resource: [aws_s3_bucket.cloudrail]  (main.tf:33)
+
+     Evidence:
+             | Resource S3 Bucket aws_s3_bucket.cloudrail does not have any tags set
+
+
+   - Exposed Resource: [aws_iam_role.cloudrail_glue_iam] (main.tf:14)
+     Violating Resource: [aws_iam_role.cloudrail_glue_iam]  (main.tf:14)
+
+     Evidence:
+             | Resource IAM Role aws_iam_role.cloudrail_glue_iam does not have any tags set
+
+
+-----------------------------------------------

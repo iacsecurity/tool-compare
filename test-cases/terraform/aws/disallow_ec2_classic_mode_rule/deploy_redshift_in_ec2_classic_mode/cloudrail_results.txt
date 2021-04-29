@@ -1,0 +1,14 @@
+
+WARNINGs found:
+Rule: Ensure EC2-Classic mode is not used
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_redshift_cluster.test] (main.tf:5)
+     Violating Resource: [aws_redshift_cluster.test] (main.tf:5)
+
+     Evidence:
+         Redshift Cluster
+             | Redshift cluster with database name test is using EC2-Classic mode
+             | It should use EC2-VPC mode instead
+
+-----------------------------------------------

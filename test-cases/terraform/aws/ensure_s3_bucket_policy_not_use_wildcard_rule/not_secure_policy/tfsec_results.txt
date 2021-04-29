@@ -1,0 +1,85 @@
+
+Check 1
+
+  [AWS002][ERROR] Resource 'aws_s3_bucket.public-bucket' does not have logging enabled.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_s3_bucket_policy_not_use_wildcard_rule/not_secure_policy/main.tf:51-58
+
+      48 |   vpc_endpoint_id = aws_vpc_endpoint.s3-vpce-gw.id
+      49 | }
+      50 | 
+      51 | resource "aws_s3_bucket" "public-bucket" {
+      52 |   bucket = "public-bucket"
+      53 |   tags = {
+      54 |     Name = "public-bucket"
+      55 |   }
+      56 | 
+      57 |   depends_on = [aws_vpc_endpoint.s3-vpce-gw]
+      58 | }
+      59 | 
+      60 | resource "aws_s3_bucket_policy" "public-bucket-policy" {
+      61 |   bucket = aws_s3_bucket.public-bucket.id
+
+   See https://tfsec.dev/docs/aws/AWS002/ for more information. 
+
+Check 2
+
+  [AWS017][ERROR] Resource 'aws_s3_bucket.public-bucket' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_s3_bucket_policy_not_use_wildcard_rule/not_secure_policy/main.tf:51-58
+
+      48 |   vpc_endpoint_id = aws_vpc_endpoint.s3-vpce-gw.id
+      49 | }
+      50 | 
+      51 | resource "aws_s3_bucket" "public-bucket" {
+      52 |   bucket = "public-bucket"
+      53 |   tags = {
+      54 |     Name = "public-bucket"
+      55 |   }
+      56 | 
+      57 |   depends_on = [aws_vpc_endpoint.s3-vpce-gw]
+      58 | }
+      59 | 
+      60 | resource "aws_s3_bucket_policy" "public-bucket-policy" {
+      61 |   bucket = aws_s3_bucket.public-bucket.id
+
+   See https://tfsec.dev/docs/aws/AWS017/ for more information. 
+
+Check 3
+
+  [AWS077][ERROR] Resource 'aws_s3_bucket.public-bucket' does not have versioning enabled
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_s3_bucket_policy_not_use_wildcard_rule/not_secure_policy/main.tf:51-58
+
+      48 |   vpc_endpoint_id = aws_vpc_endpoint.s3-vpce-gw.id
+      49 | }
+      50 | 
+      51 | resource "aws_s3_bucket" "public-bucket" {
+      52 |   bucket = "public-bucket"
+      53 |   tags = {
+      54 |     Name = "public-bucket"
+      55 |   }
+      56 | 
+      57 |   depends_on = [aws_vpc_endpoint.s3-vpce-gw]
+      58 | }
+      59 | 
+      60 | resource "aws_s3_bucket_policy" "public-bucket-policy" {
+      61 |   bucket = aws_s3_bucket.public-bucket.id
+
+   See https://tfsec.dev/docs/aws/AWS077/ for more information. 
+
+  times
+  ------------------------------------------
+  disk i/o             635.209µs
+  parsing HCL          4.25µs
+  evaluating values    122.916µs
+  running checks       335.958µs
+
+  counts
+  ------------------------------------------
+  files loaded         1
+  blocks               10
+  evaluated blocks     10
+  modules              0
+  module blocks        0
+  ignored checks       0
+
+3 potential problems detected.
+

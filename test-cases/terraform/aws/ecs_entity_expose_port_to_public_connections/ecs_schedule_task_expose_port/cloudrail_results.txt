@@ -1,0 +1,46 @@
+
+WARNINGs found:
+Rule: Ensure VPC Endpoint for S3 is enabled in all VPCs
+ - 5 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [your-name-prefix-mzww] (Not found in TF)
+     Violating Resource: [aws_vpc.main-vpc]  (main.tf:11)
+
+     Evidence:
+         The VPC
+             | aws_vpc.main-vpc in region us-east-1 is in use but not leveraging S3 Endpoint Gateway
+
+
+   - Exposed Resource: [pingdummy-test-yi2020] (Not found in TF)
+     Violating Resource: [aws_vpc.main-vpc]  (main.tf:11)
+
+     Evidence:
+         The VPC
+             | aws_vpc.main-vpc in region us-east-1 is in use but not leveraging S3 Endpoint Gateway
+
+
+   - Exposed Resource: [consoleme-test-ld-logs] (Not found in TF)
+     Violating Resource: [aws_vpc.main-vpc]  (main.tf:11)
+
+     Evidence:
+         The VPC
+             | aws_vpc.main-vpc in region us-east-1 is in use but not leveraging S3 Endpoint Gateway
+
+
+   - Exposed Resource: [config-bucket-154724799477] (Not found in TF)
+     Violating Resource: [aws_vpc.main-vpc]  (main.tf:11)
+
+     Evidence:
+         The VPC
+             | aws_vpc.main-vpc in region us-east-1 is in use but not leveraging S3 Endpoint Gateway
+
+
+   - Exposed Resource: [cf-templates-phzfkcsb0pyx-us-west-2] (Not found in TF)
+     Violating Resource: [aws_vpc.main-vpc]  (main.tf:11)
+
+     Evidence:
+         The VPC
+             | aws_vpc.main-vpc in region us-east-1 is in use but not leveraging S3 Endpoint Gateway
+
+
+-----------------------------------------------

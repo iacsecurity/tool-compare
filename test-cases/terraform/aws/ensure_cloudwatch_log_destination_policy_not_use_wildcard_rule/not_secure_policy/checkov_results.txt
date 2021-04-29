@@ -1,0 +1,30 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.46 
+
+terraform scan results:
+
+Passed checks: 12, Failed checks: 1, Skipped checks: 0
+
+Check: CKV_AWS_43: "Ensure Kinesis Stream is securely encrypted"
+	FAILED for resource: aws_kinesis_stream.kinesis_for_cloudwatch
+	File: /main.tf:49-58
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_22
+
+		49 | resource "aws_kinesis_stream" "kinesis_for_cloudwatch" {
+		50 |   name             = "kinesis_for_cloudwatch"
+		51 |   shard_count      = 1
+		52 |   retention_period = 48
+		53 | 
+		54 |   shard_level_metrics = [
+		55 |     "IncomingBytes",
+		56 |     "OutgoingBytes",
+		57 |   ]
+		58 | }
+
+

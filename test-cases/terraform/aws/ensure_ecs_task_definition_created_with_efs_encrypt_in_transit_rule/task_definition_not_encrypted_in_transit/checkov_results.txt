@@ -1,0 +1,71 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.46 
+
+terraform scan results:
+
+Passed checks: 1, Failed checks: 2, Skipped checks: 0
+
+Check: CKV_AWS_42: "Ensure EFS is securely encrypted"
+	FAILED for resource: aws_efs_file_system.test
+	File: /main.tf:5-7
+	Guide: https://docs.bridgecrew.io/docs/general_17
+
+		5 | resource "aws_efs_file_system" "test" {
+		6 |   creation_token = "cloudrail-test"
+		7 | }
+
+
+Check: CKV_AWS_97: "Ensure Encryption in transit is enabled for EFS volumes in ECS Task definitions"
+	FAILED for resource: aws_ecs_task_definition.service
+	File: /main.tf:9-49
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_39
+
+		9  | resource "aws_ecs_task_definition" "service" {
+		10 |   family                = "cloudrail-test-encryption"
+		11 |   container_definitions = <<DEFINITION
+		12 | [
+		13 |     {
+		14 |         "name": "first",
+		15 |         "image": "service-first",
+		16 |         "cpu": 10,
+		17 |         "memory": 512,
+		18 |         "essential": true,
+		19 |         "portMappings": [
+		20 |             {
+		21 |                 "containerPort": 80,
+		22 |                 "hostPort": 80
+		23 |             }
+		24 |         ]
+		25 |     },
+		26 |     {
+		27 |         "name": "second",
+		28 |         "image": "service-second",
+		29 |         "cpu": 10,
+		30 |         "memory": 256,
+		31 |         "essential": true,
+		32 |         "portMappings": [
+		33 |             {
+		34 |                 "containerPort": 443,
+		35 |                 "hostPort": 443
+		36 |             }
+		37 |         ]
+		38 |     }
+		39 | ]
+		40 |   DEFINITION
+		41 |   volume {
+		42 |     name = "service-storage"
+		43 | 
+		44 |     efs_volume_configuration {
+		45 |       file_system_id = aws_efs_file_system.test.id
+		46 |       root_directory = "/opt/data"
+		47 |     }
+		48 |   }
+		49 | }
+
+

@@ -1,0 +1,29 @@
+
+ERRORs found:
+Rule: Ensure all security groups and rules have a description detailing the rule
+Description: Cloudrail will review your security groups. If a security group is using a default description, or has a rule which does not include a description, this rule will trigger.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html to update the security group or security group rules description field.
+Remediation Steps - Terraform: For the aws_security_group and aws_security_group_rule resources, set description argument with a proper value.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_security_group.nondefault] (main.tf:9)
+     Violating Resource: [aws_security_group.nondefault]  (main.tf:9)
+
+     Evidence:
+             | The Security group aws_security_group.nondefault does not have a description for the ingress rule of 0.0.0.0/0 for ports 0:65000 using protocol tcp
+
+
+-----------------------------------------------
+WARNINGs found:
+Rule: Ensure RDS instances/clusters being created are set to be encrypted at rest
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_db_instance.test] (main.tf:60)
+     Violating Resource: [aws_db_instance.test]  (main.tf:60)
+
+     Evidence:
+         RDS Instance
+             | RDS Instance aws_db_instance.test is not set to use encrypt at rest
+
+
+-----------------------------------------------

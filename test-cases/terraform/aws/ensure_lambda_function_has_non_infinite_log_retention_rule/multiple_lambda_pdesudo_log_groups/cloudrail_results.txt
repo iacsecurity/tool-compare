@@ -1,0 +1,70 @@
+
+WARNINGs found:
+Rule: Ensure use of Lambda function policy, and no action wildcards are being used
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_lambda_function.test_lambda_2] (main.tf:91)
+     Violating Resource: [aws_lambda_function.test_lambda_2]  (main.tf:91)
+
+     Evidence:
+             | There is no resource policy or no statements attached to aws_lambda_function.test_lambda_2
+
+
+   - Exposed Resource: [aws_lambda_function.test_lambda] (main.tf:74)
+     Violating Resource: [aws_lambda_function.test_lambda]  (main.tf:74)
+
+     Evidence:
+             | There is no resource policy or no statements attached to aws_lambda_function.test_lambda
+
+
+-----------------------------------------------
+Rule: Ensure each Lambda function has a non-infinite log retention
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_lambda_function.test_lambda_2] (main.tf:91)
+     Violating Resource: [aws_lambda_function.test_lambda_2]  (main.tf:91)
+
+     Evidence:
+             | Upon creation, Lambda Function aws_lambda_function.test_lambda_2 will have a log group generated automatically with its retention set to Never Expire
+
+
+   - Exposed Resource: [aws_lambda_function.test_lambda] (main.tf:74)
+     Violating Resource: [aws_lambda_function.test_lambda]  (main.tf:74)
+
+     Evidence:
+             | Upon creation, Lambda Function aws_lambda_function.test_lambda will have a log group generated automatically with its retention set to Never Expire
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 4 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_lambda_function.test_lambda_2] (main.tf:91)
+     Violating Resource: [aws_lambda_function.test_lambda_2]  (main.tf:91)
+
+     Evidence:
+             | Resource Lambda Function aws_lambda_function.test_lambda_2 does not have any tags set
+
+
+   - Exposed Resource: [aws_lambda_function.test_lambda] (main.tf:74)
+     Violating Resource: [aws_lambda_function.test_lambda]  (main.tf:74)
+
+     Evidence:
+             | Resource Lambda Function aws_lambda_function.test_lambda does not have any tags set
+
+
+   - Exposed Resource: [aws_iam_role.iam_for_lambda_2] (main.tf:26)
+     Violating Resource: [aws_iam_role.iam_for_lambda_2]  (main.tf:26)
+
+     Evidence:
+             | Resource IAM Role aws_iam_role.iam_for_lambda_2 does not have any tags set
+
+
+   - Exposed Resource: [aws_iam_role.iam_for_lambda] (main.tf:5)
+     Violating Resource: [aws_iam_role.iam_for_lambda]  (main.tf:5)
+
+     Evidence:
+             | Resource IAM Role aws_iam_role.iam_for_lambda does not have any tags set
+
+
+-----------------------------------------------

@@ -1,0 +1,80 @@
+
+WARNINGs found:
+Rule: Ensure VPC Endpoint for S3 is enabled in all VPCs
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.cloudrail_anthena_bucket] (main.tf:5)
+     Violating Resource: [my-vpc]  (Not found in TF)
+
+     Evidence:
+         The VPC
+             | my-vpc in region us-east-1 is in use but not leveraging S3 Endpoint Gateway
+
+
+-----------------------------------------------
+Rule: Ensure S3 buckets are set to be encrypted at rest
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.cloudrail_anthena_bucket] (main.tf:5)
+     Violating Resource: [aws_s3_bucket.cloudrail_anthena_bucket]  (main.tf:5)
+
+     Evidence:
+             | The S3 Bucket aws_s3_bucket.cloudrail_anthena_bucket is not set to be encrypted at rest
+
+
+-----------------------------------------------
+Rule: Ensure S3 buckets have versioning enabled
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.cloudrail_anthena_bucket] (main.tf:5)
+     Violating Resource: [aws_s3_bucket.cloudrail_anthena_bucket]  (main.tf:5)
+
+     Evidence:
+             | The S3 Bucket aws_s3_bucket.cloudrail_anthena_bucket does not have versioning enabled
+
+
+-----------------------------------------------
+Rule: Ensure Athena Workgroup query results being created are set to be encrypted at rest using customer-managed CMKs
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_athena_workgroup.cloudrail_wg] (main.tf:18)
+     Violating Resource: [aws_athena_workgroup.cloudrail_wg]  (main.tf:18)
+
+     Evidence:
+             | The Athena Workgroup aws_athena_workgroup.cloudrail_wg is set to use encrypt at rest but it is not using customer-managed CMKs
+
+
+-----------------------------------------------
+Rule: Ensure use of S3 bucket policy, and no action wildcards are being used
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.cloudrail_anthena_bucket] (main.tf:5)
+     Violating Resource: [aws_s3_bucket.cloudrail_anthena_bucket]  (main.tf:5)
+
+     Evidence:
+             | There is no resource policy or no statements attached to aws_s3_bucket.cloudrail_anthena_bucket
+
+
+-----------------------------------------------
+Rule: Enforce use of HTTPS in S3 bucket policy
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.cloudrail_anthena_bucket] (main.tf:5)
+     Violating Resource: [aws_s3_bucket.cloudrail_anthena_bucket]  (main.tf:5)
+
+     Evidence:
+             | The S3 Bucket aws_s3_bucket.cloudrail_anthena_bucket does not have a policy with the aws:SecureTransport condition
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.cloudrail_anthena_bucket] (main.tf:5)
+     Violating Resource: [aws_s3_bucket.cloudrail_anthena_bucket]  (main.tf:5)
+
+     Evidence:
+             | Resource S3 Bucket aws_s3_bucket.cloudrail_anthena_bucket does not have any tags set
+
+
+-----------------------------------------------

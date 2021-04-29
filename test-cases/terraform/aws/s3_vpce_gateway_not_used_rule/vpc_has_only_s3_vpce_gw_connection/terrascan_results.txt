@@ -1,0 +1,52 @@
+
+
+Violation Details -
+    
+	Description    :	Enabling S3 versioning will enable easy recovery from both unintended user actions, like deletes and overwrites
+	File           :	main.tf
+	Line           :	101
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	S3 bucket Access is allowed to all AWS Account Users.
+	File           :	main.tf
+	Line           :	101
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
+	File           :	main.tf
+	Line           :	94
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Misconfigured S3 buckets can leak private information to the entire internet or allow unauthorized data tampering / deletion
+	File           :	main.tf
+	Line           :	101
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure VPC flow logging is enabled in all VPCs
+	File           :	main.tf
+	Line           :	9
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+
+Scan Summary -
+
+	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/s3_vpce_gateway_not_used_rule/vpc_has_only_s3_vpce_gw_connection
+	IaC Type            :	terraform
+	Scanned At          :	2021-04-14 17:34:48.175308 +0000 UTC
+	Policies Validated  :	561
+	Violated Policies   :	5
+	Low                 :	0
+	Medium              :	2
+	High                :	3
+	
+

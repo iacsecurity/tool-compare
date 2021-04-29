@@ -1,0 +1,13 @@
+
+WARNINGs found:
+Rule: Ensure Cloudwatch Log Groups being created are set to be encrypted at rest using KMS CMK
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_cloudwatch_log_group.cloudrail-test] (main.tf:5)
+     Violating Resource: [aws_cloudwatch_log_group.cloudrail-test]  (main.tf:5)
+
+     Evidence:
+             | The CloudWatch Logs Group aws_cloudwatch_log_group.cloudrail-test is set to use encrypt at rest but it is not using CMKs
+
+
+-----------------------------------------------

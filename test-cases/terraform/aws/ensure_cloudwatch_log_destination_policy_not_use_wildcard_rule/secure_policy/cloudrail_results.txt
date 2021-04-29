@@ -1,0 +1,31 @@
+
+WARNINGs found:
+Rule: Ensure Kinesis streams are set to be encrypted at rest
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_kinesis_stream.kinesis_for_cloudwatch] (main.tf:49)
+     Violating Resource: [aws_kinesis_stream.kinesis_for_cloudwatch]  (main.tf:49)
+
+     Evidence:
+             | The Kinesis Data Stream aws_kinesis_stream.kinesis_for_cloudwatch is not set to use encryption at rest
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_kinesis_stream.kinesis_for_cloudwatch] (main.tf:49)
+     Violating Resource: [aws_kinesis_stream.kinesis_for_cloudwatch]  (main.tf:49)
+
+     Evidence:
+             | Resource Kinesis Data Stream aws_kinesis_stream.kinesis_for_cloudwatch does not have any tags set
+
+
+   - Exposed Resource: [aws_iam_role.iam_for_cloudwatch] (main.tf:29)
+     Violating Resource: [aws_iam_role.iam_for_cloudwatch]  (main.tf:29)
+
+     Evidence:
+             | Resource IAM Role aws_iam_role.iam_for_cloudwatch does not have any tags set
+
+
+-----------------------------------------------

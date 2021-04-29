@@ -1,0 +1,143 @@
+Failed to run the process ...
+{
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "policy": "",
+    "ignoreSettings": null,
+    "projectId": "",
+    "org": "y"
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "main.tf",
+  "projectName": "project",
+  "org": "y",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
+  "infrastructureAsCodeIssues": [
+    {
+      "id": "SNYK-CC-TF-73",
+      "title": "AWS Security Group allows open egress",
+      "type": "terraform",
+      "subType": "VPC",
+      "severity": "low",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "The inline security group rule allows open egress",
+        "impact": "Open egress can be used to exfiltrate data to unauthorized destinations, and enable access to potentially malicious resources",
+        "resolve": "Set `egress.cidr_blocks` attribute to specific ranges e.g. `192.168.1.0/24`"
+      },
+      "lineNumber": 28,
+      "path": [
+        "resource",
+        "aws_security_group[default]",
+        "egress"
+      ]
+    },
+    {
+      "id": "SNYK-CC-TF-73",
+      "title": "AWS Security Group allows open egress",
+      "type": "terraform",
+      "subType": "VPC",
+      "severity": "low",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "The inline security group rule allows open egress",
+        "impact": "Open egress can be used to exfiltrate data to unauthorized destinations, and enable access to potentially malicious resources",
+        "resolve": "Set `egress.cidr_blocks` attribute to specific ranges e.g. `192.168.1.0/24`"
+      },
+      "lineNumber": 89,
+      "path": [
+        "resource",
+        "aws_security_group[default_2]",
+        "egress"
+      ]
+    },
+    {
+      "id": "SNYK-CC-TF-130",
+      "title": "EC2 instance accepts IMDSv1",
+      "type": "terraform",
+      "subType": "EC2",
+      "severity": "low",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Instance Metadata Service v2 is not enforced",
+        "impact": "Metadata service may be vulnerable to reverse proxy/open firewall misconfigurations and server side request forgery attacks",
+        "resolve": "Set `metadata_options.http_tokens` attribute to `required`"
+      },
+      "lineNumber": 124,
+      "path": [
+        "resource",
+        "aws_instance[ec2_2]",
+        "metadata_options"
+      ]
+    },
+    {
+      "id": "SNYK-CC-TF-130",
+      "title": "EC2 instance accepts IMDSv1",
+      "type": "terraform",
+      "subType": "EC2",
+      "severity": "low",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Instance Metadata Service v2 is not enforced",
+        "impact": "Metadata service may be vulnerable to reverse proxy/open firewall misconfigurations and server side request forgery attacks",
+        "resolve": "Set `metadata_options.http_tokens` attribute to `required`"
+      },
+      "lineNumber": 63,
+      "path": [
+        "resource",
+        "aws_instance[ec2]",
+        "metadata_options"
+      ]
+    },
+    {
+      "id": "SNYK-CC-TF-53",
+      "title": "Non-Encrypted root block device",
+      "type": "terraform",
+      "subType": "EC2",
+      "severity": "medium",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "The root block device for ec2 instance is not encrypted",
+        "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+        "resolve": "Set `root_block_device.encrypted` attribute to `true`"
+      },
+      "lineNumber": 124,
+      "path": [
+        "resource",
+        "aws_instance[ec2_2]",
+        "root_block_device",
+        "encrypted"
+      ]
+    },
+    {
+      "id": "SNYK-CC-TF-53",
+      "title": "Non-Encrypted root block device",
+      "type": "terraform",
+      "subType": "EC2",
+      "severity": "medium",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "The root block device for ec2 instance is not encrypted",
+        "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+        "resolve": "Set `root_block_device.encrypted` attribute to `true`"
+      },
+      "lineNumber": 63,
+      "path": [
+        "resource",
+        "aws_instance[ec2]",
+        "root_block_device",
+        "encrypted"
+      ]
+    }
+  ]
+}

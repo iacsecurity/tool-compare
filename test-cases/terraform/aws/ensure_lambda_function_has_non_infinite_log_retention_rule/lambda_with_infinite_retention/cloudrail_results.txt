@@ -1,0 +1,71 @@
+
+WARNINGs found:
+Rule: Ensure Cloudwatch Log Groups being created are set to be encrypted at rest using KMS CMK
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_cloudwatch_log_group.log_group] (main.tf:29)
+     Violating Resource: [aws_cloudwatch_log_group.log_group]  (main.tf:29)
+
+     Evidence:
+             | The CloudWatch Logs Group aws_cloudwatch_log_group.log_group is set to use encrypt at rest but it is not using CMKs
+
+
+-----------------------------------------------
+Rule: Ensure CloudWatch log groups have a retention policy
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_cloudwatch_log_group.log_group] (main.tf:29)
+     Violating Resource: [aws_cloudwatch_log_group.log_group]  (main.tf:29)
+
+     Evidence:
+             | The CloudWatch Logs Group aws_cloudwatch_log_group.log_group does not have a retention policy set
+
+
+-----------------------------------------------
+Rule: Ensure use of Lambda function policy, and no action wildcards are being used
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_lambda_function.test_lambda] (main.tf:62)
+     Violating Resource: [aws_lambda_function.test_lambda]  (main.tf:62)
+
+     Evidence:
+             | There is no resource policy or no statements attached to aws_lambda_function.test_lambda
+
+
+-----------------------------------------------
+Rule: Ensure each Lambda function has a non-infinite log retention
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_lambda_function.test_lambda] (main.tf:62)
+     Violating Resource: [aws_cloudwatch_log_group.log_group]  (main.tf:29)
+
+     Evidence:
+             | The CloudWatch Logs Group aws_cloudwatch_log_group.log_group has retention set to Never Expire
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 3 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_lambda_function.test_lambda] (main.tf:62)
+     Violating Resource: [aws_lambda_function.test_lambda]  (main.tf:62)
+
+     Evidence:
+             | Resource Lambda Function aws_lambda_function.test_lambda does not have any tags set
+
+
+   - Exposed Resource: [aws_cloudwatch_log_group.log_group] (main.tf:29)
+     Violating Resource: [aws_cloudwatch_log_group.log_group]  (main.tf:29)
+
+     Evidence:
+             | Resource CloudWatch Logs Group aws_cloudwatch_log_group.log_group does not have any tags set
+
+
+   - Exposed Resource: [aws_iam_role.iam_for_lambda] (main.tf:9)
+     Violating Resource: [aws_iam_role.iam_for_lambda]  (main.tf:9)
+
+     Evidence:
+             | Resource IAM Role aws_iam_role.iam_for_lambda does not have any tags set
+
+
+-----------------------------------------------

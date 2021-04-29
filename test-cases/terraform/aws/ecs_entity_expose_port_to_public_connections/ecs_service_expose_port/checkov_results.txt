@@ -1,0 +1,50 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.46 
+
+terraform scan results:
+
+Passed checks: 5, Failed checks: 2, Skipped checks: 0
+
+Check: CKV_AWS_23: "Ensure every security groups rule has a description"
+	FAILED for resource: aws_security_group.sg
+	File: /main.tf:68-87
+	Guide: https://docs.bridgecrew.io/docs/networking_31
+
+		68 | resource "aws_security_group" "sg" {
+		69 |   name   = "sg"
+		70 |   vpc_id = aws_vpc.main-vpc.id
+		71 | 
+		72 |   ingress {
+		73 |     description = "mysql"
+		74 |     from_port   = local.web_server_port
+		75 |     to_port     = local.mysql_port
+		76 |     protocol    = "tcp"
+		77 |     cidr_blocks = ["0.0.0.0/0"]
+		78 |   }
+		79 | 
+		80 |   egress {
+		81 |     from_port   = 0
+		82 |     to_port     = 0
+		83 |     protocol    = "-1"
+		84 |     cidr_blocks = ["0.0.0.0/0"]
+		85 |   }
+		86 | 
+		87 | }
+
+
+Check: CKV_AWS_65: "Ensure container insights are enabled on ECS cluster"
+	FAILED for resource: aws_ecs_cluster.ecs-cluster
+	File: /main.tf:89-91
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_logging_11
+
+		89 | resource "aws_ecs_cluster" "ecs-cluster" {
+		90 |   name = "ecs-cluster"
+		91 | }
+
+

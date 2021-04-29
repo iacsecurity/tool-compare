@@ -1,0 +1,27 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.46 
+
+terraform scan results:
+
+Passed checks: 1, Failed checks: 1, Skipped checks: 0
+
+Check: CKV_AWS_42: "Ensure EFS is securely encrypted"
+	FAILED for resource: aws_efs_file_system.not_secure
+	File: /main.tf:5-11
+	Guide: https://docs.bridgecrew.io/docs/general_17
+
+		5  | resource "aws_efs_file_system" "not_secure" {
+		6  |   creation_token = "efs-not-secure"
+		7  | 
+		8  |   tags = {
+		9  |     Name = "NotSecure"
+		10 |   }
+		11 | }
+
+

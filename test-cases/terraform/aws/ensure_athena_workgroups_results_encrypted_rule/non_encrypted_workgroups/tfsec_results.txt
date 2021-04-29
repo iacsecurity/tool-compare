@@ -1,0 +1,162 @@
+
+Check 1
+
+  [AWS002][ERROR] Resource 'aws_s3_bucket.cloudrail_anthena_bucket_2' does not have logging enabled.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_athena_workgroups_results_encrypted_rule/non_encrypted_workgroups/main.tf:32-35
+
+      29 |   }
+      30 | }
+      31 | 
+      32 | resource "aws_s3_bucket" "cloudrail_anthena_bucket_2" {
+      33 |   bucket = "cloudrail-wg-encrypted-sse-s3-2"
+      34 |   acl    = "private"
+      35 | }
+      36 | 
+      37 | resource "aws_s3_bucket_public_access_block" "cloudrail_anthena_bucket_2" {
+      38 |   bucket                  = aws_s3_bucket.cloudrail_anthena_bucket_2.id
+
+   See https://tfsec.dev/docs/aws/AWS002/ for more information. 
+
+Check 2
+
+  [AWS017][ERROR] Resource 'aws_s3_bucket.cloudrail_anthena_bucket_2' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_athena_workgroups_results_encrypted_rule/non_encrypted_workgroups/main.tf:32-35
+
+      29 |   }
+      30 | }
+      31 | 
+      32 | resource "aws_s3_bucket" "cloudrail_anthena_bucket_2" {
+      33 |   bucket = "cloudrail-wg-encrypted-sse-s3-2"
+      34 |   acl    = "private"
+      35 | }
+      36 | 
+      37 | resource "aws_s3_bucket_public_access_block" "cloudrail_anthena_bucket_2" {
+      38 |   bucket                  = aws_s3_bucket.cloudrail_anthena_bucket_2.id
+
+   See https://tfsec.dev/docs/aws/AWS017/ for more information. 
+
+Check 3
+
+  [AWS077][ERROR] Resource 'aws_s3_bucket.cloudrail_anthena_bucket_2' does not have versioning enabled
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_athena_workgroups_results_encrypted_rule/non_encrypted_workgroups/main.tf:32-35
+
+      29 |   }
+      30 | }
+      31 | 
+      32 | resource "aws_s3_bucket" "cloudrail_anthena_bucket_2" {
+      33 |   bucket = "cloudrail-wg-encrypted-sse-s3-2"
+      34 |   acl    = "private"
+      35 | }
+      36 | 
+      37 | resource "aws_s3_bucket_public_access_block" "cloudrail_anthena_bucket_2" {
+      38 |   bucket                  = aws_s3_bucket.cloudrail_anthena_bucket_2.id
+
+   See https://tfsec.dev/docs/aws/AWS077/ for more information. 
+
+Check 4
+
+  [AWS059][ERROR] Resource 'aws_athena_workgroup.cloudrail_wg_2' missing encryption configuration block.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_athena_workgroups_results_encrypted_rule/non_encrypted_workgroups/main.tf:52-55
+
+      49 |     enforce_workgroup_configuration    = true
+      50 |     publish_cloudwatch_metrics_enabled = true
+      51 | 
+      52 |     result_configuration {
+      53 |       output_location = "s3://{aws_s3_bucket.cloudrail_anthena_bucket_2.bucket}/output/"
+      54 | 
+      55 |     }
+      56 |   }
+      57 | }
+
+   See https://tfsec.dev/docs/aws/AWS059/ for more information. 
+
+Check 5
+
+  [AWS002][ERROR] Resource 'aws_s3_bucket.cloudrail_anthena_bucket' does not have logging enabled.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_athena_workgroups_results_encrypted_rule/non_encrypted_workgroups/main.tf:5-8
+
+       2 |   region = "us-east-1"
+       3 | }
+       4 | 
+       5 | resource "aws_s3_bucket" "cloudrail_anthena_bucket" {
+       6 |   bucket = "cloudrail-wg-encrypted-sse-s3"
+       7 |   acl    = "private"
+       8 | }
+       9 | 
+      10 | resource "aws_s3_bucket_public_access_block" "cloudrail_anthena_bucket" {
+      11 |   bucket                  = aws_s3_bucket.cloudrail_anthena_bucket.id
+
+   See https://tfsec.dev/docs/aws/AWS002/ for more information. 
+
+Check 6
+
+  [AWS017][ERROR] Resource 'aws_s3_bucket.cloudrail_anthena_bucket' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_athena_workgroups_results_encrypted_rule/non_encrypted_workgroups/main.tf:5-8
+
+       2 |   region = "us-east-1"
+       3 | }
+       4 | 
+       5 | resource "aws_s3_bucket" "cloudrail_anthena_bucket" {
+       6 |   bucket = "cloudrail-wg-encrypted-sse-s3"
+       7 |   acl    = "private"
+       8 | }
+       9 | 
+      10 | resource "aws_s3_bucket_public_access_block" "cloudrail_anthena_bucket" {
+      11 |   bucket                  = aws_s3_bucket.cloudrail_anthena_bucket.id
+
+   See https://tfsec.dev/docs/aws/AWS017/ for more information. 
+
+Check 7
+
+  [AWS077][ERROR] Resource 'aws_s3_bucket.cloudrail_anthena_bucket' does not have versioning enabled
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_athena_workgroups_results_encrypted_rule/non_encrypted_workgroups/main.tf:5-8
+
+       2 |   region = "us-east-1"
+       3 | }
+       4 | 
+       5 | resource "aws_s3_bucket" "cloudrail_anthena_bucket" {
+       6 |   bucket = "cloudrail-wg-encrypted-sse-s3"
+       7 |   acl    = "private"
+       8 | }
+       9 | 
+      10 | resource "aws_s3_bucket_public_access_block" "cloudrail_anthena_bucket" {
+      11 |   bucket                  = aws_s3_bucket.cloudrail_anthena_bucket.id
+
+   See https://tfsec.dev/docs/aws/AWS077/ for more information. 
+
+Check 8
+
+  [AWS059][ERROR] Resource 'aws_athena_workgroup.cloudrail_wg' missing encryption configuration block.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_athena_workgroups_results_encrypted_rule/non_encrypted_workgroups/main.tf:25-28
+
+      22 |     enforce_workgroup_configuration    = true
+      23 |     publish_cloudwatch_metrics_enabled = true
+      24 | 
+      25 |     result_configuration {
+      26 |       output_location = "s3://{aws_s3_bucket.cloudrail_anthena_bucket.bucket}/output/"
+      27 | 
+      28 |     }
+      29 |   }
+      30 | }
+      31 | 
+
+   See https://tfsec.dev/docs/aws/AWS059/ for more information. 
+
+  times
+  ------------------------------------------
+  disk i/o             715.5µs
+  parsing HCL          4.042µs
+  evaluating values    58.583µs
+  running checks       849µs
+
+  counts
+  ------------------------------------------
+  files loaded         1
+  blocks               7
+  evaluated blocks     7
+  modules              0
+  module blocks        0
+  ignored checks       0
+
+8 potential problems detected.
+

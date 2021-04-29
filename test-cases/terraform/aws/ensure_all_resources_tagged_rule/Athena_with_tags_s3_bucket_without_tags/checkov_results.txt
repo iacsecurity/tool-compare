@@ -1,0 +1,76 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.46 
+
+terraform scan results:
+
+Passed checks: 11, Failed checks: 6, Skipped checks: 0
+
+Check: CKV_AWS_19: "Ensure all data stored in the S3 bucket is securely encrypted at rest"
+	FAILED for resource: aws_s3_bucket.cloudrail_anthena_bucket
+	File: /main.tf:5-8
+	Guide: https://docs.bridgecrew.io/docs/s3_14-data-encrypted-at-rest
+
+		5 | resource "aws_s3_bucket" "cloudrail_anthena_bucket" {
+		6 |   bucket = "cloudrail-wg-encrypted-sse-s3-tags-test"
+		7 |   acl    = "private"
+		8 | }
+
+
+Check: CKV_AWS_144: "Ensure that S3 bucket has cross-region replication enabled"
+	FAILED for resource: aws_s3_bucket.cloudrail_anthena_bucket
+	File: /main.tf:5-8
+
+		5 | resource "aws_s3_bucket" "cloudrail_anthena_bucket" {
+		6 |   bucket = "cloudrail-wg-encrypted-sse-s3-tags-test"
+		7 |   acl    = "private"
+		8 | }
+
+
+Check: CKV_AWS_145: "Ensure that S3 buckets are encrypted with KMS by default"
+	FAILED for resource: aws_s3_bucket.cloudrail_anthena_bucket
+	File: /main.tf:5-8
+
+		5 | resource "aws_s3_bucket" "cloudrail_anthena_bucket" {
+		6 |   bucket = "cloudrail-wg-encrypted-sse-s3-tags-test"
+		7 |   acl    = "private"
+		8 | }
+
+
+Check: CKV_AWS_52: "Ensure S3 bucket has MFA delete enabled"
+	FAILED for resource: aws_s3_bucket.cloudrail_anthena_bucket
+	File: /main.tf:5-8
+
+		5 | resource "aws_s3_bucket" "cloudrail_anthena_bucket" {
+		6 |   bucket = "cloudrail-wg-encrypted-sse-s3-tags-test"
+		7 |   acl    = "private"
+		8 | }
+
+
+Check: CKV_AWS_18: "Ensure the S3 bucket has access logging enabled"
+	FAILED for resource: aws_s3_bucket.cloudrail_anthena_bucket
+	File: /main.tf:5-8
+	Guide: https://docs.bridgecrew.io/docs/s3_13-enable-logging
+
+		5 | resource "aws_s3_bucket" "cloudrail_anthena_bucket" {
+		6 |   bucket = "cloudrail-wg-encrypted-sse-s3-tags-test"
+		7 |   acl    = "private"
+		8 | }
+
+
+Check: CKV_AWS_21: "Ensure all data stored in the S3 bucket have versioning enabled"
+	FAILED for resource: aws_s3_bucket.cloudrail_anthena_bucket
+	File: /main.tf:5-8
+	Guide: https://docs.bridgecrew.io/docs/s3_16-enable-versioning
+
+		5 | resource "aws_s3_bucket" "cloudrail_anthena_bucket" {
+		6 |   bucket = "cloudrail-wg-encrypted-sse-s3-tags-test"
+		7 |   acl    = "private"
+		8 | }
+
+

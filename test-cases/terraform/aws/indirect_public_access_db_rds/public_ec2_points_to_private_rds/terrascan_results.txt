@@ -1,0 +1,59 @@
+
+
+Violation Details -
+    
+	Description    :	Security group attached to launch configuration is wide open to internet and this can be related to reconnaissance phase
+	File           :	main.tf
+	Line           :	146
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that your RDS database instances encrypt the underlying storage. Encrypted RDS instances use the industry standard AES-256 encryption algorithm to encrypt data on the server that hosts RDS DB instances. After data is encrypted, RDS handles authentication of access and descryption of data transparently with minimal impact on performance.
+	File           :	main.tf
+	Line           :	113
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that your RDS database has IAM Authentication enabled.
+	File           :	main.tf
+	Line           :	113
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure VPC flow logging is enabled in all VPCs
+	File           :	main.tf
+	Line           :	10
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
+	File           :	main.tf
+	Line           :	146
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	It is recommended that no security group allows unrestricted ingress access
+	File           :	main.tf
+	Line           :	129
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+
+Scan Summary -
+
+	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/indirect_public_access_db_rds/public_ec2_points_to_private_rds
+	IaC Type            :	terraform
+	Scanned At          :	2021-04-14 17:34:12.800679 +0000 UTC
+	Policies Validated  :	561
+	Violated Policies   :	6
+	Low                 :	0
+	Medium              :	2
+	High                :	4
+	
+

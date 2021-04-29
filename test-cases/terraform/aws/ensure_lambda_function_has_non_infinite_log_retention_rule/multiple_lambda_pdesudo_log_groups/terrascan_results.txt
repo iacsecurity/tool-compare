@@ -1,0 +1,59 @@
+
+
+Violation Details -
+    
+	Description    :	Lambda tracing is not enabled.
+	File           :	main.tf
+	Line           :	91
+	Severity       :	LOW
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Lambda tracing is not enabled.
+	File           :	main.tf
+	Line           :	74
+	Severity       :	LOW
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Lambda does not use KMS CMK key to protect environment variables.
+	File           :	main.tf
+	Line           :	91
+	Severity       :	High
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Lambda does not use KMS CMK key to protect environment variables.
+	File           :	main.tf
+	Line           :	74
+	Severity       :	High
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Lambda function doesn't not include a VPC configuration.
+	File           :	main.tf
+	Line           :	91
+	Severity       :	Low
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Lambda function doesn't not include a VPC configuration.
+	File           :	main.tf
+	Line           :	74
+	Severity       :	Low
+	
+	-----------------------------------------------------------------------
+	
+
+Scan Summary -
+
+	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/ensure_lambda_function_has_non_infinite_log_retention_rule/multiple_lambda_pdesudo_log_groups
+	IaC Type            :	terraform
+	Scanned At          :	2021-04-14 17:34:35.521235 +0000 UTC
+	Policies Validated  :	561
+	Violated Policies   :	6
+	Low                 :	4
+	Medium              :	0
+	High                :	2
+	
+

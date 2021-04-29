@@ -1,0 +1,53 @@
+
+WARNINGs found:
+Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 22 (SSH)
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [module.ec2-bastion-server.aws_instance.default[0]] (.terraform/modules/ec2-bastion-server/main.tf:100)
+     Violating Resource: [module.ec2-bastion-server.aws_security_group.default[0]]  (.terraform/modules/ec2-bastion-server/main.tf:33)
+
+     Evidence:
+         Internet
+             | Subnet module.vpc_example_complete-vpc.module.vpc.aws_subnet.public[0] has internet gateway
+             | Instance module.ec2-bastion-server.aws_instance.default[0] is on module.vpc_example_complete-vpc.module.vpc.aws_subnet.public[0]
+             | Subnet routes traffic from instance to internet gateway
+             | Subnet uses Network ACL's nacl-pseudo-aa5fef6f-863d-4260-8f28-854558c1cb61 which allows port 22
+             | Instance uses security group module.ec2-bastion-server.aws_security_group.default[0]
+             | module.ec2-bastion-server.aws_security_group.default[0] allows port 22
+         Instance
+
+
+-----------------------------------------------
+Rule: Ensure Cloudwatch Log Groups being created are set to be encrypted at rest using KMS CMK
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [module.vpc_example_complete-vpc.module.vpc.aws_cloudwatch_log_group.flow_log[0]] (.terraform/modules/vpc_example_complete-vpc/vpc-flow-logs.tf:32)
+     Violating Resource: [module.vpc_example_complete-vpc.module.vpc.aws_cloudwatch_log_group.flow_log[0]]  (.terraform/modules/vpc_example_complete-vpc/vpc-flow-logs.tf:32)
+
+     Evidence:
+             | The CloudWatch Logs Group module.vpc_example_complete-vpc.module.vpc.aws_cloudwatch_log_group.flow_log[0] is set to use encrypt at rest but it is not using CMKs
+
+
+-----------------------------------------------
+Rule: Allow only private AMIs to be used
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [module.ec2-bastion-server.aws_instance.default[0]] (.terraform/modules/ec2-bastion-server/main.tf:100)
+     Violating Resource: [ami-084ef34fdfdd7384c]  (Not found in TF)
+
+     Evidence:
+             | The EC2 Instance module.ec2-bastion-server.aws_instance.default[0] uses AMI ami-084ef34fdfdd7384c, which is public
+
+
+-----------------------------------------------
+Rule: Ensure CloudWatch log groups have a retention policy
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [module.vpc_example_complete-vpc.module.vpc.aws_cloudwatch_log_group.flow_log[0]] (.terraform/modules/vpc_example_complete-vpc/vpc-flow-logs.tf:32)
+     Violating Resource: [module.vpc_example_complete-vpc.module.vpc.aws_cloudwatch_log_group.flow_log[0]]  (.terraform/modules/vpc_example_complete-vpc/vpc-flow-logs.tf:32)
+
+     Evidence:
+             | The CloudWatch Logs Group module.vpc_example_complete-vpc.module.vpc.aws_cloudwatch_log_group.flow_log[0] does not have a retention policy set
+
+
+-----------------------------------------------

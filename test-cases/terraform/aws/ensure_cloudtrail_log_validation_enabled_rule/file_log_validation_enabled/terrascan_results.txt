@@ -1,0 +1,24 @@
+
+
+Violation Details -
+    
+	Description    :	Enabling S3 versioning will enable easy recovery from both unintended user actions, like deletes and overwrites
+	File           :	main.tf
+	Line           :	19
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+
+Scan Summary -
+
+	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/ensure_cloudtrail_log_validation_enabled_rule/file_log_validation_enabled
+	IaC Type            :	terraform
+	Scanned At          :	2021-04-14 17:35:07.792394 +0000 UTC
+	Policies Validated  :	561
+	Violated Policies   :	1
+	Low                 :	0
+	Medium              :	0
+	High                :	1
+	
+

@@ -1,0 +1,303 @@
+
+Check 1
+
+  [AWS017][ERROR] Resource 'aws_s3_bucket.logging' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/cloudfront_distributiion_list/cloudfront_protocol_version_is_low/main.tf:5-12
+
+       2 |   region = "us-east-2"
+       3 | }
+       4 | 
+       5 | resource "aws_s3_bucket" "logging" {
+       6 |   bucket = "dist-cloud-test-logs"
+       7 |   acl    = "log-delivery-write"
+       8 | 
+       9 |   tags = {
+      10 |     Name = "dist-cloud-test-logs"
+      11 |   }
+      12 | }
+      13 | 
+      14 | resource "aws_s3_bucket" "dist" {
+      15 |   bucket = "dist-cloud-test"
+
+   See https://tfsec.dev/docs/aws/AWS017/ for more information. 
+
+Check 2
+
+  [AWS001][WARNING] Resource 'aws_s3_bucket.dist' has an ACL which allows public access.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/cloudfront_distributiion_list/cloudfront_protocol_version_is_low/main.tf:16
+
+      13 | 
+      14 | resource "aws_s3_bucket" "dist" {
+      15 |   bucket = "dist-cloud-test"
+      16 |   acl    = "public-read-write"
+      17 | 
+      18 |   tags = {
+      19 |     Name = "dist-cloud-test"
+
+   See https://tfsec.dev/docs/aws/AWS001/ for more information. 
+
+Check 3
+
+  [AWS020][ERROR] Resource 'aws_cloudfront_distribution.s3_distribution' defines a CloudFront distribution that allows unencrypted communications.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/cloudfront_distributiion_list/cloudfront_protocol_version_is_low/main.tf:64
+
+      61 |       }
+      62 |     }
+      63 | 
+      64 |     viewer_protocol_policy = "allow-all"
+      65 |     min_ttl                = 0
+      66 |     default_ttl            = 3600
+      67 |     max_ttl                = 86400
+
+   See https://tfsec.dev/docs/aws/AWS020/ for more information. 
+
+Check 4
+
+  [AWS021][ERROR] Resource 'aws_cloudfront_distribution.s3_distribution' defines outdated SSL/TLS policies (missing minimum_protocol_version attribute)
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/cloudfront_distributiion_list/cloudfront_protocol_version_is_low/main.tf:128-130
+
+     125 |     Environment = "production"
+     126 |   }
+     127 | 
+     128 |   viewer_certificate {
+     129 |     cloudfront_default_certificate = true
+     130 |   }
+     131 | }
+
+   See https://tfsec.dev/docs/aws/AWS021/ for more information. 
+
+Check 5
+
+  [AWS045][WARNING] Resource 'aws_cloudfront_distribution.s3_distribution' does not have a WAF in front of it.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/cloudfront_distributiion_list/cloudfront_protocol_version_is_low/main.tf:32-131
+
+      29 | }
+      30 | 
+      31 | 
+      32 | resource "aws_cloudfront_distribution" "s3_distribution" {
+      33 |   origin {
+      34 |     domain_name = aws_s3_bucket.dist.bucket_regional_domain_name
+      35 |     origin_id   = local.s3_origin_id
+      36 |   }
+      37 | 
+      38 |   enabled             = true
+      39 |   is_ipv6_enabled     = true
+      40 |   comment             = "Some comment"
+      41 |   default_root_object = "index.html"
+      42 | 
+      43 |   logging_config {
+      44 |     include_cookies = false
+      45 |     bucket          = "dist-cloud-test-logs.s3.amazonaws.com"
+      46 |     prefix          = "log/"
+      47 |   }
+      48 | 
+      49 |   aliases = ["mysite.example.com", "yoursite.example.com"]
+      50 | 
+      51 |   default_cache_behavior {
+      52 |     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
+      53 |     cached_methods   = ["GET", "HEAD"]
+      54 |     target_origin_id = local.s3_origin_id
+      55 | 
+      56 |     forwarded_values {
+      57 |       query_string = false
+      58 | 
+      59 |       cookies {
+      60 |         forward = "none"
+      61 |       }
+      62 |     }
+      63 | 
+      64 |     viewer_protocol_policy = "allow-all"
+      65 |     min_ttl                = 0
+      66 |     default_ttl            = 3600
+      67 |     max_ttl                = 86400
+      68 |   }
+      69 | 
+      70 |   # Cache behavior with precedence 0
+      71 |   ordered_cache_behavior {
+      72 |     path_pattern     = "/content/immutable/*"
+      73 |     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
+      74 |     cached_methods   = ["GET", "HEAD", "OPTIONS"]
+      75 |     target_origin_id = local.s3_origin_id
+      76 | 
+      77 |     forwarded_values {
+      78 |       query_string = false
+      79 |       headers      = ["Origin"]
+      80 | 
+      81 |       cookies {
+      82 |         forward = "none"
+      83 |       }
+      84 |     }
+      85 | 
+      86 |     min_ttl                = 0
+      87 |     default_ttl            = 86400
+      88 |     max_ttl                = 31536000
+      89 |     compress               = true
+      90 |     viewer_protocol_policy = "redirect-to-https"
+      91 |   }
+      92 | 
+      93 |   # Cache behavior with precedence 1
+      94 |   ordered_cache_behavior {
+      95 |     path_pattern     = "/content/*"
+      96 |     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
+      97 |     cached_methods   = ["GET", "HEAD"]
+      98 |     target_origin_id = local.s3_origin_id
+      99 | 
+     100 |     forwarded_values {
+     101 |       query_string = false
+     102 | 
+     103 |       cookies {
+     104 |         forward = "none"
+     105 |       }
+     106 |     }
+     107 | 
+     108 |     min_ttl                = 0
+     109 |     default_ttl            = 3600
+     110 |     max_ttl                = 86400
+     111 |     compress               = true
+     112 |     viewer_protocol_policy = "redirect-to-https"
+     113 |   }
+     114 | 
+     115 |   price_class = "PriceClass_200"
+     116 | 
+     117 |   restrictions {
+     118 |     geo_restriction {
+     119 |       restriction_type = "whitelist"
+     120 |       locations        = ["US", "CA", "GB", "DE"]
+     121 |     }
+     122 |   }
+     123 | 
+     124 |   tags = {
+     125 |     Environment = "production"
+     126 |   }
+     127 | 
+     128 |   viewer_certificate {
+     129 |     cloudfront_default_certificate = true
+     130 |   }
+     131 | }
+
+   See https://tfsec.dev/docs/aws/AWS045/ for more information. 
+
+Check 6
+
+  [AWS077][ERROR] Resource 'aws_s3_bucket.logging' does not have versioning enabled
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/cloudfront_distributiion_list/cloudfront_protocol_version_is_low/main.tf:5-12
+
+       2 |   region = "us-east-2"
+       3 | }
+       4 | 
+       5 | resource "aws_s3_bucket" "logging" {
+       6 |   bucket = "dist-cloud-test-logs"
+       7 |   acl    = "log-delivery-write"
+       8 | 
+       9 |   tags = {
+      10 |     Name = "dist-cloud-test-logs"
+      11 |   }
+      12 | }
+      13 | 
+      14 | resource "aws_s3_bucket" "dist" {
+      15 |   bucket = "dist-cloud-test"
+
+   See https://tfsec.dev/docs/aws/AWS077/ for more information. 
+
+Check 7
+
+  [AWS017][ERROR] Resource 'aws_s3_bucket.dist' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/cloudfront_distributiion_list/cloudfront_protocol_version_is_low/main.tf:14-25
+
+      11 |   }
+      12 | }
+      13 | 
+      14 | resource "aws_s3_bucket" "dist" {
+      15 |   bucket = "dist-cloud-test"
+      16 |   acl    = "public-read-write"
+      17 | 
+      18 |   tags = {
+      19 |     Name = "dist-cloud-test"
+      20 |   }
+      21 |   logging {
+      22 |    	target_bucket = aws_s3_bucket.logging.id
+      23 |   	target_prefix = "log/"
+      24 |   }
+      25 | }
+      26 | 
+      27 | locals {
+      28 |   s3_origin_id = "myDistTestCloduFront"
+
+   See https://tfsec.dev/docs/aws/AWS017/ for more information. 
+
+Check 8
+
+  [AWS077][ERROR] Resource 'aws_s3_bucket.dist' does not have versioning enabled
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/cloudfront_distributiion_list/cloudfront_protocol_version_is_low/main.tf:14-25
+
+      11 |   }
+      12 | }
+      13 | 
+      14 | resource "aws_s3_bucket" "dist" {
+      15 |   bucket = "dist-cloud-test"
+      16 |   acl    = "public-read-write"
+      17 | 
+      18 |   tags = {
+      19 |     Name = "dist-cloud-test"
+      20 |   }
+      21 |   logging {
+      22 |    	target_bucket = aws_s3_bucket.logging.id
+      23 |   	target_prefix = "log/"
+      24 |   }
+      25 | }
+      26 | 
+      27 | locals {
+      28 |   s3_origin_id = "myDistTestCloduFront"
+
+   See https://tfsec.dev/docs/aws/AWS077/ for more information. 
+
+Check 9
+
+  [AWS072][ERROR] Resource 'aws_cloudfront_distribution.s3_distribution' does not use HTTPS in Viewer Protocol Policy
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/cloudfront_distributiion_list/cloudfront_protocol_version_is_low/main.tf:51-68
+
+      48 | 
+      49 |   aliases = ["mysite.example.com", "yoursite.example.com"]
+      50 | 
+      51 |   default_cache_behavior {
+      52 |     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
+      53 |     cached_methods   = ["GET", "HEAD"]
+      54 |     target_origin_id = local.s3_origin_id
+      55 | 
+      56 |     forwarded_values {
+      57 |       query_string = false
+      58 | 
+      59 |       cookies {
+      60 |         forward = "none"
+      61 |       }
+      62 |     }
+      63 | 
+      64 |     viewer_protocol_policy = "allow-all"
+      65 |     min_ttl                = 0
+      66 |     default_ttl            = 3600
+      67 |     max_ttl                = 86400
+      68 |   }
+      69 | 
+      70 |   # Cache behavior with precedence 0
+      71 |   ordered_cache_behavior {
+
+   See https://tfsec.dev/docs/aws/AWS072/ for more information. 
+
+  times
+  ------------------------------------------
+  disk i/o             729.249µs
+  parsing HCL          4.542µs
+  evaluating values    42.5µs
+  running checks       1.904209ms
+
+  counts
+  ------------------------------------------
+  files loaded         1
+  blocks               5
+  evaluated blocks     5
+  modules              0
+  module blocks        0
+  ignored checks       0
+
+9 potential problems detected.
+

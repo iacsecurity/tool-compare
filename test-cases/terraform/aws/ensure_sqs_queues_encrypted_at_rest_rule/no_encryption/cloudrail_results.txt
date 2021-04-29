@@ -1,0 +1,62 @@
+
+WARNINGs found:
+Rule: Ensure SQS queues are set to be encrypted at rest
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_sqs_queue.cloudrail] (main.tf:5)
+     Violating Resource: [aws_sqs_queue.cloudrail]  (main.tf:5)
+
+     Evidence:
+             | The SQS queue aws_sqs_queue.cloudrail                             is not set to use encryption at rest
+
+
+-----------------------------------------------
+Rule: Ensure use of SQS queue policy, and no action wildcards are being used
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_sqs_queue.cloudrail] (main.tf:5)
+     Violating Resource: [aws_sqs_queue.cloudrail]  (main.tf:5)
+
+     Evidence:
+             | There is no resource policy or no statements attached to aws_sqs_queue.cloudrail
+
+
+-----------------------------------------------
+Rule: Ensure VPC Endpoint for SQS is enabled in all VPCs in use
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_sqs_queue.cloudrail] (main.tf:5)
+     Violating Resource: [sfdc-somestage-consoleme]  (Not found in TF)
+
+     Evidence:
+             | The service SQS is in use in region us-east-1, but VPC sfdc-somestage-consoleme
+             | is not configured to use a VPC Endpoint for SQS
+
+
+-----------------------------------------------
+Rule: Ensure VPC Endpoint for SQS is enabled in all Availability Zones in use a VPC
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_sqs_queue.cloudrail] (main.tf:5)
+     Violating Resource: [sfdc-somestage-consoleme]  (Not found in TF)
+
+     Evidence:
+             | The service SQS is in use in region us-east-1
+             | which contains a VPC vpc-033a54f26ef5e2b4a
+             | and the following subnets ['subnet-0e474b5158094e961']
+             | in availability zones {'us-east-1a'}
+             | can reach the Internet but do not have at least 2 VPC endpoints from different availability zones
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_sqs_queue.cloudrail] (main.tf:5)
+     Violating Resource: [aws_sqs_queue.cloudrail]  (main.tf:5)
+
+     Evidence:
+             | Resource SQS queue aws_sqs_queue.cloudrail does not have any tags set
+
+
+-----------------------------------------------

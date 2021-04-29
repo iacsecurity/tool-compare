@@ -1,0 +1,13 @@
+
+WARNINGs found:
+Rule: Ensure rotation for customer created CMKs is enabled
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_kms_key.secure_policy] (main.tf:5)
+     Violating Resource: [aws_kms_key.secure_policy]  (main.tf:5)
+
+     Evidence:
+             | This rule evaluated aws_kms_key.secure_policy's configuration
+
+
+-----------------------------------------------

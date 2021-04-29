@@ -1,0 +1,51 @@
+
+WARNINGs found:
+Rule: Ensure IAM permissions are not given directly to users
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_iam_user.user1] (main.tf:5)
+     Violating Resource: [AdministratorAccess]  (Not found in TF)
+
+     Evidence:
+             | The user aws_iam_user.user1 has the policy AdministratorAccess  attached directly to it
+
+
+-----------------------------------------------
+Rule: Disallow IAM permissions which can lead to privilege escalation
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [test_for_cloudrail-demo-repo] (Not found in TF)
+     Violating Resource: [aws_iam_user.user1]  (main.tf:5)
+
+     Evidence:
+         AdministratorAccess
+             | is applied to arn:aws:iam::154724799477:user/user-1
+             | granting the problematic permissions {'*'} which can allow for privilege escalation
+
+
+-----------------------------------------------
+Rule: Ensure IAM entities policies are managed solely in infrastructure-as-code
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [test_for_cloudrail-demo-repo] (Not found in TF)
+     Violating Resource: [AdministratorAccess]  (Not found in TF)
+
+     Evidence:
+         AdministratorAccess
+             | is attached to IAM user aws_iam_user.user1
+             | aws_iam_user.user1 is declared in infrastructure-as-code
+             | The attachment of the policy was done outside of the code (for example, directly via the console)
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_iam_user.user1] (main.tf:5)
+     Violating Resource: [aws_iam_user.user1]  (main.tf:5)
+
+     Evidence:
+             | Resource IAM user aws_iam_user.user1 does not have any tags set
+
+
+-----------------------------------------------

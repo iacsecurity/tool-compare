@@ -1,0 +1,42 @@
+
+WARNINGs found:
+Rule: Ensure use of KMS key policy, and no action wildcards are being used
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_kms_key.test] (main.tf:5)
+     Violating Resource: [aws_kms_key.test]  (main.tf:5)
+
+     Evidence:
+             | The policy attached to the KMS key aws_kms_key.test is using wildcard action kms:*
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_kms_key.test] (main.tf:5)
+     Violating Resource: [aws_kms_key.test]  (main.tf:5)
+
+     Evidence:
+             | Resource KMS key aws_kms_key.test does not have any tags set
+
+
+   - Exposed Resource: [aws_sns_topic.test] (main.tf:10)
+     Violating Resource: [aws_sns_topic.test]  (main.tf:10)
+
+     Evidence:
+             | Resource SNS topic aws_sns_topic.test does not have any tags set
+
+
+-----------------------------------------------
+Rule: Ensure rotation for customer created CMKs is enabled
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_rds_global_cluster.global] (main.tf:5)
+     Violating Resource: [aws_rds_global_cluster.global]  (main.tf:5)
+
+     Evidence:
+             | This rule evaluated aws_rds_global_cluster.global's configuration
+
+
+-----------------------------------------------

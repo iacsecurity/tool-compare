@@ -1,0 +1,92 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.46 
+
+terraform scan results:
+
+Passed checks: 1, Failed checks: 2, Skipped checks: 0
+
+Check: CKV_AWS_132: "Ensure KMS have rotation policy"
+	FAILED for resource: aws_kms_key.secure_policy
+	File: /main.tf:5-38
+
+		5  | resource "aws_kms_key" "secure_policy" {
+		6  |   description             = "KMS key + secure_policy"
+		7  |   deletion_window_in_days = 7
+		8  | 
+		9  |   policy = <<EOF
+		10 | {
+		11 |     "Version": "2008-10-17",
+		12 |     "Statement": [
+		13 |         {
+		14 |             "Sid": "Secure Policy",
+		15 |             "Effect": "Allow",
+		16 |             "Principal": "*",
+		17 |             "Resource": "*",
+		18 |             "Action": [
+		19 |             "kms:Create*",
+		20 |             "kms:Describe*",
+		21 |             "kms:Enable*",
+		22 |             "kms:List*",
+		23 |             "kms:Put*",
+		24 |             "kms:Update*",
+		25 |             "kms:Revoke*",
+		26 |             "kms:Disable*",
+		27 |             "kms:Get*",
+		28 |             "kms:Delete*",
+		29 |             "kms:TagResource",
+		30 |             "kms:UntagResource",
+		31 |             "kms:ScheduleKeyDeletion",
+		32 |             "kms:CancelKeyDeletion"
+		33 |             ]
+		34 |         }
+		35 |     ]
+		36 | }
+		37 | EOF
+		38 | }
+
+Check: CKV_AWS_7: "Ensure rotation for customer created CMKs is enabled"
+	FAILED for resource: aws_kms_key.secure_policy
+	File: /main.tf:5-38
+	Guide: https://docs.bridgecrew.io/docs/logging_8
+
+		5  | resource "aws_kms_key" "secure_policy" {
+		6  |   description             = "KMS key + secure_policy"
+		7  |   deletion_window_in_days = 7
+		8  | 
+		9  |   policy = <<EOF
+		10 | {
+		11 |     "Version": "2008-10-17",
+		12 |     "Statement": [
+		13 |         {
+		14 |             "Sid": "Secure Policy",
+		15 |             "Effect": "Allow",
+		16 |             "Principal": "*",
+		17 |             "Resource": "*",
+		18 |             "Action": [
+		19 |             "kms:Create*",
+		20 |             "kms:Describe*",
+		21 |             "kms:Enable*",
+		22 |             "kms:List*",
+		23 |             "kms:Put*",
+		24 |             "kms:Update*",
+		25 |             "kms:Revoke*",
+		26 |             "kms:Disable*",
+		27 |             "kms:Get*",
+		28 |             "kms:Delete*",
+		29 |             "kms:TagResource",
+		30 |             "kms:UntagResource",
+		31 |             "kms:ScheduleKeyDeletion",
+		32 |             "kms:CancelKeyDeletion"
+		33 |             ]
+		34 |         }
+		35 |     ]
+		36 | }
+		37 | EOF
+		38 | }
+

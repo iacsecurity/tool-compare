@@ -1,0 +1,46 @@
+Failed to run the process ...
+{
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "policy": "",
+    "ignoreSettings": null,
+    "projectId": "",
+    "org": "y"
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "main.tf",
+  "projectName": "project",
+  "org": "y",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
+  "infrastructureAsCodeIssues": [
+    {
+      "id": "SNYK-CC-TF-141",
+      "title": "DocDB logging disabled",
+      "type": "terraform",
+      "subType": "DocumentDB",
+      "severity": "low",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Amazon DocDB logging is not enabled",
+        "impact": "Audit records may not be available during investigation",
+        "resolve": "Set `enabled_cloudwatch_logs_exports` attribute to `['profiler', 'audit']`"
+      },
+      "lineNumber": 5,
+      "path": [
+        "resource",
+        "aws_docdb_cluster[test1]",
+        "enabled_cloudwatch_logs_exports"
+      ]
+    }
+  ]
+}

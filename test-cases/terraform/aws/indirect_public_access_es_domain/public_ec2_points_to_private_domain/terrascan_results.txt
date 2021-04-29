@@ -1,0 +1,59 @@
+
+
+Violation Details -
+    
+	Description    :	Enable AWS ElasticSearch Encryption At Rest
+	File           :	main.tf
+	Line           :	107
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	It is recommended that no security group allows unrestricted ingress access
+	File           :	main.tf
+	Line           :	121
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure VPC flow logging is enabled in all VPCs
+	File           :	main.tf
+	Line           :	5
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Security group attached to launch configuration is wide open to internet and this can be related to reconnaissance phase
+	File           :	main.tf
+	Line           :	138
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that your AWS Elasticsearch clusters have enabled the support for publishing slow logs to AWS CloudWatch Logs. This feature enables you to publish slow logs from the indexing and search operations performed on your ES clusters and gain full insight into the performance of these operations.
+	File           :	main.tf
+	Line           :	107
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
+	File           :	main.tf
+	Line           :	138
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+
+Scan Summary -
+
+	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/indirect_public_access_es_domain/public_ec2_points_to_private_domain
+	IaC Type            :	terraform
+	Scanned At          :	2021-04-14 17:35:14.45818 +0000 UTC
+	Policies Validated  :	561
+	Violated Policies   :	6
+	Low                 :	0
+	Medium              :	4
+	High                :	2
+	
+

@@ -1,0 +1,117 @@
+
+WARNINGs found:
+Rule: Ensure IMDSv2 is used and IMDSv1 is disabled
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.test] (main.tf:94)
+     Violating Resource: [aws_instance.test]  (main.tf:94)
+
+     Evidence:
+             | The EC2 Instance aws_instance.test is allowing IMDSv1
+
+
+-----------------------------------------------
+Rule: Ensure VPC Endpoint for S3 is enabled in all VPCs
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.public-bucket] (main.tf:101)
+     Violating Resource: [sfdc-somestage-consoleme]  (Not found in TF)
+
+     Evidence:
+         The VPC
+             | sfdc-somestage-consoleme in region us-east-1 is in use but not leveraging S3 Endpoint Gateway
+
+
+-----------------------------------------------
+Rule: Ensure VPC Endpoint for DynamoDB is enabled in all route tables in use in a VPC
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_vpc.main] (main.tf:9)
+     Violating Resource: [aws_route_table.private-rtb]  (main.tf:38)
+
+     Evidence:
+         The VPC
+             | aws_vpc.main has a DYNAMODB Endpoint gateway but aws_subnet.private-subnet uses aws_route_table.private-rtb, which does not have a route to the Endpoint gateway.
+
+
+-----------------------------------------------
+Rule: Ensure that the private bucket's policy reference a VPC Endpoint as source
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.public-bucket] (main.tf:101)
+     Violating Resource: [aws_s3_bucket.public-bucket]  (main.tf:101)
+
+     Evidence:
+         S3 Bucket
+             | aws_s3_bucket.public-bucket is accessible via VPC endpoint aws_vpc_endpoint.s3-vpce-gw
+         in VPC
+             | aws_vpc.main with a policy that is not restricting requests sourced from a VPC Endpoint.
+
+
+-----------------------------------------------
+Rule: Ensure S3 buckets are set to be encrypted at rest
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.public-bucket] (main.tf:101)
+     Violating Resource: [aws_s3_bucket.public-bucket]  (main.tf:101)
+
+     Evidence:
+             | The S3 Bucket aws_s3_bucket.public-bucket is not set to be encrypted at rest
+
+
+-----------------------------------------------
+Rule: Ensure S3 buckets have versioning enabled
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.public-bucket] (main.tf:101)
+     Violating Resource: [aws_s3_bucket.public-bucket]  (main.tf:101)
+
+     Evidence:
+             | The S3 Bucket aws_s3_bucket.public-bucket does not have versioning enabled
+
+
+-----------------------------------------------
+Rule: Allow only private AMIs to be used
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.test] (main.tf:94)
+     Violating Resource: [ami-0f593aebffc0070e1]  (Not found in TF)
+
+     Evidence:
+             | The EC2 Instance aws_instance.test uses AMI ami-0f593aebffc0070e1, which is public
+
+
+-----------------------------------------------
+Rule: Ensure use of S3 bucket policy, and no action wildcards are being used
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.public-bucket] (main.tf:101)
+     Violating Resource: [aws_s3_bucket.public-bucket]  (main.tf:101)
+
+     Evidence:
+             | There is no resource policy or no statements attached to aws_s3_bucket.public-bucket
+
+
+-----------------------------------------------
+Rule: Enforce use of HTTPS in S3 bucket policy
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.public-bucket] (main.tf:101)
+     Violating Resource: [aws_s3_bucket.public-bucket]  (main.tf:101)
+
+     Evidence:
+             | The S3 Bucket aws_s3_bucket.public-bucket does not have a policy with the aws:SecureTransport condition
+
+
+-----------------------------------------------
+Rule: Ensure all data stored in the Launch configuration EBS is securely encrypted
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.test] (main.tf:94)
+     Violating Resource: [aws_instance.test]  (main.tf:94)
+
+     Evidence:
+             | This rule evaluated aws_instance.test's configuration
+
+
+-----------------------------------------------

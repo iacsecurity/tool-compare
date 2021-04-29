@@ -1,0 +1,14 @@
+
+
+Scan Summary -
+
+	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/ensure_rds_encrypt_at_rest_rule/cluster_encrypt_at_rest_disabled
+	IaC Type            :	terraform
+	Scanned At          :	2021-04-14 17:33:28.021353 +0000 UTC
+	Policies Validated  :	561
+	Violated Policies   :	0
+	Low                 :	0
+	Medium              :	0
+	High                :	0
+	
+

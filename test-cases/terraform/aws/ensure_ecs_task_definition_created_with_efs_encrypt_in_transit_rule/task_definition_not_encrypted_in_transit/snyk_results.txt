@@ -1,0 +1,46 @@
+Failed to run the process ...
+{
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "policy": "",
+    "ignoreSettings": null,
+    "projectId": "",
+    "org": "y"
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "main.tf",
+  "projectName": "project",
+  "org": "y",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
+  "infrastructureAsCodeIssues": [
+    {
+      "id": "SNYK-CC-TF-204",
+      "title": "Non-encrypted EFS at rest",
+      "type": "terraform",
+      "subType": "EFS",
+      "severity": "medium",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "EFS system file is not encrypted",
+        "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+        "resolve": "Set `encrypted` attribute to `true`."
+      },
+      "lineNumber": 5,
+      "path": [
+        "resource",
+        "aws_efs_file_system[test]",
+        "encrypted"
+      ]
+    }
+  ]
+}

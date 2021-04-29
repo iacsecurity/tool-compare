@@ -1,0 +1,94 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.46 
+
+terraform scan results:
+
+Passed checks: 4, Failed checks: 5, Skipped checks: 0
+
+Check: CKV_AWS_23: "Ensure every security groups rule has a description"
+	FAILED for resource: aws_security_group.free
+	File: /main.tf:18-27
+	Guide: https://docs.bridgecrew.io/docs/networking_31
+
+		18 | resource "aws_security_group" "free" {
+		19 |   vpc_id = aws_vpc.external.id
+		20 | 
+		21 |   ingress {
+		22 |     from_port = 0
+		23 |     protocol = "TCP"
+		24 |     to_port = 64000
+		25 |     cidr_blocks = ["0.0.0.0/0"]
+		26 |   }
+		27 | }
+
+
+Check: CKV_AWS_24: "Ensure no security groups allow ingress from 0.0.0.0:0 to port 22"
+	FAILED for resource: aws_security_group.free
+	File: /main.tf:18-27
+	Guide: https://docs.bridgecrew.io/docs/networking_1-port-security
+
+		18 | resource "aws_security_group" "free" {
+		19 |   vpc_id = aws_vpc.external.id
+		20 | 
+		21 |   ingress {
+		22 |     from_port = 0
+		23 |     protocol = "TCP"
+		24 |     to_port = 64000
+		25 |     cidr_blocks = ["0.0.0.0/0"]
+		26 |   }
+		27 | }
+
+
+Check: CKV_AWS_25: "Ensure no security groups allow ingress from 0.0.0.0:0 to port 3389"
+	FAILED for resource: aws_security_group.free
+	File: /main.tf:18-27
+	Guide: https://docs.bridgecrew.io/docs/networking_2
+
+		18 | resource "aws_security_group" "free" {
+		19 |   vpc_id = aws_vpc.external.id
+		20 | 
+		21 |   ingress {
+		22 |     from_port = 0
+		23 |     protocol = "TCP"
+		24 |     to_port = 64000
+		25 |     cidr_blocks = ["0.0.0.0/0"]
+		26 |   }
+		27 | }
+
+
+Check: CKV_AWS_101: "Ensure Neptune logging is enabled"
+	FAILED for resource: aws_neptune_cluster.encrypted_neptune_cluster
+	File: /main.tf:66-74
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_logging_24
+
+		66 | resource "aws_neptune_cluster" "encrypted_neptune_cluster" {
+		67 |   cluster_identifier  = "cloudrail-test-encrypted"
+		68 |   engine              = "neptune"
+		69 |   skip_final_snapshot = true
+		70 |   apply_immediately   = true
+		71 |   storage_encrypted   = true
+		72 |   neptune_subnet_group_name = aws_db_subnet_group.free.name
+		73 |   vpc_security_group_ids = [aws_security_group.free.id]
+		74 | }
+
+
+Check: CKV_AWS_102: "Ensure Neptune Cluster instance is not publicly available"
+	FAILED for resource: aws_neptune_cluster_instance.neptune_instance
+	File: /main.tf:76-83
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_42
+
+		76 | resource "aws_neptune_cluster_instance" "neptune_instance" {
+		77 |   count              = 2
+		78 |   cluster_identifier = aws_neptune_cluster.encrypted_neptune_cluster.cluster_identifier
+		79 |   engine             = "neptune"
+		80 |   instance_class     = "db.r4.large"
+		81 |   apply_immediately  = true
+		82 |   publicly_accessible = true
+		83 | }
+

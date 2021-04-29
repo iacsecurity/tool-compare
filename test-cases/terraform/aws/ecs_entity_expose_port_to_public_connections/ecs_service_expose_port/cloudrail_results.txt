@@ -1,0 +1,14 @@
+
+WARNINGs found:
+Rule: Ensure VPC Endpoint for DynamoDB is enabled in all VPCs
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [consoleme_cloudtrail] (Not found in TF)
+     Violating Resource: [aws_vpc.main-vpc]  (main.tf:11)
+
+     Evidence:
+         The VPC
+             | aws_vpc.main-vpc in region us-east-1 is in use but not leveraging DynamoDB Endpoint Gateway
+
+
+-----------------------------------------------

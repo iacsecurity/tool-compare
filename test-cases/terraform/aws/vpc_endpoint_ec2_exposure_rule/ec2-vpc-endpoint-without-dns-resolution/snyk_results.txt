@@ -1,0 +1,66 @@
+Failed to run the process ...
+{
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "policy": "",
+    "ignoreSettings": null,
+    "projectId": "",
+    "org": "y"
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "main.tf",
+  "projectName": "project",
+  "org": "y",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
+  "infrastructureAsCodeIssues": [
+    {
+      "id": "SNYK-CC-TF-130",
+      "title": "EC2 instance accepts IMDSv1",
+      "type": "terraform",
+      "subType": "EC2",
+      "severity": "low",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Instance Metadata Service v2 is not enforced",
+        "impact": "Metadata service may be vulnerable to reverse proxy/open firewall misconfigurations and server side request forgery attacks",
+        "resolve": "Set `metadata_options.http_tokens` attribute to `required`"
+      },
+      "lineNumber": 87,
+      "path": [
+        "resource",
+        "aws_instance[test-ec2-instance]",
+        "metadata_options"
+      ]
+    },
+    {
+      "id": "SNYK-CC-TF-53",
+      "title": "Non-Encrypted root block device",
+      "type": "terraform",
+      "subType": "EC2",
+      "severity": "medium",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "The root block device for ec2 instance is not encrypted",
+        "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+        "resolve": "Set `root_block_device.encrypted` attribute to `true`"
+      },
+      "lineNumber": 87,
+      "path": [
+        "resource",
+        "aws_instance[test-ec2-instance]",
+        "root_block_device",
+        "encrypted"
+      ]
+    }
+  ]
+}

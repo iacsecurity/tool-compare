@@ -1,0 +1,46 @@
+Failed to run the process ...
+{
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "policy": "",
+    "ignoreSettings": null,
+    "projectId": "",
+    "org": "y"
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "main.tf",
+  "projectName": "project",
+  "org": "y",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
+  "infrastructureAsCodeIssues": [
+    {
+      "id": "SNYK-CC-TF-133",
+      "title": "X-ray tracing is disabled for Lambda function",
+      "type": "terraform",
+      "subType": "Lambda",
+      "severity": "low",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Amazon X-Ray tracing is not enabled for Lambda function",
+        "impact": "Trace logs will not be available during investigation",
+        "resolve": "Set `tracing_config.mode` attribute to `Active` or `PassThrough`"
+      },
+      "lineNumber": 57,
+      "path": [
+        "resource",
+        "aws_lambda_function[test_lambda]",
+        "tracing_config"
+      ]
+    }
+  ]
+}

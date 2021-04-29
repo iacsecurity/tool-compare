@@ -1,0 +1,93 @@
+
+WARNINGs found:
+Rule: Ensure S3 buckets are set to be encrypted at rest
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.bucket] (main.tf:61)
+     Violating Resource: [aws_s3_bucket.bucket]  (main.tf:61)
+
+     Evidence:
+             | The S3 Bucket aws_s3_bucket.bucket is not set to be encrypted at rest
+
+
+-----------------------------------------------
+Rule: Ensure S3 buckets have versioning enabled
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.bucket] (main.tf:61)
+     Violating Resource: [aws_s3_bucket.bucket]  (main.tf:61)
+
+     Evidence:
+             | The S3 Bucket aws_s3_bucket.bucket does not have versioning enabled
+
+
+-----------------------------------------------
+Rule: Ensure use of S3 bucket policy, and no action wildcards are being used
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.bucket] (main.tf:61)
+     Violating Resource: [aws_s3_bucket.bucket]  (main.tf:61)
+
+     Evidence:
+             | There is no resource policy or no statements attached to aws_s3_bucket.bucket
+
+
+-----------------------------------------------
+Rule: Enforce use of HTTPS in S3 bucket policy
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.bucket] (main.tf:61)
+     Violating Resource: [aws_s3_bucket.bucket]  (main.tf:61)
+
+     Evidence:
+             | The S3 Bucket aws_s3_bucket.bucket does not have a policy with the aws:SecureTransport condition
+
+
+-----------------------------------------------
+Rule: Ensure use of Lambda function policy, and no action wildcards are being used
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_lambda_function.my-lambda] (main.tf:5)
+     Violating Resource: [aws_lambda_function.my-lambda]  (main.tf:5)
+
+     Evidence:
+             | There is no resource policy or no statements attached to aws_lambda_function.my-lambda
+
+
+-----------------------------------------------
+Rule: Ensure each Lambda function has a non-infinite log retention
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_lambda_function.my-lambda] (main.tf:5)
+     Violating Resource: [aws_lambda_function.my-lambda]  (main.tf:5)
+
+     Evidence:
+             | Upon creation, Lambda Function aws_lambda_function.my-lambda will have a log group generated automatically with its retention set to Never Expire
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 3 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_lambda_function.my-lambda] (main.tf:5)
+     Violating Resource: [aws_lambda_function.my-lambda]  (main.tf:5)
+
+     Evidence:
+             | Resource Lambda Function aws_lambda_function.my-lambda does not have any tags set
+
+
+   - Exposed Resource: [aws_s3_bucket.bucket] (main.tf:61)
+     Violating Resource: [aws_s3_bucket.bucket]  (main.tf:61)
+
+     Evidence:
+             | Resource S3 Bucket aws_s3_bucket.bucket does not have any tags set
+
+
+   - Exposed Resource: [aws_iam_role.lambda-role] (main.tf:14)
+     Violating Resource: [aws_iam_role.lambda-role]  (main.tf:14)
+
+     Evidence:
+             | Resource IAM Role aws_iam_role.lambda-role does not have any tags set
+
+
+-----------------------------------------------

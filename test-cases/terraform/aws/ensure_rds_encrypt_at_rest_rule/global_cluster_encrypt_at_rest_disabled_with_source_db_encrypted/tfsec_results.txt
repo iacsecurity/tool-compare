@@ -1,0 +1,57 @@
+
+Check 1
+
+  [AWS051][ERROR] Resource 'aws_rds_cluster.test' defines a disabled RDS Cluster encryption.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_rds_encrypt_at_rest_rule/global_cluster_encrypt_at_rest_disabled_with_source_db_encrypted/main.tf:5-13
+
+       2 |   region = "us-east-1"
+       3 | }
+       4 | 
+       5 | resource "aws_rds_cluster" "test" {
+       6 |   cluster_identifier  = "cloudrail-test-encrypted"
+       7 |   availability_zones  = ["us-east-1a", "us-east-1b", "us-east-1c"]
+       8 |   database_name       = "cloudrail"
+       9 |   master_username     = "administrator"
+      10 |   master_password     = "cloudrail-TEST-password"
+      11 |   skip_final_snapshot = true
+      12 |   storage_encrypted   = true
+      13 | }
+      14 | 
+      15 | resource "aws_rds_global_cluster" "global" {
+      16 |   global_cluster_identifier = "cloudrail-test-non-encrypted"
+
+   See https://tfsec.dev/docs/aws/AWS051/ for more information. 
+
+Check 2
+
+  [GEN003][WARNING] Block 'aws_rds_cluster.test' includes a potentially sensitive attribute which is defined within the project.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_rds_encrypt_at_rest_rule/global_cluster_encrypt_at_rest_disabled_with_source_db_encrypted/main.tf:10
+
+       7 |   availability_zones  = ["us-east-1a", "us-east-1b", "us-east-1c"]
+       8 |   database_name       = "cloudrail"
+       9 |   master_username     = "administrator"
+      10 |   master_password     = "cloudrail-TEST-password"
+      11 |   skip_final_snapshot = true
+      12 |   storage_encrypted   = true
+      13 | }
+
+   See https://tfsec.dev/docs/general/GEN003/ for more information. 
+
+  times
+  ------------------------------------------
+  disk i/o             396.375µs
+  parsing HCL          3.458µs
+  evaluating values    43.666µs
+  running checks       303.292µs
+
+  counts
+  ------------------------------------------
+  files loaded         1
+  blocks               3
+  evaluated blocks     3
+  modules              0
+  module blocks        0
+  ignored checks       0
+
+2 potential problems detected.
+

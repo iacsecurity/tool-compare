@@ -1,0 +1,89 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.46 
+
+terraform scan results:
+
+Passed checks: 1, Failed checks: 3, Skipped checks: 0
+
+Check: CKV_AWS_42: "Ensure EFS is securely encrypted"
+	FAILED for resource: aws_efs_file_system.test
+	File: /main.tf:5-7
+	Guide: https://docs.bridgecrew.io/docs/general_17
+
+		5 | resource "aws_efs_file_system" "test" {
+		6 |   creation_token = "cloudrail-test"
+		7 | }
+
+
+Check: CKV_AWS_42: "Ensure EFS is securely encrypted"
+	FAILED for resource: aws_efs_file_system.test_2
+	File: /main.tf:9-11
+	Guide: https://docs.bridgecrew.io/docs/general_17
+
+		9  | resource "aws_efs_file_system" "test_2" {
+		10 |   creation_token = "cloudrail-test_2"
+		11 | }
+
+
+Check: CKV_AWS_97: "Ensure Encryption in transit is enabled for EFS volumes in ECS Task definitions"
+	FAILED for resource: aws_ecs_task_definition.service
+	File: /main.tf:13-61
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_39
+
+		13 | resource "aws_ecs_task_definition" "service" {
+		14 |   family                = "cloudrail-test-encryption"
+		15 |   container_definitions = <<DEFINITION
+		16 | [
+		17 |     {
+		18 |         "name": "first",
+		19 |         "image": "service-first",
+		20 |         "cpu": 10,
+		21 |         "memory": 512,
+		22 |         "essential": true,
+		23 |         "portMappings": [
+		24 |             {
+		25 |                 "containerPort": 80,
+		26 |                 "hostPort": 80
+		27 |             }
+		28 |         ]
+		29 |     },
+		30 |     {
+		31 |         "name": "second",
+		32 |         "image": "service-second",
+		33 |         "cpu": 10,
+		34 |         "memory": 256,
+		35 |         "essential": true,
+		36 |         "portMappings": [
+		37 |             {
+		38 |                 "containerPort": 443,
+		39 |                 "hostPort": 443
+		40 |             }
+		41 |         ]
+		42 |     }
+		43 | ]
+		44 |   DEFINITION
+		45 |   volume {
+		46 |     name = "service-storage"
+		47 | 
+		48 |     efs_volume_configuration {
+		49 |       file_system_id = aws_efs_file_system.test.id
+		50 |       root_directory = "/opt/data"
+		51 |     }
+		52 |   }
+		53 |   volume {
+		54 |     name = "service-storage_2"
+		55 | 
+		56 |     efs_volume_configuration {
+		57 |       file_system_id = aws_efs_file_system.test_2.id
+		58 |       root_directory = "/opt/data/second/"
+		59 |     }
+		60 |   }
+		61 | }
+
+

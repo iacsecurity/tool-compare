@@ -1,0 +1,15 @@
+WARNING:root:Unable to load module (source="/terraform-tests-modules/public-vpc" version="latest"): /terraform-tests-modules/public-vpc
+2021-04-14 17:16:52,621 [MainThread  ] [WARNI]  Unable to load module (source="/terraform-tests-modules/public-vpc" version="latest"): /terraform-tests-modules/public-vpc
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.46 
+
+terraform scan results:
+
+Passed checks: 1, Failed checks: 0, Skipped checks: 0
+

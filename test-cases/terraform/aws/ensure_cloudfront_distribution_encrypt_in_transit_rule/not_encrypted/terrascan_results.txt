@@ -1,0 +1,59 @@
+
+
+Violation Details -
+    
+	Description    :	Use encrypted connection between CloudFront and origin server
+	File           :	main.tf
+	Line           :	44
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Use encrypted connection between CloudFront and origin server
+	File           :	main.tf
+	Line           :	44
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that cloud-front has web application firewall enabled
+	File           :	main.tf
+	Line           :	44
+	Severity       :	Medium
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that your AWS Cloudfront distributions have the Logging feature enabled in order to track all viewer requests for the content delivered through the Content Delivery Network (CDN).
+	File           :	main.tf
+	Line           :	44
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that geo restriction is enabled for your Amazon CloudFront CDN distribution to whitelist or blacklist a country in order to allow or restrict users in specific locations from accessing web application content.
+	File           :	main.tf
+	Line           :	44
+	Severity       :	Medium
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Enabling S3 versioning will enable easy recovery from both unintended user actions, like deletes and overwrites
+	File           :	main.tf
+	Line           :	10
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+
+Scan Summary -
+
+	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/ensure_cloudfront_distribution_encrypt_in_transit_rule/not_encrypted
+	IaC Type            :	terraform
+	Scanned At          :	2021-04-14 17:33:50.507139 +0000 UTC
+	Policies Validated  :	561
+	Violated Policies   :	6
+	Low                 :	0
+	Medium              :	3
+	High                :	3
+	
+

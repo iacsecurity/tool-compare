@@ -1,0 +1,31 @@
+
+
+Violation Details -
+    
+	Description    :	Enabling S3 versioning will enable easy recovery from both unintended user actions, like deletes and overwrites
+	File           :	main.tf
+	Line           :	5
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	S3 bucket Access is allowed to all AWS Account Users.
+	File           :	main.tf
+	Line           :	5
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+
+Scan Summary -
+
+	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/s3_acl_disallow_public_and_cross_account/bucket_policy_public_to_all_cross_accounts_users
+	IaC Type            :	terraform
+	Scanned At          :	2021-04-14 17:34:17.619283 +0000 UTC
+	Policies Validated  :	561
+	Violated Policies   :	2
+	Low                 :	0
+	Medium              :	0
+	High                :	2
+	
+

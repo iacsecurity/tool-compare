@@ -1,0 +1,84 @@
+Failed to run the process ...
+{
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "policy": "",
+    "ignoreSettings": null,
+    "projectId": "",
+    "org": "y"
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "main.tf",
+  "projectName": "project",
+  "org": "y",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
+  "infrastructureAsCodeIssues": [
+    {
+      "id": "SNYK-CC-TF-94",
+      "title": "EKS cluster allows public access",
+      "type": "terraform",
+      "subType": "EKS",
+      "severity": "high",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "API endpoint of the EKS cluster is public",
+        "impact": "Anyone may be able to establish network connectivity to the API server",
+        "resolve": "Set `vpc_config.public_access_cidrs` attribute to specific net address e.g. `192.168.0.0/24`, or set `vpc_config.endpoint_public_access` attribute to `false`"
+      },
+      "lineNumber": 23,
+      "path": [
+        "resource",
+        "aws_eks_cluster[test]",
+        "vpc_config"
+      ]
+    },
+    {
+      "id": "SNYK-CC-TF-131",
+      "title": "EKS control plane logging insufficient",
+      "type": "terraform",
+      "subType": "EKS",
+      "severity": "low",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Amazon EKS control plane logging is not enabled for all log types",
+        "impact": "Audit records may not be available during investigation",
+        "resolve": "Set `enabled_cluster_log_types` attribute to `['api;, 'audit', 'authenticator', 'controllerManager', 'scheduler' ]`"
+      },
+      "lineNumber": 20,
+      "path": [
+        "resource",
+        "aws_eks_cluster[test]",
+        "enabled_cluster_log_types"
+      ]
+    },
+    {
+      "id": "SNYK-CC-TF-107",
+      "title": "EKS cluster has non-encrypted secrets at rest",
+      "type": "terraform",
+      "subType": "EKS",
+      "severity": "medium",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "EKS cluster secrets are not encrypted",
+        "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+        "resolve": "Set the `encryption_config` object with the relevant `provider` & `resources`."
+      },
+      "lineNumber": 20,
+      "path": [
+        "resource",
+        "aws_eks_cluster[test]",
+        "encryption_config"
+      ]
+    }
+  ]
+}

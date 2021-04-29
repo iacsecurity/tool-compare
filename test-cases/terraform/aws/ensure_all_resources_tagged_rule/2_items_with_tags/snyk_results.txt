@@ -1,0 +1,65 @@
+Failed to run the process ...
+{
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "policy": "",
+    "ignoreSettings": null,
+    "projectId": "",
+    "org": "y"
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "main.tf",
+  "projectName": "project",
+  "org": "y",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
+  "infrastructureAsCodeIssues": [
+    {
+      "id": "SNYK-CC-TF-55",
+      "title": "Non-Encrypted SNS Topic",
+      "type": "terraform",
+      "subType": "SNS",
+      "severity": "medium",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "The SNS topic is not encrypted at rest",
+        "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+        "resolve": "Set `kms_master_key_id` attribute to KMS key"
+      },
+      "lineNumber": 5,
+      "path": [
+        "resource",
+        "aws_sns_topic[cloudrail_1]",
+        "kms_master_key_id"
+      ]
+    },
+    {
+      "id": "SNYK-CC-TF-54",
+      "title": "Non-Encrypted SQS Queue",
+      "type": "terraform",
+      "subType": "SQS",
+      "severity": "medium",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "The SQS queue is not encrypted at rest",
+        "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+        "resolve": "Set `kms_master_key_id` attribute to KMS key"
+      },
+      "lineNumber": 13,
+      "path": [
+        "resource",
+        "aws_sqs_queue[cloudrail]",
+        "kms_master_key_id"
+      ]
+    }
+  ]
+}

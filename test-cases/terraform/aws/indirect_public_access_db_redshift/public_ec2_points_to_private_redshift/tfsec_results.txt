@@ -1,0 +1,108 @@
+
+Check 1
+
+  [GEN003][WARNING] Block 'aws_redshift_cluster.test' includes a potentially sensitive attribute which is defined within the project.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/indirect_public_access_db_redshift/public_ec2_points_to_private_redshift/main.tf:106
+
+     103 | resource "aws_redshift_cluster" "test" {
+     104 |   cluster_identifier = "redshift-defaults-only"
+     105 |   node_type = "dc2.large"
+     106 |   master_password = "Test1234"
+     107 |   master_username = "test"
+     108 |   skip_final_snapshot = true
+     109 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
+
+   See https://tfsec.dev/docs/general/GEN003/ for more information. 
+
+Check 2
+
+  [AWS008][WARNING] Resource 'aws_security_group.publicly_accessible_sg' defines a fully open ingress security group.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/indirect_public_access_db_redshift/public_ec2_points_to_private_redshift/main.tf:120
+
+     117 |     from_port = 0
+     118 |     protocol = "tcp"
+     119 |     to_port = 65000
+     120 |     cidr_blocks = ["0.0.0.0/0"]
+     121 |   }
+     122 |   egress {
+     123 |     from_port = 0
+
+   See https://tfsec.dev/docs/aws/AWS008/ for more information. 
+
+Check 3
+
+  [AWS009][WARNING] Resource 'aws_security_group.publicly_accessible_sg' defines a fully open egress security group.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/indirect_public_access_db_redshift/public_ec2_points_to_private_redshift/main.tf:126
+
+     123 |     from_port = 0
+     124 |     protocol = "tcp"
+     125 |     to_port = 65000
+     126 |     cidr_blocks = ["0.0.0.0/0"]
+     127 |   }
+     128 | }
+     129 | 
+
+   See https://tfsec.dev/docs/aws/AWS009/ for more information. 
+
+Check 4
+
+  [AWS018][ERROR] Resource 'aws_security_group.publicly_accessible_sg' should include a description for auditing purposes.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/indirect_public_access_db_redshift/public_ec2_points_to_private_redshift/main.tf:114-128
+
+     111 |   publicly_accessible = false // Note that while the subnet itself has public access, the redshift is set NOT to have a public IP
+     112 | }
+     113 | 
+     114 | resource "aws_security_group" "publicly_accessible_sg" {
+     115 |   vpc_id = aws_vpc.nondefault.id
+     116 |   ingress {
+     117 |     from_port = 0
+     118 |     protocol = "tcp"
+     119 |     to_port = 65000
+     120 |     cidr_blocks = ["0.0.0.0/0"]
+     121 |   }
+     122 |   egress {
+     123 |     from_port = 0
+     124 |     protocol = "tcp"
+     125 |     to_port = 65000
+     126 |     cidr_blocks = ["0.0.0.0/0"]
+     127 |   }
+     128 | }
+     129 | 
+     130 | // This instance is can potentially be used to hop into the DB
+     131 | resource "aws_instance" "public_ins" {
+
+   See https://tfsec.dev/docs/aws/AWS018/ for more information. 
+
+Check 5
+
+  [AWS012][ERROR] Resource 'aws_instance.public_ins' has a public IP address associated.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/indirect_public_access_db_redshift/public_ec2_points_to_private_redshift/main.tf:134
+
+     131 | resource "aws_instance" "public_ins" {
+     132 |   ami = "ami-0130bec6e5047f596"
+     133 |   instance_type = "t3.nano"
+     134 |   associate_public_ip_address = true
+     135 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
+     136 |   subnet_id = aws_subnet.nondefault_1.id
+     137 | }
+
+   See https://tfsec.dev/docs/aws/AWS012/ for more information. 
+
+  times
+  ------------------------------------------
+  disk i/o             820.959µs
+  parsing HCL          6.917µs
+  evaluating values    164.125µs
+  running checks       506.833µs
+
+  counts
+  ------------------------------------------
+  files loaded         1
+  blocks               14
+  evaluated blocks     14
+  modules              0
+  module blocks        0
+  ignored checks       0
+
+5 potential problems detected.
+

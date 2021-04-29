@@ -1,0 +1,24 @@
+
+WARNINGs found:
+Rule: Ensure Cloudwatch Log Groups being created are set to be encrypted at rest using KMS CMK
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_cloudwatch_log_group.yada] (main.tf:5)
+     Violating Resource: [aws_cloudwatch_log_group.yada]  (main.tf:5)
+
+     Evidence:
+             | The CloudWatch Logs Group aws_cloudwatch_log_group.yada is set to use encrypt at rest but it is not using CMKs
+
+
+-----------------------------------------------
+Rule: Ensure CloudWatch log groups have a retention policy
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_cloudwatch_log_group.yada] (main.tf:5)
+     Violating Resource: [aws_cloudwatch_log_group.yada]  (main.tf:5)
+
+     Evidence:
+             | The CloudWatch Logs Group aws_cloudwatch_log_group.yada does not have a retention policy set
+
+
+-----------------------------------------------

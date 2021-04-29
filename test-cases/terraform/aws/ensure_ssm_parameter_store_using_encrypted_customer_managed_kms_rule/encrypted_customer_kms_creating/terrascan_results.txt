@@ -1,0 +1,14 @@
+
+
+Scan Summary -
+
+	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/ensure_ssm_parameter_store_using_encrypted_customer_managed_kms_rule/encrypted_customer_kms_creating
+	IaC Type            :	terraform
+	Scanned At          :	2021-04-14 17:34:15.848314 +0000 UTC
+	Policies Validated  :	561
+	Violated Policies   :	0
+	Low                 :	0
+	Medium              :	0
+	High                :	0
+	
+

@@ -1,0 +1,56 @@
+
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.66 
+Update available 2.0.66 -> 2.0.67
+Run pip3 install -U checkov to update 
+
+
+terraform scan results:
+
+Passed checks: 1, Failed checks: 1, Skipped checks: 0
+
+Check: CKV_AWS_7: "Ensure rotation for customer created CMKs is enabled"
+	FAILED for resource: aws_kms_key.secure_policy
+	File: /main.tf:5-37
+	Guide: https://docs.bridgecrew.io/docs/logging_8
+
+		5  | resource "aws_kms_key" "secure_policy" {
+		6  |   description             = "KMS key + secure_policy"
+		7  |   deletion_window_in_days = 7
+		8  | 
+		9  |   policy = <<EOF
+		10 | {
+		11 |     "Version": "2008-10-17",
+		12 |     "Statement": [
+		13 |         {
+		14 |             "Sid": "Secure Policy",
+		15 |             "Effect": "Allow",
+		16 |             "Resource": "*",
+		17 |             "Action": [
+		18 |             "kms:Create*",
+		19 |             "kms:Describe*",
+		20 |             "kms:Enable*",
+		21 |             "kms:List*",
+		22 |             "kms:Put*",
+		23 |             "kms:Update*",
+		24 |             "kms:Revoke*",
+		25 |             "kms:Disable*",
+		26 |             "kms:Get*",
+		27 |             "kms:Delete*",
+		28 |             "kms:TagResource",
+		29 |             "kms:UntagResource",
+		30 |             "kms:ScheduleKeyDeletion",
+		31 |             "kms:CancelKeyDeletion"
+		32 |             ]
+		33 |         }
+		34 |     ]
+		35 | }
+		36 | EOF
+		37 | }
+

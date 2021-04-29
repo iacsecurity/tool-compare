@@ -1,0 +1,24 @@
+
+WARNINGs found:
+Rule: Ensure use of Secrets Manager secret policy, and no action wildcards are being used
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_secretsmanager_secret.test] (main.tf:9)
+     Violating Resource: [aws_secretsmanager_secret.test]  (main.tf:9)
+
+     Evidence:
+             | There is no resource policy or no statements attached to aws_secretsmanager_secret.test
+
+
+-----------------------------------------------
+Rule: Ensure Secrets Manager secrets are encrypted at rest with customer-managed CMK
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_secretsmanager_secret.test] (main.tf:9)
+     Violating Resource: [aws_secretsmanager_secret.test]  (main.tf:9)
+
+     Evidence:
+             | The Secrets Manager secret test-cloudrail-1 is not set to be encrypted at rest using customer-managed CMK
+
+
+-----------------------------------------------

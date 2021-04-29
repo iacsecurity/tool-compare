@@ -1,0 +1,126 @@
+Failed to run the process ...
+{
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "policy": "",
+    "ignoreSettings": null,
+    "projectId": "",
+    "org": "y"
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "main.tf",
+  "projectName": "project",
+  "org": "y",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
+  "infrastructureAsCodeIssues": [
+    {
+      "id": "SNYK-CC-TF-45",
+      "title": "S3 server access logging is disabled",
+      "type": "terraform",
+      "subType": "S3",
+      "severity": "low",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "The s3 access logs will not be collected",
+        "impact": "There will be no audit trail of access to s3 objects",
+        "resolve": "Add `logging` block attribute"
+      },
+      "lineNumber": 5,
+      "path": [
+        "input",
+        "resource",
+        "aws_s3_bucket[public-bucket]",
+        "logging"
+      ]
+    },
+    {
+      "id": "SNYK-CC-TF-4",
+      "title": "Non-encrypted S3 Bucket",
+      "type": "terraform",
+      "subType": "S3",
+      "severity": "medium",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "That by default S3 buckets do not encrypt the objects that are stored.",
+        "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+        "resolve": "Adding the `server_side_encryption_configuration` block and associated attributes to configure your encryption key and algorithm."
+      },
+      "lineNumber": 5,
+      "path": [
+        "input",
+        "resource",
+        "aws_s3_bucket[public-bucket]"
+      ]
+    },
+    {
+      "id": "SNYK-CC-TF-19",
+      "title": "S3 Bucket is publicly readable and writable",
+      "type": "terraform",
+      "subType": "S3",
+      "severity": "high",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "That this S3 bucket is publicly writeable without any authentication or authorization. ",
+        "impact": "That you may be leaking sensitive information to members of the public and this data could be modified with your knowledge.",
+        "resolve": "Adding the `acl` attribute with a more restrictive policy such as `private` to restrict access."
+      },
+      "lineNumber": 7,
+      "path": [
+        "input",
+        "resource",
+        "aws_s3_bucket[public-bucket]",
+        "acl"
+      ]
+    },
+    {
+      "id": "SNYK-CC-TF-127",
+      "title": "S3 bucket MFA delete control disabled",
+      "type": "terraform",
+      "subType": "S3",
+      "severity": "low",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "S3 bucket will not enforce MFA login on delete requests",
+        "impact": "Object could be deleted without stronger MFA authorization",
+        "resolve": "Set `versioning.mfa_delete` attribute to `true`"
+      },
+      "lineNumber": 5,
+      "path": [
+        "resource",
+        "aws_s3_bucket[public-bucket]",
+        "versioning",
+        "mfa_delete"
+      ]
+    },
+    {
+      "id": "SNYK-CC-TF-124",
+      "title": "S3 bucket versioning disabled",
+      "type": "terraform",
+      "subType": "S3",
+      "severity": "low",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "S3 bucket versioning is disabled",
+        "impact": "Changes or deletion of objects will not be reversible",
+        "resolve": "Set `versioning.enabled` attribute to `true`"
+      },
+      "lineNumber": 5,
+      "path": [
+        "resource",
+        "aws_s3_bucket[public-bucket]",
+        "versioning",
+        "enabled"
+      ]
+    }
+  ]
+}

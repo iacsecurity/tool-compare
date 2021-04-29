@@ -1,0 +1,25 @@
+
+WARNINGs found:
+Rule: Ensure RDS instances/clusters being created are set to be encrypted at rest
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_rds_cluster.default] (main.tf:5)
+     Violating Resource: [aws_rds_cluster.default]  (main.tf:5)
+
+     Evidence:
+         RDS DB cluster
+             | RDS DB cluster aws_rds_cluster.default is not set to use encrypt at rest
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_rds_cluster.default] (main.tf:5)
+     Violating Resource: [aws_rds_cluster.default]  (main.tf:5)
+
+     Evidence:
+             | Resource RDS DB cluster aws_rds_cluster.default does not have any tags set
+
+
+-----------------------------------------------

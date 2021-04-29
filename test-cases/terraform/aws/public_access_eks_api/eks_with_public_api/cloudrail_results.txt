@@ -1,0 +1,41 @@
+
+WARNINGs found:
+Rule: Ensure EKS API is not publicly accessible
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [module.my-cluster.aws_eks_cluster.this[0]] (.terraform/modules/my-cluster/cluster.tf:9)
+     Violating Resource: [aws_security_group.cluster]  (main.tf:35)
+
+     Evidence:
+         Internet
+             | EKS cluster module.my-cluster.aws_eks_cluster.this[0] is on VPC module.vpc.aws_vpc.this[0]
+             | Master is protected by security groups aws_security_group.cluster, sg-pseudo-116c6c80-9431-4107-bc9d-dfac2bf5f7af
+             | EKS cluster uses subnets module.vpc.aws_subnet.public[0], module.vpc.aws_subnet.public[1], module.vpc.aws_subnet.public[2]
+             | Subnets rely on Network ACL's nacl-pseudo-f9da8d94-3e0c-4721-929d-92dedd666a77, nacl-pseudo-f9da8d94-3e0c-4721-929d-92dedd666a77, nacl-pseudo-f9da8d94-3e0c-4721-929d-92dedd666a77
+             | They also rely on Route tables module.vpc.aws_route_table.public[0], module.vpc.aws_route_table.public[0], module.vpc.aws_route_table.public[0]
+             | EKS cluster is set to be publicly accessible
+
+
+-----------------------------------------------
+Rule: Ensure IMDSv2 is used and IMDSv1 is disabled
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [module.my-cluster.aws_launch_configuration.workers[0]] (.terraform/modules/my-cluster/workers.tf:157)
+     Violating Resource: [module.my-cluster.aws_launch_configuration.workers[0]]  (.terraform/modules/my-cluster/workers.tf:157)
+
+     Evidence:
+             | The Launch configuration module.my-cluster.aws_launch_configuration.workers[0] is allowing IMDSv1
+
+
+-----------------------------------------------
+Rule: Ensure all security groups and rules have a description detailing the rule
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_security_group.cluster] (main.tf:35)
+     Violating Resource: [aws_security_group.cluster]  (main.tf:35)
+
+     Evidence:
+             | The Security group aws_security_group.cluster does not have a description for the ingress rule of 0.0.0.0/0 for ports 443:443 using protocol tcp
+
+
+-----------------------------------------------

@@ -1,0 +1,65 @@
+Failed to run the process ...
+{
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "policy": "",
+    "ignoreSettings": null,
+    "projectId": "",
+    "org": "y"
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "main.tf",
+  "projectName": "project",
+  "org": "y",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
+  "infrastructureAsCodeIssues": [
+    {
+      "id": "SNYK-CC-TF-47",
+      "title": "Load balancer endpoint does not enforce HTTPS",
+      "type": "terraform",
+      "subType": "Elastic Load Balancing v2 (ALB/NLB)",
+      "severity": "medium",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Load balancer endpoint does not enforce HTTPS",
+        "impact": "The content could be intercepted and manipulated in transit",
+        "resolve": "Use `HTTPS` or `TLS` protocol"
+      },
+      "lineNumber": 68,
+      "path": [
+        "resource",
+        "aws_lb_listener[lb_listener_test]",
+        "protocol"
+      ]
+    },
+    {
+      "id": "SNYK-CC-TF-48",
+      "title": "Load balancer is internet facing",
+      "type": "terraform",
+      "subType": "Elastic Load Balancing (ELB Classic)",
+      "severity": "low",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Load balancer is internet facing",
+        "impact": "Increases attack vector reachability",
+        "resolve": "Set `internal` attribute to `true`"
+      },
+      "lineNumber": 60,
+      "path": [
+        "resource",
+        "aws_lb[alb_test]",
+        "internal"
+      ]
+    }
+  ]
+}

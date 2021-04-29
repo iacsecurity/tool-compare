@@ -1,0 +1,251 @@
+
+Check 1
+
+  [AWS018][ERROR] Resource 'aws_security_group.esdomain' should include a description for auditing purposes.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/indirect_public_access_es_domain/public_ec2_points_to_private_domain/main.tf:92-100
+
+      89 |   subnet_id = aws_subnet.nondefault_1.id
+      90 | }
+      91 | 
+      92 | resource "aws_security_group" "esdomain" {
+      93 |   vpc_id = aws_vpc.nondefault.id
+      94 |   ingress {
+      95 |     from_port = 443
+      96 |     protocol = "tcp"
+      97 |     to_port = 443
+      98 |     cidr_blocks = [aws_subnet.nondefault_1.cidr_block]
+      99 |   }
+     100 | }
+     101 | 
+     102 | resource "aws_iam_service_linked_role" "es" {
+     103 |   aws_service_name = "es.amazonaws.com"
+
+   See https://tfsec.dev/docs/aws/AWS018/ for more information. 
+
+Check 2
+
+  [AWS032][ERROR] Resource 'aws_elasticsearch_domain.test' defines an Elasticsearch domain with plaintext traffic (missing node_to_node_encryption block).
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/indirect_public_access_es_domain/public_ec2_points_to_private_domain/main.tf:107-119
+
+     104 |   description      = "Allows Amazon ES to manage AWS resources for a domain on your behalf."
+     105 | }
+     106 | 
+     107 | resource "aws_elasticsearch_domain" "test" {
+     108 |   domain_name = "test"
+     109 |   vpc_options {
+     110 |     subnet_ids = [aws_subnet.nondefault_1.id]
+     111 |     security_group_ids = [aws_security_group.esdomain.id]
+     112 |   }
+     113 | 
+     114 |   ebs_options {
+     115 |     ebs_enabled = true
+     116 |     volume_size = 10
+     117 |     volume_type = "gp2"
+     118 |   }
+     119 | }
+     120 | 
+     121 | resource "aws_security_group" "publicly_accessible_sg" {
+     122 |   vpc_id = aws_vpc.nondefault.id
+
+   See https://tfsec.dev/docs/aws/AWS032/ for more information. 
+
+Check 3
+
+  [AWS055][ERROR] Resource 'aws_elasticsearch_domain.test' does not configure node to node encryption on the domain.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/indirect_public_access_es_domain/public_ec2_points_to_private_domain/main.tf:107-119
+
+     104 |   description      = "Allows Amazon ES to manage AWS resources for a domain on your behalf."
+     105 | }
+     106 | 
+     107 | resource "aws_elasticsearch_domain" "test" {
+     108 |   domain_name = "test"
+     109 |   vpc_options {
+     110 |     subnet_ids = [aws_subnet.nondefault_1.id]
+     111 |     security_group_ids = [aws_security_group.esdomain.id]
+     112 |   }
+     113 | 
+     114 |   ebs_options {
+     115 |     ebs_enabled = true
+     116 |     volume_size = 10
+     117 |     volume_type = "gp2"
+     118 |   }
+     119 | }
+     120 | 
+     121 | resource "aws_security_group" "publicly_accessible_sg" {
+     122 |   vpc_id = aws_vpc.nondefault.id
+
+   See https://tfsec.dev/docs/aws/AWS055/ for more information. 
+
+Check 4
+
+  [AWS057][ERROR] Resource 'aws_elasticsearch_domain.test' does not configure logging at rest on the domain.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/indirect_public_access_es_domain/public_ec2_points_to_private_domain/main.tf:107-119
+
+     104 |   description      = "Allows Amazon ES to manage AWS resources for a domain on your behalf."
+     105 | }
+     106 | 
+     107 | resource "aws_elasticsearch_domain" "test" {
+     108 |   domain_name = "test"
+     109 |   vpc_options {
+     110 |     subnet_ids = [aws_subnet.nondefault_1.id]
+     111 |     security_group_ids = [aws_security_group.esdomain.id]
+     112 |   }
+     113 | 
+     114 |   ebs_options {
+     115 |     ebs_enabled = true
+     116 |     volume_size = 10
+     117 |     volume_type = "gp2"
+     118 |   }
+     119 | }
+     120 | 
+     121 | resource "aws_security_group" "publicly_accessible_sg" {
+     122 |   vpc_id = aws_vpc.nondefault.id
+
+   See https://tfsec.dev/docs/aws/AWS057/ for more information. 
+
+Check 5
+
+  [AWS008][WARNING] Resource 'aws_security_group.publicly_accessible_sg' defines a fully open ingress security group.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/indirect_public_access_es_domain/public_ec2_points_to_private_domain/main.tf:127
+
+     124 |     from_port = 0
+     125 |     protocol = "tcp"
+     126 |     to_port = 65000
+     127 |     cidr_blocks = ["0.0.0.0/0"]
+     128 |   }
+     129 |   egress {
+     130 |     from_port = 0
+
+   See https://tfsec.dev/docs/aws/AWS008/ for more information. 
+
+Check 6
+
+  [AWS009][WARNING] Resource 'aws_security_group.publicly_accessible_sg' defines a fully open egress security group.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/indirect_public_access_es_domain/public_ec2_points_to_private_domain/main.tf:133
+
+     130 |     from_port = 0
+     131 |     protocol = "tcp"
+     132 |     to_port = 65000
+     133 |     cidr_blocks = ["0.0.0.0/0"]
+     134 |   }
+     135 | }
+     136 | 
+
+   See https://tfsec.dev/docs/aws/AWS009/ for more information. 
+
+Check 7
+
+  [AWS031][ERROR] Resource 'aws_elasticsearch_domain.test' defines an unencrypted Elasticsearch domain (missing encrypt_at_rest block).
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/indirect_public_access_es_domain/public_ec2_points_to_private_domain/main.tf:107-119
+
+     104 |   description      = "Allows Amazon ES to manage AWS resources for a domain on your behalf."
+     105 | }
+     106 | 
+     107 | resource "aws_elasticsearch_domain" "test" {
+     108 |   domain_name = "test"
+     109 |   vpc_options {
+     110 |     subnet_ids = [aws_subnet.nondefault_1.id]
+     111 |     security_group_ids = [aws_security_group.esdomain.id]
+     112 |   }
+     113 | 
+     114 |   ebs_options {
+     115 |     ebs_enabled = true
+     116 |     volume_size = 10
+     117 |     volume_type = "gp2"
+     118 |   }
+     119 | }
+     120 | 
+     121 | resource "aws_security_group" "publicly_accessible_sg" {
+     122 |   vpc_id = aws_vpc.nondefault.id
+
+   See https://tfsec.dev/docs/aws/AWS031/ for more information. 
+
+Check 8
+
+  [AWS033][ERROR] Resource 'aws_elasticsearch_domain.test' defines an Elasticsearch domain with plaintext traffic (missing domain_endpoint_options block).
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/indirect_public_access_es_domain/public_ec2_points_to_private_domain/main.tf:107-119
+
+     104 |   description      = "Allows Amazon ES to manage AWS resources for a domain on your behalf."
+     105 | }
+     106 | 
+     107 | resource "aws_elasticsearch_domain" "test" {
+     108 |   domain_name = "test"
+     109 |   vpc_options {
+     110 |     subnet_ids = [aws_subnet.nondefault_1.id]
+     111 |     security_group_ids = [aws_security_group.esdomain.id]
+     112 |   }
+     113 | 
+     114 |   ebs_options {
+     115 |     ebs_enabled = true
+     116 |     volume_size = 10
+     117 |     volume_type = "gp2"
+     118 |   }
+     119 | }
+     120 | 
+     121 | resource "aws_security_group" "publicly_accessible_sg" {
+     122 |   vpc_id = aws_vpc.nondefault.id
+
+   See https://tfsec.dev/docs/aws/AWS033/ for more information. 
+
+Check 9
+
+  [AWS018][ERROR] Resource 'aws_security_group.publicly_accessible_sg' should include a description for auditing purposes.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/indirect_public_access_es_domain/public_ec2_points_to_private_domain/main.tf:121-135
+
+     118 |   }
+     119 | }
+     120 | 
+     121 | resource "aws_security_group" "publicly_accessible_sg" {
+     122 |   vpc_id = aws_vpc.nondefault.id
+     123 |   ingress {
+     124 |     from_port = 0
+     125 |     protocol = "tcp"
+     126 |     to_port = 65000
+     127 |     cidr_blocks = ["0.0.0.0/0"]
+     128 |   }
+     129 |   egress {
+     130 |     from_port = 0
+     131 |     protocol = "tcp"
+     132 |     to_port = 65000
+     133 |     cidr_blocks = ["0.0.0.0/0"]
+     134 |   }
+     135 | }
+     136 | 
+     137 | // This instance is can potentially be used to hop into the DB
+     138 | resource "aws_instance" "public_ins" {
+
+   See https://tfsec.dev/docs/aws/AWS018/ for more information. 
+
+Check 10
+
+  [AWS012][ERROR] Resource 'aws_instance.public_ins' has a public IP address associated.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/indirect_public_access_es_domain/public_ec2_points_to_private_domain/main.tf:141
+
+     138 | resource "aws_instance" "public_ins" {
+     139 |   ami = "ami-0130bec6e5047f596"
+     140 |   instance_type = "t3.nano"
+     141 |   associate_public_ip_address = true
+     142 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
+     143 |   subnet_id = aws_subnet.nondefault_1.id
+     144 | }
+
+   See https://tfsec.dev/docs/aws/AWS012/ for more information. 
+
+  times
+  ------------------------------------------
+  disk i/o             912.917µs
+  parsing HCL          4.875µs
+  evaluating values    164.375µs
+  running checks       875.875µs
+
+  counts
+  ------------------------------------------
+  files loaded         1
+  blocks               14
+  evaluated blocks     14
+  modules              0
+  module blocks        0
+  ignored checks       0
+
+10 potential problems detected.
+

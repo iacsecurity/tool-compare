@@ -1,0 +1,26 @@
+
+WARNINGs found:
+Rule: Disallow IAM permissions which can lead to privilege escalation
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [test_for_cloudrail-demo-repo] (Not found in TF)
+     Violating Resource: [aws_iam_role_policy.policy]  (main.tf:25)
+
+     Evidence:
+         aws_iam_role_policy.policy
+             | is applied to arn:aws:iam::154724799477:role/role
+             | granting the problematic permissions {'iam: AttachUser*', 'iam:*'} which can allow for privilege escalation
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_iam_role.role] (main.tf:5)
+     Violating Resource: [aws_iam_role.role]  (main.tf:5)
+
+     Evidence:
+             | Resource IAM Role aws_iam_role.role does not have any tags set
+
+
+-----------------------------------------------

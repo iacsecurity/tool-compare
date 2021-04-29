@@ -1,0 +1,97 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.46 
+
+terraform scan results:
+
+Passed checks: 5, Failed checks: 6, Skipped checks: 0
+
+Check: CKV_AWS_23: "Ensure every security groups rule has a description"
+	FAILED for resource: aws_security_group.sg
+	File: /main.tf:35-43
+	Guide: https://docs.bridgecrew.io/docs/networking_31
+
+		35 | resource "aws_security_group" "sg" {
+		36 |   vpc_id = aws_vpc.vpc.id
+		37 |   ingress {
+		38 |     from_port = 22
+		39 |     protocol = "tcp"
+		40 |     to_port = 22
+		41 |     cidr_blocks = [var.source_cidr]
+		42 |   }
+		43 | }
+
+
+Check: CKV_AWS_79: "Ensure Instance Metadata Service Version 1 is not enabled"
+	FAILED for resource: aws_instance.test
+	File: /main.tf:62-68
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_31
+
+		62 | resource "aws_instance" "test" {
+		63 |   ami           = "ami-09b89ad3c5769cca2"
+		64 |   instance_type = "t2.micro"
+		65 |   subnet_id     = aws_subnet.subnet.id
+		66 |   vpc_security_group_ids = [aws_security_group.sg.id]
+		67 |   associate_public_ip_address = true
+		68 | }
+
+
+Check: CKV_AWS_88: "EC2 instance should not have public IP."
+	FAILED for resource: aws_instance.test
+	File: /main.tf:62-68
+	Guide: https://docs.bridgecrew.io/docs/public_12
+
+		62 | resource "aws_instance" "test" {
+		63 |   ami           = "ami-09b89ad3c5769cca2"
+		64 |   instance_type = "t2.micro"
+		65 |   subnet_id     = aws_subnet.subnet.id
+		66 |   vpc_security_group_ids = [aws_security_group.sg.id]
+		67 |   associate_public_ip_address = true
+		68 | }
+
+
+Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration EBS is securely encrypted"
+	FAILED for resource: aws_instance.test
+	File: /main.tf:62-68
+	Guide: https://docs.bridgecrew.io/docs/general_13
+
+		62 | resource "aws_instance" "test" {
+		63 |   ami           = "ami-09b89ad3c5769cca2"
+		64 |   instance_type = "t2.micro"
+		65 |   subnet_id     = aws_subnet.subnet.id
+		66 |   vpc_security_group_ids = [aws_security_group.sg.id]
+		67 |   associate_public_ip_address = true
+		68 | }
+
+
+Check: CKV_AWS_126: "Ensure that detailed monitoring is enabled for EC2 instances"
+	FAILED for resource: aws_instance.test
+	File: /main.tf:62-68
+
+		62 | resource "aws_instance" "test" {
+		63 |   ami           = "ami-09b89ad3c5769cca2"
+		64 |   instance_type = "t2.micro"
+		65 |   subnet_id     = aws_subnet.subnet.id
+		66 |   vpc_security_group_ids = [aws_security_group.sg.id]
+		67 |   associate_public_ip_address = true
+		68 | }
+
+
+Check: CKV_AWS_135: "Ensure that EC2 is EBS optimized"
+	FAILED for resource: aws_instance.test
+	File: /main.tf:62-68
+
+		62 | resource "aws_instance" "test" {
+		63 |   ami           = "ami-09b89ad3c5769cca2"
+		64 |   instance_type = "t2.micro"
+		65 |   subnet_id     = aws_subnet.subnet.id
+		66 |   vpc_security_group_ids = [aws_security_group.sg.id]
+		67 |   associate_public_ip_address = true
+		68 | }
+
+

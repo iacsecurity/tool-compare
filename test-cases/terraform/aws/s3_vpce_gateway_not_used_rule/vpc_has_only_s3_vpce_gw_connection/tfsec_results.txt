@@ -1,0 +1,103 @@
+
+Check 1
+
+  [AWS009][WARNING] Resource 'aws_security_group.allow-public-outbound-sg' defines a fully open egress security group.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/s3_vpce_gateway_not_used_rule/vpc_has_only_s3_vpce_gw_connection/main.tf:73
+
+      70 |     from_port   = 443
+      71 |     to_port     = 443
+      72 |     protocol    = "tcp"
+      73 |     cidr_blocks = ["0.0.0.0/0"]
+      74 |   }
+      75 | 
+      76 | }
+
+   See https://tfsec.dev/docs/aws/AWS009/ for more information. 
+
+Check 2
+
+  [AWS001][WARNING] Resource 'aws_s3_bucket.public-bucket' has an ACL which allows public access.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/s3_vpce_gateway_not_used_rule/vpc_has_only_s3_vpce_gw_connection/main.tf:103
+
+     100 | 
+     101 | resource "aws_s3_bucket" "public-bucket" {
+     102 |   bucket = "public-bucket"
+     103 |   acl = "public-read"
+     104 |   tags = {
+     105 |     Name = "public-bucket"
+     106 |   }
+
+   See https://tfsec.dev/docs/aws/AWS001/ for more information. 
+
+Check 3
+
+  [AWS002][ERROR] Resource 'aws_s3_bucket.public-bucket' does not have logging enabled.
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/s3_vpce_gateway_not_used_rule/vpc_has_only_s3_vpce_gw_connection/main.tf:101-107
+
+      98 |   subnet_id = aws_subnet.private-subnet.id
+      99 | }
+     100 | 
+     101 | resource "aws_s3_bucket" "public-bucket" {
+     102 |   bucket = "public-bucket"
+     103 |   acl = "public-read"
+     104 |   tags = {
+     105 |     Name = "public-bucket"
+     106 |   }
+     107 | }
+
+   See https://tfsec.dev/docs/aws/AWS002/ for more information. 
+
+Check 4
+
+  [AWS017][ERROR] Resource 'aws_s3_bucket.public-bucket' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/s3_vpce_gateway_not_used_rule/vpc_has_only_s3_vpce_gw_connection/main.tf:101-107
+
+      98 |   subnet_id = aws_subnet.private-subnet.id
+      99 | }
+     100 | 
+     101 | resource "aws_s3_bucket" "public-bucket" {
+     102 |   bucket = "public-bucket"
+     103 |   acl = "public-read"
+     104 |   tags = {
+     105 |     Name = "public-bucket"
+     106 |   }
+     107 | }
+
+   See https://tfsec.dev/docs/aws/AWS017/ for more information. 
+
+Check 5
+
+  [AWS077][ERROR] Resource 'aws_s3_bucket.public-bucket' does not have versioning enabled
+  /Users/acme/code/cloudrail-demo/test/aws/terraform/s3_vpce_gateway_not_used_rule/vpc_has_only_s3_vpce_gw_connection/main.tf:101-107
+
+      98 |   subnet_id = aws_subnet.private-subnet.id
+      99 | }
+     100 | 
+     101 | resource "aws_s3_bucket" "public-bucket" {
+     102 |   bucket = "public-bucket"
+     103 |   acl = "public-read"
+     104 |   tags = {
+     105 |     Name = "public-bucket"
+     106 |   }
+     107 | }
+
+   See https://tfsec.dev/docs/aws/AWS077/ for more information. 
+
+  times
+  ------------------------------------------
+  disk i/o             781.833µs
+  parsing HCL          4.875µs
+  evaluating values    114.791µs
+  running checks       479.25µs
+
+  counts
+  ------------------------------------------
+  files loaded         1
+  blocks               13
+  evaluated blocks     13
+  modules              0
+  module blocks        0
+  ignored checks       0
+
+5 potential problems detected.
+
