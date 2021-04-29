@@ -404,6 +404,92 @@ Rule: Ensure all security groups and rules have a description detailing the rule
 
 
 -----------------------------------------------
+Rule: Ensure VPC Endpoint for EC2 is enabled in all VPCs in use
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
+     Violating Resource: [aws_vpc.nondefault]  (main.tf:5)
+
+     Evidence:
+             | The service EC2 is in use in region eu-central-1, but VPC aws_vpc.nondefault
+             | is not configured to use a VPC Endpoint for EC2
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 10 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_network_acl.redshift_eni2_nacl] (main.tf:36)
+     Violating Resource: [aws_network_acl.redshift_eni2_nacl]  (main.tf:36)
+
+     Evidence:
+             | Resource Network ACL's aws_network_acl.redshift_eni2_nacl does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [aws_network_acl.ec2_nacl] (main.tf:9)
+     Violating Resource: [aws_network_acl.ec2_nacl]  (main.tf:9)
+
+     Evidence:
+             | Resource Network ACL's aws_network_acl.ec2_nacl does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [aws_route_table.nondefault_1] (main.tf:79)
+     Violating Resource: [aws_route_table.nondefault_1]  (main.tf:79)
+
+     Evidence:
+             | Resource Route table aws_route_table.nondefault_1 does not have any tags set
+
+
+   - Exposed Resource: [aws_security_group.esdomain] (main.tf:92)
+     Violating Resource: [aws_security_group.esdomain]  (main.tf:92)
+
+     Evidence:
+             | Resource Security group aws_security_group.esdomain does not have any tags set
+
+
+   - Exposed Resource: [aws_security_group.publicly_accessible_sg] (main.tf:121)
+     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:121)
+
+     Evidence:
+             | Resource Security group aws_security_group.publicly_accessible_sg does not have any tags set
+
+
+   - Exposed Resource: [aws_elasticsearch_domain.test] (main.tf:107)
+     Violating Resource: [aws_elasticsearch_domain.test]  (main.tf:107)
+
+     Evidence:
+             | Resource ElasticSearch Domain aws_elasticsearch_domain.test does not have any tags set
+
+
+   - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
+     Violating Resource: [aws_instance.public_ins]  (main.tf:138)
+
+     Evidence:
+             | Resource EC2 Instance aws_instance.public_ins does not have any tags set
+
+
+   - Exposed Resource: [aws_subnet.nondefault_1] (main.tf:63)
+     Violating Resource: [aws_subnet.nondefault_1]  (main.tf:63)
+
+     Evidence:
+             | Resource Subnet aws_subnet.nondefault_1 does not have any tags set
+
+
+   - Exposed Resource: [aws_subnet.nondefault_2] (main.tf:69)
+     Violating Resource: [aws_subnet.nondefault_2]  (main.tf:69)
+
+     Evidence:
+             | Resource Subnet aws_subnet.nondefault_2 does not have any tags set
+
+
+   - Exposed Resource: [aws_vpc.nondefault] (main.tf:5)
+     Violating Resource: [aws_vpc.nondefault]  (main.tf:5)
+
+     Evidence:
+             | Resource VPC aws_vpc.nondefault does not have any tags set
+
+
+-----------------------------------------------
 Rule: Ensure all data stored in the Launch configuration EBS is securely encrypted
  - 1 Resources Exposed:
 -----------------------------------------------
@@ -426,3 +512,6 @@ Rule: Ensure Elasticsearch Domain enforces HTTPS
 
 
 -----------------------------------------------
+
+Cloudrail ran this assessment without any policies and so all rule violations show as warnings.
+You can increase a rule's enforcement level by creating a Policy in the Web UI and adding the rule to it.

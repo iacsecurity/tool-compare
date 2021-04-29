@@ -1,46 +1,69 @@
 
 WARNINGs found:
-Rule: Ensure VPC Endpoint for S3 is enabled in all VPCs
- - 5 Resources Exposed:
+Rule: Ensure all security groups and rules have a description detailing the rule
+ - 1 Resources Exposed:
 -----------------------------------------------
-   - Exposed Resource: [your-name-prefix-mzww] (Not found in TF)
-     Violating Resource: [aws_vpc.main-vpc]  (main.tf:11)
+   - Exposed Resource: [aws_security_group.sg] (main.tf:68)
+     Violating Resource: [aws_security_group.sg]  (main.tf:68)
 
      Evidence:
-         The VPC
-             | aws_vpc.main-vpc in region us-east-1 is in use but not leveraging S3 Endpoint Gateway
-
-
-   - Exposed Resource: [pingdummy-test-yi2020] (Not found in TF)
-     Violating Resource: [aws_vpc.main-vpc]  (main.tf:11)
-
-     Evidence:
-         The VPC
-             | aws_vpc.main-vpc in region us-east-1 is in use but not leveraging S3 Endpoint Gateway
-
-
-   - Exposed Resource: [consoleme-test-ld-logs] (Not found in TF)
-     Violating Resource: [aws_vpc.main-vpc]  (main.tf:11)
-
-     Evidence:
-         The VPC
-             | aws_vpc.main-vpc in region us-east-1 is in use but not leveraging S3 Endpoint Gateway
-
-
-   - Exposed Resource: [config-bucket-154724799477] (Not found in TF)
-     Violating Resource: [aws_vpc.main-vpc]  (main.tf:11)
-
-     Evidence:
-         The VPC
-             | aws_vpc.main-vpc in region us-east-1 is in use but not leveraging S3 Endpoint Gateway
-
-
-   - Exposed Resource: [cf-templates-phzfkcsb0pyx-us-west-2] (Not found in TF)
-     Violating Resource: [aws_vpc.main-vpc]  (main.tf:11)
-
-     Evidence:
-         The VPC
-             | aws_vpc.main-vpc in region us-east-1 is in use but not leveraging S3 Endpoint Gateway
+             | The Security group aws_security_group.sg does not have a non-default description
 
 
 -----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 7 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_network_acl.public-subnet-nacl] (main.tf:21)
+     Violating Resource: [aws_network_acl.public-subnet-nacl]  (main.tf:21)
+
+     Evidence:
+             | Resource Network ACL's aws_network_acl.public-subnet-nacl does not have any tags set
+
+
+   - Exposed Resource: [aws_route_table.public-subnet-rt] (main.tf:52)
+     Violating Resource: [aws_route_table.public-subnet-rt]  (main.tf:52)
+
+     Evidence:
+             | Resource Route table aws_route_table.public-subnet-rt does not have any tags set
+
+
+   - Exposed Resource: [aws_security_group.sg] (main.tf:68)
+     Violating Resource: [aws_security_group.sg]  (main.tf:68)
+
+     Evidence:
+             | Resource Security group aws_security_group.sg does not have any tags set
+
+
+   - Exposed Resource: [aws_ecs_task_definition.web-server-task-definition] (main.tf:93)
+     Violating Resource: [aws_ecs_task_definition.web-server-task-definition]  (main.tf:93)
+
+     Evidence:
+             | Resource ECS task definition aws_ecs_task_definition.web-server-task-definition does not have any tags set
+
+
+   - Exposed Resource: [aws_ecs_cluster.ecs-cluster] (main.tf:89)
+     Violating Resource: [aws_ecs_cluster.ecs-cluster]  (main.tf:89)
+
+     Evidence:
+             | Resource ECS cluster aws_ecs_cluster.ecs-cluster does not have any tags set
+
+
+   - Exposed Resource: [aws_subnet.main-public-subnet] (main.tf:15)
+     Violating Resource: [aws_subnet.main-public-subnet]  (main.tf:15)
+
+     Evidence:
+             | Resource Subnet aws_subnet.main-public-subnet does not have any tags set
+
+
+   - Exposed Resource: [aws_vpc.main-vpc] (main.tf:11)
+     Violating Resource: [aws_vpc.main-vpc]  (main.tf:11)
+
+     Evidence:
+             | Resource VPC aws_vpc.main-vpc does not have any tags set
+
+
+-----------------------------------------------
+
+Cloudrail ran this assessment without any policies and so all rule violations show as warnings.
+You can increase a rule's enforcement level by creating a Policy in the Web UI and adding the rule to it.

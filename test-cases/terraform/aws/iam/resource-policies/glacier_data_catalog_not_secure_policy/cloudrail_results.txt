@@ -1,17 +1,5 @@
 
 WARNINGs found:
-Rule: Ensure VPC Endpoint for S3 is enabled in all VPCs
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_s3_bucket.cloudrail] (main.tf:33)
-     Violating Resource: [my-vpc]  (Not found in TF)
-
-     Evidence:
-         The VPC
-             | my-vpc in region us-east-1 is in use but not leveraging S3 Endpoint Gateway
-
-
------------------------------------------------
 Rule: Ensure S3 buckets are set to be encrypted at rest
  - 1 Resources Exposed:
 -----------------------------------------------
@@ -52,14 +40,14 @@ Rule: Ensure use of Glue data catalog policy, and no action wildcards are being 
      Violating Resource: [aws_glue_resource_policy.example]  (main.tf:67)
 
      Evidence:
-             | The Glue Data Catalog resource policy in region us-east-1 is using wildcard action glue:*
+             | The Glue Data Catalog resource policy in region us-east-1 is using wildcard action glue:*, and principal AWS: *, without any condition
 
 
    - Exposed Resource: [aws_glue_catalog_table.cloudrail_table] (main.tf:9)
      Violating Resource: [aws_glue_resource_policy.example]  (main.tf:67)
 
      Evidence:
-             | The Glue Data Catalog resource policy in region us-east-1 is using wildcard action glue:*
+             | The Glue Data Catalog resource policy in region us-east-1 is using wildcard action glue:*, and principal AWS: *, without any condition
 
 
 -----------------------------------------------
@@ -84,13 +72,6 @@ Rule: Ensure all resources that can be tagged have at least one tag
              | Resource Glue crawler aws_glue_crawler.cloudrail_table_crawler does not have any tags set
 
 
-   - Exposed Resource: [aws_s3_bucket.cloudrail] (main.tf:33)
-     Violating Resource: [aws_s3_bucket.cloudrail]  (main.tf:33)
-
-     Evidence:
-             | Resource S3 Bucket aws_s3_bucket.cloudrail does not have any tags set
-
-
    - Exposed Resource: [aws_iam_role.cloudrail_glue_iam] (main.tf:14)
      Violating Resource: [aws_iam_role.cloudrail_glue_iam]  (main.tf:14)
 
@@ -98,4 +79,27 @@ Rule: Ensure all resources that can be tagged have at least one tag
              | Resource IAM Role aws_iam_role.cloudrail_glue_iam does not have any tags set
 
 
+   - Exposed Resource: [aws_s3_bucket.cloudrail] (main.tf:33)
+     Violating Resource: [aws_s3_bucket.cloudrail]  (main.tf:33)
+
+     Evidence:
+             | Resource S3 Bucket aws_s3_bucket.cloudrail does not have any tags set
+
+
 -----------------------------------------------
+Rule: Ensure IAM policies pass Access Analyzer policy validation without WARNING and SUGGESTION issues
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_glue_resource_policy.example] (main.tf:67)
+     Violating Resource: [aws_glue_resource_policy.example]  (main.tf:67)
+
+     Evidence:
+         Line 5, Col 13:
+             | Add a value to the empty string in the Sid element
+             | See https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-reference-policy-checks.html#access-analyzer-reference-policy-checks-suggestion-empty-sid-value
+
+
+-----------------------------------------------
+
+Cloudrail ran this assessment without any policies and so all rule violations show as warnings.
+You can increase a rule's enforcement level by creating a Policy in the Web UI and adding the rule to it.

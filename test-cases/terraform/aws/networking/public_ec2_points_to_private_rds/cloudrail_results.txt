@@ -462,18 +462,18 @@ Rule: Ensure all resources that can be tagged have at least one tag
              | Resource EC2 Instance aws_instance.public_ins does not have any tags set
 
 
-   - Exposed Resource: [aws_subnet.nondefault_2] (main.tf:74)
-     Violating Resource: [aws_subnet.nondefault_2]  (main.tf:74)
-
-     Evidence:
-             | Resource Subnet aws_subnet.nondefault_2 does not have any tags set
-
-
    - Exposed Resource: [aws_subnet.nondefault_1] (main.tf:68)
      Violating Resource: [aws_subnet.nondefault_1]  (main.tf:68)
 
      Evidence:
              | Resource Subnet aws_subnet.nondefault_1 does not have any tags set
+
+
+   - Exposed Resource: [aws_subnet.nondefault_2] (main.tf:74)
+     Violating Resource: [aws_subnet.nondefault_2]  (main.tf:74)
+
+     Evidence:
+             | Resource Subnet aws_subnet.nondefault_2 does not have any tags set
 
 
    - Exposed Resource: [aws_vpc.nondefault] (main.tf:10)
