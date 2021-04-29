@@ -1,0 +1,126 @@
+
+WARNINGs found:
+Rule: Ensure Neptune clusters being created are set to be encrypted at rest with customer-managed CMK
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_neptune_cluster.encrypted_neptune_cluster] (main.tf:66)
+     Violating Resource: [aws_neptune_cluster.encrypted_neptune_cluster]  (main.tf:66)
+
+     Evidence:
+             | The Neptune cluster aws_neptune_cluster.encrypted_neptune_cluster is not set to be encrypted at rest using customer-managed CMK
+
+
+-----------------------------------------------
+Rule: Ensure all security groups and rules have a description detailing the rule
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_security_group.free] (main.tf:18)
+     Violating Resource: [aws_security_group.free]  (main.tf:18)
+
+     Evidence:
+             | The Security group aws_security_group.free does not have a description for the ingress rule of 0.0.0.0/0 for ports 0:64000 using protocol TCP
+
+
+-----------------------------------------------
+Rule: Ensure Neptune database is not publicly accessible
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_neptune_cluster_instance.neptune_instance[1]] (main.tf:76)
+     Violating Resource: [aws_security_group.free]  (main.tf:18)
+
+     Evidence:
+         Internet
+             | Instance aws_neptune_cluster_instance.neptune_instance[1] is in Neptune DB Cluster aws_neptune_cluster.encrypted_neptune_cluster
+             | Neptune Instance is on VPC aws_vpc.external
+             | Neptune Instance uses subnet(s) aws_subnet.free_1, aws_subnet.free_2
+             | Neptune Instance is reachable from the internet due to subnet(s) and route table(s)
+             | Subnet uses Network ACL(s) nacl-pseudo-7ba94b65-1e6c-439c-b62c-11bfaaf8a8c7
+             | Network ACL's and security group(s) allows the Neptune Instance configured ports
+         Neptune Instance
+
+
+   - Exposed Resource: [aws_neptune_cluster_instance.neptune_instance[0]] (main.tf:76)
+     Violating Resource: [aws_security_group.free]  (main.tf:18)
+
+     Evidence:
+         Internet
+             | Instance aws_neptune_cluster_instance.neptune_instance[0] is in Neptune DB Cluster aws_neptune_cluster.encrypted_neptune_cluster
+             | Neptune Instance is on VPC aws_vpc.external
+             | Neptune Instance uses subnet(s) aws_subnet.free_1, aws_subnet.free_2
+             | Neptune Instance is reachable from the internet due to subnet(s) and route table(s)
+             | Subnet uses Network ACL(s) nacl-pseudo-7ba94b65-1e6c-439c-b62c-11bfaaf8a8c7
+             | Network ACL's and security group(s) allows the Neptune Instance configured ports
+         Neptune Instance
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 9 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_db_subnet_group.free] (main.tf:59)
+     Violating Resource: [aws_db_subnet_group.free]  (main.tf:59)
+
+     Evidence:
+             | Resource DB subnet group aws_db_subnet_group.free does not have any tags set
+
+
+   - Exposed Resource: [aws_route_table.rt] (main.tf:29)
+     Violating Resource: [aws_route_table.rt]  (main.tf:29)
+
+     Evidence:
+             | Resource Route table aws_route_table.rt does not have any tags set
+
+
+   - Exposed Resource: [aws_security_group.free] (main.tf:18)
+     Violating Resource: [aws_security_group.free]  (main.tf:18)
+
+     Evidence:
+             | Resource Security group aws_security_group.free does not have any tags set
+
+
+   - Exposed Resource: [aws_neptune_cluster_instance.neptune_instance[1]] (main.tf:76)
+     Violating Resource: [aws_neptune_cluster_instance.neptune_instance[1]]  (main.tf:76)
+
+     Evidence:
+             | Resource Neptune Instance aws_neptune_cluster_instance.neptune_instance[1] does not have any tags set
+
+
+   - Exposed Resource: [aws_neptune_cluster_instance.neptune_instance[0]] (main.tf:76)
+     Violating Resource: [aws_neptune_cluster_instance.neptune_instance[0]]  (main.tf:76)
+
+     Evidence:
+             | Resource Neptune Instance aws_neptune_cluster_instance.neptune_instance[0] does not have any tags set
+
+
+   - Exposed Resource: [aws_neptune_cluster.encrypted_neptune_cluster] (main.tf:66)
+     Violating Resource: [aws_neptune_cluster.encrypted_neptune_cluster]  (main.tf:66)
+
+     Evidence:
+             | Resource Neptune DB Cluster aws_neptune_cluster.encrypted_neptune_cluster does not have any tags set
+
+
+   - Exposed Resource: [aws_subnet.free_2] (main.tf:53)
+     Violating Resource: [aws_subnet.free_2]  (main.tf:53)
+
+     Evidence:
+             | Resource Subnet aws_subnet.free_2 does not have any tags set
+
+
+   - Exposed Resource: [aws_subnet.free_1] (main.tf:47)
+     Violating Resource: [aws_subnet.free_1]  (main.tf:47)
+
+     Evidence:
+             | Resource Subnet aws_subnet.free_1 does not have any tags set
+
+
+   - Exposed Resource: [aws_vpc.external] (main.tf:5)
+     Violating Resource: [aws_vpc.external]  (main.tf:5)
+
+     Evidence:
+             | Resource VPC aws_vpc.external does not have any tags set other than "Name"
+
+
+-----------------------------------------------
+
+Cloudrail ran this assessment without any policies and so all rule violations show as warnings.
+You can increase a rule's enforcement level by creating a Policy in the Web UI and adding the rule to it.

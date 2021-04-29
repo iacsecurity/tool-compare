@@ -1,0 +1,38 @@
+
+WARNINGs found:
+Rule: Ensure Secrets Manager secrets are encrypted at rest with customer-managed CMK
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_secretsmanager_secret.test] (main.tf:5)
+     Violating Resource: [aws_secretsmanager_secret.test]  (main.tf:5)
+
+     Evidence:
+             | The Secrets Manager secret test-cloudrail is not set to be encrypted at rest using customer-managed CMK
+
+
+-----------------------------------------------
+Rule: Ensure use of Secrets Manager secret policy, and no action wildcards are being used
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_secretsmanager_secret.test] (main.tf:5)
+     Violating Resource: [aws_secretsmanager_secret.test]  (main.tf:5)
+
+     Evidence:
+             | There is no resource policy or no statements attached to aws_secretsmanager_secret.test
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_secretsmanager_secret.test] (main.tf:5)
+     Violating Resource: [aws_secretsmanager_secret.test]  (main.tf:5)
+
+     Evidence:
+             | Resource Secrets Manager Secret aws_secretsmanager_secret.test does not have any tags set
+
+
+-----------------------------------------------
+
+Cloudrail ran this assessment without any policies and so all rule violations show as warnings.
+You can increase a rule's enforcement level by creating a Policy in the Web UI and adding the rule to it.

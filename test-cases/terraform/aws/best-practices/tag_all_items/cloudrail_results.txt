@@ -1,0 +1,56 @@
+
+WARNINGs found:
+Rule: Ensure SQS queues are set to be encrypted at rest
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_sqs_queue.cloudrail] (main.tf:12)
+     Violating Resource: [aws_sqs_queue.cloudrail]  (main.tf:12)
+
+     Evidence:
+             | The SQS queue aws_sqs_queue.cloudrail                             is not set to use encryption at rest
+
+
+-----------------------------------------------
+Rule: Ensure use of SQS queue policy, and no action wildcards are being used
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_sqs_queue.cloudrail] (main.tf:12)
+     Violating Resource: [aws_sqs_queue.cloudrail]  (main.tf:12)
+
+     Evidence:
+             | There is no resource policy or no statements attached to aws_sqs_queue.cloudrail
+
+
+-----------------------------------------------
+Rule: Ensure SNS topics are set to be encrypted at rest
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_sns_topic.cloudrail_1] (main.tf:5)
+     Violating Resource: [aws_sns_topic.cloudrail_1]  (main.tf:5)
+
+     Evidence:
+             | The SNS topic aws_sns_topic.cloudrail_1 is not set to use encryption at rest
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_sns_topic.cloudrail_1] (main.tf:5)
+     Violating Resource: [aws_sns_topic.cloudrail_1]  (main.tf:5)
+
+     Evidence:
+             | Resource SNS topic aws_sns_topic.cloudrail_1 does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [aws_sqs_queue.cloudrail] (main.tf:12)
+     Violating Resource: [aws_sqs_queue.cloudrail]  (main.tf:12)
+
+     Evidence:
+             | Resource SQS queue aws_sqs_queue.cloudrail does not have any tags set other than "Name"
+
+
+-----------------------------------------------
+
+Cloudrail ran this assessment without any policies and so all rule violations show as warnings.
+You can increase a rule's enforcement level by creating a Policy in the Web UI and adding the rule to it.

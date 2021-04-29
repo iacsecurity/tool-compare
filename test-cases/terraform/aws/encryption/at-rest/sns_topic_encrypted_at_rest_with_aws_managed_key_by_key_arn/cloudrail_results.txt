@@ -1,24 +1,24 @@
 
 WARNINGs found:
-Rule: Ensure IAM permissions are not given directly to users
+Rule: Ensure SNS topics are encrypted at rest with customer-managed CMK
  - 1 Resources Exposed:
 -----------------------------------------------
-   - Exposed Resource: [aws_iam_user.user-1] (main.tf:5)
-     Violating Resource: [aws_iam_policy.managed-policy]  (main.tf:9)
+   - Exposed Resource: [aws_sns_topic.test] (main.tf:9)
+     Violating Resource: [aws_sns_topic.test]  (main.tf:9)
 
      Evidence:
-             | The user aws_iam_user.user-1 has the policy aws_iam_policy.managed-policy  attached directly to it
+             | The SNS topic aws_sns_topic.test is not set to use encryption at rest using customer-managed CMK
 
 
 -----------------------------------------------
 Rule: Ensure all resources that can be tagged have at least one tag
  - 1 Resources Exposed:
 -----------------------------------------------
-   - Exposed Resource: [aws_iam_user.user-1] (main.tf:5)
-     Violating Resource: [aws_iam_user.user-1]  (main.tf:5)
+   - Exposed Resource: [aws_sns_topic.test] (main.tf:9)
+     Violating Resource: [aws_sns_topic.test]  (main.tf:9)
 
      Evidence:
-             | Resource IAM user aws_iam_user.user-1 does not have any tags set
+             | Resource SNS topic aws_sns_topic.test does not have any tags set
 
 
 -----------------------------------------------

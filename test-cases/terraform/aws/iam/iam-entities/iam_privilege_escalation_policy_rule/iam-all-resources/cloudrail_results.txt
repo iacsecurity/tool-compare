@@ -1,18 +1,5 @@
 
 WARNINGs found:
-Rule: Disallow IAM permissions which can lead to privilege escalation
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [test_for_cloudrail-demo-repo] (Not found in TF)
-     Violating Resource: [aws_iam_role_policy.policy]  (main.tf:25)
-
-     Evidence:
-         aws_iam_role_policy.policy
-             | is applied to arn:aws:iam::154724799477:role/role
-             | granting the problematic permissions {'iam: AttachUser*', 'iam:*'} which can allow for privilege escalation
-
-
------------------------------------------------
 Rule: Ensure all resources that can be tagged have at least one tag
  - 1 Resources Exposed:
 -----------------------------------------------
@@ -24,3 +11,46 @@ Rule: Ensure all resources that can be tagged have at least one tag
 
 
 -----------------------------------------------
+Rule: Ensure IAM policies pass Access Analyzer policy validation without WARNING and SUGGESTION issues
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_iam_role.role] (main.tf:5)
+     Violating Resource: [aws_iam_role.role]  (main.tf:5)
+
+     Evidence:
+         Line 10, Col 17:
+             | Add a value to the empty string in the Sid element
+             | See https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-reference-policy-checks.html#access-analyzer-reference-policy-checks-suggestion-empty-sid-value
+
+
+   - Exposed Resource: [aws_iam_role_policy.policy] (main.tf:25)
+     Violating Resource: [aws_iam_role_policy.policy]  (main.tf:25)
+
+     Evidence:
+         Line 6, Col 8:
+             | Using wildcards (*) in the action and the resource can allow creation of unintended service-linked roles because it allows iam:CreateServiceLinkedRole permissions on all resources
+             | We recommend that you specify resource ARNs instead
+             | See https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-reference-policy-checks.html#access-analyzer-reference-policy-checks-general-warning-create-slr-with-star-in-action-and-resource
+
+
+-----------------------------------------------
+Rule: Ensure IAM policies pass Access Analyzer policy validation without SECURITY and ERROR issues
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_iam_role_policy.policy] (main.tf:25)
+     Violating Resource: [aws_iam_role_policy.policy]  (main.tf:25)
+
+     Evidence:
+         Line 6, Col 8:
+             | Using wildcards (*) in the action and the resource can be overly permissive because it allows iam:PassRole permissions on all resources
+             | We recommend that you specify resource ARNs or add the iam:PassedToService condition key to your statement
+             | See https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-reference-policy-checks.html#access-analyzer-reference-policy-checks-security-warning-pass-role-with-star-in-action-and-resource
+         Line 6, Col 17:
+             | The action 'iam: AttachUser*' does not exist
+             | See https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-reference-policy-checks.html#access-analyzer-reference-policy-checks-error-invalid-action
+
+
+-----------------------------------------------
+
+Cloudrail ran this assessment without any policies and so all rule violations show as warnings.
+You can increase a rule's enforcement level by creating a Policy in the Web UI and adding the rule to it.
