@@ -1,19 +1,4 @@
 
-ERRORs found:
-Rule: Ensure all security groups and rules have a description detailing the rule
-Description: Cloudrail will review your security groups. If a security group is using a default description, or has a rule which does not include a description, this rule will trigger.
-Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html to update the security group or security group rules description field.
-Remediation Steps - Terraform: For the aws_security_group and aws_security_group_rule resources, set description argument with a proper value.
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_security_group.nondefault] (main.tf:9)
-     Violating Resource: [aws_security_group.nondefault]  (main.tf:9)
-
-     Evidence:
-             | The Security group aws_security_group.nondefault does not have a description for the ingress rule of 0.0.0.0/0 for ports 0:65000 using protocol tcp
-
-
------------------------------------------------
 WARNINGs found:
 Rule: Ensure RDS instances/clusters being created are set to be encrypted at rest
  - 1 Resources Exposed:
@@ -27,3 +12,81 @@ Rule: Ensure RDS instances/clusters being created are set to be encrypted at res
 
 
 -----------------------------------------------
+Rule: Ensure RDS cluster instances being created are set to encrypt the performance insights with customer-managed CMK
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_db_instance.test] (main.tf:60)
+     Violating Resource: [aws_db_instance.test]  (main.tf:60)
+
+     Evidence:
+             | The RDS cluster instance aws_db_instance.test is not set to be encrypted at rest using customer-managed CMK
+
+
+-----------------------------------------------
+Rule: Ensure all security groups and rules have a description detailing the rule
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_security_group.nondefault] (main.tf:9)
+     Violating Resource: [aws_security_group.nondefault]  (main.tf:9)
+
+     Evidence:
+             | The Security group aws_security_group.nondefault does not have a description for the ingress rule of 0.0.0.0/0 for ports 0:65000 using protocol TCP
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 7 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_db_subnet_group.nondefault] (main.tf:32)
+     Violating Resource: [aws_db_subnet_group.nondefault]  (main.tf:32)
+
+     Evidence:
+             | Resource DB subnet group aws_db_subnet_group.nondefault does not have any tags set
+
+
+   - Exposed Resource: [aws_route_table.nondefault] (main.tf:42)
+     Violating Resource: [aws_route_table.nondefault]  (main.tf:42)
+
+     Evidence:
+             | Resource Route table aws_route_table.nondefault does not have any tags set
+
+
+   - Exposed Resource: [aws_security_group.nondefault] (main.tf:9)
+     Violating Resource: [aws_security_group.nondefault]  (main.tf:9)
+
+     Evidence:
+             | Resource Security group aws_security_group.nondefault does not have any tags set
+
+
+   - Exposed Resource: [aws_db_instance.test] (main.tf:60)
+     Violating Resource: [aws_db_instance.test]  (main.tf:60)
+
+     Evidence:
+             | Resource RDS Instance aws_db_instance.test does not have any tags set
+
+
+   - Exposed Resource: [aws_subnet.nondefault_2] (main.tf:26)
+     Violating Resource: [aws_subnet.nondefault_2]  (main.tf:26)
+
+     Evidence:
+             | Resource Subnet aws_subnet.nondefault_2 does not have any tags set
+
+
+   - Exposed Resource: [aws_subnet.nondefault_1] (main.tf:20)
+     Violating Resource: [aws_subnet.nondefault_1]  (main.tf:20)
+
+     Evidence:
+             | Resource Subnet aws_subnet.nondefault_1 does not have any tags set
+
+
+   - Exposed Resource: [aws_vpc.nondefault] (main.tf:5)
+     Violating Resource: [aws_vpc.nondefault]  (main.tf:5)
+
+     Evidence:
+             | Resource VPC aws_vpc.nondefault does not have any tags set
+
+
+-----------------------------------------------
+
+Cloudrail ran this assessment without any policies and so all rule violations show as warnings.
+You can increase a rule's enforcement level by creating a Policy in the Web UI and adding the rule to it.

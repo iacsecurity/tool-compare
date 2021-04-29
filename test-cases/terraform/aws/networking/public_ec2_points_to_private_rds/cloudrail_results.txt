@@ -351,6 +351,17 @@ Rule: Ensure RDS instances/clusters being created are set to be encrypted at res
 
 
 -----------------------------------------------
+Rule: Ensure RDS cluster instances being created are set to encrypt the performance insights with customer-managed CMK
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_db_instance.test] (main.tf:113)
+     Violating Resource: [aws_db_instance.test]  (main.tf:113)
+
+     Evidence:
+             | The RDS cluster instance aws_db_instance.test is not set to be encrypted at rest using customer-managed CMK
+
+
+-----------------------------------------------
 Rule: Allow only private AMIs to be used
  - 1 Resources Exposed:
 -----------------------------------------------
@@ -380,6 +391,99 @@ Rule: Ensure all security groups and rules have a description detailing the rule
 
 
 -----------------------------------------------
+Rule: Ensure VPC Endpoint for EC2 is enabled in all VPCs in use
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.public_ins] (main.tf:146)
+     Violating Resource: [aws_vpc.nondefault]  (main.tf:10)
+
+     Evidence:
+             | The service EC2 is in use in region eu-central-1, but VPC aws_vpc.nondefault
+             | is not configured to use a VPC Endpoint for EC2
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 11 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_db_subnet_group.db] (main.tf:97)
+     Violating Resource: [aws_db_subnet_group.db]  (main.tf:97)
+
+     Evidence:
+             | Resource DB subnet group aws_db_subnet_group.db does not have any tags set
+
+
+   - Exposed Resource: [aws_network_acl.redshift_eni2_nacl] (main.tf:41)
+     Violating Resource: [aws_network_acl.redshift_eni2_nacl]  (main.tf:41)
+
+     Evidence:
+             | Resource Network ACL's aws_network_acl.redshift_eni2_nacl does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [aws_network_acl.ec2_nacl] (main.tf:14)
+     Violating Resource: [aws_network_acl.ec2_nacl]  (main.tf:14)
+
+     Evidence:
+             | Resource Network ACL's aws_network_acl.ec2_nacl does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [aws_route_table.nondefault_1] (main.tf:84)
+     Violating Resource: [aws_route_table.nondefault_1]  (main.tf:84)
+
+     Evidence:
+             | Resource Route table aws_route_table.nondefault_1 does not have any tags set
+
+
+   - Exposed Resource: [aws_security_group.publicly_accessible_sg] (main.tf:129)
+     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:129)
+
+     Evidence:
+             | Resource Security group aws_security_group.publicly_accessible_sg does not have any tags set
+
+
+   - Exposed Resource: [aws_security_group.db] (main.tf:103)
+     Violating Resource: [aws_security_group.db]  (main.tf:103)
+
+     Evidence:
+             | Resource Security group aws_security_group.db does not have any tags set
+
+
+   - Exposed Resource: [aws_db_instance.test] (main.tf:113)
+     Violating Resource: [aws_db_instance.test]  (main.tf:113)
+
+     Evidence:
+             | Resource RDS Instance aws_db_instance.test does not have any tags set
+
+
+   - Exposed Resource: [aws_instance.public_ins] (main.tf:146)
+     Violating Resource: [aws_instance.public_ins]  (main.tf:146)
+
+     Evidence:
+             | Resource EC2 Instance aws_instance.public_ins does not have any tags set
+
+
+   - Exposed Resource: [aws_subnet.nondefault_2] (main.tf:74)
+     Violating Resource: [aws_subnet.nondefault_2]  (main.tf:74)
+
+     Evidence:
+             | Resource Subnet aws_subnet.nondefault_2 does not have any tags set
+
+
+   - Exposed Resource: [aws_subnet.nondefault_1] (main.tf:68)
+     Violating Resource: [aws_subnet.nondefault_1]  (main.tf:68)
+
+     Evidence:
+             | Resource Subnet aws_subnet.nondefault_1 does not have any tags set
+
+
+   - Exposed Resource: [aws_vpc.nondefault] (main.tf:10)
+     Violating Resource: [aws_vpc.nondefault]  (main.tf:10)
+
+     Evidence:
+             | Resource VPC aws_vpc.nondefault does not have any tags set
+
+
+-----------------------------------------------
 Rule: Ensure all data stored in the Launch configuration EBS is securely encrypted
  - 1 Resources Exposed:
 -----------------------------------------------
@@ -391,3 +495,6 @@ Rule: Ensure all data stored in the Launch configuration EBS is securely encrypt
 
 
 -----------------------------------------------
+
+Cloudrail ran this assessment without any policies and so all rule violations show as warnings.
+You can increase a rule's enforcement level by creating a Policy in the Web UI and adding the rule to it.
