@@ -46,4 +46,4 @@ def print_category_test_case_table(path):
 
 
 if __name__ == "__main__":
-    recurse_dir("test-cases", 3)
+    recurse_dir("test-cases", 2)
