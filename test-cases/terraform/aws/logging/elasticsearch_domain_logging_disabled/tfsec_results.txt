@@ -1,0 +1,134 @@
+
+Problem 1
+
+  [AWS033][ERROR] Resource 'aws_elasticsearch_domain.example' defines an Elasticsearch domain with plaintext traffic (missing domain_endpoint_options block).
+  /src/main.tf:1-16
+
+       1 | resource "aws_elasticsearch_domain" "example" {
+       2 |   domain_name           = "example"
+       3 |   elasticsearch_version = "1.5"
+       4 | 
+       5 |   cluster_config {
+       6 |     instance_type = "r4.large.elasticsearch"
+       7 |   }
+       8 | 
+       9 |   snapshot_options {
+      10 |     automated_snapshot_start_hour = 23
+      11 |   }
+      12 | 
+      13 |   tags = {
+      14 |     Domain = "TestDomain"
+      15 |   }
+      16 | }
+      17 | 
+
+   See https://tfsec.dev/docs/aws/AWS033/ for more information. 
+
+Problem 2
+
+  [AWS055][ERROR] Resource 'aws_elasticsearch_domain.example' does not configure node to node encryption on the domain.
+  /src/main.tf:1-16
+
+       1 | resource "aws_elasticsearch_domain" "example" {
+       2 |   domain_name           = "example"
+       3 |   elasticsearch_version = "1.5"
+       4 | 
+       5 |   cluster_config {
+       6 |     instance_type = "r4.large.elasticsearch"
+       7 |   }
+       8 | 
+       9 |   snapshot_options {
+      10 |     automated_snapshot_start_hour = 23
+      11 |   }
+      12 | 
+      13 |   tags = {
+      14 |     Domain = "TestDomain"
+      15 |   }
+      16 | }
+      17 | 
+
+   See https://tfsec.dev/docs/aws/AWS055/ for more information. 
+
+Problem 3
+
+  [AWS057][ERROR] Resource 'aws_elasticsearch_domain.example' does not configure logging at rest on the domain.
+  /src/main.tf:1-16
+
+       1 | resource "aws_elasticsearch_domain" "example" {
+       2 |   domain_name           = "example"
+       3 |   elasticsearch_version = "1.5"
+       4 | 
+       5 |   cluster_config {
+       6 |     instance_type = "r4.large.elasticsearch"
+       7 |   }
+       8 | 
+       9 |   snapshot_options {
+      10 |     automated_snapshot_start_hour = 23
+      11 |   }
+      12 | 
+      13 |   tags = {
+      14 |     Domain = "TestDomain"
+      15 |   }
+      16 | }
+      17 | 
+
+   See https://tfsec.dev/docs/aws/AWS057/ for more information. 
+
+Problem 4
+
+  [AWS031][ERROR] Resource 'aws_elasticsearch_domain.example' defines an unencrypted Elasticsearch domain (missing encrypt_at_rest block).
+  /src/main.tf:1-16
+
+       1 | resource "aws_elasticsearch_domain" "example" {
+       2 |   domain_name           = "example"
+       3 |   elasticsearch_version = "1.5"
+       4 | 
+       5 |   cluster_config {
+       6 |     instance_type = "r4.large.elasticsearch"
+       7 |   }
+       8 | 
+       9 |   snapshot_options {
+      10 |     automated_snapshot_start_hour = 23
+      11 |   }
+      12 | 
+      13 |   tags = {
+      14 |     Domain = "TestDomain"
+      15 |   }
+      16 | }
+      17 | 
+
+   See https://tfsec.dev/docs/aws/AWS031/ for more information. 
+
+Problem 5
+
+  [AWS032][ERROR] Resource 'aws_elasticsearch_domain.example' defines an Elasticsearch domain with plaintext traffic (missing node_to_node_encryption block).
+  /src/main.tf:1-16
+
+       1 | resource "aws_elasticsearch_domain" "example" {
+       2 |   domain_name           = "example"
+       3 |   elasticsearch_version = "1.5"
+       4 | 
+       5 |   cluster_config {
+       6 |     instance_type = "r4.large.elasticsearch"
+       7 |   }
+       8 | 
+       9 |   snapshot_options {
+      10 |     automated_snapshot_start_hour = 23
+      11 |   }
+      12 | 
+      13 |   tags = {
+      14 |     Domain = "TestDomain"
+      15 |   }
+      16 | }
+      17 | 
+
+   See https://tfsec.dev/docs/aws/AWS032/ for more information. 
+
+  disk i/o             25.281ms
+  parsing HCL          540µs
+  evaluating values    1.12ms
+  running checks       19.794ms
+  files loaded         1
+
+5 potential problems detected.
+

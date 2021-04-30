@@ -1,0 +1,70 @@
+
+                   .0MO.                                    
+                   OMMMx                                    
+                   ;NMX;                                    
+                    ...           ...              ....     
+WMMMd     cWMMM0.  KMMMO      ;xKWMMMMNOc.     ,xXMMMMMWXkc.
+WMMMd   .0MMMN:    KMMMO    :XMMMMMMMMMMMWl   xMMMMMWMMMMMMl
+WMMMd  lWMMMO.     KMMMO   xMMMMKc...'lXMk   ,MMMMx   .;dXx 
+WMMMd.0MMMX;       KMMMO  cMMMMd        '    'MMMMNl'       
+WMMMNWMMMMl        KMMMO  0MMMN               oMMMMMMMXkl.  
+WMMMMMMMMMMo       KMMMO  0MMMX                .ckKWMMMMMM0.
+WMMMMWokMMMMk      KMMMO  oMMMMc              .     .:OMMMM0
+WMMMK.  dMMMM0.    KMMMO   KMMMMx'    ,kNc   :WOc.    .NMMMX
+WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
+WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
+xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
+
+
+Scanning with Keeping Infrastructure as Code Secure v1.2.4
+
+
+
+Files scanned: 1
+Parsed files: 1
+Queries loaded: 1386
+Queries failed to execute: 0
+
+------------------------------------
+
+ALB Is Not Integrated With WAF, Severity: MEDIUM, Results: 4
+Description: All Application Load Balancers (ALB) must be protected with Web Application Firewall (WAF) service
+Platform: Terraform
+
+	[1]: /src/main.tf:33
+
+		032: 
+		033: resource "aws_alb" "default" {
+		034:   internal           = false
+
+
+	[2]: /src/main.tf:49
+
+		048: 
+		049: resource "aws_alb" "disabled" {
+		050:   internal           = false
+
+
+	[3]: /src/main.tf:26
+
+		025: 
+		026: resource "aws_lb" "default" {
+		027:   internal           = false
+
+
+	[4]: /src/main.tf:40
+
+		039: 
+		040: resource "aws_lb" "disabled" {
+		041:   internal           = false
+
+
+
+Results Summary:
+HIGH: 0
+MEDIUM: 4
+LOW: 0
+INFO: 0
+TOTAL: 4
+
+Scan duration: 30.022306263s

@@ -1,0 +1,24 @@
+
+Problem 1
+
+  [AWS011][WARNING] Resource 'aws_dms_replication_instance.test' is exposed publicly.
+  /src/main.tf:65
+
+      62 |   kms_key_arn                  = "arn:aws:kms:us-east-1:123456789012:key/12345678-1234-1234-1234-123456789012"
+      63 |   multi_az                     = false
+      64 |   preferred_maintenance_window = "sun:10:30-sun:14:30"
+      65 |   publicly_accessible          = true
+      66 |   replication_instance_class   = "dms.t2.micro"
+      67 |   replication_instance_id      = "test-dms-replication-instance-tf"
+      68 |   replication_subnet_group_id  = aws_dms_replication_subnet_group.test.replication_subnet_group_id
+
+   See https://tfsec.dev/docs/aws/AWS011/ for more information. 
+
+  disk i/o             24.204ms
+  parsing HCL          500µs
+  evaluating values    3.474ms
+  running checks       6.839ms
+  files loaded         1
+
+1 potential problems detected.
+

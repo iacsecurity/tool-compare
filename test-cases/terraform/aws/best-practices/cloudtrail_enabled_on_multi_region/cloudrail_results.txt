@@ -1,0 +1,78 @@
+
+WARNINGs found:
+Rule: Ensure S3 buckets are set to be encrypted at rest
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.foo] (main.tf:10)
+     Violating Resource: [aws_s3_bucket.foo]  (main.tf:10)
+
+     Evidence:
+             | The S3 Bucket aws_s3_bucket.foo is not set to be encrypted at rest
+
+
+-----------------------------------------------
+Rule: Ensure S3 buckets have versioning enabled
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.foo] (main.tf:10)
+     Violating Resource: [aws_s3_bucket.foo]  (main.tf:10)
+
+     Evidence:
+             | The S3 Bucket aws_s3_bucket.foo does not have versioning enabled
+
+
+-----------------------------------------------
+Rule: Ensure CloudTrail trails are set to be encrypted at rest using SSE-KMS
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_cloudtrail.foobar] (main.tf:3)
+     Violating Resource: [aws_cloudtrail.foobar]  (main.tf:3)
+
+     Evidence:
+             | The CloudTrail trail aws_cloudtrail.foobar is not set to use encryption at rest with KMS CMK
+
+
+-----------------------------------------------
+Rule: Enforce use of HTTPS in S3 bucket policy
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.foo] (main.tf:10)
+     Violating Resource: [aws_s3_bucket.foo]  (main.tf:10)
+
+     Evidence:
+             | The S3 Bucket aws_s3_bucket.foo does not have a policy with the aws:SecureTransport condition
+
+
+-----------------------------------------------
+Rule: Ensure CloudTrail trails have log validation enabled
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_cloudtrail.foobar] (main.tf:3)
+     Violating Resource: [aws_cloudtrail.foobar]  (main.tf:3)
+
+     Evidence:
+             | The CloudTrail trail aws_cloudtrail.foobar does not have log validation enabled
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_cloudtrail.foobar] (main.tf:3)
+     Violating Resource: [aws_cloudtrail.foobar]  (main.tf:3)
+
+     Evidence:
+             | Resource CloudTrail aws_cloudtrail.foobar does not have any tags set
+
+
+   - Exposed Resource: [aws_s3_bucket.foo] (main.tf:10)
+     Violating Resource: [aws_s3_bucket.foo]  (main.tf:10)
+
+     Evidence:
+             | Resource S3 Bucket aws_s3_bucket.foo does not have any tags set
+
+
+-----------------------------------------------
+
+Cloudrail ran this assessment without any policies and so all rule violations show as warnings.
+You can increase a rule's enforcement level by creating a Policy in the Web UI and adding the rule to it.

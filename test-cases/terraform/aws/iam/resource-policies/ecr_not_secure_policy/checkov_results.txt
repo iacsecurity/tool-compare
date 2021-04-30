@@ -1,0 +1,41 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.87 
+
+terraform scan results:
+
+Passed checks: 1, Failed checks: 2, Skipped checks: 0
+
+Check: CKV_AWS_51: "Ensure ECR Image Tags are immutable"
+	FAILED for resource: aws_ecr_repository.foo
+	File: /main.tf:1-8
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_24
+
+		1 | resource "aws_ecr_repository" "foo" {
+		2 |   name                 = "bar"
+		3 |   image_tag_mutability = "MUTABLE"
+		4 | 
+		5 |   image_scanning_configuration {
+		6 |     scan_on_push = true
+		7 |   }
+		8 | }
+
+Check: CKV_AWS_136: "Ensure that ECR repositories are encrypted using KMS"
+	FAILED for resource: aws_ecr_repository.foo
+	File: /main.tf:1-8
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-ecr-repositories-are-encrypted
+
+		1 | resource "aws_ecr_repository" "foo" {
+		2 |   name                 = "bar"
+		3 |   image_tag_mutability = "MUTABLE"
+		4 | 
+		5 |   image_scanning_configuration {
+		6 |     scan_on_push = true
+		7 |   }
+		8 | }
+

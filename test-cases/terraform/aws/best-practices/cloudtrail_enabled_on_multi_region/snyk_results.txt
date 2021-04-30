@@ -1,0 +1,269 @@
+Failed to run the process ...
+{
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "ignoreSettings": null,
+    "org": "y",
+    "projectId": "",
+    "policy": ""
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "/project/main.tf",
+  "projectName": "project",
+  "org": "y",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
+  "infrastructureAsCodeIssues": [
+    {
+      "resolve": "Set `is_multi_region_trail` attribute to `true`",
+      "id": "SNYK-CC-TF-135",
+      "impact": "Logs will only be capture for current region (region specified in terraform provider)",
+      "subType": "CloudTrail",
+      "policyEngineType": "opa",
+      "publicId": "SNYK-CC-TF-135",
+      "title": "CloudTrail does not include all regions",
+      "severity": "low",
+      "msg": "resource.aws_cloudtrail[foobar].is_multi_region_trail",
+      "issue": "Amazon CloudTrail is not enabled for all regions",
+      "type": "terraform",
+      "references": [
+        "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/receive-cloudtrail-log-files-from-multiple-regions.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Amazon CloudTrail is not enabled for all regions",
+        "impact": "Logs will only be capture for current region (region specified in terraform provider)",
+        "resolve": "Set `is_multi_region_trail` attribute to `true`"
+      },
+      "lineNumber": 3,
+      "path": [
+        "resource",
+        "aws_cloudtrail[foobar]",
+        "is_multi_region_trail"
+      ]
+    },
+    {
+      "resolve": "Set `versioning.mfa_delete` attribute to `true`",
+      "id": "SNYK-CC-TF-127",
+      "impact": "Object could be deleted without stronger MFA authorization",
+      "subType": "S3",
+      "policyEngineType": "opa",
+      "publicId": "SNYK-CC-TF-127",
+      "title": "S3 bucket MFA delete control disabled",
+      "severity": "low",
+      "msg": "resource.aws_s3_bucket[foo].versioning.mfa_delete",
+      "issue": "S3 bucket will not enforce MFA login on delete requests",
+      "type": "terraform",
+      "references": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/dev/Versioning.html",
+        "https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingMFADelete.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "S3 bucket will not enforce MFA login on delete requests",
+        "impact": "Object could be deleted without stronger MFA authorization",
+        "resolve": "Set `versioning.mfa_delete` attribute to `true`"
+      },
+      "lineNumber": 10,
+      "path": [
+        "resource",
+        "aws_s3_bucket[foo]",
+        "versioning",
+        "mfa_delete"
+      ]
+    },
+    {
+      "resolve": "Set `cloud_watch_logs_group_arn` attribute to cloudwatch log group ARN",
+      "id": "SNYK-CC-TF-256",
+      "impact": "Alarms cannot be configured to alert on CloudTrail events",
+      "subType": "CloudTrail",
+      "policyEngineType": "opa",
+      "publicId": "SNYK-CC-TF-256",
+      "title": "CloudTrail not integrated with CloudWatch",
+      "severity": "low",
+      "msg": "resource.aws_cloudtrail[foobar].cloud_watch_logs_group_arn",
+      "issue": "CloudTrail does not deliver logs to CloudWatch",
+      "type": "terraform",
+      "references": [
+        "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/send-cloudtrail-events-to-cloudwatch-logs.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "CloudTrail does not deliver logs to CloudWatch",
+        "impact": "Alarms cannot be configured to alert on CloudTrail events",
+        "resolve": "Set `cloud_watch_logs_group_arn` attribute to cloudwatch log group ARN"
+      },
+      "lineNumber": 3,
+      "path": [
+        "resource",
+        "aws_cloudtrail[foobar]",
+        "cloud_watch_logs_group_arn"
+      ]
+    },
+    {
+      "resolve": "Set `server_side_encryption_configuration` block attribute",
+      "id": "SNYK-CC-TF-4",
+      "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+      "remediation": {
+        "cloudformation": "Set `BucketEncryption` attribute",
+        "terraform": "Set `server_side_encryption_configuration` block attribute"
+      },
+      "subType": "S3",
+      "policyEngineType": "opa",
+      "publicId": "SNYK-CC-TF-4",
+      "title": "Non-encrypted S3 Bucket",
+      "severity": "medium",
+      "msg": "input.resource.aws_s3_bucket[foo]",
+      "issue": "That by default S3 buckets do not encrypt the objects that are stored.",
+      "type": "terraform",
+      "references": [],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "That by default S3 buckets do not encrypt the objects that are stored.",
+        "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+        "resolve": "Set `server_side_encryption_configuration` block attribute"
+      },
+      "lineNumber": 10,
+      "path": [
+        "input",
+        "resource",
+        "aws_s3_bucket[foo]"
+      ]
+    },
+    {
+      "resolve": "Set `kms_key_id` attribute to valid KMS key id",
+      "id": "SNYK-CC-TF-17",
+      "impact": "IAM policies cannot be used to control access to the decryption keys",
+      "remediation": {
+        "cloudformation": "Set `KMSKeyId` attribute to valid KMS key id",
+        "terraform": "Set `kms_key_id` attribute to valid KMS key id"
+      },
+      "subType": "CloudTrail",
+      "policyEngineType": "opa",
+      "publicId": "SNYK-CC-TF-17",
+      "title": "CloudTrail logs are not encrypted with managed key",
+      "severity": "low",
+      "msg": "input.resource.aws_cloudtrail[foobar].kms_key_id",
+      "issue": "The CloudTrail logs are not encrypted with managed key",
+      "type": "terraform",
+      "references": [
+        "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/encrypting-cloudtrail-log-files-with-aws-kms.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "The CloudTrail logs are not encrypted with managed key",
+        "impact": "IAM policies cannot be used to control access to the decryption keys",
+        "resolve": "Set `kms_key_id` attribute to valid KMS key id"
+      },
+      "lineNumber": 3,
+      "path": [
+        "input",
+        "resource",
+        "aws_cloudtrail[foobar]",
+        "kms_key_id"
+      ]
+    },
+    {
+      "resolve": "Add `logging` block attribute",
+      "id": "SNYK-CC-TF-45",
+      "impact": "There will be no audit trail of access to s3 objects",
+      "remediation": {
+        "cloudformation": "Set `Properties.LoggingConfiguration` attribute",
+        "terraform": "Add `logging` block attribute"
+      },
+      "subType": "S3",
+      "policyEngineType": "opa",
+      "publicId": "SNYK-CC-TF-45",
+      "title": "S3 server access logging is disabled",
+      "severity": "low",
+      "msg": "input.resource.aws_s3_bucket[foo].logging",
+      "issue": "The s3 access logs will not be collected",
+      "type": "terraform",
+      "references": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerLogs.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "The s3 access logs will not be collected",
+        "impact": "There will be no audit trail of access to s3 objects",
+        "resolve": "Add `logging` block attribute"
+      },
+      "lineNumber": 10,
+      "path": [
+        "input",
+        "resource",
+        "aws_s3_bucket[foo]",
+        "logging"
+      ]
+    },
+    {
+      "resolve": "Set the `enable_log_file_validation` attribute to `true`",
+      "id": "SNYK-CC-TF-16",
+      "impact": "You cannot trust the integrity of the log files and determine whether they have been tampered with.",
+      "remediation": {
+        "cloudformation": "Set the `Properties.EnableLogFileValidation` attribute to `true`",
+        "terraform": "Set the `enable_log_file_validation` attribute to `true`"
+      },
+      "subType": "CloudTrail",
+      "policyEngineType": "opa",
+      "publicId": "SNYK-CC-TF-16",
+      "title": "CloudTrail does not have log file validation enabled",
+      "severity": "medium",
+      "msg": "input.resource.aws_cloudtrail[foobar].enable_log_file_validation",
+      "issue": "The CloudTrail logs integrity is not been enforced",
+      "type": "terraform",
+      "references": [],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "The CloudTrail logs integrity is not been enforced",
+        "impact": "You cannot trust the integrity of the log files and determine whether they have been tampered with.",
+        "resolve": "Set the `enable_log_file_validation` attribute to `true`"
+      },
+      "lineNumber": 3,
+      "path": [
+        "input",
+        "resource",
+        "aws_cloudtrail[foobar]",
+        "enable_log_file_validation"
+      ]
+    },
+    {
+      "resolve": "Set `versioning.enabled` attribute to `true`",
+      "id": "SNYK-CC-TF-124",
+      "impact": "Changes or deletion of objects will not be reversible",
+      "subType": "S3",
+      "policyEngineType": "opa",
+      "publicId": "SNYK-CC-TF-124",
+      "title": "S3 bucket versioning disabled",
+      "severity": "low",
+      "msg": "resource.aws_s3_bucket[foo].versioning.enabled",
+      "issue": "S3 bucket versioning is disabled",
+      "type": "terraform",
+      "references": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/dev/Versioning.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "S3 bucket versioning is disabled",
+        "impact": "Changes or deletion of objects will not be reversible",
+        "resolve": "Set `versioning.enabled` attribute to `true`"
+      },
+      "lineNumber": 10,
+      "path": [
+        "resource",
+        "aws_s3_bucket[foo]",
+        "versioning",
+        "enabled"
+      ]
+    }
+  ]
+}

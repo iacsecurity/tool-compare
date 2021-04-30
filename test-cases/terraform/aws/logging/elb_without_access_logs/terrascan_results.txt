@@ -1,0 +1,24 @@
+
+
+Violation Details -
+    
+	Description    :	AWS ELB incoming traffic not encrypted
+	File           :	main.tf
+	Line           :	1
+	Severity       :	LOW
+	
+	-----------------------------------------------------------------------
+	
+
+Scan Summary -
+
+	File/Folder         :	tool-compare/test-cases/terraform/aws/logging/elb_without_access_logs
+	IaC Type            :	terraform
+	Scanned At          :	2021-04-30 19:28:30.324921 +0000 UTC
+	Policies Validated  :	561
+	Violated Policies   :	1
+	Low                 :	1
+	Medium              :	0
+	High                :	0
+	
+

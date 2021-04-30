@@ -1,0 +1,28 @@
+
+Problem 1
+
+  [AWS061][ERROR] Resource 'aws_api_gateway_stage.api_gw_stage' .
+  /src/main.tf:44-48
+
+      41 |   }
+      42 | }
+      43 | 
+      44 | resource "aws_api_gateway_stage" "api_gw_stage" {
+      45 |   stage_name    = "prod"
+      46 |   rest_api_id   = aws_api_gateway_rest_api.api_gw.id
+      47 |   deployment_id = aws_api_gateway_deployment.api_gw_deploy.id
+      48 | }
+      49 | 
+      50 | resource "aws_api_gateway_method_settings" "api_gw_method_sett" {
+      51 |   rest_api_id = aws_api_gateway_rest_api.api_gw.id
+
+   See https://tfsec.dev/docs/aws/AWS061/ for more information. 
+
+  disk i/o             29.495ms
+  parsing HCL          506µs
+  evaluating values    3.663ms
+  running checks       5.36ms
+  files loaded         1
+
+1 potential problems detected.
+

@@ -1,0 +1,24 @@
+
+
+Violation Details -
+    
+	Description    :	Enable AWS CloudWatch Logs for APIs
+	File           :	main.tf
+	Line           :	44
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+
+Scan Summary -
+
+	File/Folder         :	tool-compare/test-cases/terraform/aws/iam/resource-authentication/rest_api_without_authorization
+	IaC Type            :	terraform
+	Scanned At          :	2021-04-30 19:28:22.44393 +0000 UTC
+	Policies Validated  :	561
+	Violated Policies   :	1
+	Low                 :	0
+	Medium              :	1
+	High                :	0
+	
+

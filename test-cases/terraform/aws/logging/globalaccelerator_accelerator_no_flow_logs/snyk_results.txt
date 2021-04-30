@@ -1,0 +1,56 @@
+Failed to run the process ...
+{
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "ignoreSettings": null,
+    "org": "y",
+    "projectId": "",
+    "policy": ""
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "/project/main.tf",
+  "projectName": "project",
+  "org": "y",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
+  "infrastructureAsCodeIssues": [
+    {
+      "resolve": "Set `attributes.flow_logs_enabled` attribute to `true`",
+      "id": "SNYK-CC-TF-137",
+      "impact": "Audit records may not be available during investigation",
+      "subType": "Global Accelerator",
+      "policyEngineType": "opa",
+      "publicId": "SNYK-CC-TF-137",
+      "title": "Global Accelerator flow logs disabled",
+      "severity": "low",
+      "msg": "resource.aws_globalaccelerator_accelerator[example].attributes.flow_logs_enabled",
+      "issue": "Amazon Global Accelerator flow logs are disabled",
+      "type": "terraform",
+      "references": [
+        "https://docs.aws.amazon.com/global-accelerator/latest/dg/monitoring-global-accelerator.flow-logs.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Amazon Global Accelerator flow logs are disabled",
+        "impact": "Audit records may not be available during investigation",
+        "resolve": "Set `attributes.flow_logs_enabled` attribute to `true`"
+      },
+      "lineNumber": 6,
+      "path": [
+        "resource",
+        "aws_globalaccelerator_accelerator[example]",
+        "attributes",
+        "flow_logs_enabled"
+      ]
+    }
+  ]
+}

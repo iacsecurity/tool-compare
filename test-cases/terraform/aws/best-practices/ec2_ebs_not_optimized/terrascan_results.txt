@@ -1,0 +1,31 @@
+
+
+Violation Details -
+    
+	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
+	File           :	main.tf
+	Line           :	17
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that your AWS application is not deployed within the default Virtual Private Cloud in order to follow security best practices
+	File           :	main.tf
+	Line           :	17
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+
+Scan Summary -
+
+	File/Folder         :	tool-compare/test-cases/terraform/aws/best-practices/ec2_ebs_not_optimized
+	IaC Type            :	terraform
+	Scanned At          :	2021-04-30 19:28:36.65776 +0000 UTC
+	Policies Validated  :	561
+	Violated Policies   :	2
+	Low                 :	0
+	Medium              :	2
+	High                :	0
+	
+

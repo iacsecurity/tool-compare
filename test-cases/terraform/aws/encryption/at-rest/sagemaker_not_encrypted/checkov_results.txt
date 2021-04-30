@@ -1,0 +1,29 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.87 
+
+terraform scan results:
+
+Passed checks: 3, Failed checks: 1, Skipped checks: 0
+
+Check: CKV_AWS_22: "Ensure all data stored in the Sagemaker Notebook is securely encrypted at rest"
+	FAILED for resource: aws_sagemaker_notebook_instance.ni
+	File: /main.tf:23-31
+	Guide: https://docs.bridgecrew.io/docs/general_14
+
+		23 | resource "aws_sagemaker_notebook_instance" "ni" {
+		24 |   name          = "my-notebook-instance"
+		25 |   role_arn      = aws_iam_role.test_role.arn
+		26 |   instance_type = "ml.t2.medium"
+		27 | 
+		28 |   tags = {
+		29 |     Name = "foo"
+		30 |   }
+		31 | }
+
+

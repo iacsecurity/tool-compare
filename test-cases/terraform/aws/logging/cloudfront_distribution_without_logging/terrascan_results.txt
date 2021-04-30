@@ -1,0 +1,45 @@
+
+
+Violation Details -
+    
+	Description    :	Ensure that cloud-front has web application firewall enabled
+	File           :	main.tf
+	Line           :	14
+	Severity       :	Medium
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	S3 bucket Access is allowed to all AWS Account Users.
+	File           :	main.tf
+	Line           :	1
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Enabling S3 versioning will enable easy recovery from both unintended user actions, like deletes and overwrites
+	File           :	main.tf
+	Line           :	1
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that your AWS Cloudfront distributions have the Logging feature enabled in order to track all viewer requests for the content delivered through the Content Delivery Network (CDN).
+	File           :	main.tf
+	Line           :	14
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+
+Scan Summary -
+
+	File/Folder         :	tool-compare/test-cases/terraform/aws/logging/cloudfront_distribution_without_logging
+	IaC Type            :	terraform
+	Scanned At          :	2021-04-30 19:28:28.534206 +0000 UTC
+	Policies Validated  :	561
+	Violated Policies   :	4
+	Low                 :	0
+	Medium              :	2
+	High                :	2
+	
+

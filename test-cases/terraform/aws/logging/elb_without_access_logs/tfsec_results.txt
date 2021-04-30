@@ -1,0 +1,28 @@
+
+Problem 1
+
+  [AWS005][WARNING] Resource 'aws_elb.test' is exposed publicly.
+  /src/main.tf:1-10
+
+       1 | resource "aws_elb" "test" {
+       2 |   name = "test-lb-tf"
+       3 |   availability_zones = ["us-west-2a", "us-west-2b", "us-west-2c"]
+       4 |   listener {
+       5 |     instance_port     = 8000
+       6 |     instance_protocol = "http"
+       7 |     lb_port           = 80
+       8 |     lb_protocol       = "http"
+       9 |   }
+      10 | }
+      11 | 
+
+   See https://tfsec.dev/docs/aws/AWS005/ for more information. 
+
+  disk i/o             28.74ms
+  parsing HCL          499µs
+  evaluating values    1.185ms
+  running checks       5.824ms
+  files loaded         1
+
+1 potential problems detected.
+

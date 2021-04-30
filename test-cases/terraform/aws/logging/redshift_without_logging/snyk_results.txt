@@ -1,0 +1,84 @@
+Failed to run the process ...
+{
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "ignoreSettings": null,
+    "org": "y",
+    "projectId": "",
+    "policy": ""
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "/project/main.tf",
+  "projectName": "project",
+  "org": "y",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
+  "infrastructureAsCodeIssues": [
+    {
+      "resolve": "Set `encrypted` attribute to `true`.",
+      "id": "SNYK-CC-TF-108",
+      "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+      "subType": "Redshift",
+      "policyEngineType": "opa",
+      "publicId": "SNYK-CC-TF-108",
+      "title": "Non-encrypted Redshift DB at rest",
+      "severity": "medium",
+      "msg": "resource.aws_redshift_cluster[default].encrypted",
+      "issue": "Redshift DB is not encrypted",
+      "type": "terraform",
+      "references": [
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/redshift_cluster#encrypted",
+        "https://docs.aws.amazon.com/redshift/latest/mgmt/security-server-side-encryption.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Redshift DB is not encrypted",
+        "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+        "resolve": "Set `encrypted` attribute to `true`."
+      },
+      "lineNumber": 1,
+      "path": [
+        "resource",
+        "aws_redshift_cluster[default]",
+        "encrypted"
+      ]
+    },
+    {
+      "resolve": "Set `logging.enabled` attribute to `true`",
+      "id": "SNYK-CC-TF-136",
+      "impact": "Audit records may not be available during investigation",
+      "subType": "Redshift",
+      "policyEngineType": "opa",
+      "publicId": "SNYK-CC-TF-136",
+      "title": "Redshift cluster logging disabled",
+      "severity": "low",
+      "msg": "resource.aws_redshift_cluster[default].logging",
+      "issue": "Amazon Redshift cluster logging is not enabled",
+      "type": "terraform",
+      "references": [
+        "https://docs.aws.amazon.com/redshift/latest/mgmt/db-auditing.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Amazon Redshift cluster logging is not enabled",
+        "impact": "Audit records may not be available during investigation",
+        "resolve": "Set `logging.enabled` attribute to `true`"
+      },
+      "lineNumber": 1,
+      "path": [
+        "resource",
+        "aws_redshift_cluster[default]",
+        "logging"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+
+Problem 1
+
+  [AWS023][ERROR] Resource 'aws_ecr_repository.foo' defines a disabled ECR image scan.
+  /src/main.tf:6
+
+       3 |   image_tag_mutability = "MUTABLE"
+       4 | 
+       5 |   image_scanning_configuration {
+       6 |     scan_on_push = false
+       7 |   }
+       8 | }
+       9 | 
+
+   See https://tfsec.dev/docs/aws/AWS023/ for more information. 
+
+  disk i/o             24.229ms
+  parsing HCL          514µs
+  evaluating values    1.236ms
+  running checks       6.46ms
+  files loaded         1
+
+1 potential problems detected.
+

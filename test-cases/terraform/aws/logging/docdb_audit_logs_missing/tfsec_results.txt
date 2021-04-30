@@ -1,0 +1,24 @@
+
+Problem 1
+
+  [GEN003][WARNING] Block 'aws_docdb_cluster.docdb' includes a potentially sensitive attribute which is defined within the project.
+  /src/main.tf:5
+
+       2 |   cluster_identifier      = "my-docdb-cluster"
+       3 |   engine                  = "docdb"
+       4 |   master_username         = "foo"
+       5 |   master_password         = "mustbeeightchars"
+       6 |   backup_retention_period = 5
+       7 |   preferred_backup_window = "07:00-09:00"
+       8 |   skip_final_snapshot     = true
+
+   See https://tfsec.dev/docs/general/GEN003/ for more information. 
+
+  disk i/o             19.765ms
+  parsing HCL          486µs
+  evaluating values    1.426ms
+  running checks       5.923ms
+  files loaded         1
+
+1 potential problems detected.
+

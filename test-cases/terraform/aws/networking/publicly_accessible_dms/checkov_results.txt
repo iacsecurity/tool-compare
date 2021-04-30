@@ -1,0 +1,38 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.87 
+
+terraform scan results:
+
+Passed checks: 13, Failed checks: 1, Skipped checks: 0
+
+Check: CKV_AWS_89: "DMS replication instance should not be publicly accessible"
+	FAILED for resource: aws_dms_replication_instance.test
+	File: /main.tf:56-73
+	Guide: https://docs.bridgecrew.io/docs/public_13
+
+		56 | resource "aws_dms_replication_instance" "test" {
+		57 |   allocated_storage            = 20
+		58 |   apply_immediately            = true
+		59 |   auto_minor_version_upgrade   = true
+		60 |   availability_zone            = "us-west-2c"
+		61 |   engine_version               = "3.1.4"
+		62 |   kms_key_arn                  = "arn:aws:kms:us-east-1:123456789012:key/12345678-1234-1234-1234-123456789012"
+		63 |   multi_az                     = false
+		64 |   preferred_maintenance_window = "sun:10:30-sun:14:30"
+		65 |   publicly_accessible          = true
+		66 |   replication_instance_class   = "dms.t2.micro"
+		67 |   replication_instance_id      = "test-dms-replication-instance-tf"
+		68 |   replication_subnet_group_id  = aws_dms_replication_subnet_group.test.replication_subnet_group_id
+		69 | 
+		70 |   tags = {
+		71 |     Name = "test"
+		72 |   }
+		73 | }
+
+

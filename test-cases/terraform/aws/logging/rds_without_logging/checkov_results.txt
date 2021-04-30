@@ -1,0 +1,64 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.87 
+
+terraform scan results:
+
+Passed checks: 1, Failed checks: 3, Skipped checks: 0
+
+Check: CKV_AWS_118: "Ensure that enhanced monitoring is enabled for Amazon RDS instances"
+	FAILED for resource: aws_db_instance.default
+	File: /main.tf:1-11
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-enhanced-monitoring-is-enabled-for-amazon-rds-instances
+
+		1  | resource "aws_db_instance" "default" {
+		2  |   allocated_storage    = 10
+		3  |   engine               = "mysql"
+		4  |   engine_version       = "5.7"
+		5  |   instance_class       = "db.t3.micro"
+		6  |   name                 = "mydb"
+		7  |   username             = "foo"
+		8  |   password             = "foobarbaz"
+		9  |   parameter_group_name = "default.mysql5.7"
+		10 |   skip_final_snapshot  = true
+		11 | }
+
+Check: CKV_AWS_129: "Ensure that respective logs of Amazon Relational Database Service (Amazon RDS) are enabled"
+	FAILED for resource: aws_db_instance.default
+	File: /main.tf:1-11
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-respective-logs-of-amazon-relational-database-service-amazon-rds-are-enabled
+
+		1  | resource "aws_db_instance" "default" {
+		2  |   allocated_storage    = 10
+		3  |   engine               = "mysql"
+		4  |   engine_version       = "5.7"
+		5  |   instance_class       = "db.t3.micro"
+		6  |   name                 = "mydb"
+		7  |   username             = "foo"
+		8  |   password             = "foobarbaz"
+		9  |   parameter_group_name = "default.mysql5.7"
+		10 |   skip_final_snapshot  = true
+		11 | }
+
+Check: CKV_AWS_16: "Ensure all data stored in the RDS is securely encrypted at rest"
+	FAILED for resource: aws_db_instance.default
+	File: /main.tf:1-11
+	Guide: https://docs.bridgecrew.io/docs/general_4
+
+		1  | resource "aws_db_instance" "default" {
+		2  |   allocated_storage    = 10
+		3  |   engine               = "mysql"
+		4  |   engine_version       = "5.7"
+		5  |   instance_class       = "db.t3.micro"
+		6  |   name                 = "mydb"
+		7  |   username             = "foo"
+		8  |   password             = "foobarbaz"
+		9  |   parameter_group_name = "default.mysql5.7"
+		10 |   skip_final_snapshot  = true
+		11 | }
+

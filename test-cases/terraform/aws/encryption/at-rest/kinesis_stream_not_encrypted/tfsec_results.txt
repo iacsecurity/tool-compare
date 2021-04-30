@@ -1,0 +1,31 @@
+
+Problem 1
+
+  [AWS024][ERROR] Resource 'aws_kinesis_stream.test_stream' defines an unencrypted Kinesis Stream.
+  /src/main.tf:1-14
+
+       1 | resource "aws_kinesis_stream" "test_stream" {
+       2 |   name             = "terraform-kinesis-test"
+       3 |   shard_count      = 1
+       4 |   retention_period = 48
+       5 | 
+       6 |   shard_level_metrics = [
+       7 |     "IncomingBytes",
+       8 |     "OutgoingBytes",
+       9 |   ]
+      10 | 
+      11 |   tags = {
+      12 |     Environment = "test"
+      13 |   }
+      14 | }
+
+   See https://tfsec.dev/docs/aws/AWS024/ for more information. 
+
+  disk i/o             21.34ms
+  parsing HCL          480µs
+  evaluating values    2ms
+  running checks       5.399ms
+  files loaded         1
+
+1 potential problems detected.
+

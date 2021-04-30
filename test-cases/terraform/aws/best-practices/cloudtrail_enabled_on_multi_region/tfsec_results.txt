@@ -1,0 +1,103 @@
+
+Problem 1
+
+  [AWS002][ERROR] Resource 'aws_s3_bucket.foo' does not have logging enabled.
+  /src/main.tf:10-44
+
+       7 |   include_global_service_events = false
+       8 | }
+       9 | 
+      10 | resource "aws_s3_bucket" "foo" {
+      11 |   bucket        = "tf-test-trail"
+      12 |   force_destroy = true
+      13 | 
+      14 |   policy = <<POLICY
+      15 | {
+      16 |     "Version": "2012-10-17",
+      17 |     "Statement": [
+      18 |         {
+      19 |             "Sid": "AWSCloudTrailAclCheck",
+      20 |             "Effect": "Allow",
+      21 |             "Principal": {
+      22 |               "Service": "cloudtrail.amazonaws.com"
+      23 |             },
+      24 |             "Action": "s3:GetBucketAcl",
+      25 |             "Resource": "arn:aws:s3:::tf-test-trail"
+      26 |         },
+      27 |         {
+      28 |             "Sid": "AWSCloudTrailWrite",
+      29 |             "Effect": "Allow",
+      30 |             "Principal": {
+      31 |               "Service": "cloudtrail.amazonaws.com"
+      32 |             },
+      33 |             "Action": "s3:PutObject",
+      34 |             "Resource": "arn:aws:s3:::tf-test-trail/prefix/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
+      35 |             "Condition": {
+      36 |                 "StringEquals": {
+      37 |                     "s3:x-amz-acl": "bucket-owner-full-control"
+      38 |                 }
+      39 |             }
+      40 |         }
+      41 |     ]
+      42 | }
+      43 | POLICY
+      44 | }
+      45 | 
+
+   See https://tfsec.dev/docs/aws/AWS002/ for more information. 
+
+Problem 2
+
+  [AWS017][ERROR] Resource 'aws_s3_bucket.foo' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
+  /src/main.tf:10-44
+
+       7 |   include_global_service_events = false
+       8 | }
+       9 | 
+      10 | resource "aws_s3_bucket" "foo" {
+      11 |   bucket        = "tf-test-trail"
+      12 |   force_destroy = true
+      13 | 
+      14 |   policy = <<POLICY
+      15 | {
+      16 |     "Version": "2012-10-17",
+      17 |     "Statement": [
+      18 |         {
+      19 |             "Sid": "AWSCloudTrailAclCheck",
+      20 |             "Effect": "Allow",
+      21 |             "Principal": {
+      22 |               "Service": "cloudtrail.amazonaws.com"
+      23 |             },
+      24 |             "Action": "s3:GetBucketAcl",
+      25 |             "Resource": "arn:aws:s3:::tf-test-trail"
+      26 |         },
+      27 |         {
+      28 |             "Sid": "AWSCloudTrailWrite",
+      29 |             "Effect": "Allow",
+      30 |             "Principal": {
+      31 |               "Service": "cloudtrail.amazonaws.com"
+      32 |             },
+      33 |             "Action": "s3:PutObject",
+      34 |             "Resource": "arn:aws:s3:::tf-test-trail/prefix/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
+      35 |             "Condition": {
+      36 |                 "StringEquals": {
+      37 |                     "s3:x-amz-acl": "bucket-owner-full-control"
+      38 |                 }
+      39 |             }
+      40 |         }
+      41 |     ]
+      42 | }
+      43 | POLICY
+      44 | }
+      45 | 
+
+   See https://tfsec.dev/docs/aws/AWS017/ for more information. 
+
+  disk i/o             33.866ms
+  parsing HCL          538µs
+  evaluating values    2.691ms
+  running checks       9.026ms
+  files loaded         1
+
+2 potential problems detected.
+

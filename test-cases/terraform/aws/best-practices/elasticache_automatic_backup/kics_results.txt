@@ -1,0 +1,56 @@
+
+                   .0MO.                                    
+                   OMMMx                                    
+                   ;NMX;                                    
+                    ...           ...              ....     
+WMMMd     cWMMM0.  KMMMO      ;xKWMMMMNOc.     ,xXMMMMMWXkc.
+WMMMd   .0MMMN:    KMMMO    :XMMMMMMMMMMMWl   xMMMMMWMMMMMMl
+WMMMd  lWMMMO.     KMMMO   xMMMMKc...'lXMk   ,MMMMx   .;dXx 
+WMMMd.0MMMX;       KMMMO  cMMMMd        '    'MMMMNl'       
+WMMMNWMMMMl        KMMMO  0MMMN               oMMMMMMMXkl.  
+WMMMMMMMMMMo       KMMMO  0MMMX                .ckKWMMMMMM0.
+WMMMMWokMMMMk      KMMMO  oMMMMc              .     .:OMMMM0
+WMMMK.  dMMMM0.    KMMMO   KMMMMx'    ,kNc   :WOc.    .NMMMX
+WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
+WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
+xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
+
+
+Scanning with Keeping Infrastructure as Code Secure v1.2.4
+
+
+
+Files scanned: 1
+Parsed files: 1
+Queries loaded: 1386
+Queries failed to execute: 0
+
+------------------------------------
+
+Memcached Disabled, Severity: HIGH, Results: 2
+Description: Check if the Memcached is disabled on the ElastiCache
+Platform: Terraform
+
+	[1]: /src/main.tf:11
+
+		010:   cluster_id           = "cluster"
+		011:   engine               = "redis"
+		012:   node_type            = "cache.m5.large"
+
+
+	[2]: /src/main.tf:3
+
+		002:   cluster_id           = "cluster"
+		003:   engine               = "redis"
+		004:   node_type            = "cache.m5.large"
+
+
+
+Results Summary:
+HIGH: 2
+MEDIUM: 0
+LOW: 0
+INFO: 0
+TOTAL: 2
+
+Scan duration: 29.75191118s
