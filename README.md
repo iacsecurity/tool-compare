@@ -19,7 +19,8 @@ which runs the above-listed tools against each of the test-cases. This allows an
 to see what the tool can do, and how it compares, before even installing it.
 
 ## Test case catch rate
-The table below compares the different tools' catch rates for the test cases included in this repository.
+The tables below list test cases included in this repository. For each case, it shows which tools
+are able to catch it specifically, and which don't.
 
 ### terraform
 #### aws
