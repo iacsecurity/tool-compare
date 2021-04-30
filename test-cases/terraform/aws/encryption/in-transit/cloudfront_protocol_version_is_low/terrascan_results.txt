@@ -2,6 +2,41 @@
 
 Violation Details -
     
+	Description    :	Enabling S3 versioning will enable easy recovery from both unintended user actions, like deletes and overwrites
+	File           :	main.tf
+	Line           :	5
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Enabling S3 versioning will enable easy recovery from both unintended user actions, like deletes and overwrites
+	File           :	main.tf
+	Line           :	14
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	S3 bucket Access is allowed to all AWS Account Users.
+	File           :	main.tf
+	Line           :	5
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	S3 bucket Access is allowed to all AWS Account Users.
+	File           :	main.tf
+	Line           :	14
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Misconfigured S3 buckets can leak private information to the entire internet or allow unauthorized data tampering / deletion
+	File           :	main.tf
+	Line           :	14
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
 	Description    :	Ensure that cloud-front has web application firewall enabled
 	File           :	main.tf
 	Line           :	32
@@ -9,44 +44,9 @@ Violation Details -
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	S3 bucket Access is allowed to all AWS Account Users.
-	File           :	main.tf
-	Line           :	14
-	Severity       :	HIGH
-	
-	-----------------------------------------------------------------------
-	
-	Description    :	S3 bucket Access is allowed to all AWS Account Users.
-	File           :	main.tf
-	Line           :	5
-	Severity       :	HIGH
-	
-	-----------------------------------------------------------------------
-	
 	Description    :	Misconfigured S3 buckets can leak private information to the entire internet or allow unauthorized data tampering / deletion
 	File           :	main.tf
 	Line           :	14
-	Severity       :	HIGH
-	
-	-----------------------------------------------------------------------
-	
-	Description    :	Misconfigured S3 buckets can leak private information to the entire internet or allow unauthorized data tampering / deletion
-	File           :	main.tf
-	Line           :	14
-	Severity       :	HIGH
-	
-	-----------------------------------------------------------------------
-	
-	Description    :	Enabling S3 versioning will enable easy recovery from both unintended user actions, like deletes and overwrites
-	File           :	main.tf
-	Line           :	14
-	Severity       :	HIGH
-	
-	-----------------------------------------------------------------------
-	
-	Description    :	Enabling S3 versioning will enable easy recovery from both unintended user actions, like deletes and overwrites
-	File           :	main.tf
-	Line           :	5
 	Severity       :	HIGH
 	
 	-----------------------------------------------------------------------
@@ -54,9 +54,9 @@ Violation Details -
 
 Scan Summary -
 
-	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/cloudfront_distributiion_list/cloudfront_protocol_version_is_low
+	File/Folder         :	tool-compare/test-cases/terraform/aws/encryption/in-transit/cloudfront_protocol_version_is_low
 	IaC Type            :	terraform
-	Scanned At          :	2021-04-14 17:33:40.530826 +0000 UTC
+	Scanned At          :	2021-04-29 23:52:16.595733 +0000 UTC
 	Policies Validated  :	561
 	Violated Policies   :	7
 	Low                 :	0

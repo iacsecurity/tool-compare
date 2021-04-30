@@ -16,9 +16,23 @@ Violation Details -
 	
 	-----------------------------------------------------------------------
 	
+	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
+	File           :	main.tf
+	Line           :	146
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
 	Description    :	Ensure that your RDS database has IAM Authentication enabled.
 	File           :	main.tf
 	Line           :	113
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	It is recommended that no security group allows unrestricted ingress access
+	File           :	main.tf
+	Line           :	129
 	Severity       :	HIGH
 	
 	-----------------------------------------------------------------------
@@ -30,26 +44,12 @@ Violation Details -
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
-	File           :	main.tf
-	Line           :	146
-	Severity       :	MEDIUM
-	
-	-----------------------------------------------------------------------
-	
-	Description    :	It is recommended that no security group allows unrestricted ingress access
-	File           :	main.tf
-	Line           :	129
-	Severity       :	HIGH
-	
-	-----------------------------------------------------------------------
-	
 
 Scan Summary -
 
-	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/indirect_public_access_db_rds/public_ec2_points_to_private_rds
+	File/Folder         :	tool-compare/test-cases/terraform/aws/networking/public_ec2_points_to_private_rds
 	IaC Type            :	terraform
-	Scanned At          :	2021-04-14 17:34:12.800679 +0000 UTC
+	Scanned At          :	2021-04-29 23:53:09.107171 +0000 UTC
 	Policies Validated  :	561
 	Violated Policies   :	6
 	Low                 :	0

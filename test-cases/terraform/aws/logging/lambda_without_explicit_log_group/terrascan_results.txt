@@ -2,13 +2,6 @@
 
 Violation Details -
     
-	Description    :	Lambda does not use KMS CMK key to protect environment variables.
-	File           :	main.tf
-	Line           :	57
-	Severity       :	High
-	
-	-----------------------------------------------------------------------
-	
 	Description    :	Lambda function doesn't not include a VPC configuration.
 	File           :	main.tf
 	Line           :	57
@@ -23,12 +16,19 @@ Violation Details -
 	
 	-----------------------------------------------------------------------
 	
+	Description    :	Lambda does not use KMS CMK key to protect environment variables.
+	File           :	main.tf
+	Line           :	57
+	Severity       :	High
+	
+	-----------------------------------------------------------------------
+	
 
 Scan Summary -
 
-	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/ensure_lambda_function_has_non_infinite_log_retention_rule/lambda_with_pseudo_log_group
+	File/Folder         :	tool-compare/test-cases/terraform/aws/logging/lambda_without_explicit_log_group
 	IaC Type            :	terraform
-	Scanned At          :	2021-04-14 17:34:36.134277 +0000 UTC
+	Scanned At          :	2021-04-29 23:53:28.782557 +0000 UTC
 	Policies Validated  :	561
 	Violated Policies   :	3
 	Low                 :	2

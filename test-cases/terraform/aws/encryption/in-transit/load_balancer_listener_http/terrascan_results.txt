@@ -12,9 +12,9 @@ Violation Details -
 
 Scan Summary -
 
-	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/ensure_alb_is_using_https/load_balancer_listener_http
+	File/Folder         :	tool-compare/test-cases/terraform/aws/encryption/in-transit/load_balancer_listener_http
 	IaC Type            :	terraform
-	Scanned At          :	2021-04-14 17:33:46.620374 +0000 UTC
+	Scanned At          :	2021-04-29 23:52:15.53579 +0000 UTC
 	Policies Validated  :	561
 	Violated Policies   :	1
 	Low                 :	0

@@ -9,14 +9,14 @@ Violation Details -
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	S3 bucket Access is allowed to all AWS Account Users.
+	Description    :	Misconfigured S3 buckets can leak private information to the entire internet or allow unauthorized data tampering / deletion
 	File           :	main.tf
 	Line           :	5
 	Severity       :	HIGH
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	Misconfigured S3 buckets can leak private information to the entire internet or allow unauthorized data tampering / deletion
+	Description    :	S3 bucket Access is allowed to all AWS Account Users.
 	File           :	main.tf
 	Line           :	5
 	Severity       :	HIGH
@@ -26,9 +26,9 @@ Violation Details -
 
 Scan Summary -
 
-	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/s3_acl_disallow_public_and_cross_account/acl_public_all_users_canned
+	File/Folder         :	tool-compare/test-cases/terraform/aws/iam/resource-policies/s3_bucket_acl_public_all_users_canned
 	IaC Type            :	terraform
-	Scanned At          :	2021-04-14 17:34:17.01338 +0000 UTC
+	Scanned At          :	2021-04-29 23:53:12.641984 +0000 UTC
 	Policies Validated  :	561
 	Violated Policies   :	3
 	Low                 :	0

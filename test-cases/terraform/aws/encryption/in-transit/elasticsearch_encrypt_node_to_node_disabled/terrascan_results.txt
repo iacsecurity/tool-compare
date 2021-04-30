@@ -19,9 +19,9 @@ Violation Details -
 
 Scan Summary -
 
-	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/es_encrypt_node_to_node_rule/encrypt_node_to_node_disabled
+	File/Folder         :	tool-compare/test-cases/terraform/aws/encryption/in-transit/elasticsearch_encrypt_node_to_node_disabled
 	IaC Type            :	terraform
-	Scanned At          :	2021-04-14 17:35:09.783901 +0000 UTC
+	Scanned At          :	2021-04-29 23:52:12.457295 +0000 UTC
 	Policies Validated  :	561
 	Violated Policies   :	2
 	Low                 :	0

@@ -2,9 +2,9 @@
 
 Scan Summary -
 
-	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/iam_privilege_escalation_policy_rule/iam-all-resources
+	File/Folder         :	tool-compare/test-cases/terraform/aws/iam/iam-entities/policy-too-broad
 	IaC Type            :	terraform
-	Scanned At          :	2021-04-14 17:34:33.741018 +0000 UTC
+	Scanned At          :	2021-04-29 23:53:21.855384 +0000 UTC
 	Policies Validated  :	561
 	Violated Policies   :	0
 	Low                 :	0

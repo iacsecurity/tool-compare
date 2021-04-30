@@ -12,9 +12,9 @@ Violation Details -
 
 Scan Summary -
 
-	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/ensure_cloudwatch_log_groups_specify_retention_days_rule/no_retantion
+	File/Folder         :	tool-compare/test-cases/terraform/aws/logging/cloudwatch_log_groups_no_retention
 	IaC Type            :	terraform
-	Scanned At          :	2021-04-14 17:34:08.877393 +0000 UTC
+	Scanned At          :	2021-04-29 23:53:29.411365 +0000 UTC
 	Policies Validated  :	561
 	Violated Policies   :	1
 	Low                 :	0

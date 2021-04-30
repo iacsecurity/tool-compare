@@ -2,9 +2,9 @@
 
 Scan Summary -
 
-	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/iam_no_human_users_rule/login_user
+	File/Folder         :	tool-compare/test-cases/terraform/aws/iam/iam-entities/human_users_defined
 	IaC Type            :	terraform
-	Scanned At          :	2021-04-14 17:33:44.117198 +0000 UTC
+	Scanned At          :	2021-04-29 23:53:28.15225 +0000 UTC
 	Policies Validated  :	561
 	Violated Policies   :	0
 	Low                 :	0

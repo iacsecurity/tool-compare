@@ -33,9 +33,9 @@ Violation Details -
 
 Scan Summary -
 
-	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/alb_disallow_target_groups_http_rule/alb_use_http
+	File/Folder         :	tool-compare/test-cases/terraform/aws/encryption/in-transit/alb_use_http
 	IaC Type            :	terraform
-	Scanned At          :	2021-04-14 17:34:27.164169 +0000 UTC
+	Scanned At          :	2021-04-29 23:52:18.460284 +0000 UTC
 	Policies Validated  :	561
 	Violated Policies   :	4
 	Low                 :	0

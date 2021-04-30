@@ -2,9 +2,9 @@
 
 Scan Summary -
 
-	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/ensure_all_resources_tagged_rule/2_items_with_only_name_tag
+	File/Folder         :	tool-compare/test-cases/terraform/aws/best-practices/tag_all_items
 	IaC Type            :	terraform
-	Scanned At          :	2021-04-14 17:35:11.774988 +0000 UTC
+	Scanned At          :	2021-04-29 23:53:33.260618 +0000 UTC
 	Policies Validated  :	561
 	Violated Policies   :	0
 	Low                 :	0

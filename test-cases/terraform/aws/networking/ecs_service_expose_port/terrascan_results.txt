@@ -19,9 +19,9 @@ Violation Details -
 
 Scan Summary -
 
-	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/ecs_entity_expose_port_to_public_connections/ecs_service_expose_port
+	File/Folder         :	tool-compare/test-cases/terraform/aws/networking/ecs_service_expose_port
 	IaC Type            :	terraform
-	Scanned At          :	2021-04-14 17:33:47.324709 +0000 UTC
+	Scanned At          :	2021-04-29 23:53:03.359582 +0000 UTC
 	Policies Validated  :	561
 	Violated Policies   :	2
 	Low                 :	0

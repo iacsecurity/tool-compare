@@ -1,0 +1,14 @@
+
+
+Scan Summary -
+
+	File/Folder         :	tool-compare/test-cases/terraform/aws/encryption/at-rest/ecs_task_definition_not_encrypted_in_transit
+	IaC Type            :	terraform
+	Scanned At          :	2021-04-29 23:52:37.967615 +0000 UTC
+	Policies Validated  :	561
+	Violated Policies   :	0
+	Low                 :	0
+	Medium              :	0
+	High                :	0
+	
+

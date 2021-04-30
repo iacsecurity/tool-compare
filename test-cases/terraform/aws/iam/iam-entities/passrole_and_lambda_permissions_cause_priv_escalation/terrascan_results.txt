@@ -2,9 +2,9 @@
 
 Scan Summary -
 
-	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/access_analyzer_validation_rule/iam_multiple_issues
+	File/Folder         :	tool-compare/test-cases/terraform/aws/iam/iam-entities/passrole_and_lambda_permissions_cause_priv_escalation
 	IaC Type            :	terraform
-	Scanned At          :	2021-04-21 16:57:36.996392 +0000 UTC
+	Scanned At          :	2021-04-29 23:53:21.23669 +0000 UTC
 	Policies Validated  :	561
 	Violated Policies   :	0
 	Low                 :	0

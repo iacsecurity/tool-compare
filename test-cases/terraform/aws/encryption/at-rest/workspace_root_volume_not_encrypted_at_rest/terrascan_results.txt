@@ -2,9 +2,9 @@
 
 Scan Summary -
 
-	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/ensure_workspace_root_volume_encrypted_at_rest_rule/root_volume_not_encrypted_at_rest
+	File/Folder         :	tool-compare/test-cases/terraform/aws/encryption/at-rest/workspace_root_volume_not_encrypted_at_rest
 	IaC Type            :	terraform
-	Scanned At          :	2021-04-14 17:33:39.213109 +0000 UTC
+	Scanned At          :	2021-04-29 23:52:24.54713 +0000 UTC
 	Policies Validated  :	561
 	Violated Policies   :	0
 	Low                 :	0

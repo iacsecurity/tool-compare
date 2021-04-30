@@ -26,9 +26,9 @@ Violation Details -
 
 Scan Summary -
 
-	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/s3_acl_disallow_public_and_cross_account/acl_public_all_authenticated_users_canned
+	File/Folder         :	tool-compare/test-cases/terraform/aws/iam/resource-policies/s3_bucket_acl_public_all_authenticated_users_canned
 	IaC Type            :	terraform
-	Scanned At          :	2021-04-14 17:34:18.209389 +0000 UTC
+	Scanned At          :	2021-04-29 23:53:20.617991 +0000 UTC
 	Policies Validated  :	561
 	Violated Policies   :	3
 	Low                 :	0

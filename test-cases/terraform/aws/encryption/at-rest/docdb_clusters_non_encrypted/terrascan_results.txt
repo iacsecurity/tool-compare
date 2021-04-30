@@ -2,9 +2,9 @@
 
 Scan Summary -
 
-	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/ensure_docdb_clusters_encrypted_rule/docdb_clusters_non_encrypted
+	File/Folder         :	tool-compare/test-cases/terraform/aws/encryption/at-rest/docdb_clusters_non_encrypted
 	IaC Type            :	terraform
-	Scanned At          :	2021-04-14 17:34:34.910052 +0000 UTC
+	Scanned At          :	2021-04-29 23:52:36.665251 +0000 UTC
 	Policies Validated  :	561
 	Violated Policies   :	0
 	Low                 :	0

@@ -19,9 +19,9 @@ Violation Details -
 
 Scan Summary -
 
-	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/ensure_security_group_rule_include_description_rule/no_description_for_security_group
+	File/Folder         :	tool-compare/test-cases/terraform/aws/best-practices/security_group_no_description_for_security_group
 	IaC Type            :	terraform
-	Scanned At          :	2021-04-14 17:34:51.908311 +0000 UTC
+	Scanned At          :	2021-04-29 23:53:33.938394 +0000 UTC
 	Policies Validated  :	561
 	Violated Policies   :	2
 	Low                 :	0

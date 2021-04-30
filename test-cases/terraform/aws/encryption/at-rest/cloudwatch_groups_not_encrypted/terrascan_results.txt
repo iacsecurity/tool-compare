@@ -12,9 +12,9 @@ Violation Details -
 
 Scan Summary -
 
-	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/ensure_cloud_watch_log_groups_encrypted_rule/non_encrypted
+	File/Folder         :	tool-compare/test-cases/terraform/aws/encryption/at-rest/cloudwatch_groups_not_encrypted
 	IaC Type            :	terraform
-	Scanned At          :	2021-04-14 17:33:49.837522 +0000 UTC
+	Scanned At          :	2021-04-29 23:52:21.77848 +0000 UTC
 	Policies Validated  :	561
 	Violated Policies   :	1
 	Low                 :	0

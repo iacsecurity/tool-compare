@@ -26,9 +26,9 @@ Violation Details -
 
 Scan Summary -
 
-	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/ensure_s3_bucket_policy_not_use_wildcard_rule/not_secure_policy
+	File/Folder         :	tool-compare/test-cases/terraform/aws/iam/resource-policies/s3_bucket_not_secure_policy
 	IaC Type            :	terraform
-	Scanned At          :	2021-04-14 17:34:28.392864 +0000 UTC
+	Scanned At          :	2021-04-29 23:53:13.2968 +0000 UTC
 	Policies Validated  :	561
 	Violated Policies   :	3
 	Low                 :	0

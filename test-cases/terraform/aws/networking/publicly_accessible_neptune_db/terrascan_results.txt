@@ -19,9 +19,9 @@ Violation Details -
 
 Scan Summary -
 
-	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/public_access_db_neptune_rule/external_vpc_with_igw
+	File/Folder         :	tool-compare/test-cases/terraform/aws/networking/publicly_accessible_neptune_db
 	IaC Type            :	terraform
-	Scanned At          :	2021-04-14 17:34:56.988099 +0000 UTC
+	Scanned At          :	2021-04-29 23:53:09.839021 +0000 UTC
 	Policies Validated  :	561
 	Violated Policies   :	2
 	Low                 :	0

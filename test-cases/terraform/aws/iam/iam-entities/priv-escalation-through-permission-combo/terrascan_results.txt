@@ -2,9 +2,9 @@
 
 Scan Summary -
 
-	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/iam_privilege_escalation_policy_rule/combo-escalation-permissions
+	File/Folder         :	tool-compare/test-cases/terraform/aws/iam/iam-entities/priv-escalation-through-permission-combo
 	IaC Type            :	terraform
-	Scanned At          :	2021-04-14 17:34:32.567743 +0000 UTC
+	Scanned At          :	2021-04-29 23:53:27.523278 +0000 UTC
 	Policies Validated  :	561
 	Violated Policies   :	0
 	Low                 :	0

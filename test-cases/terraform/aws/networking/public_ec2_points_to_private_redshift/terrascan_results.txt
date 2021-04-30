@@ -2,10 +2,24 @@
 
 Violation Details -
     
-	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
+	Description    :	Ensure VPC flow logging is enabled in all VPCs
 	File           :	main.tf
-	Line           :	131
+	Line           :	10
 	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	It is recommended that no security group allows unrestricted ingress access
+	File           :	main.tf
+	Line           :	114
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure Redshift clusters are not publicly accessible to minimize security risks.
+	File           :	main.tf
+	Line           :	103
+	Severity       :	HIGH
 	
 	-----------------------------------------------------------------------
 	
@@ -23,23 +37,9 @@ Violation Details -
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	Ensure Redshift clusters are not publicly accessible to minimize security risks.
+	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
 	File           :	main.tf
-	Line           :	103
-	Severity       :	HIGH
-	
-	-----------------------------------------------------------------------
-	
-	Description    :	It is recommended that no security group allows unrestricted ingress access
-	File           :	main.tf
-	Line           :	114
-	Severity       :	HIGH
-	
-	-----------------------------------------------------------------------
-	
-	Description    :	Ensure VPC flow logging is enabled in all VPCs
-	File           :	main.tf
-	Line           :	10
+	Line           :	131
 	Severity       :	MEDIUM
 	
 	-----------------------------------------------------------------------
@@ -47,9 +47,9 @@ Violation Details -
 
 Scan Summary -
 
-	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/indirect_public_access_db_redshift/public_ec2_points_to_private_redshift
+	File/Folder         :	tool-compare/test-cases/terraform/aws/networking/public_ec2_points_to_private_redshift
 	IaC Type            :	terraform
-	Scanned At          :	2021-04-14 17:33:34.233229 +0000 UTC
+	Scanned At          :	2021-04-29 23:53:07.644622 +0000 UTC
 	Policies Validated  :	561
 	Violated Policies   :	6
 	Low                 :	0

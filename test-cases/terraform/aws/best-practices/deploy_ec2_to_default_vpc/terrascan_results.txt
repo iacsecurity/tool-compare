@@ -19,9 +19,9 @@ Violation Details -
 
 Scan Summary -
 
-	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/disallow_default_vpc/deploy_ec2_to_default_vpc
+	File/Folder         :	tool-compare/test-cases/terraform/aws/best-practices/deploy_ec2_to_default_vpc
 	IaC Type            :	terraform
-	Scanned At          :	2021-04-14 17:34:53.730852 +0000 UTC
+	Scanned At          :	2021-04-29 23:53:31.998845 +0000 UTC
 	Policies Validated  :	561
 	Violated Policies   :	2
 	Low                 :	0

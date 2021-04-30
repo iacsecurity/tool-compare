@@ -2,9 +2,9 @@
 
 Violation Details -
     
-	Description    :	Ensure that your AWS application is not deployed within the default Virtual Private Cloud in order to follow security best practices
+	Description    :	Ensure VPC flow logging is enabled in all VPCs
 	File           :	main.tf
-	Line           :	31
+	Line           :	14
 	Severity       :	MEDIUM
 	
 	-----------------------------------------------------------------------
@@ -16,9 +16,9 @@ Violation Details -
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	Ensure VPC flow logging is enabled in all VPCs
+	Description    :	Ensure that your AWS application is not deployed within the default Virtual Private Cloud in order to follow security best practices
 	File           :	main.tf
-	Line           :	14
+	Line           :	31
 	Severity       :	MEDIUM
 	
 	-----------------------------------------------------------------------
@@ -26,9 +26,9 @@ Violation Details -
 
 Scan Summary -
 
-	File/Folder         :	/Users/yoni/code/cloudrail-demo/test/aws/terraform/ensure_all_used_default_security_groups_restrict_all_traffic_rule/default_sg_in_new_vpc
+	File/Folder         :	tool-compare/test-cases/terraform/aws/networking/default_sg_in_new_vpc
 	IaC Type            :	terraform
-	Scanned At          :	2021-04-14 17:33:44.739875 +0000 UTC
+	Scanned At          :	2021-04-29 23:53:06.119594 +0000 UTC
 	Policies Validated  :	561
 	Violated Policies   :	3
 	Low                 :	0
