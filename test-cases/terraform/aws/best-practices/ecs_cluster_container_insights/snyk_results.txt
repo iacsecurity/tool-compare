@@ -1,0 +1,55 @@
+Failed to run the process ...
+{
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "ignoreSettings": null,
+    "org": "y",
+    "projectId": "",
+    "policy": ""
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "/project/main.tf",
+  "projectName": "project",
+  "org": "y",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
+  "infrastructureAsCodeIssues": [
+    {
+      "resolve": "Set `settings.name` attribute to `containerInsights`, and `settings.value` to `enabled`",
+      "id": "SNYK-CC-TF-128",
+      "impact": "Performance log events will not be collected and displayed in CloudWatch",
+      "subType": "ECS",
+      "policyEngineType": "opa",
+      "publicId": "SNYK-CC-TF-128",
+      "title": "ECS ContainerInsights disabled",
+      "severity": "low",
+      "msg": "resource.aws_ecs_cluster[foo].setting",
+      "issue": "ECS ContainerInsights will not be enabled on the cluster",
+      "type": "terraform",
+      "references": [
+        "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/ContainerInsights.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "ECS ContainerInsights will not be enabled on the cluster",
+        "impact": "Performance log events will not be collected and displayed in CloudWatch",
+        "resolve": "Set `settings.name` attribute to `containerInsights`, and `settings.value` to `enabled`"
+      },
+      "lineNumber": 1,
+      "path": [
+        "resource",
+        "aws_ecs_cluster[foo]",
+        "setting"
+      ]
+    }
+  ]
+}

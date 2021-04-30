@@ -1,0 +1,38 @@
+
+
+Violation Details -
+    
+	Description    :	S3 bucket Access is allowed to all AWS Account Users.
+	File           :	main.tf
+	Line           :	1
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Enabling S3 versioning will enable easy recovery from both unintended user actions, like deletes and overwrites
+	File           :	main.tf
+	Line           :	1
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that cloud-front has web application firewall enabled
+	File           :	main.tf
+	Line           :	14
+	Severity       :	Medium
+	
+	-----------------------------------------------------------------------
+	
+
+Scan Summary -
+
+	File/Folder         :	tool-compare/test-cases/terraform/aws/best-practices/cloudfront_not_using_waf
+	IaC Type            :	terraform
+	Scanned At          :	2021-04-30 19:28:38.549703 +0000 UTC
+	Policies Validated  :	561
+	Violated Policies   :	3
+	Low                 :	0
+	Medium              :	1
+	High                :	2
+	
+

@@ -1,0 +1,139 @@
+Failed to run the process ...
+{
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "ignoreSettings": null,
+    "org": "y",
+    "projectId": "",
+    "policy": ""
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "/project/main.tf",
+  "projectName": "project",
+  "org": "y",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
+  "infrastructureAsCodeIssues": [
+    {
+      "resolve": "Set `internal` attribute to `true`",
+      "id": "SNYK-CC-TF-48",
+      "impact": "Increases attack vector reachability",
+      "subType": "Elastic Load Balancing (ELB Classic)",
+      "policyEngineType": "opa",
+      "publicId": "SNYK-CC-TF-48",
+      "title": "Load balancer is internet facing",
+      "severity": "low",
+      "msg": "resource.aws_lb[default].internal",
+      "issue": "Load balancer is internet facing",
+      "type": "terraform",
+      "references": [
+        "https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-internet-facing-load-balancers.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Load balancer is internet facing",
+        "impact": "Increases attack vector reachability",
+        "resolve": "Set `internal` attribute to `true`"
+      },
+      "lineNumber": -1,
+      "path": [
+        "resource",
+        "aws_lb[default]",
+        "internal"
+      ]
+    },
+    {
+      "resolve": "Set `internal` attribute to `true`",
+      "id": "SNYK-CC-TF-48",
+      "impact": "Increases attack vector reachability",
+      "subType": "Elastic Load Balancing (ELB Classic)",
+      "policyEngineType": "opa",
+      "publicId": "SNYK-CC-TF-48",
+      "title": "Load balancer is internet facing",
+      "severity": "low",
+      "msg": "resource.aws_alb[default].internal",
+      "issue": "Load balancer is internet facing",
+      "type": "terraform",
+      "references": [
+        "https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-internet-facing-load-balancers.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Load balancer is internet facing",
+        "impact": "Increases attack vector reachability",
+        "resolve": "Set `internal` attribute to `true`"
+      },
+      "lineNumber": -1,
+      "path": [
+        "resource",
+        "aws_alb[default]",
+        "internal"
+      ]
+    },
+    {
+      "resolve": "Set `internal` attribute to `true`",
+      "id": "SNYK-CC-TF-48",
+      "impact": "Increases attack vector reachability",
+      "subType": "Elastic Load Balancing (ELB Classic)",
+      "policyEngineType": "opa",
+      "publicId": "SNYK-CC-TF-48",
+      "title": "Load balancer is internet facing",
+      "severity": "low",
+      "msg": "resource.aws_lb[disabled].internal",
+      "issue": "Load balancer is internet facing",
+      "type": "terraform",
+      "references": [
+        "https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-internet-facing-load-balancers.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Load balancer is internet facing",
+        "impact": "Increases attack vector reachability",
+        "resolve": "Set `internal` attribute to `true`"
+      },
+      "lineNumber": -1,
+      "path": [
+        "resource",
+        "aws_lb[disabled]",
+        "internal"
+      ]
+    },
+    {
+      "resolve": "Set `internal` attribute to `true`",
+      "id": "SNYK-CC-TF-48",
+      "impact": "Increases attack vector reachability",
+      "subType": "Elastic Load Balancing (ELB Classic)",
+      "policyEngineType": "opa",
+      "publicId": "SNYK-CC-TF-48",
+      "title": "Load balancer is internet facing",
+      "severity": "low",
+      "msg": "resource.aws_alb[disabled].internal",
+      "issue": "Load balancer is internet facing",
+      "type": "terraform",
+      "references": [
+        "https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-internet-facing-load-balancers.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Load balancer is internet facing",
+        "impact": "Increases attack vector reachability",
+        "resolve": "Set `internal` attribute to `true`"
+      },
+      "lineNumber": -1,
+      "path": [
+        "resource",
+        "aws_alb[disabled]",
+        "internal"
+      ]
+    }
+  ]
+}

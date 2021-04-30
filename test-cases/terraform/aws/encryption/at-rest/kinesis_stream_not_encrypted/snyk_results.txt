@@ -1,0 +1,55 @@
+Failed to run the process ...
+{
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "ignoreSettings": null,
+    "org": "y",
+    "projectId": "",
+    "policy": ""
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "/project/main.tf",
+  "projectName": "project",
+  "org": "y",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
+  "infrastructureAsCodeIssues": [
+    {
+      "resolve": "Set `encryption_type` attribute to `KMS`",
+      "id": "SNYK-CC-TF-62",
+      "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+      "subType": "Kinesis",
+      "policyEngineType": "opa",
+      "publicId": "SNYK-CC-TF-62",
+      "title": "Non-Encrypted Kinesis Stream",
+      "severity": "medium",
+      "msg": "resource.aws_kinesis_stream[test_stream].encryption_type",
+      "issue": "The AWS kinesis server-side encryption is disabled",
+      "type": "terraform",
+      "references": [
+        "https://docs.aws.amazon.com/AmazonECR/latest/userguide/image-scanning.htm://docs.aws.amazon.com/streams/latest/dev/server-side-encryption.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "The AWS kinesis server-side encryption is disabled",
+        "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+        "resolve": "Set `encryption_type` attribute to `KMS`"
+      },
+      "lineNumber": 1,
+      "path": [
+        "resource",
+        "aws_kinesis_stream[test_stream]",
+        "encryption_type"
+      ]
+    }
+  ]
+}

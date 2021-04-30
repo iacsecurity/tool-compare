@@ -1,0 +1,133 @@
+
+                   .0MO.                                    
+                   OMMMx                                    
+                   ;NMX;                                    
+                    ...           ...              ....     
+WMMMd     cWMMM0.  KMMMO      ;xKWMMMMNOc.     ,xXMMMMMWXkc.
+WMMMd   .0MMMN:    KMMMO    :XMMMMMMMMMMMWl   xMMMMMWMMMMMMl
+WMMMd  lWMMMO.     KMMMO   xMMMMKc...'lXMk   ,MMMMx   .;dXx 
+WMMMd.0MMMX;       KMMMO  cMMMMd        '    'MMMMNl'       
+WMMMNWMMMMl        KMMMO  0MMMN               oMMMMMMMXkl.  
+WMMMMMMMMMMo       KMMMO  0MMMX                .ckKWMMMMMM0.
+WMMMMWokMMMMk      KMMMO  oMMMMc              .     .:OMMMM0
+WMMMK.  dMMMM0.    KMMMO   KMMMMx'    ,kNc   :WOc.    .NMMMX
+WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
+WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
+xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
+
+
+Scanning with Keeping Infrastructure as Code Secure v1.2.4
+
+
+
+Files scanned: 1
+Parsed files: 1
+Queries loaded: 1386
+Queries failed to execute: 0
+
+------------------------------------
+
+S3 Bucket Logging Disabled, Severity: LOW, Results: 1
+Description: S3 bucket without logging
+Platform: Terraform
+
+	[1]: /src/main.tf:10
+
+		009: 
+		010: resource "aws_s3_bucket" "foo" {
+		011:   bucket        = "tf-test-trail"
+
+
+CloudTrail Log File Validation Disabled, Severity: LOW, Results: 1
+Description: CloudTrail log file validation should be enabled
+Platform: Terraform
+
+	[1]: /src/main.tf:3
+
+		002: 
+		003: resource "aws_cloudtrail" "foobar" {
+		004:   name                          = "tf-trail-foobar"
+
+
+S3 Bucket Without Versioning, Severity: MEDIUM, Results: 1
+Description: S3 bucket without versioning
+Platform: Terraform
+
+	[1]: /src/main.tf:10
+
+		009: 
+		010: resource "aws_s3_bucket" "foo" {
+		011:   bucket        = "tf-test-trail"
+
+
+CloudTrail SNS Topic Name Undefined, Severity: MEDIUM, Results: 1
+Description: Check if SNS topic name is set for CloudTrail
+Platform: Terraform
+
+	[1]: /src/main.tf:3
+
+		002: 
+		003: resource "aws_cloudtrail" "foobar" {
+		004:   name                          = "tf-trail-foobar"
+
+
+CloudTrail Not Integrated With CloudWatch, Severity: MEDIUM, Results: 2
+Description: CloudTrail should be integrated with CloudWatch
+Platform: Terraform
+
+	[1]: /src/main.tf:3
+
+		002: 
+		003: resource "aws_cloudtrail" "foobar" {
+		004:   name                          = "tf-trail-foobar"
+
+
+	[2]: /src/main.tf:3
+
+		002: 
+		003: resource "aws_cloudtrail" "foobar" {
+		004:   name                          = "tf-trail-foobar"
+
+
+CloudTrail Multi Region Disabled, Severity: MEDIUM, Results: 1
+Description: Check if MultiRegion is Enabled
+Platform: Terraform
+
+	[1]: /src/main.tf:3
+
+		002: 
+		003: resource "aws_cloudtrail" "foobar" {
+		004:   name                          = "tf-trail-foobar"
+
+
+S3 Bucket Without Server-side-encryption, Severity: HIGH, Results: 1
+Description: S3 bucket should have encryption defined
+Platform: Terraform
+
+	[1]: /src/main.tf:10
+
+		009: 
+		010: resource "aws_s3_bucket" "foo" {
+		011:   bucket        = "tf-test-trail"
+
+
+CloudTrail Log Files Not Encrypted, Severity: HIGH, Results: 1
+Description: Logs delivered by CloudTrail should be encrypted using KMS
+Platform: Terraform
+
+	[1]: /src/main.tf:3
+
+		002: 
+		003: resource "aws_cloudtrail" "foobar" {
+		004:   name                          = "tf-trail-foobar"
+
+
+
+Results Summary:
+HIGH: 2
+MEDIUM: 5
+LOW: 2
+INFO: 0
+TOTAL: 9
+
+Scan duration: 30.610245139s

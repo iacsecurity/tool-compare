@@ -1,0 +1,38 @@
+
+
+Violation Details -
+    
+	Description    :	Lambda function doesn't not include a VPC configuration.
+	File           :	main.tf
+	Line           :	21
+	Severity       :	Low
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Lambda does not use KMS CMK key to protect environment variables.
+	File           :	main.tf
+	Line           :	21
+	Severity       :	High
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Lambda tracing is not enabled.
+	File           :	main.tf
+	Line           :	21
+	Severity       :	LOW
+	
+	-----------------------------------------------------------------------
+	
+
+Scan Summary -
+
+	File/Folder         :	tool-compare/test-cases/terraform/aws/logging/lambda_without_xray
+	IaC Type            :	terraform
+	Scanned At          :	2021-04-30 19:28:29.705942 +0000 UTC
+	Policies Validated  :	561
+	Violated Policies   :	3
+	Low                 :	2
+	Medium              :	0
+	High                :	1
+	
+

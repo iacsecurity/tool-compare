@@ -1,0 +1,24 @@
+
+Problem 1
+
+  [GEN003][WARNING] Block 'aws_redshift_cluster.default' includes a potentially sensitive attribute which is defined within the project.
+  /src/main.tf:5
+
+       2 |   cluster_identifier = "tf-redshift-cluster"
+       3 |   database_name      = "mydb"
+       4 |   master_username    = "foo"
+       5 |   master_password    = "Mustbe8characters"
+       6 |   node_type          = "dc1.large"
+       7 |   cluster_type       = "single-node"
+       8 | }
+
+   See https://tfsec.dev/docs/general/GEN003/ for more information. 
+
+  disk i/o             21.32ms
+  parsing HCL          486µs
+  evaluating values    1.619ms
+  running checks       5.361ms
+  files loaded         1
+
+1 potential problems detected.
+

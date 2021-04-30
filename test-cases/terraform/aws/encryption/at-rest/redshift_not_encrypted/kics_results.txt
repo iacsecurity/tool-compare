@@ -1,0 +1,82 @@
+
+                   .0MO.                                    
+                   OMMMx                                    
+                   ;NMX;                                    
+                    ...           ...              ....     
+WMMMd     cWMMM0.  KMMMO      ;xKWMMMMNOc.     ,xXMMMMMWXkc.
+WMMMd   .0MMMN:    KMMMO    :XMMMMMMMMMMMWl   xMMMMMWMMMMMMl
+WMMMd  lWMMMO.     KMMMO   xMMMMKc...'lXMk   ,MMMMx   .;dXx 
+WMMMd.0MMMX;       KMMMO  cMMMMd        '    'MMMMNl'       
+WMMMNWMMMMl        KMMMO  0MMMN               oMMMMMMMXkl.  
+WMMMMMMMMMMo       KMMMO  0MMMX                .ckKWMMMMMM0.
+WMMMMWokMMMMk      KMMMO  oMMMMc              .     .:OMMMM0
+WMMMK.  dMMMM0.    KMMMO   KMMMMx'    ,kNc   :WOc.    .NMMMX
+WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
+WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
+xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
+
+
+Scanning with Keeping Infrastructure as Code Secure v1.2.4
+
+
+
+Files scanned: 1
+Parsed files: 1
+Queries loaded: 1386
+Queries failed to execute: 0
+
+------------------------------------
+
+Redshift Cluster Logging Disabled, Severity: MEDIUM, Results: 1
+Description: Make sure Logging is enabled for Redshift Cluster
+Platform: Terraform
+
+	[1]: /src/main.tf:1
+
+		001: resource "aws_redshift_cluster" "default" {
+		002:   cluster_identifier = "tf-redshift-cluster"
+		003:   database_name      = "mydb"
+
+
+Redshift Publicly Accessible, Severity: HIGH, Results: 1
+Description: Check if 'publicly_accessible' field is true or undefined (default is true)
+Platform: Terraform
+
+	[1]: /src/main.tf:1
+
+		001: resource "aws_redshift_cluster" "default" {
+		002:   cluster_identifier = "tf-redshift-cluster"
+		003:   database_name      = "mydb"
+
+
+Redshift Not Encrypted, Severity: HIGH, Results: 1
+Description: Check if 'encrypted' field is false or undefined (default is false)
+Platform: Terraform
+
+	[1]: /src/main.tf:1
+
+		001: resource "aws_redshift_cluster" "default" {
+		002:   cluster_identifier = "tf-redshift-cluster"
+		003:   database_name      = "mydb"
+
+
+Passwords And Secrets In Infrastructure Code, Severity: HIGH, Results: 1
+Description: Query to find passwords and secrets in infrastructure code.
+Platform: Common
+
+	[1]: /src/main.tf:5
+
+		004:   master_username    = "foo"
+		005:   master_password    = "Mustbe8characters"
+		006:   node_type          = "dc1.large"
+
+
+
+Results Summary:
+HIGH: 3
+MEDIUM: 1
+LOW: 0
+INFO: 0
+TOTAL: 4
+
+Scan duration: 28.946072805s

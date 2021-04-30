@@ -1,0 +1,9 @@
+Failed to run the process ...
+
+<--- Last few GCs --->
+
+[37:0x26980a0]     3872 ms: Mark-sweep 25.1 (40.8) -> 18.8 (58.3) MB, 36.2 / 1.0 ms  (+ 17.4 ms in 15 steps since start of marking, biggest step 7.2 ms, walltime since start of marking 256 ms) (average mu = 1.000, current mu = 1.000) finalize incremental [37:0x26980a0]     5318 ms: Scavenge 37.3 (58.8) -> 27.5 (60.3) MB, 7.5 / 0.0 ms  (average mu = 1.000, current mu = 1.000) allocation failure 
+
+
+<--- JS stacktrace --->
+Cannot get stack trace in GC.

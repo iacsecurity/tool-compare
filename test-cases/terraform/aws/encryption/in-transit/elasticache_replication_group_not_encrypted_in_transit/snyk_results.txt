@@ -1,0 +1,83 @@
+Failed to run the process ...
+{
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "ignoreSettings": null,
+    "org": "y",
+    "projectId": "",
+    "policy": ""
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "/project/main.tf",
+  "projectName": "project",
+  "org": "y",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
+  "infrastructureAsCodeIssues": [
+    {
+      "resolve": "Set `transit_encryption_enabled` attribute to `true`",
+      "id": "SNYK-CC-TF-214",
+      "impact": "The data could be read in transit.",
+      "subType": "ElastiCache",
+      "policyEngineType": "opa",
+      "publicId": "SNYK-CC-TF-214",
+      "title": "Non-Encrypted ElastiCache data in transit",
+      "severity": "medium",
+      "msg": "resource.aws_elasticache_replication_group[example].transit_encryption_enabled",
+      "issue": "Data in the Elasticache Replication Group is not securely encrypted in transit",
+      "type": "terraform",
+      "references": [
+        "https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/in-transit-encryption.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Data in the Elasticache Replication Group is not securely encrypted in transit",
+        "impact": "The data could be read in transit.",
+        "resolve": "Set `transit_encryption_enabled` attribute to `true`"
+      },
+      "lineNumber": 5,
+      "path": [
+        "resource",
+        "aws_elasticache_replication_group[example]",
+        "transit_encryption_enabled"
+      ]
+    },
+    {
+      "resolve": "Set `at_rest_encryption_enabled` attribute to `true`",
+      "id": "SNYK-CC-TF-71",
+      "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+      "subType": "ElastiCache",
+      "policyEngineType": "opa",
+      "publicId": "SNYK-CC-TF-71",
+      "title": "Non-Encrypted ElastiCache Replication Group",
+      "severity": "medium",
+      "msg": "resource.aws_elasticache_replication_group[example].at_rest_encryption_enabled",
+      "issue": "The ElastiCache replication group is not encrypted at rest",
+      "type": "terraform",
+      "references": [
+        "https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/at-rest-encryption.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "The ElastiCache replication group is not encrypted at rest",
+        "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+        "resolve": "Set `at_rest_encryption_enabled` attribute to `true`"
+      },
+      "lineNumber": 5,
+      "path": [
+        "resource",
+        "aws_elasticache_replication_group[example]",
+        "at_rest_encryption_enabled"
+      ]
+    }
+  ]
+}

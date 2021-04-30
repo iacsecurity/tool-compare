@@ -1,0 +1,55 @@
+Failed to run the process ...
+{
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "ignoreSettings": null,
+    "org": "y",
+    "projectId": "",
+    "policy": ""
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "/project/main.tf",
+  "projectName": "project",
+  "org": "y",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
+  "infrastructureAsCodeIssues": [
+    {
+      "resolve": "Set `point_in_time_recovery.enabled` attribute to `true`",
+      "id": "SNYK-CC-TF-125",
+      "impact": "No automated backups of DynamoDB data",
+      "subType": "DynamoDB",
+      "policyEngineType": "opa",
+      "publicId": "SNYK-CC-TF-125",
+      "title": "DynamoDB point-in-time recovery disabled",
+      "severity": "medium",
+      "msg": "resource.aws_dynamodb_table[basic-dynamodb-table]",
+      "issue": "DynamoDB does not have Point-in-Time Recovery enabled",
+      "type": "terraform",
+      "references": [
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/PointInTimeRecovery_Howitworks.html",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table#point_in_time_recovery"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "DynamoDB does not have Point-in-Time Recovery enabled",
+        "impact": "No automated backups of DynamoDB data",
+        "resolve": "Set `point_in_time_recovery.enabled` attribute to `true`"
+      },
+      "lineNumber": 1,
+      "path": [
+        "resource",
+        "aws_dynamodb_table[basic-dynamodb-table]"
+      ]
+    }
+  ]
+}

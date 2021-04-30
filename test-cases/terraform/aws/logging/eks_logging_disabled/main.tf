@@ -1,7 +1,6 @@
 
 provider "aws" {
   region = "us-east-2"
-  version = "3.1"
 }
 
 resource "aws_iam_role" "eksrole" {

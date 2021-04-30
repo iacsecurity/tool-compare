@@ -1,0 +1,24 @@
+
+
+Violation Details -
+    
+	Description    :	Unscanned images may contain vulnerabilities
+	File           :	main.tf
+	Line           :	1
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+
+Scan Summary -
+
+	File/Folder         :	tool-compare/test-cases/terraform/aws/best-practices/ecr_use_image_scanning
+	IaC Type            :	terraform
+	Scanned At          :	2021-04-30 19:28:31.54913 +0000 UTC
+	Policies Validated  :	561
+	Violated Policies   :	1
+	Low                 :	0
+	Medium              :	1
+	High                :	0
+	
+

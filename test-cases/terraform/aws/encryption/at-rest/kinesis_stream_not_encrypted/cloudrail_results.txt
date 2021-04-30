@@ -1,0 +1,16 @@
+
+WARNINGs found:
+Rule: Ensure Kinesis streams are set to be encrypted at rest
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_kinesis_stream.test_stream] (main.tf:1)
+     Violating Resource: [aws_kinesis_stream.test_stream]  (main.tf:1)
+
+     Evidence:
+             | The Kinesis Data Stream aws_kinesis_stream.test_stream is not set to use encryption at rest
+
+
+-----------------------------------------------
+
+Cloudrail ran this assessment without any policies and so all rule violations show as warnings.
+You can increase a rule's enforcement level by creating a Policy in the Web UI and adding the rule to it.

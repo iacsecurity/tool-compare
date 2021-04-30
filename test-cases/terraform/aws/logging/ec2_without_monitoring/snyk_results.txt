@@ -1,0 +1,88 @@
+Failed to run the process ...
+{
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "ignoreSettings": null,
+    "org": "y",
+    "projectId": "",
+    "policy": ""
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "/project/main.tf",
+  "projectName": "project",
+  "org": "y",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
+  "infrastructureAsCodeIssues": [
+    {
+      "resolve": "Set `root_block_device.encrypted` attribute to `true`",
+      "id": "SNYK-CC-TF-53",
+      "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+      "subType": "EC2",
+      "policyEngineType": "opa",
+      "publicId": "SNYK-CC-TF-53",
+      "title": "Non-Encrypted root block device",
+      "severity": "medium",
+      "msg": "resource.aws_instance[web].root_block_device.encrypted",
+      "issue": "The root block device for ec2 instance is not encrypted",
+      "type": "terraform",
+      "references": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/RootDeviceStorage.html",
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "The root block device for ec2 instance is not encrypted",
+        "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+        "resolve": "Set `root_block_device.encrypted` attribute to `true`"
+      },
+      "lineNumber": 17,
+      "path": [
+        "resource",
+        "aws_instance[web]",
+        "root_block_device",
+        "encrypted"
+      ]
+    },
+    {
+      "resolve": "Set `metadata_options.http_tokens` attribute to `required`",
+      "id": "SNYK-CC-TF-130",
+      "impact": "Metadata service may be vulnerable to reverse proxy/open firewall misconfigurations and server side request forgery attacks",
+      "subType": "EC2",
+      "policyEngineType": "opa",
+      "publicId": "SNYK-CC-TF-130",
+      "title": "EC2 instance accepts IMDSv1",
+      "severity": "low",
+      "msg": "resource.aws_instance[web].metadata_options",
+      "issue": "Instance Metadata Service v2 is not enforced",
+      "type": "terraform",
+      "references": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html",
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html",
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-data-retrieval.html",
+        "https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service/"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Instance Metadata Service v2 is not enforced",
+        "impact": "Metadata service may be vulnerable to reverse proxy/open firewall misconfigurations and server side request forgery attacks",
+        "resolve": "Set `metadata_options.http_tokens` attribute to `required`"
+      },
+      "lineNumber": 17,
+      "path": [
+        "resource",
+        "aws_instance[web]",
+        "metadata_options"
+      ]
+    }
+  ]
+}

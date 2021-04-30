@@ -1,0 +1,55 @@
+Failed to run the process ...
+{
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "ignoreSettings": null,
+    "org": "y",
+    "projectId": "",
+    "policy": ""
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "/project/main.tf",
+  "projectName": "project",
+  "org": "y",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
+  "infrastructureAsCodeIssues": [
+    {
+      "resolve": "Set `image_tag_mutability` attribute to `IMMUTABLE`",
+      "id": "SNYK-CC-TF-126",
+      "impact": "Image tags can be modified post deployment",
+      "subType": "ECR",
+      "policyEngineType": "opa",
+      "publicId": "SNYK-CC-TF-126",
+      "title": "ECR Registry allows mutable tags",
+      "severity": "low",
+      "msg": "resource.aws_ecr_repository[foo].image_tag_mutability",
+      "issue": "The AWS ECR registry does not enforce immutable tags",
+      "type": "terraform",
+      "references": [
+        "https://docs.aws.amazon.com/AmazonECR/latest/userguide/image-tag-mutability.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "The AWS ECR registry does not enforce immutable tags",
+        "impact": "Image tags can be modified post deployment",
+        "resolve": "Set `image_tag_mutability` attribute to `IMMUTABLE`"
+      },
+      "lineNumber": 3,
+      "path": [
+        "resource",
+        "aws_ecr_repository[foo]",
+        "image_tag_mutability"
+      ]
+    }
+  ]
+}

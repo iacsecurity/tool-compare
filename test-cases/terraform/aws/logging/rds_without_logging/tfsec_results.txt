@@ -1,0 +1,43 @@
+
+Problem 1
+
+  [AWS052][ERROR] Resource 'aws_db_instance.default' defines a disabled RDS Instance Encryption.
+  /src/main.tf:1-11
+
+       1 | resource "aws_db_instance" "default" {
+       2 |   allocated_storage    = 10
+       3 |   engine               = "mysql"
+       4 |   engine_version       = "5.7"
+       5 |   instance_class       = "db.t3.micro"
+       6 |   name                 = "mydb"
+       7 |   username             = "foo"
+       8 |   password             = "foobarbaz"
+       9 |   parameter_group_name = "default.mysql5.7"
+      10 |   skip_final_snapshot  = true
+      11 | }
+
+   See https://tfsec.dev/docs/aws/AWS052/ for more information. 
+
+Problem 2
+
+  [GEN003][WARNING] Block 'aws_db_instance.default' includes a potentially sensitive attribute which is defined within the project.
+  /src/main.tf:8
+
+       5 |   instance_class       = "db.t3.micro"
+       6 |   name                 = "mydb"
+       7 |   username             = "foo"
+       8 |   password             = "foobarbaz"
+       9 |   parameter_group_name = "default.mysql5.7"
+      10 |   skip_final_snapshot  = true
+      11 | }
+
+   See https://tfsec.dev/docs/general/GEN003/ for more information. 
+
+  disk i/o             20.501ms
+  parsing HCL          526µs
+  evaluating values    1.499ms
+  running checks       12.914ms
+  files loaded         1
+
+2 potential problems detected.
+

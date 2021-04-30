@@ -1,0 +1,21 @@
+
+Problem 1
+
+  [AWS019][WARNING] Resource 'aws_kms_key.a' does not have KMS Key auto-rotation enabled.
+  /src/main.tf:1-4
+
+       1 | resource "aws_kms_key" "a" {
+       2 |   description             = "KMS key 1"
+       3 |   deletion_window_in_days = 10
+       4 | }
+
+   See https://tfsec.dev/docs/aws/AWS019/ for more information. 
+
+  disk i/o             19.466ms
+  parsing HCL          519µs
+  evaluating values    1.449ms
+  running checks       5.175ms
+  files loaded         1
+
+1 potential problems detected.
+

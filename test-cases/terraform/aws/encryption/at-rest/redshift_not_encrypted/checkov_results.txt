@@ -1,0 +1,73 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.87 
+
+terraform scan results:
+
+Passed checks: 1, Failed checks: 4, Skipped checks: 0
+
+Check: CKV_AWS_71: "Ensure Redshift Cluster logging is enabled"
+	FAILED for resource: aws_redshift_cluster.default
+	File: /main.tf:1-8
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_logging_12
+
+		1 | resource "aws_redshift_cluster" "default" {
+		2 |   cluster_identifier = "tf-redshift-cluster"
+		3 |   database_name      = "mydb"
+		4 |   master_username    = "foo"
+		5 |   master_password    = "Mustbe8characters"
+		6 |   node_type          = "dc1.large"
+		7 |   cluster_type       = "single-node"
+		8 | }
+
+
+Check: CKV_AWS_142: "Ensure that Redshift cluster is encrypted by KMS"
+	FAILED for resource: aws_redshift_cluster.default
+	File: /main.tf:1-8
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-redshift-cluster-is-encrypted-by-kms
+
+		1 | resource "aws_redshift_cluster" "default" {
+		2 |   cluster_identifier = "tf-redshift-cluster"
+		3 |   database_name      = "mydb"
+		4 |   master_username    = "foo"
+		5 |   master_password    = "Mustbe8characters"
+		6 |   node_type          = "dc1.large"
+		7 |   cluster_type       = "single-node"
+		8 | }
+
+
+Check: CKV_AWS_87: "Redshift cluster should not be publicly accessible"
+	FAILED for resource: aws_redshift_cluster.default
+	File: /main.tf:1-8
+	Guide: https://docs.bridgecrew.io/docs/public_9
+
+		1 | resource "aws_redshift_cluster" "default" {
+		2 |   cluster_identifier = "tf-redshift-cluster"
+		3 |   database_name      = "mydb"
+		4 |   master_username    = "foo"
+		5 |   master_password    = "Mustbe8characters"
+		6 |   node_type          = "dc1.large"
+		7 |   cluster_type       = "single-node"
+		8 | }
+
+
+Check: CKV_AWS_64: "Ensure all data stored in the Redshift cluster is securely encrypted at rest"
+	FAILED for resource: aws_redshift_cluster.default
+	File: /main.tf:1-8
+	Guide: https://docs.bridgecrew.io/docs/general_25
+
+		1 | resource "aws_redshift_cluster" "default" {
+		2 |   cluster_identifier = "tf-redshift-cluster"
+		3 |   database_name      = "mydb"
+		4 |   master_username    = "foo"
+		5 |   master_password    = "Mustbe8characters"
+		6 |   node_type          = "dc1.large"
+		7 |   cluster_type       = "single-node"
+		8 | }
+
+

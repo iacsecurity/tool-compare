@@ -1,0 +1,208 @@
+Failed to run the process ...
+{
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "ignoreSettings": null,
+    "org": "y",
+    "projectId": "",
+    "policy": ""
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "/project/main.tf",
+  "projectName": "project",
+  "org": "y",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
+  "infrastructureAsCodeIssues": [
+    {
+      "resolve": "Set `versioning.mfa_delete` attribute to `true`",
+      "id": "SNYK-CC-TF-127",
+      "impact": "Object could be deleted without stronger MFA authorization",
+      "subType": "S3",
+      "policyEngineType": "opa",
+      "publicId": "SNYK-CC-TF-127",
+      "title": "S3 bucket MFA delete control disabled",
+      "severity": "low",
+      "msg": "resource.aws_s3_bucket[b].versioning.mfa_delete",
+      "issue": "S3 bucket will not enforce MFA login on delete requests",
+      "type": "terraform",
+      "references": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/dev/Versioning.html",
+        "https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingMFADelete.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "S3 bucket will not enforce MFA login on delete requests",
+        "impact": "Object could be deleted without stronger MFA authorization",
+        "resolve": "Set `versioning.mfa_delete` attribute to `true`"
+      },
+      "lineNumber": 1,
+      "path": [
+        "resource",
+        "aws_s3_bucket[b]",
+        "versioning",
+        "mfa_delete"
+      ]
+    },
+    {
+      "resolve": "Set `server_side_encryption_configuration` block attribute",
+      "id": "SNYK-CC-TF-4",
+      "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+      "remediation": {
+        "cloudformation": "Set `BucketEncryption` attribute",
+        "terraform": "Set `server_side_encryption_configuration` block attribute"
+      },
+      "subType": "S3",
+      "policyEngineType": "opa",
+      "publicId": "SNYK-CC-TF-4",
+      "title": "Non-encrypted S3 Bucket",
+      "severity": "medium",
+      "msg": "input.resource.aws_s3_bucket[b]",
+      "issue": "That by default S3 buckets do not encrypt the objects that are stored.",
+      "type": "terraform",
+      "references": [],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "That by default S3 buckets do not encrypt the objects that are stored.",
+        "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+        "resolve": "Set `server_side_encryption_configuration` block attribute"
+      },
+      "lineNumber": 1,
+      "path": [
+        "input",
+        "resource",
+        "aws_s3_bucket[b]"
+      ]
+    },
+    {
+      "resolve": "Add `logging` block attribute",
+      "id": "SNYK-CC-TF-45",
+      "impact": "There will be no audit trail of access to s3 objects",
+      "remediation": {
+        "cloudformation": "Set `Properties.LoggingConfiguration` attribute",
+        "terraform": "Add `logging` block attribute"
+      },
+      "subType": "S3",
+      "policyEngineType": "opa",
+      "publicId": "SNYK-CC-TF-45",
+      "title": "S3 server access logging is disabled",
+      "severity": "low",
+      "msg": "input.resource.aws_s3_bucket[b].logging",
+      "issue": "The s3 access logs will not be collected",
+      "type": "terraform",
+      "references": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerLogs.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "The s3 access logs will not be collected",
+        "impact": "There will be no audit trail of access to s3 objects",
+        "resolve": "Add `logging` block attribute"
+      },
+      "lineNumber": 1,
+      "path": [
+        "input",
+        "resource",
+        "aws_s3_bucket[b]",
+        "logging"
+      ]
+    },
+    {
+      "resolve": "Set `web_acl_id` attribute to existing AWS WAF acl ARN",
+      "id": "SNYK-CC-TF-75",
+      "impact": "The WAF service will not protect the application from common web based attacks such as SQL injections",
+      "subType": "CloudFront",
+      "policyEngineType": "opa",
+      "publicId": "SNYK-CC-TF-75",
+      "title": "Cloudfront distribution without WAF",
+      "severity": "low",
+      "msg": "resource.aws_cloudfront_distribution[s3_distribution].web_acl_id",
+      "issue": "The AWS WAF is not in front of cloudfront distribution",
+      "type": "terraform",
+      "references": [
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/distribution-web-awswaf.html",
+        "https://docs.aws.amazon.com/waf/latest/developerguide/web-acl.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "The AWS WAF is not in front of cloudfront distribution",
+        "impact": "The WAF service will not protect the application from common web based attacks such as SQL injections",
+        "resolve": "Set `web_acl_id` attribute to existing AWS WAF acl ARN"
+      },
+      "lineNumber": 14,
+      "path": [
+        "resource",
+        "aws_cloudfront_distribution[s3_distribution]",
+        "web_acl_id"
+      ]
+    },
+    {
+      "resolve": "Set `default_cache_behavior.viewer_protocol_policy` attribute to `redirect-to-https`",
+      "id": "SNYK-CC-TF-57",
+      "impact": "The content could be intercepted and manipulated in transit",
+      "subType": "CloudFront",
+      "policyEngineType": "opa",
+      "publicId": "SNYK-CC-TF-57",
+      "title": "Cloudfront distribution does not enforce HTTPS",
+      "severity": "medium",
+      "msg": "resource.aws_cloudfront_distribution[s3_distribution].default_cache_behavior.viewer_protocol_policy",
+      "issue": "Cloudfront distribution does not enforce HTTPS",
+      "type": "terraform",
+      "references": [
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/distribution-web-values-specify.html#DownloadDistValuesViewerProtocolPolicy",
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-https-viewers-to-cloudfront.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Cloudfront distribution does not enforce HTTPS",
+        "impact": "The content could be intercepted and manipulated in transit",
+        "resolve": "Set `default_cache_behavior.viewer_protocol_policy` attribute to `redirect-to-https`"
+      },
+      "lineNumber": 50,
+      "path": [
+        "resource",
+        "aws_cloudfront_distribution[s3_distribution]",
+        "default_cache_behavior",
+        "viewer_protocol_policy"
+      ]
+    },
+    {
+      "resolve": "Set `versioning.enabled` attribute to `true`",
+      "id": "SNYK-CC-TF-124",
+      "impact": "Changes or deletion of objects will not be reversible",
+      "subType": "S3",
+      "policyEngineType": "opa",
+      "publicId": "SNYK-CC-TF-124",
+      "title": "S3 bucket versioning disabled",
+      "severity": "low",
+      "msg": "resource.aws_s3_bucket[b].versioning.enabled",
+      "issue": "S3 bucket versioning is disabled",
+      "type": "terraform",
+      "references": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/dev/Versioning.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "S3 bucket versioning is disabled",
+        "impact": "Changes or deletion of objects will not be reversible",
+        "resolve": "Set `versioning.enabled` attribute to `true`"
+      },
+      "lineNumber": 1,
+      "path": [
+        "resource",
+        "aws_s3_bucket[b]",
+        "versioning",
+        "enabled"
+      ]
+    }
+  ]
+}

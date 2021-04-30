@@ -1,0 +1,55 @@
+Failed to run the process ...
+{
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "ignoreSettings": null,
+    "org": "y",
+    "projectId": "",
+    "policy": ""
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "/project/main.tf",
+  "projectName": "project",
+  "org": "y",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
+  "infrastructureAsCodeIssues": [
+    {
+      "resolve": "Set `storage_encrypted` attribute to true",
+      "id": "SNYK-CC-TF-201",
+      "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+      "subType": "RDS",
+      "policyEngineType": "opa",
+      "publicId": "SNYK-CC-TF-201",
+      "title": "Non-encrypted RDS instance at rest",
+      "severity": "medium",
+      "msg": "resource.aws_db_instance[default].storage_encrypted",
+      "issue": "The DB instance storage encrypted set by default to false",
+      "type": "terraform",
+      "references": [
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_instance#storage_encrypted"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "The DB instance storage encrypted set by default to false",
+        "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+        "resolve": "Set `storage_encrypted` attribute to true"
+      },
+      "lineNumber": 1,
+      "path": [
+        "resource",
+        "aws_db_instance[default]",
+        "storage_encrypted"
+      ]
+    }
+  ]
+}
