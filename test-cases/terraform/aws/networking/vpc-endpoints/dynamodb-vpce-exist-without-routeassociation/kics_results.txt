@@ -27,48 +27,34 @@ Queries failed to execute: 0
 
 ------------------------------------
 
-EC2 Instance Has Public IP, Severity: HIGH, Results: 3
+EC2 Instance Has Public IP, Severity: HIGH, Results: 1
 Description: EC2 Instance should not have a public IP address.
 Platform: Terraform
 
-	[1]: /src/main.tf:95
+	[1]: /src/main.tf:83
 
-		094: 
-		095: resource "aws_instance" "inst2" {
-		096:   vpc_security_group_ids = [aws_default_security_group.dsg.id]
-
-
-	[2]: /src/main.tf:108
-
-		107: 
-		108: resource "aws_instance" "inst3" {
-		109:   vpc_security_group_ids = [aws_default_security_group.dsg.id]
-
-
-	[3]: /src/main.tf:82
-
-		081: 
-		082: resource "aws_instance" "inst1" {
-		083:   vpc_security_group_ids = [aws_default_security_group.dsg.id]
+		082: 
+		083: resource "aws_instance" "test" {
+		084:   ami = data.aws_ami.ubuntu.id
 
 
 VPC FlowLogs Disabled, Severity: MEDIUM, Results: 1
 Description: VPC hasn't got any FlowLog associated
 Platform: Terraform
 
-	[1]: /src/main.tf:26
+	[1]: /src/main.tf:8
 
-		025: 
-		026: resource "aws_vpc" "vpc1" {
-		027:   cidr_block = "10.10.0.0/16"
+		007: }
+		008: resource "aws_vpc" "main" {
+		009:   cidr_block = "192.168.100.0/24"
 
 
 
 Results Summary:
-HIGH: 3
+HIGH: 1
 MEDIUM: 1
 LOW: 0
 INFO: 0
-TOTAL: 4
+TOTAL: 2
 
-Scan duration: 32.137486182s
+Scan duration: 30.717850847s

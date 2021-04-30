@@ -36,7 +36,7 @@ resource "aws_db_subnet_group" nondefault {
 }
 
 resource "aws_internet_gateway" "igw" {
-
+  vpc_id = aws_vpc.nondefault.id
 }
 
 resource "aws_route_table" "nondefault" {

@@ -22,10 +22,7 @@ resource "aws_elasticsearch_domain_policy" "main" {
         {
             "Action": "es:*",
             "Principal": "*",
-            "Effect": "Allow",
-            "Condition": {
-                "IpAddress": {"aws:SourceIp": "127.0.0.1/32"}
-            }
+            "Effect": "Allow"
         }
     ]
 }

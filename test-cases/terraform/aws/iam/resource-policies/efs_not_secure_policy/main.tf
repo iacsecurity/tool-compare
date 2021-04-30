@@ -26,12 +26,7 @@ resource "aws_efs_file_system_policy" "not_secure_policy" {
             },
             "Action": [
                 "elasticfilesystem:*"
-            ],
-            "Condition": {
-                "Bool": {
-                    "aws:SecureTransport": "true"
-                }
-            }
+            ]
         }
     ]
 }

@@ -1,5 +1,23 @@
 
 WARNINGs found:
+Rule: Ensure RDS database is not publicly accessible
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_db_instance.test] (main.tf:60)
+     Violating Resource: [aws_security_group.nondefault]  (main.tf:9)
+
+     Evidence:
+         Internet
+             | RDS Instance aws_db_instance.test is on VPC aws_vpc.nondefault
+             | instance uses security groups aws_security_group.nondefault 
+             | RDS Instance uses the subnets aws_subnet.nondefault_1, aws_subnet.nondefault_2
+             | RDS Instance is reachable from the internet due to subnet(s) and route table(s)
+             | Subnet uses Network ACL's nacl-pseudo-bbd87e5f-0ec8-48a7-8cdc-da0a0f87b840, nacl-pseudo-bbd87e5f-0ec8-48a7-8cdc-da0a0f87b840
+             | Network ACL's and security group(s) allows the RDS configured ports
+         RDS Instance
+
+
+-----------------------------------------------
 Rule: Ensure RDS instances/clusters being created are set to be encrypted at rest
  - 1 Resources Exposed:
 -----------------------------------------------
