@@ -15,9 +15,9 @@ tools = {
 def recurse_dir(path, level, total_case_catch_stats, is_root):
     results = ""
 
-    heading_prefix = '#' * level
+    heading_prefix = '#' * 3
     if not is_root:
-        results += f'{heading_prefix} {os.path.basename(path)}\n'
+        results += f'<dl>{heading_prefix} {os.path.basename(path)}\n'
 
     found_sub_categories = False
     for subdir in sorted(os.listdir(path)):
@@ -28,6 +28,7 @@ def recurse_dir(path, level, total_case_catch_stats, is_root):
     if not found_sub_categories:
         results += generate_category_test_case_table(path, total_case_catch_stats)
 
+    results += "</dl>"
     return results
 
 def generate_category_test_case_table(path, total_case_catch_stats):
