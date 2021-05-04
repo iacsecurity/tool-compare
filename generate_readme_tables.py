@@ -15,22 +15,20 @@ tools = {
 def recurse_dir(path, level, total_case_catch_stats, is_root):
     results = ""
 
-    heading_prefix = '#' * level
-    if not is_root:
-        results += f'{heading_prefix} {os.path.basename(path)}\n'
-
     found_sub_categories = False
     for subdir in sorted(os.listdir(path)):
         if os.path.isdir(os.path.join(path, subdir)) and not os.path.exists(os.path.join(path, subdir, "main.tf")):
             found_sub_categories = True
+
             results += recurse_dir(os.path.join(path, subdir), level + 1, total_case_catch_stats, is_root = False)
 
     if not found_sub_categories:
-        results += print_category_test_case_table(path, total_case_catch_stats)
+        results += f'### {path}\n'
+        results += generate_category_test_case_table(path, total_case_catch_stats)
 
     return results
 
-def print_category_test_case_table(path, total_case_catch_stats):
+def generate_category_test_case_table(path, total_case_catch_stats):
     results = ""
     category_catch_summary = {x: 0 for x in tools.keys()}
     category_catch_summary['total'] = 0
@@ -51,7 +49,9 @@ def print_category_test_case_table(path, total_case_catch_stats):
 
             with open(summary_json_path) as summary_json_file:
                 summary_json = json.load(summary_json_file)
-                case_line = f"|[{subdir}]({os.path.join(path, subdir)})|"
+                adjusted_case_name = (subdir[:40] + '..') if len(subdir) > 40 else subdir
+                case_line = f"|[{adjusted_case_name}]({os.path.join(path, subdir)})|"
+
                 for tool in tools:
                     case_line += (':white_check_mark:' if summary_json[tool] == 'yes' else ':x:') + "|"
                     category_catch_summary[tool] += 1 if summary_json[tool] == 'yes' else 0
@@ -62,6 +62,31 @@ def print_category_test_case_table(path, total_case_catch_stats):
     summary_line = f"|Category Catch Rate|"
     for tool in tools:
         summary_line += f"{round(category_catch_summary[tool] * 100 / category_catch_summary['total'])}%|"
+    results += f"{summary_line}\n\n"
+
+    return results
+
+
+def generate_summary_table():
+    header = "|     |"
+    header_line = "|----|"
+    for tool in tools.values():
+        header += f" {tool} |"
+        header_line += "----|"
+    results = f"### Summary\n"
+    results += f"{header}\n"
+    results += f"{header_line}\n"
+
+    version_line = f"|Tested Version|"
+    for tool in tools:
+        with open(f"version_{tool}.txt") as fp:
+            tool_version = fp.readline().strip().replace("v", "")
+            version_line += f"{tool_version}|"
+    results += f"{version_line}\n"
+
+    summary_line = f"|Total Catch Rate|"
+    for tool in tools:
+        summary_line += f"{round(total_case_catch_stats[tool] * 100 / total_case_catch_stats['total'])}%|"
     results += f"{summary_line}\n"
 
     return results
@@ -73,18 +98,6 @@ if __name__ == "__main__":
 
     full_results = recurse_dir("test-cases", 2, total_case_catch_stats, is_root = True)
 
-    header = "|     |"
-    header_line = "|----|"
-    for tool in tools.values():
-        header += f" {tool} |"
-        header_line += "----|"
-    print("### Summary")
-    print(header)
-    print(header_line)
-
-    summary_line = f"|Total Catch Rate|"
-    for tool in tools:
-        summary_line += f"{round(total_case_catch_stats[tool] * 100 / total_case_catch_stats['total'])}%|"
-    print(summary_line)
+    print(generate_summary_table())
 
     print(full_results)
