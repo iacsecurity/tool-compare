@@ -51,7 +51,9 @@ def generate_category_test_case_table(path, total_case_catch_stats):
 
             with open(summary_json_path) as summary_json_file:
                 summary_json = json.load(summary_json_file)
-                case_line = f"|[{subdir}]({os.path.join(path, subdir)})|"
+                adjusted_case_name = (subdir[:40] + '..') if len(subdir) > 40 else subdir
+                case_line = f"|[{adjusted_case_name}]({os.path.join(path, subdir)})|"
+
                 for tool in tools:
                     case_line += (':white_check_mark:' if summary_json[tool] == 'yes' else ':x:') + "|"
                     category_catch_summary[tool] += 1 if summary_json[tool] == 'yes' else 0
