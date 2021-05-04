@@ -26,11 +26,11 @@ def recurse_dir(path, level, total_case_catch_stats, is_root):
             results += recurse_dir(os.path.join(path, subdir), level + 1, total_case_catch_stats, is_root = False)
 
     if not found_sub_categories:
-        results += print_category_test_case_table(path, total_case_catch_stats)
+        results += generate_category_test_case_table(path, total_case_catch_stats)
 
     return results
 
-def print_category_test_case_table(path, total_case_catch_stats):
+def generate_category_test_case_table(path, total_case_catch_stats):
     results = ""
     category_catch_summary = {x: 0 for x in tools.keys()}
     category_catch_summary['total'] = 0
@@ -67,24 +67,37 @@ def print_category_test_case_table(path, total_case_catch_stats):
     return results
 
 
+def generate_summary_table():
+    header = "|     |"
+    header_line = "|----|"
+    for tool in tools.values():
+        header += f" {tool} |"
+        header_line += "----|"
+    results = f"### Summary\n"
+    results += f"{header}\n"
+    results += f"{header_line}\n"
+
+    version_line = f"|Tested Version|"
+    for tool in tools:
+        with open(f"version_{tool}.txt") as fp:
+            tool_version = fp.readline().strip().replace("v", "")
+            version_line += f"{tool_version}|"
+    results += f"{version_line}\n"
+
+    summary_line = f"|Total Catch Rate|"
+    for tool in tools:
+        summary_line += f"{round(total_case_catch_stats[tool] * 100 / total_case_catch_stats['total'])}%|"
+    results += f"{summary_line}\n"
+
+    return results
+
+
 if __name__ == "__main__":
     total_case_catch_stats = {x: 0 for x in tools.keys()}
     total_case_catch_stats['total'] = 0
 
     full_results = recurse_dir("test-cases", 2, total_case_catch_stats, is_root = True)
 
-    header = "|     |"
-    header_line = "|----|"
-    for tool in tools.values():
-        header += f" {tool} |"
-        header_line += "----|"
-    print("### Summary")
-    print(header)
-    print(header_line)
-
-    summary_line = f"|Total Catch Rate|"
-    for tool in tools:
-        summary_line += f"{round(total_case_catch_stats[tool] * 100 / total_case_catch_stats['total'])}%|"
-    print(summary_line)
+    print(generate_summary_table())
 
     print(full_results)

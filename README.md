@@ -25,8 +25,10 @@ are able to catch it specifically, and which don't.
 ### Summary
 |     | Checkov | Indeni Cloudrail | Kics | Snyk | Terrascan | Tfsec |
 |----|----|----|----|----|----|----|
+|Tested Version|2.0.87|1.2.130|1.2.4|1.563.0|1.4.0|0.38.3|
 |Total Catch Rate|59%|69%|29%|43%|16%|26%|
 
+### terraform
 #### aws
 ##### best-practices
 | Test Case | Checkov | Indeni Cloudrail | Kics | Snyk | Terrascan | Tfsec |
