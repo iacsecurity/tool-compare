@@ -17,7 +17,7 @@ def recurse_dir(path, level, total_case_catch_stats, is_root):
 
     indentation = '\xa0' * level
     if not is_root:
-        results += f'{indentation}### {os.path.basename(path)}\n'
+        results += f'{indentation}### {os.path.basename(path)}\n\n'
 
     found_sub_categories = False
     for subdir in sorted(os.listdir(path)):
@@ -28,6 +28,7 @@ def recurse_dir(path, level, total_case_catch_stats, is_root):
     if not found_sub_categories:
         results += generate_category_test_case_table(path, total_case_catch_stats)
 
+    results += "\n\n"
     return results
 
 def generate_category_test_case_table(path, total_case_catch_stats):
