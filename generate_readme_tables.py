@@ -15,20 +15,17 @@ tools = {
 def recurse_dir(path, level, total_case_catch_stats, is_root):
     results = ""
 
-    indentation = '\xa0' * level
-    if not is_root:
-        results += f'{indentation}### {os.path.basename(path)}\n\n'
-
     found_sub_categories = False
     for subdir in sorted(os.listdir(path)):
         if os.path.isdir(os.path.join(path, subdir)) and not os.path.exists(os.path.join(path, subdir, "main.tf")):
             found_sub_categories = True
+
             results += recurse_dir(os.path.join(path, subdir), level + 1, total_case_catch_stats, is_root = False)
 
     if not found_sub_categories:
+        results += f'### {path}\n'
         results += generate_category_test_case_table(path, total_case_catch_stats)
 
-    results += "\n\n"
     return results
 
 def generate_category_test_case_table(path, total_case_catch_stats):
@@ -65,7 +62,7 @@ def generate_category_test_case_table(path, total_case_catch_stats):
     summary_line = f"|Category Catch Rate|"
     for tool in tools:
         summary_line += f"{round(category_catch_summary[tool] * 100 / category_catch_summary['total'])}%|"
-    results += f"{summary_line}\n"
+    results += f"{summary_line}\n\n"
 
     return results
 
