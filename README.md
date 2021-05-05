@@ -1,5 +1,5 @@
-[![MIT License](https://img.shields.io/github/license/iacsecurity/tool-compare)]
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)]
+![MIT License](https://img.shields.io/github/license/iacsecurity/tool-compare)
+![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)
 
 # tool-compare
 In the world of infrastructure-as-code security there are several tools for users to choose from.
