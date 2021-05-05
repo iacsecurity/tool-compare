@@ -1,8 +1,9 @@
 
-Problem 1
+Check 1
 
   [AWS018][ERROR] Resource 'aws_security_group.db' should include a description for auditing purposes.
   /src/main.tf:103-111
+
 
      100 | 
      101 | }
@@ -20,27 +21,16 @@ Problem 1
      113 | resource "aws_db_instance" "test" {
      114 |   identifier = "tf-test-db"
 
-   See https://tfsec.dev/docs/aws/AWS018/ for more information. 
+  Impact:     Descriptions provide context for the firewall rule reasons
+  Resolution: Add descriptions for all security groups anf rules
 
-Problem 2
+  See https://tfsec.dev/docs/aws/AWS018/ for more information. 
 
-  [AWS012][ERROR] Resource 'aws_instance.public_ins' has a public IP address associated.
-  /src/main.tf:149
+Check 2
 
-     146 | resource "aws_instance" "public_ins" {
-     147 |   ami = "ami-0130bec6e5047f596"
-     148 |   instance_type = "t3.nano"
-     149 |   associate_public_ip_address = true
-     150 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
-     151 |   subnet_id = aws_subnet.nondefault_1.id
-     152 | }
-
-   See https://tfsec.dev/docs/aws/AWS012/ for more information. 
-
-Problem 3
-
-  [AWS052][ERROR] Resource 'aws_db_instance.test' defines a disabled RDS Instance Encryption.
+  [AWS052][ERROR] Resource 'aws_db_instance.test' has no storage encryption defined.
   /src/main.tf:113-126
+
 
      110 |   }
      111 | }
@@ -63,12 +53,16 @@ Problem 3
      128 | 
      129 | resource "aws_security_group" "publicly_accessible_sg" {
 
-   See https://tfsec.dev/docs/aws/AWS052/ for more information. 
+  Impact:     Data can be read from the RDS instances if it is compromised
+  Resolution: Enable encryption for RDS clusters and instances
 
-Problem 4
+  See https://tfsec.dev/docs/aws/AWS052/ for more information. 
+
+Check 3
 
   [GEN003][WARNING] Block 'aws_db_instance.test' includes a potentially sensitive attribute which is defined within the project.
   /src/main.tf:120
+
 
      117 |   engine = "mysql"
      118 |   instance_class = "db.t2.small"
@@ -78,12 +72,16 @@ Problem 4
      122 |   vpc_security_group_ids = [ aws_security_group.db.id]
      123 |   storage_type = "gp2"
 
-   See https://tfsec.dev/docs/general/GEN003/ for more information. 
+  Impact:     Block attribute could be leaking secrets
+  Resolution: Don't include sensitive data in blocks
 
-Problem 5
+  See https://tfsec.dev/docs/general/GEN003/ for more information. 
+
+Check 4
 
   [AWS008][WARNING] Resource 'aws_security_group.publicly_accessible_sg' defines a fully open ingress security group.
   /src/main.tf:135
+
 
      132 |     from_port = 0
      133 |     protocol = "tcp"
@@ -93,12 +91,16 @@ Problem 5
      137 |   egress {
      138 |     from_port = 0
 
-   See https://tfsec.dev/docs/aws/AWS008/ for more information. 
+  Impact:     The port is exposed for ingress from the internet
+  Resolution: Set a more restrictive cidr range
 
-Problem 6
+  See https://tfsec.dev/docs/aws/AWS008/ for more information. 
+
+Check 5
 
   [AWS009][WARNING] Resource 'aws_security_group.publicly_accessible_sg' defines a fully open egress security group.
   /src/main.tf:141
+
 
      138 |     from_port = 0
      139 |     protocol = "tcp"
@@ -108,12 +110,16 @@ Problem 6
      143 | }
      144 | 
 
-   See https://tfsec.dev/docs/aws/AWS009/ for more information. 
+  Impact:     The port is exposed for egressing data to the internet
+  Resolution: Set a more restrictive cidr range
 
-Problem 7
+  See https://tfsec.dev/docs/aws/AWS009/ for more information. 
+
+Check 6
 
   [AWS018][ERROR] Resource 'aws_security_group.publicly_accessible_sg' should include a description for auditing purposes.
   /src/main.tf:129-143
+
 
      126 | }
      127 | 
@@ -137,13 +143,67 @@ Problem 7
      145 | // This instance is can potentially be used to hop into the DB
      146 | resource "aws_instance" "public_ins" {
 
-   See https://tfsec.dev/docs/aws/AWS018/ for more information. 
+  Impact:     Descriptions provide context for the firewall rule reasons
+  Resolution: Add descriptions for all security groups anf rules
 
-  disk i/o             62.535ms
-  parsing HCL          554µs
-  evaluating values    3.802ms
-  running checks       23.268ms
+  See https://tfsec.dev/docs/aws/AWS018/ for more information. 
+
+Check 7
+
+  [AWS012][ERROR] Resource 'aws_instance.public_ins' has a public IP address associated.
+  /src/main.tf:149
+
+
+     146 | resource "aws_instance" "public_ins" {
+     147 |   ami = "ami-0130bec6e5047f596"
+     148 |   instance_type = "t3.nano"
+     149 |   associate_public_ip_address = true
+     150 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
+     151 |   subnet_id = aws_subnet.nondefault_1.id
+     152 | }
+
+  Impact:     The instance or configuration is publically accessible
+  Resolution: Set the instance to not be publically accessible
+
+  See https://tfsec.dev/docs/aws/AWS012/ for more information. 
+
+Check 8
+
+  [AWS079][ERROR] Resource 'aws_instance.public_ins' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
+  /src/main.tf:146-152
+
+
+     143 | }
+     144 | 
+     145 | // This instance is can potentially be used to hop into the DB
+     146 | resource "aws_instance" "public_ins" {
+     147 |   ami = "ami-0130bec6e5047f596"
+     148 |   instance_type = "t3.nano"
+     149 |   associate_public_ip_address = true
+     150 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
+     151 |   subnet_id = aws_subnet.nondefault_1.id
+     152 | }
+
+  Impact:     Instance metadata service can be interacted with freely
+  Resolution: Enable HTTP token requirement for IMDS
+
+  See https://tfsec.dev/docs/aws/AWS079/ for more information. 
+
+  times
+  ------------------------------------------
+  disk i/o             53.351167ms
+  parsing HCL          528.458µs
+  evaluating values    3.852958ms
+  running checks       28.779292ms
+
+  counts
+  ------------------------------------------
   files loaded         1
+  blocks               15
+  evaluated blocks     15
+  modules              0
+  module blocks        0
+  ignored checks       0
 
-7 potential problems detected.
+8 potential problems detected.
 

@@ -1,8 +1,9 @@
 
-Problem 1
+Check 1
 
   [AWS024][ERROR] Resource 'aws_kinesis_stream.kinesis_for_cloudwatch' defines an unencrypted Kinesis Stream.
   /src/main.tf:49-58
+
 
       46 |   EOF
       47 | }
@@ -21,13 +22,26 @@ Problem 1
       60 | resource "aws_cloudwatch_log_destination" "test_destination" {
       61 |   name       = "test_destination"
 
-   See https://tfsec.dev/docs/aws/AWS024/ for more information. 
+  Impact:     Intercepted data can be read in transit
+  Resolution: Enable in transit encryption
 
-  disk i/o             53.176ms
-  parsing HCL          505µs
-  evaluating values    3.158ms
-  running checks       6.136ms
+  See https://tfsec.dev/docs/aws/AWS024/ for more information. 
+
+  times
+  ------------------------------------------
+  disk i/o             41.309792ms
+  parsing HCL          522.333µs
+  evaluating values    4.00725ms
+  running checks       7.738042ms
+
+  counts
+  ------------------------------------------
   files loaded         1
+  blocks               9
+  evaluated blocks     9
+  modules              0
+  module blocks        0
+  ignored checks       0
 
 1 potential problems detected.
 

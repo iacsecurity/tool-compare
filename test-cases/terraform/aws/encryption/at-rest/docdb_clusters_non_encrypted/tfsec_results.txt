@@ -1,8 +1,9 @@
 
-Problem 1
+Check 1
 
   [GEN003][WARNING] Block 'aws_docdb_cluster.docdb' includes a potentially sensitive attribute which is defined within the project.
   /src/main.tf:9
+
 
        6 |   cluster_identifier  = "my-docdb-cluster"
        7 |   engine              = "docdb"
@@ -11,13 +12,26 @@ Problem 1
       10 |   skip_final_snapshot = true
       11 | }
 
-   See https://tfsec.dev/docs/general/GEN003/ for more information. 
+  Impact:     Block attribute could be leaking secrets
+  Resolution: Don't include sensitive data in blocks
 
-  disk i/o             49.639ms
-  parsing HCL          481µs
-  evaluating values    1.585ms
-  running checks       5.174ms
+  See https://tfsec.dev/docs/general/GEN003/ for more information. 
+
+  times
+  ------------------------------------------
+  disk i/o             38.993708ms
+  parsing HCL          462.75µs
+  evaluating values    1.57175ms
+  running checks       5.95175ms
+
+  counts
+  ------------------------------------------
   files loaded         1
+  blocks               2
+  evaluated blocks     2
+  modules              0
+  module blocks        0
+  ignored checks       0
 
 1 potential problems detected.
 

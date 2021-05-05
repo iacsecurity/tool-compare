@@ -1,8 +1,9 @@
 
-Problem 1
+Check 1
 
   [AWS005][WARNING] Resource 'aws_elb.test' is exposed publicly.
   /src/main.tf:1-10
+
 
        1 | resource "aws_elb" "test" {
        2 |   name = "test-lb-tf"
@@ -16,13 +17,26 @@ Problem 1
       10 | }
       11 | 
 
-   See https://tfsec.dev/docs/aws/AWS005/ for more information. 
+  Impact:     The load balancer is exposed on the internet
+  Resolution: Switch to an internal load balancer or add a tfsec ignore
 
-  disk i/o             43.036ms
-  parsing HCL          527µs
-  evaluating values    1.145ms
-  running checks       4.496ms
+  See https://tfsec.dev/docs/aws/AWS005/ for more information. 
+
+  times
+  ------------------------------------------
+  disk i/o             44.953334ms
+  parsing HCL          502.083µs
+  evaluating values    1.249833ms
+  running checks       5.952708ms
+
+  counts
+  ------------------------------------------
   files loaded         1
+  blocks               1
+  evaluated blocks     1
+  modules              0
+  module blocks        0
+  ignored checks       0
 
 1 potential problems detected.
 

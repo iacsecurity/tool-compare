@@ -1,9 +1,43 @@
 
-  disk i/o             56.828ms
-  parsing HCL          535µs
-  evaluating values    3.282ms
-  running checks       2.447ms
-  files loaded         1
+Check 1
 
-No problems detected!
+  [AWS079][ERROR] Resource 'aws_instance.test' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
+  /src/main.tf:83-88
+
+
+      80 |   owners = ["099720109477"] # Canonical
+      81 | }
+      82 | 
+      83 | resource "aws_instance" "test" {
+      84 |   ami = data.aws_ami.ubuntu.id
+      85 |   instance_type = "t2.micro"
+      86 |   vpc_security_group_ids = [aws_security_group.allow-public-outbound-sg.id]
+      87 |   subnet_id = aws_subnet.private-subnet.id
+      88 | }
+      89 | 
+      90 | resource "aws_dynamodb_table" "basic-dynamodb-table" {
+      91 |   name           = "GameScores"
+
+  Impact:     Instance metadata service can be interacted with freely
+  Resolution: Enable HTTP token requirement for IMDS
+
+  See https://tfsec.dev/docs/aws/AWS079/ for more information. 
+
+  times
+  ------------------------------------------
+  disk i/o             52.934293ms
+  parsing HCL          562.292µs
+  evaluating values    4.169375ms
+  running checks       6.922792ms
+
+  counts
+  ------------------------------------------
+  files loaded         1
+  blocks               11
+  evaluated blocks     11
+  modules              0
+  module blocks        0
+  ignored checks       0
+
+1 potential problems detected.
 

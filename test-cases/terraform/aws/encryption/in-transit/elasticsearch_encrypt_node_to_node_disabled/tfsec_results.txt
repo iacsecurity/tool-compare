@@ -1,69 +1,10 @@
 
-Problem 1
-
-  [AWS033][ERROR] Resource 'aws_elasticsearch_domain.example' defines an Elasticsearch domain with plaintext traffic (missing domain_endpoint_options block).
-  /src/main.tf:5-13
-
-       2 |   region = "us-east-1"
-       3 | }
-       4 | 
-       5 | resource "aws_elasticsearch_domain" "example" {
-       6 |   domain_name           = "cloudrail-non-enc-in-tran"
-       7 |   elasticsearch_version = "6.0"
-       8 | 
-       9 |   cluster_config {
-      10 |     instance_type = "i3.large.elasticsearch"
-      11 |   }
-      12 | 
-      13 | }
-
-   See https://tfsec.dev/docs/aws/AWS033/ for more information. 
-
-Problem 2
-
-  [AWS055][ERROR] Resource 'aws_elasticsearch_domain.example' does not configure node to node encryption on the domain.
-  /src/main.tf:5-13
-
-       2 |   region = "us-east-1"
-       3 | }
-       4 | 
-       5 | resource "aws_elasticsearch_domain" "example" {
-       6 |   domain_name           = "cloudrail-non-enc-in-tran"
-       7 |   elasticsearch_version = "6.0"
-       8 | 
-       9 |   cluster_config {
-      10 |     instance_type = "i3.large.elasticsearch"
-      11 |   }
-      12 | 
-      13 | }
-
-   See https://tfsec.dev/docs/aws/AWS055/ for more information. 
-
-Problem 3
-
-  [AWS057][ERROR] Resource 'aws_elasticsearch_domain.example' does not configure logging at rest on the domain.
-  /src/main.tf:5-13
-
-       2 |   region = "us-east-1"
-       3 | }
-       4 | 
-       5 | resource "aws_elasticsearch_domain" "example" {
-       6 |   domain_name           = "cloudrail-non-enc-in-tran"
-       7 |   elasticsearch_version = "6.0"
-       8 | 
-       9 |   cluster_config {
-      10 |     instance_type = "i3.large.elasticsearch"
-      11 |   }
-      12 | 
-      13 | }
-
-   See https://tfsec.dev/docs/aws/AWS057/ for more information. 
-
-Problem 4
+Check 1
 
   [AWS031][ERROR] Resource 'aws_elasticsearch_domain.example' defines an unencrypted Elasticsearch domain (missing encrypt_at_rest block).
   /src/main.tf:5-13
 
+
        2 |   region = "us-east-1"
        3 | }
        4 | 
@@ -77,13 +18,17 @@ Problem 4
       12 | 
       13 | }
 
-   See https://tfsec.dev/docs/aws/AWS031/ for more information. 
+  Impact:     Data will be readable if compromised
+  Resolution: Enable ElasticSearch domain encryption
 
-Problem 5
+  See https://tfsec.dev/docs/aws/AWS031/ for more information. 
+
+Check 2
 
   [AWS032][ERROR] Resource 'aws_elasticsearch_domain.example' defines an Elasticsearch domain with plaintext traffic (missing node_to_node_encryption block).
   /src/main.tf:5-13
 
+
        2 |   region = "us-east-1"
        3 | }
        4 | 
@@ -97,13 +42,74 @@ Problem 5
       12 | 
       13 | }
 
-   See https://tfsec.dev/docs/aws/AWS032/ for more information. 
+  Impact:     In transit data between nodes could be read if intercepted
+  Resolution: Enable encrypted node to node communication
 
-  disk i/o             44.451ms
-  parsing HCL          497µs
-  evaluating values    1.561ms
-  running checks       17.056ms
+  See https://tfsec.dev/docs/aws/AWS032/ for more information. 
+
+Check 3
+
+  [AWS033][ERROR] Resource 'aws_elasticsearch_domain.example' defines an Elasticsearch domain with plaintext traffic (missing domain_endpoint_options block).
+  /src/main.tf:5-13
+
+
+       2 |   region = "us-east-1"
+       3 | }
+       4 | 
+       5 | resource "aws_elasticsearch_domain" "example" {
+       6 |   domain_name           = "cloudrail-non-enc-in-tran"
+       7 |   elasticsearch_version = "6.0"
+       8 | 
+       9 |   cluster_config {
+      10 |     instance_type = "i3.large.elasticsearch"
+      11 |   }
+      12 | 
+      13 | }
+
+  Impact:     HTTP traffic can be intercepted and the contents read
+  Resolution: Enforce the use of HTTPS for ElasticSearch
+
+  See https://tfsec.dev/docs/aws/AWS033/ for more information. 
+
+Check 4
+
+  [AWS057][ERROR] Resource 'aws_elasticsearch_domain.example' does not configure logging at rest on the domain.
+  /src/main.tf:5-13
+
+
+       2 |   region = "us-east-1"
+       3 | }
+       4 | 
+       5 | resource "aws_elasticsearch_domain" "example" {
+       6 |   domain_name           = "cloudrail-non-enc-in-tran"
+       7 |   elasticsearch_version = "6.0"
+       8 | 
+       9 |   cluster_config {
+      10 |     instance_type = "i3.large.elasticsearch"
+      11 |   }
+      12 | 
+      13 | }
+
+  Impact:     Logging provides vital information about access and usage
+  Resolution: Enable logging for ElasticSearch domains
+
+  See https://tfsec.dev/docs/aws/AWS057/ for more information. 
+
+  times
+  ------------------------------------------
+  disk i/o             52.836084ms
+  parsing HCL          689.792µs
+  evaluating values    2.0495ms
+  running checks       19.993833ms
+
+  counts
+  ------------------------------------------
   files loaded         1
+  blocks               2
+  evaluated blocks     2
+  modules              0
+  module blocks        0
+  ignored checks       0
 
-5 potential problems detected.
+4 potential problems detected.
 

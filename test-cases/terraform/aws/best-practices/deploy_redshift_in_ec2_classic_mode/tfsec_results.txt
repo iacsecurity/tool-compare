@@ -1,8 +1,9 @@
 
-Problem 1
+Check 1
 
   [GEN003][WARNING] Block 'aws_redshift_cluster.test' includes a potentially sensitive attribute which is defined within the project.
   /src/main.tf:8
+
 
        5 | resource "aws_redshift_cluster" "test" {
        6 |   cluster_identifier = "redshift-defaults-only"
@@ -12,13 +13,26 @@ Problem 1
       10 |   skip_final_snapshot = true
       11 | }
 
-   See https://tfsec.dev/docs/general/GEN003/ for more information. 
+  Impact:     Block attribute could be leaking secrets
+  Resolution: Don't include sensitive data in blocks
 
-  disk i/o             50.891ms
-  parsing HCL          543µs
-  evaluating values    1.605ms
-  running checks       4.939ms
+  See https://tfsec.dev/docs/general/GEN003/ for more information. 
+
+  times
+  ------------------------------------------
+  disk i/o             44.398459ms
+  parsing HCL          501.542µs
+  evaluating values    1.542917ms
+  running checks       5.60325ms
+
+  counts
+  ------------------------------------------
   files loaded         1
+  blocks               2
+  evaluated blocks     2
+  modules              0
+  module blocks        0
+  ignored checks       0
 
 1 potential problems detected.
 

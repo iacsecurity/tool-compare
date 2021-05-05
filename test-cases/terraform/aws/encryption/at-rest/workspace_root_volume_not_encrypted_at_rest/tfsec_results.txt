@@ -1,8 +1,9 @@
 
-Problem 1
+Check 1
 
   [GEN003][WARNING] Block 'aws_directory_service_directory.test' includes a potentially sensitive attribute which is defined within the project.
   /src/main.tf:34
+
 
       31 | 
       32 | resource "aws_directory_service_directory" "test" {
@@ -12,13 +13,26 @@ Problem 1
       36 | 
       37 |   vpc_settings {
 
-   See https://tfsec.dev/docs/general/GEN003/ for more information. 
+  Impact:     Block attribute could be leaking secrets
+  Resolution: Don't include sensitive data in blocks
 
-  disk i/o             45.507ms
-  parsing HCL          537µs
-  evaluating values    4.751ms
-  running checks       6.886ms
+  See https://tfsec.dev/docs/general/GEN003/ for more information. 
+
+  times
+  ------------------------------------------
+  disk i/o             42.373042ms
+  parsing HCL          576.417µs
+  evaluating values    6.628375ms
+  running checks       10.297917ms
+
+  counts
+  ------------------------------------------
   files loaded         1
+  blocks               12
+  evaluated blocks     12
+  modules              0
+  module blocks        0
+  ignored checks       0
 
 1 potential problems detected.
 

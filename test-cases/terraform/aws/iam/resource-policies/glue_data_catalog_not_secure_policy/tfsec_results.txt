@@ -1,27 +1,10 @@
 
-Problem 1
-
-  [AWS017][ERROR] Resource 'aws_s3_bucket.cloudrail' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
-  /src/main.tf:33-36
-
-      30 | EOF
-      31 | }
-      32 | 
-      33 | resource "aws_s3_bucket" "cloudrail" {
-      34 |   bucket = "cloudrail-glue"
-      35 |   acl    = "private"
-      36 | }
-      37 | 
-      38 | resource "aws_glue_crawler" "cloudrail_table_crawler" {
-      39 |   database_name = aws_glue_catalog_database.cloudrail_table_database.name
-
-   See https://tfsec.dev/docs/aws/AWS017/ for more information. 
-
-Problem 2
+Check 1
 
   [AWS002][ERROR] Resource 'aws_s3_bucket.cloudrail' does not have logging enabled.
   /src/main.tf:33-36
 
+
       30 | EOF
       31 | }
       32 | 
@@ -33,13 +16,70 @@ Problem 2
       38 | resource "aws_glue_crawler" "cloudrail_table_crawler" {
       39 |   database_name = aws_glue_catalog_database.cloudrail_table_database.name
 
-   See https://tfsec.dev/docs/aws/AWS002/ for more information. 
+  Impact:     There is no way to determine the access to this bucket
+  Resolution: Add a logging block to the resource to enable access logging
 
-  disk i/o             49.383ms
-  parsing HCL          515µs
-  evaluating values    2.837ms
-  running checks       9.161ms
+  See https://tfsec.dev/docs/aws/AWS002/ for more information. 
+
+Check 2
+
+  [AWS017][ERROR] Resource 'aws_s3_bucket.cloudrail' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
+  /src/main.tf:33-36
+
+
+      30 | EOF
+      31 | }
+      32 | 
+      33 | resource "aws_s3_bucket" "cloudrail" {
+      34 |   bucket = "cloudrail-glue"
+      35 |   acl    = "private"
+      36 | }
+      37 | 
+      38 | resource "aws_glue_crawler" "cloudrail_table_crawler" {
+      39 |   database_name = aws_glue_catalog_database.cloudrail_table_database.name
+
+  Impact:     The bucket objects could be read if compromised
+  Resolution: Configure bucket encryption
+
+  See https://tfsec.dev/docs/aws/AWS017/ for more information. 
+
+Check 3
+
+  [AWS077][ERROR] Resource 'aws_s3_bucket.cloudrail' does not have versioning enabled
+  /src/main.tf:33-36
+
+
+      30 | EOF
+      31 | }
+      32 | 
+      33 | resource "aws_s3_bucket" "cloudrail" {
+      34 |   bucket = "cloudrail-glue"
+      35 |   acl    = "private"
+      36 | }
+      37 | 
+      38 | resource "aws_glue_crawler" "cloudrail_table_crawler" {
+      39 |   database_name = aws_glue_catalog_database.cloudrail_table_database.name
+
+  Impact:     Deleted or modified data would not be recoverable
+  Resolution: Enable versioning to protect against accidental/malicious removal or modification
+
+  See https://tfsec.dev/docs/aws/AWS077/ for more information. 
+
+  times
+  ------------------------------------------
+  disk i/o             63.818458ms
+  parsing HCL          564.542µs
+  evaluating values    4.071333ms
+  running checks       15.8195ms
+
+  counts
+  ------------------------------------------
   files loaded         1
+  blocks               11
+  evaluated blocks     11
+  modules              0
+  module blocks        0
+  ignored checks       0
 
-2 potential problems detected.
+3 potential problems detected.
 

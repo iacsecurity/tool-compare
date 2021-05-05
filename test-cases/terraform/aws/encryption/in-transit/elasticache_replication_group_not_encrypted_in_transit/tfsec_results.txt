@@ -1,9 +1,10 @@
 
-Problem 1
+Check 1
 
   [AWS035][ERROR] Resource 'aws_elasticache_replication_group.example' defines an unencrypted Elasticache Replication Group (missing at_rest_encryption_enabled attribute).
   /src/main.tf:5-14
 
+
        2 |   region = "us-east-1"
        3 | }
        4 | 
@@ -19,13 +20,17 @@ Problem 1
       14 | }
       15 | 
 
-   See https://tfsec.dev/docs/aws/AWS035/ for more information. 
+  Impact:     Data in the replication group could be readable if compromised
+  Resolution: Enable encryption for replication group
 
-Problem 2
+  See https://tfsec.dev/docs/aws/AWS035/ for more information. 
+
+Check 2
 
   [AWS036][ERROR] Resource 'aws_elasticache_replication_group.example' defines an unencrypted Elasticache Replication Group (missing transit_encryption_enabled attribute).
   /src/main.tf:5-14
 
+
        2 |   region = "us-east-1"
        3 | }
        4 | 
@@ -41,13 +46,26 @@ Problem 2
       14 | }
       15 | 
 
-   See https://tfsec.dev/docs/aws/AWS036/ for more information. 
+  Impact:     In transit data in the Replication Group could be read if intercepted
+  Resolution: Enable in transit encryptuon for replication group
 
-  disk i/o             45.793ms
-  parsing HCL          551µs
-  evaluating values    1.772ms
-  running checks       8.587ms
+  See https://tfsec.dev/docs/aws/AWS036/ for more information. 
+
+  times
+  ------------------------------------------
+  disk i/o             50.632167ms
+  parsing HCL          499.792µs
+  evaluating values    1.899583ms
+  running checks       10.750709ms
+
+  counts
+  ------------------------------------------
   files loaded         1
+  blocks               2
+  evaluated blocks     2
+  modules              0
+  module blocks        0
+  ignored checks       0
 
 2 potential problems detected.
 

@@ -1,9 +1,10 @@
 
-Problem 1
+Check 1
 
   [AWS035][ERROR] Resource 'aws_elasticache_replication_group.example' defines an unencrypted Elasticache Replication Group (missing at_rest_encryption_enabled attribute).
   /src/main.tf:1-10
 
+
        1 | resource "aws_elasticache_replication_group" "example" {
        2 |   automatic_failover_enabled    = true
        3 |   availability_zones            = ["us-west-2a", "us-west-2b"]
@@ -16,13 +17,17 @@ Problem 1
       10 | }
       11 | 
 
-   See https://tfsec.dev/docs/aws/AWS035/ for more information. 
+  Impact:     Data in the replication group could be readable if compromised
+  Resolution: Enable encryption for replication group
 
-Problem 2
+  See https://tfsec.dev/docs/aws/AWS035/ for more information. 
+
+Check 2
 
   [AWS036][ERROR] Resource 'aws_elasticache_replication_group.example' defines an unencrypted Elasticache Replication Group (missing transit_encryption_enabled attribute).
   /src/main.tf:1-10
 
+
        1 | resource "aws_elasticache_replication_group" "example" {
        2 |   automatic_failover_enabled    = true
        3 |   availability_zones            = ["us-west-2a", "us-west-2b"]
@@ -35,13 +40,26 @@ Problem 2
       10 | }
       11 | 
 
-   See https://tfsec.dev/docs/aws/AWS036/ for more information. 
+  Impact:     In transit data in the Replication Group could be read if intercepted
+  Resolution: Enable in transit encryptuon for replication group
 
-  disk i/o             42.848ms
-  parsing HCL          528µs
-  evaluating values    1.697ms
-  running checks       7.312ms
+  See https://tfsec.dev/docs/aws/AWS036/ for more information. 
+
+  times
+  ------------------------------------------
+  disk i/o             45.795584ms
+  parsing HCL          548.917µs
+  evaluating values    1.910292ms
+  running checks       7.699209ms
+
+  counts
+  ------------------------------------------
   files loaded         1
+  blocks               1
+  evaluated blocks     1
+  modules              0
+  module blocks        0
+  ignored checks       0
 
 2 potential problems detected.
 

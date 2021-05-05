@@ -1,8 +1,9 @@
 
-Problem 1
+Check 1
 
   [AWS008][WARNING] Resource 'aws_security_group.nondefault' defines a fully open ingress security group.
   /src/main.tf:16
+
 
       13 |     from_port = 0
       14 |     protocol = "TCP"
@@ -12,12 +13,16 @@ Problem 1
       18 | }
       19 | 
 
-   See https://tfsec.dev/docs/aws/AWS008/ for more information. 
+  Impact:     The port is exposed for ingress from the internet
+  Resolution: Set a more restrictive cidr range
 
-Problem 2
+  See https://tfsec.dev/docs/aws/AWS008/ for more information. 
+
+Check 2
 
   [AWS018][ERROR] Resource 'aws_security_group.nondefault' should include a description for auditing purposes.
   /src/main.tf:9-18
+
 
        6 |   cidr_block = "10.1.1.0/24"
        7 | }
@@ -36,12 +41,16 @@ Problem 2
       20 | resource "aws_subnet" "nondefault_1" {
       21 |   vpc_id = aws_vpc.nondefault.id
 
-   See https://tfsec.dev/docs/aws/AWS018/ for more information. 
+  Impact:     Descriptions provide context for the firewall rule reasons
+  Resolution: Add descriptions for all security groups anf rules
 
-Problem 3
+  See https://tfsec.dev/docs/aws/AWS018/ for more information. 
+
+Check 3
 
   [AWS011][WARNING] Resource 'aws_db_instance.test' is exposed publicly.
   /src/main.tf:62
+
 
       59 | 
       60 | resource "aws_db_instance" "test" {
@@ -51,12 +60,16 @@ Problem 3
       64 |   vpc_security_group_ids = [aws_security_group.nondefault.id]
       65 | }
 
-   See https://tfsec.dev/docs/aws/AWS011/ for more information. 
+  Impact:     The database instance is publicly accessible
+  Resolution: Set the database to not be publically accessible
 
-Problem 4
+  See https://tfsec.dev/docs/aws/AWS011/ for more information. 
 
-  [AWS052][ERROR] Resource 'aws_db_instance.test' defines a disabled RDS Instance Encryption.
+Check 4
+
+  [AWS052][ERROR] Resource 'aws_db_instance.test' has no storage encryption defined.
   /src/main.tf:60-65
+
 
       57 |   subnet_id = aws_subnet.nondefault_2.id
       58 | }
@@ -68,13 +81,26 @@ Problem 4
       64 |   vpc_security_group_ids = [aws_security_group.nondefault.id]
       65 | }
 
-   See https://tfsec.dev/docs/aws/AWS052/ for more information. 
+  Impact:     Data can be read from the RDS instances if it is compromised
+  Resolution: Enable encryption for RDS clusters and instances
 
-  disk i/o             55.62ms
-  parsing HCL          526µs
-  evaluating values    3.444ms
-  running checks       17.58ms
+  See https://tfsec.dev/docs/aws/AWS052/ for more information. 
+
+  times
+  ------------------------------------------
+  disk i/o             64.579708ms
+  parsing HCL          501.416µs
+  evaluating values    3.485874ms
+  running checks       20.392917ms
+
+  counts
+  ------------------------------------------
   files loaded         1
+  blocks               11
+  evaluated blocks     11
+  modules              0
+  module blocks        0
+  ignored checks       0
 
 4 potential problems detected.
 

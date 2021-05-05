@@ -1,8 +1,9 @@
 
-Problem 1
+Check 1
 
   [AWS051][ERROR] Resource 'aws_rds_cluster.default' defines a disabled RDS Cluster encryption.
   /src/main.tf:1-10
+
 
        1 | resource "aws_rds_cluster" "default" {
        2 |   cluster_identifier      = "aurora-cluster-demo"
@@ -16,12 +17,16 @@ Problem 1
       10 | }
       11 | 
 
-   See https://tfsec.dev/docs/aws/AWS051/ for more information. 
+  Impact:     Data can be read from the RDS cluster if it is compromised
+  Resolution: Enable encryption for RDS clusters and instances
 
-Problem 2
+  See https://tfsec.dev/docs/aws/AWS051/ for more information. 
+
+Check 2
 
   [GEN003][WARNING] Block 'aws_rds_cluster.default' includes a potentially sensitive attribute which is defined within the project.
   /src/main.tf:8
+
 
        5 |   availability_zones      = ["us-west-2a", "us-west-2b", "us-west-2c"]
        6 |   database_name           = "mydb"
@@ -31,13 +36,26 @@ Problem 2
       10 | }
       11 | 
 
-   See https://tfsec.dev/docs/general/GEN003/ for more information. 
+  Impact:     Block attribute could be leaking secrets
+  Resolution: Don't include sensitive data in blocks
 
-  disk i/o             47.853ms
-  parsing HCL          492µs
-  evaluating values    1.615ms
-  running checks       7.449ms
+  See https://tfsec.dev/docs/general/GEN003/ for more information. 
+
+  times
+  ------------------------------------------
+  disk i/o             44.115875ms
+  parsing HCL          483.25µs
+  evaluating values    1.731208ms
+  running checks       7.478209ms
+
+  counts
+  ------------------------------------------
   files loaded         1
+  blocks               1
+  evaluated blocks     1
+  modules              0
+  module blocks        0
+  ignored checks       0
 
 2 potential problems detected.
 

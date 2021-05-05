@@ -1,23 +1,9 @@
 
-Problem 1
-
-  [AWS004][ERROR] Resource 'aws_lb_listener.lb_listener_test' uses plain HTTP instead of HTTPS.
-  /src/main.tf:68
-
-      65 | resource "aws_lb_listener" "lb_listener_test" {
-      66 |   load_balancer_arn = aws_lb.alb_test.arn
-      67 |   port              = "80"
-      68 |   protocol          = "HTTP"
-      69 | 
-      70 |   default_action {
-      71 |     type             = "forward"
-
-   See https://tfsec.dev/docs/aws/AWS004/ for more information. 
-
-Problem 2
+Check 1
 
   [AWS005][WARNING] Resource 'aws_lb.alb_test' is exposed publicly.
   /src/main.tf:60-63
+
 
       57 |   protocol = "HTTP"
       58 | }
@@ -30,13 +16,45 @@ Problem 2
       65 | resource "aws_lb_listener" "lb_listener_test" {
       66 |   load_balancer_arn = aws_lb.alb_test.arn
 
-   See https://tfsec.dev/docs/aws/AWS005/ for more information. 
+  Impact:     The load balancer is exposed on the internet
+  Resolution: Switch to an internal load balancer or add a tfsec ignore
 
-  disk i/o             50.717ms
-  parsing HCL          520µs
-  evaluating values    3.483ms
-  running checks       9.686ms
+  See https://tfsec.dev/docs/aws/AWS005/ for more information. 
+
+Check 2
+
+  [AWS004][ERROR] Resource 'aws_lb_listener.lb_listener_test' uses plain HTTP instead of HTTPS.
+  /src/main.tf:68
+
+
+      65 | resource "aws_lb_listener" "lb_listener_test" {
+      66 |   load_balancer_arn = aws_lb.alb_test.arn
+      67 |   port              = "80"
+      68 |   protocol          = "HTTP"
+      69 | 
+      70 |   default_action {
+      71 |     type             = "forward"
+
+  Impact:     Your traffic is not protected
+  Resolution: Switch to HTTPS to benefit from TLS security features
+
+  See https://tfsec.dev/docs/aws/AWS004/ for more information. 
+
+  times
+  ------------------------------------------
+  disk i/o             56.46621ms
+  parsing HCL          527.25µs
+  evaluating values    3.873291ms
+  running checks       9.285708ms
+
+  counts
+  ------------------------------------------
   files loaded         1
+  blocks               12
+  evaluated blocks     12
+  modules              0
+  module blocks        0
+  ignored checks       0
 
 2 potential problems detected.
 
