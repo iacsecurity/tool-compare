@@ -1,8 +1,8 @@
 
-Check 1
+Problem 1
 
   [GEN003][WARNING] Block 'aws_docdb_cluster.test1' includes a potentially sensitive attribute which is defined within the project.
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_docdb_clusters_encrypted_using_customer_managed_cmk_rule/docdb_cluster_encrypted_without_kms_key/main.tf:9
+  /src/main.tf:9
 
        6 |   cluster_identifier  = "my-docdb-cluster-test1"
        7 |   engine              = "docdb"
@@ -14,21 +14,11 @@ Check 1
 
    See https://tfsec.dev/docs/general/GEN003/ for more information. 
 
-  times
-  ------------------------------------------
-  disk i/o             630.833µs
-  parsing HCL          3.583µs
-  evaluating values    26µs
-  running checks       110.375µs
-
-  counts
-  ------------------------------------------
+  disk i/o             45.528ms
+  parsing HCL          529µs
+  evaluating values    1.536ms
+  running checks       4.963ms
   files loaded         1
-  blocks               2
-  evaluated blocks     2
-  modules              0
-  module blocks        0
-  ignored checks       0
 
 1 potential problems detected.
 

@@ -1,26 +1,8 @@
 
-Check 1
-
-  [AWS002][ERROR] Resource 'aws_s3_bucket.cloudrail' does not have logging enabled.
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_s3_buckets_encrypted_rule/non_encrypted/main.tf:5-8
-
-       2 |   region = "us-east-1"
-       3 | }
-       4 | 
-       5 | resource "aws_s3_bucket" "cloudrail" {
-       6 |   bucket = "cloudrail-non-encrypted-czx7zxchs"
-       7 |   acl    = "private"
-       8 | }
-       9 | 
-      10 | resource "aws_s3_bucket_public_access_block" "cloudrail" {
-      11 |   bucket                  = aws_s3_bucket.cloudrail.id
-
-   See https://tfsec.dev/docs/aws/AWS002/ for more information. 
-
-Check 2
+Problem 1
 
   [AWS017][ERROR] Resource 'aws_s3_bucket.cloudrail' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_s3_buckets_encrypted_rule/non_encrypted/main.tf:5-8
+  /src/main.tf:5-8
 
        2 |   region = "us-east-1"
        3 | }
@@ -35,10 +17,10 @@ Check 2
 
    See https://tfsec.dev/docs/aws/AWS017/ for more information. 
 
-Check 3
+Problem 2
 
-  [AWS077][ERROR] Resource 'aws_s3_bucket.cloudrail' does not have versioning enabled
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_s3_buckets_encrypted_rule/non_encrypted/main.tf:5-8
+  [AWS002][ERROR] Resource 'aws_s3_bucket.cloudrail' does not have logging enabled.
+  /src/main.tf:5-8
 
        2 |   region = "us-east-1"
        3 | }
@@ -51,23 +33,13 @@ Check 3
       10 | resource "aws_s3_bucket_public_access_block" "cloudrail" {
       11 |   bucket                  = aws_s3_bucket.cloudrail.id
 
-   See https://tfsec.dev/docs/aws/AWS077/ for more information. 
+   See https://tfsec.dev/docs/aws/AWS002/ for more information. 
 
-  times
-  ------------------------------------------
-  disk i/o             424.333µs
-  parsing HCL          4.5µs
-  evaluating values    40.667µs
-  running checks       318.875µs
-
-  counts
-  ------------------------------------------
+  disk i/o             41.52ms
+  parsing HCL          530µs
+  evaluating values    2.932ms
+  running checks       7.71ms
   files loaded         1
-  blocks               3
-  evaluated blocks     3
-  modules              0
-  module blocks        0
-  ignored checks       0
 
-3 potential problems detected.
+2 potential problems detected.
 

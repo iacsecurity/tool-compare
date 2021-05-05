@@ -1,55 +1,6 @@
 
 Problem 1
 
-  [AWS017][ERROR] Resource 'aws_s3_bucket.b' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
-  /src/main.tf:1-8
-
-       1 | resource "aws_s3_bucket" "b" {
-       2 |   bucket = "mybucket"
-       3 |   acl    = "private"
-       4 | 
-       5 |   tags = {
-       6 |     Name = "My bucket"
-       7 |   }
-       8 | }
-       9 | 
-      10 | locals {
-      11 |   s3_origin_id = "myS3Origin"
-
-   See https://tfsec.dev/docs/aws/AWS017/ for more information. 
-
-Problem 2
-
-  [AWS020][ERROR] Resource 'aws_cloudfront_distribution.s3_distribution' defines a CloudFront distribution that allows unencrypted communications.
-  /src/main.tf:44
-
-      41 |       }
-      42 |     }
-      43 | 
-      44 |     viewer_protocol_policy = "allow-all"
-      45 |     min_ttl                = 0
-      46 |     default_ttl            = 3600
-      47 |     max_ttl                = 86400
-
-   See https://tfsec.dev/docs/aws/AWS020/ for more information. 
-
-Problem 3
-
-  [AWS021][ERROR] Resource 'aws_cloudfront_distribution.s3_distribution' defines outdated SSL/TLS policies (missing minimum_protocol_version attribute)
-  /src/main.tf:108-110
-
-     105 |     Environment = "production"
-     106 |   }
-     107 | 
-     108 |   viewer_certificate {
-     109 |     cloudfront_default_certificate = true
-     110 |   }
-     111 | }
-
-   See https://tfsec.dev/docs/aws/AWS021/ for more information. 
-
-Problem 4
-
   [AWS045][WARNING] Resource 'aws_cloudfront_distribution.s3_distribution' does not have a WAF in front of it.
   /src/main.tf:14-111
 
@@ -157,7 +108,7 @@ Problem 4
 
    See https://tfsec.dev/docs/aws/AWS045/ for more information. 
 
-Problem 5
+Problem 2
 
   [AWS002][ERROR] Resource 'aws_s3_bucket.b' does not have logging enabled.
   /src/main.tf:1-8
@@ -176,10 +127,59 @@ Problem 5
 
    See https://tfsec.dev/docs/aws/AWS002/ for more information. 
 
-  disk i/o             29.427ms
-  parsing HCL          523µs
-  evaluating values    1.992ms
-  running checks       17.307ms
+Problem 3
+
+  [AWS017][ERROR] Resource 'aws_s3_bucket.b' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
+  /src/main.tf:1-8
+
+       1 | resource "aws_s3_bucket" "b" {
+       2 |   bucket = "mybucket"
+       3 |   acl    = "private"
+       4 | 
+       5 |   tags = {
+       6 |     Name = "My bucket"
+       7 |   }
+       8 | }
+       9 | 
+      10 | locals {
+      11 |   s3_origin_id = "myS3Origin"
+
+   See https://tfsec.dev/docs/aws/AWS017/ for more information. 
+
+Problem 4
+
+  [AWS020][ERROR] Resource 'aws_cloudfront_distribution.s3_distribution' defines a CloudFront distribution that allows unencrypted communications.
+  /src/main.tf:44
+
+      41 |       }
+      42 |     }
+      43 | 
+      44 |     viewer_protocol_policy = "allow-all"
+      45 |     min_ttl                = 0
+      46 |     default_ttl            = 3600
+      47 |     max_ttl                = 86400
+
+   See https://tfsec.dev/docs/aws/AWS020/ for more information. 
+
+Problem 5
+
+  [AWS021][ERROR] Resource 'aws_cloudfront_distribution.s3_distribution' defines outdated SSL/TLS policies (missing minimum_protocol_version attribute)
+  /src/main.tf:108-110
+
+     105 |     Environment = "production"
+     106 |   }
+     107 | 
+     108 |   viewer_certificate {
+     109 |     cloudfront_default_certificate = true
+     110 |   }
+     111 | }
+
+   See https://tfsec.dev/docs/aws/AWS021/ for more information. 
+
+  disk i/o             46.726ms
+  parsing HCL          552µs
+  evaluating values    2.354ms
+  running checks       15.39ms
   files loaded         1
 
 5 potential problems detected.

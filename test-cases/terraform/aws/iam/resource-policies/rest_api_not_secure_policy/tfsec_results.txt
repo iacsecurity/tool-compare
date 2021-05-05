@@ -1,8 +1,8 @@
 
-Check 1
+Problem 1
 
-  [AWS061][ERROR] Resource 'aws_api_gateway_stage.api_gw_stage' is missing access log settings block.
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_rest_api_gw_policy_not_use_wildcard_rule/not_secure_policy/main.tf:72-76
+  [AWS061][ERROR] Resource 'aws_api_gateway_stage.api_gw_stage' .
+  /src/main.tf:72-76
 
       69 |   }
       70 | }
@@ -18,21 +18,11 @@ Check 1
 
    See https://tfsec.dev/docs/aws/AWS061/ for more information. 
 
-  times
-  ------------------------------------------
-  disk i/o             787.001µs
-  parsing HCL          10.125µs
-  evaluating values    214.79µs
-  running checks       428.708µs
-
-  counts
-  ------------------------------------------
+  disk i/o             51.835ms
+  parsing HCL          562µs
+  evaluating values    3.815ms
+  running checks       5.363ms
   files loaded         1
-  blocks               9
-  evaluated blocks     9
-  modules              0
-  module blocks        0
-  ignored checks       0
 
 1 potential problems detected.
 

@@ -1,8 +1,23 @@
 
-Check 1
+Problem 1
+
+  [AWS001][WARNING] Resource 'aws_s3_bucket.public-bucket' has an ACL which allows access to any authenticated AWS user, not just users within the target account.
+  /src/main.tf:7
+
+       4 | 
+       5 | resource "aws_s3_bucket" "public-bucket" {
+       6 |   bucket = "bucket-with-public-acl-2"
+       7 |   acl = "authenticated-read"
+       8 | }
+       9 | 
+      10 | 
+
+   See https://tfsec.dev/docs/aws/AWS001/ for more information. 
+
+Problem 2
 
   [AWS002][ERROR] Resource 'aws_s3_bucket.public-bucket' does not have logging enabled.
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/s3_acl_disallow_public_and_cross_account/acl_public_all_authenticated_users_canned/main.tf:5-8
+  /src/main.tf:5-8
 
        2 |   region = "us-east-1"
        3 | }
@@ -16,10 +31,10 @@ Check 1
 
    See https://tfsec.dev/docs/aws/AWS002/ for more information. 
 
-Check 2
+Problem 3
 
   [AWS017][ERROR] Resource 'aws_s3_bucket.public-bucket' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/s3_acl_disallow_public_and_cross_account/acl_public_all_authenticated_users_canned/main.tf:5-8
+  /src/main.tf:5-8
 
        2 |   region = "us-east-1"
        3 | }
@@ -33,53 +48,11 @@ Check 2
 
    See https://tfsec.dev/docs/aws/AWS017/ for more information. 
 
-Check 3
-
-  [AWS077][ERROR] Resource 'aws_s3_bucket.public-bucket' does not have versioning enabled
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/s3_acl_disallow_public_and_cross_account/acl_public_all_authenticated_users_canned/main.tf:5-8
-
-       2 |   region = "us-east-1"
-       3 | }
-       4 | 
-       5 | resource "aws_s3_bucket" "public-bucket" {
-       6 |   bucket = "bucket-with-public-acl-2"
-       7 |   acl = "authenticated-read"
-       8 | }
-       9 | 
-      10 | 
-
-   See https://tfsec.dev/docs/aws/AWS077/ for more information. 
-
-Check 4
-
-  [AWS001][WARNING] Resource 'aws_s3_bucket.public-bucket' has an ACL which allows access to any authenticated AWS user, not just users within the target account.
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/s3_acl_disallow_public_and_cross_account/acl_public_all_authenticated_users_canned/main.tf:7
-
-       4 | 
-       5 | resource "aws_s3_bucket" "public-bucket" {
-       6 |   bucket = "bucket-with-public-acl-2"
-       7 |   acl = "authenticated-read"
-       8 | }
-       9 | 
-      10 | 
-
-   See https://tfsec.dev/docs/aws/AWS001/ for more information. 
-
-  times
-  ------------------------------------------
-  disk i/o             503.835µs
-  parsing HCL          4.125µs
-  evaluating values    23.334µs
-  running checks       405.917µs
-
-  counts
-  ------------------------------------------
+  disk i/o             46.523ms
+  parsing HCL          528µs
+  evaluating values    1.64ms
+  running checks       10.75ms
   files loaded         1
-  blocks               2
-  evaluated blocks     2
-  modules              0
-  module blocks        0
-  ignored checks       0
 
-4 potential problems detected.
+3 potential problems detected.
 

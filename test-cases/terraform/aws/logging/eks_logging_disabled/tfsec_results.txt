@@ -1,85 +1,9 @@
 
-Check 1
-
-  [AWS066][ERROR] Resource 'aws_eks_cluster.test' has no encryption_config block
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/eks_logging_disable/failure/main.tf:20-26
-
-      17 |   vpc_id = aws_vpc.vpc.id
-      18 | }
-      19 | 
-      20 | resource "aws_eks_cluster" "test" {
-      21 |   name = "test"
-      22 |   role_arn = aws_iam_role.eksrole.arn
-      23 |   vpc_config {
-      24 |     subnet_ids = [aws_subnet.subnet1.id]
-      25 |   }
-      26 | }
-
-   See https://tfsec.dev/docs/aws/AWS066/ for more information. 
-
-Check 2
-
-  [AWS067][ERROR] Resource 'aws_eks_cluster.test' missing the enabled_cluster_log_types attribute to enable control plane logging
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/eks_logging_disable/failure/main.tf:20-26
-
-      17 |   vpc_id = aws_vpc.vpc.id
-      18 | }
-      19 | 
-      20 | resource "aws_eks_cluster" "test" {
-      21 |   name = "test"
-      22 |   role_arn = aws_iam_role.eksrole.arn
-      23 |   vpc_config {
-      24 |     subnet_ids = [aws_subnet.subnet1.id]
-      25 |   }
-      26 | }
-
-   See https://tfsec.dev/docs/aws/AWS067/ for more information. 
-
-Check 3
-
-  [AWS068][ERROR] Resource 'aws_eks_cluster.test' is using default public access cidrs in the vpc config
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/eks_logging_disable/failure/main.tf:23-25
-
-      20 | resource "aws_eks_cluster" "test" {
-      21 |   name = "test"
-      22 |   role_arn = aws_iam_role.eksrole.arn
-      23 |   vpc_config {
-      24 |     subnet_ids = [aws_subnet.subnet1.id]
-      25 |   }
-      26 | }
-
-   See https://tfsec.dev/docs/aws/AWS068/ for more information. 
-
-Check 4
-
-  [AWS069][ERROR] Resource 'aws_eks_cluster.test' is using default public access in the vpc config
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/eks_logging_disable/failure/main.tf:23-25
-
-      20 | resource "aws_eks_cluster" "test" {
-      21 |   name = "test"
-      22 |   role_arn = aws_iam_role.eksrole.arn
-      23 |   vpc_config {
-      24 |     subnet_ids = [aws_subnet.subnet1.id]
-      25 |   }
-      26 | }
-
-   See https://tfsec.dev/docs/aws/AWS069/ for more information. 
-
-  times
-  ------------------------------------------
-  disk i/o             410.585µs
-  parsing HCL          3.791µs
-  evaluating values    45µs
-  running checks       355µs
-
-  counts
-  ------------------------------------------
+  disk i/o             46.234ms
+  parsing HCL          498µs
+  evaluating values    2.794ms
+  running checks       1.186ms
   files loaded         1
-  blocks               5
-  evaluated blocks     5
-  modules              0
-  module blocks        0
-  ignored checks       0
 
-4 potential problems detected.
+No problems detected!
 

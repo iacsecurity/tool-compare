@@ -18,10 +18,10 @@ Problem 1
 
    See https://tfsec.dev/docs/aws/AWS061/ for more information. 
 
-  disk i/o             26.086ms
-  parsing HCL          538µs
-  evaluating values    3.801ms
-  running checks       5.674ms
+  disk i/o             46.336ms
+  parsing HCL          497µs
+  evaluating values    3.677ms
+  running checks       6.019ms
   files loaded         1
 
 1 potential problems detected.

@@ -1,23 +1,8 @@
 
-Check 1
-
-  [AWS009][WARNING] Resource 'aws_security_group.public-internet-sg' defines a fully open egress security group.
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/vpc_endpoint_sqs_exposure_rule/sqs-vpc-endpoint-without-dns-resolution/main.tf:59
-
-      56 |     from_port   = 0
-      57 |     to_port     = 0
-      58 |     protocol    = "-1"
-      59 |     cidr_blocks = [local.quad_zero_cidr_block]
-      60 |   }
-      61 | 
-      62 |   ingress {
-
-   See https://tfsec.dev/docs/aws/AWS009/ for more information. 
-
-Check 2
+Problem 1
 
   [AWS015][ERROR] Resource 'aws_sqs_queue.test-queue' defines an unencrypted SQS queue.
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/vpc_endpoint_sqs_exposure_rule/sqs-vpc-endpoint-without-dns-resolution/main.tf:103-105
+  /src/main.tf:103-105
 
      100 |   security_group_ids = [aws_security_group.public-internet-sg.id]
      101 | }
@@ -31,21 +16,26 @@ Check 2
 
    See https://tfsec.dev/docs/aws/AWS015/ for more information. 
 
-  times
-  ------------------------------------------
-  disk i/o             861.333µs
-  parsing HCL          6.583µs
-  evaluating values    116.374µs
-  running checks       376.416µs
+Problem 2
 
-  counts
-  ------------------------------------------
+  [AWS009][WARNING] Resource 'aws_security_group.public-internet-sg' defines a fully open egress security group.
+  /src/main.tf:59
+
+      56 |     from_port   = 0
+      57 |     to_port     = 0
+      58 |     protocol    = "-1"
+      59 |     cidr_blocks = [local.quad_zero_cidr_block]
+      60 |   }
+      61 | 
+      62 |   ingress {
+
+   See https://tfsec.dev/docs/aws/AWS009/ for more information. 
+
+  disk i/o             49.078ms
+  parsing HCL          540µs
+  evaluating values    3.459ms
+  running checks       10.273ms
   files loaded         1
-  blocks               12
-  evaluated blocks     12
-  modules              0
-  module blocks        0
-  ignored checks       0
 
 2 potential problems detected.
 

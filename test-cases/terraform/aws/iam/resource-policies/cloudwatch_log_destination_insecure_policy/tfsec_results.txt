@@ -1,8 +1,8 @@
 
-Check 1
+Problem 1
 
   [AWS024][ERROR] Resource 'aws_kinesis_stream.kinesis_for_cloudwatch' defines an unencrypted Kinesis Stream.
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_cloudwatch_log_destination_policy_not_use_wildcard_rule/not_secure_policy/main.tf:49-58
+  /src/main.tf:49-58
 
       46 |   EOF
       47 | }
@@ -23,21 +23,11 @@ Check 1
 
    See https://tfsec.dev/docs/aws/AWS024/ for more information. 
 
-  times
-  ------------------------------------------
-  disk i/o             677.166µs
-  parsing HCL          4.542µs
-  evaluating values    108.417µs
-  running checks       274.458µs
-
-  counts
-  ------------------------------------------
+  disk i/o             53.176ms
+  parsing HCL          505µs
+  evaluating values    3.158ms
+  running checks       6.136ms
   files loaded         1
-  blocks               9
-  evaluated blocks     9
-  modules              0
-  module blocks        0
-  ignored checks       0
 
 1 potential problems detected.
 

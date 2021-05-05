@@ -1,38 +1,8 @@
 
-Check 1
-
-  [GEN003][WARNING] Block 'aws_redshift_cluster.test' includes a potentially sensitive attribute which is defined within the project.
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/indirect_public_access_db_redshift/public_ec2_points_to_private_redshift/main.tf:106
-
-     103 | resource "aws_redshift_cluster" "test" {
-     104 |   cluster_identifier = "redshift-defaults-only"
-     105 |   node_type = "dc2.large"
-     106 |   master_password = "Test1234"
-     107 |   master_username = "test"
-     108 |   skip_final_snapshot = true
-     109 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
-
-   See https://tfsec.dev/docs/general/GEN003/ for more information. 
-
-Check 2
-
-  [AWS008][WARNING] Resource 'aws_security_group.publicly_accessible_sg' defines a fully open ingress security group.
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/indirect_public_access_db_redshift/public_ec2_points_to_private_redshift/main.tf:120
-
-     117 |     from_port = 0
-     118 |     protocol = "tcp"
-     119 |     to_port = 65000
-     120 |     cidr_blocks = ["0.0.0.0/0"]
-     121 |   }
-     122 |   egress {
-     123 |     from_port = 0
-
-   See https://tfsec.dev/docs/aws/AWS008/ for more information. 
-
-Check 3
+Problem 1
 
   [AWS009][WARNING] Resource 'aws_security_group.publicly_accessible_sg' defines a fully open egress security group.
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/indirect_public_access_db_redshift/public_ec2_points_to_private_redshift/main.tf:126
+  /src/main.tf:126
 
      123 |     from_port = 0
      124 |     protocol = "tcp"
@@ -44,10 +14,10 @@ Check 3
 
    See https://tfsec.dev/docs/aws/AWS009/ for more information. 
 
-Check 4
+Problem 2
 
   [AWS018][ERROR] Resource 'aws_security_group.publicly_accessible_sg' should include a description for auditing purposes.
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/indirect_public_access_db_redshift/public_ec2_points_to_private_redshift/main.tf:114-128
+  /src/main.tf:114-128
 
      111 |   publicly_accessible = false // Note that while the subnet itself has public access, the redshift is set NOT to have a public IP
      112 | }
@@ -73,10 +43,25 @@ Check 4
 
    See https://tfsec.dev/docs/aws/AWS018/ for more information. 
 
-Check 5
+Problem 3
+
+  [GEN003][WARNING] Block 'aws_redshift_cluster.test' includes a potentially sensitive attribute which is defined within the project.
+  /src/main.tf:106
+
+     103 | resource "aws_redshift_cluster" "test" {
+     104 |   cluster_identifier = "redshift-defaults-only"
+     105 |   node_type = "dc2.large"
+     106 |   master_password = "Test1234"
+     107 |   master_username = "test"
+     108 |   skip_final_snapshot = true
+     109 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
+
+   See https://tfsec.dev/docs/general/GEN003/ for more information. 
+
+Problem 4
 
   [AWS012][ERROR] Resource 'aws_instance.public_ins' has a public IP address associated.
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/indirect_public_access_db_redshift/public_ec2_points_to_private_redshift/main.tf:134
+  /src/main.tf:134
 
      131 | resource "aws_instance" "public_ins" {
      132 |   ami = "ami-0130bec6e5047f596"
@@ -88,21 +73,26 @@ Check 5
 
    See https://tfsec.dev/docs/aws/AWS012/ for more information. 
 
-  times
-  ------------------------------------------
-  disk i/o             820.959µs
-  parsing HCL          6.917µs
-  evaluating values    164.125µs
-  running checks       506.833µs
+Problem 5
 
-  counts
-  ------------------------------------------
+  [AWS008][WARNING] Resource 'aws_security_group.publicly_accessible_sg' defines a fully open ingress security group.
+  /src/main.tf:120
+
+     117 |     from_port = 0
+     118 |     protocol = "tcp"
+     119 |     to_port = 65000
+     120 |     cidr_blocks = ["0.0.0.0/0"]
+     121 |   }
+     122 |   egress {
+     123 |     from_port = 0
+
+   See https://tfsec.dev/docs/aws/AWS008/ for more information. 
+
+  disk i/o             50.481ms
+  parsing HCL          593µs
+  evaluating values    4.013ms
+  running checks       23.183ms
   files loaded         1
-  blocks               14
-  evaluated blocks     14
-  modules              0
-  module blocks        0
-  ignored checks       0
 
 5 potential problems detected.
 

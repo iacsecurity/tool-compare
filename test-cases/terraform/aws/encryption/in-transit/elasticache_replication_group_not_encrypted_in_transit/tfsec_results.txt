@@ -2,45 +2,51 @@
 Problem 1
 
   [AWS035][ERROR] Resource 'aws_elasticache_replication_group.example' defines an unencrypted Elasticache Replication Group (missing at_rest_encryption_enabled attribute).
-  /src/main.tf:1-10
+  /src/main.tf:5-14
 
-       1 | resource "aws_elasticache_replication_group" "example" {
-       2 |   automatic_failover_enabled    = true
-       3 |   availability_zones            = ["us-west-2a", "us-west-2b"]
-       4 |   replication_group_id          = "tf-rep-group-1"
-       5 |   replication_group_description = "test description"
-       6 |   node_type                     = "cache.m4.large"
-       7 |   number_cache_clusters         = 2
-       8 |   parameter_group_name          = "default.redis3.2"
-       9 |   port                          = 6379
-      10 | }
-      11 | 
+       2 |   region = "us-east-1"
+       3 | }
+       4 | 
+       5 | resource "aws_elasticache_replication_group" "example" {
+       6 |   automatic_failover_enabled    = true
+       7 |   availability_zones            = ["us-west-2a", "us-west-2b"]
+       8 |   replication_group_id          = "tf-rep-group-1"
+       9 |   replication_group_description = "test description"
+      10 |   node_type                     = "cache.m4.large"
+      11 |   number_cache_clusters         = 2
+      12 |   parameter_group_name          = "default.redis3.2"
+      13 |   port                          = 6379
+      14 | }
+      15 | 
 
    See https://tfsec.dev/docs/aws/AWS035/ for more information. 
 
 Problem 2
 
   [AWS036][ERROR] Resource 'aws_elasticache_replication_group.example' defines an unencrypted Elasticache Replication Group (missing transit_encryption_enabled attribute).
-  /src/main.tf:1-10
+  /src/main.tf:5-14
 
-       1 | resource "aws_elasticache_replication_group" "example" {
-       2 |   automatic_failover_enabled    = true
-       3 |   availability_zones            = ["us-west-2a", "us-west-2b"]
-       4 |   replication_group_id          = "tf-rep-group-1"
-       5 |   replication_group_description = "test description"
-       6 |   node_type                     = "cache.m4.large"
-       7 |   number_cache_clusters         = 2
-       8 |   parameter_group_name          = "default.redis3.2"
-       9 |   port                          = 6379
-      10 | }
-      11 | 
+       2 |   region = "us-east-1"
+       3 | }
+       4 | 
+       5 | resource "aws_elasticache_replication_group" "example" {
+       6 |   automatic_failover_enabled    = true
+       7 |   availability_zones            = ["us-west-2a", "us-west-2b"]
+       8 |   replication_group_id          = "tf-rep-group-1"
+       9 |   replication_group_description = "test description"
+      10 |   node_type                     = "cache.m4.large"
+      11 |   number_cache_clusters         = 2
+      12 |   parameter_group_name          = "default.redis3.2"
+      13 |   port                          = 6379
+      14 | }
+      15 | 
 
    See https://tfsec.dev/docs/aws/AWS036/ for more information. 
 
-  disk i/o             23.621ms
-  parsing HCL          489µs
-  evaluating values    1.617ms
-  running checks       7.176ms
+  disk i/o             45.793ms
+  parsing HCL          551µs
+  evaluating values    1.772ms
+  running checks       8.587ms
   files loaded         1
 
 2 potential problems detected.

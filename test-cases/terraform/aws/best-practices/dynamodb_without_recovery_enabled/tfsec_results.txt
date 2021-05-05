@@ -1,8 +1,8 @@
 
-  disk i/o             24.26ms
-  parsing HCL          475µs
-  evaluating values    1.27ms
-  running checks       1.006ms
+  disk i/o             46.261ms
+  parsing HCL          520µs
+  evaluating values    1.181ms
+  running checks       867µs
   files loaded         1
 
 No problems detected!

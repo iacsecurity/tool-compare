@@ -1,69 +1,69 @@
 
 Problem 1
 
-  [AWS005][WARNING] Resource 'aws_alb.disabled' is exposed publicly.
-  /src/main.tf:50
+  [AWS005][WARNING] Resource 'aws_lb.disabled' is exposed publicly.
+  /src/main.tf:40
 
-      47 | }
-      48 | 
-      49 | resource "aws_alb" "disabled" {
-      50 |   internal           = false
-      51 |   load_balancer_type = "application"
-      52 |   name               = "alb"
-      53 |   subnets            = module.vpc.public_subnets
+      37 | }
+      38 | 
+      39 | resource "aws_lb" "disabled" {
+      40 |   internal           = false
+      41 |   load_balancer_type = "application"
+      42 |   name               = "alb"
+      43 |   subnets            = module.vpc.public_subnets
 
    See https://tfsec.dev/docs/aws/AWS005/ for more information. 
 
 Problem 2
 
   [AWS005][WARNING] Resource 'aws_lb.default' is exposed publicly.
-  /src/main.tf:27
+  /src/main.tf:26
 
-      24 | }
-      25 | 
-      26 | resource "aws_lb" "default" {
-      27 |   internal           = false
-      28 |   load_balancer_type = "application"
-      29 |   name               = "alb"
-      30 |   subnets            = module.vpc.public_subnets
+      23 | }
+      24 | 
+      25 | resource "aws_lb" "default" {
+      26 |   internal           = false
+      27 |   load_balancer_type = "application"
+      28 |   name               = "alb"
+      29 |   subnets            = module.vpc.public_subnets
 
    See https://tfsec.dev/docs/aws/AWS005/ for more information. 
 
 Problem 3
 
-  [AWS005][WARNING] Resource 'aws_alb.default' is exposed publicly.
-  /src/main.tf:34
+  [AWS005][WARNING] Resource 'aws_alb.disabled' is exposed publicly.
+  /src/main.tf:49
 
-      31 | }
-      32 | 
-      33 | resource "aws_alb" "default" {
-      34 |   internal           = false
-      35 |   load_balancer_type = "application"
-      36 |   name               = "alb"
-      37 |   subnets            = module.vpc.public_subnets
+      46 | }
+      47 | 
+      48 | resource "aws_alb" "disabled" {
+      49 |   internal           = false
+      50 |   load_balancer_type = "application"
+      51 |   name               = "alb"
+      52 |   subnets            = module.vpc.public_subnets
 
    See https://tfsec.dev/docs/aws/AWS005/ for more information. 
 
 Problem 4
 
-  [AWS005][WARNING] Resource 'aws_lb.disabled' is exposed publicly.
-  /src/main.tf:41
+  [AWS005][WARNING] Resource 'aws_alb.default' is exposed publicly.
+  /src/main.tf:33
 
-      38 | }
-      39 | 
-      40 | resource "aws_lb" "disabled" {
-      41 |   internal           = false
-      42 |   load_balancer_type = "application"
-      43 |   name               = "alb"
-      44 |   subnets            = module.vpc.public_subnets
+      30 | }
+      31 | 
+      32 | resource "aws_alb" "default" {
+      33 |   internal           = false
+      34 |   load_balancer_type = "application"
+      35 |   name               = "alb"
+      36 |   subnets            = module.vpc.public_subnets
 
    See https://tfsec.dev/docs/aws/AWS005/ for more information. 
 
-  disk i/o             31.532ms
-  parsing HCL          522µs
-  evaluating values    2.487ms
-  running checks       14.613ms
-  files loaded         1
+  disk i/o             237.712ms
+  parsing HCL          926µs
+  evaluating values    712.446ms
+  running checks       42.953ms
+  files loaded         6
 
 4 potential problems detected.
 

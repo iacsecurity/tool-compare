@@ -1,8 +1,8 @@
 
-Check 1
+Problem 1
 
   [AWS001][WARNING] Resource 'aws_s3_bucket.public-bucket' has an ACL which allows public access.
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/s3_acl_disallow_public_and_cross_account/test_acl_public_all_users_canned_with_overriding_access_block/main.tf:7
+  /src/main.tf:7
 
        4 | 
        5 | resource "aws_s3_bucket" "public-bucket" {
@@ -14,10 +14,10 @@ Check 1
 
    See https://tfsec.dev/docs/aws/AWS001/ for more information. 
 
-Check 2
+Problem 2
 
   [AWS002][ERROR] Resource 'aws_s3_bucket.public-bucket' does not have logging enabled.
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/s3_acl_disallow_public_and_cross_account/test_acl_public_all_users_canned_with_overriding_access_block/main.tf:5-8
+  /src/main.tf:5-8
 
        2 |   region = "us-east-1"
        3 | }
@@ -32,10 +32,10 @@ Check 2
 
    See https://tfsec.dev/docs/aws/AWS002/ for more information. 
 
-Check 3
+Problem 3
 
   [AWS017][ERROR] Resource 'aws_s3_bucket.public-bucket' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/s3_acl_disallow_public_and_cross_account/test_acl_public_all_users_canned_with_overriding_access_block/main.tf:5-8
+  /src/main.tf:5-8
 
        2 |   region = "us-east-1"
        3 | }
@@ -50,39 +50,11 @@ Check 3
 
    See https://tfsec.dev/docs/aws/AWS017/ for more information. 
 
-Check 4
-
-  [AWS077][ERROR] Resource 'aws_s3_bucket.public-bucket' does not have versioning enabled
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/s3_acl_disallow_public_and_cross_account/test_acl_public_all_users_canned_with_overriding_access_block/main.tf:5-8
-
-       2 |   region = "us-east-1"
-       3 | }
-       4 | 
-       5 | resource "aws_s3_bucket" "public-bucket" {
-       6 |   bucket = "bucket-with-public-acl-3"
-       7 |   acl = "public-read-write"
-       8 | }
-       9 | 
-      10 | resource "aws_s3_bucket_public_access_block" "block_public_bucket_3" {
-      11 |   bucket = aws_s3_bucket.public-bucket.id
-
-   See https://tfsec.dev/docs/aws/AWS077/ for more information. 
-
-  times
-  ------------------------------------------
-  disk i/o             385.917µs
-  parsing HCL          3.292µs
-  evaluating values    36.25µs
-  running checks       280.167µs
-
-  counts
-  ------------------------------------------
+  disk i/o             45.684ms
+  parsing HCL          548µs
+  evaluating values    2.588ms
+  running checks       11.202ms
   files loaded         1
-  blocks               3
-  evaluated blocks     3
-  modules              0
-  module blocks        0
-  ignored checks       0
 
-4 potential problems detected.
+3 potential problems detected.
 

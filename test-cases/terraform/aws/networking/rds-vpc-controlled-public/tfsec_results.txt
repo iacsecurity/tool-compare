@@ -1,8 +1,8 @@
 
-Check 1
+Problem 1
 
   [AWS008][WARNING] Resource 'aws_security_group.nondefault' defines a fully open ingress security group.
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/public_access_db_rds/individual-instance/vpc-controlled-public/main.tf:16
+  /src/main.tf:16
 
       13 |     from_port = 0
       14 |     protocol = "TCP"
@@ -14,10 +14,10 @@ Check 1
 
    See https://tfsec.dev/docs/aws/AWS008/ for more information. 
 
-Check 2
+Problem 2
 
   [AWS018][ERROR] Resource 'aws_security_group.nondefault' should include a description for auditing purposes.
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/public_access_db_rds/individual-instance/vpc-controlled-public/main.tf:9-18
+  /src/main.tf:9-18
 
        6 |   cidr_block = "10.1.1.0/24"
        7 | }
@@ -38,10 +38,10 @@ Check 2
 
    See https://tfsec.dev/docs/aws/AWS018/ for more information. 
 
-Check 3
+Problem 3
 
   [AWS011][WARNING] Resource 'aws_db_instance.test' is exposed publicly.
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/public_access_db_rds/individual-instance/vpc-controlled-public/main.tf:62
+  /src/main.tf:62
 
       59 | 
       60 | resource "aws_db_instance" "test" {
@@ -53,10 +53,10 @@ Check 3
 
    See https://tfsec.dev/docs/aws/AWS011/ for more information. 
 
-Check 4
+Problem 4
 
-  [AWS052][ERROR] Resource 'aws_db_instance.test' has no storage encryption defined.
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/public_access_db_rds/individual-instance/vpc-controlled-public/main.tf:60-65
+  [AWS052][ERROR] Resource 'aws_db_instance.test' defines a disabled RDS Instance Encryption.
+  /src/main.tf:60-65
 
       57 |   subnet_id = aws_subnet.nondefault_2.id
       58 | }
@@ -70,21 +70,11 @@ Check 4
 
    See https://tfsec.dev/docs/aws/AWS052/ for more information. 
 
-  times
-  ------------------------------------------
-  disk i/o             775.459µs
-  parsing HCL          4.333µs
-  evaluating values    119.959µs
-  running checks       520.875µs
-
-  counts
-  ------------------------------------------
+  disk i/o             55.62ms
+  parsing HCL          526µs
+  evaluating values    3.444ms
+  running checks       17.58ms
   files loaded         1
-  blocks               11
-  evaluated blocks     11
-  modules              0
-  module blocks        0
-  ignored checks       0
 
 4 potential problems detected.
 

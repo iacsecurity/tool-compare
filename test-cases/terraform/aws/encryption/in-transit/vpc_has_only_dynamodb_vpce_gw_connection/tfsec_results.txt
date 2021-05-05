@@ -1,8 +1,8 @@
 
-Check 1
+Problem 1
 
   [AWS009][WARNING] Resource 'aws_security_group.allow-public-outbound-sg' defines a fully open egress security group.
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/dynamodb_vpce_gateway_not_used_rule/vpc_has_only_dynamodb_vpce_gw_connection/main.tf:107
+  /src/main.tf:107
 
      104 |     from_port   = 443
      105 |     to_port     = 443
@@ -14,21 +14,11 @@ Check 1
 
    See https://tfsec.dev/docs/aws/AWS009/ for more information. 
 
-  times
-  ------------------------------------------
-  disk i/o             789.165µs
-  parsing HCL          4.75µs
-  evaluating values    180.249µs
-  running checks       366.583µs
-
-  counts
-  ------------------------------------------
+  disk i/o             57.041ms
+  parsing HCL          514µs
+  evaluating values    3.797ms
+  running checks       7.957ms
   files loaded         1
-  blocks               16
-  evaluated blocks     16
-  modules              0
-  module blocks        0
-  ignored checks       0
 
 1 potential problems detected.
 

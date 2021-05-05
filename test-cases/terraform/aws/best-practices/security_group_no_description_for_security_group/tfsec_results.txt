@@ -1,8 +1,8 @@
 
-Check 1
+Problem 1
 
   [AWS009][WARNING] Resource 'aws_security_group.default' defines a fully open egress security group.
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_security_group_rule_include_description_rule/no_description_for_security_group/main.tf:32
+  /src/main.tf:32
 
       29 |     from_port   = 0
       30 |     to_port     = 0
@@ -14,10 +14,10 @@ Check 1
 
    See https://tfsec.dev/docs/aws/AWS009/ for more information. 
 
-Check 2
+Problem 2
 
   [AWS018][ERROR] Resource 'aws_security_group.default' should include a description for auditing purposes.
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_security_group_rule_include_description_rule/no_description_for_security_group/main.tf:15-38
+  /src/main.tf:15-38
 
       12 | 
       13 | }
@@ -52,21 +52,11 @@ Check 2
 
    See https://tfsec.dev/docs/aws/AWS018/ for more information. 
 
-  times
-  ------------------------------------------
-  disk i/o             715.834µs
-  parsing HCL          4.542µs
-  evaluating values    61.709µs
-  running checks       218.833µs
-
-  counts
-  ------------------------------------------
+  disk i/o             47.929ms
+  parsing HCL          575µs
+  evaluating values    3.053ms
+  running checks       9.511ms
   files loaded         1
-  blocks               7
-  evaluated blocks     7
-  modules              0
-  module blocks        0
-  ignored checks       0
 
 2 potential problems detected.
 
