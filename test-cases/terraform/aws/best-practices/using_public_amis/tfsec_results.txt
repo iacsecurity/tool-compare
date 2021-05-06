@@ -1,10 +1,101 @@
 
+Check 1
+
+  [AWS079][ERROR] Resource 'aws_instance.example_with_new_ami' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
+  /src/main.tf:45-48
+
+
+      42 |   }
+      43 | }
+      44 | 
+      45 | resource "aws_instance" "example_with_new_ami" {
+      46 |   ami = aws_ami.example.id
+      47 |   instance_type = "t3.nano"
+      48 | }
+      49 | 
+      50 | /** Copying an existing AMI, making the new one private **/
+      51 | 
+
+  Impact:     Instance metadata service can be interacted with freely
+  Resolution: Enable HTTP token requirement for IMDS
+
+  See https://tfsec.dev/docs/aws/AWS079/ for more information. 
+
+Check 2
+
+  [AWS079][ERROR] Resource 'aws_instance.example_with_copied_ami' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
+  /src/main.tf:80-84
+
+
+      77 |   }
+      78 | }
+      79 | 
+      80 | resource "aws_instance" "example_with_copied_ami" {
+      81 |   ami = aws_ami_copy.example.id
+      82 |   instance_type = "t3.nano"
+      83 |   
+      84 | }
+      85 | 
+      86 | /** Create a private AMI from an EC2 instance **/
+      87 | 
+
+  Impact:     Instance metadata service can be interacted with freely
+  Resolution: Enable HTTP token requirement for IMDS
+
+  See https://tfsec.dev/docs/aws/AWS079/ for more information. 
+
+Check 3
+
+  [AWS079][ERROR] Resource 'aws_instance.example_with_ami_from_instance' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
+  /src/main.tf:93-96
+
+
+      90 |   source_instance_id = aws_instance.example_with_copied_ami.id
+      91 | }
+      92 | 
+      93 | resource "aws_instance" "example_with_ami_from_instance" {
+      94 |   ami = aws_ami_from_instance.example.id
+      95 |   instance_type = "t3.nano"
+      96 | }
+      97 | 
+      98 | resource "aws_instance" "public-ubuntu-from-data" {
+      99 |   ami           = data.aws_ami.ubuntu.id
+
+  Impact:     Instance metadata service can be interacted with freely
+  Resolution: Enable HTTP token requirement for IMDS
+
+  See https://tfsec.dev/docs/aws/AWS079/ for more information. 
+
+Check 4
+
+  [AWS079][ERROR] Resource 'aws_instance.public-ubuntu-from-data' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
+  /src/main.tf:98-105
+
+
+      95 |   instance_type = "t3.nano"
+      96 | }
+      97 | 
+      98 | resource "aws_instance" "public-ubuntu-from-data" {
+      99 |   ami           = data.aws_ami.ubuntu.id
+     100 |   instance_type = "t2.micro"
+     101 |   
+     102 |   tags = {
+     103 |     Name = "public-ubuntu-from-data"
+     104 |   }
+     105 | }
+     106 | 
+
+  Impact:     Instance metadata service can be interacted with freely
+  Resolution: Enable HTTP token requirement for IMDS
+
+  See https://tfsec.dev/docs/aws/AWS079/ for more information. 
+
   times
   ------------------------------------------
-  disk i/o             2.95225ms
-  parsing HCL          5.334µs
-  evaluating values    109.334µs
-  running checks       195.917µs
+  disk i/o             48.067083ms
+  parsing HCL          574.833µs
+  evaluating values    3.660833ms
+  running checks       14.68375ms
 
   counts
   ------------------------------------------
@@ -15,5 +106,5 @@
   module blocks        0
   ignored checks       0
 
-No problems detected!
+4 potential problems detected.
 

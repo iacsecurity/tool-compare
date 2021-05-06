@@ -2,7 +2,8 @@
 Check 1
 
   [AWS001][WARNING] Resource 'aws_s3_bucket.public-bucket' has an ACL which allows public access.
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/s3_acl_disallow_public_and_cross_account/acl_public_all_users_canned/main.tf:7
+  /src/main.tf:7
+
 
        4 | 
        5 | resource "aws_s3_bucket" "public-bucket" {
@@ -11,12 +12,16 @@ Check 1
        8 | }
        9 | 
 
-   See https://tfsec.dev/docs/aws/AWS001/ for more information. 
+  Impact:     The contents of the bucket can be accessed publicly
+  Resolution: Apply a more restrictive bucket ACL
+
+  See https://tfsec.dev/docs/aws/AWS001/ for more information. 
 
 Check 2
 
   [AWS002][ERROR] Resource 'aws_s3_bucket.public-bucket' does not have logging enabled.
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/s3_acl_disallow_public_and_cross_account/acl_public_all_users_canned/main.tf:5-8
+  /src/main.tf:5-8
+
 
        2 |   region = "us-east-1"
        3 | }
@@ -27,12 +32,16 @@ Check 2
        8 | }
        9 | 
 
-   See https://tfsec.dev/docs/aws/AWS002/ for more information. 
+  Impact:     There is no way to determine the access to this bucket
+  Resolution: Add a logging block to the resource to enable access logging
+
+  See https://tfsec.dev/docs/aws/AWS002/ for more information. 
 
 Check 3
 
   [AWS017][ERROR] Resource 'aws_s3_bucket.public-bucket' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/s3_acl_disallow_public_and_cross_account/acl_public_all_users_canned/main.tf:5-8
+  /src/main.tf:5-8
+
 
        2 |   region = "us-east-1"
        3 | }
@@ -43,12 +52,16 @@ Check 3
        8 | }
        9 | 
 
-   See https://tfsec.dev/docs/aws/AWS017/ for more information. 
+  Impact:     The bucket objects could be read if compromised
+  Resolution: Configure bucket encryption
+
+  See https://tfsec.dev/docs/aws/AWS017/ for more information. 
 
 Check 4
 
   [AWS077][ERROR] Resource 'aws_s3_bucket.public-bucket' does not have versioning enabled
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/s3_acl_disallow_public_and_cross_account/acl_public_all_users_canned/main.tf:5-8
+  /src/main.tf:5-8
+
 
        2 |   region = "us-east-1"
        3 | }
@@ -59,14 +72,17 @@ Check 4
        8 | }
        9 | 
 
-   See https://tfsec.dev/docs/aws/AWS077/ for more information. 
+  Impact:     Deleted or modified data would not be recoverable
+  Resolution: Enable versioning to protect against accidental/malicious removal or modification
+
+  See https://tfsec.dev/docs/aws/AWS077/ for more information. 
 
   times
   ------------------------------------------
-  disk i/o             470.71µs
-  parsing HCL          3.625µs
-  evaluating values    19.208µs
-  running checks       366.917µs
+  disk i/o             44.464458ms
+  parsing HCL          498µs
+  evaluating values    1.568291ms
+  running checks       14.745ms
 
   counts
   ------------------------------------------

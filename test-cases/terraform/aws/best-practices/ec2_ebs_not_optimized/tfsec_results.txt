@@ -1,9 +1,42 @@
 
-  disk i/o             22.175ms
-  parsing HCL          547µs
-  evaluating values    2.845ms
-  running checks       1.205ms
-  files loaded         1
+Check 1
 
-No problems detected!
+  [AWS079][ERROR] Resource 'aws_instance.web' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
+  /src/main.tf:17-24
+
+
+      14 |   owners = ["099720109477"] # Canonical
+      15 | }
+      16 | 
+      17 | resource "aws_instance" "web" {
+      18 |   ami           = data.aws_ami.ubuntu.id
+      19 |   instance_type = "t3.micro"
+      20 | 
+      21 |   tags = {
+      22 |     Name = "HelloWorld"
+      23 |   }
+      24 | }
+
+  Impact:     Instance metadata service can be interacted with freely
+  Resolution: Enable HTTP token requirement for IMDS
+
+  See https://tfsec.dev/docs/aws/AWS079/ for more information. 
+
+  times
+  ------------------------------------------
+  disk i/o             47.831125ms
+  parsing HCL          503.833µs
+  evaluating values    3.335667ms
+  running checks       5.828667ms
+
+  counts
+  ------------------------------------------
+  files loaded         1
+  blocks               2
+  evaluated blocks     2
+  modules              0
+  module blocks        0
+  ignored checks       0
+
+1 potential problems detected.
 

@@ -1,11 +1,10 @@
 
 Check 1
 
-  [AWS002][ERROR] Resource 'aws_s3_bucket.public-bucket' does not have logging enabled.
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/s3_acl_disallow_public_and_cross_account/acl_public_all_authenticated_users_canned/main.tf:5-8
+  [AWS001][WARNING] Resource 'aws_s3_bucket.public-bucket' has an ACL which allows access to any authenticated AWS user, not just users within the target account.
+  /src/main.tf:7
 
-       2 |   region = "us-east-1"
-       3 | }
+
        4 | 
        5 | resource "aws_s3_bucket" "public-bucket" {
        6 |   bucket = "bucket-with-public-acl-2"
@@ -14,12 +13,16 @@ Check 1
        9 | 
       10 | 
 
-   See https://tfsec.dev/docs/aws/AWS002/ for more information. 
+  Impact:     The contents of the bucket can be accessed publicly
+  Resolution: Apply a more restrictive bucket ACL
+
+  See https://tfsec.dev/docs/aws/AWS001/ for more information. 
 
 Check 2
 
-  [AWS017][ERROR] Resource 'aws_s3_bucket.public-bucket' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/s3_acl_disallow_public_and_cross_account/acl_public_all_authenticated_users_canned/main.tf:5-8
+  [AWS002][ERROR] Resource 'aws_s3_bucket.public-bucket' does not have logging enabled.
+  /src/main.tf:5-8
+
 
        2 |   region = "us-east-1"
        3 | }
@@ -31,12 +34,16 @@ Check 2
        9 | 
       10 | 
 
-   See https://tfsec.dev/docs/aws/AWS017/ for more information. 
+  Impact:     There is no way to determine the access to this bucket
+  Resolution: Add a logging block to the resource to enable access logging
+
+  See https://tfsec.dev/docs/aws/AWS002/ for more information. 
 
 Check 3
 
-  [AWS077][ERROR] Resource 'aws_s3_bucket.public-bucket' does not have versioning enabled
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/s3_acl_disallow_public_and_cross_account/acl_public_all_authenticated_users_canned/main.tf:5-8
+  [AWS017][ERROR] Resource 'aws_s3_bucket.public-bucket' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
+  /src/main.tf:5-8
+
 
        2 |   region = "us-east-1"
        3 | }
@@ -48,13 +55,19 @@ Check 3
        9 | 
       10 | 
 
-   See https://tfsec.dev/docs/aws/AWS077/ for more information. 
+  Impact:     The bucket objects could be read if compromised
+  Resolution: Configure bucket encryption
+
+  See https://tfsec.dev/docs/aws/AWS017/ for more information. 
 
 Check 4
 
-  [AWS001][WARNING] Resource 'aws_s3_bucket.public-bucket' has an ACL which allows access to any authenticated AWS user, not just users within the target account.
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/s3_acl_disallow_public_and_cross_account/acl_public_all_authenticated_users_canned/main.tf:7
+  [AWS077][ERROR] Resource 'aws_s3_bucket.public-bucket' does not have versioning enabled
+  /src/main.tf:5-8
 
+
+       2 |   region = "us-east-1"
+       3 | }
        4 | 
        5 | resource "aws_s3_bucket" "public-bucket" {
        6 |   bucket = "bucket-with-public-acl-2"
@@ -63,14 +76,17 @@ Check 4
        9 | 
       10 | 
 
-   See https://tfsec.dev/docs/aws/AWS001/ for more information. 
+  Impact:     Deleted or modified data would not be recoverable
+  Resolution: Enable versioning to protect against accidental/malicious removal or modification
+
+  See https://tfsec.dev/docs/aws/AWS077/ for more information. 
 
   times
   ------------------------------------------
-  disk i/o             503.835µs
-  parsing HCL          4.125µs
-  evaluating values    23.334µs
-  running checks       405.917µs
+  disk i/o             40.968291ms
+  parsing HCL          488.459µs
+  evaluating values    1.514333ms
+  running checks       13.8655ms
 
   counts
   ------------------------------------------

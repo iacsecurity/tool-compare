@@ -1,9 +1,37 @@
 
-  disk i/o             54.384ms
-  parsing HCL          506µs
-  evaluating values    1.172ms
-  running checks       1.769ms
-  files loaded         1
+Check 1
 
-No problems detected!
+  [AWS078][ERROR] Resource 'aws_ecr_repository.foo' has `image_tag_mutability` attribute  not set to `IMMUTABLE`
+  /src/main.tf:3
+
+
+       1 | resource "aws_ecr_repository" "foo" {
+       2 |   name                 = "bar"
+       3 |   image_tag_mutability = "MUTABLE"
+       4 | 
+       5 |   image_scanning_configuration {
+       6 |     scan_on_push = true
+
+  Impact:     Image tags could be overwritten with compromised images
+  Resolution: Only use immutable images in ECR
+
+  See https://tfsec.dev/docs/aws/AWS078/ for more information. 
+
+  times
+  ------------------------------------------
+  disk i/o             44.672624ms
+  parsing HCL          493.834µs
+  evaluating values    1.235083ms
+  running checks       5.890125ms
+
+  counts
+  ------------------------------------------
+  files loaded         1
+  blocks               1
+  evaluated blocks     1
+  modules              0
+  module blocks        0
+  ignored checks       0
+
+1 potential problems detected.
 

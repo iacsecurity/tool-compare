@@ -1,8 +1,9 @@
 
-Problem 1
+Check 1
 
-  [AWS052][ERROR] Resource 'aws_db_instance.default' defines a disabled RDS Instance Encryption.
+  [AWS052][ERROR] Resource 'aws_db_instance.default' has no storage encryption defined.
   /src/main.tf:1-11
+
 
        1 | resource "aws_db_instance" "default" {
        2 |   allocated_storage    = 10
@@ -17,12 +18,16 @@ Problem 1
       11 | }
       12 | 
 
-   See https://tfsec.dev/docs/aws/AWS052/ for more information. 
+  Impact:     Data can be read from the RDS instances if it is compromised
+  Resolution: Enable encryption for RDS clusters and instances
 
-Problem 2
+  See https://tfsec.dev/docs/aws/AWS052/ for more information. 
+
+Check 2
 
   [GEN003][WARNING] Block 'aws_db_instance.default' includes a potentially sensitive attribute which is defined within the project.
   /src/main.tf:8
+
 
        5 |   instance_class       = "db.t3.micro"
        6 |   name                 = "mydb"
@@ -32,13 +37,26 @@ Problem 2
       10 |   skip_final_snapshot  = true
       11 | }
 
-   See https://tfsec.dev/docs/general/GEN003/ for more information. 
+  Impact:     Block attribute could be leaking secrets
+  Resolution: Don't include sensitive data in blocks
 
-  disk i/o             24.259ms
-  parsing HCL          530µs
-  evaluating values    1.452ms
-  running checks       8.741ms
+  See https://tfsec.dev/docs/general/GEN003/ for more information. 
+
+  times
+  ------------------------------------------
+  disk i/o             56.384292ms
+  parsing HCL          538.167µs
+  evaluating values    1.829166ms
+  running checks       11.320667ms
+
+  counts
+  ------------------------------------------
   files loaded         1
+  blocks               1
+  evaluated blocks     1
+  modules              0
+  module blocks        0
+  ignored checks       0
 
 2 potential problems detected.
 

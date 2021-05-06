@@ -1,8 +1,9 @@
 
-Problem 1
+Check 1
 
   [AWS024][ERROR] Resource 'aws_kinesis_stream.test_stream' defines an unencrypted Kinesis Stream.
   /src/main.tf:1-14
+
 
        1 | resource "aws_kinesis_stream" "test_stream" {
        2 |   name             = "terraform-kinesis-test"
@@ -19,13 +20,26 @@ Problem 1
       13 |   }
       14 | }
 
-   See https://tfsec.dev/docs/aws/AWS024/ for more information. 
+  Impact:     Intercepted data can be read in transit
+  Resolution: Enable in transit encryption
 
-  disk i/o             21.34ms
-  parsing HCL          480µs
-  evaluating values    2ms
-  running checks       5.399ms
+  See https://tfsec.dev/docs/aws/AWS024/ for more information. 
+
+  times
+  ------------------------------------------
+  disk i/o             43.505083ms
+  parsing HCL          528.791µs
+  evaluating values    2.204875ms
+  running checks       4.914417ms
+
+  counts
+  ------------------------------------------
   files loaded         1
+  blocks               1
+  evaluated blocks     1
+  modules              0
+  module blocks        0
+  ignored checks       0
 
 1 potential problems detected.
 

@@ -1,19 +1,96 @@
 
+Check 1
+
+  [AWS079][ERROR] Resource 'aws_instance.pub_ins' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
+  /src/main.tf:98-104
+
+
+      95 | }
+      96 | 
+      97 | 
+      98 | resource "aws_instance" "pub_ins" {
+      99 |   ami           = "${data.aws_ami.ubuntu.id}"
+     100 |   instance_type = "t2.micro"
+     101 |   subnet_id = module.vpc.public_subnets[0]
+     102 |   iam_instance_profile = aws_iam_instance_profile.test_profile.name
+     103 | 
+     104 | }
+     105 | 
+     106 | resource "aws_instance" "priv_ins" {
+     107 |   ami           = "${data.aws_ami.ubuntu.id}"
+
+  Impact:     Instance metadata service can be interacted with freely
+  Resolution: Enable HTTP token requirement for IMDS
+
+  See https://tfsec.dev/docs/aws/AWS079/ for more information. 
+
+Check 2
+
+  [AWS079][ERROR] Resource 'aws_instance.priv_ins' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
+  /src/main.tf:106-111
+
+
+     103 | 
+     104 | }
+     105 | 
+     106 | resource "aws_instance" "priv_ins" {
+     107 |   ami           = "${data.aws_ami.ubuntu.id}"
+     108 |   instance_type = "t2.micro"
+     109 |   subnet_id = module.vpc.private_subnets[0]
+     110 |   iam_instance_profile = aws_iam_instance_profile.test_profile.name
+     111 | }
+
+  Impact:     Instance metadata service can be interacted with freely
+  Resolution: Enable HTTP token requirement for IMDS
+
+  See https://tfsec.dev/docs/aws/AWS079/ for more information. 
+
+Check 3
+
+  [AWS082][ERROR] Resource 'module.vpc:aws_default_vpc.this' should not exist
+  /src/.terraform/modules/vpc/main.tf:1301-1315
+
+
+    1298 | # Defaults
+    1299 | ################################################################################
+    1300 | 
+    1301 | resource "aws_default_vpc" "this" {
+    1302 |   count = var.manage_default_vpc ? 1 : 0
+    1303 | 
+    1304 |   enable_dns_support   = var.default_vpc_enable_dns_support
+    1305 |   enable_dns_hostnames = var.default_vpc_enable_dns_hostnames
+    1306 |   enable_classiclink   = var.default_vpc_enable_classiclink
+    1307 | 
+    1308 |   tags = merge(
+    1309 |     {
+    1310 |       "Name" = format("%s", var.default_vpc_name)
+    1311 |     },
+    1312 |     var.tags,
+    1313 |     var.default_vpc_tags,
+    1314 |   )
+    1315 | }
+    1316 | 
+
+  Impact:     The default VPC does not have critical security features applied
+  Resolution: Create a non-default vpc for resources to be created in
+
+  See https://tfsec.dev/docs/aws/AWS082/ for more information. 
+
   times
   ------------------------------------------
-  disk i/o             41.055667ms
-  parsing HCL          255.961µs
-  evaluating values    69.888167ms
-  running checks       10.403208ms
+  disk i/o             246.135418ms
+  parsing HCL          906µs
+  evaluating values    217.376751ms
+  running checks       54.6805ms
 
   counts
   ------------------------------------------
-  files loaded         7
+  files loaded         6
   blocks               9
-  evaluated blocks     856
+  evaluated blocks     357
   modules              1
-  module blocks        847
+  module blocks        348
   ignored checks       0
 
-No problems detected!
+3 potential problems detected.
 

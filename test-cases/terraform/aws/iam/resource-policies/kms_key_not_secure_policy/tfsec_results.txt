@@ -2,7 +2,8 @@
 Check 1
 
   [AWS019][WARNING] Resource 'aws_kms_key.not_secure_policy' does not have KMS Key auto-rotation enabled.
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_kms_key_policy_not_use_wildcard_rule/kms_key_not_secure_policy/main.tf:5-25
+  /src/main.tf:5-25
+
 
        2 |   region = "us-east-1"
        3 | }
@@ -29,14 +30,17 @@ Check 1
       24 | EOF
       25 | }
 
-   See https://tfsec.dev/docs/aws/AWS019/ for more information. 
+  Impact:     Long life KMS keys increase the attack surface when compromised
+  Resolution: Configure KMS key to auto rotate
+
+  See https://tfsec.dev/docs/aws/AWS019/ for more information. 
 
   times
   ------------------------------------------
-  disk i/o             405.208µs
-  parsing HCL          3.291µs
-  evaluating values    24.334µs
-  running checks       101.25µs
+  disk i/o             40.728418ms
+  parsing HCL          501.5µs
+  evaluating values    1.643416ms
+  running checks       4.861458ms
 
   counts
   ------------------------------------------
