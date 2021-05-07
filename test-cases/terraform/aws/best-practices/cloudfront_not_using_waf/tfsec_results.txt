@@ -1,8 +1,78 @@
 
-Problem 1
+Check 1
+
+  [AWS002][ERROR] Resource 'aws_s3_bucket.b' does not have logging enabled.
+  /src/main.tf:1-8
+
+
+       1 | resource "aws_s3_bucket" "b" {
+       2 |   bucket = "mybucket"
+       3 |   acl    = "private"
+       4 | 
+       5 |   tags = {
+       6 |     Name = "My bucket"
+       7 |   }
+       8 | }
+       9 | 
+      10 | locals {
+      11 |   s3_origin_id = "myS3Origin"
+
+  Impact:     There is no way to determine the access to this bucket
+  Resolution: Add a logging block to the resource to enable access logging
+
+  See https://tfsec.dev/docs/aws/AWS002/ for more information. 
+
+Check 2
+
+  [AWS017][ERROR] Resource 'aws_s3_bucket.b' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
+  /src/main.tf:1-8
+
+
+       1 | resource "aws_s3_bucket" "b" {
+       2 |   bucket = "mybucket"
+       3 |   acl    = "private"
+       4 | 
+       5 |   tags = {
+       6 |     Name = "My bucket"
+       7 |   }
+       8 | }
+       9 | 
+      10 | locals {
+      11 |   s3_origin_id = "myS3Origin"
+
+  Impact:     The bucket objects could be read if compromised
+  Resolution: Configure bucket encryption
+
+  See https://tfsec.dev/docs/aws/AWS017/ for more information. 
+
+Check 3
+
+  [AWS077][ERROR] Resource 'aws_s3_bucket.b' does not have versioning enabled
+  /src/main.tf:1-8
+
+
+       1 | resource "aws_s3_bucket" "b" {
+       2 |   bucket = "mybucket"
+       3 |   acl    = "private"
+       4 | 
+       5 |   tags = {
+       6 |     Name = "My bucket"
+       7 |   }
+       8 | }
+       9 | 
+      10 | locals {
+      11 |   s3_origin_id = "myS3Origin"
+
+  Impact:     Deleted or modified data would not be recoverable
+  Resolution: Enable versioning to protect against accidental/malicious removal or modification
+
+  See https://tfsec.dev/docs/aws/AWS077/ for more information. 
+
+Check 4
 
   [AWS020][ERROR] Resource 'aws_cloudfront_distribution.s3_distribution' defines a CloudFront distribution that allows unencrypted communications.
   /src/main.tf:50
+
 
       47 |       }
       48 |     }
@@ -12,12 +82,16 @@ Problem 1
       52 |     default_ttl            = 3600
       53 |     max_ttl                = 86400
 
-   See https://tfsec.dev/docs/aws/AWS020/ for more information. 
+  Impact:     CloudFront is available through an unencrypted connection
+  Resolution: Only allow HTTPS for CloudFront distribution communication
 
-Problem 2
+  See https://tfsec.dev/docs/aws/AWS020/ for more information. 
+
+Check 5
 
   [AWS021][ERROR] Resource 'aws_cloudfront_distribution.s3_distribution' defines outdated SSL/TLS policies (missing minimum_protocol_version attribute)
   /src/main.tf:114-116
+
 
      111 |     Environment = "production"
      112 |   }
@@ -28,12 +102,16 @@ Problem 2
      117 | }
      118 | 
 
-   See https://tfsec.dev/docs/aws/AWS021/ for more information. 
+  Impact:     Outdated SSL policies increase exposure to known vulnerabilites
+  Resolution: Use the most modern TLS/SSL policies available
 
-Problem 3
+  See https://tfsec.dev/docs/aws/AWS021/ for more information. 
+
+Check 6
 
   [AWS045][WARNING] Resource 'aws_cloudfront_distribution.s3_distribution' does not have a WAF in front of it.
   /src/main.tf:14-117
+
 
       11 |   s3_origin_id = "myS3Origin"
       12 | }
@@ -144,51 +222,62 @@ Problem 3
      117 | }
      118 | 
 
-   See https://tfsec.dev/docs/aws/AWS045/ for more information. 
+  Impact:     Complex web application attacks can more easily be performed without a WAF
+  Resolution: Enable WAF for the CloudFront distribution
 
-Problem 4
+  See https://tfsec.dev/docs/aws/AWS045/ for more information. 
 
-  [AWS002][ERROR] Resource 'aws_s3_bucket.b' does not have logging enabled.
-  /src/main.tf:1-8
+Check 7
 
-       1 | resource "aws_s3_bucket" "b" {
-       2 |   bucket = "mybucket"
-       3 |   acl    = "private"
-       4 | 
-       5 |   tags = {
-       6 |     Name = "My bucket"
-       7 |   }
-       8 | }
-       9 | 
-      10 | locals {
-      11 |   s3_origin_id = "myS3Origin"
+  [AWS072][ERROR] Resource 'aws_cloudfront_distribution.s3_distribution' does not use HTTPS in Viewer Protocol Policy
+  /src/main.tf:37-54
 
-   See https://tfsec.dev/docs/aws/AWS002/ for more information. 
 
-Problem 5
+      34 | 
+      35 |   aliases = ["mysite.example.com", "yoursite.example.com"]
+      36 | 
+      37 |   default_cache_behavior {
+      38 |     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
+      39 |     cached_methods   = ["GET", "HEAD"]
+      40 |     target_origin_id = local.s3_origin_id
+      41 | 
+      42 |     forwarded_values {
+      43 |       query_string = false
+      44 | 
+      45 |       cookies {
+      46 |         forward = "none"
+      47 |       }
+      48 |     }
+      49 | 
+      50 |     viewer_protocol_policy = "allow-all"
+      51 |     min_ttl                = 0
+      52 |     default_ttl            = 3600
+      53 |     max_ttl                = 86400
+      54 |   }
+      55 | 
+      56 |   # Cache behavior with precedence 0
+      57 |   ordered_cache_behavior {
 
-  [AWS017][ERROR] Resource 'aws_s3_bucket.b' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
-  /src/main.tf:1-8
+  Impact:     HTTP traffic can be read if intercepted
+  Resolution: Only use HTTPS in the Viewer Protocol Policy
 
-       1 | resource "aws_s3_bucket" "b" {
-       2 |   bucket = "mybucket"
-       3 |   acl    = "private"
-       4 | 
-       5 |   tags = {
-       6 |     Name = "My bucket"
-       7 |   }
-       8 | }
-       9 | 
-      10 | locals {
-      11 |   s3_origin_id = "myS3Origin"
+  See https://tfsec.dev/docs/aws/AWS072/ for more information. 
 
-   See https://tfsec.dev/docs/aws/AWS017/ for more information. 
+  times
+  ------------------------------------------
+  disk i/o             48.83175ms
+  parsing HCL          544.125µs
+  evaluating values    2.099708ms
+  running checks       25.340167ms
 
-  disk i/o             27.015ms
-  parsing HCL          545µs
-  evaluating values    1.987ms
-  running checks       40.637ms
+  counts
+  ------------------------------------------
   files loaded         1
+  blocks               3
+  evaluated blocks     3
+  modules              0
+  module blocks        0
+  ignored checks       0
 
-5 potential problems detected.
+7 potential problems detected.
 

@@ -2,7 +2,8 @@
 Check 1
 
   [AWS008][WARNING] Resource 'aws_security_group.nondefault' defines a fully open ingress security group.
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/public_access_db_rds/individual-instance/vpc-controlled-public/main.tf:16
+  /src/main.tf:16
+
 
       13 |     from_port = 0
       14 |     protocol = "TCP"
@@ -12,12 +13,16 @@ Check 1
       18 | }
       19 | 
 
-   See https://tfsec.dev/docs/aws/AWS008/ for more information. 
+  Impact:     The port is exposed for ingress from the internet
+  Resolution: Set a more restrictive cidr range
+
+  See https://tfsec.dev/docs/aws/AWS008/ for more information. 
 
 Check 2
 
   [AWS018][ERROR] Resource 'aws_security_group.nondefault' should include a description for auditing purposes.
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/public_access_db_rds/individual-instance/vpc-controlled-public/main.tf:9-18
+  /src/main.tf:9-18
+
 
        6 |   cidr_block = "10.1.1.0/24"
        7 | }
@@ -36,12 +41,16 @@ Check 2
       20 | resource "aws_subnet" "nondefault_1" {
       21 |   vpc_id = aws_vpc.nondefault.id
 
-   See https://tfsec.dev/docs/aws/AWS018/ for more information. 
+  Impact:     Descriptions provide context for the firewall rule reasons
+  Resolution: Add descriptions for all security groups anf rules
+
+  See https://tfsec.dev/docs/aws/AWS018/ for more information. 
 
 Check 3
 
   [AWS011][WARNING] Resource 'aws_db_instance.test' is exposed publicly.
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/public_access_db_rds/individual-instance/vpc-controlled-public/main.tf:62
+  /src/main.tf:62
+
 
       59 | 
       60 | resource "aws_db_instance" "test" {
@@ -51,12 +60,16 @@ Check 3
       64 |   vpc_security_group_ids = [aws_security_group.nondefault.id]
       65 | }
 
-   See https://tfsec.dev/docs/aws/AWS011/ for more information. 
+  Impact:     The database instance is publicly accessible
+  Resolution: Set the database to not be publically accessible
+
+  See https://tfsec.dev/docs/aws/AWS011/ for more information. 
 
 Check 4
 
   [AWS052][ERROR] Resource 'aws_db_instance.test' has no storage encryption defined.
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/public_access_db_rds/individual-instance/vpc-controlled-public/main.tf:60-65
+  /src/main.tf:60-65
+
 
       57 |   subnet_id = aws_subnet.nondefault_2.id
       58 | }
@@ -68,14 +81,17 @@ Check 4
       64 |   vpc_security_group_ids = [aws_security_group.nondefault.id]
       65 | }
 
-   See https://tfsec.dev/docs/aws/AWS052/ for more information. 
+  Impact:     Data can be read from the RDS instances if it is compromised
+  Resolution: Enable encryption for RDS clusters and instances
+
+  See https://tfsec.dev/docs/aws/AWS052/ for more information. 
 
   times
   ------------------------------------------
-  disk i/o             775.459µs
-  parsing HCL          4.333µs
-  evaluating values    119.959µs
-  running checks       520.875µs
+  disk i/o             64.579708ms
+  parsing HCL          501.416µs
+  evaluating values    3.485874ms
+  running checks       20.392917ms
 
   counts
   ------------------------------------------

@@ -1,27 +1,10 @@
 
-Problem 1
-
-  [AWS017][ERROR] Resource 'aws_s3_bucket.b' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
-  /src/main.tf:1-9
-
-       1 | resource "aws_s3_bucket" "b" {
-       2 |   bucket = "my-tf-test-bucket"
-       3 |   acl    = "private"
-       4 | 
-       5 |   tags = {
-       6 |     Name        = "My bucket"
-       7 |     Environment = "Dev"
-       8 |   }
-       9 | }
-      10 | 
-
-   See https://tfsec.dev/docs/aws/AWS017/ for more information. 
-
-Problem 2
+Check 1
 
   [AWS002][ERROR] Resource 'aws_s3_bucket.b' does not have logging enabled.
   /src/main.tf:1-9
 
+
        1 | resource "aws_s3_bucket" "b" {
        2 |   bucket = "my-tf-test-bucket"
        3 |   acl    = "private"
@@ -33,13 +16,70 @@ Problem 2
        9 | }
       10 | 
 
-   See https://tfsec.dev/docs/aws/AWS002/ for more information. 
+  Impact:     There is no way to determine the access to this bucket
+  Resolution: Add a logging block to the resource to enable access logging
 
-  disk i/o             21.835ms
-  parsing HCL          487µs
-  evaluating values    1.832ms
-  running checks       8.555ms
+  See https://tfsec.dev/docs/aws/AWS002/ for more information. 
+
+Check 2
+
+  [AWS017][ERROR] Resource 'aws_s3_bucket.b' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
+  /src/main.tf:1-9
+
+
+       1 | resource "aws_s3_bucket" "b" {
+       2 |   bucket = "my-tf-test-bucket"
+       3 |   acl    = "private"
+       4 | 
+       5 |   tags = {
+       6 |     Name        = "My bucket"
+       7 |     Environment = "Dev"
+       8 |   }
+       9 | }
+      10 | 
+
+  Impact:     The bucket objects could be read if compromised
+  Resolution: Configure bucket encryption
+
+  See https://tfsec.dev/docs/aws/AWS017/ for more information. 
+
+Check 3
+
+  [AWS077][ERROR] Resource 'aws_s3_bucket.b' does not have versioning enabled
+  /src/main.tf:1-9
+
+
+       1 | resource "aws_s3_bucket" "b" {
+       2 |   bucket = "my-tf-test-bucket"
+       3 |   acl    = "private"
+       4 | 
+       5 |   tags = {
+       6 |     Name        = "My bucket"
+       7 |     Environment = "Dev"
+       8 |   }
+       9 | }
+      10 | 
+
+  Impact:     Deleted or modified data would not be recoverable
+  Resolution: Enable versioning to protect against accidental/malicious removal or modification
+
+  See https://tfsec.dev/docs/aws/AWS077/ for more information. 
+
+  times
+  ------------------------------------------
+  disk i/o             44.813584ms
+  parsing HCL          528.834µs
+  evaluating values    2.042041ms
+  running checks       10.810833ms
+
+  counts
+  ------------------------------------------
   files loaded         1
+  blocks               1
+  evaluated blocks     1
+  modules              0
+  module blocks        0
+  ignored checks       0
 
-2 potential problems detected.
+3 potential problems detected.
 

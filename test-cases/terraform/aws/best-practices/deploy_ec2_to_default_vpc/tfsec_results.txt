@@ -1,10 +1,54 @@
 
+Check 1
+
+  [AWS079][ERROR] Resource 'aws_instance.t2-instance' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
+  /src/main.tf:49-53
+
+
+      46 |   owners = ["099720109477"] # Canonical
+      47 | }
+      48 | 
+      49 | resource "aws_instance" "t2-instance" {
+      50 |   ami = data.aws_ami.ubuntu.id
+      51 |   instance_type = "t2.micro"
+      52 |   subnet_id = aws_subnet.default-subnet.id
+      53 | }
+      54 | 
+
+  Impact:     Instance metadata service can be interacted with freely
+  Resolution: Enable HTTP token requirement for IMDS
+
+  See https://tfsec.dev/docs/aws/AWS079/ for more information. 
+
+Check 2
+
+  [AWS082][ERROR] Resource 'aws_default_vpc.default' should not exist
+  /src/main.tf:12-16
+
+
+       9 |   region  = "us-east-1"
+      10 | }
+      11 | 
+      12 | resource "aws_default_vpc" "default" {
+      13 |   tags = {
+      14 |     Name = "Default VPC"
+      15 |   }
+      16 | }
+      17 | 
+      18 | resource "aws_subnet" "default-subnet" {
+      19 |   vpc_id     = aws_default_vpc.default.id
+
+  Impact:     The default VPC does not have critical security features applied
+  Resolution: Create a non-default vpc for resources to be created in
+
+  See https://tfsec.dev/docs/aws/AWS082/ for more information. 
+
   times
   ------------------------------------------
-  disk i/o             811.75µs
-  parsing HCL          6.166µs
-  evaluating values    79.458µs
-  running checks       123.042µs
+  disk i/o             50.957333ms
+  parsing HCL          562.625µs
+  evaluating values    6.274417ms
+  running checks       9.048459ms
 
   counts
   ------------------------------------------
@@ -15,5 +59,5 @@
   module blocks        0
   ignored checks       0
 
-No problems detected!
+2 potential problems detected.
 

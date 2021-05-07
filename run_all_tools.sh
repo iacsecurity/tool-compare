@@ -32,9 +32,9 @@ find . -name "main.tf" -exec dirname {} \; | grep -v "\.terraform" | while read 
 
 # tfsec
 echo Now running tfsec on all cases
-docker pull liamg/tfsec:latest
-docker run -t -v $PWD:/tf liamg/tfsec --version > version_tfsec.txt
-find . -name "main.tf" -exec dirname {} \; | grep -v "\.terraform" | while read -r test_case; do echo $test_case ; ORG_PATH=$PWD ; cd $test_case ; if [ ! -f tfsec_results.txt ]; then docker run --rm -v "$(pwd):/src" liamg/tfsec /src --no-color | sed "s~$ORG_PATH~tool-compare~" > tfsec_results.txt ; fi; cd $ORG_PATH; done
+docker pull tfsec/tfsec:latest
+docker run -t -v $PWD:/tf tfsec/tfsec --version > version_tfsec.txt
+find . -name "main.tf" -exec dirname {} \; | grep -v "\.terraform" | while read -r test_case; do echo $test_case ; ORG_PATH=$PWD ; cd $test_case ; if [ ! -f tfsec_results.txt ]; then docker run --rm -v "$(pwd):/src" tfsec/tfsec /src --no-color | sed "s~$ORG_PATH~tool-compare~" > tfsec_results.txt ; fi; cd $ORG_PATH; done
 
 # KICS
 echo Now running KICS on all cases

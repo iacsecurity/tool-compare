@@ -25,21 +25,21 @@ are able to catch it specifically, and which don't.
 ### Summary
 |     | Checkov | Indeni Cloudrail | Kics | Snyk | Terrascan | Tfsec |
 |----|----|----|----|----|----|----|
-|Tested Version|2.0.87|1.2.130|1.2.4|1.563.0|1.4.0|0.38.3|
-|Total Catch Rate|59%|69%|29%|43%|16%|26%|
+|Tested Version|2.0.87|1.2.130|1.2.4|1.563.0|1.4.0|0.39.29|
+|Total Catch Rate|59%|69%|29%|43%|16%|35%|
 
 ### test-cases/terraform/aws/best-practices
 | Test Case | Checkov | Indeni Cloudrail | Kics | Snyk | Terrascan | Tfsec |
 |----|----|----|----|----|----|----|
 |[alb_drop_http_headers](test-cases/terraform/aws/best-practices/alb_drop_http_headers)|:white_check_mark:|:x:|:x:|:x:|:x:|:x:|
 |[cloudfront_not_using_waf](test-cases/terraform/aws/best-practices/cloudfront_not_using_waf)|:white_check_mark:|:x:|:white_check_mark:|:white_check_mark:|:x:|:white_check_mark:|
-|[cloudtrail_enabled_on_multi_region](test-cases/terraform/aws/best-practices/cloudtrail_enabled_on_multi_region)|:white_check_mark:|:x:|:white_check_mark:|:white_check_mark:|:x:|:x:|
+|[cloudtrail_enabled_on_multi_region](test-cases/terraform/aws/best-practices/cloudtrail_enabled_on_multi_region)|:white_check_mark:|:x:|:white_check_mark:|:white_check_mark:|:x:|:white_check_mark:|
 |[config_aggregator_all_regions](test-cases/terraform/aws/best-practices/config_aggregator_all_regions)|:white_check_mark:|:x:|:x:|:x:|:x:|:x:|
 |[deploy_ec2_to_default_vpc](test-cases/terraform/aws/best-practices/deploy_ec2_to_default_vpc)|:white_check_mark:|:white_check_mark:|:white_check_mark:|:x:|:white_check_mark:|:white_check_mark:|
 |[deploy_redshift_in_ec2_classic_mode](test-cases/terraform/aws/best-practices/deploy_redshift_in_ec2_classic_mode)|:x:|:white_check_mark:|:x:|:x:|:x:|:x:|
 |[dynamodb_without_recovery_enabled](test-cases/terraform/aws/best-practices/dynamodb_without_recovery_enabled)|:white_check_mark:|:white_check_mark:|:x:|:white_check_mark:|:x:|:x:|
 |[ec2_ebs_not_optimized](test-cases/terraform/aws/best-practices/ec2_ebs_not_optimized)|:white_check_mark:|:x:|:x:|:x:|:x:|:x:|
-|[ecr_make_tags_immutable](test-cases/terraform/aws/best-practices/ecr_make_tags_immutable)|:white_check_mark:|:x:|:white_check_mark:|:white_check_mark:|:x:|:x:|
+|[ecr_make_tags_immutable](test-cases/terraform/aws/best-practices/ecr_make_tags_immutable)|:white_check_mark:|:x:|:white_check_mark:|:white_check_mark:|:x:|:white_check_mark:|
 |[ecr_use_image_scanning](test-cases/terraform/aws/best-practices/ecr_use_image_scanning)|:white_check_mark:|:x:|:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |[ecs_cluster_container_insights](test-cases/terraform/aws/best-practices/ecs_cluster_container_insights)|:white_check_mark:|:x:|:x:|:white_check_mark:|:x:|:x:|
 |[elasticache_automatic_backup](test-cases/terraform/aws/best-practices/elasticache_automatic_backup)|:white_check_mark:|:x:|:x:|:x:|:x:|:x:|
@@ -49,17 +49,17 @@ are able to catch it specifically, and which don't.
 |[security_group_no_description_for_securi..](test-cases/terraform/aws/best-practices/security_group_no_description_for_security_group)|:x:|:white_check_mark:|:x:|:white_check_mark:|:x:|:white_check_mark:|
 |[tag_all_items](test-cases/terraform/aws/best-practices/tag_all_items)|:x:|:white_check_mark:|:x:|:x:|:x:|:x:|
 |[using_public_amis](test-cases/terraform/aws/best-practices/using_public_amis)|:x:|:white_check_mark:|:x:|:x:|:x:|:x:|
-|Category Catch Rate|72%|44%|28%|44%|11%|28%|
+|Category Catch Rate|72%|44%|28%|44%|11%|39%|
 
 ### test-cases/terraform/aws/encryption/at-rest
 | Test Case | Checkov | Indeni Cloudrail | Kics | Snyk | Terrascan | Tfsec |
 |----|----|----|----|----|----|----|
-|[athena_not_encrypted](test-cases/terraform/aws/encryption/at-rest/athena_not_encrypted)|:white_check_mark:|:x:|:x:|:white_check_mark:|:x:|:x:|
+|[athena_not_encrypted](test-cases/terraform/aws/encryption/at-rest/athena_not_encrypted)|:white_check_mark:|:x:|:x:|:white_check_mark:|:x:|:white_check_mark:|
 |[cloudtrail_not_encrypted](test-cases/terraform/aws/encryption/at-rest/cloudtrail_not_encrypted)|:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|:x:|:white_check_mark:|
 |[cloudwatch_groups_not_encrypted](test-cases/terraform/aws/encryption/at-rest/cloudwatch_groups_not_encrypted)|:x:|:white_check_mark:|:x:|:x:|:white_check_mark:|:x:|
 |[codbuild_using_aws_key](test-cases/terraform/aws/encryption/at-rest/codbuild_using_aws_key)|:x:|:white_check_mark:|:x:|:x:|:x:|:x:|
-|[dax_cluster_not_encrypted](test-cases/terraform/aws/encryption/at-rest/dax_cluster_not_encrypted)|:white_check_mark:|:white_check_mark:|:x:|:white_check_mark:|:x:|:x:|
-|[docdb_cluster_encrypted_at_rest_using_cm..](test-cases/terraform/aws/encryption/at-rest/docdb_cluster_encrypted_at_rest_using_cmk_not_customer_managed)|:x:|:white_check_mark:|:x:|:x:|:x:|:x:|
+|[dax_cluster_not_encrypted](test-cases/terraform/aws/encryption/at-rest/dax_cluster_not_encrypted)|:white_check_mark:|:white_check_mark:|:x:|:white_check_mark:|:x:|:white_check_mark:|
+|[docdb_cluster_encrypted_at_rest_using_cm..](test-cases/terraform/aws/encryption/at-rest/docdb_cluster_encrypted_at_rest_using_cmk_not_customer_managed)|:x:|:white_check_mark:|:x:|:x:|:x:|:white_check_mark:|
 |[docdb_cluster_encrypted_without_kms_key](test-cases/terraform/aws/encryption/at-rest/docdb_cluster_encrypted_without_kms_key)|:x:|:white_check_mark:|:x:|:x:|:x:|:x:|
 |[docdb_clusters_non_encrypted](test-cases/terraform/aws/encryption/at-rest/docdb_clusters_non_encrypted)|:white_check_mark:|:white_check_mark:|:x:|:white_check_mark:|:x:|:x:|
 |[dynamodb_not_encrypted](test-cases/terraform/aws/encryption/at-rest/dynamodb_not_encrypted)|:white_check_mark:|:x:|:x:|:x:|:x:|:x:|
@@ -81,7 +81,7 @@ are able to catch it specifically, and which don't.
 |[workgroups_non_encrypted](test-cases/terraform/aws/encryption/at-rest/workgroups_non_encrypted)|:x:|:white_check_mark:|:x:|:x:|:x:|:white_check_mark:|
 |[workspace_root_volume_not_encrypted_at_r..](test-cases/terraform/aws/encryption/at-rest/workspace_root_volume_not_encrypted_at_rest)|:x:|:white_check_mark:|:x:|:x:|:x:|:x:|
 |[workspace_user_volume_not_encrypted_at_r..](test-cases/terraform/aws/encryption/at-rest/workspace_user_volume_not_encrypted_at_rest)|:x:|:white_check_mark:|:x:|:x:|:x:|:x:|
-|Category Catch Rate|56%|85%|26%|41%|7%|30%|
+|Category Catch Rate|56%|85%|26%|41%|7%|41%|
 
 ### test-cases/terraform/aws/encryption/in-transit
 | Test Case | Checkov | Indeni Cloudrail | Kics | Snyk | Terrascan | Tfsec |
@@ -138,12 +138,12 @@ are able to catch it specifically, and which don't.
 | Test Case | Checkov | Indeni Cloudrail | Kics | Snyk | Terrascan | Tfsec |
 |----|----|----|----|----|----|----|
 |[api_gateway_no_xray](test-cases/terraform/aws/logging/api_gateway_no_xray)|:white_check_mark:|:x:|:white_check_mark:|:white_check_mark:|:white_check_mark:|:x:|
-|[cloudfront_distribution_without_logging](test-cases/terraform/aws/logging/cloudfront_distribution_without_logging)|:white_check_mark:|:x:|:white_check_mark:|:white_check_mark:|:white_check_mark:|:x:|
+|[cloudfront_distribution_without_logging](test-cases/terraform/aws/logging/cloudfront_distribution_without_logging)|:white_check_mark:|:x:|:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |[cloudtrail_file_log_validation_disabled](test-cases/terraform/aws/logging/cloudtrail_file_log_validation_disabled)|:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|:x:|:white_check_mark:|
 |[cloudwatch_log_groups_no_retention](test-cases/terraform/aws/logging/cloudwatch_log_groups_no_retention)|:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|:x:|:x:|
 |[docdb_audit_logs_missing](test-cases/terraform/aws/logging/docdb_audit_logs_missing)|:white_check_mark:|:x:|:x:|:x:|:x:|:x:|
 |[ec2_without_monitoring](test-cases/terraform/aws/logging/ec2_without_monitoring)|:white_check_mark:|:x:|:x:|:x:|:x:|:x:|
-|[eks_logging_disabled](test-cases/terraform/aws/logging/eks_logging_disabled)|:white_check_mark:|:white_check_mark:|:x:|:white_check_mark:|:x:|:x:|
+|[eks_logging_disabled](test-cases/terraform/aws/logging/eks_logging_disabled)|:white_check_mark:|:white_check_mark:|:x:|:white_check_mark:|:x:|:white_check_mark:|
 |[elasticsearch_domain_logging_disabled](test-cases/terraform/aws/logging/elasticsearch_domain_logging_disabled)|:white_check_mark:|:x:|:x:|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |[elb_without_access_logs](test-cases/terraform/aws/logging/elb_without_access_logs)|:white_check_mark:|:x:|:x:|:x:|:x:|:x:|
 |[globalaccelerator_accelerator_no_flow_lo..](test-cases/terraform/aws/logging/globalaccelerator_accelerator_no_flow_logs)|:white_check_mark:|:x:|:x:|:white_check_mark:|:x:|:x:|
@@ -152,9 +152,9 @@ are able to catch it specifically, and which don't.
 |[neptune_cluster_no_logging](test-cases/terraform/aws/logging/neptune_cluster_no_logging)|:white_check_mark:|:x:|:x:|:x:|:x:|:x:|
 |[rds_without_logging](test-cases/terraform/aws/logging/rds_without_logging)|:white_check_mark:|:x:|:x:|:x:|:x:|:x:|
 |[redshift_without_logging](test-cases/terraform/aws/logging/redshift_without_logging)|:white_check_mark:|:x:|:white_check_mark:|:white_check_mark:|:x:|:x:|
-|[rest_api_no_access_logging](test-cases/terraform/aws/logging/rest_api_no_access_logging)|:white_check_mark:|:x:|:white_check_mark:|:white_check_mark:|:white_check_mark:|:x:|
+|[rest_api_no_access_logging](test-cases/terraform/aws/logging/rest_api_no_access_logging)|:white_check_mark:|:x:|:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |[s3_access_logging_disabled](test-cases/terraform/aws/logging/s3_access_logging_disabled)|:white_check_mark:|:x:|:white_check_mark:|:white_check_mark:|:x:|:white_check_mark:|
-|Category Catch Rate|94%|24%|47%|65%|29%|18%|
+|Category Catch Rate|94%|24%|47%|65%|29%|35%|
 
 ### test-cases/terraform/aws/networking/vpc-endpoints
 | Test Case | Checkov | Indeni Cloudrail | Kics | Snyk | Terrascan | Tfsec |

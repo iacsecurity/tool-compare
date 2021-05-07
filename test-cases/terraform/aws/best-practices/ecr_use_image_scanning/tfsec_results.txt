@@ -1,8 +1,9 @@
 
-Problem 1
+Check 1
 
   [AWS023][ERROR] Resource 'aws_ecr_repository.foo' defines a disabled ECR image scan.
   /src/main.tf:6
+
 
        3 |   image_tag_mutability = "MUTABLE"
        4 | 
@@ -12,13 +13,44 @@ Problem 1
        8 | }
        9 | 
 
-   See https://tfsec.dev/docs/aws/AWS023/ for more information. 
+  Impact:     The ability to scan images is not being used and vulnerabilities will not be highlighted
+  Resolution: Enable ECR image scanning
 
-  disk i/o             24.229ms
-  parsing HCL          514µs
-  evaluating values    1.236ms
-  running checks       6.46ms
+  See https://tfsec.dev/docs/aws/AWS023/ for more information. 
+
+Check 2
+
+  [AWS078][ERROR] Resource 'aws_ecr_repository.foo' has `image_tag_mutability` attribute  not set to `IMMUTABLE`
+  /src/main.tf:3
+
+
+       1 | resource "aws_ecr_repository" "foo" {
+       2 |   name                 = "bar"
+       3 |   image_tag_mutability = "MUTABLE"
+       4 | 
+       5 |   image_scanning_configuration {
+       6 |     scan_on_push = false
+
+  Impact:     Image tags could be overwritten with compromised images
+  Resolution: Only use immutable images in ECR
+
+  See https://tfsec.dev/docs/aws/AWS078/ for more information. 
+
+  times
+  ------------------------------------------
+  disk i/o             45.6015ms
+  parsing HCL          476.875µs
+  evaluating values    1.25475ms
+  running checks       8.874375ms
+
+  counts
+  ------------------------------------------
   files loaded         1
+  blocks               1
+  evaluated blocks     1
+  modules              0
+  module blocks        0
+  ignored checks       0
 
-1 potential problems detected.
+2 potential problems detected.
 

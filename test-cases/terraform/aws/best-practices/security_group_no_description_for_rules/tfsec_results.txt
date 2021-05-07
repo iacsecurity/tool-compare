@@ -2,7 +2,8 @@
 Check 1
 
   [AWS009][WARNING] Resource 'aws_security_group.default' defines a fully open egress security group.
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_security_group_rule_include_description_rule/no_description_for_rules/main.tf:31
+  /src/main.tf:31
+
 
       28 |     from_port   = 0
       29 |     to_port     = 0
@@ -12,14 +13,40 @@ Check 1
       33 | 
       34 |   tags = {
 
-   See https://tfsec.dev/docs/aws/AWS009/ for more information. 
+  Impact:     The port is exposed for egressing data to the internet
+  Resolution: Set a more restrictive cidr range
+
+  See https://tfsec.dev/docs/aws/AWS009/ for more information. 
+
+Check 2
+
+  [AWS079][ERROR] Resource 'aws_instance.ec2' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
+  /src/main.tf:62-68
+
+
+      59 |   owners = ["099720109477"] # Canonical
+      60 | }
+      61 | 
+      62 | resource "aws_instance" "ec2" {
+      63 |   ami = data.aws_ami.ubuntu.id
+      64 |   instance_type = "t2.micro"
+      65 |   subnet_id     = aws_subnet.subnet.id
+      66 |   vpc_security_group_ids  = [aws_security_group.default.id]
+      67 | 
+      68 | }
+      69 | 
+
+  Impact:     Instance metadata service can be interacted with freely
+  Resolution: Enable HTTP token requirement for IMDS
+
+  See https://tfsec.dev/docs/aws/AWS079/ for more information. 
 
   times
   ------------------------------------------
-  disk i/o             593.958µs
-  parsing HCL          7.083µs
-  evaluating values    81.583µs
-  running checks       234.042µs
+  disk i/o             53.614709ms
+  parsing HCL          600.375µs
+  evaluating values    3.449625ms
+  running checks       10.376542ms
 
   counts
   ------------------------------------------
@@ -30,5 +57,5 @@ Check 1
   module blocks        0
   ignored checks       0
 
-1 potential problems detected.
+2 potential problems detected.
 

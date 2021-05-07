@@ -2,7 +2,8 @@
 Check 1
 
   [AWS016][ERROR] Resource 'aws_sns_topic.aws_sns_topic' defines an unencrypted SNS topic.
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/ensure_glacier_vault_policy_not_use_wildcard_rule/not_secure_policy/main.tf:5-7
+  /src/main.tf:5-7
+
 
        2 |   region = "us-east-1"
        3 | }
@@ -14,14 +15,17 @@ Check 1
        9 | resource "aws_glacier_vault" "not_secure_archive" {
       10 |   name = "not_secure_archive"
 
-   See https://tfsec.dev/docs/aws/AWS016/ for more information. 
+  Impact:     The SNS topic messages could be read if compromised
+  Resolution: Turn on SNS Topic encryption
+
+  See https://tfsec.dev/docs/aws/AWS016/ for more information. 
 
   times
   ------------------------------------------
-  disk i/o             798.499µs
-  parsing HCL          3.583µs
-  evaluating values    25.459µs
-  running checks       252.75µs
+  disk i/o             151.661916ms
+  parsing HCL          717.209µs
+  evaluating values    3.2415ms
+  running checks       17.042708ms
 
   counts
   ------------------------------------------

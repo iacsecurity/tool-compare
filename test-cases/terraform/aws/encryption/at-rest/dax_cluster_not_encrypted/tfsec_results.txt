@@ -1,10 +1,32 @@
 
+Check 1
+
+  [AWS081][ERROR] DAX cluster 'aws_dax_cluster.cloudrail-test' does not have server side encryption configured. By default it is disabled.
+  /src/main.tf:25-30
+
+
+      22 | EOF
+      23 | }
+      24 | 
+      25 | resource "aws_dax_cluster" "cloudrail-test" {
+      26 |   cluster_name       = "non-encrypt"
+      27 |   iam_role_arn       = aws_iam_role.dax.arn
+      28 |   node_type          = "dax.r4.large"
+      29 |   replication_factor = 1
+      30 | }
+      31 | 
+
+  Impact:     Data can be read if compromised
+  Resolution: Enable encryption at rest for DAX Cluster
+
+  See https://tfsec.dev/docs/aws/AWS081/ for more information. 
+
   times
   ------------------------------------------
-  disk i/o             1.424335ms
-  parsing HCL          3.417µs
-  evaluating values    39.875µs
-  running checks       64.833µs
+  disk i/o             51.899708ms
+  parsing HCL          496.667µs
+  evaluating values    2.704583ms
+  running checks       5.151375ms
 
   counts
   ------------------------------------------
@@ -15,5 +37,5 @@
   module blocks        0
   ignored checks       0
 
-No problems detected!
+1 potential problems detected.
 

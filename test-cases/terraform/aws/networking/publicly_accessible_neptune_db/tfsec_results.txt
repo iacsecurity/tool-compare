@@ -2,7 +2,8 @@
 Check 1
 
   [AWS008][WARNING] Resource 'aws_security_group.free' defines a fully open ingress security group.
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/public_access_db_neptune_rule/external_vpc_with_igw/main.tf:25
+  /src/main.tf:25
+
 
       22 |     from_port = 0
       23 |     protocol = "TCP"
@@ -12,12 +13,16 @@ Check 1
       27 | }
       28 | 
 
-   See https://tfsec.dev/docs/aws/AWS008/ for more information. 
+  Impact:     The port is exposed for ingress from the internet
+  Resolution: Set a more restrictive cidr range
+
+  See https://tfsec.dev/docs/aws/AWS008/ for more information. 
 
 Check 2
 
   [AWS018][ERROR] Resource 'aws_security_group.free' should include a description for auditing purposes.
-  /Users/acme/code/cloudrail-demo/test/aws/terraform/public_access_db_neptune_rule/external_vpc_with_igw/main.tf:18-27
+  /src/main.tf:18-27
+
 
       15 |   vpc_id = aws_vpc.external.id
       16 | }
@@ -36,14 +41,17 @@ Check 2
       29 | resource "aws_route_table" "rt" {
       30 |   vpc_id = aws_vpc.external.id
 
-   See https://tfsec.dev/docs/aws/AWS018/ for more information. 
+  Impact:     Descriptions provide context for the firewall rule reasons
+  Resolution: Add descriptions for all security groups anf rules
+
+  See https://tfsec.dev/docs/aws/AWS018/ for more information. 
 
   times
   ------------------------------------------
-  disk i/o             667.583µs
-  parsing HCL          4.625µs
-  evaluating values    152.291µs
-  running checks       361.166µs
+  disk i/o             46.606958ms
+  parsing HCL          530µs
+  evaluating values    4.760668ms
+  running checks       10.417ms
 
   counts
   ------------------------------------------

@@ -1,8 +1,9 @@
 
-Problem 1
+Check 1
 
-  [AWS061][ERROR] Resource 'aws_api_gateway_stage.api_gw_stage' .
+  [AWS061][ERROR] Resource 'aws_api_gateway_stage.api_gw_stage' is missing access log settings block.
   /src/main.tf:44-48
+
 
       41 |   }
       42 | }
@@ -16,13 +17,26 @@ Problem 1
       50 | resource "aws_api_gateway_method_settings" "api_gw_method_sett" {
       51 |   rest_api_id = aws_api_gateway_rest_api.api_gw.id
 
-   See https://tfsec.dev/docs/aws/AWS061/ for more information. 
+  Impact:     Logging provides vital information about access and usage
+  Resolution: Enable logging for API Gateway stages
 
-  disk i/o             45.952ms
-  parsing HCL          523µs
-  evaluating values    3.974ms
-  running checks       7.118ms
+  See https://tfsec.dev/docs/aws/AWS061/ for more information. 
+
+  times
+  ------------------------------------------
+  disk i/o             44.889959ms
+  parsing HCL          528.417µs
+  evaluating values    4.162834ms
+  running checks       5.839459ms
+
+  counts
+  ------------------------------------------
   files loaded         1
+  blocks               8
+  evaluated blocks     8
+  modules              0
+  module blocks        0
+  ignored checks       0
 
 1 potential problems detected.
 
