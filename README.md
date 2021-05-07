@@ -7,12 +7,9 @@ The goal of this repository is to help compare the different options so that use
 choose the tool that best fits their own needs.
 
 ## What tools are there?
-* [Checkov](https://github.com/bridgecrewio/checkov)
-* [Indeni Cloudrail](https://www.indeni.com/cloudrail)
-* [Kics](https://github.com/Checkmarx/kics)
-* [Snyk](https://snyk.io/) 
-* [Terrascan](https://github.com/accurics/terrascan) 
-* [Tfsec](https://github.com/tfsec/tfsec)
+|     | [Checkov](https://github.com/bridgecrewio/checkov) | [Indeni Cloudrail](https://www.indeni.com/cloudrail) | [Kics](https://github.com/Checkmarx/kics) | [Snyk](https://snyk.io/) | [Terrascan](https://github.com/accurics/terrascan) | [Tfsec](https://github.com/tfsec/tfsec) |
+|----|----|----|----|----|----|----|
+|License|OSS|Freemium|OSS|Freemium|OSS|OSS|
   
 (there are others, anyone can add to this list, sorted A-Z)
 
