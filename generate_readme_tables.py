@@ -1,6 +1,6 @@
 import os
 import json
-
+from datetime import datetime
 
 tools = {
     "checkov": "Checkov",
@@ -73,7 +73,9 @@ def generate_summary_table():
     for tool in tools.values():
         header += f" {tool} |"
         header_line += "----|"
+
     results = f"### Summary\n"
+    results += f"Last update: {datetime.today().strftime('%Y-%m-%d')}\n\n"
     results += f"{header}\n"
     results += f"{header_line}\n"
 

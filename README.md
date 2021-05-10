@@ -23,6 +23,8 @@ The tables below list test cases included in this repository. For each case, it 
 are able to catch it specifically, and which don't.
 
 ### Summary
+Last update: 2021-05-10
+
 |     | Checkov | Indeni Cloudrail | Kics | Snyk | Terrascan | Tfsec |
 |----|----|----|----|----|----|----|
 |Tested Version|2.0.87|1.2.130|1.3.0|1.563.0|1.4.0|0.39.29|
