@@ -1,0 +1,93 @@
+
+                   .0MO.                                    
+                   OMMMx                                    
+                   ;NMX;                                    
+                    ...           ...              ....     
+WMMMd     cWMMM0.  KMMMO      ;xKWMMMMNOc.     ,xXMMMMMWXkc.
+WMMMd   .0MMMN:    KMMMO    :XMMMMMMMMMMMWl   xMMMMMWMMMMMMl
+WMMMd  lWMMMO.     KMMMO   xMMMMKc...'lXMk   ,MMMMx   .;dXx 
+WMMMd.0MMMX;       KMMMO  cMMMMd        '    'MMMMNl'       
+WMMMNWMMMMl        KMMMO  0MMMN               oMMMMMMMXkl.  
+WMMMMMMMMMMo       KMMMO  0MMMX                .ckKWMMMMMM0.
+WMMMMWokMMMMk      KMMMO  oMMMMc              .     .:OMMMM0
+WMMMK.  dMMMM0.    KMMMO   KMMMMx'    ,kNc   :WOc.    .NMMMX
+WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
+WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
+xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
+
+
+Scanning with Keeping Infrastructure as Code Secure v1.3.0
+
+
+
+Files scanned: 1
+Parsed files: 1
+Queries loaded: 520
+Queries failed to execute: 0
+
+------------------------------------
+
+S3 Bucket With Ignore Public ACL, Severity: LOW, Results: 1
+Description: S3 bucket with ignore public ACL
+Platform: Terraform
+
+	[1]: /src/main.tf:14
+
+		013:   block_public_policy = true
+		014:   ignore_public_acls = true
+		015:   restrict_public_buckets = true
+
+
+S3 Bucket Logging Disabled, Severity: LOW, Results: 1
+Description: S3 bucket without logging
+Platform: Terraform
+
+	[1]: /src/main.tf:5
+
+		004: 
+		005: resource "aws_s3_bucket" "public-bucket" {
+		006:   bucket = "bucket-with-public-acl-3"
+
+
+S3 Bucket Without Versioning, Severity: MEDIUM, Results: 1
+Description: S3 bucket without versioning
+Platform: Terraform
+
+	[1]: /src/main.tf:5
+
+		004: 
+		005: resource "aws_s3_bucket" "public-bucket" {
+		006:   bucket = "bucket-with-public-acl-3"
+
+
+S3 Bucket Without Server-side-encryption, Severity: HIGH, Results: 1
+Description: S3 bucket should have encryption defined
+Platform: Terraform
+
+	[1]: /src/main.tf:5
+
+		004: 
+		005: resource "aws_s3_bucket" "public-bucket" {
+		006:   bucket = "bucket-with-public-acl-3"
+
+
+S3 Bucket ACL Allows Read Or Write to All Users, Severity: HIGH, Results: 1
+Description: S3 bucket with public READ/WRITE access
+Platform: Terraform
+
+	[1]: /src/main.tf:7
+
+		006:   bucket = "bucket-with-public-acl-3"
+		007:   acl = "public-read-write"
+		008: }
+
+
+
+Results Summary:
+HIGH: 2
+MEDIUM: 1
+LOW: 2
+INFO: 0
+TOTAL: 5
+
+Scan duration: 10.938839297s
