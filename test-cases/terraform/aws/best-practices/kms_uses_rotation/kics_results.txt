@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.2.4
+Scanning with Keeping Infrastructure as Code Secure v1.3.0
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 1386
+Queries loaded: 520
 Queries failed to execute: 0
 
 ------------------------------------
@@ -35,4 +35,4 @@ LOW: 0
 INFO: 0
 TOTAL: 0
 
-Scan duration: 30.413218639s
+Scan duration: 11.186298547s

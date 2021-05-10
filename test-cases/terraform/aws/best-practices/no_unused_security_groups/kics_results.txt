@@ -27,34 +27,67 @@ Queries failed to execute: 0
 
 ------------------------------------
 
-Instance With No VPC, Severity: MEDIUM, Results: 1
-Description: Instance should be configured in VPC (Virtual Private Cloud)
+VPC FlowLogs Disabled, Severity: MEDIUM, Results: 1
+Description: VPC hasn't got any FlowLog associated
 Platform: Terraform
 
-	[1]: /src/main.tf:17
+	[1]: /src/main.tf:13
 
-		016: 
-		017: resource "aws_instance" "web" {
-		018:   ami           = data.aws_ami.ubuntu.id
+		012: 
+		013: resource "aws_vpc" "main" {
+		014:   cidr_block = local.cidr_block
+
+
+Unrestricted Security Group Ingress, Severity: HIGH, Results: 1
+Description: Security groups allow ingress from 0.0.0.0:0
+Platform: Terraform
+
+	[1]: /src/main.tf:102
+
+		101:     to_port = 53
+		102:     cidr_blocks = ["0.0.0.0/0"]
+		103:   }
+
+
+Unknown Port Exposed To Internet, Severity: HIGH, Results: 1
+Description: AWS Security Group should not have an unknown port exposed to the entire Internet
+Platform: Terraform
+
+	[1]: /src/main.tf:102
+
+		101:     to_port = 53
+		102:     cidr_blocks = ["0.0.0.0/0"]
+		103:   }
+
+
+Sensitive Port Is Exposed To Entire Network, Severity: HIGH, Results: 1
+Description: A sensitive port, such as port 23 or port 110, is open for the whole network in either TCP or UDP protocol
+Platform: Terraform
+
+	[1]: /src/main.tf:98
+
+		097: 
+		098:   ingress {
+		099:     from_port = 53
 
 
 EC2 Instance Has Public IP, Severity: HIGH, Results: 1
 Description: EC2 Instance should not have a public IP address.
 Platform: Terraform
 
-	[1]: /src/main.tf:17
+	[1]: /src/main.tf:83
 
-		016: 
-		017: resource "aws_instance" "web" {
-		018:   ami           = data.aws_ami.ubuntu.id
+		082: 
+		083: resource "aws_instance" "test-ec2-instance" {
+		084:   ami = data.aws_ami.ubuntu.id
 
 
 
 Results Summary:
-HIGH: 1
+HIGH: 4
 MEDIUM: 1
 LOW: 0
 INFO: 0
-TOTAL: 2
+TOTAL: 5
 
-Scan duration: 10.850753672s
+Scan duration: 12.189777631s

@@ -16,26 +16,26 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.2.3
+Scanning with Keeping Infrastructure as Code Secure v1.3.0
 
 
 
-Files scanned: 2
-Parsed files: 2
-Queries loaded: 1343
+Files scanned: 1
+Parsed files: 1
+Queries loaded: 520
 Queries failed to execute: 0
 
 ------------------------------------
 
-Lambda Function Without Tags, Severity: MEDIUM, Results: 1
-Description: AWS Lambda Functions must have associated tags.
+Lambda Permission Misconfigured, Severity: LOW, Results: 1
+Description: Lambda permission may be misconfigured if the action field is not filled in by 'lambda:InvokeFunction'
 Platform: Terraform
 
-	[1]: /src/main.tf:5
+	[1]: /src/main.tf:35
 
-		004: 
-		005: resource "aws_lambda_function" "my-lambda" {
-		006:   filename = "~/Downloads/lambda.json.zip"
+		034:   statement_id  = "AllowAllResources"
+		035:   action        = "lambda:*"
+		036:   function_name = aws_lambda_function.my-lambda.function_name
 
 
 Lambda Functions Without X-Ray Tracing, Severity: LOW, Results: 1
@@ -49,15 +49,15 @@ Platform: Terraform
 		006:   filename = "~/Downloads/lambda.json.zip"
 
 
-Lambda Permission Misconfigured, Severity: LOW, Results: 1
-Description: Lambda permission may be misconfigured if the action field is not filled in by 'lambda:InvokeFunction'
+Lambda Function Without Tags, Severity: MEDIUM, Results: 1
+Description: AWS Lambda Functions must have associated tags.
 Platform: Terraform
 
-	[1]: /src/main.tf:35
+	[1]: /src/main.tf:5
 
-		034:   statement_id  = "AllowAllResources"
-		035:   action        = "lambda:*"
-		036:   function_name = aws_lambda_function.my-lambda.function_name
+		004: 
+		005: resource "aws_lambda_function" "my-lambda" {
+		006:   filename = "~/Downloads/lambda.json.zip"
 
 
 
@@ -68,4 +68,4 @@ LOW: 2
 INFO: 0
 TOTAL: 3
 
-Scan duration: 28.117885304s
+Scan duration: 10.780400672s

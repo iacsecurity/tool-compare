@@ -16,69 +16,47 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.2.3
+Scanning with Keeping Infrastructure as Code Secure v1.3.0
 
 
 
-Files scanned: 3
-Parsed files: 3
-Queries loaded: 1343
+Files scanned: 1
+Parsed files: 1
+Queries loaded: 520
 Queries failed to execute: 0
 
 ------------------------------------
 
-AMI Not Encrypted, Severity: HIGH, Results: 1
-Description: AWS AMI Encryption is not enabled
+Instance With No VPC, Severity: MEDIUM, Results: 4
+Description: Instance should be configured in VPC (Virtual Private Cloud)
 Platform: Terraform
 
-	[1]: /src/main.tf:38
-
-		037: 
-		038:   ebs_block_device {
-		039:     device_name = "/dev/xvda"
-
-
-EBS Volume Snapshot Not Encrypted, Severity: HIGH, Results: 1
-Description: The value on AWS EBS Volume Snapshot Encryptation must be true
-Platform: Terraform
-
-	[1]: /src/main.tf:24
-
-		023: 
-		024: resource "aws_ebs_snapshot" "example_snapshot" {
-		025:   volume_id = aws_ebs_volume.example.id
-
-
-EC2 Instance Has Public IP, Severity: HIGH, Results: 4
-Description: EC2 Instance should not have a public IP address.
-Platform: Terraform
-
-	[1]: /src/main.tf:80
-
-		079: 
-		080: resource "aws_instance" "example_with_copied_ami" {
-		081:   ami = aws_ami_copy.example.id
-
-
-	[2]: /src/main.tf:93
-
-		092: 
-		093: resource "aws_instance" "example_with_ami_from_instance" {
-		094:   ami = aws_ami_from_instance.example.id
-
-
-	[3]: /src/main.tf:98
+	[1]: /src/main.tf:98
 
 		097: 
 		098: resource "aws_instance" "public-ubuntu-from-data" {
 		099:   ami           = data.aws_ami.ubuntu.id
 
 
-	[4]: /src/main.tf:45
+	[2]: /src/main.tf:45
 
 		044: 
 		045: resource "aws_instance" "example_with_new_ami" {
 		046:   ami = aws_ami.example.id
+
+
+	[3]: /src/main.tf:80
+
+		079: 
+		080: resource "aws_instance" "example_with_copied_ami" {
+		081:   ami = aws_ami_copy.example.id
+
+
+	[4]: /src/main.tf:93
+
+		092: 
+		093: resource "aws_instance" "example_with_ami_from_instance" {
+		094:   ami = aws_ami_from_instance.example.id
 
 
 EBS Volume Encryption Disabled, Severity: MEDIUM, Results: 1
@@ -92,8 +70,8 @@ Platform: Terraform
 		016:   availability_zone = data.aws_availability_zones.available.names[0]
 
 
-Instance With No VPC, Severity: MEDIUM, Results: 4
-Description: Instance should be configured in VPC (Virtual Private Cloud)
+EC2 Instance Has Public IP, Severity: HIGH, Results: 4
+Description: EC2 Instance should not have a public IP address.
 Platform: Terraform
 
 	[1]: /src/main.tf:45
@@ -124,6 +102,28 @@ Platform: Terraform
 		099:   ami           = data.aws_ami.ubuntu.id
 
 
+EBS Volume Snapshot Not Encrypted, Severity: HIGH, Results: 1
+Description: The value on AWS EBS Volume Snapshot Encryptation must be true
+Platform: Terraform
+
+	[1]: /src/main.tf:24
+
+		023: 
+		024: resource "aws_ebs_snapshot" "example_snapshot" {
+		025:   volume_id = aws_ebs_volume.example.id
+
+
+AMI Not Encrypted, Severity: HIGH, Results: 1
+Description: AWS AMI Encryption is not enabled
+Platform: Terraform
+
+	[1]: /src/main.tf:38
+
+		037: 
+		038:   ebs_block_device {
+		039:     device_name = "/dev/xvda"
+
+
 
 Results Summary:
 HIGH: 6
@@ -132,4 +132,4 @@ LOW: 0
 INFO: 0
 TOTAL: 11
 
-Scan duration: 29.947395098s
+Scan duration: 11.482682838s

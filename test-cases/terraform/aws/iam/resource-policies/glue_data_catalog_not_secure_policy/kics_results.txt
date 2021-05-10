@@ -16,19 +16,19 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.2.3
+Scanning with Keeping Infrastructure as Code Secure v1.3.0
 
 
 
-Files scanned: 2
-Parsed files: 2
-Queries loaded: 1343
+Files scanned: 1
+Parsed files: 1
+Queries loaded: 520
 Queries failed to execute: 0
 
 ------------------------------------
 
-S3 Bucket Without Server-side-encryption, Severity: HIGH, Results: 1
-Description: S3 bucket should have encryption defined
+S3 Bucket Logging Disabled, Severity: LOW, Results: 1
+Description: S3 bucket without logging
 Platform: Terraform
 
 	[1]: /src/main.tf:33
@@ -49,8 +49,8 @@ Platform: Terraform
 		034:   bucket = "cloudrail-glue"
 
 
-S3 Bucket Logging Disabled, Severity: LOW, Results: 1
-Description: S3 bucket without logging
+S3 Bucket Without Server-side-encryption, Severity: HIGH, Results: 1
+Description: S3 bucket should have encryption defined
 Platform: Terraform
 
 	[1]: /src/main.tf:33
@@ -68,4 +68,4 @@ LOW: 1
 INFO: 0
 TOTAL: 3
 
-Scan duration: 28.996358388s
+Scan duration: 10.775856712s

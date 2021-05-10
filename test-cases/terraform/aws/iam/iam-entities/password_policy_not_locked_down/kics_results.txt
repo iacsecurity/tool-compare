@@ -1,0 +1,115 @@
+
+                   .0MO.                                    
+                   OMMMx                                    
+                   ;NMX;                                    
+                    ...           ...              ....     
+WMMMd     cWMMM0.  KMMMO      ;xKWMMMMNOc.     ,xXMMMMMWXkc.
+WMMMd   .0MMMN:    KMMMO    :XMMMMMMMMMMMWl   xMMMMMWMMMMMMl
+WMMMd  lWMMMO.     KMMMO   xMMMMKc...'lXMk   ,MMMMx   .;dXx 
+WMMMd.0MMMX;       KMMMO  cMMMMd        '    'MMMMNl'       
+WMMMNWMMMMl        KMMMO  0MMMN               oMMMMMMMXkl.  
+WMMMMMMMMMMo       KMMMO  0MMMX                .ckKWMMMMMM0.
+WMMMMWokMMMMk      KMMMO  oMMMMc              .     .:OMMMM0
+WMMMK.  dMMMM0.    KMMMO   KMMMMx'    ,kNc   :WOc.    .NMMMX
+WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
+WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
+xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
+
+
+Scanning with Keeping Infrastructure as Code Secure v1.3.0
+
+
+
+Files scanned: 1
+Parsed files: 1
+Queries loaded: 520
+Queries failed to execute: 0
+
+------------------------------------
+
+Password Without Reuse Prevention, Severity: MEDIUM, Results: 1
+Description: Check if IAM account password has the reuse password configured with 24
+Platform: Terraform
+
+	[1]: /src/main.tf:11
+
+		010: 
+		011: resource "aws_iam_account_password_policy" "strict" {
+		012:   minimum_password_length        = 1
+
+
+Misconfigured Password Policy Expiration, Severity: MEDIUM, Results: 1
+Description: No password expiration policy
+Platform: Terraform
+
+	[1]: /src/main.tf:11
+
+		010: 
+		011: resource "aws_iam_account_password_policy" "strict" {
+		012:   minimum_password_length        = 1
+
+
+IAM Password Without Uppercase Letter, Severity: MEDIUM, Results: 1
+Description: Check if IAM account password has at least one uppercase letter
+Platform: Terraform
+
+	[1]: /src/main.tf:15
+
+		014:   require_numbers                = false
+		015:   require_uppercase_characters   = false
+		016:   require_symbols                = false
+
+
+IAM Password Without Symbol, Severity: MEDIUM, Results: 1
+Description: Check if IAM account password has the required symbols
+Platform: Terraform
+
+	[1]: /src/main.tf:16
+
+		015:   require_uppercase_characters   = false
+		016:   require_symbols                = false
+		017:   allow_users_to_change_password = false
+
+
+IAM Password Without Minimum Length, Severity: MEDIUM, Results: 1
+Description: Check if IAM account password has the required minimum length
+Platform: Terraform
+
+	[1]: /src/main.tf:12
+
+		011: resource "aws_iam_account_password_policy" "strict" {
+		012:   minimum_password_length        = 1
+		013:   require_lowercase_characters   = false
+
+
+IAM Password Without Lowercase Letter, Severity: MEDIUM, Results: 1
+Description: Check if IAM account password has at least one lowercase letter
+Platform: Terraform
+
+	[1]: /src/main.tf:13
+
+		012:   minimum_password_length        = 1
+		013:   require_lowercase_characters   = false
+		014:   require_numbers                = false
+
+
+AWS Password Policy With Unchangeable Passwords, Severity: MEDIUM, Results: 1
+Description: Unchangeable passwords in AWS password policy
+Platform: Terraform
+
+	[1]: /src/main.tf:17
+
+		016:   require_symbols                = false
+		017:   allow_users_to_change_password = false
+		018: }
+
+
+
+Results Summary:
+HIGH: 0
+MEDIUM: 7
+LOW: 0
+INFO: 0
+TOTAL: 7
+
+Scan duration: 11.177956172s

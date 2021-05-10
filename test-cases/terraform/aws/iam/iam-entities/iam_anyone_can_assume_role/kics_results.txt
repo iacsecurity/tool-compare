@@ -27,34 +27,12 @@ Queries failed to execute: 0
 
 ------------------------------------
 
-Instance With No VPC, Severity: MEDIUM, Results: 1
-Description: Instance should be configured in VPC (Virtual Private Cloud)
-Platform: Terraform
-
-	[1]: /src/main.tf:17
-
-		016: 
-		017: resource "aws_instance" "web" {
-		018:   ami           = data.aws_ami.ubuntu.id
-
-
-EC2 Instance Has Public IP, Severity: HIGH, Results: 1
-Description: EC2 Instance should not have a public IP address.
-Platform: Terraform
-
-	[1]: /src/main.tf:17
-
-		016: 
-		017: resource "aws_instance" "web" {
-		018:   ami           = data.aws_ami.ubuntu.id
-
-
 
 Results Summary:
-HIGH: 1
-MEDIUM: 1
+HIGH: 0
+MEDIUM: 0
 LOW: 0
 INFO: 0
-TOTAL: 2
+TOTAL: 0
 
-Scan duration: 10.850753672s
+Scan duration: 11.258745963s

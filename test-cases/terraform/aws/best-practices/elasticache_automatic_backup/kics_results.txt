@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.2.4
+Scanning with Keeping Infrastructure as Code Secure v1.3.0
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 1386
+Queries loaded: 520
 Queries failed to execute: 0
 
 ------------------------------------
@@ -31,18 +31,18 @@ Memcached Disabled, Severity: HIGH, Results: 2
 Description: Check if the Memcached is disabled on the ElastiCache
 Platform: Terraform
 
-	[1]: /src/main.tf:11
-
-		010:   cluster_id           = "cluster"
-		011:   engine               = "redis"
-		012:   node_type            = "cache.m5.large"
-
-
-	[2]: /src/main.tf:3
+	[1]: /src/main.tf:3
 
 		002:   cluster_id           = "cluster"
 		003:   engine               = "redis"
 		004:   node_type            = "cache.m5.large"
+
+
+	[2]: /src/main.tf:11
+
+		010:   cluster_id           = "cluster"
+		011:   engine               = "redis"
+		012:   node_type            = "cache.m5.large"
 
 
 
@@ -53,4 +53,4 @@ LOW: 0
 INFO: 0
 TOTAL: 2
 
-Scan duration: 29.75191118s
+Scan duration: 11.355251214s

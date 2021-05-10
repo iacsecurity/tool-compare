@@ -16,55 +16,66 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.2.4
+Scanning with Keeping Infrastructure as Code Secure v1.3.0
 
 
 
-Files scanned: 1
-Parsed files: 1
-Queries loaded: 1386
+Files scanned: 53
+Parsed files: 53
+Queries loaded: 754
 Queries failed to execute: 0
 
 ------------------------------------
+
+CloudWatch Without Retention Period Specified, Severity: MEDIUM, Results: 1
+Description: AWS CloudWatch Log groups should have retention days specified
+Platform: Terraform
+
+	[1]: /src/.terraform/modules/vpc/examples/vpc-flow-logs/main.tf:126
+
+		125: # Cloudwatch logs
+		126: resource "aws_cloudwatch_log_group" "flow_log" {
+		127:   name = local.cloudwatch_log_group_name
+
 
 ALB Is Not Integrated With WAF, Severity: MEDIUM, Results: 4
 Description: All Application Load Balancers (ALB) must be protected with Web Application Firewall (WAF) service
 Platform: Terraform
 
-	[1]: /src/main.tf:33
+	[1]: /src/main.tf:32
 
-		032: 
-		033: resource "aws_alb" "default" {
-		034:   internal           = false
-
-
-	[2]: /src/main.tf:49
-
-		048: 
-		049: resource "aws_alb" "disabled" {
-		050:   internal           = false
+		031: 
+		032: resource "aws_alb" "default" {
+		033:   internal           = false
 
 
-	[3]: /src/main.tf:26
+	[2]: /src/main.tf:48
 
-		025: 
-		026: resource "aws_lb" "default" {
-		027:   internal           = false
+		047: 
+		048: resource "aws_alb" "disabled" {
+		049:   internal           = false
 
 
-	[4]: /src/main.tf:40
+	[3]: /src/main.tf:39
 
-		039: 
-		040: resource "aws_lb" "disabled" {
-		041:   internal           = false
+		038: 
+		039: resource "aws_lb" "disabled" {
+		040:   internal           = false
+
+
+	[4]: /src/main.tf:25
+
+		024: 
+		025: resource "aws_lb" "default" {
+		026:   internal           = false
 
 
 
 Results Summary:
 HIGH: 0
-MEDIUM: 4
+MEDIUM: 5
 LOW: 0
 INFO: 0
-TOTAL: 4
+TOTAL: 5
 
-Scan duration: 30.022306263s
+Scan duration: 31.901904972s

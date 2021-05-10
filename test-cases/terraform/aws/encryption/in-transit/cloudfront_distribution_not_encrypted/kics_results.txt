@@ -16,85 +16,30 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.2.3
+Scanning with Keeping Infrastructure as Code Secure v1.3.0
 
 
 
-Files scanned: 2
-Parsed files: 2
-Queries loaded: 1343
+Files scanned: 1
+Parsed files: 1
+Queries loaded: 520
 Queries failed to execute: 0
 
 ------------------------------------
 
-CloudFront Without Minimum Protocol TLS 1.2, Severity: HIGH, Results: 1
-Description: CloudFront Minimum Protocol version should be at least TLS 1.2
+S3 Bucket With Ignore Public ACL, Severity: LOW, Results: 1
+Description: S3 bucket with ignore public ACL
 Platform: Terraform
 
-	[1]: /src/main.tf:76
+	[1]: /src/main.tf:36
 
-		075:   viewer_certificate {
-		076:     cloudfront_default_certificate = true
-		077:   }
-
-
-Passwords And Secrets In Infrastructure Code, Severity: HIGH, Results: 1
-Description: Query to find passwords and secrets in infrastructure code.
-Platform: Common
-
-	[1]: /src/main.tf:46
-
-		045:   enabled             = true
-		046:   price_class         = "PriceClass_200"
-		047:   default_root_object = "index.html"
+		035:   block_public_policy     = true
+		036:   ignore_public_acls      = true
+		037:   restrict_public_buckets = true
 
 
-S3 Bucket Without Server-side-encryption, Severity: HIGH, Results: 1
-Description: S3 bucket should have encryption defined
-Platform: Terraform
-
-	[1]: /src/main.tf:10
-
-		009: 
-		010: resource "aws_s3_bucket" "cdn-content" {
-		011:   bucket = local.name
-
-
-Viewer Protocol Policy Allows HTTP, Severity: HIGH, Results: 1
-Description: Checks if the connection between the CloudFront and the origin server is encrypted
-Platform: Terraform
-
-	[1]: /src/main.tf:83
-
-		082:     target_origin_id       = local.s3_origin_id
-		083:     viewer_protocol_policy = "allow-all"
-		084: 
-
-
-Vulnerable Default SSL Certificate, Severity: HIGH, Results: 1
-Description: CloudFront web distributions should use custom (and not default) SSL certificates. Custom SSL certificates allow only defined users to access content by using an alternate domain name instead of the default one.
-Platform: Terraform
-
-	[1]: /src/main.tf:75
-
-		074: 
-		075:   viewer_certificate {
-		076:     cloudfront_default_certificate = true
-
-
-Cloudfront Logging Disabled, Severity: MEDIUM, Results: 1
-Description: AWS Cloudfront distributions must be have logging enabled, which means the attribute 'logging_config' must be defined
-Platform: Terraform
-
-	[1]: /src/main.tf:44
-
-		043: 
-		044: resource "aws_cloudfront_distribution" "s3_distribution" {
-		045:   enabled             = true
-
-
-S3 Bucket Without Versioning, Severity: MEDIUM, Results: 1
-Description: S3 bucket without versioning
+S3 Bucket Logging Disabled, Severity: LOW, Results: 1
+Description: S3 bucket without logging
 Platform: Terraform
 
 	[1]: /src/main.tf:10
@@ -115,8 +60,8 @@ Platform: Terraform
 		045:   enabled             = true
 
 
-S3 Bucket Logging Disabled, Severity: LOW, Results: 1
-Description: S3 bucket without logging
+S3 Bucket Without Versioning, Severity: MEDIUM, Results: 1
+Description: S3 bucket without versioning
 Platform: Terraform
 
 	[1]: /src/main.tf:10
@@ -126,15 +71,70 @@ Platform: Terraform
 		011:   bucket = local.name
 
 
-S3 Bucket With Ignore Public ACL, Severity: LOW, Results: 1
-Description: S3 bucket with ignore public ACL
+Cloudfront Logging Disabled, Severity: MEDIUM, Results: 1
+Description: AWS Cloudfront distributions must be have logging enabled, which means the attribute 'logging_config' must be defined
 Platform: Terraform
 
-	[1]: /src/main.tf:36
+	[1]: /src/main.tf:44
 
-		035:   block_public_policy     = true
-		036:   ignore_public_acls      = true
-		037:   restrict_public_buckets = true
+		043: 
+		044: resource "aws_cloudfront_distribution" "s3_distribution" {
+		045:   enabled             = true
+
+
+Vulnerable Default SSL Certificate, Severity: HIGH, Results: 1
+Description: CloudFront web distributions should use custom (and not default) SSL certificates. Custom SSL certificates allow only defined users to access content by using an alternate domain name instead of the default one.
+Platform: Terraform
+
+	[1]: /src/main.tf:75
+
+		074: 
+		075:   viewer_certificate {
+		076:     cloudfront_default_certificate = true
+
+
+Viewer Protocol Policy Allows HTTP, Severity: HIGH, Results: 1
+Description: Checks if the connection between the CloudFront and the origin server is encrypted
+Platform: Terraform
+
+	[1]: /src/main.tf:83
+
+		082:     target_origin_id       = local.s3_origin_id
+		083:     viewer_protocol_policy = "allow-all"
+		084: 
+
+
+S3 Bucket Without Server-side-encryption, Severity: HIGH, Results: 1
+Description: S3 bucket should have encryption defined
+Platform: Terraform
+
+	[1]: /src/main.tf:10
+
+		009: 
+		010: resource "aws_s3_bucket" "cdn-content" {
+		011:   bucket = local.name
+
+
+Passwords And Secrets In Infrastructure Code, Severity: HIGH, Results: 1
+Description: Query to find passwords and secrets in infrastructure code.
+Platform: Common
+
+	[1]: /src/main.tf:46
+
+		045:   enabled             = true
+		046:   price_class         = "PriceClass_200"
+		047:   default_root_object = "index.html"
+
+
+CloudFront Without Minimum Protocol TLS 1.2, Severity: HIGH, Results: 1
+Description: CloudFront Minimum Protocol version should be at least TLS 1.2
+Platform: Terraform
+
+	[1]: /src/main.tf:76
+
+		075:   viewer_certificate {
+		076:     cloudfront_default_certificate = true
+		077:   }
 
 
 
@@ -145,4 +145,4 @@ LOW: 3
 INFO: 0
 TOTAL: 10
 
-Scan duration: 35.892592641s
+Scan duration: 11.81795888s

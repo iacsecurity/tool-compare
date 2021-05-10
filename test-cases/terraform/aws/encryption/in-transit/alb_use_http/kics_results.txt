@@ -16,41 +16,16 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.2.3
+Scanning with Keeping Infrastructure as Code Secure v1.3.0
 
 
 
-Files scanned: 2
-Parsed files: 2
-Queries loaded: 1343
+Files scanned: 1
+Parsed files: 1
+Queries loaded: 520
 Queries failed to execute: 0
 
 ------------------------------------
-
-EC2 Instance Has Public IP, Severity: HIGH, Results: 3
-Description: EC2 Instance should not have a public IP address.
-Platform: Terraform
-
-	[1]: /src/main.tf:95
-
-		094: 
-		095: resource "aws_instance" "inst2" {
-		096:   vpc_security_group_ids = [aws_default_security_group.dsg.id]
-
-
-	[2]: /src/main.tf:108
-
-		107: 
-		108: resource "aws_instance" "inst3" {
-		109:   vpc_security_group_ids = [aws_default_security_group.dsg.id]
-
-
-	[3]: /src/main.tf:82
-
-		081: 
-		082: resource "aws_instance" "inst1" {
-		083:   vpc_security_group_ids = [aws_default_security_group.dsg.id]
-
 
 VPC FlowLogs Disabled, Severity: MEDIUM, Results: 1
 Description: VPC hasn't got any FlowLog associated
@@ -63,6 +38,31 @@ Platform: Terraform
 		027:   cidr_block = "10.10.0.0/16"
 
 
+EC2 Instance Has Public IP, Severity: HIGH, Results: 3
+Description: EC2 Instance should not have a public IP address.
+Platform: Terraform
+
+	[1]: /src/main.tf:82
+
+		081: 
+		082: resource "aws_instance" "inst1" {
+		083:   vpc_security_group_ids = [aws_default_security_group.dsg.id]
+
+
+	[2]: /src/main.tf:95
+
+		094: 
+		095: resource "aws_instance" "inst2" {
+		096:   vpc_security_group_ids = [aws_default_security_group.dsg.id]
+
+
+	[3]: /src/main.tf:108
+
+		107: 
+		108: resource "aws_instance" "inst3" {
+		109:   vpc_security_group_ids = [aws_default_security_group.dsg.id]
+
+
 
 Results Summary:
 HIGH: 3
@@ -71,4 +71,4 @@ LOW: 0
 INFO: 0
 TOTAL: 4
 
-Scan duration: 32.137486182s
+Scan duration: 12.043631422s

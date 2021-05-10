@@ -16,27 +16,16 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.2.3
+Scanning with Keeping Infrastructure as Code Secure v1.3.0
 
 
 
-Files scanned: 2
-Parsed files: 2
-Queries loaded: 1343
+Files scanned: 1
+Parsed files: 1
+Queries loaded: 520
 Queries failed to execute: 0
 
 ------------------------------------
-
-ALB Listening on HTTP, Severity: HIGH, Results: 1
-Description: AWS Application Load Balancer (alb) should not listen on HTTP
-Platform: Terraform
-
-	[1]: /src/main.tf:70
-
-		069: 
-		070:   default_action {
-		071:     type             = "forward"
-
 
 VPC FlowLogs Disabled, Severity: MEDIUM, Results: 1
 Description: VPC hasn't got any FlowLog associated
@@ -49,12 +38,34 @@ Platform: Terraform
 		006:   cidr_block = "10.10.0.0/16"
 
 
+ALB Is Not Integrated With WAF, Severity: MEDIUM, Results: 1
+Description: All Application Load Balancers (ALB) must be protected with Web Application Firewall (WAF) service
+Platform: Terraform
+
+	[1]: /src/main.tf:60
+
+		059: 
+		060: resource "aws_lb" "alb_test" {
+		061:   subnets = [aws_subnet.subnet1.id, aws_subnet.subnet2.id]
+
+
+ALB Listening on HTTP, Severity: HIGH, Results: 1
+Description: AWS Application Load Balancer (alb) should not listen on HTTP
+Platform: Terraform
+
+	[1]: /src/main.tf:70
+
+		069: 
+		070:   default_action {
+		071:     type             = "forward"
+
+
 
 Results Summary:
 HIGH: 1
-MEDIUM: 1
+MEDIUM: 2
 LOW: 0
 INFO: 0
-TOTAL: 2
+TOTAL: 3
 
-Scan duration: 31.087656764s
+Scan duration: 10.951170546s
