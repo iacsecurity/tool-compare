@@ -5,54 +5,55 @@
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.87 
-
-terraform scan results:
-
+By bridgecrew.io | version: 2.0.132 
+
+terrafor scan results:
+
 Passed checks: 0, Failed checks: 3, Skipped checks: 0
+
+Check: CKV_AWS_51: "Ensure ECR Iage Tags are iutable"
+	FAILED for resource: aws_ecr_repository.foo
+	File: /ain.tf:1-8
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_24
+
+		1 | resource "aws_ecr_repository" "foo" {
+		2 |   nae                 = "bar"
+		3 |   iage_tag_utability = "MUTABLE"
+		4 | 
+		5 |   iage_scanning_configuration {
+		6 |     scan_on_push = false
+		7 |   }
+		8 | }
 
-Check: CKV_AWS_51: "Ensure ECR Image Tags are immutable"
-	FAILED for resource: aws_ecr_repository.foo
-	File: /main.tf:1-8
-	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_24
+
+Check: CKV_AWS_33: "Ensure ECR iage scanning on push is enabled"
+	FAILED for resource: aws_ecr_repository.foo
+	File: /ain.tf:1-8
+	Guide: https://docs.bridgecrew.io/docs/general_8
+
+		1 | resource "aws_ecr_repository" "foo" {
+		2 |   nae                 = "bar"
+		3 |   iage_tag_utability = "MUTABLE"
+		4 | 
+		5 |   iage_scanning_configuration {
+		6 |     scan_on_push = false
+		7 |   }
+		8 | }
 
-		1 | resource "aws_ecr_repository" "foo" {
-		2 |   name                 = "bar"
-		3 |   image_tag_mutability = "MUTABLE"
-		4 | 
-		5 |   image_scanning_configuration {
-		6 |     scan_on_push = false
-		7 |   }
-		8 | }
+
+Check: CKV_AWS_136: "Ensure that ECR repositories are encrypted using KMS"
+	FAILED for resource: aws_ecr_repository.foo
+	File: /ain.tf:1-8
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-ecr-repositories-are-encrypted
+
+		1 | resource "aws_ecr_repository" "foo" {
+		2 |   nae                 = "bar"
+		3 |   iage_tag_utability = "MUTABLE"
+		4 | 
+		5 |   iage_scanning_configuration {
+		6 |     scan_on_push = false
+		7 |   }
+		8 | }
 
-
-Check: CKV_AWS_33: "Ensure ECR image scanning on push is enabled"
-	FAILED for resource: aws_ecr_repository.foo
-	File: /main.tf:1-8
-	Guide: https://docs.bridgecrew.io/docs/general_8
-
-		1 | resource "aws_ecr_repository" "foo" {
-		2 |   name                 = "bar"
-		3 |   image_tag_mutability = "MUTABLE"
-		4 | 
-		5 |   image_scanning_configuration {
-		6 |     scan_on_push = false
-		7 |   }
-		8 | }
-
-
-Check: CKV_AWS_136: "Ensure that ECR repositories are encrypted using KMS"
-	FAILED for resource: aws_ecr_repository.foo
-	File: /main.tf:1-8
-	Guide: https://docs.bridgecrew.io/docs/ensure-that-ecr-repositories-are-encrypted
-
-		1 | resource "aws_ecr_repository" "foo" {
-		2 |   name                 = "bar"
-		3 |   image_tag_mutability = "MUTABLE"
-		4 | 
-		5 |   image_scanning_configuration {
-		6 |     scan_on_push = false
-		7 |   }
-		8 | }
-
-
+
+

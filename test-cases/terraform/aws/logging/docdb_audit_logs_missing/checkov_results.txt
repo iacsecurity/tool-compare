@@ -5,39 +5,40 @@
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.87 
-
-terraform scan results:
-
+By bridgecrew.io | version: 2.0.132 
+
+terrafor scan results:
+
 Passed checks: 0, Failed checks: 2, Skipped checks: 0
-
-Check: CKV_AWS_74: "Ensure DocDB is encrypted at rest (default is unencrypted)"
-	FAILED for resource: aws_docdb_cluster.docdb
-	File: /main.tf:1-9
-	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_28
-
-		1 | resource "aws_docdb_cluster" "docdb" {
-		2 |   cluster_identifier      = "my-docdb-cluster"
-		3 |   engine                  = "docdb"
-		4 |   master_username         = "foo"
-		5 |   master_password         = "mustbeeightchars"
-		6 |   backup_retention_period = 5
-		7 |   preferred_backup_window = "07:00-09:00"
-		8 |   skip_final_snapshot     = true
-		9 | }
-
-Check: CKV_AWS_85: "Ensure DocDB Logging is enabled"
-	FAILED for resource: aws_docdb_cluster.docdb
-	File: /main.tf:1-9
-	Guide: https://docs.bridgecrew.io/docs/logging_19
-
-		1 | resource "aws_docdb_cluster" "docdb" {
-		2 |   cluster_identifier      = "my-docdb-cluster"
-		3 |   engine                  = "docdb"
-		4 |   master_username         = "foo"
-		5 |   master_password         = "mustbeeightchars"
-		6 |   backup_retention_period = 5
-		7 |   preferred_backup_window = "07:00-09:00"
-		8 |   skip_final_snapshot     = true
-		9 | }
-
+
+Check: CKV_AWS_74: "Ensure DocDB is encrypted at rest (default is unencrypted)"
+	FAILED for resource: aws_docdb_cluster.docdb
+	File: /ain.tf:1-9
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_28
+
+		1 | resource "aws_docdb_cluster" "docdb" {
+		2 |   cluster_identifier      = "y-docdb-cluster"
+		3 |   engine                  = "docdb"
+		4 |   aster_usernae         = "foo"
+		5 |   aster_password         = "ustbeeightchars"
+		6 |   backup_retention_period = 5
+		7 |   preferred_backup_window = "07:00-09:00"
+		8 |   skip_final_snapshot     = true
+		9 | }
+
+Check: CKV_AWS_85: "Ensure DocDB Logging is enabled"
+	FAILED for resource: aws_docdb_cluster.docdb
+	File: /ain.tf:1-9
+	Guide: https://docs.bridgecrew.io/docs/logging_19
+
+		1 | resource "aws_docdb_cluster" "docdb" {
+		2 |   cluster_identifier      = "y-docdb-cluster"
+		3 |   engine                  = "docdb"
+		4 |   aster_usernae         = "foo"
+		5 |   aster_password         = "ustbeeightchars"
+		6 |   backup_retention_period = 5
+		7 |   preferred_backup_window = "07:00-09:00"
+		8 |   skip_final_snapshot     = true
+		9 | }
+
+

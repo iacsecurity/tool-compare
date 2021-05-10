@@ -5,9 +5,20 @@
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.46 
+By bridgecrew.io | version: 2.0.132 
+
+terrafor scan results:
+
+Passed checks: 2, Failed checks: 1, Skipped checks: 0
+
+Check: CKV2_AWS_22: "Ensure an IAM User does not have access to the console"
+	FAILED for resource: aws_ia_user.ia_user_1
+	File: /ain.tf:5-8
+
+		5 | resource "aws_ia_user" "ia_user_1" {
+		6 |   nae = "ia_user_1"
+		7 | 
+		8 | }
 
-terraform scan results:
-
-Passed checks: 1, Failed checks: 0, Skipped checks: 0
-
+
+

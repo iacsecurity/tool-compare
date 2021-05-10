@@ -5,109 +5,114 @@
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.46 
-
-terraform scan results:
-
+By bridgecrew.io | version: 2.0.132 
+
+terrafor scan results:
+
 Passed checks: 9, Failed checks: 8, Skipped checks: 0
+
+Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration EBS is securely encrypted"
+	FAILED for resource: aws_instance.pub_ins
+	File: /ain.tf:98-104
+	Guide: https://docs.bridgecrew.io/docs/general_13
+
+		98  | resource "aws_instance" "pub_ins" {
+		99  |   ai           = "${data.aws_ai.ubuntu.id}"
+		100 |   instance_type = "t2.icro"
+		101 |   subnet_id = odule.vpc.public_subnets[0]
+		102 |   ia_instance_profile = aws_ia_instance_profile.test_profile.nae
+		103 | 
+		104 | }
 
-Check: CKV_AWS_79: "Ensure Instance Metadata Service Version 1 is not enabled"
-	FAILED for resource: aws_instance.pub_ins
-	File: /main.tf:99-105
-	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_31
+
+Check: CKV_AWS_79: "Ensure Instance Metadata Service Version 1 is not enabled"
+	FAILED for resource: aws_instance.pub_ins
+	File: /ain.tf:98-104
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_31
+
+		98  | resource "aws_instance" "pub_ins" {
+		99  |   ai           = "${data.aws_ai.ubuntu.id}"
+		100 |   instance_type = "t2.icro"
+		101 |   subnet_id = odule.vpc.public_subnets[0]
+		102 |   ia_instance_profile = aws_ia_instance_profile.test_profile.nae
+		103 | 
+		104 | }
 
-		99  | resource "aws_instance" "pub_ins" {
-		100 |   ami           = "${data.aws_ami.ubuntu.id}"
-		101 |   instance_type = "t2.micro"
-		102 |   subnet_id = module.vpc.public_subnets[0]
-		103 |   iam_instance_profile = aws_iam_instance_profile.test_profile.name
-		104 | 
-		105 | }
+
+Check: CKV_AWS_135: "Ensure that EC2 is EBS optiized"
+	FAILED for resource: aws_instance.pub_ins
+	File: /ain.tf:98-104
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-ec2-is-ebs-optiized
+
+		98  | resource "aws_instance" "pub_ins" {
+		99  |   ai           = "${data.aws_ai.ubuntu.id}"
+		100 |   instance_type = "t2.icro"
+		101 |   subnet_id = odule.vpc.public_subnets[0]
+		102 |   ia_instance_profile = aws_ia_instance_profile.test_profile.nae
+		103 | 
+		104 | }
 
+
+Check: CKV_AWS_126: "Ensure that detailed onitoring is enabled for EC2 instances"
+	FAILED for resource: aws_instance.pub_ins
+	File: /ain.tf:98-104
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-detailed-onitoring-is-enabled-for-ec2-instances
+
+		98  | resource "aws_instance" "pub_ins" {
+		99  |   ai           = "${data.aws_ai.ubuntu.id}"
+		100 |   instance_type = "t2.icro"
+		101 |   subnet_id = odule.vpc.public_subnets[0]
+		102 |   ia_instance_profile = aws_ia_instance_profile.test_profile.nae
+		103 | 
+		104 | }
 
-Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration EBS is securely encrypted"
-	FAILED for resource: aws_instance.pub_ins
-	File: /main.tf:99-105
-	Guide: https://docs.bridgecrew.io/docs/general_13
-
-		99  | resource "aws_instance" "pub_ins" {
-		100 |   ami           = "${data.aws_ami.ubuntu.id}"
-		101 |   instance_type = "t2.micro"
-		102 |   subnet_id = module.vpc.public_subnets[0]
-		103 |   iam_instance_profile = aws_iam_instance_profile.test_profile.name
-		104 | 
-		105 | }
-
-
-Check: CKV_AWS_126: "Ensure that detailed monitoring is enabled for EC2 instances"
-	FAILED for resource: aws_instance.pub_ins
-	File: /main.tf:99-105
-
-		99  | resource "aws_instance" "pub_ins" {
-		100 |   ami           = "${data.aws_ami.ubuntu.id}"
-		101 |   instance_type = "t2.micro"
-		102 |   subnet_id = module.vpc.public_subnets[0]
-		103 |   iam_instance_profile = aws_iam_instance_profile.test_profile.name
-		104 | 
-		105 | }
-
-
-Check: CKV_AWS_135: "Ensure that EC2 is EBS optimized"
-	FAILED for resource: aws_instance.pub_ins
-	File: /main.tf:99-105
-
-		99  | resource "aws_instance" "pub_ins" {
-		100 |   ami           = "${data.aws_ami.ubuntu.id}"
-		101 |   instance_type = "t2.micro"
-		102 |   subnet_id = module.vpc.public_subnets[0]
-		103 |   iam_instance_profile = aws_iam_instance_profile.test_profile.name
-		104 | 
-		105 | }
-
-
-Check: CKV_AWS_79: "Ensure Instance Metadata Service Version 1 is not enabled"
-	FAILED for resource: aws_instance.priv_ins
-	File: /main.tf:107-112
-	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_31
-
-		107 | resource "aws_instance" "priv_ins" {
-		108 |   ami           = "${data.aws_ami.ubuntu.id}"
-		109 |   instance_type = "t2.micro"
-		110 |   subnet_id = module.vpc.private_subnets[0]
-		111 |   iam_instance_profile = aws_iam_instance_profile.test_profile.name
-		112 | }
-
-Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration EBS is securely encrypted"
-	FAILED for resource: aws_instance.priv_ins
-	File: /main.tf:107-112
-	Guide: https://docs.bridgecrew.io/docs/general_13
-
-		107 | resource "aws_instance" "priv_ins" {
-		108 |   ami           = "${data.aws_ami.ubuntu.id}"
-		109 |   instance_type = "t2.micro"
-		110 |   subnet_id = module.vpc.private_subnets[0]
-		111 |   iam_instance_profile = aws_iam_instance_profile.test_profile.name
-		112 | }
-
-Check: CKV_AWS_126: "Ensure that detailed monitoring is enabled for EC2 instances"
-	FAILED for resource: aws_instance.priv_ins
-	File: /main.tf:107-112
-
-		107 | resource "aws_instance" "priv_ins" {
-		108 |   ami           = "${data.aws_ami.ubuntu.id}"
-		109 |   instance_type = "t2.micro"
-		110 |   subnet_id = module.vpc.private_subnets[0]
-		111 |   iam_instance_profile = aws_iam_instance_profile.test_profile.name
-		112 | }
-
-Check: CKV_AWS_135: "Ensure that EC2 is EBS optimized"
-	FAILED for resource: aws_instance.priv_ins
-	File: /main.tf:107-112
-
-		107 | resource "aws_instance" "priv_ins" {
-		108 |   ami           = "${data.aws_ami.ubuntu.id}"
-		109 |   instance_type = "t2.micro"
-		110 |   subnet_id = module.vpc.private_subnets[0]
-		111 |   iam_instance_profile = aws_iam_instance_profile.test_profile.name
-		112 | }
-
+
+Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration EBS is securely encrypted"
+	FAILED for resource: aws_instance.priv_ins
+	File: /ain.tf:106-111
+	Guide: https://docs.bridgecrew.io/docs/general_13
+
+		106 | resource "aws_instance" "priv_ins" {
+		107 |   ai           = "${data.aws_ai.ubuntu.id}"
+		108 |   instance_type = "t2.icro"
+		109 |   subnet_id = odule.vpc.private_subnets[0]
+		110 |   ia_instance_profile = aws_ia_instance_profile.test_profile.nae
+		111 | }
+
+Check: CKV_AWS_79: "Ensure Instance Metadata Service Version 1 is not enabled"
+	FAILED for resource: aws_instance.priv_ins
+	File: /ain.tf:106-111
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_31
+
+		106 | resource "aws_instance" "priv_ins" {
+		107 |   ai           = "${data.aws_ai.ubuntu.id}"
+		108 |   instance_type = "t2.icro"
+		109 |   subnet_id = odule.vpc.private_subnets[0]
+		110 |   ia_instance_profile = aws_ia_instance_profile.test_profile.nae
+		111 | }
+
+Check: CKV_AWS_135: "Ensure that EC2 is EBS optiized"
+	FAILED for resource: aws_instance.priv_ins
+	File: /ain.tf:106-111
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-ec2-is-ebs-optiized
+
+		106 | resource "aws_instance" "priv_ins" {
+		107 |   ai           = "${data.aws_ai.ubuntu.id}"
+		108 |   instance_type = "t2.icro"
+		109 |   subnet_id = odule.vpc.private_subnets[0]
+		110 |   ia_instance_profile = aws_ia_instance_profile.test_profile.nae
+		111 | }
+
+Check: CKV_AWS_126: "Ensure that detailed onitoring is enabled for EC2 instances"
+	FAILED for resource: aws_instance.priv_ins
+	File: /ain.tf:106-111
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-detailed-onitoring-is-enabled-for-ec2-instances
+
+		106 | resource "aws_instance" "priv_ins" {
+		107 |   ai           = "${data.aws_ai.ubuntu.id}"
+		108 |   instance_type = "t2.icro"
+		109 |   subnet_id = odule.vpc.private_subnets[0]
+		110 |   ia_instance_profile = aws_ia_instance_profile.test_profile.nae
+		111 | }
+
+

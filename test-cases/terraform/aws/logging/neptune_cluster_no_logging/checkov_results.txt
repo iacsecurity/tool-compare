@@ -5,41 +5,42 @@
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.87 
-
-terraform scan results:
-
+By bridgecrew.io | version: 2.0.132 
+
+terrafor scan results:
+
 Passed checks: 0, Failed checks: 2, Skipped checks: 0
+
+Check: CKV_AWS_44: "Ensure Neptune storage is securely encrypted"
+	FAILED for resource: aws_neptune_cluster.test
+	File: /ain.tf:1-9
+	Guide: https://docs.bridgecrew.io/docs/general_18
+
+		1 | resource "aws_neptune_cluster" "test" {
+		2 |   cluster_identifier                  = "neptune-cluster-deo"
+		3 |   engine                              = "neptune"
+		4 |   backup_retention_period             = 5
+		5 |   preferred_backup_window             = "07:00-09:00"
+		6 |   skip_final_snapshot                 = true
+		7 |   ia_database_authentication_enabled = true
+		8 |   apply_iediately                   = true
+		9 | }
 
-Check: CKV_AWS_44: "Ensure Neptune storage is securely encrypted"
-	FAILED for resource: aws_neptune_cluster.test
-	File: /main.tf:1-9
-	Guide: https://docs.bridgecrew.io/docs/general_18
+
+Check: CKV_AWS_101: "Ensure Neptune logging is enabled"
+	FAILED for resource: aws_neptune_cluster.test
+	File: /ain.tf:1-9
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_logging_24
+
+		1 | resource "aws_neptune_cluster" "test" {
+		2 |   cluster_identifier                  = "neptune-cluster-deo"
+		3 |   engine                              = "neptune"
+		4 |   backup_retention_period             = 5
+		5 |   preferred_backup_window             = "07:00-09:00"
+		6 |   skip_final_snapshot                 = true
+		7 |   ia_database_authentication_enabled = true
+		8 |   apply_iediately                   = true
+		9 | }
 
-		1 | resource "aws_neptune_cluster" "test" {
-		2 |   cluster_identifier                  = "neptune-cluster-demo"
-		3 |   engine                              = "neptune"
-		4 |   backup_retention_period             = 5
-		5 |   preferred_backup_window             = "07:00-09:00"
-		6 |   skip_final_snapshot                 = true
-		7 |   iam_database_authentication_enabled = true
-		8 |   apply_immediately                   = true
-		9 | }
-
-
-Check: CKV_AWS_101: "Ensure Neptune logging is enabled"
-	FAILED for resource: aws_neptune_cluster.test
-	File: /main.tf:1-9
-	Guide: https://docs.bridgecrew.io/docs/bc_aws_logging_24
-
-		1 | resource "aws_neptune_cluster" "test" {
-		2 |   cluster_identifier                  = "neptune-cluster-demo"
-		3 |   engine                              = "neptune"
-		4 |   backup_retention_period             = 5
-		5 |   preferred_backup_window             = "07:00-09:00"
-		6 |   skip_final_snapshot                 = true
-		7 |   iam_database_authentication_enabled = true
-		8 |   apply_immediately                   = true
-		9 | }
-
-
+
+

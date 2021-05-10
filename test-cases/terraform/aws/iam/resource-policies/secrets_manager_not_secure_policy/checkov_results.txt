@@ -5,9 +5,19 @@
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.46 
+By bridgecrew.io | version: 2.0.132 
+
+terrafor scan results:
+
+Passed checks: 1, Failed checks: 1, Skipped checks: 0
+
+Check: CKV_AWS_149: "Ensure that Secrets Manager secret is encrypted using KMS"
+	FAILED for resource: aws_secretsanager_secret.not_secure_policy
+	File: /ain.tf:5-7
+
+		5 | resource "aws_secretsanager_secret" "not_secure_policy" {
+		6 |   nae = "not_secure_secret"
+		7 | }
 
-terraform scan results:
-
-Passed checks: 1, Failed checks: 0, Skipped checks: 0
-
+
+

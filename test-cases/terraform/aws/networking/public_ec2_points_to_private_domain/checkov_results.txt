@@ -5,214 +5,253 @@
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.46 
+By bridgecrew.io | version: 2.0.132 
+
+terrafor scan results:
+
+Passed checks: 12, Failed checks: 15, Skipped checks: 0
+
+Check: CKV_AWS_23: "Ensure every security groups rule has a description"
+	FAILED for resource: aws_security_group.esdoain
+	File: /ain.tf:92-100
+	Guide: https://docs.bridgecrew.io/docs/networking_31
+
+		92  | resource "aws_security_group" "esdoain" {
+		93  |   vpc_id = aws_vpc.nondefault.id
+		94  |   ingress {
+		95  |     fro_port = 443
+		96  |     protocol = "tcp"
+		97  |     to_port = 443
+		98  |     cidr_blocks = [aws_subnet.nondefault_1.cidr_block]
+		99  |   }
+		100 | }
 
-terraform scan results:
+
+Check: CKV_AWS_83: "Ensure Elasticsearch Doain enforces HTTPS"
+	FAILED for resource: aws_elasticsearch_doain.test
+	File: /ain.tf:107-119
+	Guide: https://docs.bridgecrew.io/docs/elasticsearch_6
+
+		107 | resource "aws_elasticsearch_doain" "test" {
+		108 |   doain_nae = "test"
+		109 |   vpc_options {
+		110 |     subnet_ids = [aws_subnet.nondefault_1.id]
+		111 |     security_group_ids = [aws_security_group.esdoain.id]
+		112 |   }
+		113 | 
+		114 |   ebs_options {
+		115 |     ebs_enabled = true
+		116 |     volue_size = 10
+		117 |     volue_type = "gp2"
+		118 |   }
+		119 | }
 
-Passed checks: 8, Failed checks: 12, Skipped checks: 0
+
+Check: CKV_AWS_84: "Ensure Elasticsearch Doain Logging is enabled"
+	FAILED for resource: aws_elasticsearch_doain.test
+	File: /ain.tf:107-119
+	Guide: https://docs.bridgecrew.io/docs/elasticsearch_7
+
+		107 | resource "aws_elasticsearch_doain" "test" {
+		108 |   doain_nae = "test"
+		109 |   vpc_options {
+		110 |     subnet_ids = [aws_subnet.nondefault_1.id]
+		111 |     security_group_ids = [aws_security_group.esdoain.id]
+		112 |   }
+		113 | 
+		114 |   ebs_options {
+		115 |     ebs_enabled = true
+		116 |     volue_size = 10
+		117 |     volue_type = "gp2"
+		118 |   }
+		119 | }
 
-Check: CKV_AWS_23: "Ensure every security groups rule has a description"
-	FAILED for resource: aws_security_group.esdomain
-	File: /main.tf:92-100
-	Guide: https://docs.bridgecrew.io/docs/networking_31
+
+Check: CKV_AWS_5: "Ensure all data stored in the Elasticsearch is securely encrypted at rest"
+	FAILED for resource: aws_elasticsearch_doain.test
+	File: /ain.tf:107-119
+	Guide: https://docs.bridgecrew.io/docs/elasticsearch_3-enable-encryptionatrest
+
+		107 | resource "aws_elasticsearch_doain" "test" {
+		108 |   doain_nae = "test"
+		109 |   vpc_options {
+		110 |     subnet_ids = [aws_subnet.nondefault_1.id]
+		111 |     security_group_ids = [aws_security_group.esdoain.id]
+		112 |   }
+		113 | 
+		114 |   ebs_options {
+		115 |     ebs_enabled = true
+		116 |     volue_size = 10
+		117 |     volue_type = "gp2"
+		118 |   }
+		119 | }
 
-		92  | resource "aws_security_group" "esdomain" {
-		93  |   vpc_id = aws_vpc.nondefault.id
-		94  |   ingress {
-		95  |     from_port = 443
-		96  |     protocol = "tcp"
-		97  |     to_port = 443
-		98  |     cidr_blocks = [aws_subnet.nondefault_1.cidr_block]
-		99  |   }
-		100 | }
+
+Check: CKV_AWS_24: "Ensure no security groups allow ingress fro 0.0.0.0:0 to port 22"
+	FAILED for resource: aws_security_group.publicly_accessible_sg
+	File: /ain.tf:121-135
+	Guide: https://docs.bridgecrew.io/docs/networking_1-port-security
+
+		121 | resource "aws_security_group" "publicly_accessible_sg" {
+		122 |   vpc_id = aws_vpc.nondefault.id
+		123 |   ingress {
+		124 |     fro_port = 0
+		125 |     protocol = "tcp"
+		126 |     to_port = 65000
+		127 |     cidr_blocks = ["0.0.0.0/0"]
+		128 |   }
+		129 |   egress {
+		130 |     fro_port = 0
+		131 |     protocol = "tcp"
+		132 |     to_port = 65000
+		133 |     cidr_blocks = ["0.0.0.0/0"]
+		134 |   }
+		135 | }
 
+
+Check: CKV_AWS_23: "Ensure every security groups rule has a description"
+	FAILED for resource: aws_security_group.publicly_accessible_sg
+	File: /ain.tf:121-135
+	Guide: https://docs.bridgecrew.io/docs/networking_31
+
+		121 | resource "aws_security_group" "publicly_accessible_sg" {
+		122 |   vpc_id = aws_vpc.nondefault.id
+		123 |   ingress {
+		124 |     fro_port = 0
+		125 |     protocol = "tcp"
+		126 |     to_port = 65000
+		127 |     cidr_blocks = ["0.0.0.0/0"]
+		128 |   }
+		129 |   egress {
+		130 |     fro_port = 0
+		131 |     protocol = "tcp"
+		132 |     to_port = 65000
+		133 |     cidr_blocks = ["0.0.0.0/0"]
+		134 |   }
+		135 | }
 
-Check: CKV_AWS_84: "Ensure Elasticsearch Domain Logging is enabled"
-	FAILED for resource: aws_elasticsearch_domain.test
-	File: /main.tf:107-119
-	Guide: https://docs.bridgecrew.io/docs/elasticsearch_7
+
+Check: CKV_AWS_25: "Ensure no security groups allow ingress fro 0.0.0.0:0 to port 3389"
+	FAILED for resource: aws_security_group.publicly_accessible_sg
+	File: /ain.tf:121-135
+	Guide: https://docs.bridgecrew.io/docs/networking_2
+
+		121 | resource "aws_security_group" "publicly_accessible_sg" {
+		122 |   vpc_id = aws_vpc.nondefault.id
+		123 |   ingress {
+		124 |     fro_port = 0
+		125 |     protocol = "tcp"
+		126 |     to_port = 65000
+		127 |     cidr_blocks = ["0.0.0.0/0"]
+		128 |   }
+		129 |   egress {
+		130 |     fro_port = 0
+		131 |     protocol = "tcp"
+		132 |     to_port = 65000
+		133 |     cidr_blocks = ["0.0.0.0/0"]
+		134 |   }
+		135 | }
 
-		107 | resource "aws_elasticsearch_domain" "test" {
-		108 |   domain_name = "test"
-		109 |   vpc_options {
-		110 |     subnet_ids = [aws_subnet.nondefault_1.id]
-		111 |     security_group_ids = [aws_security_group.esdomain.id]
-		112 |   }
-		113 | 
-		114 |   ebs_options {
-		115 |     ebs_enabled = true
-		116 |     volume_size = 10
-		117 |     volume_type = "gp2"
-		118 |   }
-		119 | }
+
+Check: CKV_AWS_88: "EC2 instance should not have public IP."
+	FAILED for resource: aws_instance.public_ins
+	File: /ain.tf:138-144
+	Guide: https://docs.bridgecrew.io/docs/public_12
+
+		138 | resource "aws_instance" "public_ins" {
+		139 |   ai = "ai-0130bec6e5047f596"
+		140 |   instance_type = "t3.nano"
+		141 |   associate_public_ip_address = true
+		142 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
+		143 |   subnet_id = aws_subnet.nondefault_1.id
+		144 | }
+
+Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration EBS is securely encrypted"
+	FAILED for resource: aws_instance.public_ins
+	File: /ain.tf:138-144
+	Guide: https://docs.bridgecrew.io/docs/general_13
+
+		138 | resource "aws_instance" "public_ins" {
+		139 |   ai = "ai-0130bec6e5047f596"
+		140 |   instance_type = "t3.nano"
+		141 |   associate_public_ip_address = true
+		142 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
+		143 |   subnet_id = aws_subnet.nondefault_1.id
+		144 | }
+
+Check: CKV_AWS_79: "Ensure Instance Metadata Service Version 1 is not enabled"
+	FAILED for resource: aws_instance.public_ins
+	File: /ain.tf:138-144
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_31
+
+		138 | resource "aws_instance" "public_ins" {
+		139 |   ai = "ai-0130bec6e5047f596"
+		140 |   instance_type = "t3.nano"
+		141 |   associate_public_ip_address = true
+		142 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
+		143 |   subnet_id = aws_subnet.nondefault_1.id
+		144 | }
+
+Check: CKV_AWS_135: "Ensure that EC2 is EBS optiized"
+	FAILED for resource: aws_instance.public_ins
+	File: /ain.tf:138-144
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-ec2-is-ebs-optiized
+
+		138 | resource "aws_instance" "public_ins" {
+		139 |   ai = "ai-0130bec6e5047f596"
+		140 |   instance_type = "t3.nano"
+		141 |   associate_public_ip_address = true
+		142 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
+		143 |   subnet_id = aws_subnet.nondefault_1.id
+		144 | }
+
+Check: CKV_AWS_126: "Ensure that detailed onitoring is enabled for EC2 instances"
+	FAILED for resource: aws_instance.public_ins
+	File: /ain.tf:138-144
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-detailed-onitoring-is-enabled-for-ec2-instances
+
+		138 | resource "aws_instance" "public_ins" {
+		139 |   ai = "ai-0130bec6e5047f596"
+		140 |   instance_type = "t3.nano"
+		141 |   associate_public_ip_address = true
+		142 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
+		143 |   subnet_id = aws_subnet.nondefault_1.id
+		144 | }
+
+Check: CKV2_AWS_12: "Ensure the default security group of every VPC restricts all traffic"
+	FAILED for resource: aws_vpc.nondefault
+	File: /ain.tf:5-7
+	Guide: https://docs.bridgecrew.io/docs/networking_4
+
+		5 | resource "aws_vpc" "nondefault" {
+		6 |   cidr_block = "10.1.1.0/24"
+		7 | }
 
+
+Check: CKV2_AWS_11: "Ensure VPC flow logging is enabled in all VPCs"
+	FAILED for resource: aws_vpc.nondefault
+	File: /ain.tf:5-7
+	Guide: https://docs.bridgecrew.io-vpc-flow-logging
+
+		5 | resource "aws_vpc" "nondefault" {
+		6 |   cidr_block = "10.1.1.0/24"
+		7 | }
 
-Check: CKV_AWS_83: "Ensure Elasticsearch Domain enforces HTTPS"
-	FAILED for resource: aws_elasticsearch_domain.test
-	File: /main.tf:107-119
-	Guide: https://docs.bridgecrew.io/docs/elasticsearch_6
+
+Check: CKV2_AWS_5: "Ensure that Security Groups are attached to EC2 instances or elastic network interfaces (ENIs)"
+	FAILED for resource: aws_security_group.esdoain
+	File: /ain.tf:92-100
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-security-groups-are-attached-to-ec2-instances-or-elastic-network-interfaces-enis
+
+		92  | resource "aws_security_group" "esdoain" {
+		93  |   vpc_id = aws_vpc.nondefault.id
+		94  |   ingress {
+		95  |     fro_port = 443
+		96  |     protocol = "tcp"
+		97  |     to_port = 443
+		98  |     cidr_blocks = [aws_subnet.nondefault_1.cidr_block]
+		99  |   }
+		100 | }
 
-		107 | resource "aws_elasticsearch_domain" "test" {
-		108 |   domain_name = "test"
-		109 |   vpc_options {
-		110 |     subnet_ids = [aws_subnet.nondefault_1.id]
-		111 |     security_group_ids = [aws_security_group.esdomain.id]
-		112 |   }
-		113 | 
-		114 |   ebs_options {
-		115 |     ebs_enabled = true
-		116 |     volume_size = 10
-		117 |     volume_type = "gp2"
-		118 |   }
-		119 | }
-
-
-Check: CKV_AWS_5: "Ensure all data stored in the Elasticsearch is securely encrypted at rest"
-	FAILED for resource: aws_elasticsearch_domain.test
-	File: /main.tf:107-119
-	Guide: https://docs.bridgecrew.io/docs/elasticsearch_3-enable-encryptionatrest
-
-		107 | resource "aws_elasticsearch_domain" "test" {
-		108 |   domain_name = "test"
-		109 |   vpc_options {
-		110 |     subnet_ids = [aws_subnet.nondefault_1.id]
-		111 |     security_group_ids = [aws_security_group.esdomain.id]
-		112 |   }
-		113 | 
-		114 |   ebs_options {
-		115 |     ebs_enabled = true
-		116 |     volume_size = 10
-		117 |     volume_type = "gp2"
-		118 |   }
-		119 | }
-
-
-Check: CKV_AWS_23: "Ensure every security groups rule has a description"
-	FAILED for resource: aws_security_group.publicly_accessible_sg
-	File: /main.tf:121-135
-	Guide: https://docs.bridgecrew.io/docs/networking_31
-
-		121 | resource "aws_security_group" "publicly_accessible_sg" {
-		122 |   vpc_id = aws_vpc.nondefault.id
-		123 |   ingress {
-		124 |     from_port = 0
-		125 |     protocol = "tcp"
-		126 |     to_port = 65000
-		127 |     cidr_blocks = ["0.0.0.0/0"]
-		128 |   }
-		129 |   egress {
-		130 |     from_port = 0
-		131 |     protocol = "tcp"
-		132 |     to_port = 65000
-		133 |     cidr_blocks = ["0.0.0.0/0"]
-		134 |   }
-		135 | }
-
-
-Check: CKV_AWS_24: "Ensure no security groups allow ingress from 0.0.0.0:0 to port 22"
-	FAILED for resource: aws_security_group.publicly_accessible_sg
-	File: /main.tf:121-135
-	Guide: https://docs.bridgecrew.io/docs/networking_1-port-security
-
-		121 | resource "aws_security_group" "publicly_accessible_sg" {
-		122 |   vpc_id = aws_vpc.nondefault.id
-		123 |   ingress {
-		124 |     from_port = 0
-		125 |     protocol = "tcp"
-		126 |     to_port = 65000
-		127 |     cidr_blocks = ["0.0.0.0/0"]
-		128 |   }
-		129 |   egress {
-		130 |     from_port = 0
-		131 |     protocol = "tcp"
-		132 |     to_port = 65000
-		133 |     cidr_blocks = ["0.0.0.0/0"]
-		134 |   }
-		135 | }
-
-
-Check: CKV_AWS_25: "Ensure no security groups allow ingress from 0.0.0.0:0 to port 3389"
-	FAILED for resource: aws_security_group.publicly_accessible_sg
-	File: /main.tf:121-135
-	Guide: https://docs.bridgecrew.io/docs/networking_2
-
-		121 | resource "aws_security_group" "publicly_accessible_sg" {
-		122 |   vpc_id = aws_vpc.nondefault.id
-		123 |   ingress {
-		124 |     from_port = 0
-		125 |     protocol = "tcp"
-		126 |     to_port = 65000
-		127 |     cidr_blocks = ["0.0.0.0/0"]
-		128 |   }
-		129 |   egress {
-		130 |     from_port = 0
-		131 |     protocol = "tcp"
-		132 |     to_port = 65000
-		133 |     cidr_blocks = ["0.0.0.0/0"]
-		134 |   }
-		135 | }
-
-
-Check: CKV_AWS_79: "Ensure Instance Metadata Service Version 1 is not enabled"
-	FAILED for resource: aws_instance.public_ins
-	File: /main.tf:138-144
-	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_31
-
-		138 | resource "aws_instance" "public_ins" {
-		139 |   ami = "ami-0130bec6e5047f596"
-		140 |   instance_type = "t3.nano"
-		141 |   associate_public_ip_address = true
-		142 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
-		143 |   subnet_id = aws_subnet.nondefault_1.id
-		144 | }
-
-Check: CKV_AWS_88: "EC2 instance should not have public IP."
-	FAILED for resource: aws_instance.public_ins
-	File: /main.tf:138-144
-	Guide: https://docs.bridgecrew.io/docs/public_12
-
-		138 | resource "aws_instance" "public_ins" {
-		139 |   ami = "ami-0130bec6e5047f596"
-		140 |   instance_type = "t3.nano"
-		141 |   associate_public_ip_address = true
-		142 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
-		143 |   subnet_id = aws_subnet.nondefault_1.id
-		144 | }
-
-Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration EBS is securely encrypted"
-	FAILED for resource: aws_instance.public_ins
-	File: /main.tf:138-144
-	Guide: https://docs.bridgecrew.io/docs/general_13
-
-		138 | resource "aws_instance" "public_ins" {
-		139 |   ami = "ami-0130bec6e5047f596"
-		140 |   instance_type = "t3.nano"
-		141 |   associate_public_ip_address = true
-		142 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
-		143 |   subnet_id = aws_subnet.nondefault_1.id
-		144 | }
-
-Check: CKV_AWS_126: "Ensure that detailed monitoring is enabled for EC2 instances"
-	FAILED for resource: aws_instance.public_ins
-	File: /main.tf:138-144
-
-		138 | resource "aws_instance" "public_ins" {
-		139 |   ami = "ami-0130bec6e5047f596"
-		140 |   instance_type = "t3.nano"
-		141 |   associate_public_ip_address = true
-		142 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
-		143 |   subnet_id = aws_subnet.nondefault_1.id
-		144 | }
-
-Check: CKV_AWS_135: "Ensure that EC2 is EBS optimized"
-	FAILED for resource: aws_instance.public_ins
-	File: /main.tf:138-144
-
-		138 | resource "aws_instance" "public_ins" {
-		139 |   ami = "ami-0130bec6e5047f596"
-		140 |   instance_type = "t3.nano"
-		141 |   associate_public_ip_address = true
-		142 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
-		143 |   subnet_id = aws_subnet.nondefault_1.id
-		144 | }
-
+
+

@@ -5,25 +5,26 @@
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.46 
-
-terraform scan results:
-
+By bridgecrew.io | version: 2.0.132 
+
+terrafor scan results:
+
 Passed checks: 2, Failed checks: 1, Skipped checks: 0
+
+Check: CKV_AWS_85: "Ensure DocDB Logging is enabled"
+	FAILED for resource: aws_docdb_cluster.test2
+	File: /ain.tf:9-17
+	Guide: https://docs.bridgecrew.io/docs/logging_19
+
+		9  | resource "aws_docdb_cluster" "test2" {
+		10 |   cluster_identifier  = "y-docdb-cluster-test2"
+		11 |   engine              = "docdb"
+		12 |   aster_usernae     = "foo"
+		13 |   aster_password     = "ustbeeightchars"
+		14 |   skip_final_snapshot = true
+		15 |   storage_encrypted   = true
+		16 |   ks_key_id          = data.aws_ks_key.test.arn
+		17 | }
 
-Check: CKV_AWS_85: "Ensure DocDB Logging is enabled"
-	FAILED for resource: aws_docdb_cluster.test2
-	File: /main.tf:9-17
-	Guide: https://docs.bridgecrew.io/docs/logging_19
-
-		9  | resource "aws_docdb_cluster" "test2" {
-		10 |   cluster_identifier  = "my-docdb-cluster-test2"
-		11 |   engine              = "docdb"
-		12 |   master_username     = "foo"
-		13 |   master_password     = "mustbeeightchars"
-		14 |   skip_final_snapshot = true
-		15 |   storage_encrypted   = true
-		16 |   kms_key_id          = data.aws_kms_key.test.arn
-		17 | }
-
-
+
+

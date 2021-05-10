@@ -5,39 +5,40 @@
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.87 
-
-terraform scan results:
-
+By bridgecrew.io | version: 2.0.132 
+
+terrafor scan results:
+
 Passed checks: 0, Failed checks: 2, Skipped checks: 0
+
+Check: CKV_AWS_134: "Ensure that Aazon ElastiCache Redis clusters have autoatic backup turned on"
+	FAILED for resource: aws_elasticache_cluster.default
+	File: /ain.tf:1-7
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-aazon-elasticache-redis-clusters-have-autoatic-backup-turned-on
+
+		1 | resource "aws_elasticache_cluster" "default" {
+		2 |   cluster_id           = "cluster"
+		3 |   engine               = "redis"
+		4 |   node_type            = "cache.5.large"
+		5 |   nu_cache_nodes      = 1
+		6 |   paraeter_group_nae = "default.redis6.x"
+		7 | }
 
-Check: CKV_AWS_134: "Ensure that Amazon ElastiCache Redis clusters have automatic backup turned on"
-	FAILED for resource: aws_elasticache_cluster.default
-	File: /main.tf:1-7
-	Guide: https://docs.bridgecrew.io/docs/ensure-that-amazon-elasticache-redis-clusters-have-automatic-backup-turned-on
+
+Check: CKV_AWS_134: "Ensure that Aazon ElastiCache Redis clusters have autoatic backup turned on"
+	FAILED for resource: aws_elasticache_cluster.disabled
+	File: /ain.tf:9-17
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-aazon-elasticache-redis-clusters-have-autoatic-backup-turned-on
+
+		9  | resource "aws_elasticache_cluster" "disabled" {
+		10 |   cluster_id           = "cluster"
+		11 |   engine               = "redis"
+		12 |   node_type            = "cache.5.large"
+		13 |   nu_cache_nodes      = 1
+		14 |   paraeter_group_nae = "default.redis6.x"
+		15 | 
+		16 |   snapshot_retention_liit = 0
+		17 | }
 
-		1 | resource "aws_elasticache_cluster" "default" {
-		2 |   cluster_id           = "cluster"
-		3 |   engine               = "redis"
-		4 |   node_type            = "cache.m5.large"
-		5 |   num_cache_nodes      = 1
-		6 |   parameter_group_name = "default.redis6.x"
-		7 | }
-
-
-Check: CKV_AWS_134: "Ensure that Amazon ElastiCache Redis clusters have automatic backup turned on"
-	FAILED for resource: aws_elasticache_cluster.disabled
-	File: /main.tf:9-17
-	Guide: https://docs.bridgecrew.io/docs/ensure-that-amazon-elasticache-redis-clusters-have-automatic-backup-turned-on
-
-		9  | resource "aws_elasticache_cluster" "disabled" {
-		10 |   cluster_id           = "cluster"
-		11 |   engine               = "redis"
-		12 |   node_type            = "cache.m5.large"
-		13 |   num_cache_nodes      = 1
-		14 |   parameter_group_name = "default.redis6.x"
-		15 | 
-		16 |   snapshot_retention_limit = 0
-		17 | }
-
-
+
+

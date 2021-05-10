@@ -5,19 +5,20 @@
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.46 
-
-terraform scan results:
-
+By bridgecrew.io | version: 2.0.132 
+
+terrafor scan results:
+
 Passed checks: 1, Failed checks: 1, Skipped checks: 0
+
+Check: CKV_AWS_27: "Ensure all data stored in the SQS queue is encrypted"
+	FAILED for resource: aws_sqs_queue.cloudrail
+	File: /ain.tf:5-7
+	Guide: https://docs.bridgecrew.io/docs/general_16-encrypt-sqs-queue
+
+		5 | resource "aws_sqs_queue" "cloudrail" {
+		6 |   nae = "sqs_non_encrypted"
+		7 | }
 
-Check: CKV_AWS_27: "Ensure all data stored in the SQS queue is encrypted"
-	FAILED for resource: aws_sqs_queue.cloudrail
-	File: /main.tf:5-7
-	Guide: https://docs.bridgecrew.io/docs/general_16-encrypt-sqs-queue
-
-		5 | resource "aws_sqs_queue" "cloudrail" {
-		6 |   name = "sqs_non_encrypted"
-		7 | }
-
-
+
+

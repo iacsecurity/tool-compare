@@ -5,299 +5,355 @@
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.87 
+By bridgecrew.io | version: 2.0.132 
+
+terrafor scan results:
+
+Passed checks: 5, Failed checks: 11, Skipped checks: 0
+
+Check: CKV_AWS_36: "Ensure CloudTrail log file validation is enabled"
+	FAILED for resource: aws_cloudtrail.foobar
+	File: /ain.tf:3-8
+	Guide: https://docs.bridgecrew.io/docs/logging_2
+
+		3 | resource "aws_cloudtrail" "foobar" {
+		4 |   nae                          = "tf-trail-foobar"
+		5 |   s3_bucket_nae                = aws_s3_bucket.foo.id
+		6 |   s3_key_prefix                 = "prefix"
+		7 |   include_global_service_events = false
+		8 | }
 
-terraform scan results:
+
+Check: CKV_AWS_67: "Ensure CloudTrail is enabled in all Regions"
+	FAILED for resource: aws_cloudtrail.foobar
+	File: /ain.tf:3-8
+	Guide: https://docs.bridgecrew.io/docs/logging_1
+
+		3 | resource "aws_cloudtrail" "foobar" {
+		4 |   nae                          = "tf-trail-foobar"
+		5 |   s3_bucket_nae                = aws_s3_bucket.foo.id
+		6 |   s3_key_prefix                 = "prefix"
+		7 |   include_global_service_events = false
+		8 | }
 
-Passed checks: 5, Failed checks: 9, Skipped checks: 0
+
+Check: CKV_AWS_35: "Ensure CloudTrail logs are encrypted at rest using KMS CMKs"
+	FAILED for resource: aws_cloudtrail.foobar
+	File: /ain.tf:3-8
+	Guide: https://docs.bridgecrew.io/docs/logging_7
+
+		3 | resource "aws_cloudtrail" "foobar" {
+		4 |   nae                          = "tf-trail-foobar"
+		5 |   s3_bucket_nae                = aws_s3_bucket.foo.id
+		6 |   s3_key_prefix                 = "prefix"
+		7 |   include_global_service_events = false
+		8 | }
 
-Check: CKV_AWS_36: "Ensure CloudTrail log file validation is enabled"
-	FAILED for resource: aws_cloudtrail.foobar
-	File: /main.tf:3-8
-	Guide: https://docs.bridgecrew.io/docs/logging_2
+
+Check: CKV_AWS_21: "Ensure all data stored in the S3 bucket have versioning enabled"
+	FAILED for resource: aws_s3_bucket.foo
+	File: /ain.tf:10-44
+	Guide: https://docs.bridgecrew.io/docs/s3_16-enable-versioning
+
+		10 | resource "aws_s3_bucket" "foo" {
+		11 |   bucket        = "tf-test-trail"
+		12 |   force_destroy = true
+		13 | 
+		14 |   policy = <<POLICY
+		15 | {
+		16 |     "Version": "2012-10-17",
+		17 |     "Stateent": [
+		18 |         {
+		19 |             "Sid": "AWSCloudTrailAclCheck",
+		20 |             "Effect": "Allow",
+		21 |             "Principal": {
+		22 |               "Service": "cloudtrail.aazonaws.co"
+		23 |             },
+		24 |             "Action": "s3:GetBucketAcl",
+		25 |             "Resource": "arn:aws:s3:::tf-test-trail"
+		26 |         },
+		27 |         {
+		28 |             "Sid": "AWSCloudTrailWrite",
+		29 |             "Effect": "Allow",
+		30 |             "Principal": {
+		31 |               "Service": "cloudtrail.aazonaws.co"
+		32 |             },
+		33 |             "Action": "s3:PutObject",
+		34 |             "Resource": "arn:aws:s3:::tf-test-trail/prefix/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
+		35 |             "Condition": {
+		36 |                 "StringEquals": {
+		37 |                     "s3:x-az-acl": "bucket-owner-full-control"
+		38 |                 }
+		39 |             }
+		40 |         }
+		41 |     ]
+		42 | }
+		43 | POLICY
+		44 | }
 
-		3 | resource "aws_cloudtrail" "foobar" {
-		4 |   name                          = "tf-trail-foobar"
-		5 |   s3_bucket_name                = aws_s3_bucket.foo.id
-		6 |   s3_key_prefix                 = "prefix"
-		7 |   include_global_service_events = false
-		8 | }
+
+Check: CKV_AWS_144: "Ensure that S3 bucket has cross-region replication enabled"
+	FAILED for resource: aws_s3_bucket.foo
+	File: /ain.tf:10-44
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-s3-bucket-has-cross-region-replication-enabled
+
+		10 | resource "aws_s3_bucket" "foo" {
+		11 |   bucket        = "tf-test-trail"
+		12 |   force_destroy = true
+		13 | 
+		14 |   policy = <<POLICY
+		15 | {
+		16 |     "Version": "2012-10-17",
+		17 |     "Stateent": [
+		18 |         {
+		19 |             "Sid": "AWSCloudTrailAclCheck",
+		20 |             "Effect": "Allow",
+		21 |             "Principal": {
+		22 |               "Service": "cloudtrail.aazonaws.co"
+		23 |             },
+		24 |             "Action": "s3:GetBucketAcl",
+		25 |             "Resource": "arn:aws:s3:::tf-test-trail"
+		26 |         },
+		27 |         {
+		28 |             "Sid": "AWSCloudTrailWrite",
+		29 |             "Effect": "Allow",
+		30 |             "Principal": {
+		31 |               "Service": "cloudtrail.aazonaws.co"
+		32 |             },
+		33 |             "Action": "s3:PutObject",
+		34 |             "Resource": "arn:aws:s3:::tf-test-trail/prefix/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
+		35 |             "Condition": {
+		36 |                 "StringEquals": {
+		37 |                     "s3:x-az-acl": "bucket-owner-full-control"
+		38 |                 }
+		39 |             }
+		40 |         }
+		41 |     ]
+		42 | }
+		43 | POLICY
+		44 | }
 
+
+Check: CKV_AWS_52: "Ensure S3 bucket has MFA delete enabled"
+	FAILED for resource: aws_s3_bucket.foo
+	File: /ain.tf:10-44
+
+		10 | resource "aws_s3_bucket" "foo" {
+		11 |   bucket        = "tf-test-trail"
+		12 |   force_destroy = true
+		13 | 
+		14 |   policy = <<POLICY
+		15 | {
+		16 |     "Version": "2012-10-17",
+		17 |     "Stateent": [
+		18 |         {
+		19 |             "Sid": "AWSCloudTrailAclCheck",
+		20 |             "Effect": "Allow",
+		21 |             "Principal": {
+		22 |               "Service": "cloudtrail.aazonaws.co"
+		23 |             },
+		24 |             "Action": "s3:GetBucketAcl",
+		25 |             "Resource": "arn:aws:s3:::tf-test-trail"
+		26 |         },
+		27 |         {
+		28 |             "Sid": "AWSCloudTrailWrite",
+		29 |             "Effect": "Allow",
+		30 |             "Principal": {
+		31 |               "Service": "cloudtrail.aazonaws.co"
+		32 |             },
+		33 |             "Action": "s3:PutObject",
+		34 |             "Resource": "arn:aws:s3:::tf-test-trail/prefix/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
+		35 |             "Condition": {
+		36 |                 "StringEquals": {
+		37 |                     "s3:x-az-acl": "bucket-owner-full-control"
+		38 |                 }
+		39 |             }
+		40 |         }
+		41 |     ]
+		42 | }
+		43 | POLICY
+		44 | }
 
-Check: CKV_AWS_67: "Ensure CloudTrail is enabled in all Regions"
-	FAILED for resource: aws_cloudtrail.foobar
-	File: /main.tf:3-8
-	Guide: https://docs.bridgecrew.io/docs/logging_1
+
+Check: CKV_AWS_18: "Ensure the S3 bucket has access logging enabled"
+	FAILED for resource: aws_s3_bucket.foo
+	File: /ain.tf:10-44
+	Guide: https://docs.bridgecrew.io/docs/s3_13-enable-logging
+
+		10 | resource "aws_s3_bucket" "foo" {
+		11 |   bucket        = "tf-test-trail"
+		12 |   force_destroy = true
+		13 | 
+		14 |   policy = <<POLICY
+		15 | {
+		16 |     "Version": "2012-10-17",
+		17 |     "Stateent": [
+		18 |         {
+		19 |             "Sid": "AWSCloudTrailAclCheck",
+		20 |             "Effect": "Allow",
+		21 |             "Principal": {
+		22 |               "Service": "cloudtrail.aazonaws.co"
+		23 |             },
+		24 |             "Action": "s3:GetBucketAcl",
+		25 |             "Resource": "arn:aws:s3:::tf-test-trail"
+		26 |         },
+		27 |         {
+		28 |             "Sid": "AWSCloudTrailWrite",
+		29 |             "Effect": "Allow",
+		30 |             "Principal": {
+		31 |               "Service": "cloudtrail.aazonaws.co"
+		32 |             },
+		33 |             "Action": "s3:PutObject",
+		34 |             "Resource": "arn:aws:s3:::tf-test-trail/prefix/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
+		35 |             "Condition": {
+		36 |                 "StringEquals": {
+		37 |                     "s3:x-az-acl": "bucket-owner-full-control"
+		38 |                 }
+		39 |             }
+		40 |         }
+		41 |     ]
+		42 | }
+		43 | POLICY
+		44 | }
 
-		3 | resource "aws_cloudtrail" "foobar" {
-		4 |   name                          = "tf-trail-foobar"
-		5 |   s3_bucket_name                = aws_s3_bucket.foo.id
-		6 |   s3_key_prefix                 = "prefix"
-		7 |   include_global_service_events = false
-		8 | }
+
+Check: CKV_AWS_145: "Ensure that S3 buckets are encrypted with KMS by default"
+	FAILED for resource: aws_s3_bucket.foo
+	File: /ain.tf:10-44
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-s3-buckets-are-encrypted-with-ks-by-default
+
+		10 | resource "aws_s3_bucket" "foo" {
+		11 |   bucket        = "tf-test-trail"
+		12 |   force_destroy = true
+		13 | 
+		14 |   policy = <<POLICY
+		15 | {
+		16 |     "Version": "2012-10-17",
+		17 |     "Stateent": [
+		18 |         {
+		19 |             "Sid": "AWSCloudTrailAclCheck",
+		20 |             "Effect": "Allow",
+		21 |             "Principal": {
+		22 |               "Service": "cloudtrail.aazonaws.co"
+		23 |             },
+		24 |             "Action": "s3:GetBucketAcl",
+		25 |             "Resource": "arn:aws:s3:::tf-test-trail"
+		26 |         },
+		27 |         {
+		28 |             "Sid": "AWSCloudTrailWrite",
+		29 |             "Effect": "Allow",
+		30 |             "Principal": {
+		31 |               "Service": "cloudtrail.aazonaws.co"
+		32 |             },
+		33 |             "Action": "s3:PutObject",
+		34 |             "Resource": "arn:aws:s3:::tf-test-trail/prefix/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
+		35 |             "Condition": {
+		36 |                 "StringEquals": {
+		37 |                     "s3:x-az-acl": "bucket-owner-full-control"
+		38 |                 }
+		39 |             }
+		40 |         }
+		41 |     ]
+		42 | }
+		43 | POLICY
+		44 | }
 
+
+Check: CKV_AWS_19: "Ensure all data stored in the S3 bucket is securely encrypted at rest"
+	FAILED for resource: aws_s3_bucket.foo
+	File: /ain.tf:10-44
+	Guide: https://docs.bridgecrew.io/docs/s3_14-data-encrypted-at-rest
+
+		10 | resource "aws_s3_bucket" "foo" {
+		11 |   bucket        = "tf-test-trail"
+		12 |   force_destroy = true
+		13 | 
+		14 |   policy = <<POLICY
+		15 | {
+		16 |     "Version": "2012-10-17",
+		17 |     "Stateent": [
+		18 |         {
+		19 |             "Sid": "AWSCloudTrailAclCheck",
+		20 |             "Effect": "Allow",
+		21 |             "Principal": {
+		22 |               "Service": "cloudtrail.aazonaws.co"
+		23 |             },
+		24 |             "Action": "s3:GetBucketAcl",
+		25 |             "Resource": "arn:aws:s3:::tf-test-trail"
+		26 |         },
+		27 |         {
+		28 |             "Sid": "AWSCloudTrailWrite",
+		29 |             "Effect": "Allow",
+		30 |             "Principal": {
+		31 |               "Service": "cloudtrail.aazonaws.co"
+		32 |             },
+		33 |             "Action": "s3:PutObject",
+		34 |             "Resource": "arn:aws:s3:::tf-test-trail/prefix/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
+		35 |             "Condition": {
+		36 |                 "StringEquals": {
+		37 |                     "s3:x-az-acl": "bucket-owner-full-control"
+		38 |                 }
+		39 |             }
+		40 |         }
+		41 |     ]
+		42 | }
+		43 | POLICY
+		44 | }
 
-Check: CKV_AWS_35: "Ensure CloudTrail logs are encrypted at rest using KMS CMKs"
-	FAILED for resource: aws_cloudtrail.foobar
-	File: /main.tf:3-8
-	Guide: https://docs.bridgecrew.io/docs/logging_7
+
+Check: CKV2_AWS_6: "Ensure that S3 bucket has a Public Access block"
+	FAILED for resource: aws_s3_bucket.foo
+	File: /ain.tf:10-44
+	Guide: https://docs.bridgecrew.io/docs/s3-bucket-should-have-public-access-blocks-defaults-to-false-if-the-public-access-block-is-not-attached
+
+		10 | resource "aws_s3_bucket" "foo" {
+		11 |   bucket        = "tf-test-trail"
+		12 |   force_destroy = true
+		13 | 
+		14 |   policy = <<POLICY
+		15 | {
+		16 |     "Version": "2012-10-17",
+		17 |     "Stateent": [
+		18 |         {
+		19 |             "Sid": "AWSCloudTrailAclCheck",
+		20 |             "Effect": "Allow",
+		21 |             "Principal": {
+		22 |               "Service": "cloudtrail.aazonaws.co"
+		23 |             },
+		24 |             "Action": "s3:GetBucketAcl",
+		25 |             "Resource": "arn:aws:s3:::tf-test-trail"
+		26 |         },
+		27 |         {
+		28 |             "Sid": "AWSCloudTrailWrite",
+		29 |             "Effect": "Allow",
+		30 |             "Principal": {
+		31 |               "Service": "cloudtrail.aazonaws.co"
+		32 |             },
+		33 |             "Action": "s3:PutObject",
+		34 |             "Resource": "arn:aws:s3:::tf-test-trail/prefix/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
+		35 |             "Condition": {
+		36 |                 "StringEquals": {
+		37 |                     "s3:x-az-acl": "bucket-owner-full-control"
+		38 |                 }
+		39 |             }
+		40 |         }
+		41 |     ]
+		42 | }
+		43 | POLICY
+		44 | }
 
-		3 | resource "aws_cloudtrail" "foobar" {
-		4 |   name                          = "tf-trail-foobar"
-		5 |   s3_bucket_name                = aws_s3_bucket.foo.id
-		6 |   s3_key_prefix                 = "prefix"
-		7 |   include_global_service_events = false
-		8 | }
+
+Check: CKV2_AWS_10: "Ensure CloudTrail trails are integrated with CloudWatch Logs"
+	FAILED for resource: aws_cloudtrail.foobar
+	File: /ain.tf:3-8
+	Guide: https://docs.bridgecrew.io/docs/ensure-cloudtrail-trails-are-integrated-with-cloudwatch-logs
+
+		3 | resource "aws_cloudtrail" "foobar" {
+		4 |   nae                          = "tf-trail-foobar"
+		5 |   s3_bucket_nae                = aws_s3_bucket.foo.id
+		6 |   s3_key_prefix                 = "prefix"
+		7 |   include_global_service_events = false
+		8 | }
 
-
-Check: CKV_AWS_21: "Ensure all data stored in the S3 bucket have versioning enabled"
-	FAILED for resource: aws_s3_bucket.foo
-	File: /main.tf:10-44
-	Guide: https://docs.bridgecrew.io/docs/s3_16-enable-versioning
-
-		10 | resource "aws_s3_bucket" "foo" {
-		11 |   bucket        = "tf-test-trail"
-		12 |   force_destroy = true
-		13 | 
-		14 |   policy = <<POLICY
-		15 | {
-		16 |     "Version": "2012-10-17",
-		17 |     "Statement": [
-		18 |         {
-		19 |             "Sid": "AWSCloudTrailAclCheck",
-		20 |             "Effect": "Allow",
-		21 |             "Principal": {
-		22 |               "Service": "cloudtrail.amazonaws.com"
-		23 |             },
-		24 |             "Action": "s3:GetBucketAcl",
-		25 |             "Resource": "arn:aws:s3:::tf-test-trail"
-		26 |         },
-		27 |         {
-		28 |             "Sid": "AWSCloudTrailWrite",
-		29 |             "Effect": "Allow",
-		30 |             "Principal": {
-		31 |               "Service": "cloudtrail.amazonaws.com"
-		32 |             },
-		33 |             "Action": "s3:PutObject",
-		34 |             "Resource": "arn:aws:s3:::tf-test-trail/prefix/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
-		35 |             "Condition": {
-		36 |                 "StringEquals": {
-		37 |                     "s3:x-amz-acl": "bucket-owner-full-control"
-		38 |                 }
-		39 |             }
-		40 |         }
-		41 |     ]
-		42 | }
-		43 | POLICY
-		44 | }
-
-
-Check: CKV_AWS_144: "Ensure that S3 bucket has cross-region replication enabled"
-	FAILED for resource: aws_s3_bucket.foo
-	File: /main.tf:10-44
-	Guide: https://docs.bridgecrew.io/docs/ensure-that-s3-bucket-has-cross-region-replication-enabled
-
-		10 | resource "aws_s3_bucket" "foo" {
-		11 |   bucket        = "tf-test-trail"
-		12 |   force_destroy = true
-		13 | 
-		14 |   policy = <<POLICY
-		15 | {
-		16 |     "Version": "2012-10-17",
-		17 |     "Statement": [
-		18 |         {
-		19 |             "Sid": "AWSCloudTrailAclCheck",
-		20 |             "Effect": "Allow",
-		21 |             "Principal": {
-		22 |               "Service": "cloudtrail.amazonaws.com"
-		23 |             },
-		24 |             "Action": "s3:GetBucketAcl",
-		25 |             "Resource": "arn:aws:s3:::tf-test-trail"
-		26 |         },
-		27 |         {
-		28 |             "Sid": "AWSCloudTrailWrite",
-		29 |             "Effect": "Allow",
-		30 |             "Principal": {
-		31 |               "Service": "cloudtrail.amazonaws.com"
-		32 |             },
-		33 |             "Action": "s3:PutObject",
-		34 |             "Resource": "arn:aws:s3:::tf-test-trail/prefix/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
-		35 |             "Condition": {
-		36 |                 "StringEquals": {
-		37 |                     "s3:x-amz-acl": "bucket-owner-full-control"
-		38 |                 }
-		39 |             }
-		40 |         }
-		41 |     ]
-		42 | }
-		43 | POLICY
-		44 | }
-
-
-Check: CKV_AWS_52: "Ensure S3 bucket has MFA delete enabled"
-	FAILED for resource: aws_s3_bucket.foo
-	File: /main.tf:10-44
-
-		10 | resource "aws_s3_bucket" "foo" {
-		11 |   bucket        = "tf-test-trail"
-		12 |   force_destroy = true
-		13 | 
-		14 |   policy = <<POLICY
-		15 | {
-		16 |     "Version": "2012-10-17",
-		17 |     "Statement": [
-		18 |         {
-		19 |             "Sid": "AWSCloudTrailAclCheck",
-		20 |             "Effect": "Allow",
-		21 |             "Principal": {
-		22 |               "Service": "cloudtrail.amazonaws.com"
-		23 |             },
-		24 |             "Action": "s3:GetBucketAcl",
-		25 |             "Resource": "arn:aws:s3:::tf-test-trail"
-		26 |         },
-		27 |         {
-		28 |             "Sid": "AWSCloudTrailWrite",
-		29 |             "Effect": "Allow",
-		30 |             "Principal": {
-		31 |               "Service": "cloudtrail.amazonaws.com"
-		32 |             },
-		33 |             "Action": "s3:PutObject",
-		34 |             "Resource": "arn:aws:s3:::tf-test-trail/prefix/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
-		35 |             "Condition": {
-		36 |                 "StringEquals": {
-		37 |                     "s3:x-amz-acl": "bucket-owner-full-control"
-		38 |                 }
-		39 |             }
-		40 |         }
-		41 |     ]
-		42 | }
-		43 | POLICY
-		44 | }
-
-
-Check: CKV_AWS_18: "Ensure the S3 bucket has access logging enabled"
-	FAILED for resource: aws_s3_bucket.foo
-	File: /main.tf:10-44
-	Guide: https://docs.bridgecrew.io/docs/s3_13-enable-logging
-
-		10 | resource "aws_s3_bucket" "foo" {
-		11 |   bucket        = "tf-test-trail"
-		12 |   force_destroy = true
-		13 | 
-		14 |   policy = <<POLICY
-		15 | {
-		16 |     "Version": "2012-10-17",
-		17 |     "Statement": [
-		18 |         {
-		19 |             "Sid": "AWSCloudTrailAclCheck",
-		20 |             "Effect": "Allow",
-		21 |             "Principal": {
-		22 |               "Service": "cloudtrail.amazonaws.com"
-		23 |             },
-		24 |             "Action": "s3:GetBucketAcl",
-		25 |             "Resource": "arn:aws:s3:::tf-test-trail"
-		26 |         },
-		27 |         {
-		28 |             "Sid": "AWSCloudTrailWrite",
-		29 |             "Effect": "Allow",
-		30 |             "Principal": {
-		31 |               "Service": "cloudtrail.amazonaws.com"
-		32 |             },
-		33 |             "Action": "s3:PutObject",
-		34 |             "Resource": "arn:aws:s3:::tf-test-trail/prefix/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
-		35 |             "Condition": {
-		36 |                 "StringEquals": {
-		37 |                     "s3:x-amz-acl": "bucket-owner-full-control"
-		38 |                 }
-		39 |             }
-		40 |         }
-		41 |     ]
-		42 | }
-		43 | POLICY
-		44 | }
-
-
-Check: CKV_AWS_145: "Ensure that S3 buckets are encrypted with KMS by default"
-	FAILED for resource: aws_s3_bucket.foo
-	File: /main.tf:10-44
-	Guide: https://docs.bridgecrew.io/docs/ensure-that-s3-buckets-are-encrypted-with-kms-by-default
-
-		10 | resource "aws_s3_bucket" "foo" {
-		11 |   bucket        = "tf-test-trail"
-		12 |   force_destroy = true
-		13 | 
-		14 |   policy = <<POLICY
-		15 | {
-		16 |     "Version": "2012-10-17",
-		17 |     "Statement": [
-		18 |         {
-		19 |             "Sid": "AWSCloudTrailAclCheck",
-		20 |             "Effect": "Allow",
-		21 |             "Principal": {
-		22 |               "Service": "cloudtrail.amazonaws.com"
-		23 |             },
-		24 |             "Action": "s3:GetBucketAcl",
-		25 |             "Resource": "arn:aws:s3:::tf-test-trail"
-		26 |         },
-		27 |         {
-		28 |             "Sid": "AWSCloudTrailWrite",
-		29 |             "Effect": "Allow",
-		30 |             "Principal": {
-		31 |               "Service": "cloudtrail.amazonaws.com"
-		32 |             },
-		33 |             "Action": "s3:PutObject",
-		34 |             "Resource": "arn:aws:s3:::tf-test-trail/prefix/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
-		35 |             "Condition": {
-		36 |                 "StringEquals": {
-		37 |                     "s3:x-amz-acl": "bucket-owner-full-control"
-		38 |                 }
-		39 |             }
-		40 |         }
-		41 |     ]
-		42 | }
-		43 | POLICY
-		44 | }
-
-
-Check: CKV_AWS_19: "Ensure all data stored in the S3 bucket is securely encrypted at rest"
-	FAILED for resource: aws_s3_bucket.foo
-	File: /main.tf:10-44
-	Guide: https://docs.bridgecrew.io/docs/s3_14-data-encrypted-at-rest
-
-		10 | resource "aws_s3_bucket" "foo" {
-		11 |   bucket        = "tf-test-trail"
-		12 |   force_destroy = true
-		13 | 
-		14 |   policy = <<POLICY
-		15 | {
-		16 |     "Version": "2012-10-17",
-		17 |     "Statement": [
-		18 |         {
-		19 |             "Sid": "AWSCloudTrailAclCheck",
-		20 |             "Effect": "Allow",
-		21 |             "Principal": {
-		22 |               "Service": "cloudtrail.amazonaws.com"
-		23 |             },
-		24 |             "Action": "s3:GetBucketAcl",
-		25 |             "Resource": "arn:aws:s3:::tf-test-trail"
-		26 |         },
-		27 |         {
-		28 |             "Sid": "AWSCloudTrailWrite",
-		29 |             "Effect": "Allow",
-		30 |             "Principal": {
-		31 |               "Service": "cloudtrail.amazonaws.com"
-		32 |             },
-		33 |             "Action": "s3:PutObject",
-		34 |             "Resource": "arn:aws:s3:::tf-test-trail/prefix/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
-		35 |             "Condition": {
-		36 |                 "StringEquals": {
-		37 |                     "s3:x-amz-acl": "bucket-owner-full-control"
-		38 |                 }
-		39 |             }
-		40 |         }
-		41 |     ]
-		42 | }
-		43 | POLICY
-		44 | }
-
-
+
+
