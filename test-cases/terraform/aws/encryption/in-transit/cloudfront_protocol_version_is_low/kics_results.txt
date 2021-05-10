@@ -16,52 +16,19 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.2.3
+Scanning with Keeping Infrastructure as Code Secure v1.3.0
 
 
 
-Files scanned: 2
-Parsed files: 2
-Queries loaded: 1343
+Files scanned: 1
+Parsed files: 1
+Queries loaded: 520
 Queries failed to execute: 0
 
 ------------------------------------
 
-CloudFront Without Minimum Protocol TLS 1.2, Severity: HIGH, Results: 1
-Description: CloudFront Minimum Protocol version should be at least TLS 1.2
-Platform: Terraform
-
-	[1]: /src/main.tf:129
-
-		128:   viewer_certificate {
-		129:     cloudfront_default_certificate = true
-		130:   }
-
-
-Passwords And Secrets In Infrastructure Code, Severity: HIGH, Results: 1
-Description: Query to find passwords and secrets in infrastructure code.
-Platform: Common
-
-	[1]: /src/main.tf:115
-
-		114: 
-		115:   price_class = "PriceClass_200"
-		116: 
-
-
-S3 Bucket ACL Allows Read Or Write to All Users, Severity: HIGH, Results: 1
-Description: S3 bucket with public READ/WRITE access
-Platform: Terraform
-
-	[1]: /src/main.tf:16
-
-		015:   bucket = "dist-cloud-test"
-		016:   acl    = "public-read-write"
-		017: 
-
-
-S3 Bucket Without Server-side-encryption, Severity: HIGH, Results: 2
-Description: S3 bucket should have encryption defined
+S3 Bucket Logging Disabled, Severity: LOW, Results: 1
+Description: S3 bucket without logging
 Platform: Terraform
 
 	[1]: /src/main.tf:5
@@ -71,33 +38,15 @@ Platform: Terraform
 		006:   bucket = "dist-cloud-test-logs"
 
 
-	[2]: /src/main.tf:14
-
-		013: 
-		014: resource "aws_s3_bucket" "dist" {
-		015:   bucket = "dist-cloud-test"
-
-
-Viewer Protocol Policy Allows HTTP, Severity: HIGH, Results: 1
-Description: Checks if the connection between the CloudFront and the origin server is encrypted
+Cloudfront Without WAF, Severity: LOW, Results: 1
+Description: All AWS CloudFront distributions should be integrated with the Web Application Firewall (AWS WAF) service
 Platform: Terraform
 
-	[1]: /src/main.tf:64
+	[1]: /src/main.tf:32
 
-		063: 
-		064:     viewer_protocol_policy = "allow-all"
-		065:     min_ttl                = 0
-
-
-Vulnerable Default SSL Certificate, Severity: HIGH, Results: 1
-Description: CloudFront web distributions should use custom (and not default) SSL certificates. Custom SSL certificates allow only defined users to access content by using an alternate domain name instead of the default one.
-Platform: Terraform
-
-	[1]: /src/main.tf:128
-
-		127: 
-		128:   viewer_certificate {
-		129:     cloudfront_default_certificate = true
+		031: 
+		032: resource "aws_cloudfront_distribution" "s3_distribution" {
+		033:   origin {
 
 
 S3 Bucket Without Versioning, Severity: MEDIUM, Results: 2
@@ -118,26 +67,77 @@ Platform: Terraform
 		015:   bucket = "dist-cloud-test"
 
 
-Cloudfront Without WAF, Severity: LOW, Results: 1
-Description: All AWS CloudFront distributions should be integrated with the Web Application Firewall (AWS WAF) service
+Vulnerable Default SSL Certificate, Severity: HIGH, Results: 1
+Description: CloudFront web distributions should use custom (and not default) SSL certificates. Custom SSL certificates allow only defined users to access content by using an alternate domain name instead of the default one.
 Platform: Terraform
 
-	[1]: /src/main.tf:32
+	[1]: /src/main.tf:128
 
-		031: 
-		032: resource "aws_cloudfront_distribution" "s3_distribution" {
-		033:   origin {
+		127: 
+		128:   viewer_certificate {
+		129:     cloudfront_default_certificate = true
 
 
-S3 Bucket Logging Disabled, Severity: LOW, Results: 1
-Description: S3 bucket without logging
+Viewer Protocol Policy Allows HTTP, Severity: HIGH, Results: 1
+Description: Checks if the connection between the CloudFront and the origin server is encrypted
 Platform: Terraform
 
-	[1]: /src/main.tf:21
+	[1]: /src/main.tf:64
 
-		020:   }
-		021:   logging {
-		022:    	target_bucket = aws_s3_bucket.logging.id
+		063: 
+		064:     viewer_protocol_policy = "allow-all"
+		065:     min_ttl                = 0
+
+
+S3 Bucket Without Server-side-encryption, Severity: HIGH, Results: 2
+Description: S3 bucket should have encryption defined
+Platform: Terraform
+
+	[1]: /src/main.tf:5
+
+		004: 
+		005: resource "aws_s3_bucket" "logging" {
+		006:   bucket = "dist-cloud-test-logs"
+
+
+	[2]: /src/main.tf:14
+
+		013: 
+		014: resource "aws_s3_bucket" "dist" {
+		015:   bucket = "dist-cloud-test"
+
+
+S3 Bucket ACL Allows Read Or Write to All Users, Severity: HIGH, Results: 1
+Description: S3 bucket with public READ/WRITE access
+Platform: Terraform
+
+	[1]: /src/main.tf:16
+
+		015:   bucket = "dist-cloud-test"
+		016:   acl    = "public-read-write"
+		017: 
+
+
+Passwords And Secrets In Infrastructure Code, Severity: HIGH, Results: 1
+Description: Query to find passwords and secrets in infrastructure code.
+Platform: Common
+
+	[1]: /src/main.tf:115
+
+		114: 
+		115:   price_class = "PriceClass_200"
+		116: 
+
+
+CloudFront Without Minimum Protocol TLS 1.2, Severity: HIGH, Results: 1
+Description: CloudFront Minimum Protocol version should be at least TLS 1.2
+Platform: Terraform
+
+	[1]: /src/main.tf:129
+
+		128:   viewer_certificate {
+		129:     cloudfront_default_certificate = true
+		130:   }
 
 
 
@@ -148,4 +148,4 @@ LOW: 2
 INFO: 0
 TOTAL: 11
 
-Scan duration: 31.928225473s
+Scan duration: 11.320981588s

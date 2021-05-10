@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.2.3
+Scanning with Keeping Infrastructure as Code Secure v1.3.0
 
 
 
-Files scanned: 2
-Parsed files: 2
-Queries loaded: 1343
+Files scanned: 1
+Parsed files: 1
+Queries loaded: 520
 Queries failed to execute: 0
 
 ------------------------------------
@@ -31,18 +31,18 @@ VPC FlowLogs Disabled, Severity: MEDIUM, Results: 2
 Description: VPC hasn't got any FlowLog associated
 Platform: Terraform
 
-	[1]: /src/main.tf:20
-
-		019: 
-		020: resource "aws_vpc" "vpc1" {
-		021:   cidr_block = "10.5.0.0/16"
-
-
-	[2]: /src/main.tf:35
+	[1]: /src/main.tf:35
 
 		034: 
 		035: resource "aws_vpc" "vpc2" {
 		036:   cidr_block = "10.7.0.0/16"
+
+
+	[2]: /src/main.tf:20
+
+		019: 
+		020: resource "aws_vpc" "vpc1" {
+		021:   cidr_block = "10.5.0.0/16"
 
 
 
@@ -53,4 +53,4 @@ LOW: 0
 INFO: 0
 TOTAL: 2
 
-Scan duration: 28.498472055s
+Scan duration: 11.064928172s

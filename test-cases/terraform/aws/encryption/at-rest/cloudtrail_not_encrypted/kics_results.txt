@@ -16,30 +16,19 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.2.3
+Scanning with Keeping Infrastructure as Code Secure v1.3.0
 
 
 
-Files scanned: 3
-Parsed files: 3
-Queries loaded: 1343
+Files scanned: 1
+Parsed files: 1
+Queries loaded: 520
 Queries failed to execute: 0
 
 ------------------------------------
 
-CloudTrail Log Files Not Encrypted, Severity: HIGH, Results: 1
-Description: Logs delivered by CloudTrail should be encrypted using KMS
-Platform: Terraform
-
-	[1]: /src/main.tf:11
-
-		010: 
-		011: resource "aws_cloudtrail" "foobar" {
-		012:   name                          = local.name
-
-
-S3 Bucket Without Server-side-encryption, Severity: HIGH, Results: 1
-Description: S3 bucket should have encryption defined
+S3 Bucket Logging Disabled, Severity: LOW, Results: 1
+Description: S3 bucket without logging
 Platform: Terraform
 
 	[1]: /src/main.tf:18
@@ -49,8 +38,30 @@ Platform: Terraform
 		019:   bucket        = local.name
 
 
-CloudTrail Multi Region Disabled, Severity: MEDIUM, Results: 1
-Description: Check if MultiRegion is Enabled
+CloudTrail Log File Validation Disabled, Severity: LOW, Results: 1
+Description: CloudTrail log file validation should be enabled
+Platform: Terraform
+
+	[1]: /src/main.tf:11
+
+		010: 
+		011: resource "aws_cloudtrail" "foobar" {
+		012:   name                          = local.name
+
+
+S3 Bucket Without Versioning, Severity: MEDIUM, Results: 1
+Description: S3 bucket without versioning
+Platform: Terraform
+
+	[1]: /src/main.tf:18
+
+		017: 
+		018: resource "aws_s3_bucket" "foo" {
+		019:   bucket        = local.name
+
+
+CloudTrail SNS Topic Name Undefined, Severity: MEDIUM, Results: 1
+Description: Check if SNS topic name is set for CloudTrail
 Platform: Terraform
 
 	[1]: /src/main.tf:11
@@ -78,8 +89,8 @@ Platform: Terraform
 		012:   name                          = local.name
 
 
-CloudTrail SNS Topic Name Undefined, Severity: MEDIUM, Results: 1
-Description: Check if SNS topic name is set for CloudTrail
+CloudTrail Multi Region Disabled, Severity: MEDIUM, Results: 1
+Description: Check if MultiRegion is Enabled
 Platform: Terraform
 
 	[1]: /src/main.tf:11
@@ -89,8 +100,8 @@ Platform: Terraform
 		012:   name                          = local.name
 
 
-S3 Bucket Without Versioning, Severity: MEDIUM, Results: 1
-Description: S3 bucket without versioning
+S3 Bucket Without Server-side-encryption, Severity: HIGH, Results: 1
+Description: S3 bucket should have encryption defined
 Platform: Terraform
 
 	[1]: /src/main.tf:18
@@ -100,8 +111,8 @@ Platform: Terraform
 		019:   bucket        = local.name
 
 
-CloudTrail Log File Validation Disabled, Severity: LOW, Results: 1
-Description: CloudTrail log file validation should be enabled
+CloudTrail Log Files Not Encrypted, Severity: HIGH, Results: 1
+Description: Logs delivered by CloudTrail should be encrypted using KMS
 Platform: Terraform
 
 	[1]: /src/main.tf:11
@@ -109,17 +120,6 @@ Platform: Terraform
 		010: 
 		011: resource "aws_cloudtrail" "foobar" {
 		012:   name                          = local.name
-
-
-S3 Bucket Logging Disabled, Severity: LOW, Results: 1
-Description: S3 bucket without logging
-Platform: Terraform
-
-	[1]: /src/main.tf:18
-
-		017: 
-		018: resource "aws_s3_bucket" "foo" {
-		019:   bucket        = local.name
 
 
 
@@ -130,4 +130,4 @@ LOW: 2
 INFO: 0
 TOTAL: 9
 
-Scan duration: 31.764934056s
+Scan duration: 10.839502339s

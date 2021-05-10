@@ -16,19 +16,19 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.2.3
+Scanning with Keeping Infrastructure as Code Secure v1.3.0
 
 
 
-Files scanned: 2
-Parsed files: 2
-Queries loaded: 1343
+Files scanned: 1
+Parsed files: 1
+Queries loaded: 520
 Queries failed to execute: 0
 
 ------------------------------------
 
-Lambda Function Without Tags, Severity: MEDIUM, Results: 1
-Description: AWS Lambda Functions must have associated tags.
+Lambda Functions Without X-Ray Tracing, Severity: LOW, Results: 1
+Description: AWS Lambda functions should have TracingConfig enabled. For this, property 'tracing_Config.mode' should have the value 'Active'
 Platform: Terraform
 
 	[1]: /src/main.tf:57
@@ -38,8 +38,8 @@ Platform: Terraform
 		058:   filename      = "${path.module}/Archive.zip"
 
 
-Lambda Functions Without X-Ray Tracing, Severity: LOW, Results: 1
-Description: AWS Lambda functions should have TracingConfig enabled. For this, property 'tracing_Config.mode' should have the value 'Active'
+Lambda Function Without Tags, Severity: MEDIUM, Results: 1
+Description: AWS Lambda Functions must have associated tags.
 Platform: Terraform
 
 	[1]: /src/main.tf:57
@@ -57,4 +57,4 @@ LOW: 1
 INFO: 0
 TOTAL: 2
 
-Scan duration: 28.015750679s
+Scan duration: 11.445687172s

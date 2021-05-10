@@ -16,52 +16,63 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.2.3
+Scanning with Keeping Infrastructure as Code Secure v1.3.0
 
 
 
-Files scanned: 2
-Parsed files: 2
-Queries loaded: 1343
+Files scanned: 1
+Parsed files: 1
+Queries loaded: 520
 Queries failed to execute: 0
 
 ------------------------------------
 
-EC2 Instance Has Public IP, Severity: HIGH, Results: 1
-Description: EC2 Instance should not have a public IP address.
+VPC FlowLogs Disabled, Severity: MEDIUM, Results: 1
+Description: VPC hasn't got any FlowLog associated
 Platform: Terraform
 
-	[1]: /src/main.tf:141
+	[1]: /src/main.tf:5
 
-		140:   instance_type = "t3.nano"
-		141:   associate_public_ip_address = true
-		142:   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
+		004: 
+		005: resource "aws_vpc" "nondefault" {
+		006:   cidr_block = "10.1.1.0/24"
 
 
-HTTP Port Open, Severity: HIGH, Results: 1
-Description: The HTTP port is open in a Security Group
+SQL Analysis Services Port 2383 (TCP) Is Publicly Accessible, Severity: MEDIUM, Results: 1
+Description: Check if port 2383 on TCP is publicly accessible by checking the CIDR block range that can access it.
 Platform: Terraform
 
-	[1]: /src/main.tf:121
+	[1]: /src/main.tf:123
 
-		120: 
-		121: resource "aws_security_group" "publicly_accessible_sg" {
 		122:   vpc_id = aws_vpc.nondefault.id
+		123:   ingress {
+		124:     from_port = 0
 
 
-Remote Desktop Port Open, Severity: HIGH, Results: 1
-Description: The Remote Desktop port is open in a Security Group
+ElasticSearch Not Encrypted At Rest, Severity: MEDIUM, Results: 1
+Description: Check if ElasticSearch encryption is disabled at Rest
 Platform: Terraform
 
-	[1]: /src/main.tf:121
+	[1]: /src/main.tf:107
 
-		120: 
-		121: resource "aws_security_group" "publicly_accessible_sg" {
-		122:   vpc_id = aws_vpc.nondefault.id
+		106: 
+		107: resource "aws_elasticsearch_domain" "test" {
+		108:   domain_name = "test"
 
 
-Security Group With Unrestricted Access To SSH, Severity: HIGH, Results: 1
-Description: SSH' (TCP:22) should not be public in AWS Security Group
+Unrestricted Security Group Ingress, Severity: HIGH, Results: 1
+Description: Security groups allow ingress from 0.0.0.0:0
+Platform: Terraform
+
+	[1]: /src/main.tf:127
+
+		126:     to_port = 65000
+		127:     cidr_blocks = ["0.0.0.0/0"]
+		128:   }
+
+
+Unknown Port Exposed To Internet, Severity: HIGH, Results: 1
+Description: AWS Security Group should not have an unknown port exposed to the entire Internet
 Platform: Terraform
 
 	[1]: /src/main.tf:127
@@ -439,8 +450,8 @@ Platform: Terraform
 		124:     from_port = 0
 
 
-Unknown Port Exposed To Internet, Severity: HIGH, Results: 1
-Description: AWS Security Group should not have an unknown port exposed to the entire Internet
+Security Group With Unrestricted Access To SSH, Severity: HIGH, Results: 1
+Description: SSH' (TCP:22) should not be public in AWS Security Group
 Platform: Terraform
 
 	[1]: /src/main.tf:127
@@ -450,48 +461,37 @@ Platform: Terraform
 		128:   }
 
 
-Unrestricted Security Group Ingress, Severity: HIGH, Results: 1
-Description: Security groups allow ingress from 0.0.0.0:0
+Remote Desktop Port Open, Severity: HIGH, Results: 1
+Description: The Remote Desktop port is open in a Security Group
 Platform: Terraform
 
-	[1]: /src/main.tf:127
+	[1]: /src/main.tf:121
 
-		126:     to_port = 65000
-		127:     cidr_blocks = ["0.0.0.0/0"]
-		128:   }
-
-
-ElasticSearch Not Encrypted At Rest, Severity: MEDIUM, Results: 1
-Description: Check if ElasticSearch encryption is disabled at Rest
-Platform: Terraform
-
-	[1]: /src/main.tf:107
-
-		106: 
-		107: resource "aws_elasticsearch_domain" "test" {
-		108:   domain_name = "test"
-
-
-SQL Analysis Services Port 2383 (TCP) Is Publicly Accessible, Severity: MEDIUM, Results: 1
-Description: Check if port 2383 on TCP is publicly accessible by checking the CIDR block range that can access it.
-Platform: Terraform
-
-	[1]: /src/main.tf:123
-
+		120: 
+		121: resource "aws_security_group" "publicly_accessible_sg" {
 		122:   vpc_id = aws_vpc.nondefault.id
-		123:   ingress {
-		124:     from_port = 0
 
 
-VPC FlowLogs Disabled, Severity: MEDIUM, Results: 1
-Description: VPC hasn't got any FlowLog associated
+HTTP Port Open, Severity: HIGH, Results: 1
+Description: The HTTP port is open in a Security Group
 Platform: Terraform
 
-	[1]: /src/main.tf:5
+	[1]: /src/main.tf:121
 
-		004: 
-		005: resource "aws_vpc" "nondefault" {
-		006:   cidr_block = "10.1.1.0/24"
+		120: 
+		121: resource "aws_security_group" "publicly_accessible_sg" {
+		122:   vpc_id = aws_vpc.nondefault.id
+
+
+EC2 Instance Has Public IP, Severity: HIGH, Results: 1
+Description: EC2 Instance should not have a public IP address.
+Platform: Terraform
+
+	[1]: /src/main.tf:141
+
+		140:   instance_type = "t3.nano"
+		141:   associate_public_ip_address = true
+		142:   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
 
 
 
@@ -502,4 +502,4 @@ LOW: 0
 INFO: 0
 TOTAL: 61
 
-Scan duration: 42.79146552s
+Scan duration: 11.392495671s

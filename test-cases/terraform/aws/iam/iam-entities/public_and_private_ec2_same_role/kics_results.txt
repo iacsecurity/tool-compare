@@ -16,70 +16,81 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.2.3
+Scanning with Keeping Infrastructure as Code Secure v1.3.0
 
 
 
-Files scanned: 41
-Parsed files: 23
-Queries loaded: 1343
+Files scanned: 53
+Parsed files: 53
+Queries loaded: 754
 Queries failed to execute: 0
 
 ------------------------------------
 
-EC2 Instance Has Public IP, Severity: HIGH, Results: 2
-Description: EC2 Instance should not have a public IP address.
+Instance With No VPC, Severity: MEDIUM, Results: 2
+Description: Instance should be configured in VPC (Virtual Private Cloud)
 Platform: Terraform
 
-	[1]: /src/main.tf:99
+	[1]: /src/main.tf:98
 
-		098: 
-		099: resource "aws_instance" "pub_ins" {
-		100:   ami           = "${data.aws_ami.ubuntu.id}"
+		097: 
+		098: resource "aws_instance" "pub_ins" {
+		099:   ami           = "${data.aws_ami.ubuntu.id}"
 
 
-	[2]: /src/main.tf:107
+	[2]: /src/main.tf:106
 
-		106: 
-		107: resource "aws_instance" "priv_ins" {
-		108:   ami           = "${data.aws_ami.ubuntu.id}"
+		105: 
+		106: resource "aws_instance" "priv_ins" {
+		107:   ami           = "${data.aws_ami.ubuntu.id}"
 
 
 IAM Policy Grants Full Permissions, Severity: MEDIUM, Results: 1
 Description: IAM policies allow all ('*') in a statement action
 Platform: Terraform
 
-	[1]: /src/main.tf:91
+	[1]: /src/main.tf:90
 
-		090:       "Effect": "Allow",
-		091:       "Resource": "*"
-		092:     }
+		089:       "Effect": "Allow",
+		090:       "Resource": "*"
+		091:     }
 
 
-Instance With No VPC, Severity: MEDIUM, Results: 2
-Description: Instance should be configured in VPC (Virtual Private Cloud)
+CloudWatch Without Retention Period Specified, Severity: MEDIUM, Results: 1
+Description: AWS CloudWatch Log groups should have retention days specified
 Platform: Terraform
 
-	[1]: /src/main.tf:99
+	[1]: /src/.terraform/modules/vpc/examples/vpc-flow-logs/main.tf:126
 
-		098: 
-		099: resource "aws_instance" "pub_ins" {
-		100:   ami           = "${data.aws_ami.ubuntu.id}"
+		125: # Cloudwatch logs
+		126: resource "aws_cloudwatch_log_group" "flow_log" {
+		127:   name = local.cloudwatch_log_group_name
 
 
-	[2]: /src/main.tf:107
+EC2 Instance Has Public IP, Severity: HIGH, Results: 2
+Description: EC2 Instance should not have a public IP address.
+Platform: Terraform
 
-		106: 
-		107: resource "aws_instance" "priv_ins" {
-		108:   ami           = "${data.aws_ami.ubuntu.id}"
+	[1]: /src/main.tf:98
+
+		097: 
+		098: resource "aws_instance" "pub_ins" {
+		099:   ami           = "${data.aws_ami.ubuntu.id}"
+
+
+	[2]: /src/main.tf:106
+
+		105: 
+		106: resource "aws_instance" "priv_ins" {
+		107:   ami           = "${data.aws_ami.ubuntu.id}"
 
 
 
 Results Summary:
 HIGH: 2
-MEDIUM: 3
+MEDIUM: 4
 LOW: 0
 INFO: 0
-TOTAL: 5
+TOTAL: 6
 
-Scan duration: 59.074782152s
+Scan duration: 33.132485974s

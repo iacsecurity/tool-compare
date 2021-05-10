@@ -16,19 +16,41 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.2.3
+Scanning with Keeping Infrastructure as Code Secure v1.3.0
 
 
 
-Files scanned: 2
-Parsed files: 2
-Queries loaded: 1343
+Files scanned: 1
+Parsed files: 1
+Queries loaded: 520
 Queries failed to execute: 0
 
 ------------------------------------
 
-DB Instance Storage Not Encrypted, Severity: HIGH, Results: 1
-Description: The parameter storage_encrypted in aws_db_instance must be set to 'true' (the default is 'false').
+VPC FlowLogs Disabled, Severity: MEDIUM, Results: 1
+Description: VPC hasn't got any FlowLog associated
+Platform: Terraform
+
+	[1]: /src/main.tf:10
+
+		009: 
+		010: resource "aws_vpc" "nondefault" {
+		011:   cidr_block = "10.1.1.0/24"
+
+
+SQL Analysis Services Port 2383 (TCP) Is Publicly Accessible, Severity: MEDIUM, Results: 1
+Description: Check if port 2383 on TCP is publicly accessible by checking the CIDR block range that can access it.
+Platform: Terraform
+
+	[1]: /src/main.tf:131
+
+		130:   vpc_id = aws_vpc.nondefault.id
+		131:   ingress {
+		132:     from_port = 0
+
+
+RDS With Backup Disabled, Severity: MEDIUM, Results: 1
+Description: RDS configured without backup
 Platform: Terraform
 
 	[1]: /src/main.tf:113
@@ -38,63 +60,19 @@ Platform: Terraform
 		114:   identifier = "tf-test-db"
 
 
-EC2 Instance Has Public IP, Severity: HIGH, Results: 1
-Description: EC2 Instance should not have a public IP address.
+Unrestricted Security Group Ingress, Severity: HIGH, Results: 1
+Description: Security groups allow ingress from 0.0.0.0:0
 Platform: Terraform
 
-	[1]: /src/main.tf:149
+	[1]: /src/main.tf:135
 
-		148:   instance_type = "t3.nano"
-		149:   associate_public_ip_address = true
-		150:   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
-
-
-HTTP Port Open, Severity: HIGH, Results: 1
-Description: The HTTP port is open in a Security Group
-Platform: Terraform
-
-	[1]: /src/main.tf:129
-
-		128: 
-		129: resource "aws_security_group" "publicly_accessible_sg" {
-		130:   vpc_id = aws_vpc.nondefault.id
+		134:     to_port = 65000
+		135:     cidr_blocks = ["0.0.0.0/0"]
+		136:   }
 
 
-IAM Database Auth Not Enabled, Severity: HIGH, Results: 1
-Description: IAM Database Auth Enabled must be configured to true
-Platform: Terraform
-
-	[1]: /src/main.tf:113
-
-		112: 
-		113: resource "aws_db_instance" "test" {
-		114:   identifier = "tf-test-db"
-
-
-Passwords And Secrets In Infrastructure Code, Severity: HIGH, Results: 1
-Description: Query to find passwords and secrets in infrastructure code.
-Platform: Common
-
-	[1]: /src/main.tf:120
-
-		119:   username = "admin"
-		120:   password = "password123"
-		121:   db_subnet_group_name = aws_db_subnet_group.db.name
-
-
-Remote Desktop Port Open, Severity: HIGH, Results: 1
-Description: The Remote Desktop port is open in a Security Group
-Platform: Terraform
-
-	[1]: /src/main.tf:129
-
-		128: 
-		129: resource "aws_security_group" "publicly_accessible_sg" {
-		130:   vpc_id = aws_vpc.nondefault.id
-
-
-Security Group With Unrestricted Access To SSH, Severity: HIGH, Results: 1
-Description: SSH' (TCP:22) should not be public in AWS Security Group
+Unknown Port Exposed To Internet, Severity: HIGH, Results: 1
+Description: AWS Security Group should not have an unknown port exposed to the entire Internet
 Platform: Terraform
 
 	[1]: /src/main.tf:135
@@ -472,8 +450,8 @@ Platform: Terraform
 		132:     from_port = 0
 
 
-Unknown Port Exposed To Internet, Severity: HIGH, Results: 1
-Description: AWS Security Group should not have an unknown port exposed to the entire Internet
+Security Group With Unrestricted Access To SSH, Severity: HIGH, Results: 1
+Description: SSH' (TCP:22) should not be public in AWS Security Group
 Platform: Terraform
 
 	[1]: /src/main.tf:135
@@ -483,19 +461,30 @@ Platform: Terraform
 		136:   }
 
 
-Unrestricted Security Group Ingress, Severity: HIGH, Results: 1
-Description: Security groups allow ingress from 0.0.0.0:0
+Remote Desktop Port Open, Severity: HIGH, Results: 1
+Description: The Remote Desktop port is open in a Security Group
 Platform: Terraform
 
-	[1]: /src/main.tf:135
+	[1]: /src/main.tf:129
 
-		134:     to_port = 65000
-		135:     cidr_blocks = ["0.0.0.0/0"]
-		136:   }
+		128: 
+		129: resource "aws_security_group" "publicly_accessible_sg" {
+		130:   vpc_id = aws_vpc.nondefault.id
 
 
-RDS With Backup Disabled, Severity: MEDIUM, Results: 1
-Description: RDS configured without backup
+Passwords And Secrets In Infrastructure Code, Severity: HIGH, Results: 1
+Description: Query to find passwords and secrets in infrastructure code.
+Platform: Common
+
+	[1]: /src/main.tf:120
+
+		119:   username = "admin"
+		120:   password = "password123"
+		121:   db_subnet_group_name = aws_db_subnet_group.db.name
+
+
+IAM Database Auth Not Enabled, Severity: HIGH, Results: 1
+Description: IAM Database Auth Enabled must be configured to true
 Platform: Terraform
 
 	[1]: /src/main.tf:113
@@ -505,26 +494,37 @@ Platform: Terraform
 		114:   identifier = "tf-test-db"
 
 
-SQL Analysis Services Port 2383 (TCP) Is Publicly Accessible, Severity: MEDIUM, Results: 1
-Description: Check if port 2383 on TCP is publicly accessible by checking the CIDR block range that can access it.
+HTTP Port Open, Severity: HIGH, Results: 1
+Description: The HTTP port is open in a Security Group
 Platform: Terraform
 
-	[1]: /src/main.tf:131
+	[1]: /src/main.tf:129
 
+		128: 
+		129: resource "aws_security_group" "publicly_accessible_sg" {
 		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
 
 
-VPC FlowLogs Disabled, Severity: MEDIUM, Results: 1
-Description: VPC hasn't got any FlowLog associated
+EC2 Instance Has Public IP, Severity: HIGH, Results: 1
+Description: EC2 Instance should not have a public IP address.
 Platform: Terraform
 
-	[1]: /src/main.tf:10
+	[1]: /src/main.tf:149
 
-		009: 
-		010: resource "aws_vpc" "nondefault" {
-		011:   cidr_block = "10.1.1.0/24"
+		148:   instance_type = "t3.nano"
+		149:   associate_public_ip_address = true
+		150:   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
+
+
+DB Instance Storage Not Encrypted, Severity: HIGH, Results: 1
+Description: The parameter storage_encrypted in aws_db_instance must be set to 'true' (the default is 'false').
+Platform: Terraform
+
+	[1]: /src/main.tf:113
+
+		112: 
+		113: resource "aws_db_instance" "test" {
+		114:   identifier = "tf-test-db"
 
 
 
@@ -535,4 +535,4 @@ LOW: 0
 INFO: 0
 TOTAL: 64
 
-Scan duration: 31.181382139s
+Scan duration: 11.367013547s

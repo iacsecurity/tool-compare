@@ -16,26 +16,26 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.2.3
+Scanning with Keeping Infrastructure as Code Secure v1.3.0
 
 
 
-Files scanned: 2
-Parsed files: 2
-Queries loaded: 1343
+Files scanned: 1
+Parsed files: 1
+Queries loaded: 520
 Queries failed to execute: 0
 
 ------------------------------------
 
-EC2 Instance Has Public IP, Severity: HIGH, Results: 1
-Description: EC2 Instance should not have a public IP address.
+VPC FlowLogs Disabled, Severity: MEDIUM, Results: 1
+Description: VPC hasn't got any FlowLog associated
 Platform: Terraform
 
-	[1]: /src/main.tf:87
+	[1]: /src/main.tf:12
 
-		086: 
-		087: resource "aws_instance" "test-ec2-instance" {
-		088:   ami = data.aws_ami.ubuntu.id
+		011: 
+		012: resource "aws_vpc" "main" {
+		013:   cidr_block = local.cidr_block
 
 
 SQS With SSE Disabled, Severity: HIGH, Results: 1
@@ -49,15 +49,15 @@ Platform: Terraform
 		104:   name = "test-queue"
 
 
-VPC FlowLogs Disabled, Severity: MEDIUM, Results: 1
-Description: VPC hasn't got any FlowLog associated
+EC2 Instance Has Public IP, Severity: HIGH, Results: 1
+Description: EC2 Instance should not have a public IP address.
 Platform: Terraform
 
-	[1]: /src/main.tf:12
+	[1]: /src/main.tf:87
 
-		011: 
-		012: resource "aws_vpc" "main" {
-		013:   cidr_block = local.cidr_block
+		086: 
+		087: resource "aws_instance" "test-ec2-instance" {
+		088:   ami = data.aws_ami.ubuntu.id
 
 
 
@@ -68,4 +68,4 @@ LOW: 0
 INFO: 0
 TOTAL: 3
 
-Scan duration: 29.774171472s
+Scan duration: 11.081267213s

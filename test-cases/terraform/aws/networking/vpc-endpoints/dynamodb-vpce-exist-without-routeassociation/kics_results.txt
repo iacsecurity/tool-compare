@@ -16,27 +16,16 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.2.3
+Scanning with Keeping Infrastructure as Code Secure v1.3.0
 
 
 
-Files scanned: 2
-Parsed files: 2
-Queries loaded: 1343
+Files scanned: 1
+Parsed files: 1
+Queries loaded: 520
 Queries failed to execute: 0
 
 ------------------------------------
-
-EC2 Instance Has Public IP, Severity: HIGH, Results: 1
-Description: EC2 Instance should not have a public IP address.
-Platform: Terraform
-
-	[1]: /src/main.tf:83
-
-		082: 
-		083: resource "aws_instance" "test" {
-		084:   ami = data.aws_ami.ubuntu.id
-
 
 VPC FlowLogs Disabled, Severity: MEDIUM, Results: 1
 Description: VPC hasn't got any FlowLog associated
@@ -49,6 +38,17 @@ Platform: Terraform
 		009:   cidr_block = "192.168.100.0/24"
 
 
+EC2 Instance Has Public IP, Severity: HIGH, Results: 1
+Description: EC2 Instance should not have a public IP address.
+Platform: Terraform
+
+	[1]: /src/main.tf:83
+
+		082: 
+		083: resource "aws_instance" "test" {
+		084:   ami = data.aws_ami.ubuntu.id
+
+
 
 Results Summary:
 HIGH: 1
@@ -57,4 +57,4 @@ LOW: 0
 INFO: 0
 TOTAL: 2
 
-Scan duration: 30.717850847s
+Scan duration: 11.007480879s

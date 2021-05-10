@@ -16,52 +16,41 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.2.3
+Scanning with Keeping Infrastructure as Code Secure v1.3.0
 
 
 
-Files scanned: 2
-Parsed files: 2
-Queries loaded: 1343
+Files scanned: 1
+Parsed files: 1
+Queries loaded: 520
 Queries failed to execute: 0
 
 ------------------------------------
 
-EC2 Instance Has Public IP, Severity: HIGH, Results: 1
-Description: EC2 Instance should not have a public IP address.
+VPC FlowLogs Disabled, Severity: MEDIUM, Results: 1
+Description: VPC hasn't got any FlowLog associated
 Platform: Terraform
 
-	[1]: /src/main.tf:134
+	[1]: /src/main.tf:10
 
-		133:   instance_type = "t3.nano"
-		134:   associate_public_ip_address = true
-		135:   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
+		009: 
+		010: resource "aws_vpc" "nondefault" {
+		011:   cidr_block = "10.1.1.0/24"
 
 
-HTTP Port Open, Severity: HIGH, Results: 1
-Description: The HTTP port is open in a Security Group
+SQL Analysis Services Port 2383 (TCP) Is Publicly Accessible, Severity: MEDIUM, Results: 1
+Description: Check if port 2383 on TCP is publicly accessible by checking the CIDR block range that can access it.
 Platform: Terraform
 
-	[1]: /src/main.tf:114
+	[1]: /src/main.tf:116
 
-		113: 
-		114: resource "aws_security_group" "publicly_accessible_sg" {
 		115:   vpc_id = aws_vpc.nondefault.id
+		116:   ingress {
+		117:     from_port = 0
 
 
-Passwords And Secrets In Infrastructure Code, Severity: HIGH, Results: 1
-Description: Query to find passwords and secrets in infrastructure code.
-Platform: Common
-
-	[1]: /src/main.tf:106
-
-		105:   node_type = "dc2.large"
-		106:   master_password = "Test1234"
-		107:   master_username = "test"
-
-
-Redshift Not Encrypted, Severity: HIGH, Results: 1
-Description: Check if 'encrypted' field is false or undefined (default is false)
+Redshift Cluster Logging Disabled, Severity: MEDIUM, Results: 1
+Description: Make sure Logging is enabled for Redshift Cluster
 Platform: Terraform
 
 	[1]: /src/main.tf:103
@@ -71,19 +60,19 @@ Platform: Terraform
 		104:   cluster_identifier = "redshift-defaults-only"
 
 
-Remote Desktop Port Open, Severity: HIGH, Results: 1
-Description: The Remote Desktop port is open in a Security Group
+Unrestricted Security Group Ingress, Severity: HIGH, Results: 1
+Description: Security groups allow ingress from 0.0.0.0:0
 Platform: Terraform
 
-	[1]: /src/main.tf:114
+	[1]: /src/main.tf:120
 
-		113: 
-		114: resource "aws_security_group" "publicly_accessible_sg" {
-		115:   vpc_id = aws_vpc.nondefault.id
+		119:     to_port = 65000
+		120:     cidr_blocks = ["0.0.0.0/0"]
+		121:   }
 
 
-Security Group With Unrestricted Access To SSH, Severity: HIGH, Results: 1
-Description: SSH' (TCP:22) should not be public in AWS Security Group
+Unknown Port Exposed To Internet, Severity: HIGH, Results: 1
+Description: AWS Security Group should not have an unknown port exposed to the entire Internet
 Platform: Terraform
 
 	[1]: /src/main.tf:120
@@ -461,8 +450,8 @@ Platform: Terraform
 		117:     from_port = 0
 
 
-Unknown Port Exposed To Internet, Severity: HIGH, Results: 1
-Description: AWS Security Group should not have an unknown port exposed to the entire Internet
+Security Group With Unrestricted Access To SSH, Severity: HIGH, Results: 1
+Description: SSH' (TCP:22) should not be public in AWS Security Group
 Platform: Terraform
 
 	[1]: /src/main.tf:120
@@ -472,19 +461,19 @@ Platform: Terraform
 		121:   }
 
 
-Unrestricted Security Group Ingress, Severity: HIGH, Results: 1
-Description: Security groups allow ingress from 0.0.0.0:0
+Remote Desktop Port Open, Severity: HIGH, Results: 1
+Description: The Remote Desktop port is open in a Security Group
 Platform: Terraform
 
-	[1]: /src/main.tf:120
+	[1]: /src/main.tf:114
 
-		119:     to_port = 65000
-		120:     cidr_blocks = ["0.0.0.0/0"]
-		121:   }
+		113: 
+		114: resource "aws_security_group" "publicly_accessible_sg" {
+		115:   vpc_id = aws_vpc.nondefault.id
 
 
-Redshift Cluster Logging Disabled, Severity: MEDIUM, Results: 1
-Description: Make sure Logging is enabled for Redshift Cluster
+Redshift Not Encrypted, Severity: HIGH, Results: 1
+Description: Check if 'encrypted' field is false or undefined (default is false)
 Platform: Terraform
 
 	[1]: /src/main.tf:103
@@ -494,26 +483,37 @@ Platform: Terraform
 		104:   cluster_identifier = "redshift-defaults-only"
 
 
-SQL Analysis Services Port 2383 (TCP) Is Publicly Accessible, Severity: MEDIUM, Results: 1
-Description: Check if port 2383 on TCP is publicly accessible by checking the CIDR block range that can access it.
+Passwords And Secrets In Infrastructure Code, Severity: HIGH, Results: 1
+Description: Query to find passwords and secrets in infrastructure code.
+Platform: Common
+
+	[1]: /src/main.tf:106
+
+		105:   node_type = "dc2.large"
+		106:   master_password = "Test1234"
+		107:   master_username = "test"
+
+
+HTTP Port Open, Severity: HIGH, Results: 1
+Description: The HTTP port is open in a Security Group
 Platform: Terraform
 
-	[1]: /src/main.tf:116
+	[1]: /src/main.tf:114
 
+		113: 
+		114: resource "aws_security_group" "publicly_accessible_sg" {
 		115:   vpc_id = aws_vpc.nondefault.id
-		116:   ingress {
-		117:     from_port = 0
 
 
-VPC FlowLogs Disabled, Severity: MEDIUM, Results: 1
-Description: VPC hasn't got any FlowLog associated
+EC2 Instance Has Public IP, Severity: HIGH, Results: 1
+Description: EC2 Instance should not have a public IP address.
 Platform: Terraform
 
-	[1]: /src/main.tf:10
+	[1]: /src/main.tf:134
 
-		009: 
-		010: resource "aws_vpc" "nondefault" {
-		011:   cidr_block = "10.1.1.0/24"
+		133:   instance_type = "t3.nano"
+		134:   associate_public_ip_address = true
+		135:   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
 
 
 
@@ -524,4 +524,4 @@ LOW: 0
 INFO: 0
 TOTAL: 63
 
-Scan duration: 31.060155472s
+Scan duration: 11.206093255s

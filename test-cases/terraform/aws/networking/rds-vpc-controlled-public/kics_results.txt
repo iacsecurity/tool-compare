@@ -16,41 +16,30 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.2.3
+Scanning with Keeping Infrastructure as Code Secure v1.3.0
 
 
 
-Files scanned: 3
-Parsed files: 3
-Queries loaded: 1343
+Files scanned: 1
+Parsed files: 1
+Queries loaded: 520
 Queries failed to execute: 0
 
 ------------------------------------
 
-DB Instance Publicly Accessible, Severity: HIGH, Results: 1
-Description: The field 'publicly_accessible' should not be set to 'true' (default is 'false').
+VPC FlowLogs Disabled, Severity: MEDIUM, Results: 1
+Description: VPC hasn't got any FlowLog associated
 Platform: Terraform
 
-	[1]: /src/main.tf:62
+	[1]: /src/main.tf:5
 
-		061:   instance_class = "db.t3.micro"
-		062:   publicly_accessible = true
-		063:   db_subnet_group_name = aws_db_subnet_group.nondefault.name
-
-
-DB Instance Storage Not Encrypted, Severity: HIGH, Results: 1
-Description: The parameter storage_encrypted in aws_db_instance must be set to 'true' (the default is 'false').
-Platform: Terraform
-
-	[1]: /src/main.tf:60
-
-		059: 
-		060: resource "aws_db_instance" "test" {
-		061:   instance_class = "db.t3.micro"
+		004: 
+		005: resource "aws_vpc" "nondefault" {
+		006:   cidr_block = "10.1.1.0/24"
 
 
-IAM Database Auth Not Enabled, Severity: HIGH, Results: 1
-Description: IAM Database Auth Enabled must be configured to true
+RDS With Backup Disabled, Severity: MEDIUM, Results: 1
+Description: RDS configured without backup
 Platform: Terraform
 
 	[1]: /src/main.tf:60
@@ -60,8 +49,19 @@ Platform: Terraform
 		061:   instance_class = "db.t3.micro"
 
 
-Security Group With Unrestricted Access To SSH, Severity: HIGH, Results: 1
-Description: SSH' (TCP:22) should not be public in AWS Security Group
+Unrestricted Security Group Ingress, Severity: HIGH, Results: 1
+Description: Security groups allow ingress from 0.0.0.0:0
+Platform: Terraform
+
+	[1]: /src/main.tf:16
+
+		015:     to_port = 65000
+		016:     cidr_blocks = ["0.0.0.0/0"]
+		017:   }
+
+
+Unknown Port Exposed To Internet, Severity: HIGH, Results: 1
+Description: AWS Security Group should not have an unknown port exposed to the entire Internet
 Platform: Terraform
 
 	[1]: /src/main.tf:16
@@ -439,8 +439,8 @@ Platform: Terraform
 		013:     from_port = 0
 
 
-Unknown Port Exposed To Internet, Severity: HIGH, Results: 1
-Description: AWS Security Group should not have an unknown port exposed to the entire Internet
+Security Group With Unrestricted Access To SSH, Severity: HIGH, Results: 1
+Description: SSH' (TCP:22) should not be public in AWS Security Group
 Platform: Terraform
 
 	[1]: /src/main.tf:16
@@ -450,19 +450,8 @@ Platform: Terraform
 		017:   }
 
 
-Unrestricted Security Group Ingress, Severity: HIGH, Results: 1
-Description: Security groups allow ingress from 0.0.0.0:0
-Platform: Terraform
-
-	[1]: /src/main.tf:16
-
-		015:     to_port = 65000
-		016:     cidr_blocks = ["0.0.0.0/0"]
-		017:   }
-
-
-RDS With Backup Disabled, Severity: MEDIUM, Results: 1
-Description: RDS configured without backup
+IAM Database Auth Not Enabled, Severity: HIGH, Results: 1
+Description: IAM Database Auth Enabled must be configured to true
 Platform: Terraform
 
 	[1]: /src/main.tf:60
@@ -472,15 +461,26 @@ Platform: Terraform
 		061:   instance_class = "db.t3.micro"
 
 
-VPC FlowLogs Disabled, Severity: MEDIUM, Results: 1
-Description: VPC hasn't got any FlowLog associated
+DB Instance Storage Not Encrypted, Severity: HIGH, Results: 1
+Description: The parameter storage_encrypted in aws_db_instance must be set to 'true' (the default is 'false').
 Platform: Terraform
 
-	[1]: /src/main.tf:5
+	[1]: /src/main.tf:60
 
-		004: 
-		005: resource "aws_vpc" "nondefault" {
-		006:   cidr_block = "10.1.1.0/24"
+		059: 
+		060: resource "aws_db_instance" "test" {
+		061:   instance_class = "db.t3.micro"
+
+
+DB Instance Publicly Accessible, Severity: HIGH, Results: 1
+Description: The field 'publicly_accessible' should not be set to 'true' (default is 'false').
+Platform: Terraform
+
+	[1]: /src/main.tf:62
+
+		061:   instance_class = "db.t3.micro"
+		062:   publicly_accessible = true
+		063:   db_subnet_group_name = aws_db_subnet_group.nondefault.name
 
 
 
@@ -491,4 +491,4 @@ LOW: 0
 INFO: 0
 TOTAL: 60
 
-Scan duration: 33.905906057s
+Scan duration: 10.918815089s

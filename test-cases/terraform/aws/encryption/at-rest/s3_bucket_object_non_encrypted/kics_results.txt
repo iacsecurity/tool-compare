@@ -16,19 +16,30 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.2.3
+Scanning with Keeping Infrastructure as Code Secure v1.3.0
 
 
 
-Files scanned: 2
-Parsed files: 2
-Queries loaded: 1343
+Files scanned: 1
+Parsed files: 1
+Queries loaded: 520
 Queries failed to execute: 0
 
 ------------------------------------
 
-S3 Bucket Without Server-side-encryption, Severity: HIGH, Results: 1
-Description: S3 bucket should have encryption defined
+S3 Bucket With Ignore Public ACL, Severity: LOW, Results: 1
+Description: S3 bucket with ignore public ACL
+Platform: Terraform
+
+	[1]: /src/main.tf:14
+
+		013:   block_public_policy     = true
+		014:   ignore_public_acls      = true
+		015:   restrict_public_buckets = true
+
+
+S3 Bucket Logging Disabled, Severity: LOW, Results: 1
+Description: S3 bucket without logging
 Platform: Terraform
 
 	[1]: /src/main.tf:5
@@ -49,8 +60,8 @@ Platform: Terraform
 		006:   bucket = "cloudrail-non-encrypted-czx7zxchs"
 
 
-S3 Bucket Logging Disabled, Severity: LOW, Results: 1
-Description: S3 bucket without logging
+S3 Bucket Without Server-side-encryption, Severity: HIGH, Results: 1
+Description: S3 bucket should have encryption defined
 Platform: Terraform
 
 	[1]: /src/main.tf:5
@@ -58,17 +69,6 @@ Platform: Terraform
 		004: 
 		005: resource "aws_s3_bucket" "cloudrail" {
 		006:   bucket = "cloudrail-non-encrypted-czx7zxchs"
-
-
-S3 Bucket With Ignore Public ACL, Severity: LOW, Results: 1
-Description: S3 bucket with ignore public ACL
-Platform: Terraform
-
-	[1]: /src/main.tf:14
-
-		013:   block_public_policy     = true
-		014:   ignore_public_acls      = true
-		015:   restrict_public_buckets = true
 
 
 
@@ -79,4 +79,4 @@ LOW: 2
 INFO: 0
 TOTAL: 4
 
-Scan duration: 29.531870264s
+Scan duration: 11.000722464s

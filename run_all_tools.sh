@@ -40,7 +40,7 @@ find . -name "main.tf" -exec dirname {} \; | grep -v "\.terraform" | while read 
 echo Now running KICS on all cases
 docker pull checkmarx/kics:latest
 docker run -t -v $PWD:/tf checkmarx/kics version | awk '{print $NF}' > version_kics.txt
-find . -name "main.tf" -exec dirname {} \; | grep -v "\.terraform" | while read -r test_case; do echo $test_case ; ORG_PATH=$PWD ; cd $test_case ; if [ ! -f kics_results.txt ]; then docker run --rm -v "$(pwd):/src" checkmarx/kics:latest -p /src | sed "s~$ORG_PATH~tool-compare~" | grep -v "Executing queries" > kics_results.txt ; fi ; cd $ORG_PATH; done
+find . -name "main.tf" -exec dirname {} \; | grep -v "\.terraform" | while read -r test_case; do echo $test_case ; ORG_PATH=$PWD ; cd $test_case ; if [ ! -f kics_results.txt ]; then docker run --rm -v "$(pwd):/src" checkmarx/kics:latest scan -p /src | sed "s~$ORG_PATH~tool-compare~" | grep -v "Executing queries" > kics_results.txt ; fi ; cd $ORG_PATH; done
 
 # Terrascan
 echo Now running Terrascan on all cases

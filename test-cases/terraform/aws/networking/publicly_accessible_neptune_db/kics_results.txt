@@ -16,19 +16,41 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.2.3
+Scanning with Keeping Infrastructure as Code Secure v1.3.0
 
 
 
-Files scanned: 2
-Parsed files: 2
-Queries loaded: 1343
+Files scanned: 1
+Parsed files: 1
+Queries loaded: 520
 Queries failed to execute: 0
 
 ------------------------------------
 
-Security Group With Unrestricted Access To SSH, Severity: HIGH, Results: 1
-Description: SSH' (TCP:22) should not be public in AWS Security Group
+VPC FlowLogs Disabled, Severity: MEDIUM, Results: 1
+Description: VPC hasn't got any FlowLog associated
+Platform: Terraform
+
+	[1]: /src/main.tf:5
+
+		004: 
+		005: resource "aws_vpc" "external" {
+		006:   cidr_block = "10.1.1.0/24"
+
+
+Unrestricted Security Group Ingress, Severity: HIGH, Results: 1
+Description: Security groups allow ingress from 0.0.0.0:0
+Platform: Terraform
+
+	[1]: /src/main.tf:25
+
+		024:     to_port = 64000
+		025:     cidr_blocks = ["0.0.0.0/0"]
+		026:   }
+
+
+Unknown Port Exposed To Internet, Severity: HIGH, Results: 1
+Description: AWS Security Group should not have an unknown port exposed to the entire Internet
 Platform: Terraform
 
 	[1]: /src/main.tf:25
@@ -406,8 +428,8 @@ Platform: Terraform
 		022:     from_port = 0
 
 
-Unknown Port Exposed To Internet, Severity: HIGH, Results: 1
-Description: AWS Security Group should not have an unknown port exposed to the entire Internet
+Security Group With Unrestricted Access To SSH, Severity: HIGH, Results: 1
+Description: SSH' (TCP:22) should not be public in AWS Security Group
 Platform: Terraform
 
 	[1]: /src/main.tf:25
@@ -415,28 +437,6 @@ Platform: Terraform
 		024:     to_port = 64000
 		025:     cidr_blocks = ["0.0.0.0/0"]
 		026:   }
-
-
-Unrestricted Security Group Ingress, Severity: HIGH, Results: 1
-Description: Security groups allow ingress from 0.0.0.0:0
-Platform: Terraform
-
-	[1]: /src/main.tf:25
-
-		024:     to_port = 64000
-		025:     cidr_blocks = ["0.0.0.0/0"]
-		026:   }
-
-
-VPC FlowLogs Disabled, Severity: MEDIUM, Results: 1
-Description: VPC hasn't got any FlowLog associated
-Platform: Terraform
-
-	[1]: /src/main.tf:5
-
-		004: 
-		005: resource "aws_vpc" "external" {
-		006:   cidr_block = "10.1.1.0/24"
 
 
 
@@ -447,4 +447,4 @@ LOW: 0
 INFO: 0
 TOTAL: 56
 
-Scan duration: 29.03949593s
+Scan duration: 10.99458163s
