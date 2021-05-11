@@ -1,29 +1,32 @@
 
+
        _               _              
    ___| |__   ___  ___| | _______   __
   / __| '_ \ / _ \/ __| |/ / _ \ \ / /
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.132 
-
-terrafor scan results:
-
-Passed checks: 0, Failed checks: 1, Skipped checks: 0
-
-Check: CKV_AWS_65: "Ensure container insights are enabled on ECS cluster"
-	FAILED for resource: aws_ecs_cluster.foo
-	File: /ain.tf:1-8
-	Guide: https://docs.bridgecrew.io/docs/bc_aws_logging_11
-
-		1 | resource "aws_ecs_cluster" "foo" {
-		2 |   nae = "white-hart"
-		3 | 
-		4 |   # setting {
-		5 |     # nae  = "containerInsights"
-		6 |     # value = "enabled"
-		7 |   # }
-		8 | }
+By bridgecrew.io | version: 2.0.135 
+Update available 2.0.135 -> 2.0.136
+Run pip3 install -U checkov to update 
 
-
-
+
+terraform scan results:
+
+Passed checks: 0, Failed checks: 1, Skipped checks: 0
+
+Check: CKV_AWS_65: "Ensure container insights are enabled on ECS cluster"
+	FAILED for resource: aws_ecs_cluster.foo
+	File: /main.tf:1-8
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_logging_11
+
+		1 | resource "aws_ecs_cluster" "foo" {
+		2 |   name = "white-hart"
+		3 | 
+		4 |   # setting {
+		5 |     # name  = "containerInsights"
+		6 |     # value = "enabled"
+		7 |   # }
+		8 | }
+
+

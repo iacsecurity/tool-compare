@@ -1,24 +1,27 @@
 
+
        _               _              
    ___| |__   ___  ___| | _______   __
   / __| '_ \ / _ \/ __| |/ / _ \ \ / /
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.132 
-
-terrafor scan results:
-
-Passed checks: 2, Failed checks: 1, Skipped checks: 0
-
-Check: CKV2_AWS_22: "Ensure an IAM User does not have access to the console"
-	FAILED for resource: aws_ia_user.ia_user_1
-	File: /ain.tf:5-8
-
-		5 | resource "aws_ia_user" "ia_user_1" {
-		6 |   nae = "ia_user_1"
-		7 | 
-		8 | }
+By bridgecrew.io | version: 2.0.135 
+Update available 2.0.135 -> 2.0.136
+Run pip3 install -U checkov to update 
 
-
-
+
+terraform scan results:
+
+Passed checks: 2, Failed checks: 1, Skipped checks: 0
+
+Check: CKV2_AWS_22: "Ensure an IAM User does not have access to the console"
+	FAILED for resource: aws_iam_user.iam_user_1
+	File: /main.tf:5-8
+
+		5 | resource "aws_iam_user" "iam_user_1" {
+		6 |   name = "iam_user_1"
+		7 | 
+		8 | }
+
+

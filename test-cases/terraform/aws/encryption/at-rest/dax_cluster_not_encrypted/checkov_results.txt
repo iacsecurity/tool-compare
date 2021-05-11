@@ -1,27 +1,30 @@
 
+
        _               _              
    ___| |__   ___  ___| | _______   __
   / __| '_ \ / _ \/ __| |/ / _ \ \ / /
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.132 
-
-terrafor scan results:
-
-Passed checks: 3, Failed checks: 1, Skipped checks: 0
-
-Check: CKV_AWS_47: "Ensure DAX is encrypted at rest (default is unencrypted)"
-	FAILED for resource: aws_dax_cluster.cloudrail-test
-	File: /ain.tf:25-30
-	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_23
-
-		25 | resource "aws_dax_cluster" "cloudrail-test" {
-		26 |   cluster_nae       = "non-encrypt"
-		27 |   ia_role_arn       = aws_ia_role.dax.arn
-		28 |   node_type          = "dax.r4.large"
-		29 |   replication_factor = 1
-		30 | }
+By bridgecrew.io | version: 2.0.135 
+Update available 2.0.135 -> 2.0.136
+Run pip3 install -U checkov to update 
 
-
-
+
+terraform scan results:
+
+Passed checks: 3, Failed checks: 1, Skipped checks: 0
+
+Check: CKV_AWS_47: "Ensure DAX is encrypted at rest (default is unencrypted)"
+	FAILED for resource: aws_dax_cluster.cloudrail-test
+	File: /main.tf:25-30
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_23
+
+		25 | resource "aws_dax_cluster" "cloudrail-test" {
+		26 |   cluster_name       = "non-encrypt"
+		27 |   iam_role_arn       = aws_iam_role.dax.arn
+		28 |   node_type          = "dax.r4.large"
+		29 |   replication_factor = 1
+		30 | }
+
+

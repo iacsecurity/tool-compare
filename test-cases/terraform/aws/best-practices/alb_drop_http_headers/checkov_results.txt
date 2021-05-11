@@ -1,178 +1,181 @@
 
+
        _               _              
    ___| |__   ___  ___| | _______   __
   / __| '_ \ / _ \/ __| |/ / _ \ \ / /
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.132 
-
-terrafor scan results:
-
+By bridgecrew.io | version: 2.0.135 
+Update available 2.0.135 -> 2.0.136
+Run pip3 install -U checkov to update 
+
+
+terraform scan results:
+
 Passed checks: 2, Failed checks: 12, Skipped checks: 0
-
-Check: CKV_AWS_91: "Ensure the ELBv2 (Application/Network) has access logging enabled"
-	FAILED for resource: aws_lb.default
-	File: /ain.tf:25-30
-	Guide: https://docs.bridgecrew.io/docs/bc_aws_logging_22
-
-		25 | resource "aws_lb" "default" {
-		26 |   internal           = false
-		27 |   load_balancer_type = "application"
-		28 |   nae               = "alb"
-		29 |   subnets            = odule.vpc.public_subnets
-		30 | }
 
-
-Check: CKV_AWS_131: "Ensure that ALB drops HTTP headers"
-	FAILED for resource: aws_lb.default
-	File: /ain.tf:25-30
-	Guide: https://docs.bridgecrew.io/docs/ensure-that-alb-drops-http-headers
-
-		25 | resource "aws_lb" "default" {
-		26 |   internal           = false
-		27 |   load_balancer_type = "application"
-		28 |   nae               = "alb"
-		29 |   subnets            = odule.vpc.public_subnets
-		30 | }
+Check: CKV_AWS_91: "Ensure the ELBv2 (Application/Network) has access logging enabled"
+	FAILED for resource: aws_lb.default
+	File: /main.tf:25-30
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_logging_22
 
-
-Check: CKV_AWS_150: "Ensure that Load Balancer has deletion protection enabled"
-	FAILED for resource: aws_lb.default
-	File: /ain.tf:25-30
-
-		25 | resource "aws_lb" "default" {
-		26 |   internal           = false
-		27 |   load_balancer_type = "application"
-		28 |   nae               = "alb"
-		29 |   subnets            = odule.vpc.public_subnets
-		30 | }
+		25 | resource "aws_lb" "default" {
+		26 |   internal           = false
+		27 |   load_balancer_type = "application"
+		28 |   name               = "alb"
+		29 |   subnets            = module.vpc.public_subnets
+		30 | }
 
-
-Check: CKV_AWS_91: "Ensure the ELBv2 (Application/Network) has access logging enabled"
-	FAILED for resource: aws_alb.default
-	File: /ain.tf:32-37
-	Guide: https://docs.bridgecrew.io/docs/bc_aws_logging_22
-
-		32 | resource "aws_alb" "default" {
-		33 |   internal           = false
-		34 |   load_balancer_type = "application"
-		35 |   nae               = "alb"
-		36 |   subnets            = odule.vpc.public_subnets
-		37 | }
 
-
-Check: CKV_AWS_131: "Ensure that ALB drops HTTP headers"
-	FAILED for resource: aws_alb.default
-	File: /ain.tf:32-37
-	Guide: https://docs.bridgecrew.io/docs/ensure-that-alb-drops-http-headers
-
-		32 | resource "aws_alb" "default" {
-		33 |   internal           = false
-		34 |   load_balancer_type = "application"
-		35 |   nae               = "alb"
-		36 |   subnets            = odule.vpc.public_subnets
-		37 | }
+Check: CKV_AWS_131: "Ensure that ALB drops HTTP headers"
+	FAILED for resource: aws_lb.default
+	File: /main.tf:25-30
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-alb-drops-http-headers
 
-
-Check: CKV_AWS_150: "Ensure that Load Balancer has deletion protection enabled"
-	FAILED for resource: aws_alb.default
-	File: /ain.tf:32-37
-
-		32 | resource "aws_alb" "default" {
-		33 |   internal           = false
-		34 |   load_balancer_type = "application"
-		35 |   nae               = "alb"
-		36 |   subnets            = odule.vpc.public_subnets
-		37 | }
+		25 | resource "aws_lb" "default" {
+		26 |   internal           = false
+		27 |   load_balancer_type = "application"
+		28 |   name               = "alb"
+		29 |   subnets            = module.vpc.public_subnets
+		30 | }
 
-
-Check: CKV_AWS_91: "Ensure the ELBv2 (Application/Network) has access logging enabled"
-	FAILED for resource: aws_lb.disabled
-	File: /ain.tf:39-46
-	Guide: https://docs.bridgecrew.io/docs/bc_aws_logging_22
-
-		39 | resource "aws_lb" "disabled" {
-		40 |   internal           = false
-		41 |   load_balancer_type = "application"
-		42 |   nae               = "alb"
-		43 |   subnets            = odule.vpc.public_subnets
-		44 | 
-		45 |   drop_invalid_header_fields = false
-		46 | }
 
-
-Check: CKV_AWS_131: "Ensure that ALB drops HTTP headers"
-	FAILED for resource: aws_lb.disabled
-	File: /ain.tf:39-46
-	Guide: https://docs.bridgecrew.io/docs/ensure-that-alb-drops-http-headers
-
-		39 | resource "aws_lb" "disabled" {
-		40 |   internal           = false
-		41 |   load_balancer_type = "application"
-		42 |   nae               = "alb"
-		43 |   subnets            = odule.vpc.public_subnets
-		44 | 
-		45 |   drop_invalid_header_fields = false
-		46 | }
+Check: CKV_AWS_150: "Ensure that Load Balancer has deletion protection enabled"
+	FAILED for resource: aws_lb.default
+	File: /main.tf:25-30
 
-
-Check: CKV_AWS_150: "Ensure that Load Balancer has deletion protection enabled"
-	FAILED for resource: aws_lb.disabled
-	File: /ain.tf:39-46
-
-		39 | resource "aws_lb" "disabled" {
-		40 |   internal           = false
-		41 |   load_balancer_type = "application"
-		42 |   nae               = "alb"
-		43 |   subnets            = odule.vpc.public_subnets
-		44 | 
-		45 |   drop_invalid_header_fields = false
-		46 | }
+		25 | resource "aws_lb" "default" {
+		26 |   internal           = false
+		27 |   load_balancer_type = "application"
+		28 |   name               = "alb"
+		29 |   subnets            = module.vpc.public_subnets
+		30 | }
 
-
-Check: CKV_AWS_91: "Ensure the ELBv2 (Application/Network) has access logging enabled"
-	FAILED for resource: aws_alb.disabled
-	File: /ain.tf:48-55
-	Guide: https://docs.bridgecrew.io/docs/bc_aws_logging_22
-
-		48 | resource "aws_alb" "disabled" {
-		49 |   internal           = false
-		50 |   load_balancer_type = "application"
-		51 |   nae               = "alb"
-		52 |   subnets            = odule.vpc.public_subnets
-		53 | 
-		54 |   drop_invalid_header_fields = false
-		55 | }
 
-
-Check: CKV_AWS_131: "Ensure that ALB drops HTTP headers"
-	FAILED for resource: aws_alb.disabled
-	File: /ain.tf:48-55
-	Guide: https://docs.bridgecrew.io/docs/ensure-that-alb-drops-http-headers
-
-		48 | resource "aws_alb" "disabled" {
-		49 |   internal           = false
-		50 |   load_balancer_type = "application"
-		51 |   nae               = "alb"
-		52 |   subnets            = odule.vpc.public_subnets
-		53 | 
-		54 |   drop_invalid_header_fields = false
-		55 | }
+Check: CKV_AWS_91: "Ensure the ELBv2 (Application/Network) has access logging enabled"
+	FAILED for resource: aws_alb.default
+	File: /main.tf:32-37
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_logging_22
 
-
-Check: CKV_AWS_150: "Ensure that Load Balancer has deletion protection enabled"
-	FAILED for resource: aws_alb.disabled
-	File: /ain.tf:48-55
-
-		48 | resource "aws_alb" "disabled" {
-		49 |   internal           = false
-		50 |   load_balancer_type = "application"
-		51 |   nae               = "alb"
-		52 |   subnets            = odule.vpc.public_subnets
-		53 | 
-		54 |   drop_invalid_header_fields = false
-		55 | }
+		32 | resource "aws_alb" "default" {
+		33 |   internal           = false
+		34 |   load_balancer_type = "application"
+		35 |   name               = "alb"
+		36 |   subnets            = module.vpc.public_subnets
+		37 | }
 
-
-
+
+Check: CKV_AWS_131: "Ensure that ALB drops HTTP headers"
+	FAILED for resource: aws_alb.default
+	File: /main.tf:32-37
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-alb-drops-http-headers
+
+		32 | resource "aws_alb" "default" {
+		33 |   internal           = false
+		34 |   load_balancer_type = "application"
+		35 |   name               = "alb"
+		36 |   subnets            = module.vpc.public_subnets
+		37 | }
+
+
+Check: CKV_AWS_150: "Ensure that Load Balancer has deletion protection enabled"
+	FAILED for resource: aws_alb.default
+	File: /main.tf:32-37
+
+		32 | resource "aws_alb" "default" {
+		33 |   internal           = false
+		34 |   load_balancer_type = "application"
+		35 |   name               = "alb"
+		36 |   subnets            = module.vpc.public_subnets
+		37 | }
+
+
+Check: CKV_AWS_91: "Ensure the ELBv2 (Application/Network) has access logging enabled"
+	FAILED for resource: aws_lb.disabled
+	File: /main.tf:39-46
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_logging_22
+
+		39 | resource "aws_lb" "disabled" {
+		40 |   internal           = false
+		41 |   load_balancer_type = "application"
+		42 |   name               = "alb"
+		43 |   subnets            = module.vpc.public_subnets
+		44 | 
+		45 |   drop_invalid_header_fields = false
+		46 | }
+
+
+Check: CKV_AWS_131: "Ensure that ALB drops HTTP headers"
+	FAILED for resource: aws_lb.disabled
+	File: /main.tf:39-46
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-alb-drops-http-headers
+
+		39 | resource "aws_lb" "disabled" {
+		40 |   internal           = false
+		41 |   load_balancer_type = "application"
+		42 |   name               = "alb"
+		43 |   subnets            = module.vpc.public_subnets
+		44 | 
+		45 |   drop_invalid_header_fields = false
+		46 | }
+
+
+Check: CKV_AWS_150: "Ensure that Load Balancer has deletion protection enabled"
+	FAILED for resource: aws_lb.disabled
+	File: /main.tf:39-46
+
+		39 | resource "aws_lb" "disabled" {
+		40 |   internal           = false
+		41 |   load_balancer_type = "application"
+		42 |   name               = "alb"
+		43 |   subnets            = module.vpc.public_subnets
+		44 | 
+		45 |   drop_invalid_header_fields = false
+		46 | }
+
+
+Check: CKV_AWS_91: "Ensure the ELBv2 (Application/Network) has access logging enabled"
+	FAILED for resource: aws_alb.disabled
+	File: /main.tf:48-55
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_logging_22
+
+		48 | resource "aws_alb" "disabled" {
+		49 |   internal           = false
+		50 |   load_balancer_type = "application"
+		51 |   name               = "alb"
+		52 |   subnets            = module.vpc.public_subnets
+		53 | 
+		54 |   drop_invalid_header_fields = false
+		55 | }
+
+
+Check: CKV_AWS_131: "Ensure that ALB drops HTTP headers"
+	FAILED for resource: aws_alb.disabled
+	File: /main.tf:48-55
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-alb-drops-http-headers
+
+		48 | resource "aws_alb" "disabled" {
+		49 |   internal           = false
+		50 |   load_balancer_type = "application"
+		51 |   name               = "alb"
+		52 |   subnets            = module.vpc.public_subnets
+		53 | 
+		54 |   drop_invalid_header_fields = false
+		55 | }
+
+
+Check: CKV_AWS_150: "Ensure that Load Balancer has deletion protection enabled"
+	FAILED for resource: aws_alb.disabled
+	File: /main.tf:48-55
+
+		48 | resource "aws_alb" "disabled" {
+		49 |   internal           = false
+		50 |   load_balancer_type = "application"
+		51 |   name               = "alb"
+		52 |   subnets            = module.vpc.public_subnets
+		53 | 
+		54 |   drop_invalid_header_fields = false
+		55 | }
+
+

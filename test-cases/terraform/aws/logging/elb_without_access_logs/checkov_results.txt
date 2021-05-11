@@ -1,48 +1,51 @@
 
+
        _               _              
    ___| |__   ___  ___| | _______   __
   / __| '_ \ / _ \/ __| |/ / _ \ \ / /
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.132 
-
-terrafor scan results:
-
+By bridgecrew.io | version: 2.0.135 
+Update available 2.0.135 -> 2.0.136
+Run pip3 install -U checkov to update 
+
+
+terraform scan results:
+
 Passed checks: 1, Failed checks: 2, Skipped checks: 0
-
-Check: CKV_AWS_92: "Ensure the ELB has access logging enabled"
-	FAILED for resource: aws_elb.test
-	File: /ain.tf:1-10
-	Guide: https://docs.bridgecrew.io/docs/bc_aws_logging_23
-
-		1  | resource "aws_elb" "test" {
-		2  |   nae = "test-lb-tf"
-		3  |   availability_zones = ["us-west-2a", "us-west-2b", "us-west-2c"]
-		4  |   listener {
-		5  |     instance_port     = 8000
-		6  |     instance_protocol = "http"
-		7  |     lb_port           = 80
-		8  |     lb_protocol       = "http"
-		9  |   }
-		10 | }
 
-
-Check: CKV_AWS_127: "Ensure that Elastic Load Balancer(s) uses SSL certificates provided by AWS Certificate Manager"
-	FAILED for resource: aws_elb.test
-	File: /ain.tf:1-10
-	Guide: https://docs.bridgecrew.io/docs/ensure-that-elastic-load-balancers-uses-ssl-certificates-provided-by-aws-certificate-anager
-
-		1  | resource "aws_elb" "test" {
-		2  |   nae = "test-lb-tf"
-		3  |   availability_zones = ["us-west-2a", "us-west-2b", "us-west-2c"]
-		4  |   listener {
-		5  |     instance_port     = 8000
-		6  |     instance_protocol = "http"
-		7  |     lb_port           = 80
-		8  |     lb_protocol       = "http"
-		9  |   }
-		10 | }
+Check: CKV_AWS_92: "Ensure the ELB has access logging enabled"
+	FAILED for resource: aws_elb.test
+	File: /main.tf:1-10
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_logging_23
 
-
-
+		1  | resource "aws_elb" "test" {
+		2  |   name = "test-lb-tf"
+		3  |   availability_zones = ["us-west-2a", "us-west-2b", "us-west-2c"]
+		4  |   listener {
+		5  |     instance_port     = 8000
+		6  |     instance_protocol = "http"
+		7  |     lb_port           = 80
+		8  |     lb_protocol       = "http"
+		9  |   }
+		10 | }
+
+
+Check: CKV_AWS_127: "Ensure that Elastic Load Balancer(s) uses SSL certificates provided by AWS Certificate Manager"
+	FAILED for resource: aws_elb.test
+	File: /main.tf:1-10
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-elastic-load-balancers-uses-ssl-certificates-provided-by-aws-certificate-manager
+
+		1  | resource "aws_elb" "test" {
+		2  |   name = "test-lb-tf"
+		3  |   availability_zones = ["us-west-2a", "us-west-2b", "us-west-2c"]
+		4  |   listener {
+		5  |     instance_port     = 8000
+		6  |     instance_protocol = "http"
+		7  |     lb_port           = 80
+		8  |     lb_protocol       = "http"
+		9  |   }
+		10 | }
+
+

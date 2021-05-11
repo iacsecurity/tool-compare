@@ -1,40 +1,43 @@
 
+
        _               _              
    ___| |__   ___  ___| | _______   __
   / __| '_ \ / _ \/ __| |/ / _ \ \ / /
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.132 
-
-terrafor scan results:
-
+By bridgecrew.io | version: 2.0.135 
+Update available 2.0.135 -> 2.0.136
+Run pip3 install -U checkov to update 
+
+
+terraform scan results:
+
 Passed checks: 1, Failed checks: 2, Skipped checks: 0
-
-Check: CKV_AWS_74: "Ensure DocDB is encrypted at rest (default is unencrypted)"
-	FAILED for resource: aws_docdb_cluster.docdb
-	File: /ain.tf:5-11
-	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_28
-
-		5  | resource "aws_docdb_cluster" "docdb" {
-		6  |   cluster_identifier  = "y-docdb-cluster"
-		7  |   engine              = "docdb"
-		8  |   aster_usernae     = "foo"
-		9  |   aster_password     = "ustbeeightchars"
-		10 |   skip_final_snapshot = true
-		11 | }
-
-Check: CKV_AWS_85: "Ensure DocDB Logging is enabled"
-	FAILED for resource: aws_docdb_cluster.docdb
-	File: /ain.tf:5-11
-	Guide: https://docs.bridgecrew.io/docs/logging_19
-
-		5  | resource "aws_docdb_cluster" "docdb" {
-		6  |   cluster_identifier  = "y-docdb-cluster"
-		7  |   engine              = "docdb"
-		8  |   aster_usernae     = "foo"
-		9  |   aster_password     = "ustbeeightchars"
-		10 |   skip_final_snapshot = true
-		11 | }
-
-
+
+Check: CKV_AWS_74: "Ensure DocDB is encrypted at rest (default is unencrypted)"
+	FAILED for resource: aws_docdb_cluster.docdb
+	File: /main.tf:5-11
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_28
+
+		5  | resource "aws_docdb_cluster" "docdb" {
+		6  |   cluster_identifier  = "my-docdb-cluster"
+		7  |   engine              = "docdb"
+		8  |   master_username     = "foo"
+		9  |   master_password     = "mustbeeightchars"
+		10 |   skip_final_snapshot = true
+		11 | }
+
+Check: CKV_AWS_85: "Ensure DocDB Logging is enabled"
+	FAILED for resource: aws_docdb_cluster.docdb
+	File: /main.tf:5-11
+	Guide: https://docs.bridgecrew.io/docs/logging_19
+
+		5  | resource "aws_docdb_cluster" "docdb" {
+		6  |   cluster_identifier  = "my-docdb-cluster"
+		7  |   engine              = "docdb"
+		8  |   master_username     = "foo"
+		9  |   master_password     = "mustbeeightchars"
+		10 |   skip_final_snapshot = true
+		11 | }
+

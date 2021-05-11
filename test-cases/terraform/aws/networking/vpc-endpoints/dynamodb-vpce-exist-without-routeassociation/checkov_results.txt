@@ -1,138 +1,141 @@
 
+
        _               _              
    ___| |__   ___  ___| | _______   __
   / __| '_ \ / _ \/ __| |/ / _ \ \ / /
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.132 
-
-terrafor scan results:
-
+By bridgecrew.io | version: 2.0.135 
+Update available 2.0.135 -> 2.0.136
+Run pip3 install -U checkov to update 
+
+
+terraform scan results:
+
 Passed checks: 10, Failed checks: 8, Skipped checks: 0
-
-Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration EBS is securely encrypted"
-	FAILED for resource: aws_instance.test
-	File: /ain.tf:83-88
-	Guide: https://docs.bridgecrew.io/docs/general_13
-
-		83 | resource "aws_instance" "test" {
-		84 |   ai = data.aws_ai.ubuntu.id
-		85 |   instance_type = "t2.icro"
-		86 |   vpc_security_group_ids = [aws_security_group.allow-public-outbound-sg.id]
-		87 |   subnet_id = aws_subnet.private-subnet.id
-		88 | }
 
-
-Check: CKV_AWS_79: "Ensure Instance Metadata Service Version 1 is not enabled"
-	FAILED for resource: aws_instance.test
-	File: /ain.tf:83-88
-	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_31
-
-		83 | resource "aws_instance" "test" {
-		84 |   ai = data.aws_ai.ubuntu.id
-		85 |   instance_type = "t2.icro"
-		86 |   vpc_security_group_ids = [aws_security_group.allow-public-outbound-sg.id]
-		87 |   subnet_id = aws_subnet.private-subnet.id
-		88 | }
+Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration EBS is securely encrypted"
+	FAILED for resource: aws_instance.test
+	File: /main.tf:83-88
+	Guide: https://docs.bridgecrew.io/docs/general_13
 
-
-Check: CKV_AWS_135: "Ensure that EC2 is EBS optiized"
-	FAILED for resource: aws_instance.test
-	File: /ain.tf:83-88
-	Guide: https://docs.bridgecrew.io/docs/ensure-that-ec2-is-ebs-optiized
-
-		83 | resource "aws_instance" "test" {
-		84 |   ai = data.aws_ai.ubuntu.id
-		85 |   instance_type = "t2.icro"
-		86 |   vpc_security_group_ids = [aws_security_group.allow-public-outbound-sg.id]
-		87 |   subnet_id = aws_subnet.private-subnet.id
-		88 | }
+		83 | resource "aws_instance" "test" {
+		84 |   ami = data.aws_ami.ubuntu.id
+		85 |   instance_type = "t2.micro"
+		86 |   vpc_security_group_ids = [aws_security_group.allow-public-outbound-sg.id]
+		87 |   subnet_id = aws_subnet.private-subnet.id
+		88 | }
 
-
-Check: CKV_AWS_126: "Ensure that detailed onitoring is enabled for EC2 instances"
-	FAILED for resource: aws_instance.test
-	File: /ain.tf:83-88
-	Guide: https://docs.bridgecrew.io/docs/ensure-that-detailed-onitoring-is-enabled-for-ec2-instances
-
-		83 | resource "aws_instance" "test" {
-		84 |   ai = data.aws_ai.ubuntu.id
-		85 |   instance_type = "t2.icro"
-		86 |   vpc_security_group_ids = [aws_security_group.allow-public-outbound-sg.id]
-		87 |   subnet_id = aws_subnet.private-subnet.id
-		88 | }
 
-
-Check: CKV_AWS_28: "Ensure Dynaodb point in tie recovery (backup) is enabled"
-	FAILED for resource: aws_dynaodb_table.basic-dynaodb-table
-	File: /ain.tf:90-107
-	Guide: https://docs.bridgecrew.io/docs/general_6
-
-		90  | resource "aws_dynaodb_table" "basic-dynaodb-table" {
-		91  |   nae           = "GaeScores"
-		92  |   billing_ode   = "PROVISIONED"
-		93  |   read_capacity  = 5
-		94  |   write_capacity = 5
-		95  |   hash_key       = "UserId"
-		96  |   range_key      = "GaeTitle"
-		97  | 
-		98  |   attribute {
-		99  |     nae = "UserId"
-		100 |     type = "S"
-		101 |   }
-		102 | 
-		103 |   attribute {
-		104 |     nae = "GaeTitle"
-		105 |     type = "S"
-		106 |   }
-		107 | }
+Check: CKV_AWS_79: "Ensure Instance Metadata Service Version 1 is not enabled"
+	FAILED for resource: aws_instance.test
+	File: /main.tf:83-88
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_31
 
-
-Check: CKV_AWS_119: "Ensure DynaoDB Tables are encrypted using KMS"
-	FAILED for resource: aws_dynaodb_table.basic-dynaodb-table
-	File: /ain.tf:90-107
-	Guide: https://docs.bridgecrew.io/docs/ensure-that-dynaodb-tables-are-encrypted
-
-		90  | resource "aws_dynaodb_table" "basic-dynaodb-table" {
-		91  |   nae           = "GaeScores"
-		92  |   billing_ode   = "PROVISIONED"
-		93  |   read_capacity  = 5
-		94  |   write_capacity = 5
-		95  |   hash_key       = "UserId"
-		96  |   range_key      = "GaeTitle"
-		97  | 
-		98  |   attribute {
-		99  |     nae = "UserId"
-		100 |     type = "S"
-		101 |   }
-		102 | 
-		103 |   attribute {
-		104 |     nae = "GaeTitle"
-		105 |     type = "S"
-		106 |   }
-		107 | }
+		83 | resource "aws_instance" "test" {
+		84 |   ami = data.aws_ami.ubuntu.id
+		85 |   instance_type = "t2.micro"
+		86 |   vpc_security_group_ids = [aws_security_group.allow-public-outbound-sg.id]
+		87 |   subnet_id = aws_subnet.private-subnet.id
+		88 | }
 
-
-Check: CKV2_AWS_12: "Ensure the default security group of every VPC restricts all traffic"
-	FAILED for resource: aws_vpc.ain
-	File: /ain.tf:8-11
-	Guide: https://docs.bridgecrew.io/docs/networking_4
-
-		8  | resource "aws_vpc" "ain" {
-		9  |   cidr_block = "192.168.100.0/24"
-		10 |   enable_dns_support = true
-		11 | }
 
-
-Check: CKV2_AWS_11: "Ensure VPC flow logging is enabled in all VPCs"
-	FAILED for resource: aws_vpc.ain
-	File: /ain.tf:8-11
-	Guide: https://docs.bridgecrew.io-vpc-flow-logging
-
-		8  | resource "aws_vpc" "ain" {
-		9  |   cidr_block = "192.168.100.0/24"
-		10 |   enable_dns_support = true
-		11 | }
+Check: CKV_AWS_135: "Ensure that EC2 is EBS optimized"
+	FAILED for resource: aws_instance.test
+	File: /main.tf:83-88
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-ec2-is-ebs-optimized
 
-
-
+		83 | resource "aws_instance" "test" {
+		84 |   ami = data.aws_ami.ubuntu.id
+		85 |   instance_type = "t2.micro"
+		86 |   vpc_security_group_ids = [aws_security_group.allow-public-outbound-sg.id]
+		87 |   subnet_id = aws_subnet.private-subnet.id
+		88 | }
+
+
+Check: CKV_AWS_126: "Ensure that detailed monitoring is enabled for EC2 instances"
+	FAILED for resource: aws_instance.test
+	File: /main.tf:83-88
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-detailed-monitoring-is-enabled-for-ec2-instances
+
+		83 | resource "aws_instance" "test" {
+		84 |   ami = data.aws_ami.ubuntu.id
+		85 |   instance_type = "t2.micro"
+		86 |   vpc_security_group_ids = [aws_security_group.allow-public-outbound-sg.id]
+		87 |   subnet_id = aws_subnet.private-subnet.id
+		88 | }
+
+
+Check: CKV_AWS_28: "Ensure Dynamodb point in time recovery (backup) is enabled"
+	FAILED for resource: aws_dynamodb_table.basic-dynamodb-table
+	File: /main.tf:90-107
+	Guide: https://docs.bridgecrew.io/docs/general_6
+
+		90  | resource "aws_dynamodb_table" "basic-dynamodb-table" {
+		91  |   name           = "GameScores"
+		92  |   billing_mode   = "PROVISIONED"
+		93  |   read_capacity  = 5
+		94  |   write_capacity = 5
+		95  |   hash_key       = "UserId"
+		96  |   range_key      = "GameTitle"
+		97  | 
+		98  |   attribute {
+		99  |     name = "UserId"
+		100 |     type = "S"
+		101 |   }
+		102 | 
+		103 |   attribute {
+		104 |     name = "GameTitle"
+		105 |     type = "S"
+		106 |   }
+		107 | }
+
+
+Check: CKV_AWS_119: "Ensure DynamoDB Tables are encrypted using KMS"
+	FAILED for resource: aws_dynamodb_table.basic-dynamodb-table
+	File: /main.tf:90-107
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-dynamodb-tables-are-encrypted
+
+		90  | resource "aws_dynamodb_table" "basic-dynamodb-table" {
+		91  |   name           = "GameScores"
+		92  |   billing_mode   = "PROVISIONED"
+		93  |   read_capacity  = 5
+		94  |   write_capacity = 5
+		95  |   hash_key       = "UserId"
+		96  |   range_key      = "GameTitle"
+		97  | 
+		98  |   attribute {
+		99  |     name = "UserId"
+		100 |     type = "S"
+		101 |   }
+		102 | 
+		103 |   attribute {
+		104 |     name = "GameTitle"
+		105 |     type = "S"
+		106 |   }
+		107 | }
+
+
+Check: CKV2_AWS_12: "Ensure the default security group of every VPC restricts all traffic"
+	FAILED for resource: aws_vpc.main
+	File: /main.tf:8-11
+	Guide: https://docs.bridgecrew.io/docs/networking_4
+
+		8  | resource "aws_vpc" "main" {
+		9  |   cidr_block = "192.168.100.0/24"
+		10 |   enable_dns_support = true
+		11 | }
+
+
+Check: CKV2_AWS_11: "Ensure VPC flow logging is enabled in all VPCs"
+	FAILED for resource: aws_vpc.main
+	File: /main.tf:8-11
+	Guide: https://docs.bridgecrew.io-vpc-flow-logging
+
+		8  | resource "aws_vpc" "main" {
+		9  |   cidr_block = "192.168.100.0/24"
+		10 |   enable_dns_support = true
+		11 | }
+
+
