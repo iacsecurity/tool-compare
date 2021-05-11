@@ -1,13 +1,26 @@
 
+
        _               _              
    ___| |__   ___  ___| | _______   __
   / __| '_ \ / _ \/ __| |/ / _ \ \ / /
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.46 
+By bridgecrew.io | version: 2.0.135 
+Update available 2.0.135 -> 2.0.136
+Run pip3 install -U checkov to update 
+
 
 terraform scan results:
 
-Passed checks: 2, Failed checks: 0, Skipped checks: 0
+Passed checks: 2, Failed checks: 1, Skipped checks: 0
+
+Check: CKV_AWS_158: "Ensure that CloudWatch Group is encrypted by KMS"
+	FAILED for resource: aws_cloudwatch_log_group.cloudrail-test
+	File: /main.tf:5-7
+
+		5 | resource "aws_cloudwatch_log_group" "cloudrail-test" {
+		6 |   retention_in_days = 1
+		7 | }
+
 

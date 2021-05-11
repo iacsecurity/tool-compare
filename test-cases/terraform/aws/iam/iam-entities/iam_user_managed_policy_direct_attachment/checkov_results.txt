@@ -6,14 +6,14 @@
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.66 
-Update available 2.0.66 -> 2.0.67
+By bridgecrew.io | version: 2.0.135 
+Update available 2.0.135 -> 2.0.136
 Run pip3 install -U checkov to update 
 
 
 terraform scan results:
 
-Passed checks: 3, Failed checks: 1, Skipped checks: 0
+Passed checks: 4, Failed checks: 1, Skipped checks: 0
 
 Check: CKV_AWS_40: "Ensure IAM policies are attached only to groups or roles (Reducing access management complexity may in-turn reduce opportunity for a principal to inadvertently receive or retain excessive privileges.)"
 	FAILED for resource: aws_iam_user_policy_attachment.managed-policy-attach

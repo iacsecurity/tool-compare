@@ -1,5 +1,4 @@
-<string>:1: SyntaxWarning: 'set' object is not subscriptable; perhaps you missed a comma?
-<string>:1: SyntaxWarning: 'set' object is not subscriptable; perhaps you missed a comma?
+
 
        _               _              
    ___| |__   ___  ___| | _______   __
@@ -7,9 +6,50 @@
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.46 
+By bridgecrew.io | version: 2.0.135 
+Update available 2.0.135 -> 2.0.136
+Run pip3 install -U checkov to update 
+
 
 terraform scan results:
 
-Passed checks: 10, Failed checks: 0, Skipped checks: 0
+Passed checks: 10, Failed checks: 2, Skipped checks: 0
+
+Check: CKV_AWS_156: "Ensure that Workspace root volumes are encrypted"
+	FAILED for resource: aws_workspaces_workspace.test
+	File: /main.tf:76-88
+
+		76 | resource "aws_workspaces_workspace" "test" {
+		77 |   directory_id = aws_workspaces_directory.test.id
+		78 |   bundle_id    = data.aws_workspaces_bundle.value_windows_10.id
+		79 |   user_name    = "Administrator"
+		80 | 
+		81 |   workspace_properties {
+		82 |     compute_type_name                         = "VALUE"
+		83 |     user_volume_size_gib                      = 10
+		84 |     root_volume_size_gib                      = 80
+		85 |     running_mode                              = "AUTO_STOP"
+		86 |     running_mode_auto_stop_timeout_in_minutes = 60
+		87 |   }
+		88 | }
+
+
+Check: CKV_AWS_155: "Ensure that Workspace user volumes are encrypted"
+	FAILED for resource: aws_workspaces_workspace.test
+	File: /main.tf:76-88
+
+		76 | resource "aws_workspaces_workspace" "test" {
+		77 |   directory_id = aws_workspaces_directory.test.id
+		78 |   bundle_id    = data.aws_workspaces_bundle.value_windows_10.id
+		79 |   user_name    = "Administrator"
+		80 | 
+		81 |   workspace_properties {
+		82 |     compute_type_name                         = "VALUE"
+		83 |     user_volume_size_gib                      = 10
+		84 |     root_volume_size_gib                      = 80
+		85 |     running_mode                              = "AUTO_STOP"
+		86 |     running_mode_auto_stop_timeout_in_minutes = 60
+		87 |   }
+		88 | }
+
 

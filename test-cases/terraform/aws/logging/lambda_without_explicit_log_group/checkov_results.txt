@@ -1,15 +1,36 @@
 
+
        _               _              
    ___| |__   ___  ___| | _______   __
   / __| '_ \ / _ \/ __| |/ / _ \ \ / /
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.46 
+By bridgecrew.io | version: 2.0.135 
+Update available 2.0.135 -> 2.0.136
+Run pip3 install -U checkov to update 
+
 
 terraform scan results:
 
 Passed checks: 6, Failed checks: 4, Skipped checks: 0
+
+Check: CKV_AWS_115: "Ensure that AWS Lambda function is configured for function-level concurrent execution limit"
+	FAILED for resource: aws_lambda_function.test_lambda
+	File: /main.tf:57-67
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-aws-lambda-function-is-configured-for-function-level-concurrent-execution-limit
+
+		57 | resource "aws_lambda_function" "test_lambda" {
+		58 |   filename      = "${path.module}/Archive.zip"
+		59 |   function_name = local.lambda_name
+		60 |   role          = aws_iam_role.iam_for_lambda.arn
+		61 |   handler       = "main.handler"
+		62 |   runtime       = "python3.8"
+		63 | 
+		64 |   depends_on = [
+		65 |     aws_iam_role_policy_attachment.lambda_logs
+		66 |   ]
+		67 | }
 
 Check: CKV_AWS_50: "X-ray tracing is enabled for Lambda"
 	FAILED for resource: aws_lambda_function.test_lambda
@@ -28,25 +49,10 @@ Check: CKV_AWS_50: "X-ray tracing is enabled for Lambda"
 		66 |   ]
 		67 | }
 
-Check: CKV_AWS_115: "Ensure that AWS Lambda function is configured for function-level concurrent execution limit"
-	FAILED for resource: aws_lambda_function.test_lambda
-	File: /main.tf:57-67
-
-		57 | resource "aws_lambda_function" "test_lambda" {
-		58 |   filename      = "${path.module}/Archive.zip"
-		59 |   function_name = local.lambda_name
-		60 |   role          = aws_iam_role.iam_for_lambda.arn
-		61 |   handler       = "main.handler"
-		62 |   runtime       = "python3.8"
-		63 | 
-		64 |   depends_on = [
-		65 |     aws_iam_role_policy_attachment.lambda_logs
-		66 |   ]
-		67 | }
-
 Check: CKV_AWS_116: "Ensure that AWS Lambda function is configured for a Dead Letter Queue(DLQ)"
 	FAILED for resource: aws_lambda_function.test_lambda
 	File: /main.tf:57-67
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-aws-lambda-function-is-configured-for-a-dead-letter-queue-dlq
 
 		57 | resource "aws_lambda_function" "test_lambda" {
 		58 |   filename      = "${path.module}/Archive.zip"
@@ -63,6 +69,7 @@ Check: CKV_AWS_116: "Ensure that AWS Lambda function is configured for a Dead Le
 Check: CKV_AWS_117: "Ensure that AWS Lambda function is configured inside a VPC"
 	FAILED for resource: aws_lambda_function.test_lambda
 	File: /main.tf:57-67
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-aws-lambda-function-is-configured-inside-a-vpc-1
 
 		57 | resource "aws_lambda_function" "test_lambda" {
 		58 |   filename      = "${path.module}/Archive.zip"

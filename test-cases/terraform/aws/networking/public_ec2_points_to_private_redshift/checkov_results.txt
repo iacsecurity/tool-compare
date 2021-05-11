@@ -1,15 +1,19 @@
 
+
        _               _              
    ___| |__   ___  ___| | _______   __
   / __| '_ \ / _ \/ __| |/ / _ \ \ / /
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.46 
+By bridgecrew.io | version: 2.0.135 
+Update available 2.0.135 -> 2.0.136
+Run pip3 install -U checkov to update 
+
 
 terraform scan results:
 
-Passed checks: 6, Failed checks: 11, Skipped checks: 0
+Passed checks: 11, Failed checks: 14, Skipped checks: 0
 
 Check: CKV_AWS_71: "Ensure Redshift Cluster logging is enabled"
 	FAILED for resource: aws_redshift_cluster.test
@@ -31,6 +35,7 @@ Check: CKV_AWS_71: "Ensure Redshift Cluster logging is enabled"
 Check: CKV_AWS_142: "Ensure that Redshift cluster is encrypted by KMS"
 	FAILED for resource: aws_redshift_cluster.test
 	File: /main.tf:103-112
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-redshift-cluster-is-encrypted-by-kms
 
 		103 | resource "aws_redshift_cluster" "test" {
 		104 |   cluster_identifier = "redshift-defaults-only"
@@ -61,10 +66,10 @@ Check: CKV_AWS_64: "Ensure all data stored in the Redshift cluster is securely e
 		112 | }
 
 
-Check: CKV_AWS_23: "Ensure every security groups rule has a description"
+Check: CKV_AWS_24: "Ensure no security groups allow ingress from 0.0.0.0:0 to port 22"
 	FAILED for resource: aws_security_group.publicly_accessible_sg
 	File: /main.tf:114-128
-	Guide: https://docs.bridgecrew.io/docs/networking_31
+	Guide: https://docs.bridgecrew.io/docs/networking_1-port-security
 
 		114 | resource "aws_security_group" "publicly_accessible_sg" {
 		115 |   vpc_id = aws_vpc.nondefault.id
@@ -83,10 +88,10 @@ Check: CKV_AWS_23: "Ensure every security groups rule has a description"
 		128 | }
 
 
-Check: CKV_AWS_24: "Ensure no security groups allow ingress from 0.0.0.0:0 to port 22"
+Check: CKV_AWS_23: "Ensure every security groups rule has a description"
 	FAILED for resource: aws_security_group.publicly_accessible_sg
 	File: /main.tf:114-128
-	Guide: https://docs.bridgecrew.io/docs/networking_1-port-security
+	Guide: https://docs.bridgecrew.io/docs/networking_31
 
 		114 | resource "aws_security_group" "publicly_accessible_sg" {
 		115 |   vpc_id = aws_vpc.nondefault.id
@@ -127,19 +132,6 @@ Check: CKV_AWS_25: "Ensure no security groups allow ingress from 0.0.0.0:0 to po
 		128 | }
 
 
-Check: CKV_AWS_79: "Ensure Instance Metadata Service Version 1 is not enabled"
-	FAILED for resource: aws_instance.public_ins
-	File: /main.tf:131-137
-	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_31
-
-		131 | resource "aws_instance" "public_ins" {
-		132 |   ami = "ami-0130bec6e5047f596"
-		133 |   instance_type = "t3.nano"
-		134 |   associate_public_ip_address = true
-		135 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
-		136 |   subnet_id = aws_subnet.nondefault_1.id
-		137 | }
-
 Check: CKV_AWS_88: "EC2 instance should not have public IP."
 	FAILED for resource: aws_instance.public_ins
 	File: /main.tf:131-137
@@ -166,9 +158,10 @@ Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration EBS is sec
 		136 |   subnet_id = aws_subnet.nondefault_1.id
 		137 | }
 
-Check: CKV_AWS_126: "Ensure that detailed monitoring is enabled for EC2 instances"
+Check: CKV_AWS_79: "Ensure Instance Metadata Service Version 1 is not enabled"
 	FAILED for resource: aws_instance.public_ins
 	File: /main.tf:131-137
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_31
 
 		131 | resource "aws_instance" "public_ins" {
 		132 |   ami = "ami-0130bec6e5047f596"
@@ -181,6 +174,7 @@ Check: CKV_AWS_126: "Ensure that detailed monitoring is enabled for EC2 instance
 Check: CKV_AWS_135: "Ensure that EC2 is EBS optimized"
 	FAILED for resource: aws_instance.public_ins
 	File: /main.tf:131-137
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-ec2-is-ebs-optimized
 
 		131 | resource "aws_instance" "public_ins" {
 		132 |   ami = "ami-0130bec6e5047f596"
@@ -189,4 +183,54 @@ Check: CKV_AWS_135: "Ensure that EC2 is EBS optimized"
 		135 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
 		136 |   subnet_id = aws_subnet.nondefault_1.id
 		137 | }
+
+Check: CKV_AWS_126: "Ensure that detailed monitoring is enabled for EC2 instances"
+	FAILED for resource: aws_instance.public_ins
+	File: /main.tf:131-137
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-detailed-monitoring-is-enabled-for-ec2-instances
+
+		131 | resource "aws_instance" "public_ins" {
+		132 |   ami = "ami-0130bec6e5047f596"
+		133 |   instance_type = "t3.nano"
+		134 |   associate_public_ip_address = true
+		135 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
+		136 |   subnet_id = aws_subnet.nondefault_1.id
+		137 | }
+
+Check: CKV2_AWS_12: "Ensure the default security group of every VPC restricts all traffic"
+	FAILED for resource: aws_vpc.nondefault
+	File: /main.tf:10-12
+	Guide: https://docs.bridgecrew.io/docs/networking_4
+
+		10 | resource "aws_vpc" "nondefault" {
+		11 |   cidr_block = "10.1.1.0/24"
+		12 | }
+
+
+Check: CKV2_AWS_11: "Ensure VPC flow logging is enabled in all VPCs"
+	FAILED for resource: aws_vpc.nondefault
+	File: /main.tf:10-12
+	Guide: https://docs.bridgecrew.io-vpc-flow-logging
+
+		10 | resource "aws_vpc" "nondefault" {
+		11 |   cidr_block = "10.1.1.0/24"
+		12 | }
+
+
+Check: CKV2_AWS_13: "Ensure that Redshift clusters has backup plan of AWS Backup"
+	FAILED for resource: aws_redshift_cluster.test
+	File: /main.tf:103-112
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-redshift-clusters-has-backup-plan-of-aws-backup
+
+		103 | resource "aws_redshift_cluster" "test" {
+		104 |   cluster_identifier = "redshift-defaults-only"
+		105 |   node_type = "dc2.large"
+		106 |   master_password = "Test1234"
+		107 |   master_username = "test"
+		108 |   skip_final_snapshot = true
+		109 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
+		110 |   cluster_subnet_group_name = aws_redshift_subnet_group.nondefault.name
+		111 |   publicly_accessible = false // Note that while the subnet itself has public access, the redshift is set NOT to have a public IP
+		112 | }
+
 

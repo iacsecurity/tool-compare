@@ -1,20 +1,24 @@
 
+
        _               _              
    ___| |__   ___  ___| | _______   __
   / __| '_ \ / _ \/ __| |/ / _ \ \ / /
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.46 
+By bridgecrew.io | version: 2.0.135 
+Update available 2.0.135 -> 2.0.136
+Run pip3 install -U checkov to update 
+
 
 terraform scan results:
 
-Passed checks: 11, Failed checks: 15, Skipped checks: 0
+Passed checks: 11, Failed checks: 17, Skipped checks: 0
 
-Check: CKV_AWS_19: "Ensure all data stored in the S3 bucket is securely encrypted at rest"
+Check: CKV_AWS_21: "Ensure all data stored in the S3 bucket have versioning enabled"
 	FAILED for resource: aws_s3_bucket.logging
 	File: /main.tf:5-12
-	Guide: https://docs.bridgecrew.io/docs/s3_14-data-encrypted-at-rest
+	Guide: https://docs.bridgecrew.io/docs/s3_16-enable-versioning
 
 		5  | resource "aws_s3_bucket" "logging" {
 		6  |   bucket = "dist-cloud-test-logs"
@@ -29,20 +33,7 @@ Check: CKV_AWS_19: "Ensure all data stored in the S3 bucket is securely encrypte
 Check: CKV_AWS_144: "Ensure that S3 bucket has cross-region replication enabled"
 	FAILED for resource: aws_s3_bucket.logging
 	File: /main.tf:5-12
-
-		5  | resource "aws_s3_bucket" "logging" {
-		6  |   bucket = "dist-cloud-test-logs"
-		7  |   acl    = "log-delivery-write"
-		8  | 
-		9  |   tags = {
-		10 |     Name = "dist-cloud-test-logs"
-		11 |   }
-		12 | }
-
-
-Check: CKV_AWS_145: "Ensure that S3 buckets are encrypted with KMS by default"
-	FAILED for resource: aws_s3_bucket.logging
-	File: /main.tf:5-12
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-s3-bucket-has-cross-region-replication-enabled
 
 		5  | resource "aws_s3_bucket" "logging" {
 		6  |   bucket = "dist-cloud-test-logs"
@@ -83,10 +74,10 @@ Check: CKV_AWS_18: "Ensure the S3 bucket has access logging enabled"
 		12 | }
 
 
-Check: CKV_AWS_21: "Ensure all data stored in the S3 bucket have versioning enabled"
+Check: CKV_AWS_145: "Ensure that S3 buckets are encrypted with KMS by default"
 	FAILED for resource: aws_s3_bucket.logging
 	File: /main.tf:5-12
-	Guide: https://docs.bridgecrew.io/docs/s3_16-enable-versioning
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-s3-buckets-are-encrypted-with-kms-by-default
 
 		5  | resource "aws_s3_bucket" "logging" {
 		6  |   bucket = "dist-cloud-test-logs"
@@ -98,29 +89,25 @@ Check: CKV_AWS_21: "Ensure all data stored in the S3 bucket have versioning enab
 		12 | }
 
 
-Check: CKV_AWS_57: "S3 Bucket has an ACL defined which allows public WRITE access."
-	FAILED for resource: aws_s3_bucket.dist
-	File: /main.tf:14-25
-	Guide: https://docs.bridgecrew.io/docs/s3_2-acl-write-permissions-everyone
-
-		14 | resource "aws_s3_bucket" "dist" {
-		15 |   bucket = "dist-cloud-test"
-		16 |   acl    = "public-read-write"
-		17 | 
-		18 |   tags = {
-		19 |     Name = "dist-cloud-test"
-		20 |   }
-		21 |   logging {
-		22 |    	target_bucket = aws_s3_bucket.logging.id
-		23 |   	target_prefix = "log/"
-		24 |   }
-		25 | }
-
-
 Check: CKV_AWS_19: "Ensure all data stored in the S3 bucket is securely encrypted at rest"
+	FAILED for resource: aws_s3_bucket.logging
+	File: /main.tf:5-12
+	Guide: https://docs.bridgecrew.io/docs/s3_14-data-encrypted-at-rest
+
+		5  | resource "aws_s3_bucket" "logging" {
+		6  |   bucket = "dist-cloud-test-logs"
+		7  |   acl    = "log-delivery-write"
+		8  | 
+		9  |   tags = {
+		10 |     Name = "dist-cloud-test-logs"
+		11 |   }
+		12 | }
+
+
+Check: CKV_AWS_21: "Ensure all data stored in the S3 bucket have versioning enabled"
 	FAILED for resource: aws_s3_bucket.dist
 	File: /main.tf:14-25
-	Guide: https://docs.bridgecrew.io/docs/s3_14-data-encrypted-at-rest
+	Guide: https://docs.bridgecrew.io/docs/s3_16-enable-versioning
 
 		14 | resource "aws_s3_bucket" "dist" {
 		15 |   bucket = "dist-cloud-test"
@@ -139,24 +126,7 @@ Check: CKV_AWS_19: "Ensure all data stored in the S3 bucket is securely encrypte
 Check: CKV_AWS_144: "Ensure that S3 bucket has cross-region replication enabled"
 	FAILED for resource: aws_s3_bucket.dist
 	File: /main.tf:14-25
-
-		14 | resource "aws_s3_bucket" "dist" {
-		15 |   bucket = "dist-cloud-test"
-		16 |   acl    = "public-read-write"
-		17 | 
-		18 |   tags = {
-		19 |     Name = "dist-cloud-test"
-		20 |   }
-		21 |   logging {
-		22 |    	target_bucket = aws_s3_bucket.logging.id
-		23 |   	target_prefix = "log/"
-		24 |   }
-		25 | }
-
-
-Check: CKV_AWS_145: "Ensure that S3 buckets are encrypted with KMS by default"
-	FAILED for resource: aws_s3_bucket.dist
-	File: /main.tf:14-25
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-s3-bucket-has-cross-region-replication-enabled
 
 		14 | resource "aws_s3_bucket" "dist" {
 		15 |   bucket = "dist-cloud-test"
@@ -209,10 +179,10 @@ Check: CKV_AWS_20: "S3 Bucket has an ACL defined which allows public READ access
 		25 | }
 
 
-Check: CKV_AWS_21: "Ensure all data stored in the S3 bucket have versioning enabled"
+Check: CKV_AWS_145: "Ensure that S3 buckets are encrypted with KMS by default"
 	FAILED for resource: aws_s3_bucket.dist
 	File: /main.tf:14-25
-	Guide: https://docs.bridgecrew.io/docs/s3_16-enable-versioning
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-s3-buckets-are-encrypted-with-kms-by-default
 
 		14 | resource "aws_s3_bucket" "dist" {
 		15 |   bucket = "dist-cloud-test"
@@ -227,6 +197,150 @@ Check: CKV_AWS_21: "Ensure all data stored in the S3 bucket have versioning enab
 		24 |   }
 		25 | }
 
+
+Check: CKV_AWS_57: "S3 Bucket has an ACL defined which allows public WRITE access."
+	FAILED for resource: aws_s3_bucket.dist
+	File: /main.tf:14-25
+	Guide: https://docs.bridgecrew.io/docs/s3_2-acl-write-permissions-everyone
+
+		14 | resource "aws_s3_bucket" "dist" {
+		15 |   bucket = "dist-cloud-test"
+		16 |   acl    = "public-read-write"
+		17 | 
+		18 |   tags = {
+		19 |     Name = "dist-cloud-test"
+		20 |   }
+		21 |   logging {
+		22 |    	target_bucket = aws_s3_bucket.logging.id
+		23 |   	target_prefix = "log/"
+		24 |   }
+		25 | }
+
+
+Check: CKV_AWS_19: "Ensure all data stored in the S3 bucket is securely encrypted at rest"
+	FAILED for resource: aws_s3_bucket.dist
+	File: /main.tf:14-25
+	Guide: https://docs.bridgecrew.io/docs/s3_14-data-encrypted-at-rest
+
+		14 | resource "aws_s3_bucket" "dist" {
+		15 |   bucket = "dist-cloud-test"
+		16 |   acl    = "public-read-write"
+		17 | 
+		18 |   tags = {
+		19 |     Name = "dist-cloud-test"
+		20 |   }
+		21 |   logging {
+		22 |    	target_bucket = aws_s3_bucket.logging.id
+		23 |   	target_prefix = "log/"
+		24 |   }
+		25 | }
+
+
+Check: CKV_AWS_34: "Ensure cloudfront distribution ViewerProtocolPolicy is set to HTTPS"
+	FAILED for resource: aws_cloudfront_distribution.s3_distribution
+	File: /main.tf:32-131
+	Guide: https://docs.bridgecrew.io/docs/networking_32
+
+		32  | resource "aws_cloudfront_distribution" "s3_distribution" {
+		33  |   origin {
+		34  |     domain_name = aws_s3_bucket.dist.bucket_regional_domain_name
+		35  |     origin_id   = local.s3_origin_id
+		36  |   }
+		37  | 
+		38  |   enabled             = true
+		39  |   is_ipv6_enabled     = true
+		40  |   comment             = "Some comment"
+		41  |   default_root_object = "index.html"
+		42  | 
+		43  |   logging_config {
+		44  |     include_cookies = false
+		45  |     bucket          = "dist-cloud-test-logs.s3.amazonaws.com"
+		46  |     prefix          = "log/"
+		47  |   }
+		48  | 
+		49  |   aliases = ["mysite.example.com", "yoursite.example.com"]
+		50  | 
+		51  |   default_cache_behavior {
+		52  |     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
+		53  |     cached_methods   = ["GET", "HEAD"]
+		54  |     target_origin_id = local.s3_origin_id
+		55  | 
+		56  |     forwarded_values {
+		57  |       query_string = false
+		58  | 
+		59  |       cookies {
+		60  |         forward = "none"
+		61  |       }
+		62  |     }
+		63  | 
+		64  |     viewer_protocol_policy = "allow-all"
+		65  |     min_ttl                = 0
+		66  |     default_ttl            = 3600
+		67  |     max_ttl                = 86400
+		68  |   }
+		69  | 
+		70  |   # Cache behavior with precedence 0
+		71  |   ordered_cache_behavior {
+		72  |     path_pattern     = "/content/immutable/*"
+		73  |     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
+		74  |     cached_methods   = ["GET", "HEAD", "OPTIONS"]
+		75  |     target_origin_id = local.s3_origin_id
+		76  | 
+		77  |     forwarded_values {
+		78  |       query_string = false
+		79  |       headers      = ["Origin"]
+		80  | 
+		81  |       cookies {
+		82  |         forward = "none"
+		83  |       }
+		84  |     }
+		85  | 
+		86  |     min_ttl                = 0
+		87  |     default_ttl            = 86400
+		88  |     max_ttl                = 31536000
+		89  |     compress               = true
+		90  |     viewer_protocol_policy = "redirect-to-https"
+		91  |   }
+		92  | 
+		93  |   # Cache behavior with precedence 1
+		94  |   ordered_cache_behavior {
+		95  |     path_pattern     = "/content/*"
+		96  |     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
+		97  |     cached_methods   = ["GET", "HEAD"]
+		98  |     target_origin_id = local.s3_origin_id
+		99  | 
+		100 |     forwarded_values {
+		101 |       query_string = false
+		102 | 
+		103 |       cookies {
+		104 |         forward = "none"
+		105 |       }
+		106 |     }
+		107 | 
+		108 |     min_ttl                = 0
+		109 |     default_ttl            = 3600
+		110 |     max_ttl                = 86400
+		111 |     compress               = true
+		112 |     viewer_protocol_policy = "redirect-to-https"
+		113 |   }
+		114 | 
+		115 |   price_class = "PriceClass_200"
+		116 | 
+		117 |   restrictions {
+		118 |     geo_restriction {
+		119 |       restriction_type = "whitelist"
+		120 |       locations        = ["US", "CA", "GB", "DE"]
+		121 |     }
+		122 |   }
+		123 | 
+		124 |   tags = {
+		125 |     Environment = "production"
+		126 |   }
+		127 | 
+		128 |   viewer_certificate {
+		129 |     cloudfront_default_certificate = true
+		130 |   }
+		131 | }
 
 Check: CKV_AWS_68: "CloudFront Distribution should have WAF enabled"
 	FAILED for resource: aws_cloudfront_distribution.s3_distribution
@@ -334,109 +448,37 @@ Check: CKV_AWS_68: "CloudFront Distribution should have WAF enabled"
 		130 |   }
 		131 | }
 
-Check: CKV_AWS_34: "Ensure cloudfront distribution ViewerProtocolPolicy is set to HTTPS"
-	FAILED for resource: aws_cloudfront_distribution.s3_distribution
-	File: /main.tf:32-131
-	Guide: https://docs.bridgecrew.io/docs/networking_32
+Check: CKV2_AWS_6: "Ensure that S3 bucket has a Public Access block"
+	FAILED for resource: aws_s3_bucket.logging
+	File: /main.tf:5-12
+	Guide: https://docs.bridgecrew.io/docs/s3-bucket-should-have-public-access-blocks-defaults-to-false-if-the-public-access-block-is-not-attached
 
-		32  | resource "aws_cloudfront_distribution" "s3_distribution" {
-		33  |   origin {
-		34  |     domain_name = aws_s3_bucket.dist.bucket_regional_domain_name
-		35  |     origin_id   = local.s3_origin_id
-		36  |   }
-		37  | 
-		38  |   enabled             = true
-		39  |   is_ipv6_enabled     = true
-		40  |   comment             = "Some comment"
-		41  |   default_root_object = "index.html"
-		42  | 
-		43  |   logging_config {
-		44  |     include_cookies = false
-		45  |     bucket          = "dist-cloud-test-logs.s3.amazonaws.com"
-		46  |     prefix          = "log/"
-		47  |   }
-		48  | 
-		49  |   aliases = ["mysite.example.com", "yoursite.example.com"]
-		50  | 
-		51  |   default_cache_behavior {
-		52  |     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
-		53  |     cached_methods   = ["GET", "HEAD"]
-		54  |     target_origin_id = local.s3_origin_id
-		55  | 
-		56  |     forwarded_values {
-		57  |       query_string = false
-		58  | 
-		59  |       cookies {
-		60  |         forward = "none"
-		61  |       }
-		62  |     }
-		63  | 
-		64  |     viewer_protocol_policy = "allow-all"
-		65  |     min_ttl                = 0
-		66  |     default_ttl            = 3600
-		67  |     max_ttl                = 86400
-		68  |   }
-		69  | 
-		70  |   # Cache behavior with precedence 0
-		71  |   ordered_cache_behavior {
-		72  |     path_pattern     = "/content/immutable/*"
-		73  |     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
-		74  |     cached_methods   = ["GET", "HEAD", "OPTIONS"]
-		75  |     target_origin_id = local.s3_origin_id
-		76  | 
-		77  |     forwarded_values {
-		78  |       query_string = false
-		79  |       headers      = ["Origin"]
-		80  | 
-		81  |       cookies {
-		82  |         forward = "none"
-		83  |       }
-		84  |     }
-		85  | 
-		86  |     min_ttl                = 0
-		87  |     default_ttl            = 86400
-		88  |     max_ttl                = 31536000
-		89  |     compress               = true
-		90  |     viewer_protocol_policy = "redirect-to-https"
-		91  |   }
-		92  | 
-		93  |   # Cache behavior with precedence 1
-		94  |   ordered_cache_behavior {
-		95  |     path_pattern     = "/content/*"
-		96  |     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
-		97  |     cached_methods   = ["GET", "HEAD"]
-		98  |     target_origin_id = local.s3_origin_id
-		99  | 
-		100 |     forwarded_values {
-		101 |       query_string = false
-		102 | 
-		103 |       cookies {
-		104 |         forward = "none"
-		105 |       }
-		106 |     }
-		107 | 
-		108 |     min_ttl                = 0
-		109 |     default_ttl            = 3600
-		110 |     max_ttl                = 86400
-		111 |     compress               = true
-		112 |     viewer_protocol_policy = "redirect-to-https"
-		113 |   }
-		114 | 
-		115 |   price_class = "PriceClass_200"
-		116 | 
-		117 |   restrictions {
-		118 |     geo_restriction {
-		119 |       restriction_type = "whitelist"
-		120 |       locations        = ["US", "CA", "GB", "DE"]
-		121 |     }
-		122 |   }
-		123 | 
-		124 |   tags = {
-		125 |     Environment = "production"
-		126 |   }
-		127 | 
-		128 |   viewer_certificate {
-		129 |     cloudfront_default_certificate = true
-		130 |   }
-		131 | }
+		5  | resource "aws_s3_bucket" "logging" {
+		6  |   bucket = "dist-cloud-test-logs"
+		7  |   acl    = "log-delivery-write"
+		8  | 
+		9  |   tags = {
+		10 |     Name = "dist-cloud-test-logs"
+		11 |   }
+		12 | }
+
+
+Check: CKV2_AWS_6: "Ensure that S3 bucket has a Public Access block"
+	FAILED for resource: aws_s3_bucket.dist
+	File: /main.tf:14-25
+	Guide: https://docs.bridgecrew.io/docs/s3-bucket-should-have-public-access-blocks-defaults-to-false-if-the-public-access-block-is-not-attached
+
+		14 | resource "aws_s3_bucket" "dist" {
+		15 |   bucket = "dist-cloud-test"
+		16 |   acl    = "public-read-write"
+		17 | 
+		18 |   tags = {
+		19 |     Name = "dist-cloud-test"
+		20 |   }
+		21 |   logging {
+		22 |    	target_bucket = aws_s3_bucket.logging.id
+		23 |   	target_prefix = "log/"
+		24 |   }
+		25 | }
+
 

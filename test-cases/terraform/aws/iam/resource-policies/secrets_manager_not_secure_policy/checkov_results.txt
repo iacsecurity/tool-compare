@@ -1,13 +1,26 @@
 
+
        _               _              
    ___| |__   ___  ___| | _______   __
   / __| '_ \ / _ \/ __| |/ / _ \ \ / /
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.46 
+By bridgecrew.io | version: 2.0.135 
+Update available 2.0.135 -> 2.0.136
+Run pip3 install -U checkov to update 
+
 
 terraform scan results:
 
-Passed checks: 1, Failed checks: 0, Skipped checks: 0
+Passed checks: 1, Failed checks: 1, Skipped checks: 0
+
+Check: CKV_AWS_149: "Ensure that Secrets Manager secret is encrypted using KMS"
+	FAILED for resource: aws_secretsmanager_secret.not_secure_policy
+	File: /main.tf:5-7
+
+		5 | resource "aws_secretsmanager_secret" "not_secure_policy" {
+		6 |   name = "not_secure_secret"
+		7 | }
+
 

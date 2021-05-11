@@ -1,11 +1,15 @@
 
+
        _               _              
    ___| |__   ___  ___| | _______   __
   / __| '_ \ / _ \/ __| |/ / _ \ \ / /
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.46 
+By bridgecrew.io | version: 2.0.135 
+Update available 2.0.135 -> 2.0.136
+Run pip3 install -U checkov to update 
+
 
 terraform scan results:
 
@@ -22,18 +26,6 @@ Check: CKV_AWS_148: "Ensure no default VPC is planned to be provisioned"
 		16 | }
 
 
-Check: CKV_AWS_79: "Ensure Instance Metadata Service Version 1 is not enabled"
-	FAILED for resource: aws_instance.t2-instance
-	File: /main.tf:49-53
-	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_31
-
-		49 | resource "aws_instance" "t2-instance" {
-		50 |   ami = data.aws_ami.ubuntu.id
-		51 |   instance_type = "t2.micro"
-		52 |   subnet_id = aws_subnet.default-subnet.id
-		53 | }
-
-
 Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration EBS is securely encrypted"
 	FAILED for resource: aws_instance.t2-instance
 	File: /main.tf:49-53
@@ -46,9 +38,10 @@ Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration EBS is sec
 		53 | }
 
 
-Check: CKV_AWS_126: "Ensure that detailed monitoring is enabled for EC2 instances"
+Check: CKV_AWS_79: "Ensure Instance Metadata Service Version 1 is not enabled"
 	FAILED for resource: aws_instance.t2-instance
 	File: /main.tf:49-53
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_31
 
 		49 | resource "aws_instance" "t2-instance" {
 		50 |   ami = data.aws_ami.ubuntu.id
@@ -60,6 +53,19 @@ Check: CKV_AWS_126: "Ensure that detailed monitoring is enabled for EC2 instance
 Check: CKV_AWS_135: "Ensure that EC2 is EBS optimized"
 	FAILED for resource: aws_instance.t2-instance
 	File: /main.tf:49-53
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-ec2-is-ebs-optimized
+
+		49 | resource "aws_instance" "t2-instance" {
+		50 |   ami = data.aws_ami.ubuntu.id
+		51 |   instance_type = "t2.micro"
+		52 |   subnet_id = aws_subnet.default-subnet.id
+		53 | }
+
+
+Check: CKV_AWS_126: "Ensure that detailed monitoring is enabled for EC2 instances"
+	FAILED for resource: aws_instance.t2-instance
+	File: /main.tf:49-53
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-detailed-monitoring-is-enabled-for-ec2-instances
 
 		49 | resource "aws_instance" "t2-instance" {
 		50 |   ami = data.aws_ami.ubuntu.id

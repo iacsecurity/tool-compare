@@ -1,15 +1,19 @@
 
+
        _               _              
    ___| |__   ___  ___| | _______   __
   / __| '_ \ / _ \/ __| |/ / _ \ \ / /
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.46 
+By bridgecrew.io | version: 2.0.135 
+Update available 2.0.135 -> 2.0.136
+Run pip3 install -U checkov to update 
+
 
 terraform scan results:
 
-Passed checks: 7, Failed checks: 12, Skipped checks: 0
+Passed checks: 11, Failed checks: 16, Skipped checks: 0
 
 Check: CKV_AWS_23: "Ensure every security groups rule has a description"
 	FAILED for resource: aws_security_group.db
@@ -27,7 +31,28 @@ Check: CKV_AWS_23: "Ensure every security groups rule has a description"
 		111 | }
 
 
-Check: CKV_AWS_129: "Ensure that that respective logs of Amazon Relational Database Service (Amazon RDS) are enabled"
+Check: CKV_AWS_118: "Ensure that enhanced monitoring is enabled for Amazon RDS instances"
+	FAILED for resource: aws_db_instance.test
+	File: /main.tf:113-126
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-enhanced-monitoring-is-enabled-for-amazon-rds-instances
+
+		113 | resource "aws_db_instance" "test" {
+		114 |   identifier = "tf-test-db"
+		115 |   allocated_storage = "5"
+		116 |   multi_az = "false"
+		117 |   engine = "mysql"
+		118 |   instance_class = "db.t2.small"
+		119 |   username = "admin"
+		120 |   password = "password123"
+		121 |   db_subnet_group_name = aws_db_subnet_group.db.name
+		122 |   vpc_security_group_ids = [ aws_security_group.db.id]
+		123 |   storage_type = "gp2"
+		124 |   skip_final_snapshot = true
+		125 |   publicly_accessible = false
+		126 | }
+
+
+Check: CKV_AWS_157: "Ensure that RDS instances have Multi-AZ enabled"
 	FAILED for resource: aws_db_instance.test
 	File: /main.tf:113-126
 
@@ -47,9 +72,10 @@ Check: CKV_AWS_129: "Ensure that that respective logs of Amazon Relational Datab
 		126 | }
 
 
-Check: CKV_AWS_118: "Ensure that enhanced monitoring is enabled for Amazon RDS instances"
+Check: CKV_AWS_129: "Ensure that respective logs of Amazon Relational Database Service (Amazon RDS) are enabled"
 	FAILED for resource: aws_db_instance.test
 	File: /main.tf:113-126
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-respective-logs-of-amazon-relational-database-service-amazon-rds-are-enabled
 
 		113 | resource "aws_db_instance" "test" {
 		114 |   identifier = "tf-test-db"
@@ -88,10 +114,10 @@ Check: CKV_AWS_16: "Ensure all data stored in the RDS is securely encrypted at r
 		126 | }
 
 
-Check: CKV_AWS_23: "Ensure every security groups rule has a description"
+Check: CKV_AWS_24: "Ensure no security groups allow ingress from 0.0.0.0:0 to port 22"
 	FAILED for resource: aws_security_group.publicly_accessible_sg
 	File: /main.tf:129-143
-	Guide: https://docs.bridgecrew.io/docs/networking_31
+	Guide: https://docs.bridgecrew.io/docs/networking_1-port-security
 
 		129 | resource "aws_security_group" "publicly_accessible_sg" {
 		130 |   vpc_id = aws_vpc.nondefault.id
@@ -110,10 +136,10 @@ Check: CKV_AWS_23: "Ensure every security groups rule has a description"
 		143 | }
 
 
-Check: CKV_AWS_24: "Ensure no security groups allow ingress from 0.0.0.0:0 to port 22"
+Check: CKV_AWS_23: "Ensure every security groups rule has a description"
 	FAILED for resource: aws_security_group.publicly_accessible_sg
 	File: /main.tf:129-143
-	Guide: https://docs.bridgecrew.io/docs/networking_1-port-security
+	Guide: https://docs.bridgecrew.io/docs/networking_31
 
 		129 | resource "aws_security_group" "publicly_accessible_sg" {
 		130 |   vpc_id = aws_vpc.nondefault.id
@@ -154,19 +180,6 @@ Check: CKV_AWS_25: "Ensure no security groups allow ingress from 0.0.0.0:0 to po
 		143 | }
 
 
-Check: CKV_AWS_79: "Ensure Instance Metadata Service Version 1 is not enabled"
-	FAILED for resource: aws_instance.public_ins
-	File: /main.tf:146-152
-	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_31
-
-		146 | resource "aws_instance" "public_ins" {
-		147 |   ami = "ami-0130bec6e5047f596"
-		148 |   instance_type = "t3.nano"
-		149 |   associate_public_ip_address = true
-		150 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
-		151 |   subnet_id = aws_subnet.nondefault_1.id
-		152 | }
-
 Check: CKV_AWS_88: "EC2 instance should not have public IP."
 	FAILED for resource: aws_instance.public_ins
 	File: /main.tf:146-152
@@ -193,9 +206,10 @@ Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration EBS is sec
 		151 |   subnet_id = aws_subnet.nondefault_1.id
 		152 | }
 
-Check: CKV_AWS_126: "Ensure that detailed monitoring is enabled for EC2 instances"
+Check: CKV_AWS_79: "Ensure Instance Metadata Service Version 1 is not enabled"
 	FAILED for resource: aws_instance.public_ins
 	File: /main.tf:146-152
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_31
 
 		146 | resource "aws_instance" "public_ins" {
 		147 |   ami = "ami-0130bec6e5047f596"
@@ -208,6 +222,7 @@ Check: CKV_AWS_126: "Ensure that detailed monitoring is enabled for EC2 instance
 Check: CKV_AWS_135: "Ensure that EC2 is EBS optimized"
 	FAILED for resource: aws_instance.public_ins
 	File: /main.tf:146-152
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-ec2-is-ebs-optimized
 
 		146 | resource "aws_instance" "public_ins" {
 		147 |   ami = "ami-0130bec6e5047f596"
@@ -216,4 +231,53 @@ Check: CKV_AWS_135: "Ensure that EC2 is EBS optimized"
 		150 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
 		151 |   subnet_id = aws_subnet.nondefault_1.id
 		152 | }
+
+Check: CKV_AWS_126: "Ensure that detailed monitoring is enabled for EC2 instances"
+	FAILED for resource: aws_instance.public_ins
+	File: /main.tf:146-152
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-detailed-monitoring-is-enabled-for-ec2-instances
+
+		146 | resource "aws_instance" "public_ins" {
+		147 |   ami = "ami-0130bec6e5047f596"
+		148 |   instance_type = "t3.nano"
+		149 |   associate_public_ip_address = true
+		150 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
+		151 |   subnet_id = aws_subnet.nondefault_1.id
+		152 | }
+
+Check: CKV2_AWS_12: "Ensure the default security group of every VPC restricts all traffic"
+	FAILED for resource: aws_vpc.nondefault
+	File: /main.tf:10-12
+	Guide: https://docs.bridgecrew.io/docs/networking_4
+
+		10 | resource "aws_vpc" "nondefault" {
+		11 |   cidr_block = "10.1.1.0/24"
+		12 | }
+
+
+Check: CKV2_AWS_11: "Ensure VPC flow logging is enabled in all VPCs"
+	FAILED for resource: aws_vpc.nondefault
+	File: /main.tf:10-12
+	Guide: https://docs.bridgecrew.io-vpc-flow-logging
+
+		10 | resource "aws_vpc" "nondefault" {
+		11 |   cidr_block = "10.1.1.0/24"
+		12 | }
+
+
+Check: CKV2_AWS_5: "Ensure that Security Groups are attached to EC2 instances or elastic network interfaces (ENIs)"
+	FAILED for resource: aws_security_group.db
+	File: /main.tf:103-111
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-security-groups-are-attached-to-ec2-instances-or-elastic-network-interfaces-enis
+
+		103 | resource "aws_security_group" "db" {
+		104 |   vpc_id = aws_vpc.nondefault.id
+		105 |   ingress {
+		106 |     from_port = 3306
+		107 |     protocol = "tcp"
+		108 |     to_port = 3306
+		109 |     cidr_blocks = [aws_subnet.nondefault_1.cidr_block]
+		110 |   }
+		111 | }
+
 

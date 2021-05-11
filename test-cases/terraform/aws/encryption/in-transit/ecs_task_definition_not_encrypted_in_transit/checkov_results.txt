@@ -1,15 +1,19 @@
 
+
        _               _              
    ___| |__   ___  ___| | _______   __
   / __| '_ \ / _ \/ __| |/ / _ \ \ / /
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.46 
+By bridgecrew.io | version: 2.0.135 
+Update available 2.0.135 -> 2.0.136
+Run pip3 install -U checkov to update 
+
 
 terraform scan results:
 
-Passed checks: 1, Failed checks: 2, Skipped checks: 0
+Passed checks: 1, Failed checks: 3, Skipped checks: 0
 
 Check: CKV_AWS_42: "Ensure EFS is securely encrypted"
 	FAILED for resource: aws_efs_file_system.test
@@ -67,5 +71,15 @@ Check: CKV_AWS_97: "Ensure Encryption in transit is enabled for EFS volumes in E
 		47 |     }
 		48 |   }
 		49 | }
+
+
+Check: CKV2_AWS_18: "Ensure that Elastic File System (Amazon EFS) file systems are added in the backup plans of AWS Backup"
+	FAILED for resource: aws_efs_file_system.test
+	File: /main.tf:5-7
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-elastic-file-system-amazon-efs-file-systems-are-added-in-the-backup-plans-of-aws-backup
+
+		5 | resource "aws_efs_file_system" "test" {
+		6 |   creation_token = "cloudrail-test"
+		7 | }
 
 

@@ -1,20 +1,24 @@
 
+
        _               _              
    ___| |__   ___  ___| | _______   __
   / __| '_ \ / _ \/ __| |/ / _ \ \ / /
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.46 
+By bridgecrew.io | version: 2.0.135 
+Update available 2.0.135 -> 2.0.136
+Run pip3 install -U checkov to update 
+
 
 terraform scan results:
 
-Passed checks: 5, Failed checks: 7, Skipped checks: 0
+Passed checks: 5, Failed checks: 8, Skipped checks: 0
 
-Check: CKV_AWS_19: "Ensure all data stored in the S3 bucket is securely encrypted at rest"
+Check: CKV_AWS_21: "Ensure all data stored in the S3 bucket have versioning enabled"
 	FAILED for resource: aws_s3_bucket.public-bucket
 	File: /main.tf:5-8
-	Guide: https://docs.bridgecrew.io/docs/s3_14-data-encrypted-at-rest
+	Guide: https://docs.bridgecrew.io/docs/s3_16-enable-versioning
 
 		5 | resource "aws_s3_bucket" "public-bucket" {
 		6 |   bucket = "bucket-with-public-acl-1"
@@ -25,16 +29,7 @@ Check: CKV_AWS_19: "Ensure all data stored in the S3 bucket is securely encrypte
 Check: CKV_AWS_144: "Ensure that S3 bucket has cross-region replication enabled"
 	FAILED for resource: aws_s3_bucket.public-bucket
 	File: /main.tf:5-8
-
-		5 | resource "aws_s3_bucket" "public-bucket" {
-		6 |   bucket = "bucket-with-public-acl-1"
-		7 |   acl = "public-read"
-		8 | }
-
-
-Check: CKV_AWS_145: "Ensure that S3 buckets are encrypted with KMS by default"
-	FAILED for resource: aws_s3_bucket.public-bucket
-	File: /main.tf:5-8
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-s3-bucket-has-cross-region-replication-enabled
 
 		5 | resource "aws_s3_bucket" "public-bucket" {
 		6 |   bucket = "bucket-with-public-acl-1"
@@ -45,17 +40,6 @@ Check: CKV_AWS_145: "Ensure that S3 buckets are encrypted with KMS by default"
 Check: CKV_AWS_52: "Ensure S3 bucket has MFA delete enabled"
 	FAILED for resource: aws_s3_bucket.public-bucket
 	File: /main.tf:5-8
-
-		5 | resource "aws_s3_bucket" "public-bucket" {
-		6 |   bucket = "bucket-with-public-acl-1"
-		7 |   acl = "public-read"
-		8 | }
-
-
-Check: CKV_AWS_18: "Ensure the S3 bucket has access logging enabled"
-	FAILED for resource: aws_s3_bucket.public-bucket
-	File: /main.tf:5-8
-	Guide: https://docs.bridgecrew.io/docs/s3_13-enable-logging
 
 		5 | resource "aws_s3_bucket" "public-bucket" {
 		6 |   bucket = "bucket-with-public-acl-1"
@@ -74,10 +58,43 @@ Check: CKV_AWS_20: "S3 Bucket has an ACL defined which allows public READ access
 		8 | }
 
 
-Check: CKV_AWS_21: "Ensure all data stored in the S3 bucket have versioning enabled"
+Check: CKV_AWS_18: "Ensure the S3 bucket has access logging enabled"
 	FAILED for resource: aws_s3_bucket.public-bucket
 	File: /main.tf:5-8
-	Guide: https://docs.bridgecrew.io/docs/s3_16-enable-versioning
+	Guide: https://docs.bridgecrew.io/docs/s3_13-enable-logging
+
+		5 | resource "aws_s3_bucket" "public-bucket" {
+		6 |   bucket = "bucket-with-public-acl-1"
+		7 |   acl = "public-read"
+		8 | }
+
+
+Check: CKV_AWS_145: "Ensure that S3 buckets are encrypted with KMS by default"
+	FAILED for resource: aws_s3_bucket.public-bucket
+	File: /main.tf:5-8
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-s3-buckets-are-encrypted-with-kms-by-default
+
+		5 | resource "aws_s3_bucket" "public-bucket" {
+		6 |   bucket = "bucket-with-public-acl-1"
+		7 |   acl = "public-read"
+		8 | }
+
+
+Check: CKV_AWS_19: "Ensure all data stored in the S3 bucket is securely encrypted at rest"
+	FAILED for resource: aws_s3_bucket.public-bucket
+	File: /main.tf:5-8
+	Guide: https://docs.bridgecrew.io/docs/s3_14-data-encrypted-at-rest
+
+		5 | resource "aws_s3_bucket" "public-bucket" {
+		6 |   bucket = "bucket-with-public-acl-1"
+		7 |   acl = "public-read"
+		8 | }
+
+
+Check: CKV2_AWS_6: "Ensure that S3 bucket has a Public Access block"
+	FAILED for resource: aws_s3_bucket.public-bucket
+	File: /main.tf:5-8
+	Guide: https://docs.bridgecrew.io/docs/s3-bucket-should-have-public-access-blocks-defaults-to-false-if-the-public-access-block-is-not-attached
 
 		5 | resource "aws_s3_bucket" "public-bucket" {
 		6 |   bucket = "bucket-with-public-acl-1"
