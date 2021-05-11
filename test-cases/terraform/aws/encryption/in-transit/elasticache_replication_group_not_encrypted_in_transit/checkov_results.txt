@@ -1,65 +1,68 @@
 
+
        _               _              
    ___| |__   ___  ___| | _______   __
   / __| '_ \ / _ \/ __| |/ / _ \ \ / /
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.132 
-
-terrafor scan results:
-
+By bridgecrew.io | version: 2.0.135 
+Update available 2.0.135 -> 2.0.136
+Run pip3 install -U checkov to update 
+
+
+terraform scan results:
+
 Passed checks: 1, Failed checks: 3, Skipped checks: 0
-
-Check: CKV_AWS_30: "Ensure all data stored in the Elasticache Replication Group is securely encrypted at transit"
-	FAILED for resource: aws_elasticache_replication_group.exaple
-	File: /ain.tf:5-14
-	Guide: https://docs.bridgecrew.io/docs/general_10
-
-		5  | resource "aws_elasticache_replication_group" "exaple" {
-		6  |   autoatic_failover_enabled    = true
-		7  |   availability_zones            = ["us-west-2a", "us-west-2b"]
-		8  |   replication_group_id          = "tf-rep-group-1"
-		9  |   replication_group_description = "test description"
-		10 |   node_type                     = "cache.4.large"
-		11 |   nuber_cache_clusters         = 2
-		12 |   paraeter_group_nae          = "default.redis3.2"
-		13 |   port                          = 6379
-		14 | }
 
-
-Check: CKV_AWS_31: "Ensure all data stored in the Elasticache Replication Group is securely encrypted at transit and has auth token"
-	FAILED for resource: aws_elasticache_replication_group.exaple
-	File: /ain.tf:5-14
-	Guide: https://docs.bridgecrew.io/docs/general_11
-
-		5  | resource "aws_elasticache_replication_group" "exaple" {
-		6  |   autoatic_failover_enabled    = true
-		7  |   availability_zones            = ["us-west-2a", "us-west-2b"]
-		8  |   replication_group_id          = "tf-rep-group-1"
-		9  |   replication_group_description = "test description"
-		10 |   node_type                     = "cache.4.large"
-		11 |   nuber_cache_clusters         = 2
-		12 |   paraeter_group_nae          = "default.redis3.2"
-		13 |   port                          = 6379
-		14 | }
+Check: CKV_AWS_30: "Ensure all data stored in the Elasticache Replication Group is securely encrypted at transit"
+	FAILED for resource: aws_elasticache_replication_group.example
+	File: /main.tf:5-14
+	Guide: https://docs.bridgecrew.io/docs/general_10
 
-
-Check: CKV_AWS_29: "Ensure all data stored in the Elasticache Replication Group is securely encrypted at rest"
-	FAILED for resource: aws_elasticache_replication_group.exaple
-	File: /ain.tf:5-14
-	Guide: https://docs.bridgecrew.io/docs/general_9
-
-		5  | resource "aws_elasticache_replication_group" "exaple" {
-		6  |   autoatic_failover_enabled    = true
-		7  |   availability_zones            = ["us-west-2a", "us-west-2b"]
-		8  |   replication_group_id          = "tf-rep-group-1"
-		9  |   replication_group_description = "test description"
-		10 |   node_type                     = "cache.4.large"
-		11 |   nuber_cache_clusters         = 2
-		12 |   paraeter_group_nae          = "default.redis3.2"
-		13 |   port                          = 6379
-		14 | }
+		5  | resource "aws_elasticache_replication_group" "example" {
+		6  |   automatic_failover_enabled    = true
+		7  |   availability_zones            = ["us-west-2a", "us-west-2b"]
+		8  |   replication_group_id          = "tf-rep-group-1"
+		9  |   replication_group_description = "test description"
+		10 |   node_type                     = "cache.m4.large"
+		11 |   number_cache_clusters         = 2
+		12 |   parameter_group_name          = "default.redis3.2"
+		13 |   port                          = 6379
+		14 | }
 
-
-
+
+Check: CKV_AWS_31: "Ensure all data stored in the Elasticache Replication Group is securely encrypted at transit and has auth token"
+	FAILED for resource: aws_elasticache_replication_group.example
+	File: /main.tf:5-14
+	Guide: https://docs.bridgecrew.io/docs/general_11
+
+		5  | resource "aws_elasticache_replication_group" "example" {
+		6  |   automatic_failover_enabled    = true
+		7  |   availability_zones            = ["us-west-2a", "us-west-2b"]
+		8  |   replication_group_id          = "tf-rep-group-1"
+		9  |   replication_group_description = "test description"
+		10 |   node_type                     = "cache.m4.large"
+		11 |   number_cache_clusters         = 2
+		12 |   parameter_group_name          = "default.redis3.2"
+		13 |   port                          = 6379
+		14 | }
+
+
+Check: CKV_AWS_29: "Ensure all data stored in the Elasticache Replication Group is securely encrypted at rest"
+	FAILED for resource: aws_elasticache_replication_group.example
+	File: /main.tf:5-14
+	Guide: https://docs.bridgecrew.io/docs/general_9
+
+		5  | resource "aws_elasticache_replication_group" "example" {
+		6  |   automatic_failover_enabled    = true
+		7  |   availability_zones            = ["us-west-2a", "us-west-2b"]
+		8  |   replication_group_id          = "tf-rep-group-1"
+		9  |   replication_group_description = "test description"
+		10 |   node_type                     = "cache.m4.large"
+		11 |   number_cache_clusters         = 2
+		12 |   parameter_group_name          = "default.redis3.2"
+		13 |   port                          = 6379
+		14 | }
+
+
