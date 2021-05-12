@@ -1,122 +1,6 @@
 
 Check 1
 
-  [AWS018][ERROR] Resource 'aws_security_group.db' should include a description for auditing purposes.
-  /src/main.tf:103-111
-
-
-     100 | 
-     101 | }
-     102 | 
-     103 | resource "aws_security_group" "db" {
-     104 |   vpc_id = aws_vpc.nondefault.id
-     105 |   ingress {
-     106 |     from_port = 3306
-     107 |     protocol = "tcp"
-     108 |     to_port = 3306
-     109 |     cidr_blocks = [aws_subnet.nondefault_1.cidr_block]
-     110 |   }
-     111 | }
-     112 | 
-     113 | resource "aws_db_instance" "test" {
-     114 |   identifier = "tf-test-db"
-
-  Impact:     Descriptions provide context for the firewall rule reasons
-  Resolution: Add descriptions for all security groups anf rules
-
-  See https://tfsec.dev/docs/aws/AWS018/ for more information. 
-
-Check 2
-
-  [AWS052][ERROR] Resource 'aws_db_instance.test' has no storage encryption defined.
-  /src/main.tf:113-126
-
-
-     110 |   }
-     111 | }
-     112 | 
-     113 | resource "aws_db_instance" "test" {
-     114 |   identifier = "tf-test-db"
-     115 |   allocated_storage = "5"
-     116 |   multi_az = "false"
-     117 |   engine = "mysql"
-     118 |   instance_class = "db.t2.small"
-     119 |   username = "admin"
-     120 |   password = "password123"
-     121 |   db_subnet_group_name = aws_db_subnet_group.db.name
-     122 |   vpc_security_group_ids = [ aws_security_group.db.id]
-     123 |   storage_type = "gp2"
-     124 |   skip_final_snapshot = true
-     125 |   publicly_accessible = false
-     126 | }
-     127 | 
-     128 | 
-     129 | resource "aws_security_group" "publicly_accessible_sg" {
-
-  Impact:     Data can be read from the RDS instances if it is compromised
-  Resolution: Enable encryption for RDS clusters and instances
-
-  See https://tfsec.dev/docs/aws/AWS052/ for more information. 
-
-Check 3
-
-  [GEN003][WARNING] Block 'aws_db_instance.test' includes a potentially sensitive attribute which is defined within the project.
-  /src/main.tf:120
-
-
-     117 |   engine = "mysql"
-     118 |   instance_class = "db.t2.small"
-     119 |   username = "admin"
-     120 |   password = "password123"
-     121 |   db_subnet_group_name = aws_db_subnet_group.db.name
-     122 |   vpc_security_group_ids = [ aws_security_group.db.id]
-     123 |   storage_type = "gp2"
-
-  Impact:     Block attribute could be leaking secrets
-  Resolution: Don't include sensitive data in blocks
-
-  See https://tfsec.dev/docs/general/GEN003/ for more information. 
-
-Check 4
-
-  [AWS008][WARNING] Resource 'aws_security_group.publicly_accessible_sg' defines a fully open ingress security group.
-  /src/main.tf:135
-
-
-     132 |     from_port = 0
-     133 |     protocol = "tcp"
-     134 |     to_port = 65000
-     135 |     cidr_blocks = ["0.0.0.0/0"]
-     136 |   }
-     137 |   egress {
-     138 |     from_port = 0
-
-  Impact:     The port is exposed for ingress from the internet
-  Resolution: Set a more restrictive cidr range
-
-  See https://tfsec.dev/docs/aws/AWS008/ for more information. 
-
-Check 5
-
-  [AWS009][WARNING] Resource 'aws_security_group.publicly_accessible_sg' defines a fully open egress security group.
-  /src/main.tf:141
-
-
-     138 |     from_port = 0
-     139 |     protocol = "tcp"
-     140 |     to_port = 65000
-     141 |     cidr_blocks = ["0.0.0.0/0"]
-     142 |   }
-     143 | }
-     144 | 
-
-  Impact:     The port is exposed for egressing data to the internet
-  Resolution: Set a more restrictive cidr range
-
-  See https://tfsec.dev/docs/aws/AWS009/ for more information. 
-
-Check 6
-
   [AWS018][ERROR] Resource 'aws_security_group.publicly_accessible_sg' should include a description for auditing purposes.
   /src/main.tf:129-143
 
@@ -148,7 +32,7 @@ Check 6
 
   See https://tfsec.dev/docs/aws/AWS018/ for more information. 
 
-Check 7
+Check 2
 
   [AWS012][ERROR] Resource 'aws_instance.public_ins' has a public IP address associated.
   /src/main.tf:149
@@ -167,7 +51,7 @@ Check 7
 
   See https://tfsec.dev/docs/aws/AWS012/ for more information. 
 
-Check 8
+Check 3
 
   [AWS079][ERROR] Resource 'aws_instance.public_ins' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
   /src/main.tf:146-152
@@ -189,12 +73,128 @@ Check 8
 
   See https://tfsec.dev/docs/aws/AWS079/ for more information. 
 
+Check 4
+
+  [AWS018][ERROR] Resource 'aws_security_group.db' should include a description for auditing purposes.
+  /src/main.tf:103-111
+
+
+     100 | 
+     101 | }
+     102 | 
+     103 | resource "aws_security_group" "db" {
+     104 |   vpc_id = aws_vpc.nondefault.id
+     105 |   ingress {
+     106 |     from_port = 3306
+     107 |     protocol = "tcp"
+     108 |     to_port = 3306
+     109 |     cidr_blocks = [aws_subnet.nondefault_1.cidr_block]
+     110 |   }
+     111 | }
+     112 | 
+     113 | resource "aws_db_instance" "test" {
+     114 |   identifier = "tf-test-db"
+
+  Impact:     Descriptions provide context for the firewall rule reasons
+  Resolution: Add descriptions for all security groups anf rules
+
+  See https://tfsec.dev/docs/aws/AWS018/ for more information. 
+
+Check 5
+
+  [AWS052][ERROR] Resource 'aws_db_instance.test' has no storage encryption defined.
+  /src/main.tf:113-126
+
+
+     110 |   }
+     111 | }
+     112 | 
+     113 | resource "aws_db_instance" "test" {
+     114 |   identifier = "tf-test-db"
+     115 |   allocated_storage = "5"
+     116 |   multi_az = "false"
+     117 |   engine = "mysql"
+     118 |   instance_class = "db.t2.small"
+     119 |   username = "admin"
+     120 |   password = "password123"
+     121 |   db_subnet_group_name = aws_db_subnet_group.db.name
+     122 |   vpc_security_group_ids = [ aws_security_group.db.id]
+     123 |   storage_type = "gp2"
+     124 |   skip_final_snapshot = true
+     125 |   publicly_accessible = false
+     126 | }
+     127 | 
+     128 | 
+     129 | resource "aws_security_group" "publicly_accessible_sg" {
+
+  Impact:     Data can be read from the RDS instances if it is compromised
+  Resolution: Enable encryption for RDS clusters and instances
+
+  See https://tfsec.dev/docs/aws/AWS052/ for more information. 
+
+Check 6
+
+  [GEN003][WARNING] Block 'aws_db_instance.test' includes a potentially sensitive attribute which is defined within the project.
+  /src/main.tf:120
+
+
+     117 |   engine = "mysql"
+     118 |   instance_class = "db.t2.small"
+     119 |   username = "admin"
+     120 |   password = "password123"
+     121 |   db_subnet_group_name = aws_db_subnet_group.db.name
+     122 |   vpc_security_group_ids = [ aws_security_group.db.id]
+     123 |   storage_type = "gp2"
+
+  Impact:     Block attribute could be leaking secrets
+  Resolution: Don't include sensitive data in blocks
+
+  See https://tfsec.dev/docs/general/GEN003/ for more information. 
+
+Check 7
+
+  [AWS008][WARNING] Resource 'aws_security_group.publicly_accessible_sg' defines a fully open ingress security group.
+  /src/main.tf:135
+
+
+     132 |     from_port = 0
+     133 |     protocol = "tcp"
+     134 |     to_port = 65000
+     135 |     cidr_blocks = ["0.0.0.0/0"]
+     136 |   }
+     137 |   egress {
+     138 |     from_port = 0
+
+  Impact:     The port is exposed for ingress from the internet
+  Resolution: Set a more restrictive cidr range
+
+  See https://tfsec.dev/docs/aws/AWS008/ for more information. 
+
+Check 8
+
+  [AWS009][WARNING] Resource 'aws_security_group.publicly_accessible_sg' defines a fully open egress security group.
+  /src/main.tf:141
+
+
+     138 |     from_port = 0
+     139 |     protocol = "tcp"
+     140 |     to_port = 65000
+     141 |     cidr_blocks = ["0.0.0.0/0"]
+     142 |   }
+     143 | }
+     144 | 
+
+  Impact:     The port is exposed for egressing data to the internet
+  Resolution: Set a more restrictive cidr range
+
+  See https://tfsec.dev/docs/aws/AWS009/ for more information. 
+
   times
   ------------------------------------------
-  disk i/o             53.351167ms
-  parsing HCL          528.458µs
-  evaluating values    3.852958ms
-  running checks       28.779292ms
+  disk i/o             15.191ms
+  parsing HCL          22.6µs
+  evaluating values    663.4µs
+  running checks       7.5308ms
 
   counts
   ------------------------------------------

@@ -1,6 +1,27 @@
 
 Check 1
 
+  [AWS087][ERROR] Resource 'aws_redshift_cluster.default' is being deployed outside of a VPC
+  /src/main.tf:1-8
+
+
+       1 | resource "aws_redshift_cluster" "default" {
+       2 |   cluster_identifier = "tf-redshift-cluster"
+       3 |   database_name      = "mydb"
+       4 |   master_username    = "foo"
+       5 |   master_password    = "Mustbe8characters"
+       6 |   node_type          = "dc1.large"
+       7 |   cluster_type       = "single-node"
+       8 | }
+       9 | 
+
+  Impact:     Redshift cluster does not benefit from VPC security if it is deployed in EC2 classic mode
+  Resolution: Deploy Redshift cluster into a non default VPC
+
+  See https://tfsec.dev/docs/aws/AWS087/ for more information. 
+
+Check 2
+
   [GEN003][WARNING] Block 'aws_redshift_cluster.default' includes a potentially sensitive attribute which is defined within the project.
   /src/main.tf:5
 
@@ -20,10 +41,10 @@ Check 1
 
   times
   ------------------------------------------
-  disk i/o             42.783542ms
-  parsing HCL          468.875µs
-  evaluating values    1.485666ms
-  running checks       5.618625ms
+  disk i/o             15.3654ms
+  parsing HCL          25.9µs
+  evaluating values    127.7µs
+  running checks       2.7123ms
 
   counts
   ------------------------------------------
@@ -34,5 +55,5 @@ Check 1
   module blocks        0
   ignored checks       0
 
-1 potential problems detected.
+2 potential problems detected.
 

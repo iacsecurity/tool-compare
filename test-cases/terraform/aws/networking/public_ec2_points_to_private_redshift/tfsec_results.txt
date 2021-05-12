@@ -1,6 +1,25 @@
 
 Check 1
 
+  [GEN003][WARNING] Block 'aws_redshift_cluster.test' includes a potentially sensitive attribute which is defined within the project.
+  /src/main.tf:106
+
+
+     103 | resource "aws_redshift_cluster" "test" {
+     104 |   cluster_identifier = "redshift-defaults-only"
+     105 |   node_type = "dc2.large"
+     106 |   master_password = "Test1234"
+     107 |   master_username = "test"
+     108 |   skip_final_snapshot = true
+     109 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
+
+  Impact:     Block attribute could be leaking secrets
+  Resolution: Don't include sensitive data in blocks
+
+  See https://tfsec.dev/docs/general/GEN003/ for more information. 
+
+Check 2
+
   [AWS008][WARNING] Resource 'aws_security_group.publicly_accessible_sg' defines a fully open ingress security group.
   /src/main.tf:120
 
@@ -18,7 +37,7 @@ Check 1
 
   See https://tfsec.dev/docs/aws/AWS008/ for more information. 
 
-Check 2
+Check 3
 
   [AWS009][WARNING] Resource 'aws_security_group.publicly_accessible_sg' defines a fully open egress security group.
   /src/main.tf:126
@@ -37,7 +56,7 @@ Check 2
 
   See https://tfsec.dev/docs/aws/AWS009/ for more information. 
 
-Check 3
+Check 4
 
   [AWS018][ERROR] Resource 'aws_security_group.publicly_accessible_sg' should include a description for auditing purposes.
   /src/main.tf:114-128
@@ -70,7 +89,7 @@ Check 3
 
   See https://tfsec.dev/docs/aws/AWS018/ for more information. 
 
-Check 4
+Check 5
 
   [AWS012][ERROR] Resource 'aws_instance.public_ins' has a public IP address associated.
   /src/main.tf:134
@@ -89,7 +108,7 @@ Check 4
 
   See https://tfsec.dev/docs/aws/AWS012/ for more information. 
 
-Check 5
+Check 6
 
   [AWS079][ERROR] Resource 'aws_instance.public_ins' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
   /src/main.tf:131-137
@@ -111,31 +130,12 @@ Check 5
 
   See https://tfsec.dev/docs/aws/AWS079/ for more information. 
 
-Check 6
-
-  [GEN003][WARNING] Block 'aws_redshift_cluster.test' includes a potentially sensitive attribute which is defined within the project.
-  /src/main.tf:106
-
-
-     103 | resource "aws_redshift_cluster" "test" {
-     104 |   cluster_identifier = "redshift-defaults-only"
-     105 |   node_type = "dc2.large"
-     106 |   master_password = "Test1234"
-     107 |   master_username = "test"
-     108 |   skip_final_snapshot = true
-     109 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
-
-  Impact:     Block attribute could be leaking secrets
-  Resolution: Don't include sensitive data in blocks
-
-  See https://tfsec.dev/docs/general/GEN003/ for more information. 
-
   times
   ------------------------------------------
-  disk i/o             55.507626ms
-  parsing HCL          558.5µs
-  evaluating values    8.77225ms
-  running checks       25.960333ms
+  disk i/o             15.7862ms
+  parsing HCL          14.7µs
+  evaluating values    401µs
+  running checks       5.9812ms
 
   counts
   ------------------------------------------

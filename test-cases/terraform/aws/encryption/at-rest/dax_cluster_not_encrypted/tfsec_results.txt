@@ -16,17 +16,17 @@ Check 1
       30 | }
       31 | 
 
-  Impact:     Data can be read if compromised
+  Impact:     Data can be freely read if compromised
   Resolution: Enable encryption at rest for DAX Cluster
 
   See https://tfsec.dev/docs/aws/AWS081/ for more information. 
 
   times
   ------------------------------------------
-  disk i/o             51.899708ms
-  parsing HCL          496.667µs
-  evaluating values    2.704583ms
-  running checks       5.151375ms
+  disk i/o             11.125ms
+  parsing HCL          23.9µs
+  evaluating values    109.7µs
+  running checks       2.2512ms
 
   counts
   ------------------------------------------

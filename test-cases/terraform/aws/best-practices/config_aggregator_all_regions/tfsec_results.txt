@@ -1,10 +1,31 @@
 
+Check 1
+
+  [AWS085][WARNING] Resource 'aws_config_configuration_aggregator.organization' should have account aggregation sources to all regions
+  /src/main.tf:5-8
+
+
+       2 | 
+       3 |   name = "example"
+       4 | 
+       5 |   account_aggregation_source {
+       6 |     account_ids = ["123456789012"]
+       7 |     regions     = ["us-east-2", "us-east-1", "us-west-1", "us-west-2"]
+       8 |   }
+       9 | }
+      10 | 
+
+  Impact:     Sources that aren't covered by the aggregator are not include in the configuration
+  Resolution: Set the aggregator to cover all regions
+
+  See https://tfsec.dev/docs/aws/AWS085/ for more information. 
+
   times
   ------------------------------------------
-  disk i/o             38.075791ms
-  parsing HCL          477.708µs
-  evaluating values    1.21825ms
-  running checks       1.16625ms
+  disk i/o             17.1821ms
+  parsing HCL          13.4µs
+  evaluating values    175.6µs
+  running checks       2.2239ms
 
   counts
   ------------------------------------------
@@ -15,5 +36,5 @@
   module blocks        0
   ignored checks       0
 
-No problems detected!
+1 potential problems detected.
 

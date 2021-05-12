@@ -83,10 +83,10 @@ Check 4
 
   times
   ------------------------------------------
-  disk i/o             40.968291ms
-  parsing HCL          488.459µs
-  evaluating values    1.514333ms
-  running checks       13.8655ms
+  disk i/o             15.8617ms
+  parsing HCL          30.7µs
+  evaluating values    145.6µs
+  running checks       5.0721ms
 
   counts
   ------------------------------------------

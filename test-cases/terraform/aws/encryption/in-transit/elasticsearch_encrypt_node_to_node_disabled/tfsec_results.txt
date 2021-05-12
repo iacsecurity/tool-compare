@@ -97,10 +97,10 @@ Check 4
 
   times
   ------------------------------------------
-  disk i/o             52.836084ms
-  parsing HCL          689.792µs
-  evaluating values    2.0495ms
-  running checks       19.993833ms
+  disk i/o             13.6688ms
+  parsing HCL          19.8µs
+  evaluating values    189.3µs
+  running checks       3.6597ms
 
   counts
   ------------------------------------------

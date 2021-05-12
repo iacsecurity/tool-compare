@@ -46,10 +46,10 @@ Check 2
 
   times
   ------------------------------------------
-  disk i/o             39.101001ms
-  parsing HCL          479.292µs
-  evaluating values    1.765167ms
-  running checks       9.617666ms
+  disk i/o             14.292ms
+  parsing HCL          18.8µs
+  evaluating values    192.3µs
+  running checks       3.8121ms
 
   counts
   ------------------------------------------

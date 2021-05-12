@@ -67,10 +67,10 @@ Check 3
 
   times
   ------------------------------------------
-  disk i/o             41.820958ms
-  parsing HCL          472.833µs
-  evaluating values    2.733126ms
-  running checks       13.036375ms
+  disk i/o             12.3213ms
+  parsing HCL          18.1µs
+  evaluating values    105µs
+  running checks       2.8221ms
 
   counts
   ------------------------------------------

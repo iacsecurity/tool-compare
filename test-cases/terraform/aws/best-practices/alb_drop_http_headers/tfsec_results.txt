@@ -1,29 +1,11 @@
 
 Check 1
 
-  [AWS005][WARNING] Resource 'aws_lb.default' is exposed publicly.
-  /src/main.tf:26
+  [AWS083][ERROR] Resource 'aws_alb.default' does not drop invalid header fields
+  /src/main.tf:32-37
 
 
-      23 | }
-      24 | 
-      25 | resource "aws_lb" "default" {
-      26 |   internal           = false
-      27 |   load_balancer_type = "application"
-      28 |   name               = "alb"
       29 |   subnets            = module.vpc.public_subnets
-
-  Impact:     The load balancer is exposed on the internet
-  Resolution: Switch to an internal load balancer or add a tfsec ignore
-
-  See https://tfsec.dev/docs/aws/AWS005/ for more information. 
-
-Check 2
-
-  [AWS005][WARNING] Resource 'aws_alb.default' is exposed publicly.
-  /src/main.tf:33
-
-
       30 | }
       31 | 
       32 | resource "aws_alb" "default" {
@@ -31,13 +13,17 @@ Check 2
       34 |   load_balancer_type = "application"
       35 |   name               = "alb"
       36 |   subnets            = module.vpc.public_subnets
+      37 | }
+      38 | 
+      39 | resource "aws_lb" "disabled" {
+      40 |   internal           = false
 
-  Impact:     The load balancer is exposed on the internet
-  Resolution: Switch to an internal load balancer or add a tfsec ignore
+  Impact:     Invalid headers being passed through to the target of the load balance may exploit vulnerabilities
+  Resolution: Set drop_invalid_header_fields to true
 
-  See https://tfsec.dev/docs/aws/AWS005/ for more information. 
+  See https://tfsec.dev/docs/aws/AWS083/ for more information. 
 
-Check 3
+Check 2
 
   [AWS005][WARNING] Resource 'aws_lb.disabled' is exposed publicly.
   /src/main.tf:40
@@ -56,7 +42,7 @@ Check 3
 
   See https://tfsec.dev/docs/aws/AWS005/ for more information. 
 
-Check 4
+Check 3
 
   [AWS005][WARNING] Resource 'aws_alb.disabled' is exposed publicly.
   /src/main.tf:49
@@ -75,7 +61,7 @@ Check 4
 
   See https://tfsec.dev/docs/aws/AWS005/ for more information. 
 
-Check 5
+Check 4
 
   [AWS082][ERROR] Resource 'module.vpc:aws_default_vpc.this' should not exist
   /src/.terraform/modules/vpc/main.tf:1301-1315
@@ -106,12 +92,111 @@ Check 5
 
   See https://tfsec.dev/docs/aws/AWS082/ for more information. 
 
+Check 5
+
+  [AWS005][WARNING] Resource 'aws_lb.default' is exposed publicly.
+  /src/main.tf:26
+
+
+      23 | }
+      24 | 
+      25 | resource "aws_lb" "default" {
+      26 |   internal           = false
+      27 |   load_balancer_type = "application"
+      28 |   name               = "alb"
+      29 |   subnets            = module.vpc.public_subnets
+
+  Impact:     The load balancer is exposed on the internet
+  Resolution: Switch to an internal load balancer or add a tfsec ignore
+
+  See https://tfsec.dev/docs/aws/AWS005/ for more information. 
+
+Check 6
+
+  [AWS083][ERROR] Resource 'aws_lb.default' does not drop invalid header fields
+  /src/main.tf:25-30
+
+
+      22 |   default_security_group_egress =[]
+      23 | }
+      24 | 
+      25 | resource "aws_lb" "default" {
+      26 |   internal           = false
+      27 |   load_balancer_type = "application"
+      28 |   name               = "alb"
+      29 |   subnets            = module.vpc.public_subnets
+      30 | }
+      31 | 
+      32 | resource "aws_alb" "default" {
+      33 |   internal           = false
+
+  Impact:     Invalid headers being passed through to the target of the load balance may exploit vulnerabilities
+  Resolution: Set drop_invalid_header_fields to true
+
+  See https://tfsec.dev/docs/aws/AWS083/ for more information. 
+
+Check 7
+
+  [AWS005][WARNING] Resource 'aws_alb.default' is exposed publicly.
+  /src/main.tf:33
+
+
+      30 | }
+      31 | 
+      32 | resource "aws_alb" "default" {
+      33 |   internal           = false
+      34 |   load_balancer_type = "application"
+      35 |   name               = "alb"
+      36 |   subnets            = module.vpc.public_subnets
+
+  Impact:     The load balancer is exposed on the internet
+  Resolution: Switch to an internal load balancer or add a tfsec ignore
+
+  See https://tfsec.dev/docs/aws/AWS005/ for more information. 
+
+Check 8
+
+  [AWS083][ERROR] Resource 'aws_lb.disabled' sets the drop_invalid_header_fields to false
+  /src/main.tf:45
+
+
+      42 |   name               = "alb"
+      43 |   subnets            = module.vpc.public_subnets
+      44 | 
+      45 |   drop_invalid_header_fields = false
+      46 | }
+      47 | 
+      48 | resource "aws_alb" "disabled" {
+
+  Impact:     Invalid headers being passed through to the target of the load balance may exploit vulnerabilities
+  Resolution: Set drop_invalid_header_fields to true
+
+  See https://tfsec.dev/docs/aws/AWS083/ for more information. 
+
+Check 9
+
+  [AWS083][ERROR] Resource 'aws_alb.disabled' sets the drop_invalid_header_fields to false
+  /src/main.tf:54
+
+
+      51 |   name               = "alb"
+      52 |   subnets            = module.vpc.public_subnets
+      53 | 
+      54 |   drop_invalid_header_fields = false
+      55 | }
+      56 | 
+
+  Impact:     Invalid headers being passed through to the target of the load balance may exploit vulnerabilities
+  Resolution: Set drop_invalid_header_fields to true
+
+  See https://tfsec.dev/docs/aws/AWS083/ for more information. 
+
   times
   ------------------------------------------
-  disk i/o             236.510292ms
-  parsing HCL          849.833µs
-  evaluating values    213.479748ms
-  running checks       65.085458ms
+  disk i/o             88.2424ms
+  parsing HCL          246.6µs
+  evaluating values    56.9511ms
+  running checks       31.1291ms
 
   counts
   ------------------------------------------
@@ -122,5 +207,5 @@ Check 5
   module blocks        348
   ignored checks       0
 
-5 potential problems detected.
+9 potential problems detected.
 

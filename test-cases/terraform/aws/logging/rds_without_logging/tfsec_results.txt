@@ -1,25 +1,6 @@
 
 Check 1
 
-  [GEN003][WARNING] Block 'aws_db_instance.default' includes a potentially sensitive attribute which is defined within the project.
-  /src/main.tf:8
-
-
-       5 |   instance_class       = "db.t3.micro"
-       6 |   name                 = "mydb"
-       7 |   username             = "foo"
-       8 |   password             = "foobarbaz"
-       9 |   parameter_group_name = "default.mysql5.7"
-      10 |   skip_final_snapshot  = true
-      11 | }
-
-  Impact:     Block attribute could be leaking secrets
-  Resolution: Don't include sensitive data in blocks
-
-  See https://tfsec.dev/docs/general/GEN003/ for more information. 
-
-Check 2
-
   [AWS052][ERROR] Resource 'aws_db_instance.default' has no storage encryption defined.
   /src/main.tf:1-11
 
@@ -41,12 +22,31 @@ Check 2
 
   See https://tfsec.dev/docs/aws/AWS052/ for more information. 
 
+Check 2
+
+  [GEN003][WARNING] Block 'aws_db_instance.default' includes a potentially sensitive attribute which is defined within the project.
+  /src/main.tf:8
+
+
+       5 |   instance_class       = "db.t3.micro"
+       6 |   name                 = "mydb"
+       7 |   username             = "foo"
+       8 |   password             = "foobarbaz"
+       9 |   parameter_group_name = "default.mysql5.7"
+      10 |   skip_final_snapshot  = true
+      11 | }
+
+  Impact:     Block attribute could be leaking secrets
+  Resolution: Don't include sensitive data in blocks
+
+  See https://tfsec.dev/docs/general/GEN003/ for more information. 
+
   times
   ------------------------------------------
-  disk i/o             53.829458ms
-  parsing HCL          537.667µs
-  evaluating values    2.014166ms
-  running checks       16.424666ms
+  disk i/o             18.2441ms
+  parsing HCL          13.5µs
+  evaluating values    282.8µs
+  running checks       4.188ms
 
   counts
   ------------------------------------------

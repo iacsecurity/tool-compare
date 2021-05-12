@@ -13,7 +13,7 @@ run-all:
 
 .PHONY: clear-%-results
 clear-%-results:
-	$echo "Clearing results for $*"
+	@echo "Clearing results for $*"
 	find . -name "$*_results.txt" -print -delete;
 
 .PHONY: clear-all-results

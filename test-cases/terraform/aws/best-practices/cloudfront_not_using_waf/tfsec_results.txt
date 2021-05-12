@@ -265,10 +265,10 @@ Check 7
 
   times
   ------------------------------------------
-  disk i/o             48.83175ms
-  parsing HCL          544.125µs
-  evaluating values    2.099708ms
-  running checks       25.340167ms
+  disk i/o             14.154ms
+  parsing HCL          15.4µs
+  evaluating values    103.7µs
+  running checks       6.5547ms
 
   counts
   ------------------------------------------

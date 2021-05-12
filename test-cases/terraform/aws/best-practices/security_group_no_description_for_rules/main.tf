@@ -14,7 +14,6 @@ resource "aws_vpc" "vpc" {
 
 resource "aws_security_group" "default" {
   name        = "examplerulename"
-  description = "Allow TLS inbound traffic"
   vpc_id      = aws_vpc.vpc.id
 
   ingress {
