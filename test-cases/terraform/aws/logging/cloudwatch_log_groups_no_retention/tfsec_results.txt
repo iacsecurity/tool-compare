@@ -1,10 +1,33 @@
 
+Check 1
+
+  [AWS089][WARNING] Resource 'aws_cloudwatch_log_group.yada' is only using default encryption
+  /src/main.tf:5-12
+
+
+       2 |   region = "us-east-1"
+       3 | }
+       4 | 
+       5 | resource "aws_cloudwatch_log_group" "yada" {
+       6 |   name = "Yada"
+       7 | 
+       8 |   tags = {
+       9 |     Environment = "production"
+      10 |     Application = "serviceA"
+      11 |   }
+      12 | }
+
+  Impact:     Log data may be leaked if the logs are compromised
+  Resolution: Enable CMK encryption of CloudWatch Log Groups
+
+  See https://tfsec.dev/docs/aws/AWS089/ for more information. 
+
   times
   ------------------------------------------
-  disk i/o             44.314416ms
-  parsing HCL          504.708µs
-  evaluating values    1.937084ms
-  running checks       1.245166ms
+  disk i/o             12.9827ms
+  parsing HCL          12.1µs
+  evaluating values    100.6µs
+  running checks       1.7584ms
 
   counts
   ------------------------------------------
@@ -15,5 +38,5 @@
   module blocks        0
   ignored checks       0
 
-No problems detected!
+1 potential problems detected.
 

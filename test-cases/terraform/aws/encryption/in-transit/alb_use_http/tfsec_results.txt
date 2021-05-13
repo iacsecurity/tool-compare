@@ -1,50 +1,29 @@
 
 Check 1
 
-  [AWS079][ERROR] Resource 'aws_instance.inst2' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
-  /src/main.tf:95-100
+  [AWS083][ERROR] Resource 'aws_lb.test' does not drop invalid header fields
+  /src/main.tf:49-54
 
 
-      92 |   port = 80
-      93 | }
-      94 | 
-      95 | resource "aws_instance" "inst2" {
-      96 |   vpc_security_group_ids = [aws_default_security_group.dsg.id]
-      97 |   subnet_id = aws_subnet.subnet1.id
-      98 |   ami = data.aws_ami.ubuntu.id
-      99 |   instance_type = "t3.micro"
-     100 | }
-     101 | 
-     102 | resource "aws_lb_target_group_attachment" "attach3" {
-     103 |   target_group_arn = aws_lb_target_group.test.arn
+      46 |   }
+      47 | }
+      48 | 
+      49 | resource "aws_lb" "test" {
+      50 |   name = "test123"
+      51 |   load_balancer_type = "application"
+      52 |   subnets = [aws_subnet.subnet1.id, aws_subnet.subnet2.id]
+      53 |   internal = true
+      54 | }
+      55 | 
+      56 | resource "aws_lb_target_group" "test" {
+      57 |   port = 80
 
-  Impact:     Instance metadata service can be interacted with freely
-  Resolution: Enable HTTP token requirement for IMDS
+  Impact:     Invalid headers being passed through to the target of the load balance may exploit vulnerabilities
+  Resolution: Set drop_invalid_header_fields to true
 
-  See https://tfsec.dev/docs/aws/AWS079/ for more information. 
+  See https://tfsec.dev/docs/aws/AWS083/ for more information. 
 
 Check 2
-
-  [AWS079][ERROR] Resource 'aws_instance.inst3' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
-  /src/main.tf:108-113
-
-
-     105 |   port = 80
-     106 | }
-     107 | 
-     108 | resource "aws_instance" "inst3" {
-     109 |   vpc_security_group_ids = [aws_default_security_group.dsg.id]
-     110 |   subnet_id = aws_subnet.subnet1.id
-     111 |   ami = data.aws_ami.ubuntu.id
-     112 |   instance_type = "t3.micro"
-     113 | }
-
-  Impact:     Instance metadata service can be interacted with freely
-  Resolution: Enable HTTP token requirement for IMDS
-
-  See https://tfsec.dev/docs/aws/AWS079/ for more information. 
-
-Check 3
 
   [AWS004][ERROR] Resource 'aws_lb_listener.listener' uses plain HTTP instead of HTTPS.
   /src/main.tf:67-74
@@ -70,7 +49,7 @@ Check 3
 
   See https://tfsec.dev/docs/aws/AWS004/ for more information. 
 
-Check 4
+Check 3
 
   [AWS079][ERROR] Resource 'aws_instance.inst1' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
   /src/main.tf:82-87
@@ -94,12 +73,57 @@ Check 4
 
   See https://tfsec.dev/docs/aws/AWS079/ for more information. 
 
+Check 4
+
+  [AWS079][ERROR] Resource 'aws_instance.inst2' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
+  /src/main.tf:95-100
+
+
+      92 |   port = 80
+      93 | }
+      94 | 
+      95 | resource "aws_instance" "inst2" {
+      96 |   vpc_security_group_ids = [aws_default_security_group.dsg.id]
+      97 |   subnet_id = aws_subnet.subnet1.id
+      98 |   ami = data.aws_ami.ubuntu.id
+      99 |   instance_type = "t3.micro"
+     100 | }
+     101 | 
+     102 | resource "aws_lb_target_group_attachment" "attach3" {
+     103 |   target_group_arn = aws_lb_target_group.test.arn
+
+  Impact:     Instance metadata service can be interacted with freely
+  Resolution: Enable HTTP token requirement for IMDS
+
+  See https://tfsec.dev/docs/aws/AWS079/ for more information. 
+
+Check 5
+
+  [AWS079][ERROR] Resource 'aws_instance.inst3' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
+  /src/main.tf:108-113
+
+
+     105 |   port = 80
+     106 | }
+     107 | 
+     108 | resource "aws_instance" "inst3" {
+     109 |   vpc_security_group_ids = [aws_default_security_group.dsg.id]
+     110 |   subnet_id = aws_subnet.subnet1.id
+     111 |   ami = data.aws_ami.ubuntu.id
+     112 |   instance_type = "t3.micro"
+     113 | }
+
+  Impact:     Instance metadata service can be interacted with freely
+  Resolution: Enable HTTP token requirement for IMDS
+
+  See https://tfsec.dev/docs/aws/AWS079/ for more information. 
+
   times
   ------------------------------------------
-  disk i/o             162.604208ms
-  parsing HCL          588.125µs
-  evaluating values    5.046834ms
-  running checks       25.8355ms
+  disk i/o             15.1531ms
+  parsing HCL          20.4µs
+  evaluating values    444.1µs
+  running checks       5.3608ms
 
   counts
   ------------------------------------------
@@ -110,5 +134,5 @@ Check 4
   module blocks        0
   ignored checks       0
 
-4 potential problems detected.
+5 potential problems detected.
 

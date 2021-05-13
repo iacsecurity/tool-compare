@@ -66,7 +66,7 @@ Check 3
       18 | resource "aws_s3_bucket" "foo" {
       19 |   bucket        = local.name
 
-  Impact:     Data can be read if compromised
+  Impact:     Data can be freely read if compromised
   Resolution: Enable encryption at rest
 
   See https://tfsec.dev/docs/aws/AWS065/ for more information. 
@@ -223,10 +223,10 @@ Check 6
 
   times
   ------------------------------------------
-  disk i/o             41.337625ms
-  parsing HCL          520.583µs
-  evaluating values    3.076418ms
-  running checks       20.216083ms
+  disk i/o             13.5067ms
+  parsing HCL          14.4µs
+  evaluating values    274.9µs
+  running checks       5.8339ms
 
   counts
   ------------------------------------------

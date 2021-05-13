@@ -2,16 +2,16 @@
 Check 1
 
   [AWS009][WARNING] Resource 'aws_security_group.default' defines a fully open egress security group.
-  /src/main.tf:31
+  /src/main.tf:30
 
 
-      28 |     from_port   = 0
-      29 |     to_port     = 0
-      30 |     protocol    = "-1"
-      31 |     cidr_blocks = ["0.0.0.0/0"]
-      32 |   }
-      33 | 
-      34 |   tags = {
+      27 |     from_port   = 0
+      28 |     to_port     = 0
+      29 |     protocol    = "-1"
+      30 |     cidr_blocks = ["0.0.0.0/0"]
+      31 |   }
+      32 | 
+      33 |   tags = {
 
   Impact:     The port is exposed for egressing data to the internet
   Resolution: Set a more restrictive cidr range
@@ -20,21 +20,61 @@ Check 1
 
 Check 2
 
+  [AWS018][ERROR] Resource 'aws_security_group.default' should include a description for auditing purposes.
+  /src/main.tf:15-36
+
+
+      12 | 
+      13 | }
+      14 | 
+      15 | resource "aws_security_group" "default" {
+      16 |   name        = "examplerulename"
+      17 |   vpc_id      = aws_vpc.vpc.id
+      18 | 
+      19 |   ingress {
+      20 |     from_port   = 443
+      21 |     to_port     = 443
+      22 |     protocol    = "tcp"
+      23 |     cidr_blocks = ["10.0.0.0/24"]
+      24 |   }
+      25 | 
+      26 |   egress {
+      27 |     from_port   = 0
+      28 |     to_port     = 0
+      29 |     protocol    = "-1"
+      30 |     cidr_blocks = ["0.0.0.0/0"]
+      31 |   }
+      32 | 
+      33 |   tags = {
+      34 |     Name = "example_rule_with_descriptions"
+      35 |   }
+      36 | }
+      37 | 
+      38 | resource "aws_subnet" "subnet" {
+      39 |   vpc_id     = aws_vpc.vpc.id
+
+  Impact:     Descriptions provide context for the firewall rule reasons
+  Resolution: Add descriptions for all security groups anf rules
+
+  See https://tfsec.dev/docs/aws/AWS018/ for more information. 
+
+Check 3
+
   [AWS079][ERROR] Resource 'aws_instance.ec2' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
-  /src/main.tf:62-68
+  /src/main.tf:61-67
 
 
-      59 |   owners = ["099720109477"] # Canonical
-      60 | }
-      61 | 
-      62 | resource "aws_instance" "ec2" {
-      63 |   ami = data.aws_ami.ubuntu.id
-      64 |   instance_type = "t2.micro"
-      65 |   subnet_id     = aws_subnet.subnet.id
-      66 |   vpc_security_group_ids  = [aws_security_group.default.id]
-      67 | 
-      68 | }
-      69 | 
+      58 |   owners = ["099720109477"] # Canonical
+      59 | }
+      60 | 
+      61 | resource "aws_instance" "ec2" {
+      62 |   ami = data.aws_ami.ubuntu.id
+      63 |   instance_type = "t2.micro"
+      64 |   subnet_id     = aws_subnet.subnet.id
+      65 |   vpc_security_group_ids  = [aws_security_group.default.id]
+      66 | 
+      67 | }
+      68 | 
 
   Impact:     Instance metadata service can be interacted with freely
   Resolution: Enable HTTP token requirement for IMDS
@@ -43,10 +83,10 @@ Check 2
 
   times
   ------------------------------------------
-  disk i/o             53.614709ms
-  parsing HCL          600.375µs
-  evaluating values    3.449625ms
-  running checks       10.376542ms
+  disk i/o             17.5688ms
+  parsing HCL          18.4µs
+  evaluating values    204.9µs
+  running checks       4.0593ms
 
   counts
   ------------------------------------------
@@ -57,5 +97,5 @@ Check 2
   module blocks        0
   ignored checks       0
 
-2 potential problems detected.
+3 potential problems detected.
 

@@ -42,12 +42,51 @@ Check 2
 
   See https://tfsec.dev/docs/aws/AWS079/ for more information. 
 
+Check 3
+
+  [AWS086][WARNING] Resource 'aws_dynamodb_table.basic-dynamodb-table' doesn't have point in time recovery
+  /src/main.tf:143-166
+
+
+     140 |   subnet_id = aws_subnet.private-subnet.id
+     141 | }
+     142 | 
+     143 | resource "aws_dynamodb_table" "basic-dynamodb-table" {
+     144 |   name           = "GameScores"
+     145 |   billing_mode   = "PROVISIONED"
+     146 |   read_capacity  = 5
+     147 |   write_capacity = 5
+     148 |   hash_key       = "UserId"
+     149 |   range_key      = "GameTitle"
+     150 | 
+     151 |   attribute {
+     152 |     name = "UserId"
+     153 |     type = "S"
+     154 |   }
+     155 | 
+     156 |   attribute {
+     157 |     name = "GameTitle"
+     158 |     type = "S"
+     159 |   }
+     160 | 
+     161 |   ttl {
+     162 |     attribute_name = "TimeToExist"
+     163 |     enabled        = false
+     164 |   }
+     165 | 
+     166 | }
+
+  Impact:     Accidental or malicious writes and deletes can't be rolled back
+  Resolution: Enable point in time recovery
+
+  See https://tfsec.dev/docs/aws/AWS086/ for more information. 
+
   times
   ------------------------------------------
-  disk i/o             44.809709ms
-  parsing HCL          531.583µs
-  evaluating values    5.197875ms
-  running checks       11.50075ms
+  disk i/o             14.136ms
+  parsing HCL          18.3µs
+  evaluating values    493.6µs
+  running checks       3.2346ms
 
   counts
   ------------------------------------------
@@ -58,5 +97,5 @@ Check 2
   module blocks        0
   ignored checks       0
 
-2 potential problems detected.
+3 potential problems detected.
 

@@ -1,10 +1,31 @@
 
+Check 1
+
+  [AWS090][WARNING] Resoure 'aws_ecs_cluster.foo' does not have codeInsights enabled
+  /src/main.tf:1-8
+
+
+       1 | resource "aws_ecs_cluster" "foo" {
+       2 |   name = "white-hart"
+       3 | 
+       4 |   # setting {
+       5 |     # name  = "containerInsights"
+       6 |     # value = "enabled"
+       7 |   # }
+       8 | }
+       9 | 
+
+  Impact:     Not all metrics and logs may be gathered for containers when Container Insights isn't enabled
+  Resolution: Enable Container Insights
+
+  See https://tfsec.dev/docs/aws/AWS090/ for more information. 
+
   times
   ------------------------------------------
-  disk i/o             35.21125ms
-  parsing HCL          517.708µs
-  evaluating values    1.618375ms
-  running checks       1.301667ms
+  disk i/o             16.6504ms
+  parsing HCL          36.6µs
+  evaluating values    98.5µs
+  running checks       1.7194ms
 
   counts
   ------------------------------------------
@@ -15,5 +36,5 @@
   module blocks        0
   ignored checks       0
 
-No problems detected!
+1 potential problems detected.
 

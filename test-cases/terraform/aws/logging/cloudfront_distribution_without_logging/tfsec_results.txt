@@ -1,48 +1,6 @@
 
 Check 1
 
-  [AWS077][ERROR] Resource 'aws_s3_bucket.b' does not have versioning enabled
-  /src/main.tf:1-8
-
-
-       1 | resource "aws_s3_bucket" "b" {
-       2 |   bucket = "mybucket"
-       3 |   acl    = "private"
-       4 | 
-       5 |   tags = {
-       6 |     Name = "My bucket"
-       7 |   }
-       8 | }
-       9 | 
-      10 | locals {
-      11 |   s3_origin_id = "myS3Origin"
-
-  Impact:     Deleted or modified data would not be recoverable
-  Resolution: Enable versioning to protect against accidental/malicious removal or modification
-
-  See https://tfsec.dev/docs/aws/AWS077/ for more information. 
-
-Check 2
-
-  [AWS020][ERROR] Resource 'aws_cloudfront_distribution.s3_distribution' defines a CloudFront distribution that allows unencrypted communications.
-  /src/main.tf:44
-
-
-      41 |       }
-      42 |     }
-      43 | 
-      44 |     viewer_protocol_policy = "allow-all"
-      45 |     min_ttl                = 0
-      46 |     default_ttl            = 3600
-      47 |     max_ttl                = 86400
-
-  Impact:     CloudFront is available through an unencrypted connection
-  Resolution: Only allow HTTPS for CloudFront distribution communication
-
-  See https://tfsec.dev/docs/aws/AWS020/ for more information. 
-
-Check 3
-
   [AWS021][ERROR] Resource 'aws_cloudfront_distribution.s3_distribution' defines outdated SSL/TLS policies (missing minimum_protocol_version attribute)
   /src/main.tf:108-110
 
@@ -60,7 +18,7 @@ Check 3
 
   See https://tfsec.dev/docs/aws/AWS021/ for more information. 
 
-Check 4
+Check 2
 
   [AWS045][WARNING] Resource 'aws_cloudfront_distribution.s3_distribution' does not have a WAF in front of it.
   /src/main.tf:14-111
@@ -173,7 +131,7 @@ Check 4
 
   See https://tfsec.dev/docs/aws/AWS045/ for more information. 
 
-Check 5
+Check 3
 
   [AWS071][ERROR] Resource 'aws_cloudfront_distribution.s3_distribution' does not have Access Logging configured
   /src/main.tf:14-111
@@ -286,7 +244,7 @@ Check 5
 
   See https://tfsec.dev/docs/aws/AWS071/ for more information. 
 
-Check 6
+Check 4
 
   [AWS072][ERROR] Resource 'aws_cloudfront_distribution.s3_distribution' does not use HTTPS in Viewer Protocol Policy
   /src/main.tf:31-48
@@ -322,7 +280,7 @@ Check 6
 
   See https://tfsec.dev/docs/aws/AWS072/ for more information. 
 
-Check 7
+Check 5
 
   [AWS002][ERROR] Resource 'aws_s3_bucket.b' does not have logging enabled.
   /src/main.tf:1-8
@@ -345,7 +303,7 @@ Check 7
 
   See https://tfsec.dev/docs/aws/AWS002/ for more information. 
 
-Check 8
+Check 6
 
   [AWS017][ERROR] Resource 'aws_s3_bucket.b' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
   /src/main.tf:1-8
@@ -368,12 +326,54 @@ Check 8
 
   See https://tfsec.dev/docs/aws/AWS017/ for more information. 
 
+Check 7
+
+  [AWS077][ERROR] Resource 'aws_s3_bucket.b' does not have versioning enabled
+  /src/main.tf:1-8
+
+
+       1 | resource "aws_s3_bucket" "b" {
+       2 |   bucket = "mybucket"
+       3 |   acl    = "private"
+       4 | 
+       5 |   tags = {
+       6 |     Name = "My bucket"
+       7 |   }
+       8 | }
+       9 | 
+      10 | locals {
+      11 |   s3_origin_id = "myS3Origin"
+
+  Impact:     Deleted or modified data would not be recoverable
+  Resolution: Enable versioning to protect against accidental/malicious removal or modification
+
+  See https://tfsec.dev/docs/aws/AWS077/ for more information. 
+
+Check 8
+
+  [AWS020][ERROR] Resource 'aws_cloudfront_distribution.s3_distribution' defines a CloudFront distribution that allows unencrypted communications.
+  /src/main.tf:44
+
+
+      41 |       }
+      42 |     }
+      43 | 
+      44 |     viewer_protocol_policy = "allow-all"
+      45 |     min_ttl                = 0
+      46 |     default_ttl            = 3600
+      47 |     max_ttl                = 86400
+
+  Impact:     CloudFront is available through an unencrypted connection
+  Resolution: Only allow HTTPS for CloudFront distribution communication
+
+  See https://tfsec.dev/docs/aws/AWS020/ for more information. 
+
   times
   ------------------------------------------
-  disk i/o             44.125418ms
-  parsing HCL          523.875µs
-  evaluating values    2.462542ms
-  running checks       25.256667ms
+  disk i/o             14.4148ms
+  parsing HCL          53.7µs
+  evaluating values    116.3µs
+  running checks       8.4709ms
 
   counts
   ------------------------------------------

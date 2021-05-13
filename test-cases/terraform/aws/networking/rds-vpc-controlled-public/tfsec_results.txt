@@ -1,25 +1,6 @@
 
 Check 1
 
-  [AWS008][WARNING] Resource 'aws_security_group.nondefault' defines a fully open ingress security group.
-  /src/main.tf:16
-
-
-      13 |     from_port = 0
-      14 |     protocol = "TCP"
-      15 |     to_port = 65000
-      16 |     cidr_blocks = ["0.0.0.0/0"]
-      17 |   }
-      18 | }
-      19 | 
-
-  Impact:     The port is exposed for ingress from the internet
-  Resolution: Set a more restrictive cidr range
-
-  See https://tfsec.dev/docs/aws/AWS008/ for more information. 
-
-Check 2
-
   [AWS018][ERROR] Resource 'aws_security_group.nondefault' should include a description for auditing purposes.
   /src/main.tf:9-18
 
@@ -46,7 +27,7 @@ Check 2
 
   See https://tfsec.dev/docs/aws/AWS018/ for more information. 
 
-Check 3
+Check 2
 
   [AWS011][WARNING] Resource 'aws_db_instance.test' is exposed publicly.
   /src/main.tf:62
@@ -65,7 +46,7 @@ Check 3
 
   See https://tfsec.dev/docs/aws/AWS011/ for more information. 
 
-Check 4
+Check 3
 
   [AWS052][ERROR] Resource 'aws_db_instance.test' has no storage encryption defined.
   /src/main.tf:60-65
@@ -86,12 +67,31 @@ Check 4
 
   See https://tfsec.dev/docs/aws/AWS052/ for more information. 
 
+Check 4
+
+  [AWS008][WARNING] Resource 'aws_security_group.nondefault' defines a fully open ingress security group.
+  /src/main.tf:16
+
+
+      13 |     from_port = 0
+      14 |     protocol = "TCP"
+      15 |     to_port = 65000
+      16 |     cidr_blocks = ["0.0.0.0/0"]
+      17 |   }
+      18 | }
+      19 | 
+
+  Impact:     The port is exposed for ingress from the internet
+  Resolution: Set a more restrictive cidr range
+
+  See https://tfsec.dev/docs/aws/AWS008/ for more information. 
+
   times
   ------------------------------------------
-  disk i/o             64.579708ms
-  parsing HCL          501.416µs
-  evaluating values    3.485874ms
-  running checks       20.392917ms
+  disk i/o             16.5463ms
+  parsing HCL          20.6µs
+  evaluating values    458µs
+  running checks       4.3392ms
 
   counts
   ------------------------------------------

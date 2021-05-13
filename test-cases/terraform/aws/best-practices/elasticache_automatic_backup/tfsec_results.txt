@@ -1,10 +1,50 @@
 
+Check 1
+
+  [AWS088][WARNING] Resource 'aws_elasticache_cluster.default' should have snapshot retention specified
+  /src/main.tf:1-7
+
+
+       1 | resource "aws_elasticache_cluster" "default" {
+       2 |   cluster_id           = "cluster"
+       3 |   engine               = "redis"
+       4 |   node_type            = "cache.m5.large"
+       5 |   num_cache_nodes      = 1
+       6 |   parameter_group_name = "default.redis6.x"
+       7 | }
+       8 | 
+       9 | resource "aws_elasticache_cluster" "disabled" {
+      10 |   cluster_id           = "cluster"
+
+  Impact:     Without backups of the redis cluster recovery is made difficult
+  Resolution: Configure snapshot retention for redis cluster
+
+  See https://tfsec.dev/docs/aws/AWS088/ for more information. 
+
+Check 2
+
+  [AWS088][WARNING] Resource 'aws_elasticache_cluster.disabled' has snapshot retention set to 0
+  /src/main.tf:16
+
+
+      13 |   num_cache_nodes      = 1
+      14 |   parameter_group_name = "default.redis6.x"
+      15 | 
+      16 |   snapshot_retention_limit = 0
+      17 | }
+      18 | 
+
+  Impact:     Without backups of the redis cluster recovery is made difficult
+  Resolution: Configure snapshot retention for redis cluster
+
+  See https://tfsec.dev/docs/aws/AWS088/ for more information. 
+
   times
   ------------------------------------------
-  disk i/o             39.688041ms
-  parsing HCL          472.75µs
-  evaluating values    1.607374ms
-  running checks       1.237291ms
+  disk i/o             15.5767ms
+  parsing HCL          13.9µs
+  evaluating values    123.4µs
+  running checks       3.0873ms
 
   counts
   ------------------------------------------
@@ -15,5 +55,5 @@
   module blocks        0
   ignored checks       0
 
-No problems detected!
+2 potential problems detected.
 

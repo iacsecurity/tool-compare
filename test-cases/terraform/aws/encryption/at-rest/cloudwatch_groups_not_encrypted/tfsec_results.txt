@@ -1,10 +1,29 @@
 
+Check 1
+
+  [AWS089][WARNING] Resource 'aws_cloudwatch_log_group.cloudrail-test' is only using default encryption
+  /src/main.tf:5-7
+
+
+       2 |   region = "us-east-1"
+       3 | }
+       4 | 
+       5 | resource "aws_cloudwatch_log_group" "cloudrail-test" {
+       6 |   retention_in_days = 1
+       7 | }
+       8 | 
+
+  Impact:     Log data may be leaked if the logs are compromised
+  Resolution: Enable CMK encryption of CloudWatch Log Groups
+
+  See https://tfsec.dev/docs/aws/AWS089/ for more information. 
+
   times
   ------------------------------------------
-  disk i/o             44.695584ms
-  parsing HCL          593.25µs
-  evaluating values    1.781958ms
-  running checks       1.297459ms
+  disk i/o             20.2175ms
+  parsing HCL          12.1µs
+  evaluating values    77µs
+  running checks       1.6018ms
 
   counts
   ------------------------------------------
@@ -15,5 +34,5 @@
   module blocks        0
   ignored checks       0
 
-No problems detected!
+1 potential problems detected.
 
