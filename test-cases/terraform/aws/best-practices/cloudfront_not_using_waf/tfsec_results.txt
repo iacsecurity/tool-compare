@@ -1,94 +1,6 @@
 
 Check 1
 
-  [AWS002][ERROR] Resource 'aws_s3_bucket.b' does not have logging enabled.
-  /src/main.tf:1-8
-
-
-       1 | resource "aws_s3_bucket" "b" {
-       2 |   bucket = "mybucket"
-       3 |   acl    = "private"
-       4 | 
-       5 |   tags = {
-       6 |     Name = "My bucket"
-       7 |   }
-       8 | }
-       9 | 
-      10 | locals {
-      11 |   s3_origin_id = "myS3Origin"
-
-  Impact:     There is no way to determine the access to this bucket
-  Resolution: Add a logging block to the resource to enable access logging
-
-  See https://tfsec.dev/docs/aws/AWS002/ for more information. 
-
-Check 2
-
-  [AWS017][ERROR] Resource 'aws_s3_bucket.b' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
-  /src/main.tf:1-8
-
-
-       1 | resource "aws_s3_bucket" "b" {
-       2 |   bucket = "mybucket"
-       3 |   acl    = "private"
-       4 | 
-       5 |   tags = {
-       6 |     Name = "My bucket"
-       7 |   }
-       8 | }
-       9 | 
-      10 | locals {
-      11 |   s3_origin_id = "myS3Origin"
-
-  Impact:     The bucket objects could be read if compromised
-  Resolution: Configure bucket encryption
-
-  See https://tfsec.dev/docs/aws/AWS017/ for more information. 
-
-Check 3
-
-  [AWS077][ERROR] Resource 'aws_s3_bucket.b' does not have versioning enabled
-  /src/main.tf:1-8
-
-
-       1 | resource "aws_s3_bucket" "b" {
-       2 |   bucket = "mybucket"
-       3 |   acl    = "private"
-       4 | 
-       5 |   tags = {
-       6 |     Name = "My bucket"
-       7 |   }
-       8 | }
-       9 | 
-      10 | locals {
-      11 |   s3_origin_id = "myS3Origin"
-
-  Impact:     Deleted or modified data would not be recoverable
-  Resolution: Enable versioning to protect against accidental/malicious removal or modification
-
-  See https://tfsec.dev/docs/aws/AWS077/ for more information. 
-
-Check 4
-
-  [AWS020][ERROR] Resource 'aws_cloudfront_distribution.s3_distribution' defines a CloudFront distribution that allows unencrypted communications.
-  /src/main.tf:50
-
-
-      47 |       }
-      48 |     }
-      49 | 
-      50 |     viewer_protocol_policy = "allow-all"
-      51 |     min_ttl                = 0
-      52 |     default_ttl            = 3600
-      53 |     max_ttl                = 86400
-
-  Impact:     CloudFront is available through an unencrypted connection
-  Resolution: Only allow HTTPS for CloudFront distribution communication
-
-  See https://tfsec.dev/docs/aws/AWS020/ for more information. 
-
-Check 5
-
   [AWS021][ERROR] Resource 'aws_cloudfront_distribution.s3_distribution' defines outdated SSL/TLS policies (missing minimum_protocol_version attribute)
   /src/main.tf:114-116
 
@@ -107,7 +19,7 @@ Check 5
 
   See https://tfsec.dev/docs/aws/AWS021/ for more information. 
 
-Check 6
+Check 2
 
   [AWS045][WARNING] Resource 'aws_cloudfront_distribution.s3_distribution' does not have a WAF in front of it.
   /src/main.tf:14-117
@@ -227,7 +139,7 @@ Check 6
 
   See https://tfsec.dev/docs/aws/AWS045/ for more information. 
 
-Check 7
+Check 3
 
   [AWS072][ERROR] Resource 'aws_cloudfront_distribution.s3_distribution' does not use HTTPS in Viewer Protocol Policy
   /src/main.tf:37-54
@@ -263,12 +175,100 @@ Check 7
 
   See https://tfsec.dev/docs/aws/AWS072/ for more information. 
 
+Check 4
+
+  [AWS002][ERROR] Resource 'aws_s3_bucket.b' does not have logging enabled.
+  /src/main.tf:1-8
+
+
+       1 | resource "aws_s3_bucket" "b" {
+       2 |   bucket = "mybucket"
+       3 |   acl    = "private"
+       4 | 
+       5 |   tags = {
+       6 |     Name = "My bucket"
+       7 |   }
+       8 | }
+       9 | 
+      10 | locals {
+      11 |   s3_origin_id = "myS3Origin"
+
+  Impact:     There is no way to determine the access to this bucket
+  Resolution: Add a logging block to the resource to enable access logging
+
+  See https://tfsec.dev/docs/aws/AWS002/ for more information. 
+
+Check 5
+
+  [AWS017][ERROR] Resource 'aws_s3_bucket.b' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
+  /src/main.tf:1-8
+
+
+       1 | resource "aws_s3_bucket" "b" {
+       2 |   bucket = "mybucket"
+       3 |   acl    = "private"
+       4 | 
+       5 |   tags = {
+       6 |     Name = "My bucket"
+       7 |   }
+       8 | }
+       9 | 
+      10 | locals {
+      11 |   s3_origin_id = "myS3Origin"
+
+  Impact:     The bucket objects could be read if compromised
+  Resolution: Configure bucket encryption
+
+  See https://tfsec.dev/docs/aws/AWS017/ for more information. 
+
+Check 6
+
+  [AWS077][ERROR] Resource 'aws_s3_bucket.b' does not have versioning enabled
+  /src/main.tf:1-8
+
+
+       1 | resource "aws_s3_bucket" "b" {
+       2 |   bucket = "mybucket"
+       3 |   acl    = "private"
+       4 | 
+       5 |   tags = {
+       6 |     Name = "My bucket"
+       7 |   }
+       8 | }
+       9 | 
+      10 | locals {
+      11 |   s3_origin_id = "myS3Origin"
+
+  Impact:     Deleted or modified data would not be recoverable
+  Resolution: Enable versioning to protect against accidental/malicious removal or modification
+
+  See https://tfsec.dev/docs/aws/AWS077/ for more information. 
+
+Check 7
+
+  [AWS020][ERROR] Resource 'aws_cloudfront_distribution.s3_distribution' defines a CloudFront distribution that allows unencrypted communications.
+  /src/main.tf:50
+
+
+      47 |       }
+      48 |     }
+      49 | 
+      50 |     viewer_protocol_policy = "allow-all"
+      51 |     min_ttl                = 0
+      52 |     default_ttl            = 3600
+      53 |     max_ttl                = 86400
+
+  Impact:     CloudFront is available through an unencrypted connection
+  Resolution: Only allow HTTPS for CloudFront distribution communication
+
+  See https://tfsec.dev/docs/aws/AWS020/ for more information. 
+
   times
   ------------------------------------------
-  disk i/o             14.154ms
-  parsing HCL          15.4µs
-  evaluating values    103.7µs
-  running checks       6.5547ms
+  disk i/o             42.2121ms
+  parsing HCL          79.1µs
+  evaluating values    784.2µs
+  running checks       18.4528ms
 
   counts
   ------------------------------------------

@@ -24,6 +24,29 @@ Check 1
 
 Check 2
 
+  [AWS091][WARNING] Resource 'aws_db_instance.default' does not have backup retention explicitly set
+  /src/main.tf:1-11
+
+
+       1 | resource "aws_db_instance" "default" {
+       2 |   allocated_storage    = 10
+       3 |   engine               = "mysql"
+       4 |   engine_version       = "5.7"
+       5 |   instance_class       = "db.t3.micro"
+       6 |   name                 = "mydb"
+       7 |   username             = "foo"
+       8 |   password             = "foobarbaz"
+       9 |   parameter_group_name = "default.mysql5.7"
+      10 |   skip_final_snapshot  = true
+      11 | }
+
+  Impact:     Potential loss of data and short opportunity for recovery
+  Resolution: Explicitly set the retention period to greater than the default
+
+  See https://tfsec.dev/docs/aws/AWS091/ for more information. 
+
+Check 3
+
   [GEN003][WARNING] Block 'aws_db_instance.default' includes a potentially sensitive attribute which is defined within the project.
   /src/main.tf:8
 
@@ -43,10 +66,10 @@ Check 2
 
   times
   ------------------------------------------
-  disk i/o             18.2441ms
-  parsing HCL          13.5µs
-  evaluating values    282.8µs
-  running checks       4.188ms
+  disk i/o             30.581ms
+  parsing HCL          24.9µs
+  evaluating values    214.7µs
+  running checks       7.2023ms
 
   counts
   ------------------------------------------
@@ -57,5 +80,5 @@ Check 2
   module blocks        0
   ignored checks       0
 
-2 potential problems detected.
+3 potential problems detected.
 

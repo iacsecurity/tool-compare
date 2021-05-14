@@ -1,47 +1,6 @@
 
 Check 1
 
-  [AWS083][ERROR] Resource 'aws_lb.alb_test' does not drop invalid header fields
-  /src/main.tf:60-63
-
-
-      57 |   protocol = "HTTP"
-      58 | }
-      59 | 
-      60 | resource "aws_lb" "alb_test" {
-      61 |   subnets = [aws_subnet.subnet1.id, aws_subnet.subnet2.id]
-      62 |   load_balancer_type = "application"
-      63 | }
-      64 | 
-      65 | resource "aws_lb_listener" "lb_listener_test" {
-      66 |   load_balancer_arn = aws_lb.alb_test.arn
-
-  Impact:     Invalid headers being passed through to the target of the load balance may exploit vulnerabilities
-  Resolution: Set drop_invalid_header_fields to true
-
-  See https://tfsec.dev/docs/aws/AWS083/ for more information. 
-
-Check 2
-
-  [AWS004][ERROR] Resource 'aws_lb_listener.lb_listener_test' uses plain HTTP instead of HTTPS.
-  /src/main.tf:68
-
-
-      65 | resource "aws_lb_listener" "lb_listener_test" {
-      66 |   load_balancer_arn = aws_lb.alb_test.arn
-      67 |   port              = "80"
-      68 |   protocol          = "HTTP"
-      69 | 
-      70 |   default_action {
-      71 |     type             = "forward"
-
-  Impact:     Your traffic is not protected
-  Resolution: Switch to HTTPS to benefit from TLS security features
-
-  See https://tfsec.dev/docs/aws/AWS004/ for more information. 
-
-Check 3
-
   [AWS005][WARNING] Resource 'aws_lb.alb_test' is exposed publicly.
   /src/main.tf:60-63
 
@@ -62,12 +21,53 @@ Check 3
 
   See https://tfsec.dev/docs/aws/AWS005/ for more information. 
 
+Check 2
+
+  [AWS083][ERROR] Resource 'aws_lb.alb_test' does not drop invalid header fields
+  /src/main.tf:60-63
+
+
+      57 |   protocol = "HTTP"
+      58 | }
+      59 | 
+      60 | resource "aws_lb" "alb_test" {
+      61 |   subnets = [aws_subnet.subnet1.id, aws_subnet.subnet2.id]
+      62 |   load_balancer_type = "application"
+      63 | }
+      64 | 
+      65 | resource "aws_lb_listener" "lb_listener_test" {
+      66 |   load_balancer_arn = aws_lb.alb_test.arn
+
+  Impact:     Invalid headers being passed through to the target of the load balance may exploit vulnerabilities
+  Resolution: Set drop_invalid_header_fields to true
+
+  See https://tfsec.dev/docs/aws/AWS083/ for more information. 
+
+Check 3
+
+  [AWS004][ERROR] Resource 'aws_lb_listener.lb_listener_test' uses plain HTTP instead of HTTPS.
+  /src/main.tf:68
+
+
+      65 | resource "aws_lb_listener" "lb_listener_test" {
+      66 |   load_balancer_arn = aws_lb.alb_test.arn
+      67 |   port              = "80"
+      68 |   protocol          = "HTTP"
+      69 | 
+      70 |   default_action {
+      71 |     type             = "forward"
+
+  Impact:     Your traffic is not protected
+  Resolution: Switch to HTTPS to benefit from TLS security features
+
+  See https://tfsec.dev/docs/aws/AWS004/ for more information. 
+
   times
   ------------------------------------------
-  disk i/o             13.6984ms
-  parsing HCL          19.4µs
-  evaluating values    416µs
-  running checks       3.5778ms
+  disk i/o             21.3456ms
+  parsing HCL          145.5µs
+  evaluating values    544.2µs
+  running checks       7.6647ms
 
   counts
   ------------------------------------------

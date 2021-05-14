@@ -36,12 +36,33 @@ Check 2
 
   See https://tfsec.dev/docs/aws/AWS078/ for more information. 
 
+Check 3
+
+  [AWS093][WARNING] Resource 'aws_ecr_repository.foo' does not have CMK encryption configured
+  /src/main.tf:1-8
+
+
+       1 | resource "aws_ecr_repository" "foo" {
+       2 |   name                 = "bar"
+       3 |   image_tag_mutability = "MUTABLE"
+       4 | 
+       5 |   image_scanning_configuration {
+       6 |     scan_on_push = false
+       7 |   }
+       8 | }
+       9 | 
+
+  Impact:     Using AWS managed keys does not allow for fine grained control
+  Resolution: Use customer managed keys
+
+  See https://tfsec.dev/docs/aws/AWS093/ for more information. 
+
   times
   ------------------------------------------
-  disk i/o             17.0425ms
-  parsing HCL          18.7µs
-  evaluating values    146.1µs
-  running checks       2.3875ms
+  disk i/o             23.1987ms
+  parsing HCL          24.1µs
+  evaluating values    144µs
+  running checks       5.1668ms
 
   counts
   ------------------------------------------
@@ -52,5 +73,5 @@ Check 2
   module blocks        0
   ignored checks       0
 
-2 potential problems detected.
+3 potential problems detected.
 

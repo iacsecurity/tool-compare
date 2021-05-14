@@ -24,10 +24,10 @@ Check 1
 
   times
   ------------------------------------------
-  disk i/o             14.6597ms
-  parsing HCL          47.7µs
-  evaluating values    832.6µs
-  running checks       2.191ms
+  disk i/o             32.0675ms
+  parsing HCL          66.1µs
+  evaluating values    1.4091ms
+  running checks       19.0586ms
 
   counts
   ------------------------------------------

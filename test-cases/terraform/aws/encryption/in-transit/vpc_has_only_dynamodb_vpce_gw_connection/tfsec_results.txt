@@ -81,12 +81,51 @@ Check 3
 
   See https://tfsec.dev/docs/aws/AWS086/ for more information. 
 
+Check 4
+
+  [AWS092][WARNING] Resource 'aws_dynamodb_table.basic-dynamodb-table' is not using KMS CMK for encryption
+  /src/main.tf:143-166
+
+
+     140 |   subnet_id = aws_subnet.private-subnet.id
+     141 | }
+     142 | 
+     143 | resource "aws_dynamodb_table" "basic-dynamodb-table" {
+     144 |   name           = "GameScores"
+     145 |   billing_mode   = "PROVISIONED"
+     146 |   read_capacity  = 5
+     147 |   write_capacity = 5
+     148 |   hash_key       = "UserId"
+     149 |   range_key      = "GameTitle"
+     150 | 
+     151 |   attribute {
+     152 |     name = "UserId"
+     153 |     type = "S"
+     154 |   }
+     155 | 
+     156 |   attribute {
+     157 |     name = "GameTitle"
+     158 |     type = "S"
+     159 |   }
+     160 | 
+     161 |   ttl {
+     162 |     attribute_name = "TimeToExist"
+     163 |     enabled        = false
+     164 |   }
+     165 | 
+     166 | }
+
+  Impact:     Using AWS managed keys does not allow for fine grained control
+  Resolution: Enable server side encrytion with a customer managed key
+
+  See https://tfsec.dev/docs/aws/AWS092/ for more information. 
+
   times
   ------------------------------------------
-  disk i/o             14.136ms
-  parsing HCL          18.3µs
-  evaluating values    493.6µs
-  running checks       3.2346ms
+  disk i/o             34.6531ms
+  parsing HCL          34.1µs
+  evaluating values    797.5µs
+  running checks       10.0339ms
 
   counts
   ------------------------------------------
@@ -97,5 +136,5 @@ Check 3
   module blocks        0
   ignored checks       0
 
-3 potential problems detected.
+4 potential problems detected.
 

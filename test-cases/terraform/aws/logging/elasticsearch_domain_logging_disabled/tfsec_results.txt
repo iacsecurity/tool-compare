@@ -117,10 +117,10 @@ Check 4
 
   times
   ------------------------------------------
-  disk i/o             15.7416ms
-  parsing HCL          30.9µs
-  evaluating values    80.1µs
-  running checks       5.1061ms
+  disk i/o             27.0941ms
+  parsing HCL          93.4µs
+  evaluating values    106.7µs
+  running checks       7.7866ms
 
   counts
   ------------------------------------------

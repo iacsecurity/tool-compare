@@ -1,6 +1,243 @@
 
 Check 1
 
+  [AWS071][ERROR] Resource 'aws_cloudfront_distribution.s3_distribution' does not have Access Logging configured
+  /src/main.tf:14-111
+
+
+      11 |   s3_origin_id = "myS3Origin"
+      12 | }
+      13 | 
+      14 | resource "aws_cloudfront_distribution" "s3_distribution" {
+      15 |   origin {
+      16 |     domain_name = aws_s3_bucket.b.bucket_regional_domain_name
+      17 |     origin_id   = local.s3_origin_id
+      18 | 
+      19 |     s3_origin_config {
+      20 |       origin_access_identity = "origin-access-identity/cloudfront/ABCDEFG1234567"
+      21 |     }
+      22 |   }
+      23 | 
+      24 |   enabled             = true
+      25 |   is_ipv6_enabled     = true
+      26 |   comment             = "Some comment"
+      27 |   default_root_object = "index.html"
+      28 | 
+      29 |   aliases = ["mysite.example.com", "yoursite.example.com"]
+      30 | 
+      31 |   default_cache_behavior {
+      32 |     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
+      33 |     cached_methods   = ["GET", "HEAD"]
+      34 |     target_origin_id = local.s3_origin_id
+      35 | 
+      36 |     forwarded_values {
+      37 |       query_string = false
+      38 | 
+      39 |       cookies {
+      40 |         forward = "none"
+      41 |       }
+      42 |     }
+      43 | 
+      44 |     viewer_protocol_policy = "allow-all"
+      45 |     min_ttl                = 0
+      46 |     default_ttl            = 3600
+      47 |     max_ttl                = 86400
+      48 |   }
+      49 | 
+      50 |   # Cache behavior with precedence 0
+      51 |   ordered_cache_behavior {
+      52 |     path_pattern     = "/content/immutable/*"
+      53 |     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
+      54 |     cached_methods   = ["GET", "HEAD", "OPTIONS"]
+      55 |     target_origin_id = local.s3_origin_id
+      56 | 
+      57 |     forwarded_values {
+      58 |       query_string = false
+      59 |       headers      = ["Origin"]
+      60 | 
+      61 |       cookies {
+      62 |         forward = "none"
+      63 |       }
+      64 |     }
+      65 | 
+      66 |     min_ttl                = 0
+      67 |     default_ttl            = 86400
+      68 |     max_ttl                = 31536000
+      69 |     compress               = true
+      70 |     viewer_protocol_policy = "redirect-to-https"
+      71 |   }
+      72 | 
+      73 |   # Cache behavior with precedence 1
+      74 |   ordered_cache_behavior {
+      75 |     path_pattern     = "/content/*"
+      76 |     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
+      77 |     cached_methods   = ["GET", "HEAD"]
+      78 |     target_origin_id = local.s3_origin_id
+      79 | 
+      80 |     forwarded_values {
+      81 |       query_string = false
+      82 | 
+      83 |       cookies {
+      84 |         forward = "none"
+      85 |       }
+      86 |     }
+      87 | 
+      88 |     min_ttl                = 0
+      89 |     default_ttl            = 3600
+      90 |     max_ttl                = 86400
+      91 |     compress               = true
+      92 |     viewer_protocol_policy = "redirect-to-https"
+      93 |   }
+      94 | 
+      95 |   price_class = "PriceClass_200"
+      96 | 
+      97 |   restrictions {
+      98 |     geo_restriction {
+      99 |       restriction_type = "whitelist"
+     100 |       locations        = ["US", "CA", "GB", "DE"]
+     101 |     }
+     102 |   }
+     103 | 
+     104 |   tags = {
+     105 |     Environment = "production"
+     106 |   }
+     107 | 
+     108 |   viewer_certificate {
+     109 |     cloudfront_default_certificate = true
+     110 |   }
+     111 | }
+
+  Impact:     Logging provides vital information about access and usage
+  Resolution: Enable logging for CloudFront distributions
+
+  See https://tfsec.dev/docs/aws/AWS071/ for more information. 
+
+Check 2
+
+  [AWS072][ERROR] Resource 'aws_cloudfront_distribution.s3_distribution' does not use HTTPS in Viewer Protocol Policy
+  /src/main.tf:31-48
+
+
+      28 | 
+      29 |   aliases = ["mysite.example.com", "yoursite.example.com"]
+      30 | 
+      31 |   default_cache_behavior {
+      32 |     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
+      33 |     cached_methods   = ["GET", "HEAD"]
+      34 |     target_origin_id = local.s3_origin_id
+      35 | 
+      36 |     forwarded_values {
+      37 |       query_string = false
+      38 | 
+      39 |       cookies {
+      40 |         forward = "none"
+      41 |       }
+      42 |     }
+      43 | 
+      44 |     viewer_protocol_policy = "allow-all"
+      45 |     min_ttl                = 0
+      46 |     default_ttl            = 3600
+      47 |     max_ttl                = 86400
+      48 |   }
+      49 | 
+      50 |   # Cache behavior with precedence 0
+      51 |   ordered_cache_behavior {
+
+  Impact:     HTTP traffic can be read if intercepted
+  Resolution: Only use HTTPS in the Viewer Protocol Policy
+
+  See https://tfsec.dev/docs/aws/AWS072/ for more information. 
+
+Check 3
+
+  [AWS002][ERROR] Resource 'aws_s3_bucket.b' does not have logging enabled.
+  /src/main.tf:1-8
+
+
+       1 | resource "aws_s3_bucket" "b" {
+       2 |   bucket = "mybucket"
+       3 |   acl    = "private"
+       4 | 
+       5 |   tags = {
+       6 |     Name = "My bucket"
+       7 |   }
+       8 | }
+       9 | 
+      10 | locals {
+      11 |   s3_origin_id = "myS3Origin"
+
+  Impact:     There is no way to determine the access to this bucket
+  Resolution: Add a logging block to the resource to enable access logging
+
+  See https://tfsec.dev/docs/aws/AWS002/ for more information. 
+
+Check 4
+
+  [AWS017][ERROR] Resource 'aws_s3_bucket.b' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
+  /src/main.tf:1-8
+
+
+       1 | resource "aws_s3_bucket" "b" {
+       2 |   bucket = "mybucket"
+       3 |   acl    = "private"
+       4 | 
+       5 |   tags = {
+       6 |     Name = "My bucket"
+       7 |   }
+       8 | }
+       9 | 
+      10 | locals {
+      11 |   s3_origin_id = "myS3Origin"
+
+  Impact:     The bucket objects could be read if compromised
+  Resolution: Configure bucket encryption
+
+  See https://tfsec.dev/docs/aws/AWS017/ for more information. 
+
+Check 5
+
+  [AWS077][ERROR] Resource 'aws_s3_bucket.b' does not have versioning enabled
+  /src/main.tf:1-8
+
+
+       1 | resource "aws_s3_bucket" "b" {
+       2 |   bucket = "mybucket"
+       3 |   acl    = "private"
+       4 | 
+       5 |   tags = {
+       6 |     Name = "My bucket"
+       7 |   }
+       8 | }
+       9 | 
+      10 | locals {
+      11 |   s3_origin_id = "myS3Origin"
+
+  Impact:     Deleted or modified data would not be recoverable
+  Resolution: Enable versioning to protect against accidental/malicious removal or modification
+
+  See https://tfsec.dev/docs/aws/AWS077/ for more information. 
+
+Check 6
+
+  [AWS020][ERROR] Resource 'aws_cloudfront_distribution.s3_distribution' defines a CloudFront distribution that allows unencrypted communications.
+  /src/main.tf:44
+
+
+      41 |       }
+      42 |     }
+      43 | 
+      44 |     viewer_protocol_policy = "allow-all"
+      45 |     min_ttl                = 0
+      46 |     default_ttl            = 3600
+      47 |     max_ttl                = 86400
+
+  Impact:     CloudFront is available through an unencrypted connection
+  Resolution: Only allow HTTPS for CloudFront distribution communication
+
+  See https://tfsec.dev/docs/aws/AWS020/ for more information. 
+
+Check 7
+
   [AWS021][ERROR] Resource 'aws_cloudfront_distribution.s3_distribution' defines outdated SSL/TLS policies (missing minimum_protocol_version attribute)
   /src/main.tf:108-110
 
@@ -18,7 +255,7 @@ Check 1
 
   See https://tfsec.dev/docs/aws/AWS021/ for more information. 
 
-Check 2
+Check 8
 
   [AWS045][WARNING] Resource 'aws_cloudfront_distribution.s3_distribution' does not have a WAF in front of it.
   /src/main.tf:14-111
@@ -131,249 +368,12 @@ Check 2
 
   See https://tfsec.dev/docs/aws/AWS045/ for more information. 
 
-Check 3
-
-  [AWS071][ERROR] Resource 'aws_cloudfront_distribution.s3_distribution' does not have Access Logging configured
-  /src/main.tf:14-111
-
-
-      11 |   s3_origin_id = "myS3Origin"
-      12 | }
-      13 | 
-      14 | resource "aws_cloudfront_distribution" "s3_distribution" {
-      15 |   origin {
-      16 |     domain_name = aws_s3_bucket.b.bucket_regional_domain_name
-      17 |     origin_id   = local.s3_origin_id
-      18 | 
-      19 |     s3_origin_config {
-      20 |       origin_access_identity = "origin-access-identity/cloudfront/ABCDEFG1234567"
-      21 |     }
-      22 |   }
-      23 | 
-      24 |   enabled             = true
-      25 |   is_ipv6_enabled     = true
-      26 |   comment             = "Some comment"
-      27 |   default_root_object = "index.html"
-      28 | 
-      29 |   aliases = ["mysite.example.com", "yoursite.example.com"]
-      30 | 
-      31 |   default_cache_behavior {
-      32 |     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
-      33 |     cached_methods   = ["GET", "HEAD"]
-      34 |     target_origin_id = local.s3_origin_id
-      35 | 
-      36 |     forwarded_values {
-      37 |       query_string = false
-      38 | 
-      39 |       cookies {
-      40 |         forward = "none"
-      41 |       }
-      42 |     }
-      43 | 
-      44 |     viewer_protocol_policy = "allow-all"
-      45 |     min_ttl                = 0
-      46 |     default_ttl            = 3600
-      47 |     max_ttl                = 86400
-      48 |   }
-      49 | 
-      50 |   # Cache behavior with precedence 0
-      51 |   ordered_cache_behavior {
-      52 |     path_pattern     = "/content/immutable/*"
-      53 |     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
-      54 |     cached_methods   = ["GET", "HEAD", "OPTIONS"]
-      55 |     target_origin_id = local.s3_origin_id
-      56 | 
-      57 |     forwarded_values {
-      58 |       query_string = false
-      59 |       headers      = ["Origin"]
-      60 | 
-      61 |       cookies {
-      62 |         forward = "none"
-      63 |       }
-      64 |     }
-      65 | 
-      66 |     min_ttl                = 0
-      67 |     default_ttl            = 86400
-      68 |     max_ttl                = 31536000
-      69 |     compress               = true
-      70 |     viewer_protocol_policy = "redirect-to-https"
-      71 |   }
-      72 | 
-      73 |   # Cache behavior with precedence 1
-      74 |   ordered_cache_behavior {
-      75 |     path_pattern     = "/content/*"
-      76 |     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
-      77 |     cached_methods   = ["GET", "HEAD"]
-      78 |     target_origin_id = local.s3_origin_id
-      79 | 
-      80 |     forwarded_values {
-      81 |       query_string = false
-      82 | 
-      83 |       cookies {
-      84 |         forward = "none"
-      85 |       }
-      86 |     }
-      87 | 
-      88 |     min_ttl                = 0
-      89 |     default_ttl            = 3600
-      90 |     max_ttl                = 86400
-      91 |     compress               = true
-      92 |     viewer_protocol_policy = "redirect-to-https"
-      93 |   }
-      94 | 
-      95 |   price_class = "PriceClass_200"
-      96 | 
-      97 |   restrictions {
-      98 |     geo_restriction {
-      99 |       restriction_type = "whitelist"
-     100 |       locations        = ["US", "CA", "GB", "DE"]
-     101 |     }
-     102 |   }
-     103 | 
-     104 |   tags = {
-     105 |     Environment = "production"
-     106 |   }
-     107 | 
-     108 |   viewer_certificate {
-     109 |     cloudfront_default_certificate = true
-     110 |   }
-     111 | }
-
-  Impact:     Logging provides vital information about access and usage
-  Resolution: Enable logging for CloudFront distributions
-
-  See https://tfsec.dev/docs/aws/AWS071/ for more information. 
-
-Check 4
-
-  [AWS072][ERROR] Resource 'aws_cloudfront_distribution.s3_distribution' does not use HTTPS in Viewer Protocol Policy
-  /src/main.tf:31-48
-
-
-      28 | 
-      29 |   aliases = ["mysite.example.com", "yoursite.example.com"]
-      30 | 
-      31 |   default_cache_behavior {
-      32 |     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
-      33 |     cached_methods   = ["GET", "HEAD"]
-      34 |     target_origin_id = local.s3_origin_id
-      35 | 
-      36 |     forwarded_values {
-      37 |       query_string = false
-      38 | 
-      39 |       cookies {
-      40 |         forward = "none"
-      41 |       }
-      42 |     }
-      43 | 
-      44 |     viewer_protocol_policy = "allow-all"
-      45 |     min_ttl                = 0
-      46 |     default_ttl            = 3600
-      47 |     max_ttl                = 86400
-      48 |   }
-      49 | 
-      50 |   # Cache behavior with precedence 0
-      51 |   ordered_cache_behavior {
-
-  Impact:     HTTP traffic can be read if intercepted
-  Resolution: Only use HTTPS in the Viewer Protocol Policy
-
-  See https://tfsec.dev/docs/aws/AWS072/ for more information. 
-
-Check 5
-
-  [AWS002][ERROR] Resource 'aws_s3_bucket.b' does not have logging enabled.
-  /src/main.tf:1-8
-
-
-       1 | resource "aws_s3_bucket" "b" {
-       2 |   bucket = "mybucket"
-       3 |   acl    = "private"
-       4 | 
-       5 |   tags = {
-       6 |     Name = "My bucket"
-       7 |   }
-       8 | }
-       9 | 
-      10 | locals {
-      11 |   s3_origin_id = "myS3Origin"
-
-  Impact:     There is no way to determine the access to this bucket
-  Resolution: Add a logging block to the resource to enable access logging
-
-  See https://tfsec.dev/docs/aws/AWS002/ for more information. 
-
-Check 6
-
-  [AWS017][ERROR] Resource 'aws_s3_bucket.b' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
-  /src/main.tf:1-8
-
-
-       1 | resource "aws_s3_bucket" "b" {
-       2 |   bucket = "mybucket"
-       3 |   acl    = "private"
-       4 | 
-       5 |   tags = {
-       6 |     Name = "My bucket"
-       7 |   }
-       8 | }
-       9 | 
-      10 | locals {
-      11 |   s3_origin_id = "myS3Origin"
-
-  Impact:     The bucket objects could be read if compromised
-  Resolution: Configure bucket encryption
-
-  See https://tfsec.dev/docs/aws/AWS017/ for more information. 
-
-Check 7
-
-  [AWS077][ERROR] Resource 'aws_s3_bucket.b' does not have versioning enabled
-  /src/main.tf:1-8
-
-
-       1 | resource "aws_s3_bucket" "b" {
-       2 |   bucket = "mybucket"
-       3 |   acl    = "private"
-       4 | 
-       5 |   tags = {
-       6 |     Name = "My bucket"
-       7 |   }
-       8 | }
-       9 | 
-      10 | locals {
-      11 |   s3_origin_id = "myS3Origin"
-
-  Impact:     Deleted or modified data would not be recoverable
-  Resolution: Enable versioning to protect against accidental/malicious removal or modification
-
-  See https://tfsec.dev/docs/aws/AWS077/ for more information. 
-
-Check 8
-
-  [AWS020][ERROR] Resource 'aws_cloudfront_distribution.s3_distribution' defines a CloudFront distribution that allows unencrypted communications.
-  /src/main.tf:44
-
-
-      41 |       }
-      42 |     }
-      43 | 
-      44 |     viewer_protocol_policy = "allow-all"
-      45 |     min_ttl                = 0
-      46 |     default_ttl            = 3600
-      47 |     max_ttl                = 86400
-
-  Impact:     CloudFront is available through an unencrypted connection
-  Resolution: Only allow HTTPS for CloudFront distribution communication
-
-  See https://tfsec.dev/docs/aws/AWS020/ for more information. 
-
   times
   ------------------------------------------
-  disk i/o             14.4148ms
-  parsing HCL          53.7µs
-  evaluating values    116.3µs
-  running checks       8.4709ms
+  disk i/o             27.926ms
+  parsing HCL          16µs
+  evaluating values    434.3µs
+  running checks       12.0279ms
 
   counts
   ------------------------------------------

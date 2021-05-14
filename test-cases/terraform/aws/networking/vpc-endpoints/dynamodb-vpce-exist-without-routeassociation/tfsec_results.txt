@@ -1,6 +1,30 @@
 
 Check 1
 
+  [AWS079][ERROR] Resource 'aws_instance.test' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
+  /src/main.tf:83-88
+
+
+      80 |   owners = ["099720109477"] # Canonical
+      81 | }
+      82 | 
+      83 | resource "aws_instance" "test" {
+      84 |   ami = data.aws_ami.ubuntu.id
+      85 |   instance_type = "t2.micro"
+      86 |   vpc_security_group_ids = [aws_security_group.allow-public-outbound-sg.id]
+      87 |   subnet_id = aws_subnet.private-subnet.id
+      88 | }
+      89 | 
+      90 | resource "aws_dynamodb_table" "basic-dynamodb-table" {
+      91 |   name           = "GameScores"
+
+  Impact:     Instance metadata service can be interacted with freely
+  Resolution: Enable HTTP token requirement for IMDS
+
+  See https://tfsec.dev/docs/aws/AWS079/ for more information. 
+
+Check 2
+
   [AWS086][WARNING] Resource 'aws_dynamodb_table.basic-dynamodb-table' doesn't have point in time recovery
   /src/main.tf:90-107
 
@@ -33,36 +57,46 @@ Check 1
 
   See https://tfsec.dev/docs/aws/AWS086/ for more information. 
 
-Check 2
+Check 3
 
-  [AWS079][ERROR] Resource 'aws_instance.test' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
-  /src/main.tf:83-88
+  [AWS092][WARNING] Resource 'aws_dynamodb_table.basic-dynamodb-table' is not using KMS CMK for encryption
+  /src/main.tf:90-107
 
 
-      80 |   owners = ["099720109477"] # Canonical
-      81 | }
-      82 | 
-      83 | resource "aws_instance" "test" {
-      84 |   ami = data.aws_ami.ubuntu.id
-      85 |   instance_type = "t2.micro"
-      86 |   vpc_security_group_ids = [aws_security_group.allow-public-outbound-sg.id]
       87 |   subnet_id = aws_subnet.private-subnet.id
       88 | }
       89 | 
       90 | resource "aws_dynamodb_table" "basic-dynamodb-table" {
       91 |   name           = "GameScores"
+      92 |   billing_mode   = "PROVISIONED"
+      93 |   read_capacity  = 5
+      94 |   write_capacity = 5
+      95 |   hash_key       = "UserId"
+      96 |   range_key      = "GameTitle"
+      97 | 
+      98 |   attribute {
+      99 |     name = "UserId"
+     100 |     type = "S"
+     101 |   }
+     102 | 
+     103 |   attribute {
+     104 |     name = "GameTitle"
+     105 |     type = "S"
+     106 |   }
+     107 | }
+     108 | 
 
-  Impact:     Instance metadata service can be interacted with freely
-  Resolution: Enable HTTP token requirement for IMDS
+  Impact:     Using AWS managed keys does not allow for fine grained control
+  Resolution: Enable server side encrytion with a customer managed key
 
-  See https://tfsec.dev/docs/aws/AWS079/ for more information. 
+  See https://tfsec.dev/docs/aws/AWS092/ for more information. 
 
   times
   ------------------------------------------
-  disk i/o             15.4543ms
-  parsing HCL          19.1µs
-  evaluating values    254.2µs
-  running checks       2.8732ms
+  disk i/o             25.6519ms
+  parsing HCL          27.5µs
+  evaluating values    429.7µs
+  running checks       8.756ms
 
   counts
   ------------------------------------------
@@ -73,5 +107,5 @@ Check 2
   module blocks        0
   ignored checks       0
 
-2 potential problems detected.
+3 potential problems detected.
 

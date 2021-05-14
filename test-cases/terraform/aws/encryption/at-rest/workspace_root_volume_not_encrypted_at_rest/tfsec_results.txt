@@ -1,36 +1,26 @@
 
 Check 1
 
-  [AWS084][ERROR] Resource 'aws_workspaces_workspace.test' should have root volume encryption enables
-  /src/main.tf:76-88
+  [GEN003][WARNING] Block 'aws_directory_service_directory.test' includes a potentially sensitive attribute which is defined within the project.
+  /src/main.tf:34
 
 
-      73 |   policy_arn = "arn:aws:iam::aws:policy/AmazonWorkSpacesSelfServiceAccess"
-      74 | }
-      75 | 
-      76 | resource "aws_workspaces_workspace" "test" {
-      77 |   directory_id = aws_workspaces_directory.test.id
-      78 |   bundle_id    = data.aws_workspaces_bundle.value_windows_10.id
-      79 |   user_name    = "Administrator"
-      80 | 
-      81 |   workspace_properties {
-      82 |     compute_type_name                         = "VALUE"
-      83 |     user_volume_size_gib                      = 10
-      84 |     root_volume_size_gib                      = 80
-      85 |     running_mode                              = "AUTO_STOP"
-      86 |     running_mode_auto_stop_timeout_in_minutes = 60
-      87 |   }
-      88 | }
-      89 | 
+      31 | 
+      32 | resource "aws_directory_service_directory" "test" {
+      33 |   name     = "corp.notexample.com"
+      34 |   password = "SuperSecretPassw0rd"
+      35 |   size     = "Small"
+      36 | 
+      37 |   vpc_settings {
 
-  Impact:     Data can be freely read if compromised
-  Resolution: Root and user volume encryption should be enabled
+  Impact:     Block attribute could be leaking secrets
+  Resolution: Don't include sensitive data in blocks
 
-  See https://tfsec.dev/docs/aws/AWS084/ for more information. 
+  See https://tfsec.dev/docs/general/GEN003/ for more information. 
 
 Check 2
 
-  [AWS084][ERROR] Resource 'aws_workspaces_workspace.test' should have user volume encryption enables
+  [AWS084][ERROR] Resource 'aws_workspaces_workspace.test' should have root volume encryption enables
   /src/main.tf:76-88
 
 
@@ -59,29 +49,39 @@ Check 2
 
 Check 3
 
-  [GEN003][WARNING] Block 'aws_directory_service_directory.test' includes a potentially sensitive attribute which is defined within the project.
-  /src/main.tf:34
+  [AWS084][ERROR] Resource 'aws_workspaces_workspace.test' should have user volume encryption enables
+  /src/main.tf:76-88
 
 
-      31 | 
-      32 | resource "aws_directory_service_directory" "test" {
-      33 |   name     = "corp.notexample.com"
-      34 |   password = "SuperSecretPassw0rd"
-      35 |   size     = "Small"
-      36 | 
-      37 |   vpc_settings {
+      73 |   policy_arn = "arn:aws:iam::aws:policy/AmazonWorkSpacesSelfServiceAccess"
+      74 | }
+      75 | 
+      76 | resource "aws_workspaces_workspace" "test" {
+      77 |   directory_id = aws_workspaces_directory.test.id
+      78 |   bundle_id    = data.aws_workspaces_bundle.value_windows_10.id
+      79 |   user_name    = "Administrator"
+      80 | 
+      81 |   workspace_properties {
+      82 |     compute_type_name                         = "VALUE"
+      83 |     user_volume_size_gib                      = 10
+      84 |     root_volume_size_gib                      = 80
+      85 |     running_mode                              = "AUTO_STOP"
+      86 |     running_mode_auto_stop_timeout_in_minutes = 60
+      87 |   }
+      88 | }
+      89 | 
 
-  Impact:     Block attribute could be leaking secrets
-  Resolution: Don't include sensitive data in blocks
+  Impact:     Data can be freely read if compromised
+  Resolution: Root and user volume encryption should be enabled
 
-  See https://tfsec.dev/docs/general/GEN003/ for more information. 
+  See https://tfsec.dev/docs/aws/AWS084/ for more information. 
 
   times
   ------------------------------------------
-  disk i/o             11.5358ms
-  parsing HCL          24.9µs
-  evaluating values    378.8µs
-  running checks       3.0964ms
+  disk i/o             30.8411ms
+  parsing HCL          40.1µs
+  evaluating values    885.7µs
+  running checks       8.2481ms
 
   counts
   ------------------------------------------

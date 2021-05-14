@@ -1,6 +1,25 @@
 
 Check 1
 
+  [AWS008][WARNING] Resource 'aws_security_group.nondefault' defines a fully open ingress security group.
+  /src/main.tf:16
+
+
+      13 |     from_port = 0
+      14 |     protocol = "TCP"
+      15 |     to_port = 65000
+      16 |     cidr_blocks = ["0.0.0.0/0"]
+      17 |   }
+      18 | }
+      19 | 
+
+  Impact:     The port is exposed for ingress from the internet
+  Resolution: Set a more restrictive cidr range
+
+  See https://tfsec.dev/docs/aws/AWS008/ for more information. 
+
+Check 2
+
   [AWS018][ERROR] Resource 'aws_security_group.nondefault' should include a description for auditing purposes.
   /src/main.tf:9-18
 
@@ -27,7 +46,7 @@ Check 1
 
   See https://tfsec.dev/docs/aws/AWS018/ for more information. 
 
-Check 2
+Check 3
 
   [AWS011][WARNING] Resource 'aws_db_instance.test' is exposed publicly.
   /src/main.tf:62
@@ -46,7 +65,7 @@ Check 2
 
   See https://tfsec.dev/docs/aws/AWS011/ for more information. 
 
-Check 3
+Check 4
 
   [AWS052][ERROR] Resource 'aws_db_instance.test' has no storage encryption defined.
   /src/main.tf:60-65
@@ -67,31 +86,33 @@ Check 3
 
   See https://tfsec.dev/docs/aws/AWS052/ for more information. 
 
-Check 4
+Check 5
 
-  [AWS008][WARNING] Resource 'aws_security_group.nondefault' defines a fully open ingress security group.
-  /src/main.tf:16
+  [AWS091][WARNING] Resource 'aws_db_instance.test' does not have backup retention explicitly set
+  /src/main.tf:60-65
 
 
-      13 |     from_port = 0
-      14 |     protocol = "TCP"
-      15 |     to_port = 65000
-      16 |     cidr_blocks = ["0.0.0.0/0"]
-      17 |   }
-      18 | }
-      19 | 
+      57 |   subnet_id = aws_subnet.nondefault_2.id
+      58 | }
+      59 | 
+      60 | resource "aws_db_instance" "test" {
+      61 |   instance_class = "db.t3.micro"
+      62 |   publicly_accessible = true
+      63 |   db_subnet_group_name = aws_db_subnet_group.nondefault.name
+      64 |   vpc_security_group_ids = [aws_security_group.nondefault.id]
+      65 | }
 
-  Impact:     The port is exposed for ingress from the internet
-  Resolution: Set a more restrictive cidr range
+  Impact:     Potential loss of data and short opportunity for recovery
+  Resolution: Explicitly set the retention period to greater than the default
 
-  See https://tfsec.dev/docs/aws/AWS008/ for more information. 
+  See https://tfsec.dev/docs/aws/AWS091/ for more information. 
 
   times
   ------------------------------------------
-  disk i/o             16.5463ms
-  parsing HCL          20.6µs
-  evaluating values    458µs
-  running checks       4.3392ms
+  disk i/o             47.5318ms
+  parsing HCL          29.5µs
+  evaluating values    1.0116ms
+  running checks       18.8346ms
 
   counts
   ------------------------------------------
@@ -102,5 +123,5 @@ Check 4
   module blocks        0
   ignored checks       0
 
-4 potential problems detected.
+5 potential problems detected.
 

@@ -223,10 +223,10 @@ Check 6
 
   times
   ------------------------------------------
-  disk i/o             13.5067ms
-  parsing HCL          14.4µs
-  evaluating values    274.9µs
-  running checks       5.8339ms
+  disk i/o             41.5017ms
+  parsing HCL          26.9µs
+  evaluating values    369.9µs
+  running checks       15.48ms
 
   counts
   ------------------------------------------

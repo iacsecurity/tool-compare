@@ -1,6 +1,25 @@
 
 Check 1
 
+  [GEN003][WARNING] Block 'aws_redshift_cluster.test' includes a potentially sensitive attribute which is defined within the project.
+  /src/main.tf:8
+
+
+       5 | resource "aws_redshift_cluster" "test" {
+       6 |   cluster_identifier = "redshift-defaults-only"
+       7 |   node_type = "dc2.large"
+       8 |   master_password = "Test1234"
+       9 |   master_username = "test"
+      10 |   skip_final_snapshot = true
+      11 | }
+
+  Impact:     Block attribute could be leaking secrets
+  Resolution: Don't include sensitive data in blocks
+
+  See https://tfsec.dev/docs/general/GEN003/ for more information. 
+
+Check 2
+
   [AWS087][ERROR] Resource 'aws_redshift_cluster.test' is being deployed outside of a VPC
   /src/main.tf:5-11
 
@@ -22,12 +41,15 @@ Check 1
 
   See https://tfsec.dev/docs/aws/AWS087/ for more information. 
 
-Check 2
+Check 3
 
-  [GEN003][WARNING] Block 'aws_redshift_cluster.test' includes a potentially sensitive attribute which is defined within the project.
-  /src/main.tf:8
+  [AWS094][WARNING] Resource 'aws_redshift_cluster.test' does not have encryption enabled
+  /src/main.tf:5-11
 
 
+       2 |   region                  = "us-west-1"
+       3 | }
+       4 | 
        5 | resource "aws_redshift_cluster" "test" {
        6 |   cluster_identifier = "redshift-defaults-only"
        7 |   node_type = "dc2.large"
@@ -35,18 +57,19 @@ Check 2
        9 |   master_username = "test"
       10 |   skip_final_snapshot = true
       11 | }
+      12 | 
 
-  Impact:     Block attribute could be leaking secrets
-  Resolution: Don't include sensitive data in blocks
+  Impact:     Data may be leaked if infrastructure is compromised
+  Resolution: Enable encryption using CMK
 
-  See https://tfsec.dev/docs/general/GEN003/ for more information. 
+  See https://tfsec.dev/docs/aws/AWS094/ for more information. 
 
   times
   ------------------------------------------
-  disk i/o             15.4109ms
-  parsing HCL          31.2µs
-  evaluating values    142.1µs
-  running checks       2.7419ms
+  disk i/o             37.7004ms
+  parsing HCL          18.9µs
+  evaluating values    154µs
+  running checks       10.6863ms
 
   counts
   ------------------------------------------
@@ -57,5 +80,5 @@ Check 2
   module blocks        0
   ignored checks       0
 
-2 potential problems detected.
+3 potential problems detected.
 

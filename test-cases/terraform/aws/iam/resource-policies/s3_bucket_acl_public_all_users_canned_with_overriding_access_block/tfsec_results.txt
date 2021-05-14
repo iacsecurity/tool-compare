@@ -1,6 +1,25 @@
 
 Check 1
 
+  [AWS001][WARNING] Resource 'aws_s3_bucket.public-bucket' has an ACL which allows public access.
+  /src/main.tf:7
+
+
+       4 | 
+       5 | resource "aws_s3_bucket" "public-bucket" {
+       6 |   bucket = "bucket-with-public-acl-3"
+       7 |   acl = "public-read-write"
+       8 | }
+       9 | 
+      10 | resource "aws_s3_bucket_public_access_block" "block_public_bucket_3" {
+
+  Impact:     The contents of the bucket can be accessed publicly
+  Resolution: Apply a more restrictive bucket ACL
+
+  See https://tfsec.dev/docs/aws/AWS001/ for more information. 
+
+Check 2
+
   [AWS002][ERROR] Resource 'aws_s3_bucket.public-bucket' does not have logging enabled.
   /src/main.tf:5-8
 
@@ -21,7 +40,7 @@ Check 1
 
   See https://tfsec.dev/docs/aws/AWS002/ for more information. 
 
-Check 2
+Check 3
 
   [AWS017][ERROR] Resource 'aws_s3_bucket.public-bucket' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
   /src/main.tf:5-8
@@ -43,7 +62,7 @@ Check 2
 
   See https://tfsec.dev/docs/aws/AWS017/ for more information. 
 
-Check 3
+Check 4
 
   [AWS077][ERROR] Resource 'aws_s3_bucket.public-bucket' does not have versioning enabled
   /src/main.tf:5-8
@@ -65,31 +84,12 @@ Check 3
 
   See https://tfsec.dev/docs/aws/AWS077/ for more information. 
 
-Check 4
-
-  [AWS001][WARNING] Resource 'aws_s3_bucket.public-bucket' has an ACL which allows public access.
-  /src/main.tf:7
-
-
-       4 | 
-       5 | resource "aws_s3_bucket" "public-bucket" {
-       6 |   bucket = "bucket-with-public-acl-3"
-       7 |   acl = "public-read-write"
-       8 | }
-       9 | 
-      10 | resource "aws_s3_bucket_public_access_block" "block_public_bucket_3" {
-
-  Impact:     The contents of the bucket can be accessed publicly
-  Resolution: Apply a more restrictive bucket ACL
-
-  See https://tfsec.dev/docs/aws/AWS001/ for more information. 
-
   times
   ------------------------------------------
-  disk i/o             20.5248ms
-  parsing HCL          13.6µs
-  evaluating values    144.8µs
-  running checks       5.8571ms
+  disk i/o             36.3397ms
+  parsing HCL          25.7µs
+  evaluating values    175µs
+  running checks       12.0874ms
 
   counts
   ------------------------------------------

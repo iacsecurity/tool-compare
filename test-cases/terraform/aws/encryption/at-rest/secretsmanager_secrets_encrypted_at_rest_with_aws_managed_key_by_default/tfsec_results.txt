@@ -1,10 +1,29 @@
 
+Check 1
+
+  [AWS095][WARNING] Resource 'aws_secretsmanager_secret.test' does not use CMK
+  /src/main.tf:5-7
+
+
+       2 |   region = "us-east-1"
+       3 | }
+       4 | 
+       5 | resource "aws_secretsmanager_secret" "test" {
+       6 |   name = "test-cloudrail"
+       7 | }
+       8 | 
+
+  Impact:     Using AWS managed keys reduces the flexibility and control over the encryption key
+  Resolution: Use customer managed keys
+
+  See https://tfsec.dev/docs/aws/AWS095/ for more information. 
+
   times
   ------------------------------------------
-  disk i/o             14.3709ms
-  parsing HCL          17.6µs
-  evaluating values    161.9µs
-  running checks       103µs
+  disk i/o             27.0078ms
+  parsing HCL          26.8µs
+  evaluating values    168.6µs
+  running checks       4.0298ms
 
   counts
   ------------------------------------------
@@ -15,5 +34,5 @@
   module blocks        0
   ignored checks       0
 
-No problems detected!
+1 potential problems detected.
 

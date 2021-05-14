@@ -1,6 +1,29 @@
 
 Check 1
 
+  [AWS079][ERROR] Resource 'aws_instance.ec2' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
+  /src/main.tf:61-67
+
+
+      58 |   owners = ["099720109477"] # Canonical
+      59 | }
+      60 | 
+      61 | resource "aws_instance" "ec2" {
+      62 |   ami = data.aws_ami.ubuntu.id
+      63 |   instance_type = "t2.micro"
+      64 |   subnet_id     = aws_subnet.subnet.id
+      65 |   vpc_security_group_ids  = [aws_security_group.default.id]
+      66 | 
+      67 | }
+      68 | 
+
+  Impact:     Instance metadata service can be interacted with freely
+  Resolution: Enable HTTP token requirement for IMDS
+
+  See https://tfsec.dev/docs/aws/AWS079/ for more information. 
+
+Check 2
+
   [AWS009][WARNING] Resource 'aws_security_group.default' defines a fully open egress security group.
   /src/main.tf:30
 
@@ -18,7 +41,7 @@ Check 1
 
   See https://tfsec.dev/docs/aws/AWS009/ for more information. 
 
-Check 2
+Check 3
 
   [AWS018][ERROR] Resource 'aws_security_group.default' should include a description for auditing purposes.
   /src/main.tf:15-36
@@ -58,35 +81,12 @@ Check 2
 
   See https://tfsec.dev/docs/aws/AWS018/ for more information. 
 
-Check 3
-
-  [AWS079][ERROR] Resource 'aws_instance.ec2' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
-  /src/main.tf:61-67
-
-
-      58 |   owners = ["099720109477"] # Canonical
-      59 | }
-      60 | 
-      61 | resource "aws_instance" "ec2" {
-      62 |   ami = data.aws_ami.ubuntu.id
-      63 |   instance_type = "t2.micro"
-      64 |   subnet_id     = aws_subnet.subnet.id
-      65 |   vpc_security_group_ids  = [aws_security_group.default.id]
-      66 | 
-      67 | }
-      68 | 
-
-  Impact:     Instance metadata service can be interacted with freely
-  Resolution: Enable HTTP token requirement for IMDS
-
-  See https://tfsec.dev/docs/aws/AWS079/ for more information. 
-
   times
   ------------------------------------------
-  disk i/o             17.5688ms
-  parsing HCL          18.4µs
-  evaluating values    204.9µs
-  running checks       4.0593ms
+  disk i/o             28.3132ms
+  parsing HCL          19µs
+  evaluating values    401.3µs
+  running checks       6.5066ms
 
   counts
   ------------------------------------------

@@ -1,6 +1,75 @@
 
 Check 1
 
+  [AWS012][ERROR] Resource 'aws_instance.public_ins' has a public IP address associated.
+  /src/main.tf:134
+
+
+     131 | resource "aws_instance" "public_ins" {
+     132 |   ami = "ami-0130bec6e5047f596"
+     133 |   instance_type = "t3.nano"
+     134 |   associate_public_ip_address = true
+     135 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
+     136 |   subnet_id = aws_subnet.nondefault_1.id
+     137 | }
+
+  Impact:     The instance or configuration is publically accessible
+  Resolution: Set the instance to not be publically accessible
+
+  See https://tfsec.dev/docs/aws/AWS012/ for more information. 
+
+Check 2
+
+  [AWS079][ERROR] Resource 'aws_instance.public_ins' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
+  /src/main.tf:131-137
+
+
+     128 | }
+     129 | 
+     130 | // This instance is can potentially be used to hop into the DB
+     131 | resource "aws_instance" "public_ins" {
+     132 |   ami = "ami-0130bec6e5047f596"
+     133 |   instance_type = "t3.nano"
+     134 |   associate_public_ip_address = true
+     135 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
+     136 |   subnet_id = aws_subnet.nondefault_1.id
+     137 | }
+
+  Impact:     Instance metadata service can be interacted with freely
+  Resolution: Enable HTTP token requirement for IMDS
+
+  See https://tfsec.dev/docs/aws/AWS079/ for more information. 
+
+Check 3
+
+  [AWS094][WARNING] Resource 'aws_redshift_cluster.test' does not have encryption enabled
+  /src/main.tf:103-112
+
+
+     100 | 
+     101 | }
+     102 | 
+     103 | resource "aws_redshift_cluster" "test" {
+     104 |   cluster_identifier = "redshift-defaults-only"
+     105 |   node_type = "dc2.large"
+     106 |   master_password = "Test1234"
+     107 |   master_username = "test"
+     108 |   skip_final_snapshot = true
+     109 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
+     110 |   cluster_subnet_group_name = aws_redshift_subnet_group.nondefault.name
+     111 |   publicly_accessible = false // Note that while the subnet itself has public access, the redshift is set NOT to have a public IP
+     112 | }
+     113 | 
+     114 | resource "aws_security_group" "publicly_accessible_sg" {
+     115 |   vpc_id = aws_vpc.nondefault.id
+
+  Impact:     Data may be leaked if infrastructure is compromised
+  Resolution: Enable encryption using CMK
+
+  See https://tfsec.dev/docs/aws/AWS094/ for more information. 
+
+Check 4
+
   [GEN003][WARNING] Block 'aws_redshift_cluster.test' includes a potentially sensitive attribute which is defined within the project.
   /src/main.tf:106
 
@@ -18,7 +87,7 @@ Check 1
 
   See https://tfsec.dev/docs/general/GEN003/ for more information. 
 
-Check 2
+Check 5
 
   [AWS008][WARNING] Resource 'aws_security_group.publicly_accessible_sg' defines a fully open ingress security group.
   /src/main.tf:120
@@ -37,7 +106,7 @@ Check 2
 
   See https://tfsec.dev/docs/aws/AWS008/ for more information. 
 
-Check 3
+Check 6
 
   [AWS009][WARNING] Resource 'aws_security_group.publicly_accessible_sg' defines a fully open egress security group.
   /src/main.tf:126
@@ -56,7 +125,7 @@ Check 3
 
   See https://tfsec.dev/docs/aws/AWS009/ for more information. 
 
-Check 4
+Check 7
 
   [AWS018][ERROR] Resource 'aws_security_group.publicly_accessible_sg' should include a description for auditing purposes.
   /src/main.tf:114-128
@@ -89,53 +158,12 @@ Check 4
 
   See https://tfsec.dev/docs/aws/AWS018/ for more information. 
 
-Check 5
-
-  [AWS012][ERROR] Resource 'aws_instance.public_ins' has a public IP address associated.
-  /src/main.tf:134
-
-
-     131 | resource "aws_instance" "public_ins" {
-     132 |   ami = "ami-0130bec6e5047f596"
-     133 |   instance_type = "t3.nano"
-     134 |   associate_public_ip_address = true
-     135 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
-     136 |   subnet_id = aws_subnet.nondefault_1.id
-     137 | }
-
-  Impact:     The instance or configuration is publically accessible
-  Resolution: Set the instance to not be publically accessible
-
-  See https://tfsec.dev/docs/aws/AWS012/ for more information. 
-
-Check 6
-
-  [AWS079][ERROR] Resource 'aws_instance.public_ins' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
-  /src/main.tf:131-137
-
-
-     128 | }
-     129 | 
-     130 | // This instance is can potentially be used to hop into the DB
-     131 | resource "aws_instance" "public_ins" {
-     132 |   ami = "ami-0130bec6e5047f596"
-     133 |   instance_type = "t3.nano"
-     134 |   associate_public_ip_address = true
-     135 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
-     136 |   subnet_id = aws_subnet.nondefault_1.id
-     137 | }
-
-  Impact:     Instance metadata service can be interacted with freely
-  Resolution: Enable HTTP token requirement for IMDS
-
-  See https://tfsec.dev/docs/aws/AWS079/ for more information. 
-
   times
   ------------------------------------------
-  disk i/o             15.7862ms
-  parsing HCL          14.7µs
-  evaluating values    401µs
-  running checks       5.9812ms
+  disk i/o             44.8873ms
+  parsing HCL          29.8µs
+  evaluating values    839.9µs
+  running checks       13.9318ms
 
   counts
   ------------------------------------------
@@ -146,5 +174,5 @@ Check 6
   module blocks        0
   ignored checks       0
 
-6 potential problems detected.
+7 potential problems detected.
 

@@ -1,33 +1,6 @@
 
 Check 1
 
-  [AWS018][ERROR] Resource 'aws_security_group.esdomain' should include a description for auditing purposes.
-  /src/main.tf:92-100
-
-
-      89 |   subnet_id = aws_subnet.nondefault_1.id
-      90 | }
-      91 | 
-      92 | resource "aws_security_group" "esdomain" {
-      93 |   vpc_id = aws_vpc.nondefault.id
-      94 |   ingress {
-      95 |     from_port = 443
-      96 |     protocol = "tcp"
-      97 |     to_port = 443
-      98 |     cidr_blocks = [aws_subnet.nondefault_1.cidr_block]
-      99 |   }
-     100 | }
-     101 | 
-     102 | resource "aws_iam_service_linked_role" "es" {
-     103 |   aws_service_name = "es.amazonaws.com"
-
-  Impact:     Descriptions provide context for the firewall rule reasons
-  Resolution: Add descriptions for all security groups anf rules
-
-  See https://tfsec.dev/docs/aws/AWS018/ for more information. 
-
-Check 2
-
   [AWS031][ERROR] Resource 'aws_elasticsearch_domain.test' defines an unencrypted Elasticsearch domain (missing encrypt_at_rest block).
   /src/main.tf:107-119
 
@@ -57,7 +30,153 @@ Check 2
 
   See https://tfsec.dev/docs/aws/AWS031/ for more information. 
 
+Check 2
+
+  [AWS032][ERROR] Resource 'aws_elasticsearch_domain.test' defines an Elasticsearch domain with plaintext traffic (missing node_to_node_encryption block).
+  /src/main.tf:107-119
+
+
+     104 |   description      = "Allows Amazon ES to manage AWS resources for a domain on your behalf."
+     105 | }
+     106 | 
+     107 | resource "aws_elasticsearch_domain" "test" {
+     108 |   domain_name = "test"
+     109 |   vpc_options {
+     110 |     subnet_ids = [aws_subnet.nondefault_1.id]
+     111 |     security_group_ids = [aws_security_group.esdomain.id]
+     112 |   }
+     113 | 
+     114 |   ebs_options {
+     115 |     ebs_enabled = true
+     116 |     volume_size = 10
+     117 |     volume_type = "gp2"
+     118 |   }
+     119 | }
+     120 | 
+     121 | resource "aws_security_group" "publicly_accessible_sg" {
+     122 |   vpc_id = aws_vpc.nondefault.id
+
+  Impact:     In transit data between nodes could be read if intercepted
+  Resolution: Enable encrypted node to node communication
+
+  See https://tfsec.dev/docs/aws/AWS032/ for more information. 
+
 Check 3
+
+  [AWS033][ERROR] Resource 'aws_elasticsearch_domain.test' defines an Elasticsearch domain with plaintext traffic (missing domain_endpoint_options block).
+  /src/main.tf:107-119
+
+
+     104 |   description      = "Allows Amazon ES to manage AWS resources for a domain on your behalf."
+     105 | }
+     106 | 
+     107 | resource "aws_elasticsearch_domain" "test" {
+     108 |   domain_name = "test"
+     109 |   vpc_options {
+     110 |     subnet_ids = [aws_subnet.nondefault_1.id]
+     111 |     security_group_ids = [aws_security_group.esdomain.id]
+     112 |   }
+     113 | 
+     114 |   ebs_options {
+     115 |     ebs_enabled = true
+     116 |     volume_size = 10
+     117 |     volume_type = "gp2"
+     118 |   }
+     119 | }
+     120 | 
+     121 | resource "aws_security_group" "publicly_accessible_sg" {
+     122 |   vpc_id = aws_vpc.nondefault.id
+
+  Impact:     HTTP traffic can be intercepted and the contents read
+  Resolution: Enforce the use of HTTPS for ElasticSearch
+
+  See https://tfsec.dev/docs/aws/AWS033/ for more information. 
+
+Check 4
+
+  [AWS008][WARNING] Resource 'aws_security_group.publicly_accessible_sg' defines a fully open ingress security group.
+  /src/main.tf:127
+
+
+     124 |     from_port = 0
+     125 |     protocol = "tcp"
+     126 |     to_port = 65000
+     127 |     cidr_blocks = ["0.0.0.0/0"]
+     128 |   }
+     129 |   egress {
+     130 |     from_port = 0
+
+  Impact:     The port is exposed for ingress from the internet
+  Resolution: Set a more restrictive cidr range
+
+  See https://tfsec.dev/docs/aws/AWS008/ for more information. 
+
+Check 5
+
+  [AWS009][WARNING] Resource 'aws_security_group.publicly_accessible_sg' defines a fully open egress security group.
+  /src/main.tf:133
+
+
+     130 |     from_port = 0
+     131 |     protocol = "tcp"
+     132 |     to_port = 65000
+     133 |     cidr_blocks = ["0.0.0.0/0"]
+     134 |   }
+     135 | }
+     136 | 
+
+  Impact:     The port is exposed for egressing data to the internet
+  Resolution: Set a more restrictive cidr range
+
+  See https://tfsec.dev/docs/aws/AWS009/ for more information. 
+
+Check 6
+
+  [AWS012][ERROR] Resource 'aws_instance.public_ins' has a public IP address associated.
+  /src/main.tf:141
+
+
+     138 | resource "aws_instance" "public_ins" {
+     139 |   ami = "ami-0130bec6e5047f596"
+     140 |   instance_type = "t3.nano"
+     141 |   associate_public_ip_address = true
+     142 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
+     143 |   subnet_id = aws_subnet.nondefault_1.id
+     144 | }
+
+  Impact:     The instance or configuration is publically accessible
+  Resolution: Set the instance to not be publically accessible
+
+  See https://tfsec.dev/docs/aws/AWS012/ for more information. 
+
+Check 7
+
+  [AWS018][ERROR] Resource 'aws_security_group.esdomain' should include a description for auditing purposes.
+  /src/main.tf:92-100
+
+
+      89 |   subnet_id = aws_subnet.nondefault_1.id
+      90 | }
+      91 | 
+      92 | resource "aws_security_group" "esdomain" {
+      93 |   vpc_id = aws_vpc.nondefault.id
+      94 |   ingress {
+      95 |     from_port = 443
+      96 |     protocol = "tcp"
+      97 |     to_port = 443
+      98 |     cidr_blocks = [aws_subnet.nondefault_1.cidr_block]
+      99 |   }
+     100 | }
+     101 | 
+     102 | resource "aws_iam_service_linked_role" "es" {
+     103 |   aws_service_name = "es.amazonaws.com"
+
+  Impact:     Descriptions provide context for the firewall rule reasons
+  Resolution: Add descriptions for all security groups anf rules
+
+  See https://tfsec.dev/docs/aws/AWS018/ for more information. 
+
+Check 8
 
   [AWS057][ERROR] Resource 'aws_elasticsearch_domain.test' does not configure logging at rest on the domain.
   /src/main.tf:107-119
@@ -88,26 +207,7 @@ Check 3
 
   See https://tfsec.dev/docs/aws/AWS057/ for more information. 
 
-Check 4
-
-  [AWS009][WARNING] Resource 'aws_security_group.publicly_accessible_sg' defines a fully open egress security group.
-  /src/main.tf:133
-
-
-     130 |     from_port = 0
-     131 |     protocol = "tcp"
-     132 |     to_port = 65000
-     133 |     cidr_blocks = ["0.0.0.0/0"]
-     134 |   }
-     135 | }
-     136 | 
-
-  Impact:     The port is exposed for egressing data to the internet
-  Resolution: Set a more restrictive cidr range
-
-  See https://tfsec.dev/docs/aws/AWS009/ for more information. 
-
-Check 5
+Check 9
 
   [AWS018][ERROR] Resource 'aws_security_group.publicly_accessible_sg' should include a description for auditing purposes.
   /src/main.tf:121-135
@@ -140,106 +240,6 @@ Check 5
 
   See https://tfsec.dev/docs/aws/AWS018/ for more information. 
 
-Check 6
-
-  [AWS032][ERROR] Resource 'aws_elasticsearch_domain.test' defines an Elasticsearch domain with plaintext traffic (missing node_to_node_encryption block).
-  /src/main.tf:107-119
-
-
-     104 |   description      = "Allows Amazon ES to manage AWS resources for a domain on your behalf."
-     105 | }
-     106 | 
-     107 | resource "aws_elasticsearch_domain" "test" {
-     108 |   domain_name = "test"
-     109 |   vpc_options {
-     110 |     subnet_ids = [aws_subnet.nondefault_1.id]
-     111 |     security_group_ids = [aws_security_group.esdomain.id]
-     112 |   }
-     113 | 
-     114 |   ebs_options {
-     115 |     ebs_enabled = true
-     116 |     volume_size = 10
-     117 |     volume_type = "gp2"
-     118 |   }
-     119 | }
-     120 | 
-     121 | resource "aws_security_group" "publicly_accessible_sg" {
-     122 |   vpc_id = aws_vpc.nondefault.id
-
-  Impact:     In transit data between nodes could be read if intercepted
-  Resolution: Enable encrypted node to node communication
-
-  See https://tfsec.dev/docs/aws/AWS032/ for more information. 
-
-Check 7
-
-  [AWS033][ERROR] Resource 'aws_elasticsearch_domain.test' defines an Elasticsearch domain with plaintext traffic (missing domain_endpoint_options block).
-  /src/main.tf:107-119
-
-
-     104 |   description      = "Allows Amazon ES to manage AWS resources for a domain on your behalf."
-     105 | }
-     106 | 
-     107 | resource "aws_elasticsearch_domain" "test" {
-     108 |   domain_name = "test"
-     109 |   vpc_options {
-     110 |     subnet_ids = [aws_subnet.nondefault_1.id]
-     111 |     security_group_ids = [aws_security_group.esdomain.id]
-     112 |   }
-     113 | 
-     114 |   ebs_options {
-     115 |     ebs_enabled = true
-     116 |     volume_size = 10
-     117 |     volume_type = "gp2"
-     118 |   }
-     119 | }
-     120 | 
-     121 | resource "aws_security_group" "publicly_accessible_sg" {
-     122 |   vpc_id = aws_vpc.nondefault.id
-
-  Impact:     HTTP traffic can be intercepted and the contents read
-  Resolution: Enforce the use of HTTPS for ElasticSearch
-
-  See https://tfsec.dev/docs/aws/AWS033/ for more information. 
-
-Check 8
-
-  [AWS008][WARNING] Resource 'aws_security_group.publicly_accessible_sg' defines a fully open ingress security group.
-  /src/main.tf:127
-
-
-     124 |     from_port = 0
-     125 |     protocol = "tcp"
-     126 |     to_port = 65000
-     127 |     cidr_blocks = ["0.0.0.0/0"]
-     128 |   }
-     129 |   egress {
-     130 |     from_port = 0
-
-  Impact:     The port is exposed for ingress from the internet
-  Resolution: Set a more restrictive cidr range
-
-  See https://tfsec.dev/docs/aws/AWS008/ for more information. 
-
-Check 9
-
-  [AWS012][ERROR] Resource 'aws_instance.public_ins' has a public IP address associated.
-  /src/main.tf:141
-
-
-     138 | resource "aws_instance" "public_ins" {
-     139 |   ami = "ami-0130bec6e5047f596"
-     140 |   instance_type = "t3.nano"
-     141 |   associate_public_ip_address = true
-     142 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
-     143 |   subnet_id = aws_subnet.nondefault_1.id
-     144 | }
-
-  Impact:     The instance or configuration is publically accessible
-  Resolution: Set the instance to not be publically accessible
-
-  See https://tfsec.dev/docs/aws/AWS012/ for more information. 
-
 Check 10
 
   [AWS079][ERROR] Resource 'aws_instance.public_ins' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
@@ -264,10 +264,10 @@ Check 10
 
   times
   ------------------------------------------
-  disk i/o             15.4905ms
-  parsing HCL          21.5µs
-  evaluating values    264.1µs
-  running checks       8.4323ms
+  disk i/o             53.1908ms
+  parsing HCL          21.4µs
+  evaluating values    438.4µs
+  running checks       37.6676ms
 
   counts
   ------------------------------------------

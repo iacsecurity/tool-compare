@@ -1,6 +1,25 @@
 
 Check 1
 
+  [AWS009][WARNING] Resource 'aws_security_group.public-internet-sg' defines a fully open egress security group.
+  /src/main.tf:59
+
+
+      56 |     from_port   = 0
+      57 |     to_port     = 0
+      58 |     protocol    = "-1"
+      59 |     cidr_blocks = [local.quad_zero_cidr_block]
+      60 |   }
+      61 | 
+      62 |   ingress {
+
+  Impact:     The port is exposed for egressing data to the internet
+  Resolution: Set a more restrictive cidr range
+
+  See https://tfsec.dev/docs/aws/AWS009/ for more information. 
+
+Check 2
+
   [AWS079][ERROR] Resource 'aws_instance.test-ec2-instance' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
   /src/main.tf:87-92
 
@@ -23,7 +42,7 @@ Check 1
 
   See https://tfsec.dev/docs/aws/AWS079/ for more information. 
 
-Check 2
+Check 3
 
   [AWS015][ERROR] Resource 'aws_sqs_queue.test-queue' defines an unencrypted SQS queue.
   /src/main.tf:103-105
@@ -44,31 +63,12 @@ Check 2
 
   See https://tfsec.dev/docs/aws/AWS015/ for more information. 
 
-Check 3
-
-  [AWS009][WARNING] Resource 'aws_security_group.public-internet-sg' defines a fully open egress security group.
-  /src/main.tf:59
-
-
-      56 |     from_port   = 0
-      57 |     to_port     = 0
-      58 |     protocol    = "-1"
-      59 |     cidr_blocks = [local.quad_zero_cidr_block]
-      60 |   }
-      61 | 
-      62 |   ingress {
-
-  Impact:     The port is exposed for egressing data to the internet
-  Resolution: Set a more restrictive cidr range
-
-  See https://tfsec.dev/docs/aws/AWS009/ for more information. 
-
   times
   ------------------------------------------
-  disk i/o             14.8429ms
-  parsing HCL          24.9µs
-  evaluating values    231.9µs
-  running checks       3.946ms
+  disk i/o             24.1042ms
+  parsing HCL          25.6µs
+  evaluating values    365.4µs
+  running checks       5.8045ms
 
   counts
   ------------------------------------------

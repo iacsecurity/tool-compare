@@ -20,12 +20,69 @@ Check 1
 
   See https://tfsec.dev/docs/aws/AWS048/ for more information. 
 
+Check 2
+
+  [AWS096][ERROR] Resource 'aws_ecs_task_definition.service' has efs configuration with in transit encryption implicitly disabled
+  /src/main.tf:9-49
+
+
+       6 |   creation_token = "cloudrail-test"
+       7 | }
+       8 | 
+       9 | resource "aws_ecs_task_definition" "service" {
+      10 |   family                = "cloudrail-test-encryption"
+      11 |   container_definitions = <<DEFINITION
+      12 | [
+      13 |     {
+      14 |         "name": "first",
+      15 |         "image": "service-first",
+      16 |         "cpu": 10,
+      17 |         "memory": 512,
+      18 |         "essential": true,
+      19 |         "portMappings": [
+      20 |             {
+      21 |                 "containerPort": 80,
+      22 |                 "hostPort": 80
+      23 |             }
+      24 |         ]
+      25 |     },
+      26 |     {
+      27 |         "name": "second",
+      28 |         "image": "service-second",
+      29 |         "cpu": 10,
+      30 |         "memory": 256,
+      31 |         "essential": true,
+      32 |         "portMappings": [
+      33 |             {
+      34 |                 "containerPort": 443,
+      35 |                 "hostPort": 443
+      36 |             }
+      37 |         ]
+      38 |     }
+      39 | ]
+      40 |   DEFINITION
+      41 |   volume {
+      42 |     name = "service-storage"
+      43 | 
+      44 |     efs_volume_configuration {
+      45 |       file_system_id = aws_efs_file_system.test.id
+      46 |       root_directory = "/opt/data"
+      47 |     }
+      48 |   }
+      49 | }
+      50 | 
+
+  Impact:     Intercepted traffic to and from EFS may lead to data loss
+  Resolution: Enable in transit encryption when using efs
+
+  See https://tfsec.dev/docs/aws/AWS096/ for more information. 
+
   times
   ------------------------------------------
-  disk i/o             12.4854ms
-  parsing HCL          12.9µs
-  evaluating values    138.4µs
-  running checks       1.7278ms
+  disk i/o             17.6769ms
+  parsing HCL          22.1µs
+  evaluating values    135.4µs
+  running checks       2.7638ms
 
   counts
   ------------------------------------------
@@ -36,5 +93,5 @@ Check 1
   module blocks        0
   ignored checks       0
 
-1 potential problems detected.
+2 potential problems detected.
 
