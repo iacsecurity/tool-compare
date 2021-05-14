@@ -1,75 +1,6 @@
 
 Check 1
 
-  [AWS063][WARNING] Resource 'aws_cloudtrail.foobar' does not set multi region trail config.
-  /src/main.tf:3-8
-
-
-       1 | data "aws_caller_identity" "current" {}
-       2 | 
-       3 | resource "aws_cloudtrail" "foobar" {
-       4 |   name                          = "tf-trail-foobar"
-       5 |   s3_bucket_name                = aws_s3_bucket.foo.id
-       6 |   s3_key_prefix                 = "prefix"
-       7 |   include_global_service_events = false
-       8 | }
-       9 | 
-      10 | resource "aws_s3_bucket" "foo" {
-      11 |   bucket        = "tf-test-trail"
-
-  Impact:     Activity could be happening in your account in a different region
-  Resolution: Enable Cloudtrail in all regions
-
-  See https://tfsec.dev/docs/aws/AWS063/ for more information. 
-
-Check 2
-
-  [AWS064][WARNING] Resource 'aws_cloudtrail.foobar' does not enable log file validation.
-  /src/main.tf:3-8
-
-
-       1 | data "aws_caller_identity" "current" {}
-       2 | 
-       3 | resource "aws_cloudtrail" "foobar" {
-       4 |   name                          = "tf-trail-foobar"
-       5 |   s3_bucket_name                = aws_s3_bucket.foo.id
-       6 |   s3_key_prefix                 = "prefix"
-       7 |   include_global_service_events = false
-       8 | }
-       9 | 
-      10 | resource "aws_s3_bucket" "foo" {
-      11 |   bucket        = "tf-test-trail"
-
-  Impact:     Illicit activity could be removed from the logs
-  Resolution: Turn on log validation for Cloudtrail
-
-  See https://tfsec.dev/docs/aws/AWS064/ for more information. 
-
-Check 3
-
-  [AWS065][ERROR] Resource 'aws_cloudtrail.foobar' does not have a kms_key_id set.
-  /src/main.tf:3-8
-
-
-       1 | data "aws_caller_identity" "current" {}
-       2 | 
-       3 | resource "aws_cloudtrail" "foobar" {
-       4 |   name                          = "tf-trail-foobar"
-       5 |   s3_bucket_name                = aws_s3_bucket.foo.id
-       6 |   s3_key_prefix                 = "prefix"
-       7 |   include_global_service_events = false
-       8 | }
-       9 | 
-      10 | resource "aws_s3_bucket" "foo" {
-      11 |   bucket        = "tf-test-trail"
-
-  Impact:     Data can be freely read if compromised
-  Resolution: Enable encryption at rest
-
-  See https://tfsec.dev/docs/aws/AWS065/ for more information. 
-
-Check 4
-
   [AWS002][ERROR] Resource 'aws_s3_bucket.foo' does not have logging enabled.
   /src/main.tf:10-44
 
@@ -119,7 +50,7 @@ Check 4
 
   See https://tfsec.dev/docs/aws/AWS002/ for more information. 
 
-Check 5
+Check 2
 
   [AWS017][ERROR] Resource 'aws_s3_bucket.foo' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
   /src/main.tf:10-44
@@ -170,7 +101,7 @@ Check 5
 
   See https://tfsec.dev/docs/aws/AWS017/ for more information. 
 
-Check 6
+Check 3
 
   [AWS077][ERROR] Resource 'aws_s3_bucket.foo' does not have versioning enabled
   /src/main.tf:10-44
@@ -221,12 +152,81 @@ Check 6
 
   See https://tfsec.dev/docs/aws/AWS077/ for more information. 
 
+Check 4
+
+  [AWS063][WARNING] Resource 'aws_cloudtrail.foobar' does not set multi region trail config.
+  /src/main.tf:3-8
+
+
+       1 | data "aws_caller_identity" "current" {}
+       2 | 
+       3 | resource "aws_cloudtrail" "foobar" {
+       4 |   name                          = "tf-trail-foobar"
+       5 |   s3_bucket_name                = aws_s3_bucket.foo.id
+       6 |   s3_key_prefix                 = "prefix"
+       7 |   include_global_service_events = false
+       8 | }
+       9 | 
+      10 | resource "aws_s3_bucket" "foo" {
+      11 |   bucket        = "tf-test-trail"
+
+  Impact:     Activity could be happening in your account in a different region
+  Resolution: Enable Cloudtrail in all regions
+
+  See https://tfsec.dev/docs/aws/AWS063/ for more information. 
+
+Check 5
+
+  [AWS064][WARNING] Resource 'aws_cloudtrail.foobar' does not enable log file validation.
+  /src/main.tf:3-8
+
+
+       1 | data "aws_caller_identity" "current" {}
+       2 | 
+       3 | resource "aws_cloudtrail" "foobar" {
+       4 |   name                          = "tf-trail-foobar"
+       5 |   s3_bucket_name                = aws_s3_bucket.foo.id
+       6 |   s3_key_prefix                 = "prefix"
+       7 |   include_global_service_events = false
+       8 | }
+       9 | 
+      10 | resource "aws_s3_bucket" "foo" {
+      11 |   bucket        = "tf-test-trail"
+
+  Impact:     Illicit activity could be removed from the logs
+  Resolution: Turn on log validation for Cloudtrail
+
+  See https://tfsec.dev/docs/aws/AWS064/ for more information. 
+
+Check 6
+
+  [AWS065][ERROR] Resource 'aws_cloudtrail.foobar' does not have a kms_key_id set.
+  /src/main.tf:3-8
+
+
+       1 | data "aws_caller_identity" "current" {}
+       2 | 
+       3 | resource "aws_cloudtrail" "foobar" {
+       4 |   name                          = "tf-trail-foobar"
+       5 |   s3_bucket_name                = aws_s3_bucket.foo.id
+       6 |   s3_key_prefix                 = "prefix"
+       7 |   include_global_service_events = false
+       8 | }
+       9 | 
+      10 | resource "aws_s3_bucket" "foo" {
+      11 |   bucket        = "tf-test-trail"
+
+  Impact:     Data can be freely read if compromised
+  Resolution: Enable encryption at rest
+
+  See https://tfsec.dev/docs/aws/AWS065/ for more information. 
+
   times
   ------------------------------------------
-  disk i/o             15.1513ms
-  parsing HCL          17.5µs
-  evaluating values    157.5µs
-  running checks       6.4168ms
+  disk i/o             39.9481ms
+  parsing HCL          26.2µs
+  evaluating values    203.3µs
+  running checks       12.0957ms
 
   counts
   ------------------------------------------

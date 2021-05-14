@@ -1,10 +1,28 @@
 
+Check 1
+
+  [AWS016][WARNING] Resource 'aws_sns_topic.test' explicitly uses the default CMK
+  /src/main.tf:11
+
+
+       8 | 
+       9 | resource "aws_sns_topic" "test" {
+      10 |   name              = "sns_ecnrypted"
+      11 |   kms_master_key_id = data.aws_kms_key.by_alias.arn
+      12 | }
+      13 | 
+
+  Impact:     The SNS topic messages could be read if compromised
+  Resolution: Turn on SNS Topic encryption
+
+  See https://tfsec.dev/docs/aws/AWS016/ for more information. 
+
   times
   ------------------------------------------
-  disk i/o             13.0413ms
-  parsing HCL          15.4µs
-  evaluating values    106.6µs
-  running checks       121.4µs
+  disk i/o             42.6916ms
+  parsing HCL          26.2µs
+  evaluating values    656.7µs
+  running checks       5.3201ms
 
   counts
   ------------------------------------------
@@ -15,5 +33,5 @@
   module blocks        0
   ignored checks       0
 
-No problems detected!
+1 potential problems detected.
 

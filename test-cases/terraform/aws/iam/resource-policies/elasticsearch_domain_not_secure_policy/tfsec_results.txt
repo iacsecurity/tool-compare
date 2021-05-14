@@ -1,60 +1,6 @@
 
 Check 1
 
-  [AWS031][ERROR] Resource 'aws_elasticsearch_domain.es-not-secure-policy' defines an unencrypted Elasticsearch domain (missing encrypt_at_rest block).
-  /src/main.tf:5-13
-
-
-       2 |   region = "us-east-1"
-       3 | }
-       4 | 
-       5 | resource "aws_elasticsearch_domain" "es-not-secure-policy" {
-       6 |   domain_name = "es-not-secure-policy"
-       7 | 
-       8 |   ebs_options {
-       9 |     ebs_enabled = true
-      10 |     volume_size = 10
-      11 |     volume_type = "gp2"
-      12 |   }
-      13 | }
-      14 | 
-      15 | resource "aws_elasticsearch_domain_policy" "main" {
-      16 |   domain_name = aws_elasticsearch_domain.es-not-secure-policy.domain_name
-
-  Impact:     Data will be readable if compromised
-  Resolution: Enable ElasticSearch domain encryption
-
-  See https://tfsec.dev/docs/aws/AWS031/ for more information. 
-
-Check 2
-
-  [AWS032][ERROR] Resource 'aws_elasticsearch_domain.es-not-secure-policy' defines an Elasticsearch domain with plaintext traffic (missing node_to_node_encryption block).
-  /src/main.tf:5-13
-
-
-       2 |   region = "us-east-1"
-       3 | }
-       4 | 
-       5 | resource "aws_elasticsearch_domain" "es-not-secure-policy" {
-       6 |   domain_name = "es-not-secure-policy"
-       7 | 
-       8 |   ebs_options {
-       9 |     ebs_enabled = true
-      10 |     volume_size = 10
-      11 |     volume_type = "gp2"
-      12 |   }
-      13 | }
-      14 | 
-      15 | resource "aws_elasticsearch_domain_policy" "main" {
-      16 |   domain_name = aws_elasticsearch_domain.es-not-secure-policy.domain_name
-
-  Impact:     In transit data between nodes could be read if intercepted
-  Resolution: Enable encrypted node to node communication
-
-  See https://tfsec.dev/docs/aws/AWS032/ for more information. 
-
-Check 3
-
   [AWS033][ERROR] Resource 'aws_elasticsearch_domain.es-not-secure-policy' defines an Elasticsearch domain with plaintext traffic (missing domain_endpoint_options block).
   /src/main.tf:5-13
 
@@ -80,7 +26,7 @@ Check 3
 
   See https://tfsec.dev/docs/aws/AWS033/ for more information. 
 
-Check 4
+Check 2
 
   [AWS057][ERROR] Resource 'aws_elasticsearch_domain.es-not-secure-policy' does not configure logging at rest on the domain.
   /src/main.tf:5-13
@@ -107,12 +53,66 @@ Check 4
 
   See https://tfsec.dev/docs/aws/AWS057/ for more information. 
 
+Check 3
+
+  [AWS031][ERROR] Resource 'aws_elasticsearch_domain.es-not-secure-policy' defines an unencrypted Elasticsearch domain (missing encrypt_at_rest block).
+  /src/main.tf:5-13
+
+
+       2 |   region = "us-east-1"
+       3 | }
+       4 | 
+       5 | resource "aws_elasticsearch_domain" "es-not-secure-policy" {
+       6 |   domain_name = "es-not-secure-policy"
+       7 | 
+       8 |   ebs_options {
+       9 |     ebs_enabled = true
+      10 |     volume_size = 10
+      11 |     volume_type = "gp2"
+      12 |   }
+      13 | }
+      14 | 
+      15 | resource "aws_elasticsearch_domain_policy" "main" {
+      16 |   domain_name = aws_elasticsearch_domain.es-not-secure-policy.domain_name
+
+  Impact:     Data will be readable if compromised
+  Resolution: Enable ElasticSearch domain encryption
+
+  See https://tfsec.dev/docs/aws/AWS031/ for more information. 
+
+Check 4
+
+  [AWS032][ERROR] Resource 'aws_elasticsearch_domain.es-not-secure-policy' defines an Elasticsearch domain with plaintext traffic (missing node_to_node_encryption block).
+  /src/main.tf:5-13
+
+
+       2 |   region = "us-east-1"
+       3 | }
+       4 | 
+       5 | resource "aws_elasticsearch_domain" "es-not-secure-policy" {
+       6 |   domain_name = "es-not-secure-policy"
+       7 | 
+       8 |   ebs_options {
+       9 |     ebs_enabled = true
+      10 |     volume_size = 10
+      11 |     volume_type = "gp2"
+      12 |   }
+      13 | }
+      14 | 
+      15 | resource "aws_elasticsearch_domain_policy" "main" {
+      16 |   domain_name = aws_elasticsearch_domain.es-not-secure-policy.domain_name
+
+  Impact:     In transit data between nodes could be read if intercepted
+  Resolution: Enable encrypted node to node communication
+
+  See https://tfsec.dev/docs/aws/AWS032/ for more information. 
+
   times
   ------------------------------------------
-  disk i/o             12.9731ms
-  parsing HCL          16µs
-  evaluating values    107.2µs
-  running checks       4.4895ms
+  disk i/o             29.2334ms
+  parsing HCL          59.2µs
+  evaluating values    1.1246ms
+  running checks       9.3888ms
 
   counts
   ------------------------------------------

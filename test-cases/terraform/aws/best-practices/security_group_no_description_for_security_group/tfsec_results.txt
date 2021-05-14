@@ -85,10 +85,10 @@ Check 3
 
   times
   ------------------------------------------
-  disk i/o             19.5028ms
-  parsing HCL          21.3µs
-  evaluating values    223.9µs
-  running checks       4.0466ms
+  disk i/o             36.5491ms
+  parsing HCL          28.1µs
+  evaluating values    301.4µs
+  running checks       6.5107ms
 
   counts
   ------------------------------------------

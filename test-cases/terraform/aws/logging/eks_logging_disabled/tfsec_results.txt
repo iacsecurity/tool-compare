@@ -1,28 +1,6 @@
 
 Check 1
 
-  [AWS066][ERROR] Resource 'aws_eks_cluster.test' has no encryption_config block
-  /src/main.tf:19-25
-
-
-      16 |   vpc_id = aws_vpc.vpc.id
-      17 | }
-      18 | 
-      19 | resource "aws_eks_cluster" "test" {
-      20 |   name = "test"
-      21 |   role_arn = aws_iam_role.eksrole.arn
-      22 |   vpc_config {
-      23 |     subnet_ids = [aws_subnet.subnet1.id]
-      24 |   }
-      25 | }
-
-  Impact:     EKS secrets could be read if compromised
-  Resolution: Enable encryption of EKS secrets
-
-  See https://tfsec.dev/docs/aws/AWS066/ for more information. 
-
-Check 2
-
   [AWS067][ERROR] Resource 'aws_eks_cluster.test' missing the enabled_cluster_log_types attribute to enable control plane logging
   /src/main.tf:19-25
 
@@ -43,7 +21,7 @@ Check 2
 
   See https://tfsec.dev/docs/aws/AWS067/ for more information. 
 
-Check 3
+Check 2
 
   [AWS068][ERROR] Resource 'aws_eks_cluster.test' is using default public access cidrs in the vpc config
   /src/main.tf:22-24
@@ -62,7 +40,7 @@ Check 3
 
   See https://tfsec.dev/docs/aws/AWS068/ for more information. 
 
-Check 4
+Check 3
 
   [AWS069][ERROR] Resource 'aws_eks_cluster.test' is using default public access in the vpc config
   /src/main.tf:22-24
@@ -81,12 +59,34 @@ Check 4
 
   See https://tfsec.dev/docs/aws/AWS069/ for more information. 
 
+Check 4
+
+  [AWS066][ERROR] Resource 'aws_eks_cluster.test' has no encryption_config block
+  /src/main.tf:19-25
+
+
+      16 |   vpc_id = aws_vpc.vpc.id
+      17 | }
+      18 | 
+      19 | resource "aws_eks_cluster" "test" {
+      20 |   name = "test"
+      21 |   role_arn = aws_iam_role.eksrole.arn
+      22 |   vpc_config {
+      23 |     subnet_ids = [aws_subnet.subnet1.id]
+      24 |   }
+      25 | }
+
+  Impact:     EKS secrets could be read if compromised
+  Resolution: Enable encryption of EKS secrets
+
+  See https://tfsec.dev/docs/aws/AWS066/ for more information. 
+
   times
   ------------------------------------------
-  disk i/o             20.0885ms
-  parsing HCL          23.9µs
-  evaluating values    135µs
-  running checks       5.1952ms
+  disk i/o             22.4559ms
+  parsing HCL          16.7µs
+  evaluating values    527.8µs
+  running checks       9.925ms
 
   counts
   ------------------------------------------

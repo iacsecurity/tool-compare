@@ -20,10 +20,10 @@ Check 1
 
   times
   ------------------------------------------
-  disk i/o             16.4488ms
-  parsing HCL          18.1µs
-  evaluating values    81.7µs
-  running checks       1.4119ms
+  disk i/o             26.14ms
+  parsing HCL          32.9µs
+  evaluating values    199.5µs
+  running checks       6.8689ms
 
   counts
   ------------------------------------------

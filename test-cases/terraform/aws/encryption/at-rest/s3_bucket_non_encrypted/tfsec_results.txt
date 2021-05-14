@@ -1,6 +1,28 @@
 
 Check 1
 
+  [AWS002][ERROR] Resource 'aws_s3_bucket.cloudrail' does not have logging enabled.
+  /src/main.tf:5-8
+
+
+       2 |   region = "us-east-1"
+       3 | }
+       4 | 
+       5 | resource "aws_s3_bucket" "cloudrail" {
+       6 |   bucket = "cloudrail-non-encrypted-czx7zxchs"
+       7 |   acl    = "private"
+       8 | }
+       9 | 
+      10 | resource "aws_s3_bucket_public_access_block" "cloudrail" {
+      11 |   bucket                  = aws_s3_bucket.cloudrail.id
+
+  Impact:     There is no way to determine the access to this bucket
+  Resolution: Add a logging block to the resource to enable access logging
+
+  See https://tfsec.dev/docs/aws/AWS002/ for more information. 
+
+Check 2
+
   [AWS017][ERROR] Resource 'aws_s3_bucket.cloudrail' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
   /src/main.tf:5-8
 
@@ -21,7 +43,7 @@ Check 1
 
   See https://tfsec.dev/docs/aws/AWS017/ for more information. 
 
-Check 2
+Check 3
 
   [AWS077][ERROR] Resource 'aws_s3_bucket.cloudrail' does not have versioning enabled
   /src/main.tf:5-8
@@ -43,34 +65,12 @@ Check 2
 
   See https://tfsec.dev/docs/aws/AWS077/ for more information. 
 
-Check 3
-
-  [AWS002][ERROR] Resource 'aws_s3_bucket.cloudrail' does not have logging enabled.
-  /src/main.tf:5-8
-
-
-       2 |   region = "us-east-1"
-       3 | }
-       4 | 
-       5 | resource "aws_s3_bucket" "cloudrail" {
-       6 |   bucket = "cloudrail-non-encrypted-czx7zxchs"
-       7 |   acl    = "private"
-       8 | }
-       9 | 
-      10 | resource "aws_s3_bucket_public_access_block" "cloudrail" {
-      11 |   bucket                  = aws_s3_bucket.cloudrail.id
-
-  Impact:     There is no way to determine the access to this bucket
-  Resolution: Add a logging block to the resource to enable access logging
-
-  See https://tfsec.dev/docs/aws/AWS002/ for more information. 
-
   times
   ------------------------------------------
-  disk i/o             13.2851ms
-  parsing HCL          16.3µs
-  evaluating values    145.1µs
-  running checks       3.1644ms
+  disk i/o             22.3415ms
+  parsing HCL          18µs
+  evaluating values    247.6µs
+  running checks       6.7511ms
 
   counts
   ------------------------------------------

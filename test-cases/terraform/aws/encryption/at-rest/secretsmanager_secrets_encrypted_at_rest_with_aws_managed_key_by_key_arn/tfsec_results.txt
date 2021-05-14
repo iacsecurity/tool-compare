@@ -1,10 +1,28 @@
 
+Check 1
+
+  [AWS095][WARNING] Resource 'aws_secretsmanager_secret.test' explicitly uses the default CMK
+  /src/main.tf:11
+
+
+       8 | 
+       9 | resource "aws_secretsmanager_secret" "test" {
+      10 |   name       = "test-cloudrail-1"
+      11 |   kms_key_id = data.aws_kms_key.by_alias.arn
+      12 | }
+      13 | 
+
+  Impact:     Using AWS managed keys reduces the flexibility and control over the encryption key
+  Resolution: Use customer managed keys
+
+  See https://tfsec.dev/docs/aws/AWS095/ for more information. 
+
   times
   ------------------------------------------
-  disk i/o             12.4246ms
-  parsing HCL          18µs
-  evaluating values    106.7µs
-  running checks       125.2µs
+  disk i/o             37.7281ms
+  parsing HCL          26.8µs
+  evaluating values    249.5µs
+  running checks       2.7037ms
 
   counts
   ------------------------------------------
@@ -15,5 +33,5 @@
   module blocks        0
   ignored checks       0
 
-No problems detected!
+1 potential problems detected.
 

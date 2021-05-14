@@ -1,28 +1,6 @@
 
 Check 1
 
-  [AWS077][ERROR] Resource 'aws_s3_bucket.cloudrail' does not have versioning enabled
-  /src/main.tf:33-36
-
-
-      30 | EOF
-      31 | }
-      32 | 
-      33 | resource "aws_s3_bucket" "cloudrail" {
-      34 |   bucket = "cloudrail-glue"
-      35 |   acl    = "private"
-      36 | }
-      37 | 
-      38 | resource "aws_glue_crawler" "cloudrail_table_crawler" {
-      39 |   database_name = aws_glue_catalog_database.cloudrail_table_database.name
-
-  Impact:     Deleted or modified data would not be recoverable
-  Resolution: Enable versioning to protect against accidental/malicious removal or modification
-
-  See https://tfsec.dev/docs/aws/AWS077/ for more information. 
-
-Check 2
-
   [AWS002][ERROR] Resource 'aws_s3_bucket.cloudrail' does not have logging enabled.
   /src/main.tf:33-36
 
@@ -43,7 +21,7 @@ Check 2
 
   See https://tfsec.dev/docs/aws/AWS002/ for more information. 
 
-Check 3
+Check 2
 
   [AWS017][ERROR] Resource 'aws_s3_bucket.cloudrail' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
   /src/main.tf:33-36
@@ -65,12 +43,34 @@ Check 3
 
   See https://tfsec.dev/docs/aws/AWS017/ for more information. 
 
+Check 3
+
+  [AWS077][ERROR] Resource 'aws_s3_bucket.cloudrail' does not have versioning enabled
+  /src/main.tf:33-36
+
+
+      30 | EOF
+      31 | }
+      32 | 
+      33 | resource "aws_s3_bucket" "cloudrail" {
+      34 |   bucket = "cloudrail-glue"
+      35 |   acl    = "private"
+      36 | }
+      37 | 
+      38 | resource "aws_glue_crawler" "cloudrail_table_crawler" {
+      39 |   database_name = aws_glue_catalog_database.cloudrail_table_database.name
+
+  Impact:     Deleted or modified data would not be recoverable
+  Resolution: Enable versioning to protect against accidental/malicious removal or modification
+
+  See https://tfsec.dev/docs/aws/AWS077/ for more information. 
+
   times
   ------------------------------------------
-  disk i/o             16.128ms
-  parsing HCL          29.9µs
-  evaluating values    213.1µs
-  running checks       3.4471ms
+  disk i/o             25.1325ms
+  parsing HCL          42.4µs
+  evaluating values    514.4µs
+  running checks       7.2086ms
 
   counts
   ------------------------------------------

@@ -1,6 +1,28 @@
 
 Check 1
 
+  [AWS015][ERROR] Resource 'aws_sqs_queue.cloudrail' defines an unencrypted SQS queue.
+  /src/main.tf:12-17
+
+
+       9 |   }
+      10 | }
+      11 | 
+      12 | resource "aws_sqs_queue" "cloudrail" {
+      13 |   name = "sqs_non_encrypted"
+      14 |   tags = {
+      15 |     Name = "Sqs Cloudrail Test"
+      16 |   }
+      17 | }
+      18 | 
+
+  Impact:     The SQS queue messages could be read if compromised
+  Resolution: Turn on SQS Queue encryption
+
+  See https://tfsec.dev/docs/aws/AWS015/ for more information. 
+
+Check 2
+
   [AWS016][ERROR] Resource 'aws_sns_topic.cloudrail_1' defines an unencrypted SNS topic.
   /src/main.tf:5-10
 
@@ -23,34 +45,12 @@ Check 1
 
   See https://tfsec.dev/docs/aws/AWS016/ for more information. 
 
-Check 2
-
-  [AWS015][ERROR] Resource 'aws_sqs_queue.cloudrail' defines an unencrypted SQS queue.
-  /src/main.tf:12-17
-
-
-       9 |   }
-      10 | }
-      11 | 
-      12 | resource "aws_sqs_queue" "cloudrail" {
-      13 |   name = "sqs_non_encrypted"
-      14 |   tags = {
-      15 |     Name = "Sqs Cloudrail Test"
-      16 |   }
-      17 | }
-      18 | 
-
-  Impact:     The SQS queue messages could be read if compromised
-  Resolution: Turn on SQS Queue encryption
-
-  See https://tfsec.dev/docs/aws/AWS015/ for more information. 
-
   times
   ------------------------------------------
-  disk i/o             18.2378ms
-  parsing HCL          33µs
-  evaluating values    110µs
-  running checks       2.5838ms
+  disk i/o             37.815ms
+  parsing HCL          36.8µs
+  evaluating values    199.1µs
+  running checks       8.5307ms
 
   counts
   ------------------------------------------

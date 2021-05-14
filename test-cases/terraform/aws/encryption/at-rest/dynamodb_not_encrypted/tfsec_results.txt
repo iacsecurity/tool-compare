@@ -55,12 +55,68 @@ Check 1
 
   See https://tfsec.dev/docs/aws/AWS086/ for more information. 
 
+Check 2
+
+  [AWS092][WARNING] Resource 'aws_dynamodb_table.basic-dynamodb-table' is not using KMS CMK for encryption
+  /src/main.tf:1-43
+
+
+       1 | resource "aws_dynamodb_table" "basic-dynamodb-table" {
+       2 |   name           = "GameScores"
+       3 |   billing_mode   = "PROVISIONED"
+       4 |   read_capacity  = 20
+       5 |   write_capacity = 20
+       6 |   hash_key       = "UserId"
+       7 |   range_key      = "GameTitle"
+       8 | 
+       9 |   attribute {
+      10 |     name = "UserId"
+      11 |     type = "S"
+      12 |   }
+      13 | 
+      14 |   attribute {
+      15 |     name = "GameTitle"
+      16 |     type = "S"
+      17 |   }
+      18 | 
+      19 |   attribute {
+      20 |     name = "TopScore"
+      21 |     type = "N"
+      22 |   }
+      23 | 
+      24 |   ttl {
+      25 |     attribute_name = "TimeToExist"
+      26 |     enabled        = false
+      27 |   }
+      28 | 
+      29 |   global_secondary_index {
+      30 |     name               = "GameTitleIndex"
+      31 |     hash_key           = "GameTitle"
+      32 |     range_key          = "TopScore"
+      33 |     write_capacity     = 10
+      34 |     read_capacity      = 10
+      35 |     projection_type    = "INCLUDE"
+      36 |     non_key_attributes = ["UserId"]
+      37 |   }
+      38 | 
+      39 |   tags = {
+      40 |     Name        = "dynamodb-table-1"
+      41 |     Environment = "production"
+      42 |   }
+      43 | }
+      44 | 
+
+  Impact:     Using AWS managed keys does not allow for fine grained control
+  Resolution: Enable server side encrytion with a customer managed key
+
+  See https://tfsec.dev/docs/aws/AWS092/ for more information. 
+
   times
   ------------------------------------------
-  disk i/o             13.5094ms
-  parsing HCL          15.1µs
-  evaluating values    152.1µs
-  running checks       1.4705ms
+  disk i/o             23.6187ms
+  parsing HCL          23.4µs
+  evaluating values    370.8µs
+  running checks       3.7579ms
 
   counts
   ------------------------------------------
@@ -71,5 +127,5 @@ Check 1
   module blocks        0
   ignored checks       0
 
-1 potential problems detected.
+2 potential problems detected.
 

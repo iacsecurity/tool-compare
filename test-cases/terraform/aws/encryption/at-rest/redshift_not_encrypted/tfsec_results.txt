@@ -1,25 +1,6 @@
 
 Check 1
 
-  [GEN003][WARNING] Block 'aws_redshift_cluster.default' includes a potentially sensitive attribute which is defined within the project.
-  /src/main.tf:9
-
-
-       6 |   cluster_identifier = "tf-redshift-cluster"
-       7 |   database_name      = "mydb"
-       8 |   master_username    = "foo"
-       9 |   master_password    = "Mustbe8characters"
-      10 |   node_type          = "dc1.large"
-      11 |   cluster_type       = "single-node"
-      12 | }
-
-  Impact:     Block attribute could be leaking secrets
-  Resolution: Don't include sensitive data in blocks
-
-  See https://tfsec.dev/docs/general/GEN003/ for more information. 
-
-Check 2
-
   [AWS087][ERROR] Resource 'aws_redshift_cluster.default' is being deployed outside of a VPC
   /src/main.tf:5-12
 
@@ -42,12 +23,55 @@ Check 2
 
   See https://tfsec.dev/docs/aws/AWS087/ for more information. 
 
+Check 2
+
+  [AWS094][WARNING] Resource 'aws_redshift_cluster.default' does not have encryption enabled
+  /src/main.tf:5-12
+
+
+       2 |   region = "us-west-1"
+       3 | }
+       4 | 
+       5 | resource "aws_redshift_cluster" "default" {
+       6 |   cluster_identifier = "tf-redshift-cluster"
+       7 |   database_name      = "mydb"
+       8 |   master_username    = "foo"
+       9 |   master_password    = "Mustbe8characters"
+      10 |   node_type          = "dc1.large"
+      11 |   cluster_type       = "single-node"
+      12 | }
+      13 | 
+
+  Impact:     Data may be leaked if infrastructure is compromised
+  Resolution: Enable encryption using CMK
+
+  See https://tfsec.dev/docs/aws/AWS094/ for more information. 
+
+Check 3
+
+  [GEN003][WARNING] Block 'aws_redshift_cluster.default' includes a potentially sensitive attribute which is defined within the project.
+  /src/main.tf:9
+
+
+       6 |   cluster_identifier = "tf-redshift-cluster"
+       7 |   database_name      = "mydb"
+       8 |   master_username    = "foo"
+       9 |   master_password    = "Mustbe8characters"
+      10 |   node_type          = "dc1.large"
+      11 |   cluster_type       = "single-node"
+      12 | }
+
+  Impact:     Block attribute could be leaking secrets
+  Resolution: Don't include sensitive data in blocks
+
+  See https://tfsec.dev/docs/general/GEN003/ for more information. 
+
   times
   ------------------------------------------
-  disk i/o             13.4396ms
-  parsing HCL          17µs
-  evaluating values    96.4µs
-  running checks       2.528ms
+  disk i/o             24.5638ms
+  parsing HCL          16.9µs
+  evaluating values    106.9µs
+  running checks       6.7943ms
 
   counts
   ------------------------------------------
@@ -58,5 +82,5 @@ Check 2
   module blocks        0
   ignored checks       0
 
-2 potential problems detected.
+3 potential problems detected.
 

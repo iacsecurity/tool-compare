@@ -24,6 +24,29 @@ Check 1
 
 Check 2
 
+  [AWS091][WARNING] Resource 'aws_rds_cluster.default' does not have backup retention explicitly set
+  /src/main.tf:1-10
+
+
+       1 | resource "aws_rds_cluster" "default" {
+       2 |   cluster_identifier      = "aurora-cluster-demo"
+       3 |   engine                  = "aurora-mysql"
+       4 |   engine_version          = "5.7.mysql_aurora.2.03.2"
+       5 |   availability_zones      = ["us-west-2a", "us-west-2b", "us-west-2c"]
+       6 |   database_name           = "mydb"
+       7 |   master_username         = "foo"
+       8 |   master_password         = "bar"
+       9 |   preferred_backup_window = "07:00-09:00"
+      10 | }
+      11 | 
+
+  Impact:     Potential loss of data and short opportunity for recovery
+  Resolution: Explicitly set the retention period to greater than the default
+
+  See https://tfsec.dev/docs/aws/AWS091/ for more information. 
+
+Check 3
+
   [GEN003][WARNING] Block 'aws_rds_cluster.default' includes a potentially sensitive attribute which is defined within the project.
   /src/main.tf:8
 
@@ -43,10 +66,10 @@ Check 2
 
   times
   ------------------------------------------
-  disk i/o             20.0065ms
-  parsing HCL          18.2µs
-  evaluating values    197.7µs
-  running checks       4.2998ms
+  disk i/o             19.1569ms
+  parsing HCL          23.1µs
+  evaluating values    167.4µs
+  running checks       3.5672ms
 
   counts
   ------------------------------------------
@@ -57,5 +80,5 @@ Check 2
   module blocks        0
   ignored checks       0
 
-2 potential problems detected.
+3 potential problems detected.
 

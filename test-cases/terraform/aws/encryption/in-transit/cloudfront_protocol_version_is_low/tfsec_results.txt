@@ -1,6 +1,107 @@
 
 Check 1
 
+  [AWS017][ERROR] Resource 'aws_s3_bucket.logging' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
+  /src/main.tf:5-12
+
+
+       2 |   region = "us-east-2"
+       3 | }
+       4 | 
+       5 | resource "aws_s3_bucket" "logging" {
+       6 |   bucket = "dist-cloud-test-logs"
+       7 |   acl    = "log-delivery-write"
+       8 | 
+       9 |   tags = {
+      10 |     Name = "dist-cloud-test-logs"
+      11 |   }
+      12 | }
+      13 | 
+      14 | resource "aws_s3_bucket" "dist" {
+      15 |   bucket = "dist-cloud-test"
+
+  Impact:     The bucket objects could be read if compromised
+  Resolution: Configure bucket encryption
+
+  See https://tfsec.dev/docs/aws/AWS017/ for more information. 
+
+Check 2
+
+  [AWS077][ERROR] Resource 'aws_s3_bucket.logging' does not have versioning enabled
+  /src/main.tf:5-12
+
+
+       2 |   region = "us-east-2"
+       3 | }
+       4 | 
+       5 | resource "aws_s3_bucket" "logging" {
+       6 |   bucket = "dist-cloud-test-logs"
+       7 |   acl    = "log-delivery-write"
+       8 | 
+       9 |   tags = {
+      10 |     Name = "dist-cloud-test-logs"
+      11 |   }
+      12 | }
+      13 | 
+      14 | resource "aws_s3_bucket" "dist" {
+      15 |   bucket = "dist-cloud-test"
+
+  Impact:     Deleted or modified data would not be recoverable
+  Resolution: Enable versioning to protect against accidental/malicious removal or modification
+
+  See https://tfsec.dev/docs/aws/AWS077/ for more information. 
+
+Check 3
+
+  [AWS077][ERROR] Resource 'aws_s3_bucket.dist' does not have versioning enabled
+  /src/main.tf:14-25
+
+
+      11 |   }
+      12 | }
+      13 | 
+      14 | resource "aws_s3_bucket" "dist" {
+      15 |   bucket = "dist-cloud-test"
+      16 |   acl    = "public-read-write"
+      17 | 
+      18 |   tags = {
+      19 |     Name = "dist-cloud-test"
+      20 |   }
+      21 |   logging {
+      22 |    	target_bucket = aws_s3_bucket.logging.id
+      23 |   	target_prefix = "log/"
+      24 |   }
+      25 | }
+      26 | 
+      27 | locals {
+      28 |   s3_origin_id = "myDistTestCloduFront"
+
+  Impact:     Deleted or modified data would not be recoverable
+  Resolution: Enable versioning to protect against accidental/malicious removal or modification
+
+  See https://tfsec.dev/docs/aws/AWS077/ for more information. 
+
+Check 4
+
+  [AWS020][ERROR] Resource 'aws_cloudfront_distribution.s3_distribution' defines a CloudFront distribution that allows unencrypted communications.
+  /src/main.tf:64
+
+
+      61 |       }
+      62 |     }
+      63 | 
+      64 |     viewer_protocol_policy = "allow-all"
+      65 |     min_ttl                = 0
+      66 |     default_ttl            = 3600
+      67 |     max_ttl                = 86400
+
+  Impact:     CloudFront is available through an unencrypted connection
+  Resolution: Only allow HTTPS for CloudFront distribution communication
+
+  See https://tfsec.dev/docs/aws/AWS020/ for more information. 
+
+Check 5
+
   [AWS021][ERROR] Resource 'aws_cloudfront_distribution.s3_distribution' defines outdated SSL/TLS policies (missing minimum_protocol_version attribute)
   /src/main.tf:128-130
 
@@ -18,7 +119,7 @@ Check 1
 
   See https://tfsec.dev/docs/aws/AWS021/ for more information. 
 
-Check 2
+Check 6
 
   [AWS072][ERROR] Resource 'aws_cloudfront_distribution.s3_distribution' does not use HTTPS in Viewer Protocol Policy
   /src/main.tf:51-68
@@ -54,59 +155,7 @@ Check 2
 
   See https://tfsec.dev/docs/aws/AWS072/ for more information. 
 
-Check 3
-
-  [AWS017][ERROR] Resource 'aws_s3_bucket.logging' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
-  /src/main.tf:5-12
-
-
-       2 |   region = "us-east-2"
-       3 | }
-       4 | 
-       5 | resource "aws_s3_bucket" "logging" {
-       6 |   bucket = "dist-cloud-test-logs"
-       7 |   acl    = "log-delivery-write"
-       8 | 
-       9 |   tags = {
-      10 |     Name = "dist-cloud-test-logs"
-      11 |   }
-      12 | }
-      13 | 
-      14 | resource "aws_s3_bucket" "dist" {
-      15 |   bucket = "dist-cloud-test"
-
-  Impact:     The bucket objects could be read if compromised
-  Resolution: Configure bucket encryption
-
-  See https://tfsec.dev/docs/aws/AWS017/ for more information. 
-
-Check 4
-
-  [AWS077][ERROR] Resource 'aws_s3_bucket.logging' does not have versioning enabled
-  /src/main.tf:5-12
-
-
-       2 |   region = "us-east-2"
-       3 | }
-       4 | 
-       5 | resource "aws_s3_bucket" "logging" {
-       6 |   bucket = "dist-cloud-test-logs"
-       7 |   acl    = "log-delivery-write"
-       8 | 
-       9 |   tags = {
-      10 |     Name = "dist-cloud-test-logs"
-      11 |   }
-      12 | }
-      13 | 
-      14 | resource "aws_s3_bucket" "dist" {
-      15 |   bucket = "dist-cloud-test"
-
-  Impact:     Deleted or modified data would not be recoverable
-  Resolution: Enable versioning to protect against accidental/malicious removal or modification
-
-  See https://tfsec.dev/docs/aws/AWS077/ for more information. 
-
-Check 5
+Check 7
 
   [AWS001][WARNING] Resource 'aws_s3_bucket.dist' has an ACL which allows public access.
   /src/main.tf:16
@@ -125,7 +174,7 @@ Check 5
 
   See https://tfsec.dev/docs/aws/AWS001/ for more information. 
 
-Check 6
+Check 8
 
   [AWS017][ERROR] Resource 'aws_s3_bucket.dist' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
   /src/main.tf:14-25
@@ -154,55 +203,6 @@ Check 6
   Resolution: Configure bucket encryption
 
   See https://tfsec.dev/docs/aws/AWS017/ for more information. 
-
-Check 7
-
-  [AWS077][ERROR] Resource 'aws_s3_bucket.dist' does not have versioning enabled
-  /src/main.tf:14-25
-
-
-      11 |   }
-      12 | }
-      13 | 
-      14 | resource "aws_s3_bucket" "dist" {
-      15 |   bucket = "dist-cloud-test"
-      16 |   acl    = "public-read-write"
-      17 | 
-      18 |   tags = {
-      19 |     Name = "dist-cloud-test"
-      20 |   }
-      21 |   logging {
-      22 |    	target_bucket = aws_s3_bucket.logging.id
-      23 |   	target_prefix = "log/"
-      24 |   }
-      25 | }
-      26 | 
-      27 | locals {
-      28 |   s3_origin_id = "myDistTestCloduFront"
-
-  Impact:     Deleted or modified data would not be recoverable
-  Resolution: Enable versioning to protect against accidental/malicious removal or modification
-
-  See https://tfsec.dev/docs/aws/AWS077/ for more information. 
-
-Check 8
-
-  [AWS020][ERROR] Resource 'aws_cloudfront_distribution.s3_distribution' defines a CloudFront distribution that allows unencrypted communications.
-  /src/main.tf:64
-
-
-      61 |       }
-      62 |     }
-      63 | 
-      64 |     viewer_protocol_policy = "allow-all"
-      65 |     min_ttl                = 0
-      66 |     default_ttl            = 3600
-      67 |     max_ttl                = 86400
-
-  Impact:     CloudFront is available through an unencrypted connection
-  Resolution: Only allow HTTPS for CloudFront distribution communication
-
-  See https://tfsec.dev/docs/aws/AWS020/ for more information. 
 
 Check 9
 
@@ -321,10 +321,10 @@ Check 9
 
   times
   ------------------------------------------
-  disk i/o             15.7119ms
-  parsing HCL          12.6µs
-  evaluating values    102.5µs
-  running checks       7.9442ms
+  disk i/o             21.5351ms
+  parsing HCL          21.7µs
+  evaluating values    352.1µs
+  running checks       14.9154ms
 
   counts
   ------------------------------------------

@@ -1,6 +1,44 @@
 
 Check 1
 
+  [AWS020][ERROR] Resource 'aws_cloudfront_distribution.s3_distribution' defines a CloudFront distribution that allows unencrypted communications.
+  /src/main.tf:83
+
+
+      80 |     allowed_methods        = ["GET", "HEAD", "OPTIONS"]
+      81 |     cached_methods         = ["GET", "HEAD"]
+      82 |     target_origin_id       = local.s3_origin_id
+      83 |     viewer_protocol_policy = "allow-all"
+      84 | 
+      85 |     forwarded_values {
+      86 |       query_string = false
+
+  Impact:     CloudFront is available through an unencrypted connection
+  Resolution: Only allow HTTPS for CloudFront distribution communication
+
+  See https://tfsec.dev/docs/aws/AWS020/ for more information. 
+
+Check 2
+
+  [AWS020][ERROR] Resource 'aws_cloudfront_distribution.s3_distribution' defines a CloudFront distribution that allows unencrypted communications.
+  /src/main.tf:118
+
+
+     115 |     allowed_methods        = ["GET", "HEAD", "OPTIONS"]
+     116 |     cached_methods         = ["GET", "HEAD"]
+     117 |     target_origin_id       = local.s3_origin_id
+     118 |     viewer_protocol_policy = "allow-all"
+     119 | 
+     120 |     forwarded_values {
+     121 |       query_string = false
+
+  Impact:     CloudFront is available through an unencrypted connection
+  Resolution: Only allow HTTPS for CloudFront distribution communication
+
+  See https://tfsec.dev/docs/aws/AWS020/ for more information. 
+
+Check 3
+
   [AWS071][ERROR] Resource 'aws_cloudfront_distribution.s3_distribution' does not have Access Logging configured
   /src/main.tf:44-128
 
@@ -100,7 +138,7 @@ Check 1
 
   See https://tfsec.dev/docs/aws/AWS071/ for more information. 
 
-Check 2
+Check 4
 
   [AWS072][ERROR] Resource 'aws_cloudfront_distribution.s3_distribution' does not use HTTPS in Viewer Protocol Policy
   /src/main.tf:79-92
@@ -132,7 +170,7 @@ Check 2
 
   See https://tfsec.dev/docs/aws/AWS072/ for more information. 
 
-Check 3
+Check 5
 
   [AWS002][ERROR] Resource 'aws_s3_bucket.cdn-content' does not have logging enabled.
   /src/main.tf:10-30
@@ -171,7 +209,7 @@ Check 3
 
   See https://tfsec.dev/docs/aws/AWS002/ for more information. 
 
-Check 4
+Check 6
 
   [AWS017][ERROR] Resource 'aws_s3_bucket.cdn-content' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
   /src/main.tf:10-30
@@ -210,7 +248,46 @@ Check 4
 
   See https://tfsec.dev/docs/aws/AWS017/ for more information. 
 
-Check 5
+Check 7
+
+  [AWS077][ERROR] Resource 'aws_s3_bucket.cdn-content' does not have versioning enabled
+  /src/main.tf:10-30
+
+
+       7 |   s3_origin_id = "cloudfront-dist-non-encrypted-bucket"
+       8 | }
+       9 | 
+      10 | resource "aws_s3_bucket" "cdn-content" {
+      11 |   bucket = local.name
+      12 |   acl    = "private"
+      13 |   policy = <<POLICY
+      14 | {
+      15 |   "Version": "2012-10-17",
+      16 |   "Id": "AllowCloudFrontOAI",
+      17 |   "Statement": [
+      18 |     {
+      19 |       "Sid": "AllowCloudFrontOAI",
+      20 |       "Effect": "Allow",
+      21 |       "Principal": {
+      22 |         "CanonicalUser": "${aws_cloudfront_origin_access_identity.oai.s3_canonical_user_id}"
+      23 |       },
+      24 |       "Action": "s3:GetObject",
+      25 |       "Resource": "arn:aws:s3:::${local.name}/*"
+      26 |     }
+      27 |   ]
+      28 | }
+      29 | POLICY
+      30 | }
+      31 | 
+      32 | resource "aws_s3_bucket_public_access_block" "cdn-content" {
+      33 |   bucket                  = aws_s3_bucket.cdn-content.id
+
+  Impact:     Deleted or modified data would not be recoverable
+  Resolution: Enable versioning to protect against accidental/malicious removal or modification
+
+  See https://tfsec.dev/docs/aws/AWS077/ for more information. 
+
+Check 8
 
   [AWS020][ERROR] Resource 'aws_cloudfront_distribution.s3_distribution' defines a CloudFront distribution that allows unencrypted communications.
   /src/main.tf:100
@@ -229,26 +306,28 @@ Check 5
 
   See https://tfsec.dev/docs/aws/AWS020/ for more information. 
 
-Check 6
+Check 9
 
-  [AWS020][ERROR] Resource 'aws_cloudfront_distribution.s3_distribution' defines a CloudFront distribution that allows unencrypted communications.
-  /src/main.tf:118
+  [AWS021][ERROR] Resource 'aws_cloudfront_distribution.s3_distribution' defines outdated SSL/TLS policies (missing minimum_protocol_version attribute)
+  /src/main.tf:75-77
 
 
-     115 |     allowed_methods        = ["GET", "HEAD", "OPTIONS"]
-     116 |     cached_methods         = ["GET", "HEAD"]
-     117 |     target_origin_id       = local.s3_origin_id
-     118 |     viewer_protocol_policy = "allow-all"
-     119 | 
-     120 |     forwarded_values {
-     121 |       query_string = false
+      72 |     }
+      73 |   }
+      74 | 
+      75 |   viewer_certificate {
+      76 |     cloudfront_default_certificate = true
+      77 |   }
+      78 | 
+      79 |   default_cache_behavior {
+      80 |     allowed_methods        = ["GET", "HEAD", "OPTIONS"]
 
-  Impact:     CloudFront is available through an unencrypted connection
-  Resolution: Only allow HTTPS for CloudFront distribution communication
+  Impact:     Outdated SSL policies increase exposure to known vulnerabilites
+  Resolution: Use the most modern TLS/SSL policies available
 
-  See https://tfsec.dev/docs/aws/AWS020/ for more information. 
+  See https://tfsec.dev/docs/aws/AWS021/ for more information. 
 
-Check 7
+Check 10
 
   [AWS045][WARNING] Resource 'aws_cloudfront_distribution.s3_distribution' does not have a WAF in front of it.
   /src/main.tf:44-128
@@ -349,91 +428,12 @@ Check 7
 
   See https://tfsec.dev/docs/aws/AWS045/ for more information. 
 
-Check 8
-
-  [AWS077][ERROR] Resource 'aws_s3_bucket.cdn-content' does not have versioning enabled
-  /src/main.tf:10-30
-
-
-       7 |   s3_origin_id = "cloudfront-dist-non-encrypted-bucket"
-       8 | }
-       9 | 
-      10 | resource "aws_s3_bucket" "cdn-content" {
-      11 |   bucket = local.name
-      12 |   acl    = "private"
-      13 |   policy = <<POLICY
-      14 | {
-      15 |   "Version": "2012-10-17",
-      16 |   "Id": "AllowCloudFrontOAI",
-      17 |   "Statement": [
-      18 |     {
-      19 |       "Sid": "AllowCloudFrontOAI",
-      20 |       "Effect": "Allow",
-      21 |       "Principal": {
-      22 |         "CanonicalUser": "${aws_cloudfront_origin_access_identity.oai.s3_canonical_user_id}"
-      23 |       },
-      24 |       "Action": "s3:GetObject",
-      25 |       "Resource": "arn:aws:s3:::${local.name}/*"
-      26 |     }
-      27 |   ]
-      28 | }
-      29 | POLICY
-      30 | }
-      31 | 
-      32 | resource "aws_s3_bucket_public_access_block" "cdn-content" {
-      33 |   bucket                  = aws_s3_bucket.cdn-content.id
-
-  Impact:     Deleted or modified data would not be recoverable
-  Resolution: Enable versioning to protect against accidental/malicious removal or modification
-
-  See https://tfsec.dev/docs/aws/AWS077/ for more information. 
-
-Check 9
-
-  [AWS020][ERROR] Resource 'aws_cloudfront_distribution.s3_distribution' defines a CloudFront distribution that allows unencrypted communications.
-  /src/main.tf:83
-
-
-      80 |     allowed_methods        = ["GET", "HEAD", "OPTIONS"]
-      81 |     cached_methods         = ["GET", "HEAD"]
-      82 |     target_origin_id       = local.s3_origin_id
-      83 |     viewer_protocol_policy = "allow-all"
-      84 | 
-      85 |     forwarded_values {
-      86 |       query_string = false
-
-  Impact:     CloudFront is available through an unencrypted connection
-  Resolution: Only allow HTTPS for CloudFront distribution communication
-
-  See https://tfsec.dev/docs/aws/AWS020/ for more information. 
-
-Check 10
-
-  [AWS021][ERROR] Resource 'aws_cloudfront_distribution.s3_distribution' defines outdated SSL/TLS policies (missing minimum_protocol_version attribute)
-  /src/main.tf:75-77
-
-
-      72 |     }
-      73 |   }
-      74 | 
-      75 |   viewer_certificate {
-      76 |     cloudfront_default_certificate = true
-      77 |   }
-      78 | 
-      79 |   default_cache_behavior {
-      80 |     allowed_methods        = ["GET", "HEAD", "OPTIONS"]
-
-  Impact:     Outdated SSL policies increase exposure to known vulnerabilites
-  Resolution: Use the most modern TLS/SSL policies available
-
-  See https://tfsec.dev/docs/aws/AWS021/ for more information. 
-
   times
   ------------------------------------------
-  disk i/o             16.0385ms
-  parsing HCL          21.6µs
-  evaluating values    163µs
-  running checks       7.7383ms
+  disk i/o             37.6807ms
+  parsing HCL          18.4µs
+  evaluating values    235.2µs
+  running checks       115.6625ms
 
   counts
   ------------------------------------------

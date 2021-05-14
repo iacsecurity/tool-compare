@@ -22,6 +22,27 @@ Check 1
 
 Check 2
 
+  [AWS094][WARNING] Resource 'aws_redshift_cluster.default' does not have encryption enabled
+  /src/main.tf:1-8
+
+
+       1 | resource "aws_redshift_cluster" "default" {
+       2 |   cluster_identifier = "tf-redshift-cluster"
+       3 |   database_name      = "mydb"
+       4 |   master_username    = "foo"
+       5 |   master_password    = "Mustbe8characters"
+       6 |   node_type          = "dc1.large"
+       7 |   cluster_type       = "single-node"
+       8 | }
+       9 | 
+
+  Impact:     Data may be leaked if infrastructure is compromised
+  Resolution: Enable encryption using CMK
+
+  See https://tfsec.dev/docs/aws/AWS094/ for more information. 
+
+Check 3
+
   [GEN003][WARNING] Block 'aws_redshift_cluster.default' includes a potentially sensitive attribute which is defined within the project.
   /src/main.tf:5
 
@@ -41,10 +62,10 @@ Check 2
 
   times
   ------------------------------------------
-  disk i/o             15.3654ms
-  parsing HCL          25.9µs
-  evaluating values    127.7µs
-  running checks       2.7123ms
+  disk i/o             29.2197ms
+  parsing HCL          24.6µs
+  evaluating values    198.1µs
+  running checks       5.6899ms
 
   counts
   ------------------------------------------
@@ -55,5 +76,5 @@ Check 2
   module blocks        0
   ignored checks       0
 
-2 potential problems detected.
+3 potential problems detected.
 

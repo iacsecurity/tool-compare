@@ -99,7 +99,11 @@ if __name__ == "__main__":
     total_case_catch_stats['total'] = 0
 
     full_results = recurse_dir("test-cases", 2, total_case_catch_stats, is_root = True)
+    summary_table = generate_summary_table()
 
-    print(generate_summary_table())
+    with open("resources/README.md.template", "r") as fr:
+        template = fr.read()
 
-    print(full_results)
+    template = template.replace("{{ summary_table }}", summary_table)
+    template = template.replace("{{ full_results }}", full_results)
+    print(template)
