@@ -4,12 +4,17 @@ default: run-all
 .PHONY: run-%
 run-%:
 	@echo "Running $*"
-	./run_all_tools.sh run_$*
+	./run_tools.sh run_$*
 
 .PHONY: run-all
 run-all:
 	@echo "Running all tools"
-	./run_all_tools.sh
+	./run_tools.sh run_all
+
+.PHONY: rerun-%
+rerun-%:
+	@echo "Running test scenarios from .rerun"
+	./run_tools.sh --rerun run_$*
 
 .PHONY: clear-%-results
 clear-%-results:
