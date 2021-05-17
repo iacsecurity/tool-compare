@@ -37,7 +37,7 @@ function run_kics {
     echo $test_case
     ORG_PATH=$PWD
     cd $test_case
-    if [ ! -f kics_results.txt ]; then docker run --rm -v "$(pwd):/src" checkmarx/kics:latest -p /src | sed "s~$ORG_PATH~tool-compare~" | grep -v "Executing queries" >kics_results.txt; fi
+    if [ ! -f kics_results.txt ]; then docker run --rm -v "$(pwd):/src" checkmarx/kics:latest scan -p /src | sed "s~$ORG_PATH~tool-compare~" | grep -v "Executing queries" >kics_results.txt; fi
     cd $ORG_PATH
   done
 }
@@ -71,7 +71,7 @@ function run_snyk {
     echo $test_case
     ORG_PATH=$PWD
     cd $test_case
-    if [ ! -f snyk_results.txt ]; then docker run --rm -v "$(pwd):/project" -e SNYK_TOKEN snyk/snyk-cli:docker iac test --experimental /project | sed "s~$ORG_PATH~tool-compare~" >snyk_results.txt; fi
+    if [ ! -f snyk_results.txt ]; then docker run --rm -v "$(pwd):/project" -e SNYK_TOKEN snyk/snyk-cli:docker iac test /project | sed "s~$ORG_PATH~tool-compare~" >snyk_results.txt; fi
     cd $ORG_PATH
   done
 }
