@@ -1,0 +1,106 @@
+
+Check 1
+
+  [AWS012][ERROR] Resource 'aws_instance.public_ins' has a public IP address associated.
+  /src/main.tf:77
+
+
+      74 | resource "aws_instance" "public_ins" {
+      75 |   ami = "ami-0130bec6e5047f596"
+      76 |   instance_type = "t3.nano"
+      77 |   associate_public_ip_address = true
+      78 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
+      79 |   subnet_id = aws_subnet.nondefault_1.id
+      80 | }
+
+  Impact:     The instance or configuration is publically accessible
+  Resolution: Set the instance to not be publically accessible
+
+  See https://tfsec.dev/docs/aws/AWS012/ for more information. 
+
+Check 2
+
+  [AWS079][ERROR] Resource 'aws_instance.public_ins' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
+  /src/main.tf:74-80
+
+
+      71 |   }
+      72 | }
+      73 | 
+      74 | resource "aws_instance" "public_ins" {
+      75 |   ami = "ami-0130bec6e5047f596"
+      76 |   instance_type = "t3.nano"
+      77 |   associate_public_ip_address = true
+      78 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
+      79 |   subnet_id = aws_subnet.nondefault_1.id
+      80 | }
+
+  Impact:     Instance metadata service can be interacted with freely
+  Resolution: Enable HTTP token requirement for IMDS
+
+  See https://tfsec.dev/docs/aws/AWS079/ for more information. 
+
+Check 3
+
+  [AWS008][WARNING] Resource 'aws_security_group.publicly_accessible_sg' defines a fully open ingress security group.
+  /src/main.tf:70
+
+
+      67 |     from_port = 22
+      68 |     protocol = "tcp"
+      69 |     to_port = 22
+      70 |     cidr_blocks = ["0.0.0.0/0"]
+      71 |   }
+      72 | }
+      73 | 
+
+  Impact:     The port is exposed for ingress from the internet
+  Resolution: Set a more restrictive cidr range
+
+  See https://tfsec.dev/docs/aws/AWS008/ for more information. 
+
+Check 4
+
+  [AWS018][ERROR] Resource 'aws_security_group.publicly_accessible_sg' should include a description for auditing purposes.
+  /src/main.tf:64-72
+
+
+      61 |   subnet_id = aws_subnet.nondefault_1.id
+      62 | }
+      63 | 
+      64 | resource "aws_security_group" "publicly_accessible_sg" {
+      65 |   vpc_id = aws_vpc.nondefault.id
+      66 |   ingress {
+      67 |     from_port = 22
+      68 |     protocol = "tcp"
+      69 |     to_port = 22
+      70 |     cidr_blocks = ["0.0.0.0/0"]
+      71 |   }
+      72 | }
+      73 | 
+      74 | resource "aws_instance" "public_ins" {
+      75 |   ami = "ami-0130bec6e5047f596"
+
+  Impact:     Descriptions provide context for the firewall rule reasons
+  Resolution: Add descriptions for all security groups anf rules
+
+  See https://tfsec.dev/docs/aws/AWS018/ for more information. 
+
+  times
+  ------------------------------------------
+  disk i/o             42.1727ms
+  parsing HCL          21.5µs
+  evaluating values    1.2726ms
+  running checks       8.2451ms
+
+  counts
+  ------------------------------------------
+  files loaded         1
+  blocks               10
+  evaluated blocks     10
+  modules              0
+  module blocks        0
+  ignored checks       0
+
+4 potential problems detected.
+
