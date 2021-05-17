@@ -1,0 +1,104 @@
+
+                   .0MO.                                    
+                   OMMMx                                    
+                   ;NMX;                                    
+                    ...           ...              ....     
+WMMMd     cWMMM0.  KMMMO      ;xKWMMMMNOc.     ,xXMMMMMWXkc.
+WMMMd   .0MMMN:    KMMMO    :XMMMMMMMMMMMWl   xMMMMMWMMMMMMl
+WMMMd  lWMMMO.     KMMMO   xMMMMKc...'lXMk   ,MMMMx   .;dXx 
+WMMMd.0MMMX;       KMMMO  cMMMMd        '    'MMMMNl'       
+WMMMNWMMMMl        KMMMO  0MMMN               oMMMMMMMXkl.  
+WMMMMMMMMMMo       KMMMO  0MMMX                .ckKWMMMMMM0.
+WMMMMWokMMMMk      KMMMO  oMMMMc              .     .:OMMMM0
+WMMMK.  dMMMM0.    KMMMO   KMMMMx'    ,kNc   :WOc.    .NMMMX
+WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
+WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
+xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
+
+
+Scanning with Keeping Infrastructure as Code Secure v1.3.0
+
+
+
+Files scanned: 1
+Parsed files: 1
+Queries loaded: 520
+Queries failed to execute: 0
+
+------------------------------------
+
+VPC FlowLogs Disabled, Severity: MEDIUM, Results: 1
+Description: VPC hasn't got any FlowLog associated
+Platform: Terraform
+
+	[1]: /src/main.tf:10
+
+		009: 
+		010: resource "aws_vpc" "nondefault" {
+		011:   cidr_block = "10.1.1.0/24"
+
+
+Unrestricted Security Group Ingress, Severity: HIGH, Results: 1
+Description: Security groups allow ingress from 0.0.0.0:0
+Platform: Terraform
+
+	[1]: /src/main.tf:70
+
+		069:     to_port = 22
+		070:     cidr_blocks = ["0.0.0.0/0"]
+		071:   }
+
+
+Unknown Port Exposed To Internet, Severity: HIGH, Results: 1
+Description: AWS Security Group should not have an unknown port exposed to the entire Internet
+Platform: Terraform
+
+	[1]: /src/main.tf:70
+
+		069:     to_port = 22
+		070:     cidr_blocks = ["0.0.0.0/0"]
+		071:   }
+
+
+Sensitive Port Is Exposed To Entire Network, Severity: HIGH, Results: 1
+Description: A sensitive port, such as port 23 or port 110, is open for the whole network in either TCP or UDP protocol
+Platform: Terraform
+
+	[1]: /src/main.tf:66
+
+		065:   vpc_id = aws_vpc.nondefault.id
+		066:   ingress {
+		067:     from_port = 22
+
+
+Security Group With Unrestricted Access To SSH, Severity: HIGH, Results: 1
+Description: SSH' (TCP:22) should not be public in AWS Security Group
+Platform: Terraform
+
+	[1]: /src/main.tf:70
+
+		069:     to_port = 22
+		070:     cidr_blocks = ["0.0.0.0/0"]
+		071:   }
+
+
+EC2 Instance Has Public IP, Severity: HIGH, Results: 1
+Description: EC2 Instance should not have a public IP address.
+Platform: Terraform
+
+	[1]: /src/main.tf:77
+
+		076:   instance_type = "t3.nano"
+		077:   associate_public_ip_address = true
+		078:   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
+
+
+
+Results Summary:
+HIGH: 5
+MEDIUM: 1
+LOW: 0
+INFO: 0
+TOTAL: 6
+
+Scan duration: 4.0873903s

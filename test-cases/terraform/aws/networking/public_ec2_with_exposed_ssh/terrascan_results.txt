@@ -1,0 +1,52 @@
+
+
+Violation Details -
+    
+	Description    :	Ensure VPC flow logging is enabled in all VPCs
+	File           :	main.tf
+	Line           :	10
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure every security group should have a description to ease the process of Auditing
+	File           :	main.tf
+	Line           :	64
+	Severity       :	LOW
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that detailed monitoring is enabled for EC2 instances.
+	File           :	main.tf
+	Line           :	74
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
+	File           :	main.tf
+	Line           :	74
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	ssh port open to internet
+	File           :	main.tf
+	Line           :	64
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+
+Scan Summary -
+
+	File/Folder         :	tool-compare
+	IaC Type            :	terraform
+	Scanned At          :	2021-05-17 19:40:23.567016 +0000 UTC
+	Policies Validated  :	607
+	Violated Policies   :	5
+	Low                 :	1
+	Medium              :	2
+	High                :	2
+	
+

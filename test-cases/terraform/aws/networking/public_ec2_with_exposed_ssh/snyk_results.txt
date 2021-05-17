@@ -1,0 +1,224 @@
+Failed to run the process ...
+{
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "ignoreSettings": null,
+    "org": "christophetd",
+    "projectId": "",
+    "policy": ""
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "/project/main.tf",
+  "projectName": "project",
+  "org": "christophetd",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
+  "ok": false,
+  "infrastructureAsCodeIssues": [
+    {
+      "resolve": "Set `associate_public_ip_address` attribute to `false`",
+      "id": "SNYK-CC-TF-51",
+      "impact": "Increases attack vector reachability",
+      "subType": "EC2",
+      "policyEngineType": "opa",
+      "publicId": "SNYK-CC-TF-51",
+      "title": "Resource has public IP assigned",
+      "severity": "low",
+      "msg": "resource.aws_instance[public_ins].associate_public_ip_address",
+      "issue": "AWS resource could be accessed externally via public IP",
+      "type": "terraform",
+      "references": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html",
+        "https://docs.aws.amazon.com/autoscaling/ec2/userguide/asg-in-vpc.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "AWS resource could be accessed externally via public IP",
+        "impact": "Increases attack vector reachability",
+        "resolve": "Set `associate_public_ip_address` attribute to `false`"
+      },
+      "lineNumber": 77,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-51",
+      "path": [
+        "resource",
+        "aws_instance[public_ins]",
+        "associate_public_ip_address"
+      ]
+    },
+    {
+      "resolve": "Set `metadata_options.http_tokens` attribute to `required`",
+      "id": "SNYK-CC-TF-130",
+      "impact": "Metadata service may be vulnerable to reverse proxy/open firewall misconfigurations and server side request forgery attacks",
+      "subType": "EC2",
+      "policyEngineType": "opa",
+      "publicId": "SNYK-CC-TF-130",
+      "title": "EC2 instance accepts IMDSv1",
+      "severity": "low",
+      "msg": "resource.aws_instance[public_ins].metadata_options",
+      "issue": "Instance Metadata Service v2 is not enforced",
+      "type": "terraform",
+      "references": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html",
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html",
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-data-retrieval.html",
+        "https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service/"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Instance Metadata Service v2 is not enforced",
+        "impact": "Metadata service may be vulnerable to reverse proxy/open firewall misconfigurations and server side request forgery attacks",
+        "resolve": "Set `metadata_options.http_tokens` attribute to `required`"
+      },
+      "lineNumber": 74,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-130",
+      "path": [
+        "resource",
+        "aws_instance[public_ins]",
+        "metadata_options"
+      ]
+    },
+    {
+      "resolve": "Set `cidr_block` attribute with a more restrictive IP, for example `192.16.0.0/24`",
+      "id": "SNYK-CC-TF-1",
+      "impact": "That potentially everyone can access your resource",
+      "remediation": {
+        "cloudformation": "Set `Properties.SecurityGroupIngress.CidrIp` attribute with a more restrictive IP, for example `192.16.0.0/24`",
+        "terraform": "Set `cidr_block` attribute with a more restrictive IP, for example `192.16.0.0/24`"
+      },
+      "subType": "VPC",
+      "policyEngineType": "opa",
+      "publicId": "SNYK-CC-TF-1",
+      "title": "Security Group allows open ingress",
+      "severity": "medium",
+      "msg": "input.resource.aws_security_group[publicly_accessible_sg].ingress",
+      "issue": "That inbound traffic is allowed to a resource from any source instead of a restricted range",
+      "type": "terraform",
+      "references": [
+        "https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "That inbound traffic is allowed to a resource from any source instead of a restricted range",
+        "impact": "That potentially everyone can access your resource",
+        "resolve": "Set `cidr_block` attribute with a more restrictive IP, for example `192.16.0.0/24`"
+      },
+      "lineNumber": 66,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-1",
+      "path": [
+        "input",
+        "resource",
+        "aws_security_group[publicly_accessible_sg]",
+        "ingress"
+      ]
+    },
+    {
+      "resolve": "Set `description` attribute to meaningful statement",
+      "id": "SNYK-CC-TF-56",
+      "impact": "Increases the security management overhead",
+      "subType": "VPC",
+      "policyEngineType": "opa",
+      "publicId": "SNYK-CC-TF-56",
+      "title": "Missing description",
+      "severity": "low",
+      "msg": "resource.aws_security_group[publicly_accessible_sg].description",
+      "issue": "The description field is missing in the security group",
+      "type": "terraform",
+      "references": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-security-groups.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "The description field is missing in the security group",
+        "impact": "Increases the security management overhead",
+        "resolve": "Set `description` attribute to meaningful statement"
+      },
+      "lineNumber": 64,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-56",
+      "path": [
+        "resource",
+        "aws_security_group[publicly_accessible_sg]",
+        "description"
+      ]
+    },
+    {
+      "resolve": "Set `cidr_block` attribute to specific IP range only, for example `192.168.1.0/24`",
+      "id": "SNYK-CC-TF-41",
+      "impact": "That potentially everyone can access your resource",
+      "remediation": {
+        "cloudformation": "Set `Properties.CidrBlock` or `Properties.Ipv6CidrBlock` attribute to specific IP range only, for example `192.168.0.0/24`",
+        "terraform": "Set `cidr_block` attribute to specific IP range only, for example `192.168.1.0/24`"
+      },
+      "subType": "VPC",
+      "policyEngineType": "opa",
+      "publicId": "SNYK-CC-TF-41",
+      "title": "AWS Network ACL allows public access",
+      "severity": "medium",
+      "msg": "resource.aws_network_acl[ec2_nacl].ingress.cidr_block",
+      "issue": "That inbound traffic is allowed to a resource from any source instead of a restricted range",
+      "type": "terraform",
+      "references": [
+        "https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "That inbound traffic is allowed to a resource from any source instead of a restricted range",
+        "impact": "That potentially everyone can access your resource",
+        "resolve": "Set `cidr_block` attribute to specific IP range only, for example `192.168.1.0/24`"
+      },
+      "lineNumber": 31,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-41",
+      "path": [
+        "resource",
+        "aws_network_acl[ec2_nacl]",
+        "ingress",
+        "cidr_block"
+      ]
+    },
+    {
+      "resolve": "Set `root_block_device.encrypted` attribute to `true`",
+      "id": "SNYK-CC-TF-53",
+      "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+      "remediation": {
+        "cloudformation": "Set `BlockDeviceMappings.Encrypted` attribute of root device to `true`",
+        "terraform": "Set `root_block_device.encrypted` attribute to `true`"
+      },
+      "subType": "EC2",
+      "policyEngineType": "opa",
+      "publicId": "SNYK-CC-TF-53",
+      "title": "Non-Encrypted root block device",
+      "severity": "medium",
+      "msg": "resource.aws_instance[public_ins].root_block_device.encrypted",
+      "issue": "The root block device for ec2 instance is not encrypted",
+      "type": "terraform",
+      "references": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/RootDeviceStorage.html",
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html",
+        "https://aws.amazon.com/premiumsupport/knowledge-center/cloudformation-root-volume-property/",
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/device_naming.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "The root block device for ec2 instance is not encrypted",
+        "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+        "resolve": "Set `root_block_device.encrypted` attribute to `true`"
+      },
+      "lineNumber": 74,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-53",
+      "path": [
+        "resource",
+        "aws_instance[public_ins]",
+        "root_block_device",
+        "encrypted"
+      ]
+    }
+  ]
+}

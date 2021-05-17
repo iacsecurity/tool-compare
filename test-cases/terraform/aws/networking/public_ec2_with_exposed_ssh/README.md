@@ -1,0 +1,1 @@
+This is a sample test case with an EC2 instance assigned with a public IP and allowing inbound SSH from the Internet. There is no 'right or wrong' in terms of detection here, as this use-case can be legitimate (e.g. for a bastion host) or risky.
