@@ -16,23 +16,46 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.0
+Scanning with Keeping Infrastructure as Code Secure v1.3.1
+
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 520
+Queries loaded: 559
 Queries failed to execute: 0
 
 ------------------------------------
 
+Resource Not Using Tags, Severity: INFO, Results: 1
+Description: AWS services resource tags are an essential part of managing components
+Platform: Terraform
+
+	[1]: /src/main.tf:5
+
+		004: 
+		005: resource "aws_secretsmanager_secret" "test" {
+		006:   name = "test-cloudrail"
+
+
+Secretsmanager Secret Without KMS, Severity: MEDIUM, Results: 1
+Description: AWS Secretmanager should use AWS KMS customer master key (CMK) to encrypt the secret values in the versions stored in the secret
+Platform: Terraform
+
+	[1]: /src/main.tf:5
+
+		004: 
+		005: resource "aws_secretsmanager_secret" "test" {
+		006:   name = "test-cloudrail"
+
+
 
 Results Summary:
 HIGH: 0
-MEDIUM: 0
+MEDIUM: 1
 LOW: 0
-INFO: 0
-TOTAL: 0
+INFO: 1
+TOTAL: 2
 
-Scan duration: 10.85233363s
+Scan duration: 18.628252425s

@@ -16,16 +16,39 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.0
+Scanning with Keeping Infrastructure as Code Secure v1.3.1
+
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 520
+Queries loaded: 559
 Queries failed to execute: 0
 
 ------------------------------------
+
+Elasticsearch Log is disabled, Severity: MEDIUM, Results: 1
+Description: AWS Elasticsearch should have logs enabled
+Platform: Terraform
+
+	[1]: /src/main.tf:1
+
+		001: resource "aws_elasticsearch_domain" "example" {
+		002:   domain_name           = "example"
+		003:   elasticsearch_version = "1.5"
+
+
+Elasticsearch Domain Not Encrypted Node To Node, Severity: MEDIUM, Results: 1
+Description: Elasticsearch Domain encryption should be enabled node to node
+Platform: Terraform
+
+	[1]: /src/main.tf:1
+
+		001: resource "aws_elasticsearch_domain" "example" {
+		002:   domain_name           = "example"
+		003:   elasticsearch_version = "1.5"
+
 
 ElasticSearch Not Encrypted At Rest, Severity: MEDIUM, Results: 1
 Description: Check if ElasticSearch encryption is disabled at Rest
@@ -41,9 +64,9 @@ Platform: Terraform
 
 Results Summary:
 HIGH: 0
-MEDIUM: 1
+MEDIUM: 3
 LOW: 0
 INFO: 0
-TOTAL: 1
+TOTAL: 3
 
-Scan duration: 11.113618756s
+Scan duration: 18.983310301s

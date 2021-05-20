@@ -16,16 +16,149 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.0
+Scanning with Keeping Infrastructure as Code Secure v1.3.1
+
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 520
+Queries loaded: 559
 Queries failed to execute: 0
 
 ------------------------------------
+
+Security Group Rules Without Description, Severity: INFO, Results: 1
+Description: It's considered a best practice for all rules in AWS Security Group to have a description
+Platform: Terraform
+
+	[1]: /src/main.tf:103
+
+		102: 
+		103:   egress {
+		104:     from_port   = 443
+
+
+Resource Not Using Tags, Severity: INFO, Results: 12
+Description: AWS services resource tags are an essential part of managing components
+Platform: Terraform
+
+	[1]: /src/main.tf:143
+
+		142: 
+		143: resource "aws_dynamodb_table" "basic-dynamodb-table" {
+		144:   name           = "GameScores"
+
+
+	[2]: /src/main.tf:5
+
+		004: 
+		005: resource "aws_vpc" "main" {
+		006:   cidr_block = "192.168.100.0/24"
+
+
+	[3]: /src/main.tf:56
+
+		055: 
+		056: resource "aws_eip" "allocate-ip-to-nat-gw" {
+		057:   vpc      = true
+
+
+	[4]: /src/main.tf:98
+
+		097: 
+		098: resource "aws_security_group" "allow-public-outbound-sg" {
+		099:   name        = "allow-public-outbound-sg"
+
+
+	[5]: /src/main.tf:136
+
+		135: 
+		136: resource "aws_instance" "test" {
+		137:   ami = data.aws_ami.ubuntu.id
+
+
+	[6]: /src/main.tf:28
+
+		027: 
+		028:   tags = {
+		029:     Name = "public-rtb"
+
+
+	[7]: /src/main.tf:75
+
+		074: 
+		075:   tags = {
+		076:     Name = "private-rtb"
+
+
+	[8]: /src/main.tf:93
+
+		092: 
+		093:   tags = {
+		094:     Name = "allow-public-outbound-nacl"
+
+
+	[9]: /src/main.tf:115
+
+		114: 
+		115:   tags = {
+		116:     Name = "internet-gateway"
+
+
+	[10]: /src/main.tf:15
+
+		014: 
+		015:   tags = {
+		016:     Name = "public-subnet"
+
+
+	[11]: /src/main.tf:42
+
+		041: 
+		042:   tags = {
+		043:     Name = "private-subnet"
+
+
+	[12]: /src/main.tf:51
+
+		050: 
+		051:   tags = {
+		052:     Name = "gw NAT"
+
+
+EC2 Not EBS Optimized, Severity: INFO, Results: 1
+Description: It's considered a best practice for an EC2 instance to use an EBS optimized instance. This provides the best performance for your EBS volumes by minimizing contention between Amazon EBS I/O and other traffic from your instance
+Platform: Terraform
+
+	[1]: /src/main.tf:136
+
+		135: 
+		136: resource "aws_instance" "test" {
+		137:   ami = data.aws_ami.ubuntu.id
+
+
+EC2 Instance Monitoring Disabled, Severity: INFO, Results: 1
+Description: EC2 Instance should have detailed monitoring enabled. With detailed monitoring enabled data is available in 1-minute periods
+Platform: Terraform
+
+	[1]: /src/main.tf:136
+
+		135: 
+		136: resource "aws_instance" "test" {
+		137:   ami = data.aws_ami.ubuntu.id
+
+
+DynamoDB Table Point In Time Recovery Disabled, Severity: INFO, Results: 1
+Description: It's considered a best practice to have point in time recovery enabled for DynamoDB Table
+Platform: Terraform
+
+	[1]: /src/main.tf:143
+
+		142: 
+		143: resource "aws_dynamodb_table" "basic-dynamodb-table" {
+		144:   name           = "GameScores"
+
 
 VPC FlowLogs Disabled, Severity: MEDIUM, Results: 1
 Description: VPC hasn't got any FlowLog associated
@@ -36,6 +169,17 @@ Platform: Terraform
 		004: 
 		005: resource "aws_vpc" "main" {
 		006:   cidr_block = "192.168.100.0/24"
+
+
+DynamoDB Table Not Encrypted, Severity: MEDIUM, Results: 1
+Description: AWS DynamoDB Tables should have server-side encryption
+Platform: Terraform
+
+	[1]: /src/main.tf:143
+
+		142: 
+		143: resource "aws_dynamodb_table" "basic-dynamodb-table" {
+		144:   name           = "GameScores"
 
 
 EC2 Instance Has Public IP, Severity: HIGH, Results: 1
@@ -52,9 +196,9 @@ Platform: Terraform
 
 Results Summary:
 HIGH: 1
-MEDIUM: 1
+MEDIUM: 2
 LOW: 0
-INFO: 0
-TOTAL: 2
+INFO: 16
+TOTAL: 19
 
-Scan duration: 11.387022964s
+Scan duration: 19.360878008s

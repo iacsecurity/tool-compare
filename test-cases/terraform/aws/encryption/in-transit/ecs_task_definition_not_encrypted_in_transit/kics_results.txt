@@ -16,16 +16,35 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.0
+Scanning with Keeping Infrastructure as Code Secure v1.3.1
+
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 520
+Queries loaded: 559
 Queries failed to execute: 0
 
 ------------------------------------
+
+Resource Not Using Tags, Severity: INFO, Results: 2
+Description: AWS services resource tags are an essential part of managing components
+Platform: Terraform
+
+	[1]: /src/main.tf:5
+
+		004: 
+		005: resource "aws_efs_file_system" "test" {
+		006:   creation_token = "cloudrail-test"
+
+
+	[2]: /src/main.tf:9
+
+		008: 
+		009: resource "aws_ecs_task_definition" "service" {
+		010:   family                = "cloudrail-test-encryption"
+
 
 EFS Without KMS, Severity: HIGH, Results: 1
 Description: Elastic File System (EFS) must have KMS Key ID
@@ -49,12 +68,23 @@ Platform: Terraform
 		006:   creation_token = "cloudrail-test"
 
 
+ECS Task Definition Volume Not Encrypted, Severity: HIGH, Results: 1
+Description: AWS ECS Task Definition EFS data in transit between AWS ECS host and AWS EFS server should be encrypted
+Platform: Terraform
+
+	[1]: /src/main.tf:44
+
+		043: 
+		044:     efs_volume_configuration {
+		045:       file_system_id = aws_efs_file_system.test.id
+
+
 
 Results Summary:
-HIGH: 2
+HIGH: 3
 MEDIUM: 0
 LOW: 0
-INFO: 0
-TOTAL: 2
+INFO: 2
+TOTAL: 5
 
-Scan duration: 11.023363631s
+Scan duration: 18.617688883s

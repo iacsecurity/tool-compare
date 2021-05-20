@@ -16,16 +16,35 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.0
+Scanning with Keeping Infrastructure as Code Secure v1.3.1
+
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 520
+Queries loaded: 559
 Queries failed to execute: 0
 
 ------------------------------------
+
+Resource Not Using Tags, Severity: INFO, Results: 2
+Description: AWS services resource tags are an essential part of managing components
+Platform: Terraform
+
+	[1]: /src/main.tf:7
+
+		006:   name              = "sns_not_ecnrypted-1"
+		007:   tags = {
+		008:     Name = "Sns Topic Cloudrail Test"
+
+
+	[2]: /src/main.tf:14
+
+		013:   name = "sqs_non_encrypted"
+		014:   tags = {
+		015:     Name = "Sqs Cloudrail Test"
+
 
 SQS With SSE Disabled, Severity: HIGH, Results: 1
 Description: Amazon Simple Queue Service (SQS) queue is not protecting the contents of their messages using Server-Side Encryption (SSE)
@@ -43,7 +62,7 @@ Results Summary:
 HIGH: 1
 MEDIUM: 0
 LOW: 0
-INFO: 0
-TOTAL: 1
+INFO: 2
+TOTAL: 3
 
-Scan duration: 11.324239713s
+Scan duration: 18.817921134s

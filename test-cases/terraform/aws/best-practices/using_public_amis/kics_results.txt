@@ -16,26 +16,27 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.0
+Scanning with Keeping Infrastructure as Code Secure v1.3.1
+
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 520
+Queries loaded: 559
 Queries failed to execute: 0
 
 ------------------------------------
 
-Instance With No VPC, Severity: MEDIUM, Results: 4
-Description: Instance should be configured in VPC (Virtual Private Cloud)
+Resource Not Using Tags, Severity: INFO, Results: 9
+Description: AWS services resource tags are an essential part of managing components
 Platform: Terraform
 
-	[1]: /src/main.tf:98
+	[1]: /src/main.tf:32
 
-		097: 
-		098: resource "aws_instance" "public-ubuntu-from-data" {
-		099:   ami           = data.aws_ami.ubuntu.id
+		031: 
+		032: resource "aws_ami" "example" {
+		033:   name                = "terraform-example"
 
 
 	[2]: /src/main.tf:45
@@ -59,19 +60,43 @@ Platform: Terraform
 		094:   ami = aws_ami_from_instance.example.id
 
 
-EBS Volume Encryption Disabled, Severity: MEDIUM, Results: 1
-Description: The value on AWS EBS Volume Cluster Encryption must be true
-Platform: Terraform
+	[5]: /src/main.tf:88
 
-	[1]: /src/main.tf:15
-
-		014: 
-		015: resource "aws_ebs_volume" "example" {
-		016:   availability_zone = data.aws_availability_zones.available.names[0]
+		087: 
+		088: resource "aws_ami_from_instance" "example" {
+		089:   name               = "terraform-example3"
 
 
-EC2 Instance Has Public IP, Severity: HIGH, Results: 4
-Description: EC2 Instance should not have a public IP address.
+	[6]: /src/main.tf:27
+
+		026: 
+		027:   tags = {
+		028:     Name = "HelloWorld_snap"
+
+
+	[7]: /src/main.tf:102
+
+		101:   
+		102:   tags = {
+		103:     Name = "public-ubuntu-from-data"
+
+
+	[8]: /src/main.tf:75
+
+		074: 
+		075:   tags = {
+		076:     Name = "HelloWorld"
+
+
+	[9]: /src/main.tf:19
+
+		018: 
+		019:   tags = {
+		020:     Name = "HelloWorld"
+
+
+EC2 Not EBS Optimized, Severity: INFO, Results: 4
+Description: It's considered a best practice for an EC2 instance to use an EBS optimized instance. This provides the best performance for your EBS volumes by minimizing contention between Amazon EBS I/O and other traffic from your instance
 Platform: Terraform
 
 	[1]: /src/main.tf:45
@@ -102,6 +127,113 @@ Platform: Terraform
 		099:   ami           = data.aws_ami.ubuntu.id
 
 
+EC2 Instance Monitoring Disabled, Severity: INFO, Results: 4
+Description: EC2 Instance should have detailed monitoring enabled. With detailed monitoring enabled data is available in 1-minute periods
+Platform: Terraform
+
+	[1]: /src/main.tf:45
+
+		044: 
+		045: resource "aws_instance" "example_with_new_ami" {
+		046:   ami = aws_ami.example.id
+
+
+	[2]: /src/main.tf:80
+
+		079: 
+		080: resource "aws_instance" "example_with_copied_ami" {
+		081:   ami = aws_ami_copy.example.id
+
+
+	[3]: /src/main.tf:93
+
+		092: 
+		093: resource "aws_instance" "example_with_ami_from_instance" {
+		094:   ami = aws_ami_from_instance.example.id
+
+
+	[4]: /src/main.tf:98
+
+		097: 
+		098: resource "aws_instance" "public-ubuntu-from-data" {
+		099:   ami           = data.aws_ami.ubuntu.id
+
+
+Instance With No VPC, Severity: MEDIUM, Results: 4
+Description: Instance should be configured in VPC (Virtual Private Cloud)
+Platform: Terraform
+
+	[1]: /src/main.tf:80
+
+		079: 
+		080: resource "aws_instance" "example_with_copied_ami" {
+		081:   ami = aws_ami_copy.example.id
+
+
+	[2]: /src/main.tf:93
+
+		092: 
+		093: resource "aws_instance" "example_with_ami_from_instance" {
+		094:   ami = aws_ami_from_instance.example.id
+
+
+	[3]: /src/main.tf:98
+
+		097: 
+		098: resource "aws_instance" "public-ubuntu-from-data" {
+		099:   ami           = data.aws_ami.ubuntu.id
+
+
+	[4]: /src/main.tf:45
+
+		044: 
+		045: resource "aws_instance" "example_with_new_ami" {
+		046:   ami = aws_ami.example.id
+
+
+EBS Volume Encryption Disabled, Severity: MEDIUM, Results: 1
+Description: The value on AWS EBS Volume Cluster Encryption must be true
+Platform: Terraform
+
+	[1]: /src/main.tf:15
+
+		014: 
+		015: resource "aws_ebs_volume" "example" {
+		016:   availability_zone = data.aws_availability_zones.available.names[0]
+
+
+EC2 Instance Has Public IP, Severity: HIGH, Results: 4
+Description: EC2 Instance should not have a public IP address.
+Platform: Terraform
+
+	[1]: /src/main.tf:98
+
+		097: 
+		098: resource "aws_instance" "public-ubuntu-from-data" {
+		099:   ami           = data.aws_ami.ubuntu.id
+
+
+	[2]: /src/main.tf:45
+
+		044: 
+		045: resource "aws_instance" "example_with_new_ami" {
+		046:   ami = aws_ami.example.id
+
+
+	[3]: /src/main.tf:80
+
+		079: 
+		080: resource "aws_instance" "example_with_copied_ami" {
+		081:   ami = aws_ami_copy.example.id
+
+
+	[4]: /src/main.tf:93
+
+		092: 
+		093: resource "aws_instance" "example_with_ami_from_instance" {
+		094:   ami = aws_ami_from_instance.example.id
+
+
 EBS Volume Snapshot Not Encrypted, Severity: HIGH, Results: 1
 Description: The value on AWS EBS Volume Snapshot Encryptation must be true
 Platform: Terraform
@@ -129,7 +261,7 @@ Results Summary:
 HIGH: 6
 MEDIUM: 5
 LOW: 0
-INFO: 0
-TOTAL: 11
+INFO: 17
+TOTAL: 28
 
-Scan duration: 11.482682838s
+Scan duration: 22.33440076s

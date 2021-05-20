@@ -16,16 +16,35 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.0
+Scanning with Keeping Infrastructure as Code Secure v1.3.1
+
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 520
+Queries loaded: 559
 Queries failed to execute: 0
 
 ------------------------------------
+
+Resource Not Using Tags, Severity: INFO, Results: 2
+Description: AWS services resource tags are an essential part of managing components
+Platform: Terraform
+
+	[1]: /src/main.tf:5
+
+		004: 
+		005: resource "aws_api_gateway_rest_api" "api_gw" {
+		006:   name        = "api-gw-cache-non-encrypted"
+
+
+	[2]: /src/main.tf:44
+
+		043: 
+		044: resource "aws_api_gateway_stage" "api_gw_stage" {
+		045:   stage_name    = "prod"
+
 
 Open Access To Resources Through API, Severity: LOW, Results: 1
 Description: Open access to back-end resources through API
@@ -69,6 +88,17 @@ Platform: Terraform
 		054: 
 		055:   settings {
 		056:     logging_level        = "OFF"
+
+
+Api Gateway Access Logging Disabled, Severity: MEDIUM, Results: 1
+Description: RDS does not have any kind of logger
+Platform: Terraform
+
+	[1]: /src/main.tf:44
+
+		043: 
+		044: resource "aws_api_gateway_stage" "api_gw_stage" {
+		045:   stage_name    = "prod"
 
 
 API Gateway X-Ray Disabled, Severity: MEDIUM, Results: 1
@@ -148,12 +178,23 @@ Platform: Terraform
 		011:   depends_on  = [aws_api_gateway_integration.api_gw_int]
 
 
+API Gateway Method Settings Cache Not Encrypted, Severity: HIGH, Results: 1
+Description: API Gateway Method Settings Cache should be encrypted
+Platform: Terraform
+
+	[1]: /src/main.tf:58
+
+		057:     caching_enabled      = true # This is required for cache encryption
+		058:     cache_data_encrypted = false # This is required for cache encryption
+		059:   }
+
+
 
 Results Summary:
-HIGH: 0
-MEDIUM: 8
+HIGH: 1
+MEDIUM: 9
 LOW: 3
-INFO: 0
-TOTAL: 11
+INFO: 2
+TOTAL: 15
 
-Scan duration: 11.790470964s
+Scan duration: 18.8255558s

@@ -16,16 +16,35 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.0
+Scanning with Keeping Infrastructure as Code Secure v1.3.1
+
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 520
+Queries loaded: 559
 Queries failed to execute: 0
 
 ------------------------------------
+
+Resource Not Using Tags, Severity: INFO, Results: 2
+Description: AWS services resource tags are an essential part of managing components
+Platform: Terraform
+
+	[1]: /src/main.tf:18
+
+		017: 
+		018: resource "aws_s3_bucket_object" "object" {
+		019:   bucket  = aws_s3_bucket.cloudrail.id
+
+
+	[2]: /src/main.tf:5
+
+		004: 
+		005: resource "aws_s3_bucket" "cloudrail" {
+		006:   bucket = "cloudrail-non-encrypted-czx7zxchs"
+
 
 S3 Bucket With Ignore Public ACL, Severity: LOW, Results: 1
 Description: S3 bucket with ignore public ACL
@@ -71,12 +90,23 @@ Platform: Terraform
 		006:   bucket = "cloudrail-non-encrypted-czx7zxchs"
 
 
+S3 Bucket Object Not Encrypted, Severity: HIGH, Results: 1
+Description: S3 Bucket Object should have server-side encryption enabled
+Platform: Terraform
+
+	[1]: /src/main.tf:18
+
+		017: 
+		018: resource "aws_s3_bucket_object" "object" {
+		019:   bucket  = aws_s3_bucket.cloudrail.id
+
+
 
 Results Summary:
-HIGH: 1
+HIGH: 2
 MEDIUM: 1
 LOW: 2
-INFO: 0
-TOTAL: 4
+INFO: 2
+TOTAL: 7
 
-Scan duration: 11.000722464s
+Scan duration: 19.377726467s

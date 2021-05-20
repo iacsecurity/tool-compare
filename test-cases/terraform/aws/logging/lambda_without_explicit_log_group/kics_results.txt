@@ -16,16 +16,42 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.0
+Scanning with Keeping Infrastructure as Code Secure v1.3.1
+
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 520
+Queries loaded: 559
 Queries failed to execute: 0
 
 ------------------------------------
+
+Resource Not Using Tags, Severity: INFO, Results: 3
+Description: AWS services resource tags are an essential part of managing components
+Platform: Terraform
+
+	[1]: /src/main.tf:57
+
+		056: 
+		057: resource "aws_lambda_function" "test_lambda" {
+		058:   filename      = "${path.module}/Archive.zip"
+
+
+	[2]: /src/main.tf:9
+
+		008: 
+		009: resource "aws_iam_role" "iam_for_lambda" {
+		010:   name = "iam_for_lambda"
+
+
+	[3]: /src/main.tf:29
+
+		028: 
+		029: resource "aws_iam_policy" "lambda_logging" {
+		030:   name        = "lambda_logging"
+
 
 Lambda Functions Without X-Ray Tracing, Severity: LOW, Results: 1
 Description: AWS Lambda functions should have TracingConfig enabled. For this, property 'tracing_Config.mode' should have the value 'Active'
@@ -54,7 +80,7 @@ Results Summary:
 HIGH: 0
 MEDIUM: 1
 LOW: 1
-INFO: 0
-TOTAL: 2
+INFO: 3
+TOTAL: 5
 
-Scan duration: 11.445687172s
+Scan duration: 19.052560634s

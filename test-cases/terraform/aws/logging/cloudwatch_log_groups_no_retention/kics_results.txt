@@ -16,13 +16,14 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.0
+Scanning with Keeping Infrastructure as Code Secure v1.3.1
+
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 520
+Queries loaded: 559
 Queries failed to execute: 0
 
 ------------------------------------
@@ -38,12 +39,23 @@ Platform: Terraform
 		006:   name = "Yada"
 
 
+CloudWatch Log Group Not Encrypted, Severity: HIGH, Results: 1
+Description: AWS CloudWatch Log groups should be encrypted using KMS
+Platform: Terraform
+
+	[1]: /src/main.tf:5
+
+		004: 
+		005: resource "aws_cloudwatch_log_group" "yada" {
+		006:   name = "Yada"
+
+
 
 Results Summary:
-HIGH: 0
+HIGH: 1
 MEDIUM: 1
 LOW: 0
 INFO: 0
-TOTAL: 1
+TOTAL: 2
 
-Scan duration: 10.764673505s
+Scan duration: 21.10853001s

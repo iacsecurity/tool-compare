@@ -16,16 +16,35 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.0
+Scanning with Keeping Infrastructure as Code Secure v1.3.1
+
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 520
+Queries loaded: 559
 Queries failed to execute: 0
 
 ------------------------------------
+
+Resource Not Using Tags, Severity: INFO, Results: 2
+Description: AWS services resource tags are an essential part of managing components
+Platform: Terraform
+
+	[1]: /src/main.tf:3
+
+		002: 
+		003: resource "aws_cloudtrail" "foobar" {
+		004:   name                          = "tf-trail-foobar"
+
+
+	[2]: /src/main.tf:10
+
+		009: 
+		010: resource "aws_s3_bucket" "foo" {
+		011:   bucket        = "tf-test-trail"
+
 
 S3 Bucket Logging Disabled, Severity: LOW, Results: 1
 Description: S3 bucket without logging
@@ -127,7 +146,7 @@ Results Summary:
 HIGH: 2
 MEDIUM: 5
 LOW: 2
-INFO: 0
-TOTAL: 9
+INFO: 2
+TOTAL: 11
 
-Scan duration: 11.037925213s
+Scan duration: 23.894907636s

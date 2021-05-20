@@ -16,16 +16,35 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.0
+Scanning with Keeping Infrastructure as Code Secure v1.3.1
+
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 520
+Queries loaded: 559
 Queries failed to execute: 0
 
 ------------------------------------
+
+Resource Not Using Tags, Severity: INFO, Results: 2
+Description: AWS services resource tags are an essential part of managing components
+Platform: Terraform
+
+	[1]: /src/main.tf:44
+
+		043: 
+		044: resource "aws_cloudfront_distribution" "s3_distribution" {
+		045:   enabled             = true
+
+
+	[2]: /src/main.tf:10
+
+		009: 
+		010: resource "aws_s3_bucket" "cdn-content" {
+		011:   bucket = local.name
+
 
 S3 Bucket With Ignore Public ACL, Severity: LOW, Results: 1
 Description: S3 bucket with ignore public ACL
@@ -93,7 +112,7 @@ Platform: Terraform
 		076:     cloudfront_default_certificate = true
 
 
-Viewer Protocol Policy Allows HTTP, Severity: HIGH, Results: 1
+Viewer Protocol Policy Allows HTTP, Severity: HIGH, Results: 3
 Description: Checks if the connection between the CloudFront and the origin server is encrypted
 Platform: Terraform
 
@@ -102,6 +121,20 @@ Platform: Terraform
 		082:     target_origin_id       = local.s3_origin_id
 		083:     viewer_protocol_policy = "allow-all"
 		084: 
+
+
+	[2]: /src/main.tf:100
+
+		099:     target_origin_id       = local.s3_origin_id
+		100:     viewer_protocol_policy = "allow-all"
+		101: 
+
+
+	[3]: /src/main.tf:118
+
+		117:     target_origin_id       = local.s3_origin_id
+		118:     viewer_protocol_policy = "allow-all"
+		119: 
 
 
 S3 Bucket Without Server-side-encryption, Severity: HIGH, Results: 1
@@ -139,10 +172,10 @@ Platform: Terraform
 
 
 Results Summary:
-HIGH: 5
+HIGH: 7
 MEDIUM: 2
 LOW: 3
-INFO: 0
-TOTAL: 10
+INFO: 2
+TOTAL: 14
 
-Scan duration: 11.81795888s
+Scan duration: 18.635608883s

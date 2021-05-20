@@ -16,16 +16,39 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.0
+Scanning with Keeping Infrastructure as Code Secure v1.3.1
+
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 520
+Queries loaded: 559
 Queries failed to execute: 0
 
 ------------------------------------
+
+Resource Not Using Tags, Severity: INFO, Results: 1
+Description: AWS services resource tags are an essential part of managing components
+Platform: Terraform
+
+	[1]: /src/main.tf:5
+
+		004: 
+		005: resource "aws_iam_user" "user-1" {
+		006:   name = "user-1"
+
+
+IAM Policies Attached To User, Severity: LOW, Results: 1
+Description: IAM policies should be attached only to groups or roles
+Platform: Terraform
+
+	[1]: /src/main.tf:11
+
+		010:   name = "inline-policy"
+		011:   user = aws_iam_user.user-1.name
+		012: 
+
 
 IAM Policy Grants Full Permissions, Severity: MEDIUM, Results: 1
 Description: IAM policies allow all ('*') in a statement action
@@ -42,8 +65,8 @@ Platform: Terraform
 Results Summary:
 HIGH: 0
 MEDIUM: 1
-LOW: 0
-INFO: 0
-TOTAL: 1
+LOW: 1
+INFO: 1
+TOTAL: 3
 
-Scan duration: 11.376899672s
+Scan duration: 18.844444425s

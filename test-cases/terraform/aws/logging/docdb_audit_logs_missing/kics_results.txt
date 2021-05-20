@@ -16,16 +16,39 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.0
+Scanning with Keeping Infrastructure as Code Secure v1.3.1
+
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 520
+Queries loaded: 559
 Queries failed to execute: 0
 
 ------------------------------------
+
+Resource Not Using Tags, Severity: INFO, Results: 1
+Description: AWS services resource tags are an essential part of managing components
+Platform: Terraform
+
+	[1]: /src/main.tf:1
+
+		001: resource "aws_docdb_cluster" "docdb" {
+		002:   cluster_identifier      = "my-docdb-cluster"
+		003:   engine                  = "docdb"
+
+
+DocDB Logging Is Disabled, Severity: LOW, Results: 1
+Description: DocDB logging should be enabled
+Platform: Terraform
+
+	[1]: /src/main.tf:1
+
+		001: resource "aws_docdb_cluster" "docdb" {
+		002:   cluster_identifier      = "my-docdb-cluster"
+		003:   engine                  = "docdb"
+
 
 Passwords And Secrets In Infrastructure Code, Severity: HIGH, Results: 1
 Description: Query to find passwords and secrets in infrastructure code.
@@ -38,12 +61,34 @@ Platform: Common
 		006:   backup_retention_period = 5
 
 
+DOCDB Cluster Without KMS, Severity: HIGH, Results: 1
+Description: AWS DOCDB Cluster should be encrypted with a KMS encryption key
+Platform: Terraform
+
+	[1]: /src/main.tf:1
+
+		001: resource "aws_docdb_cluster" "docdb" {
+		002:   cluster_identifier      = "my-docdb-cluster"
+		003:   engine                  = "docdb"
+
+
+DOCDB Cluster Not Encrypted, Severity: HIGH, Results: 1
+Description: AWS DOCDB Cluster storage should be encrypted
+Platform: Terraform
+
+	[1]: /src/main.tf:1
+
+		001: resource "aws_docdb_cluster" "docdb" {
+		002:   cluster_identifier      = "my-docdb-cluster"
+		003:   engine                  = "docdb"
+
+
 
 Results Summary:
-HIGH: 1
+HIGH: 3
 MEDIUM: 0
-LOW: 0
-INFO: 0
-TOTAL: 1
+LOW: 1
+INFO: 1
+TOTAL: 5
 
-Scan duration: 11.705864505s
+Scan duration: 21.062972259s

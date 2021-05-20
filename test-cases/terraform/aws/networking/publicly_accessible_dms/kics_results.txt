@@ -16,23 +16,63 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.0
+Scanning with Keeping Infrastructure as Code Secure v1.3.1
+
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 520
+Queries loaded: 559
 Queries failed to execute: 0
 
 ------------------------------------
+
+Resource Not Using Tags, Severity: INFO, Results: 5
+Description: AWS services resource tags are an essential part of managing components
+Platform: Terraform
+
+	[1]: /src/main.tf:12
+
+		011: 
+		012: resource "aws_iam_role" "dms-access-for-endpoint" {
+		013:   assume_role_policy = data.aws_iam_policy_document.dms_assume_role.json
+
+
+	[2]: /src/main.tf:22
+
+		021: 
+		022: resource "aws_iam_role" "dms-cloudwatch-logs-role" {
+		023:   assume_role_policy = data.aws_iam_policy_document.dms_assume_role.json
+
+
+	[3]: /src/main.tf:32
+
+		031: 
+		032: resource "aws_iam_role" "dms-vpc-role" {
+		033:   assume_role_policy = data.aws_iam_policy_document.dms_assume_role.json
+
+
+	[4]: /src/main.tf:50
+
+		049: 
+		050:   tags = {
+		051:     Name = "test"
+
+
+	[5]: /src/main.tf:70
+
+		069: 
+		070:   tags = {
+		071:     Name = "test"
+
 
 
 Results Summary:
 HIGH: 0
 MEDIUM: 0
 LOW: 0
-INFO: 0
-TOTAL: 0
+INFO: 5
+TOTAL: 5
 
-Scan duration: 10.835717172s
+Scan duration: 18.953192134s

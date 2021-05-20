@@ -16,16 +16,42 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.0
+Scanning with Keeping Infrastructure as Code Secure v1.3.1
+
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 520
+Queries loaded: 559
 Queries failed to execute: 0
 
 ------------------------------------
+
+Resource Not Using Tags, Severity: INFO, Results: 3
+Description: AWS services resource tags are an essential part of managing components
+Platform: Terraform
+
+	[1]: /src/main.tf:14
+
+		013: 
+		014: resource "aws_iam_role" "cloudrail_glue_iam" {
+		015:   name = "cloudrail_glue_iam"
+
+
+	[2]: /src/main.tf:33
+
+		032: 
+		033: resource "aws_s3_bucket" "cloudrail" {
+		034:   bucket = "cloudrail-glue"
+
+
+	[3]: /src/main.tf:38
+
+		037: 
+		038: resource "aws_glue_crawler" "cloudrail_table_crawler" {
+		039:   database_name = aws_glue_catalog_database.cloudrail_table_database.name
+
 
 S3 Bucket Logging Disabled, Severity: LOW, Results: 1
 Description: S3 bucket without logging
@@ -65,7 +91,7 @@ Results Summary:
 HIGH: 1
 MEDIUM: 1
 LOW: 1
-INFO: 0
-TOTAL: 3
+INFO: 3
+TOTAL: 6
 
-Scan duration: 10.775856712s
+Scan duration: 18.489396508s

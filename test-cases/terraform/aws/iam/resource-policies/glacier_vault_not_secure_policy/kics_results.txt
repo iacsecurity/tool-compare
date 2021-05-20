@@ -16,23 +16,42 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.0
+Scanning with Keeping Infrastructure as Code Secure v1.3.1
+
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 520
+Queries loaded: 559
 Queries failed to execute: 0
 
 ------------------------------------
+
+Resource Not Using Tags, Severity: INFO, Results: 2
+Description: AWS services resource tags are an essential part of managing components
+Platform: Terraform
+
+	[1]: /src/main.tf:9
+
+		008: 
+		009: resource "aws_glacier_vault" "not_secure_archive" {
+		010:   name = "not_secure_archive"
+
+
+	[2]: /src/main.tf:5
+
+		004: 
+		005: resource "aws_sns_topic" "aws_sns_topic" {
+		006:   name = "glacier-sns-topic"
+
 
 
 Results Summary:
 HIGH: 0
 MEDIUM: 0
 LOW: 0
-INFO: 0
-TOTAL: 0
+INFO: 2
+TOTAL: 2
 
-Scan duration: 10.697242088s
+Scan duration: 18.547179551s

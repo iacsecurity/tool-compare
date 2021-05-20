@@ -16,16 +16,53 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.0
+Scanning with Keeping Infrastructure as Code Secure v1.3.1
+
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 520
+Queries loaded: 559
 Queries failed to execute: 0
 
 ------------------------------------
+
+Resource Not Using Tags, Severity: INFO, Results: 2
+Description: AWS services resource tags are an essential part of managing components
+Platform: Terraform
+
+	[1]: /src/main.tf:1
+
+		001: resource "aws_elasticache_cluster" "default" {
+		002:   cluster_id           = "cluster"
+		003:   engine               = "redis"
+
+
+	[2]: /src/main.tf:9
+
+		008: 
+		009: resource "aws_elasticache_cluster" "disabled" {
+		010:   cluster_id           = "cluster"
+
+
+ElastiCache Redis Cluster Without Backup, Severity: MEDIUM, Results: 2
+Description: ElastiCache Redis cluster should have 'snapshot_retention_limit' higher than 0
+Platform: Terraform
+
+	[1]: /src/main.tf:1
+
+		001: resource "aws_elasticache_cluster" "default" {
+		002:   cluster_id           = "cluster"
+		003:   engine               = "redis"
+
+
+	[2]: /src/main.tf:16
+
+		015: 
+		016:   snapshot_retention_limit = 0
+		017: }
+
 
 Memcached Disabled, Severity: HIGH, Results: 2
 Description: Check if the Memcached is disabled on the ElastiCache
@@ -48,9 +85,9 @@ Platform: Terraform
 
 Results Summary:
 HIGH: 2
-MEDIUM: 0
+MEDIUM: 2
 LOW: 0
-INFO: 0
-TOTAL: 2
+INFO: 2
+TOTAL: 6
 
-Scan duration: 11.355251214s
+Scan duration: 21.935987511s
