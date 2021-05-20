@@ -16,16 +16,162 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.0
+Scanning with Keeping Infrastructure as Code Secure v1.3.1
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 520
+Queries loaded: 559
 Queries failed to execute: 0
 
 ------------------------------------
+
+Security Group Without Description, Severity: INFO, Results: 2
+Description: It's considered a best practice for AWS Security Group to have a description
+Platform: Terraform
+
+	[1]: /src/main.tf:92
+
+		091: 
+		092: resource "aws_security_group" "esdomain" {
+		093:   vpc_id = aws_vpc.nondefault.id
+
+
+	[2]: /src/main.tf:121
+
+		120: 
+		121: resource "aws_security_group" "publicly_accessible_sg" {
+		122:   vpc_id = aws_vpc.nondefault.id
+
+
+Security Group Rules Without Description, Severity: INFO, Results: 3
+Description: It's considered a best practice for all rules in AWS Security Group to have a description
+Platform: Terraform
+
+	[1]: /src/main.tf:94
+
+		093:   vpc_id = aws_vpc.nondefault.id
+		094:   ingress {
+		095:     from_port = 443
+
+
+	[2]: /src/main.tf:129
+
+		128:   }
+		129:   egress {
+		130:     from_port = 0
+
+
+	[3]: /src/main.tf:123
+
+		122:   vpc_id = aws_vpc.nondefault.id
+		123:   ingress {
+		124:     from_port = 0
+
+
+Resource Not Using Tags, Severity: INFO, Results: 11
+Description: AWS services resource tags are an essential part of managing components
+Platform: Terraform
+
+	[1]: /src/main.tf:138
+
+		137: // This instance is can potentially be used to hop into the DB
+		138: resource "aws_instance" "public_ins" {
+		139:   ami = "ami-0130bec6e5047f596"
+
+
+	[2]: /src/main.tf:75
+
+		074: 
+		075: resource "aws_internet_gateway" "igw" {
+		076:   vpc_id = aws_vpc.nondefault.id
+
+
+	[3]: /src/main.tf:79
+
+		078: 
+		079: resource aws_route_table "nondefault_1" {
+		080:   vpc_id = aws_vpc.nondefault.id
+
+
+	[4]: /src/main.tf:63
+
+		062: 
+		063: resource "aws_subnet" "nondefault_1" {
+		064:   vpc_id = aws_vpc.nondefault.id
+
+
+	[5]: /src/main.tf:69
+
+		068: 
+		069: resource "aws_subnet" "nondefault_2" {
+		070:   vpc_id = aws_vpc.nondefault.id
+
+
+	[6]: /src/main.tf:5
+
+		004: 
+		005: resource "aws_vpc" "nondefault" {
+		006:   cidr_block = "10.1.1.0/24"
+
+
+	[7]: /src/main.tf:121
+
+		120: 
+		121: resource "aws_security_group" "publicly_accessible_sg" {
+		122:   vpc_id = aws_vpc.nondefault.id
+
+
+	[8]: /src/main.tf:92
+
+		091: 
+		092: resource "aws_security_group" "esdomain" {
+		093:   vpc_id = aws_vpc.nondefault.id
+
+
+	[9]: /src/main.tf:107
+
+		106: 
+		107: resource "aws_elasticsearch_domain" "test" {
+		108:   domain_name = "test"
+
+
+	[10]: /src/main.tf:31
+
+		030: 
+		031:   tags = {
+		032:     Name = "main"
+
+
+	[11]: /src/main.tf:58
+
+		057: 
+		058:   tags = {
+		059:     Name = "main"
+
+
+EC2 Not EBS Optimized, Severity: INFO, Results: 1
+Description: It's considered a best practice for an EC2 instance to use an EBS optimized instance. This provides the best performance for your EBS volumes by minimizing contention between Amazon EBS I/O and other traffic from your instance
+Platform: Terraform
+
+	[1]: /src/main.tf:138
+
+		137: // This instance is can potentially be used to hop into the DB
+		138: resource "aws_instance" "public_ins" {
+		139:   ami = "ami-0130bec6e5047f596"
+
+
+EC2 Instance Monitoring Disabled, Severity: INFO, Results: 1
+Description: EC2 Instance should have detailed monitoring enabled. With detailed monitoring enabled data is available in 1-minute periods
+Platform: Terraform
+
+	[1]: /src/main.tf:138
+
+		137: // This instance is can potentially be used to hop into the DB
+		138: resource "aws_instance" "public_ins" {
+		139:   ami = "ami-0130bec6e5047f596"
+
 
 VPC FlowLogs Disabled, Severity: MEDIUM, Results: 1
 Description: VPC hasn't got any FlowLog associated
@@ -47,6 +193,28 @@ Platform: Terraform
 		122:   vpc_id = aws_vpc.nondefault.id
 		123:   ingress {
 		124:     from_port = 0
+
+
+Elasticsearch Log is disabled, Severity: MEDIUM, Results: 1
+Description: AWS Elasticsearch should have logs enabled
+Platform: Terraform
+
+	[1]: /src/main.tf:107
+
+		106: 
+		107: resource "aws_elasticsearch_domain" "test" {
+		108:   domain_name = "test"
+
+
+Elasticsearch Domain Not Encrypted Node To Node, Severity: MEDIUM, Results: 1
+Description: Elasticsearch Domain encryption should be enabled node to node
+Platform: Terraform
+
+	[1]: /src/main.tf:107
+
+		106: 
+		107: resource "aws_elasticsearch_domain" "test" {
+		108:   domain_name = "test"
 
 
 ElasticSearch Not Encrypted At Rest, Severity: MEDIUM, Results: 1
@@ -497,9 +665,9 @@ Platform: Terraform
 
 Results Summary:
 HIGH: 58
-MEDIUM: 3
+MEDIUM: 5
 LOW: 0
-INFO: 0
-TOTAL: 61
+INFO: 18
+TOTAL: 81
 
-Scan duration: 11.392495671s
+Scan duration: 3.872904106s

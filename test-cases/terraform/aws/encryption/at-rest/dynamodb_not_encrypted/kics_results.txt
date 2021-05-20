@@ -16,23 +16,45 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.0
+Scanning with Keeping Infrastructure as Code Secure v1.3.1
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 520
+Queries loaded: 559
 Queries failed to execute: 0
 
 ------------------------------------
 
+DynamoDB Table Point In Time Recovery Disabled, Severity: INFO, Results: 1
+Description: It's considered a best practice to have point in time recovery enabled for DynamoDB Table
+Platform: Terraform
+
+	[1]: /src/main.tf:1
+
+		001: resource "aws_dynamodb_table" "basic-dynamodb-table" {
+		002:   name           = "GameScores"
+		003:   billing_mode   = "PROVISIONED"
+
+
+DynamoDB Table Not Encrypted, Severity: MEDIUM, Results: 1
+Description: AWS DynamoDB Tables should have server-side encryption
+Platform: Terraform
+
+	[1]: /src/main.tf:1
+
+		001: resource "aws_dynamodb_table" "basic-dynamodb-table" {
+		002:   name           = "GameScores"
+		003:   billing_mode   = "PROVISIONED"
+
+
 
 Results Summary:
 HIGH: 0
-MEDIUM: 0
+MEDIUM: 1
 LOW: 0
-INFO: 0
-TOTAL: 0
+INFO: 1
+TOTAL: 2
 
-Scan duration: 10.850630213s
+Scan duration: 3.958702442s

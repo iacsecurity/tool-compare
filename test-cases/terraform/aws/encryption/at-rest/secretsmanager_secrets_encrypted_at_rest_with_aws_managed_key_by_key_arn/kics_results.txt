@@ -16,23 +16,34 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.0
+Scanning with Keeping Infrastructure as Code Secure v1.3.1
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 520
+Queries loaded: 559
 Queries failed to execute: 0
 
 ------------------------------------
+
+Resource Not Using Tags, Severity: INFO, Results: 1
+Description: AWS services resource tags are an essential part of managing components
+Platform: Terraform
+
+	[1]: /src/main.tf:9
+
+		008: 
+		009: resource "aws_secretsmanager_secret" "test" {
+		010:   name       = "test-cloudrail-1"
+
 
 
 Results Summary:
 HIGH: 0
 MEDIUM: 0
 LOW: 0
-INFO: 0
-TOTAL: 0
+INFO: 1
+TOTAL: 1
 
-Scan duration: 10.719917297s
+Scan duration: 3.804914885s

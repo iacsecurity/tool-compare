@@ -16,16 +16,180 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.0
+Scanning with Keeping Infrastructure as Code Secure v1.3.1
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 520
+Queries loaded: 559
 Queries failed to execute: 0
 
 ------------------------------------
+
+Security Group Without Description, Severity: INFO, Results: 2
+Description: It's considered a best practice for AWS Security Group to have a description
+Platform: Terraform
+
+	[1]: /src/main.tf:103
+
+		102: 
+		103: resource "aws_security_group" "db" {
+		104:   vpc_id = aws_vpc.nondefault.id
+
+
+	[2]: /src/main.tf:129
+
+		128: 
+		129: resource "aws_security_group" "publicly_accessible_sg" {
+		130:   vpc_id = aws_vpc.nondefault.id
+
+
+Security Group Rules Without Description, Severity: INFO, Results: 3
+Description: It's considered a best practice for all rules in AWS Security Group to have a description
+Platform: Terraform
+
+	[1]: /src/main.tf:137
+
+		136:   }
+		137:   egress {
+		138:     from_port = 0
+
+
+	[2]: /src/main.tf:131
+
+		130:   vpc_id = aws_vpc.nondefault.id
+		131:   ingress {
+		132:     from_port = 0
+
+
+	[3]: /src/main.tf:105
+
+		104:   vpc_id = aws_vpc.nondefault.id
+		105:   ingress {
+		106:     from_port = 3306
+
+
+Resource Not Using Tags, Severity: INFO, Results: 12
+Description: AWS services resource tags are an essential part of managing components
+Platform: Terraform
+
+	[1]: /src/main.tf:68
+
+		067: 
+		068: resource "aws_subnet" "nondefault_1" {
+		069:   vpc_id = aws_vpc.nondefault.id
+
+
+	[2]: /src/main.tf:74
+
+		073: 
+		074: resource "aws_subnet" "nondefault_2" {
+		075:   vpc_id = aws_vpc.nondefault.id
+
+
+	[3]: /src/main.tf:129
+
+		128: 
+		129: resource "aws_security_group" "publicly_accessible_sg" {
+		130:   vpc_id = aws_vpc.nondefault.id
+
+
+	[4]: /src/main.tf:103
+
+		102: 
+		103: resource "aws_security_group" "db" {
+		104:   vpc_id = aws_vpc.nondefault.id
+
+
+	[5]: /src/main.tf:84
+
+		083: 
+		084: resource aws_route_table "nondefault_1" {
+		085:   vpc_id = aws_vpc.nondefault.id
+
+
+	[6]: /src/main.tf:97
+
+		096: 
+		097: resource "aws_db_subnet_group" "db" {
+		098:   name = "rds_db"
+
+
+	[7]: /src/main.tf:113
+
+		112: 
+		113: resource "aws_db_instance" "test" {
+		114:   identifier = "tf-test-db"
+
+
+	[8]: /src/main.tf:146
+
+		145: // This instance is can potentially be used to hop into the DB
+		146: resource "aws_instance" "public_ins" {
+		147:   ami = "ami-0130bec6e5047f596"
+
+
+	[9]: /src/main.tf:10
+
+		009: 
+		010: resource "aws_vpc" "nondefault" {
+		011:   cidr_block = "10.1.1.0/24"
+
+
+	[10]: /src/main.tf:80
+
+		079: 
+		080: resource "aws_internet_gateway" "igw" {
+		081:   vpc_id = aws_vpc.nondefault.id
+
+
+	[11]: /src/main.tf:36
+
+		035: 
+		036:   tags = {
+		037:     Name = "main"
+
+
+	[12]: /src/main.tf:63
+
+		062: 
+		063:   tags = {
+		064:     Name = "main"
+
+
+RDS Without Logging, Severity: INFO, Results: 1
+Description: RDS does not have any kind of logger
+Platform: Terraform
+
+	[1]: /src/main.tf:113
+
+		112: 
+		113: resource "aws_db_instance" "test" {
+		114:   identifier = "tf-test-db"
+
+
+EC2 Not EBS Optimized, Severity: INFO, Results: 1
+Description: It's considered a best practice for an EC2 instance to use an EBS optimized instance. This provides the best performance for your EBS volumes by minimizing contention between Amazon EBS I/O and other traffic from your instance
+Platform: Terraform
+
+	[1]: /src/main.tf:146
+
+		145: // This instance is can potentially be used to hop into the DB
+		146: resource "aws_instance" "public_ins" {
+		147:   ami = "ami-0130bec6e5047f596"
+
+
+EC2 Instance Monitoring Disabled, Severity: INFO, Results: 1
+Description: EC2 Instance should have detailed monitoring enabled. With detailed monitoring enabled data is available in 1-minute periods
+Platform: Terraform
+
+	[1]: /src/main.tf:146
+
+		145: // This instance is can potentially be used to hop into the DB
+		146: resource "aws_instance" "public_ins" {
+		147:   ami = "ami-0130bec6e5047f596"
+
 
 VPC FlowLogs Disabled, Severity: MEDIUM, Results: 1
 Description: VPC hasn't got any FlowLog associated
@@ -532,7 +696,7 @@ Results Summary:
 HIGH: 61
 MEDIUM: 3
 LOW: 0
-INFO: 0
-TOTAL: 64
+INFO: 20
+TOTAL: 84
 
-Scan duration: 11.367013547s
+Scan duration: 3.761606887s

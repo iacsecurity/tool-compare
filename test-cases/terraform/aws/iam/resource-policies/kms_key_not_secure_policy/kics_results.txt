@@ -16,23 +16,56 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.0
+Scanning with Keeping Infrastructure as Code Secure v1.3.1
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 520
+Queries loaded: 559
 Queries failed to execute: 0
 
 ------------------------------------
 
+Resource Not Using Tags, Severity: INFO, Results: 1
+Description: AWS services resource tags are an essential part of managing components
+Platform: Terraform
+
+	[1]: /src/main.tf:5
+
+		004: 
+		005: resource "aws_kms_key" "not_secure_policy" {
+		006:   description             = "KMS key + not_secure_policy"
+
+
+KMS Key With Vulnerable Policy, Severity: HIGH, Results: 1
+Description: Checks if the policy is vulnerable and needs updating.
+Platform: Terraform
+
+	[1]: /src/main.tf:9
+
+		008: 
+		009:   policy = <<EOF
+		010: {
+
+
+CMK Rotation Disabled, Severity: HIGH, Results: 1
+Description: Customer Master Keys (CMK) must have rotation enabled, which means the attribute 'enable_key_rotation' must be set to 'true' when the key is enabled.
+Platform: Terraform
+
+	[1]: /src/main.tf:5
+
+		004: 
+		005: resource "aws_kms_key" "not_secure_policy" {
+		006:   description             = "KMS key + not_secure_policy"
+
+
 
 Results Summary:
-HIGH: 0
+HIGH: 2
 MEDIUM: 0
 LOW: 0
-INFO: 0
-TOTAL: 0
+INFO: 1
+TOTAL: 3
 
-Scan duration: 10.77439188s
+Scan duration: 4.11859112s

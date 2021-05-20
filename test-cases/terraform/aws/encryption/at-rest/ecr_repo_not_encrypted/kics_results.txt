@@ -16,23 +16,56 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.0
+Scanning with Keeping Infrastructure as Code Secure v1.3.1
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 520
+Queries loaded: 559
 Queries failed to execute: 0
 
 ------------------------------------
 
+Resource Not Using Tags, Severity: INFO, Results: 1
+Description: AWS services resource tags are an essential part of managing components
+Platform: Terraform
+
+	[1]: /src/main.tf:1
+
+		001: resource "aws_ecr_repository" "foo" {
+		002:   name                 = "bar"
+		003:   image_tag_mutability = "IMMUTABLE"
+
+
+ECR Repository Without Policy, Severity: LOW, Results: 1
+Description: ECR Repository should have Policies attached to it
+Platform: Terraform
+
+	[1]: /src/main.tf:1
+
+		001: resource "aws_ecr_repository" "foo" {
+		002:   name                 = "bar"
+		003:   image_tag_mutability = "IMMUTABLE"
+
+
+ECR Repository Not Encrypted, Severity: MEDIUM, Results: 1
+Description: ECR (Elastic Container Registry) Repository encryption should be set
+Platform: Terraform
+
+	[1]: /src/main.tf:1
+
+		001: resource "aws_ecr_repository" "foo" {
+		002:   name                 = "bar"
+		003:   image_tag_mutability = "IMMUTABLE"
+
+
 
 Results Summary:
 HIGH: 0
-MEDIUM: 0
-LOW: 0
-INFO: 0
-TOTAL: 0
+MEDIUM: 1
+LOW: 1
+INFO: 1
+TOTAL: 3
 
-Scan duration: 10.732933047s
+Scan duration: 4.34009674s

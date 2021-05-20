@@ -16,23 +16,56 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.0
+Scanning with Keeping Infrastructure as Code Secure v1.3.1
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 520
+Queries loaded: 559
 Queries failed to execute: 0
 
 ------------------------------------
 
+Resource Not Using Tags, Severity: INFO, Results: 1
+Description: AWS services resource tags are an essential part of managing components
+Platform: Terraform
+
+	[1]: /src/main.tf:1
+
+		001: resource "aws_rds_cluster" "default" {
+		002:   cluster_identifier      = "aurora-cluster-demo"
+		003:   engine                  = "aurora-mysql"
+
+
+RDS Cluster With Backup Disabled, Severity: MEDIUM, Results: 1
+Description: RDS Cluster backup retention period should be specifically defined
+Platform: Terraform
+
+	[1]: /src/main.tf:1
+
+		001: resource "aws_rds_cluster" "default" {
+		002:   cluster_identifier      = "aurora-cluster-demo"
+		003:   engine                  = "aurora-mysql"
+
+
+RDS Storage Not Encrypted, Severity: HIGH, Results: 1
+Description: Check if RDS Cluster Storage isn't encrypted. Happens when 'storage_encrypted' is not set to 'true'
+Platform: Terraform
+
+	[1]: /src/main.tf:1
+
+		001: resource "aws_rds_cluster" "default" {
+		002:   cluster_identifier      = "aurora-cluster-demo"
+		003:   engine                  = "aurora-mysql"
+
+
 
 Results Summary:
-HIGH: 0
-MEDIUM: 0
+HIGH: 1
+MEDIUM: 1
 LOW: 0
-INFO: 0
-TOTAL: 0
+INFO: 1
+TOTAL: 3
 
-Scan duration: 10.732401963s
+Scan duration: 3.844448118s

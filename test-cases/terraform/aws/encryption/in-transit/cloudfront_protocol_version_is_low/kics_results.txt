@@ -16,16 +16,34 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.0
+Scanning with Keeping Infrastructure as Code Secure v1.3.1
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 520
+Queries loaded: 559
 Queries failed to execute: 0
 
 ------------------------------------
+
+Resource Not Using Tags, Severity: INFO, Results: 2
+Description: AWS services resource tags are an essential part of managing components
+Platform: Terraform
+
+	[1]: /src/main.tf:9
+
+		008: 
+		009:   tags = {
+		010:     Name = "dist-cloud-test-logs"
+
+
+	[2]: /src/main.tf:18
+
+		017: 
+		018:   tags = {
+		019:     Name = "dist-cloud-test"
+
 
 S3 Bucket Logging Disabled, Severity: LOW, Results: 1
 Description: S3 bucket without logging
@@ -53,18 +71,18 @@ S3 Bucket Without Versioning, Severity: MEDIUM, Results: 2
 Description: S3 bucket without versioning
 Platform: Terraform
 
-	[1]: /src/main.tf:5
-
-		004: 
-		005: resource "aws_s3_bucket" "logging" {
-		006:   bucket = "dist-cloud-test-logs"
-
-
-	[2]: /src/main.tf:14
+	[1]: /src/main.tf:14
 
 		013: 
 		014: resource "aws_s3_bucket" "dist" {
 		015:   bucket = "dist-cloud-test"
+
+
+	[2]: /src/main.tf:5
+
+		004: 
+		005: resource "aws_s3_bucket" "logging" {
+		006:   bucket = "dist-cloud-test-logs"
 
 
 Vulnerable Default SSL Certificate, Severity: HIGH, Results: 1
@@ -145,7 +163,7 @@ Results Summary:
 HIGH: 7
 MEDIUM: 2
 LOW: 2
-INFO: 0
-TOTAL: 11
+INFO: 2
+TOTAL: 13
 
-Scan duration: 11.320981588s
+Scan duration: 3.904232017s

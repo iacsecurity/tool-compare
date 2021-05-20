@@ -16,16 +16,116 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.0
+Scanning with Keeping Infrastructure as Code Secure v1.3.1
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 520
+Queries loaded: 559
 Queries failed to execute: 0
 
 ------------------------------------
+
+Security Group Rules Without Description, Severity: INFO, Results: 2
+Description: It's considered a best practice for all rules in AWS Security Group to have a description
+Platform: Terraform
+
+	[1]: /src/main.tf:55
+
+		054: 
+		055:   egress {
+		056:     from_port   = 0
+
+
+	[2]: /src/main.tf:62
+
+		061: 
+		062:   ingress {
+		063:     from_port   = 0
+
+
+Resource Not Using Tags, Severity: INFO, Results: 8
+Description: AWS services resource tags are an essential part of managing components
+Platform: Terraform
+
+	[1]: /src/main.tf:103
+
+		102: 
+		103: resource "aws_sqs_queue" "test-queue" {
+		104:   name = "test-queue"
+
+
+	[2]: /src/main.tf:107
+
+		106: 
+		107: resource "aws_internet_gateway" "igw" {
+		108:   vpc_id = aws_vpc.main.id
+
+
+	[3]: /src/main.tf:87
+
+		086: 
+		087: resource "aws_instance" "test-ec2-instance" {
+		088:   ami = data.aws_ami.ubuntu.id
+
+
+	[4]: /src/main.tf:94
+
+		093: 
+		094: resource "aws_vpc_endpoint" "sqs-vpc-endpoint" {
+		095:   vpc_id            = aws_vpc.main.id
+
+
+	[5]: /src/main.tf:50
+
+		049: 
+		050: resource "aws_security_group" "public-internet-sg" {
+		051:   name        = "public-internet-sg"
+
+
+	[6]: /src/main.tf:12
+
+		011: 
+		012: resource "aws_vpc" "main" {
+		013:   cidr_block = local.cidr_block
+
+
+	[7]: /src/main.tf:22
+
+		021: 
+		022:   tags = {
+		023:     Name = "public-subnet"
+
+
+	[8]: /src/main.tf:40
+
+		039: 
+		040:   tags = {
+		041:     Name = "public-rtb"
+
+
+EC2 Not EBS Optimized, Severity: INFO, Results: 1
+Description: It's considered a best practice for an EC2 instance to use an EBS optimized instance. This provides the best performance for your EBS volumes by minimizing contention between Amazon EBS I/O and other traffic from your instance
+Platform: Terraform
+
+	[1]: /src/main.tf:87
+
+		086: 
+		087: resource "aws_instance" "test-ec2-instance" {
+		088:   ami = data.aws_ami.ubuntu.id
+
+
+EC2 Instance Monitoring Disabled, Severity: INFO, Results: 1
+Description: EC2 Instance should have detailed monitoring enabled. With detailed monitoring enabled data is available in 1-minute periods
+Platform: Terraform
+
+	[1]: /src/main.tf:87
+
+		086: 
+		087: resource "aws_instance" "test-ec2-instance" {
+		088:   ami = data.aws_ami.ubuntu.id
+
 
 VPC FlowLogs Disabled, Severity: MEDIUM, Results: 1
 Description: VPC hasn't got any FlowLog associated
@@ -65,7 +165,7 @@ Results Summary:
 HIGH: 2
 MEDIUM: 1
 LOW: 0
-INFO: 0
-TOTAL: 3
+INFO: 12
+TOTAL: 15
 
-Scan duration: 11.081267213s
+Scan duration: 4.041183756s

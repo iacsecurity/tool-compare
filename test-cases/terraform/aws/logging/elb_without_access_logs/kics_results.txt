@@ -16,23 +16,45 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.0
+Scanning with Keeping Infrastructure as Code Secure v1.3.1
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 520
+Queries loaded: 559
 Queries failed to execute: 0
 
 ------------------------------------
+
+Resource Not Using Tags, Severity: INFO, Results: 1
+Description: AWS services resource tags are an essential part of managing components
+Platform: Terraform
+
+	[1]: /src/main.tf:1
+
+		001: resource "aws_elb" "test" {
+		002:   name = "test-lb-tf"
+		003:   availability_zones = ["us-west-2a", "us-west-2b", "us-west-2c"]
+
+
+ELB Access Logging Disabled, Severity: INFO, Results: 1
+Description: ELB should have logging enabled to help on error investigation
+Platform: Terraform
+
+	[1]: /src/main.tf:1
+
+		001: resource "aws_elb" "test" {
+		002:   name = "test-lb-tf"
+		003:   availability_zones = ["us-west-2a", "us-west-2b", "us-west-2c"]
+
 
 
 Results Summary:
 HIGH: 0
 MEDIUM: 0
 LOW: 0
-INFO: 0
-TOTAL: 0
+INFO: 2
+TOTAL: 2
 
-Scan duration: 10.769011088s
+Scan duration: 3.935709751s
