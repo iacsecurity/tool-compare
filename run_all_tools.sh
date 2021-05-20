@@ -106,7 +106,7 @@ function run_all {
 }
 
 # Set up AWS access for plan
-if [ -z "$AWS_ACCESS_KEY_ID" ]; then
+if [ -z "$AWS_ACCESS_KEY_ID" -a -z "$AWS_DEFAULT_PROFILE" ]; then
   echo "To run this script, you'll need AWS credentials (for use with terraform plan)."
   exit 1
 fi
