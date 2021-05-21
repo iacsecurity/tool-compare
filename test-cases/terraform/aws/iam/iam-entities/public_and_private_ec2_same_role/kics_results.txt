@@ -16,16 +16,84 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.0
+Scanning with Keeping Infrastructure as Code Secure v1.3.1
 
 
 
-Files scanned: 53
-Parsed files: 53
-Queries loaded: 754
+Files scanned: 1
+Parsed files: 1
+Queries loaded: 559
 Queries failed to execute: 0
 
 ------------------------------------
+
+Resource Not Using Tags, Severity: INFO, Results: 4
+Description: AWS services resource tags are an essential part of managing components
+Platform: Terraform
+
+	[1]: /src/main.tf:98
+
+		097: 
+		098: resource "aws_instance" "pub_ins" {
+		099:   ami           = "${data.aws_ami.ubuntu.id}"
+
+
+	[2]: /src/main.tf:106
+
+		105: 
+		106: resource "aws_instance" "priv_ins" {
+		107:   ami           = "${data.aws_ami.ubuntu.id}"
+
+
+	[3]: /src/main.tf:50
+
+		049: 
+		050: resource "aws_iam_role" "test_role" {
+		051:   name = "test_role"
+
+
+	[4]: /src/main.tf:71
+
+		070: 
+		071: resource "aws_iam_instance_profile" "test_profile" {
+		072:   name = "test_profile"
+
+
+EC2 Not EBS Optimized, Severity: INFO, Results: 2
+Description: It's considered a best practice for an EC2 instance to use an EBS optimized instance. This provides the best performance for your EBS volumes by minimizing contention between Amazon EBS I/O and other traffic from your instance
+Platform: Terraform
+
+	[1]: /src/main.tf:98
+
+		097: 
+		098: resource "aws_instance" "pub_ins" {
+		099:   ami           = "${data.aws_ami.ubuntu.id}"
+
+
+	[2]: /src/main.tf:106
+
+		105: 
+		106: resource "aws_instance" "priv_ins" {
+		107:   ami           = "${data.aws_ami.ubuntu.id}"
+
+
+EC2 Instance Monitoring Disabled, Severity: INFO, Results: 2
+Description: EC2 Instance should have detailed monitoring enabled. With detailed monitoring enabled data is available in 1-minute periods
+Platform: Terraform
+
+	[1]: /src/main.tf:98
+
+		097: 
+		098: resource "aws_instance" "pub_ins" {
+		099:   ami           = "${data.aws_ami.ubuntu.id}"
+
+
+	[2]: /src/main.tf:106
+
+		105: 
+		106: resource "aws_instance" "priv_ins" {
+		107:   ami           = "${data.aws_ami.ubuntu.id}"
+
 
 Instance With No VPC, Severity: MEDIUM, Results: 2
 Description: Instance should be configured in VPC (Virtual Private Cloud)
@@ -56,17 +124,6 @@ Platform: Terraform
 		091:     }
 
 
-CloudWatch Without Retention Period Specified, Severity: MEDIUM, Results: 1
-Description: AWS CloudWatch Log groups should have retention days specified
-Platform: Terraform
-
-	[1]: /src/.terraform/modules/vpc/examples/vpc-flow-logs/main.tf:126
-
-		125: # Cloudwatch logs
-		126: resource "aws_cloudwatch_log_group" "flow_log" {
-		127:   name = local.cloudwatch_log_group_name
-
-
 EC2 Instance Has Public IP, Severity: HIGH, Results: 2
 Description: EC2 Instance should not have a public IP address.
 Platform: Terraform
@@ -88,9 +145,9 @@ Platform: Terraform
 
 Results Summary:
 HIGH: 2
-MEDIUM: 4
+MEDIUM: 3
 LOW: 0
-INFO: 0
-TOTAL: 6
+INFO: 8
+TOTAL: 13
 
-Scan duration: 33.132485974s
+Scan duration: 4.28883074s

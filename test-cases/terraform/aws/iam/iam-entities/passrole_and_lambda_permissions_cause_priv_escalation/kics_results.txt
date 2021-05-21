@@ -16,41 +16,63 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.0
+Scanning with Keeping Infrastructure as Code Secure v1.3.1
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 520
+Queries loaded: 559
 Queries failed to execute: 0
 
 ------------------------------------
+
+Resource Not Using Tags, Severity: INFO, Results: 1
+Description: AWS services resource tags are an essential part of managing components
+Platform: Terraform
+
+	[1]: /src/main.tf:27
+
+		026:   name = "allow-policy-1"
+		027:   role = aws_iam_role.role.id
+		028: 
+
+
+IAM Role Policy passRole Allows All, Severity: MEDIUM, Results: 1
+Description: Using the iam:passrole action with wildcards (*) in the resource can be overly permissive because it allows iam:passrole permissions on multiple resources
+Platform: Terraform
+
+	[1]: /src/main.tf:35
+
+		034:         "Action": [
+		035:           "iam:passrole"
+		036:         ],
+
 
 IAM Policy Grants Full Permissions, Severity: MEDIUM, Results: 2
 Description: IAM policies allow all ('*') in a statement action
 Platform: Terraform
 
-	[1]: /src/main.tf:58
-
-		057:         "Effect": "Allow",
-		058:         "Resource": "*"
-		059:       }
-
-
-	[2]: /src/main.tf:38
+	[1]: /src/main.tf:38
 
 		037:         "Effect": "Allow",
 		038:         "Resource": "*"
 		039:       }
 
 
+	[2]: /src/main.tf:58
+
+		057:         "Effect": "Allow",
+		058:         "Resource": "*"
+		059:       }
+
+
 
 Results Summary:
 HIGH: 0
-MEDIUM: 2
+MEDIUM: 3
 LOW: 0
-INFO: 0
-TOTAL: 2
+INFO: 1
+TOTAL: 4
 
-Scan duration: 10.917931172s
+Scan duration: 4.296882546s

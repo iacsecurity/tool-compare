@@ -16,23 +16,56 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.0
+Scanning with Keeping Infrastructure as Code Secure v1.3.1
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 520
+Queries loaded: 559
 Queries failed to execute: 0
 
 ------------------------------------
 
+Resource Not Using Tags, Severity: INFO, Results: 1
+Description: AWS services resource tags are an essential part of managing components
+Platform: Terraform
+
+	[1]: /src/main.tf:1
+
+		001: resource "aws_elasticache_replication_group" "example" {
+		002:   automatic_failover_enabled    = true
+		003:   availability_zones            = ["us-west-2a", "us-west-2b"]
+
+
+ElastiCache Replication Group Not Encrypted At Transit, Severity: MEDIUM, Results: 1
+Description: ElastiCache Replication Group encryption should be enabled at Transit
+Platform: Terraform
+
+	[1]: /src/main.tf:1
+
+		001: resource "aws_elasticache_replication_group" "example" {
+		002:   automatic_failover_enabled    = true
+		003:   availability_zones            = ["us-west-2a", "us-west-2b"]
+
+
+ElastiCache Replication Group Not Encrypted At Rest, Severity: MEDIUM, Results: 1
+Description: ElastiCache Replication Group encryption should be enabled at Rest
+Platform: Terraform
+
+	[1]: /src/main.tf:1
+
+		001: resource "aws_elasticache_replication_group" "example" {
+		002:   automatic_failover_enabled    = true
+		003:   availability_zones            = ["us-west-2a", "us-west-2b"]
+
+
 
 Results Summary:
 HIGH: 0
-MEDIUM: 0
+MEDIUM: 2
 LOW: 0
-INFO: 0
-TOTAL: 0
+INFO: 1
+TOTAL: 3
 
-Scan duration: 10.853168256s
+Scan duration: 3.827490937s

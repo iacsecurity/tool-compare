@@ -16,16 +16,109 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.0
+Scanning with Keeping Infrastructure as Code Secure v1.3.1
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 520
+Queries loaded: 559
 Queries failed to execute: 0
 
 ------------------------------------
+
+Security Group Without Description, Severity: INFO, Results: 1
+Description: It's considered a best practice for AWS Security Group to have a description
+Platform: Terraform
+
+	[1]: /src/main.tf:9
+
+		008: 
+		009: resource "aws_security_group" "nondefault" {
+		010:   vpc_id = aws_vpc.nondefault.id
+
+
+Security Group Rules Without Description, Severity: INFO, Results: 1
+Description: It's considered a best practice for all rules in AWS Security Group to have a description
+Platform: Terraform
+
+	[1]: /src/main.tf:12
+
+		011: 
+		012:     ingress {
+		013:     from_port = 0
+
+
+Resource Not Using Tags, Severity: INFO, Results: 8
+Description: AWS services resource tags are an essential part of managing components
+Platform: Terraform
+
+	[1]: /src/main.tf:60
+
+		059: 
+		060: resource "aws_db_instance" "test" {
+		061:   instance_class = "db.t3.micro"
+
+
+	[2]: /src/main.tf:5
+
+		004: 
+		005: resource "aws_vpc" "nondefault" {
+		006:   cidr_block = "10.1.1.0/24"
+
+
+	[3]: /src/main.tf:9
+
+		008: 
+		009: resource "aws_security_group" "nondefault" {
+		010:   vpc_id = aws_vpc.nondefault.id
+
+
+	[4]: /src/main.tf:20
+
+		019: 
+		020: resource "aws_subnet" "nondefault_1" {
+		021:   vpc_id = aws_vpc.nondefault.id
+
+
+	[5]: /src/main.tf:26
+
+		025: 
+		026: resource "aws_subnet" "nondefault_2" {
+		027:   vpc_id = aws_vpc.nondefault.id
+
+
+	[6]: /src/main.tf:32
+
+		031: 
+		032: resource "aws_db_subnet_group" nondefault {
+		033:   name = "nondefault"
+
+
+	[7]: /src/main.tf:38
+
+		037: 
+		038: resource "aws_internet_gateway" "igw" {
+		039:   vpc_id = aws_vpc.nondefault.id
+
+
+	[8]: /src/main.tf:42
+
+		041: 
+		042: resource "aws_route_table" "nondefault" {
+		043:   vpc_id = aws_vpc.nondefault.id
+
+
+RDS Without Logging, Severity: INFO, Results: 1
+Description: RDS does not have any kind of logger
+Platform: Terraform
+
+	[1]: /src/main.tf:60
+
+		059: 
+		060: resource "aws_db_instance" "test" {
+		061:   instance_class = "db.t3.micro"
+
 
 VPC FlowLogs Disabled, Severity: MEDIUM, Results: 1
 Description: VPC hasn't got any FlowLog associated
@@ -488,7 +581,7 @@ Results Summary:
 HIGH: 58
 MEDIUM: 2
 LOW: 0
-INFO: 0
-TOTAL: 60
+INFO: 11
+TOTAL: 71
 
-Scan duration: 10.918815089s
+Scan duration: 3.825273472s

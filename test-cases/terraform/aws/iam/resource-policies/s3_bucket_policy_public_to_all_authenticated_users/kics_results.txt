@@ -16,6 +16,89 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.0
+Scanning with Keeping Infrastructure as Code Secure v1.3.1
 
 
+
+Files scanned: 1
+Parsed files: 1
+Queries loaded: 559
+Queries failed to execute: 0
+
+------------------------------------
+
+Resource Not Using Tags, Severity: INFO, Results: 1
+Description: AWS services resource tags are an essential part of managing components
+Platform: Terraform
+
+	[1]: /src/main.tf:5
+
+		004: 
+		005: resource "aws_s3_bucket" "public-bucket" {
+		006:   bucket = "bucket-with-public-policy-2"
+
+
+S3 Bucket Logging Disabled, Severity: LOW, Results: 1
+Description: S3 bucket without logging
+Platform: Terraform
+
+	[1]: /src/main.tf:5
+
+		004: 
+		005: resource "aws_s3_bucket" "public-bucket" {
+		006:   bucket = "bucket-with-public-policy-2"
+
+
+S3 Bucket Without Versioning, Severity: MEDIUM, Results: 1
+Description: S3 bucket without versioning
+Platform: Terraform
+
+	[1]: /src/main.tf:5
+
+		004: 
+		005: resource "aws_s3_bucket" "public-bucket" {
+		006:   bucket = "bucket-with-public-policy-2"
+
+
+S3 Bucket Without Server-side-encryption, Severity: HIGH, Results: 1
+Description: S3 bucket should have encryption defined
+Platform: Terraform
+
+	[1]: /src/main.tf:5
+
+		004: 
+		005: resource "aws_s3_bucket" "public-bucket" {
+		006:   bucket = "bucket-with-public-policy-2"
+
+
+S3 Bucket Allows Get Action From All Principals, Severity: HIGH, Results: 1
+Description: S3 Buckets must not allow Get Action From All Principals, as to prevent leaking private information to the entire internet or allow unauthorized data tampering / deletion. This means the 'Effect' must not be 'Allow' when the 'Action' is Get, for all Principals.
+Platform: Terraform
+
+	[1]: /src/main.tf:20
+
+		019:       "Principal": {"AWS": "*"},
+		020:       "Action":["s3:GetObject","s3:GetObjectVersion"],
+		021:       "Resource":["arn:aws:s3:::bucket-with-public-policy-2/*"]
+
+
+S3 Bucket Access to Any Principal, Severity: HIGH, Results: 1
+Description: S3 Buckets must not allow Actions From All Principals, as to prevent leaking private information to the entire internet or allow unauthorized data tampering / deletion. This means the 'Effect' must not be 'Allow' when there are All Principals
+Platform: Terraform
+
+	[1]: /src/main.tf:12
+
+		011: 
+		012:   policy = <<POLICY
+		013: {
+
+
+
+Results Summary:
+HIGH: 3
+MEDIUM: 1
+LOW: 1
+INFO: 1
+TOTAL: 6
+
+Scan duration: 4.028987163s

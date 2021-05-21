@@ -16,16 +16,38 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.0
+Scanning with Keeping Infrastructure as Code Secure v1.3.1
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 520
+Queries loaded: 559
 Queries failed to execute: 0
 
 ------------------------------------
+
+Resource Not Using Tags, Severity: INFO, Results: 1
+Description: AWS services resource tags are an essential part of managing components
+Platform: Terraform
+
+	[1]: /src/main.tf:1
+
+		001: resource "aws_db_instance" "default" {
+		002:   allocated_storage    = 10
+		003:   engine               = "mysql"
+
+
+RDS Without Logging, Severity: INFO, Results: 1
+Description: RDS does not have any kind of logger
+Platform: Terraform
+
+	[1]: /src/main.tf:1
+
+		001: resource "aws_db_instance" "default" {
+		002:   allocated_storage    = 10
+		003:   engine               = "mysql"
+
 
 RDS With Backup Disabled, Severity: MEDIUM, Results: 1
 Description: RDS configured without backup
@@ -76,7 +98,7 @@ Results Summary:
 HIGH: 3
 MEDIUM: 1
 LOW: 0
-INFO: 0
-TOTAL: 4
+INFO: 2
+TOTAL: 6
 
-Scan duration: 11.489518046s
+Scan duration: 3.914003804s

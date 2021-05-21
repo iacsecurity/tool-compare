@@ -16,16 +16,27 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.0
+Scanning with Keeping Infrastructure as Code Secure v1.3.1
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 520
+Queries loaded: 559
 Queries failed to execute: 0
 
 ------------------------------------
+
+Resource Not Using Tags, Severity: INFO, Results: 1
+Description: AWS services resource tags are an essential part of managing components
+Platform: Terraform
+
+	[1]: /src/main.tf:1
+
+		001: resource "aws_s3_bucket" "hoge" {
+		002:   bucket = "hoge"
+		003: }
+
 
 S3 Bucket Logging Disabled, Severity: LOW, Results: 1
 Description: S3 bucket without logging
@@ -60,12 +71,23 @@ Platform: Terraform
 		003: }
 
 
+Athena Database Not Encrypted, Severity: HIGH, Results: 1
+Description: AWS Athena Database data in S3 should be encrypted
+Platform: Terraform
+
+	[1]: /src/main.tf:5
+
+		004: 
+		005: resource "aws_athena_database" "hoge" {
+		006:   name   = "database_name"
+
+
 
 Results Summary:
-HIGH: 1
+HIGH: 2
 MEDIUM: 1
 LOW: 1
-INFO: 0
-TOTAL: 3
+INFO: 1
+TOTAL: 5
 
-Scan duration: 10.714387755s
+Scan duration: 4.37559222s

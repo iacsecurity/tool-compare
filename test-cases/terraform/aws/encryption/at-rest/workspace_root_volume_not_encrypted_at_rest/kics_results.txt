@@ -16,16 +16,66 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.0
+Scanning with Keeping Infrastructure as Code Secure v1.3.1
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 520
+Queries loaded: 559
 Queries failed to execute: 0
 
 ------------------------------------
+
+Resource Not Using Tags, Severity: INFO, Results: 4
+Description: AWS services resource tags are an essential part of managing components
+Platform: Terraform
+
+	[1]: /src/main.tf:76
+
+		075: 
+		076: resource "aws_workspaces_workspace" "test" {
+		077:   directory_id = aws_workspaces_directory.test.id
+
+
+	[2]: /src/main.tf:32
+
+		031: 
+		032: resource "aws_directory_service_directory" "test" {
+		033:   name     = "corp.notexample.com"
+
+
+	[3]: /src/main.tf:47
+
+		046: 
+		047: resource "aws_workspaces_directory" "test" {
+		048:   directory_id = aws_directory_service_directory.test.id
+
+
+	[4]: /src/main.tf:61
+
+		060: 
+		061: resource "aws_iam_role" "workspaces_default" {
+		062:   name               = "workspaces_DefaultRole"
+
+
+Workspaces Workspace Volume Not Encrypted, Severity: HIGH, Results: 2
+Description: AWS Workspaces Workspace data stored in volumes should be encrypted
+Platform: Terraform
+
+	[1]: /src/main.tf:84
+
+		083:     user_volume_size_gib                      = 10
+		084:     root_volume_size_gib                      = 80
+		085:     running_mode                              = "AUTO_STOP"
+
+
+	[2]: /src/main.tf:83
+
+		082:     compute_type_name                         = "VALUE"
+		083:     user_volume_size_gib                      = 10
+		084:     root_volume_size_gib                      = 80
+
 
 Passwords And Secrets In Infrastructure Code, Severity: HIGH, Results: 1
 Description: Query to find passwords and secrets in infrastructure code.
@@ -40,10 +90,10 @@ Platform: Common
 
 
 Results Summary:
-HIGH: 1
+HIGH: 3
 MEDIUM: 0
 LOW: 0
-INFO: 0
-TOTAL: 1
+INFO: 4
+TOTAL: 7
 
-Scan duration: 11.225461464s
+Scan duration: 4.027764324s

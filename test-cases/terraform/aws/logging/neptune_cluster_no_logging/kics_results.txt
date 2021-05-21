@@ -16,16 +16,38 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.0
+Scanning with Keeping Infrastructure as Code Secure v1.3.1
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 520
+Queries loaded: 559
 Queries failed to execute: 0
 
 ------------------------------------
+
+Resource Not Using Tags, Severity: INFO, Results: 1
+Description: AWS services resource tags are an essential part of managing components
+Platform: Terraform
+
+	[1]: /src/main.tf:1
+
+		001: resource "aws_neptune_cluster" "test" {
+		002:   cluster_identifier                  = "neptune-cluster-demo"
+		003:   engine                              = "neptune"
+
+
+Neptune Logging Is Disabled, Severity: INFO, Results: 1
+Description: Neptune logging should be enabled
+Platform: Terraform
+
+	[1]: /src/main.tf:1
+
+		001: resource "aws_neptune_cluster" "test" {
+		002:   cluster_identifier                  = "neptune-cluster-demo"
+		003:   engine                              = "neptune"
+
 
 Neptune Database Cluster Encryption Disabled, Severity: MEDIUM, Results: 1
 Description: Check if Neptune Cluster Storage is securely encrypted
@@ -43,7 +65,7 @@ Results Summary:
 HIGH: 0
 MEDIUM: 1
 LOW: 0
-INFO: 0
-TOTAL: 1
+INFO: 2
+TOTAL: 3
 
-Scan duration: 10.544048713s
+Scan duration: 3.846889155s

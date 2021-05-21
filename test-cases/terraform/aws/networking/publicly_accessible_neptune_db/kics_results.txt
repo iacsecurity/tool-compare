@@ -16,16 +16,116 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.0
+Scanning with Keeping Infrastructure as Code Secure v1.3.1
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 520
+Queries loaded: 559
 Queries failed to execute: 0
 
 ------------------------------------
+
+Security Group Without Description, Severity: INFO, Results: 1
+Description: It's considered a best practice for AWS Security Group to have a description
+Platform: Terraform
+
+	[1]: /src/main.tf:18
+
+		017: 
+		018: resource "aws_security_group" "free" {
+		019:   vpc_id = aws_vpc.external.id
+
+
+Security Group Rules Without Description, Severity: INFO, Results: 1
+Description: It's considered a best practice for all rules in AWS Security Group to have a description
+Platform: Terraform
+
+	[1]: /src/main.tf:21
+
+		020: 
+		021:   ingress {
+		022:     from_port = 0
+
+
+Resource Not Using Tags, Severity: INFO, Results: 9
+Description: AWS services resource tags are an essential part of managing components
+Platform: Terraform
+
+	[1]: /src/main.tf:53
+
+		052: 
+		053: resource "aws_subnet" "free_2" {
+		054:   vpc_id = aws_vpc.external.id
+
+
+	[2]: /src/main.tf:47
+
+		046: 
+		047: resource "aws_subnet" "free_1" {
+		048:   vpc_id = aws_vpc.external.id
+
+
+	[3]: /src/main.tf:59
+
+		058: 
+		059: resource "aws_db_subnet_group" free {
+		060:   name = "free"
+
+
+	[4]: /src/main.tf:18
+
+		017: 
+		018: resource "aws_security_group" "free" {
+		019:   vpc_id = aws_vpc.external.id
+
+
+	[5]: /src/main.tf:76
+
+		075: 
+		076: resource "aws_neptune_cluster_instance" "neptune_instance" {
+		077:   count              = 2
+
+
+	[6]: /src/main.tf:14
+
+		013: 
+		014: resource "aws_internet_gateway" "igw" {
+		015:   vpc_id = aws_vpc.external.id
+
+
+	[7]: /src/main.tf:29
+
+		028: 
+		029: resource "aws_route_table" "rt" {
+		030:   vpc_id = aws_vpc.external.id
+
+
+	[8]: /src/main.tf:66
+
+		065: 
+		066: resource "aws_neptune_cluster" "encrypted_neptune_cluster" {
+		067:   cluster_identifier  = "cloudrail-test-encrypted"
+
+
+	[9]: /src/main.tf:9
+
+		008:   enable_dns_hostnames = "true"
+		009:   tags = {
+		010:     Name = "external-vpc"
+
+
+Neptune Logging Is Disabled, Severity: INFO, Results: 1
+Description: Neptune logging should be enabled
+Platform: Terraform
+
+	[1]: /src/main.tf:66
+
+		065: 
+		066: resource "aws_neptune_cluster" "encrypted_neptune_cluster" {
+		067:   cluster_identifier  = "cloudrail-test-encrypted"
+
 
 VPC FlowLogs Disabled, Severity: MEDIUM, Results: 1
 Description: VPC hasn't got any FlowLog associated
@@ -444,7 +544,7 @@ Results Summary:
 HIGH: 55
 MEDIUM: 1
 LOW: 0
-INFO: 0
-TOTAL: 56
+INFO: 12
+TOTAL: 68
 
-Scan duration: 10.99458163s
+Scan duration: 3.893985296s

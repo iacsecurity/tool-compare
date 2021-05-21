@@ -16,16 +16,34 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.0
+Scanning with Keeping Infrastructure as Code Secure v1.3.1
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 520
+Queries loaded: 559
 Queries failed to execute: 0
 
 ------------------------------------
+
+Resource Not Using Tags, Severity: INFO, Results: 2
+Description: AWS services resource tags are an essential part of managing components
+Platform: Terraform
+
+	[1]: /src/main.tf:29
+
+		028: 
+		029: resource "aws_iam_role" "iam_for_cloudwatch" {
+		030:   name = "iam_for_cloudwatch"
+
+
+	[2]: /src/main.tf:49
+
+		048: 
+		049: resource "aws_kinesis_stream" "kinesis_for_cloudwatch" {
+		050:   name             = "kinesis_for_cloudwatch"
+
 
 Kinesis Not Encrypted With KMS, Severity: HIGH, Results: 1
 Description: AWS Kinesis Streams and metadata should be protected with KMS
@@ -43,7 +61,7 @@ Results Summary:
 HIGH: 1
 MEDIUM: 0
 LOW: 0
-INFO: 0
-TOTAL: 1
+INFO: 2
+TOTAL: 3
 
-Scan duration: 10.949899006s
+Scan duration: 4.348194335s

@@ -16,16 +16,34 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.0
+Scanning with Keeping Infrastructure as Code Secure v1.3.1
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 520
+Queries loaded: 559
 Queries failed to execute: 0
 
 ------------------------------------
+
+Resource Not Using Tags, Severity: INFO, Results: 2
+Description: AWS services resource tags are an essential part of managing components
+Platform: Terraform
+
+	[1]: /src/main.tf:5
+
+		004: 
+		005: resource "aws_lambda_function" "my-lambda" {
+		006:   filename = "~/Downloads/lambda.json.zip"
+
+
+	[2]: /src/main.tf:13
+
+		012: 
+		013: resource "aws_iam_role" "lambda-role" {
+		014:   name = "lambda-role"
+
 
 Lambda Permission Misconfigured, Severity: LOW, Results: 1
 Description: Lambda permission may be misconfigured if the action field is not filled in by 'lambda:InvokeFunction'
@@ -65,7 +83,7 @@ Results Summary:
 HIGH: 0
 MEDIUM: 1
 LOW: 2
-INFO: 0
-TOTAL: 3
+INFO: 2
+TOTAL: 5
 
-Scan duration: 10.780400672s
+Scan duration: 3.675476498s
