@@ -1,0 +1,59 @@
+
+
+Violation Details -
+    
+	Description    :	Upper case alphabet not present in the Password, Password Complexity is not high. Increased Password complexity increases resiliency against brute force attack
+	File           :	main.tf
+	Line           :	11
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Setting a lengthy password increases account resiliency against brute force login attempts
+	File           :	main.tf
+	Line           :	11
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Number not present in the Password, Password Complexity is not high. Increased Password complexity increases resiliency against brute force attack
+	File           :	main.tf
+	Line           :	11
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Lower case alphabet not present in the Password, Password Complexity is not high. Increased Password complexity increases resiliency against brute force attack
+	File           :	main.tf
+	Line           :	11
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Special symbols not present in the Password, Password Complexity is not high. Increased Password complexity increases resiliency against brute force attack
+	File           :	main.tf
+	Line           :	11
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Setting a lengthy password increases account resiliency against brute force login attempts
+	File           :	main.tf
+	Line           :	11
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+
+Scan Summary -
+
+	File/Folder         :	tool-compare/test-cases/terraform/aws/iam/iam-entities/password_policy_not_locked_down
+	IaC Type            :	terraform
+	Scanned At          :	2021-05-12 17:49:00.698431 +0000 UTC
+	Policies Validated  :	561
+	Violated Policies   :	6
+	Low                 :	0
+	Medium              :	6
+	High                :	0
+	
+

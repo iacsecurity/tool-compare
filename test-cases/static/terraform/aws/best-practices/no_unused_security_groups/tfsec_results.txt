@@ -1,0 +1,108 @@
+
+Check 1
+
+  [AWS009][WARNING] Resource 'aws_security_group.public-internet-sg' defines a fully open egress security group.
+  /src/main.tf:55
+
+
+      52 |     from_port   = 0
+      53 |     to_port     = 0
+      54 |     protocol    = "-1"
+      55 |     cidr_blocks = [local.quad_zero_cidr_block]
+      56 |   }
+      57 | 
+      58 |   ingress {
+
+  Impact:     The port is exposed for egressing data to the internet
+  Resolution: Set a more restrictive cidr range
+
+  See https://tfsec.dev/docs/aws/AWS009/ for more information. 
+
+Check 2
+
+  [AWS079][ERROR] Resource 'aws_instance.test-ec2-instance' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
+  /src/main.tf:83-88
+
+
+      80 |   owners = ["099720109477"] # Canonical
+      81 | }
+      82 | 
+      83 | resource "aws_instance" "test-ec2-instance" {
+      84 |   ami = data.aws_ami.ubuntu.id
+      85 |   instance_type = "t2.micro"
+      86 |   subnet_id = aws_subnet.public-subnet.id
+      87 |   vpc_security_group_ids = [aws_security_group.public-internet-sg.id]
+      88 | }
+      89 | 
+      90 | resource "aws_internet_gateway" "igw" {
+      91 |   vpc_id = aws_vpc.main.id
+
+  Impact:     Instance metadata service can be interacted with freely
+  Resolution: Enable HTTP token requirement for IMDS
+
+  See https://tfsec.dev/docs/aws/AWS079/ for more information. 
+
+Check 3
+
+  [AWS008][WARNING] Resource 'aws_security_group.unused' defines a fully open ingress security group.
+  /src/main.tf:102
+
+
+      99 |     from_port = 53
+     100 |     protocol = "UDP"
+     101 |     to_port = 53
+     102 |     cidr_blocks = ["0.0.0.0/0"]
+     103 |   }
+     104 | }
+     105 | 
+
+  Impact:     The port is exposed for ingress from the internet
+  Resolution: Set a more restrictive cidr range
+
+  See https://tfsec.dev/docs/aws/AWS008/ for more information. 
+
+Check 4
+
+  [AWS018][ERROR] Resource 'aws_security_group.unused' should include a description for auditing purposes.
+  /src/main.tf:94-104
+
+
+      91 |   vpc_id = aws_vpc.main.id
+      92 | }
+      93 | 
+      94 | resource "aws_security_group" "unused" {
+      95 |   vpc_id = aws_vpc.main.id
+      96 |   name = "Unused security group"
+      97 | 
+      98 |   ingress {
+      99 |     from_port = 53
+     100 |     protocol = "UDP"
+     101 |     to_port = 53
+     102 |     cidr_blocks = ["0.0.0.0/0"]
+     103 |   }
+     104 | }
+     105 | 
+
+  Impact:     Descriptions provide context for the firewall rule reasons
+  Resolution: Add descriptions for all security groups anf rules
+
+  See https://tfsec.dev/docs/aws/AWS018/ for more information. 
+
+  times
+  ------------------------------------------
+  disk i/o             48.648084ms
+  parsing HCL          578.375µs
+  evaluating values    3.808875ms
+  running checks       20.968084ms
+
+  counts
+  ------------------------------------------
+  files loaded         1
+  blocks               11
+  evaluated blocks     11
+  modules              0
+  module blocks        0
+  ignored checks       0
+
+4 potential problems detected.
+

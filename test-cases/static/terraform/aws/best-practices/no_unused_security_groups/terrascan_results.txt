@@ -1,0 +1,38 @@
+
+
+Violation Details -
+    
+	Description    :	Unknown Port is exposed to the entire internet
+	File           :	main.tf
+	Line           :	93
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
+	File           :	main.tf
+	Line           :	82
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure VPC flow logging is enabled in all VPCs
+	File           :	main.tf
+	Line           :	12
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+
+Scan Summary -
+
+	File/Folder         :	tool-compare
+	IaC Type            :	terraform
+	Scanned At          :	2021-05-05 22:23:39.122582 +0000 UTC
+	Policies Validated  :	561
+	Violated Policies   :	3
+	Low                 :	0
+	Medium              :	2
+	High                :	1
+	
+

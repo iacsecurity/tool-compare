@@ -1,0 +1,14 @@
+
+
+Scan Summary -
+
+	File/Folder         :	tool-compare/test-cases/terraform/aws/iam/iam-entities/iam_anyone_can_assume_role
+	IaC Type            :	terraform
+	Scanned At          :	2021-05-12 17:48:59.227408 +0000 UTC
+	Policies Validated  :	561
+	Violated Policies   :	0
+	Low                 :	0
+	Medium              :	0
+	High                :	0
+	
+

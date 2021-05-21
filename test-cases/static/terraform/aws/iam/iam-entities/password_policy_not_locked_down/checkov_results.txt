@@ -1,0 +1,128 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.138 
+
+terraform scan results:
+
+Passed checks: 0, Failed checks: 8, Skipped checks: 0
+
+Check: CKV_AWS_10: "Ensure IAM password policy requires minimum length of 14 or greater"
+	FAILED for resource: aws_iam_account_password_policy.strict
+	File: /main.tf:11-18
+	Guide: https://docs.bridgecrew.io/docs/iam_9-1
+
+		11 | resource "aws_iam_account_password_policy" "strict" {
+		12 |   minimum_password_length        = 1
+		13 |   require_lowercase_characters   = false
+		14 |   require_numbers                = false
+		15 |   require_uppercase_characters   = false
+		16 |   require_symbols                = false
+		17 |   allow_users_to_change_password = false
+		18 | }
+
+
+Check: CKV_AWS_14: "Ensure IAM password policy requires at least one symbol"
+	FAILED for resource: aws_iam_account_password_policy.strict
+	File: /main.tf:11-18
+	Guide: https://docs.bridgecrew.io/docs/iam_7
+
+		11 | resource "aws_iam_account_password_policy" "strict" {
+		12 |   minimum_password_length        = 1
+		13 |   require_lowercase_characters   = false
+		14 |   require_numbers                = false
+		15 |   require_uppercase_characters   = false
+		16 |   require_symbols                = false
+		17 |   allow_users_to_change_password = false
+		18 | }
+
+
+Check: CKV_AWS_15: "Ensure IAM password policy requires at least one uppercase letter"
+	FAILED for resource: aws_iam_account_password_policy.strict
+	File: /main.tf:11-18
+	Guide: https://docs.bridgecrew.io/docs/iam_5
+
+		11 | resource "aws_iam_account_password_policy" "strict" {
+		12 |   minimum_password_length        = 1
+		13 |   require_lowercase_characters   = false
+		14 |   require_numbers                = false
+		15 |   require_uppercase_characters   = false
+		16 |   require_symbols                = false
+		17 |   allow_users_to_change_password = false
+		18 | }
+
+
+Check: CKV_AWS_9: "Ensure IAM password policy expires passwords within 90 days or less"
+	FAILED for resource: aws_iam_account_password_policy.strict
+	File: /main.tf:11-18
+	Guide: https://docs.bridgecrew.io/docs/iam_11
+
+		11 | resource "aws_iam_account_password_policy" "strict" {
+		12 |   minimum_password_length        = 1
+		13 |   require_lowercase_characters   = false
+		14 |   require_numbers                = false
+		15 |   require_uppercase_characters   = false
+		16 |   require_symbols                = false
+		17 |   allow_users_to_change_password = false
+		18 | }
+
+
+Check: CKV_AWS_11: "Ensure IAM password policy requires at least one lowercase letter"
+	FAILED for resource: aws_iam_account_password_policy.strict
+	File: /main.tf:11-18
+	Guide: https://docs.bridgecrew.io/docs/iam_6
+
+		11 | resource "aws_iam_account_password_policy" "strict" {
+		12 |   minimum_password_length        = 1
+		13 |   require_lowercase_characters   = false
+		14 |   require_numbers                = false
+		15 |   require_uppercase_characters   = false
+		16 |   require_symbols                = false
+		17 |   allow_users_to_change_password = false
+		18 | }
+
+
+Check: CKV_AWS_13: "Ensure IAM password policy prevents password reuse"
+	FAILED for resource: aws_iam_account_password_policy.strict
+	File: /main.tf:11-18
+	Guide: https://docs.bridgecrew.io/docs/iam_10
+
+		11 | resource "aws_iam_account_password_policy" "strict" {
+		12 |   minimum_password_length        = 1
+		13 |   require_lowercase_characters   = false
+		14 |   require_numbers                = false
+		15 |   require_uppercase_characters   = false
+		16 |   require_symbols                = false
+		17 |   allow_users_to_change_password = false
+		18 | }
+
+
+Check: CKV_AWS_12: "Ensure IAM password policy requires at least one number"
+	FAILED for resource: aws_iam_account_password_policy.strict
+	File: /main.tf:11-18
+	Guide: https://docs.bridgecrew.io/docs/iam_8
+
+		11 | resource "aws_iam_account_password_policy" "strict" {
+		12 |   minimum_password_length        = 1
+		13 |   require_lowercase_characters   = false
+		14 |   require_numbers                = false
+		15 |   require_uppercase_characters   = false
+		16 |   require_symbols                = false
+		17 |   allow_users_to_change_password = false
+		18 | }
+
+
+Check: CKV2_AWS_22: "Ensure an IAM User does not have access to the console"
+	FAILED for resource: aws_iam_user.iam_user_1
+	File: /main.tf:1-4
+
+		1 | resource "aws_iam_user" "iam_user_1" {
+		2 |   name = "iam_user_1"
+		3 | 
+		4 | }
+
+
