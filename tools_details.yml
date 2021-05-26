@@ -1,0 +1,92 @@
+# This file lists all of the tools covered by this repository, together with some
+# additional information, such as API keys and credentials for accessing 
+# demo accounts set up to be used with this repo.
+
+tools:
+  - checkov:
+    id: checkov
+    name: Checkov
+    company: Bridgecrew
+    license: OSS
+    main_link: http://bridgecrew.io/
+    custom_rules: Yes, Python
+
+    web_account:
+      url: https://www.bridgecrew.cloud/
+      username: iacsec.toolcompare+ro@gmail.com
+      password: Zxcv1234! 
+
+    api_key: 8ce1454b-95de-5c80-8d18-618472bf396f # API key created especially for this repo
+
+  - cloudrail:
+    id: cloudrail
+    name: Cloudrail
+    company: Indeni
+    license: Freemium
+    main_link: http://indeni.com/cloudrail
+    custom_rules: Yes, Python
+
+    web_account:
+      url: https://web.cloudrail.app
+      # IMPORTANT:
+      # Cloudrail does not yet support read-only access via login. We ask that you do not mess with the
+      # Cloudrail account created for this repo. There's nothing confidential there and breaking any
+      # settings will simply create more work for those collaborating on this repository.
+      username: iacsec.toolcompare+ro@gmail.com
+      password: Zxcv1234! 
+
+    # IMPORTANT:
+    # Cloudrail does not yet support read-only access via API. We ask that you do not mess with the
+    # Cloudrail account created for this repo. There's nothing confidential there and breaking any
+    # settings will simply create more work for those collaborating on this repository.
+    api_key: 4ycnnm2f5tnhM6CvlDlF217nIhqBVWw0wITnHXKiyx4 # API key created especially for this repo
+
+  - kics:
+    id: kics
+    name: KICS
+    company: Checkmarx
+    license: OSS
+    main_link: https://www.kics.io/
+    custom_rules: Yes, Rego
+    
+    # KICS doesn't have a web UI or API yet
+
+  - snyk:
+    id: snyk
+    name: Snyk
+    company: Snyk
+    license: Freemium
+    main_link: https://www.snyk.io/
+    custom_rules: "No"
+    
+    web_account:
+      # Snyk's authentication mechanism doesn't allow for the creation of a simple email/password
+      # combo in the Free plan. If you want to access the Snyk account set up for this repo, 
+      # simply request to join the org "iacsec.toolcompare".
+      url: https://app.snyk.io/
+
+    api_key: 9ac152d6-0081-4855-af8e-252fea96adf9
+
+  - terrascan:
+    id: terrascan
+    name: Terrascan
+    company: Accurics
+    license: OSS
+    main_link: https://www.accurics.com/
+    custom_rules: Yes, Rego
+
+    web_account:
+      # Was not able to add a readonly user yet (license?). Opened a ticket asking to be able to do it.
+      url: https://app.accurics.com/
+    
+    # Was not able to get an api_key yet, due to licensing.
+
+  - tfsec:
+    id: tfsec
+    name: Tfsec
+    company: Tfsec
+    license: OSS
+    main_link: https://tfsec.dev/
+    custom_rules: Yes, JSON
+
+    # tfsec doesn't have a web UI or API yet

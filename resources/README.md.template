@@ -7,11 +7,10 @@ The goal of this repository is to help compare the different options so that use
 choose the tool that best fits their own needs.
 
 ## What tools are there?
-|     | [Checkov](https://github.com/bridgecrewio/checkov) | [Indeni Cloudrail](https://www.indeni.com/cloudrail) | [Kics](https://github.com/Checkmarx/kics) | [Snyk](https://snyk.io/) | [Terrascan](https://github.com/accurics/terrascan) | [Tfsec](https://github.com/tfsec/tfsec) |
-|----|----|----|----|----|----|----|
-|License|OSS|Freemium|OSS|Freemium|OSS|OSS|
+{{ tools_table }}
 
-(there are others, anyone can add to this list, sorted A-Z)
+For more information on each tool, including demo credentials for those that have them, 
+see [tools_details.yml](tools_details.yml).
 
 ## How does this repo work?
 This repository has a set of test-cases and a main script, called [run_all_tools.sh](/run_all_tools.sh) 
