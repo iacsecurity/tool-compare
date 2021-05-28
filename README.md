@@ -178,3 +178,4 @@ and run the `run_all_tools.sh` script against it. Make sure to include all of th
 
 NOTE: This repository has been initiated by @yi2020, CEO & Founder of Indeni, the company behind Indeni Cloudrail. While this was initiated by an employee of a vendor in the community, the intention is for this repository to be neutral and truly serve as a non-biased comparison tool of products offered. Contributions that help users make that choice, and are unbiased in nature, are very welcome. The aspiration is that over time all vendors will become equal contributors in this repository.
 
+See blog at <a target="_blank" href="https://indeni.com/blog/comparing-cloudrail-checkov-tfsec-and-kics-with-testing/">https://indeni.com/blog/comparing-cloudrail-checkov-tfsec-and-kics-with-testing</a>
