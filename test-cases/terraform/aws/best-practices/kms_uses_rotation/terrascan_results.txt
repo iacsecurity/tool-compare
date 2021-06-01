@@ -1,14 +1,25 @@
 
 
+Violation Details -
+    
+	Description    :	Ensure rotation for customer created CMKs is enabled
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	1
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+
 Scan Summary -
 
 	File/Folder         :	tool-compare/test-cases/terraform/aws/best-practices/kms_uses_rotation
-	IaC Type            :	terraform
-	Scanned At          :	2021-04-30 19:28:32.726027 +0000 UTC
-	Policies Validated  :	561
-	Violated Policies   :	0
+	IaC Type            :	all
+	Scanned At          :	2021-06-01 05:56:09.63537 +0000 UTC
+	Policies Validated  :	612
+	Violated Policies   :	1
 	Low                 :	0
-	Medium              :	0
+	Medium              :	1
 	High                :	0
 	
 

@@ -1,14 +1,33 @@
 
 
+Violation Details -
+    
+	Description    :	Ensure SecretsManager Secrets are Encrypted using KMS key
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	5
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure secrets manager do not wildcard policies attached
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	9
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+
 Scan Summary -
 
 	File/Folder         :	tool-compare/test-cases/terraform/aws/iam/resource-policies/secrets_manager_not_secure_policy
-	IaC Type            :	terraform
-	Scanned At          :	2021-04-29 23:53:14.580913 +0000 UTC
-	Policies Validated  :	561
-	Violated Policies   :	0
+	IaC Type            :	all
+	Scanned At          :	2021-06-01 05:55:25.117378 +0000 UTC
+	Policies Validated  :	612
+	Violated Policies   :	2
 	Low                 :	0
-	Medium              :	0
-	High                :	0
+	Medium              :	1
+	High                :	1
 	
 

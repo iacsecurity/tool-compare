@@ -1,14 +1,25 @@
 
 
+Violation Details -
+    
+	Description    :	Ensure AWS Config is enabled in all regions
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	1
+	Severity       :	Medium
+	
+	-----------------------------------------------------------------------
+	
+
 Scan Summary -
 
 	File/Folder         :	tool-compare/test-cases/terraform/aws/best-practices/config_aggregator_all_regions
-	IaC Type            :	terraform
-	Scanned At          :	2021-04-30 19:28:32.134216 +0000 UTC
-	Policies Validated  :	561
-	Violated Policies   :	0
+	IaC Type            :	all
+	Scanned At          :	2021-06-01 05:56:07.281309 +0000 UTC
+	Policies Validated  :	612
+	Violated Policies   :	1
 	Low                 :	0
-	Medium              :	0
+	Medium              :	1
 	High                :	0
 	
 

@@ -3,9 +3,9 @@
 Scan Summary -
 
 	File/Folder         :	tool-compare/test-cases/terraform/aws/iam/iam-entities/human_users_defined
-	IaC Type            :	terraform
-	Scanned At          :	2021-04-29 23:53:28.15225 +0000 UTC
-	Policies Validated  :	561
+	IaC Type            :	all
+	Scanned At          :	2021-06-01 05:55:49.31422 +0000 UTC
+	Policies Validated  :	612
 	Violated Policies   :	0
 	Low                 :	0
 	Medium              :	0

@@ -1,13 +1,24 @@
 
 
+Violation Details -
+    
+	Description    :	Ensure Global Accelerator accelerator has flow logs enabled.
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	1
+	Severity       :	LOW
+	
+	-----------------------------------------------------------------------
+	
+
 Scan Summary -
 
 	File/Folder         :	tool-compare/test-cases/terraform/aws/logging/globalaccelerator_accelerator_no_flow_logs
-	IaC Type            :	terraform
-	Scanned At          :	2021-04-30 19:28:25.435164 +0000 UTC
-	Policies Validated  :	561
-	Violated Policies   :	0
-	Low                 :	0
+	IaC Type            :	all
+	Scanned At          :	2021-06-01 05:55:54.765233 +0000 UTC
+	Policies Validated  :	612
+	Violated Policies   :	1
+	Low                 :	1
 	Medium              :	0
 	High                :	0
 	

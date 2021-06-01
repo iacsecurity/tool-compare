@@ -2,8 +2,17 @@
 
 Violation Details -
     
+	Description    :	Ensure AWS Redshift cluster instances have logging enabled.
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	1
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
 	Description    :	Ensure Redshift clusters are not publicly accessible to minimize security risks.
 	File           :	main.tf
+	Plan Root      :	./
 	Line           :	1
 	Severity       :	HIGH
 	
@@ -11,6 +20,7 @@ Violation Details -
 	
 	Description    :	Use customer-managed KMS keys instead of AWS-managed keys, to have granular control over encrypting and encrypting data. Encrypt Redshift clusters with a Customer-managed KMS key. This is a recommended best practice.
 	File           :	main.tf
+	Plan Root      :	./
 	Line           :	1
 	Severity       :	HIGH
 	
@@ -20,12 +30,12 @@ Violation Details -
 Scan Summary -
 
 	File/Folder         :	tool-compare/test-cases/terraform/aws/logging/redshift_without_logging
-	IaC Type            :	terraform
-	Scanned At          :	2021-04-30 19:28:26.020417 +0000 UTC
-	Policies Validated  :	561
-	Violated Policies   :	2
+	IaC Type            :	all
+	Scanned At          :	2021-06-01 05:55:56.287578 +0000 UTC
+	Policies Validated  :	612
+	Violated Policies   :	3
 	Low                 :	0
-	Medium              :	0
+	Medium              :	1
 	High                :	2
 	
 

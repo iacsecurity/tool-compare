@@ -4,6 +4,7 @@ Violation Details -
     
 	Description    :	Ensure VPC flow logging is enabled in all VPCs
 	File           :	main.tf
+	Plan Root      :	./
 	Line           :	20
 	Severity       :	MEDIUM
 	
@@ -11,6 +12,7 @@ Violation Details -
 	
 	Description    :	Ensure VPC flow logging is enabled in all VPCs
 	File           :	main.tf
+	Plan Root      :	./
 	Line           :	35
 	Severity       :	MEDIUM
 	
@@ -20,9 +22,9 @@ Violation Details -
 Scan Summary -
 
 	File/Folder         :	tool-compare/test-cases/terraform/aws/networking/over_exposed_vpc_peering
-	IaC Type            :	terraform
-	Scanned At          :	2021-04-29 23:53:06.817307 +0000 UTC
-	Policies Validated  :	561
+	IaC Type            :	all
+	Scanned At          :	2021-06-01 05:55:16.238145 +0000 UTC
+	Policies Validated  :	612
 	Violated Policies   :	2
 	Low                 :	0
 	Medium              :	2

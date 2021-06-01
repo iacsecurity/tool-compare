@@ -2,15 +2,25 @@
 
 Violation Details -
     
-	Description    :	Ensure that your RDS database instances encrypt the underlying storage. Encrypted RDS instances use the industry standard AES-256 encryption algorithm to encrypt data on the server that hosts RDS DB instances. After data is encrypted, RDS handles authentication of access and descryption of data transparently with minimal impact on performance.
+	Description    :	Ensure that your RDS database has IAM Authentication enabled.
 	File           :	main.tf
+	Plan Root      :	./
 	Line           :	1
 	Severity       :	HIGH
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	Ensure that your RDS database has IAM Authentication enabled.
+	Description    :	Ensure AWS RDS instances have logging enabled.
 	File           :	main.tf
+	Plan Root      :	./
+	Line           :	1
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that your RDS database instances encrypt the underlying storage. Encrypted RDS instances use the industry standard AES-256 encryption algorithm to encrypt data on the server that hosts RDS DB instances. After data is encrypted, RDS handles authentication of access and descryption of data transparently with minimal impact on performance.
+	File           :	main.tf
+	Plan Root      :	./
 	Line           :	1
 	Severity       :	HIGH
 	
@@ -20,12 +30,12 @@ Violation Details -
 Scan Summary -
 
 	File/Folder         :	tool-compare/test-cases/terraform/aws/logging/rds_without_logging
-	IaC Type            :	terraform
-	Scanned At          :	2021-04-30 19:28:30.958652 +0000 UTC
-	Policies Validated  :	561
-	Violated Policies   :	2
+	IaC Type            :	all
+	Scanned At          :	2021-06-01 05:56:04.153205 +0000 UTC
+	Policies Validated  :	612
+	Violated Policies   :	3
 	Low                 :	0
-	Medium              :	0
+	Medium              :	1
 	High                :	2
 	
 

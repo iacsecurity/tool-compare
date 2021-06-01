@@ -3,9 +3,9 @@
 Scan Summary -
 
 	File/Folder         :	tool-compare/test-cases/terraform/aws/encryption/at-rest/sns_topic_encrypted_at_rest_with_aws_managed_key_by_key_arn
-	IaC Type            :	terraform
-	Scanned At          :	2021-04-29 23:52:28.757591 +0000 UTC
-	Policies Validated  :	561
+	IaC Type            :	all
+	Scanned At          :	2021-06-01 05:54:58.010088 +0000 UTC
+	Policies Validated  :	612
 	Violated Policies   :	0
 	Low                 :	0
 	Medium              :	0
