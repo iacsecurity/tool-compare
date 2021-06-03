@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.1
+Scanning with Keeping Infrastructure as Code Secure v1.3.2
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 559
+Queries loaded: 575
 Queries failed to execute: 0
 
 ------------------------------------
@@ -31,39 +31,39 @@ Resource Not Using Tags, Severity: INFO, Results: 7
 Description: AWS services resource tags are an essential part of managing components
 Platform: Terraform
 
-	[1]: /src/main.tf:36
+	[1]: /src/main.tf:32
+
+		031: 
+		032: resource "aws_internet_gateway" "igw1" {
+		033:   vpc_id = aws_vpc.vpc1.id
+
+
+	[2]: /src/main.tf:36
 
 		035: 
 		036: resource "aws_route_table" "rt1" {
 		037:   vpc_id = aws_vpc.vpc1.id
 
 
-	[2]: /src/main.tf:54
+	[3]: /src/main.tf:54
 
 		053: 
 		054: resource "aws_lb_target_group" "test" {
 		055:   vpc_id = aws_vpc.vpc1.id
 
 
-	[3]: /src/main.tf:60
+	[4]: /src/main.tf:60
 
 		059: 
 		060: resource "aws_lb" "alb_test" {
 		061:   subnets = [aws_subnet.subnet1.id, aws_subnet.subnet2.id]
 
 
-	[4]: /src/main.tf:5
+	[5]: /src/main.tf:5
 
 		004: 
 		005: resource "aws_vpc" "vpc1" {
 		006:   cidr_block = "10.10.0.0/16"
-
-
-	[5]: /src/main.tf:32
-
-		031: 
-		032: resource "aws_internet_gateway" "igw1" {
-		033:   vpc_id = aws_vpc.vpc1.id
 
 
 	[6]: /src/main.tf:17
@@ -132,4 +132,4 @@ LOW: 0
 INFO: 7
 TOTAL: 11
 
-Scan duration: 3.914230132s
+Scan duration: 4.955641762s

@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.1
+Scanning with Keeping Infrastructure as Code Secure v1.3.2
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 559
+Queries loaded: 575
 Queries failed to execute: 0
 
 ------------------------------------
@@ -56,25 +56,25 @@ Platform: Terraform
 		104:   name = "test-queue"
 
 
-	[2]: /src/main.tf:107
+	[2]: /src/main.tf:12
 
-		106: 
-		107: resource "aws_internet_gateway" "igw" {
-		108:   vpc_id = aws_vpc.main.id
-
-
-	[3]: /src/main.tf:87
-
-		086: 
-		087: resource "aws_instance" "test-ec2-instance" {
-		088:   ami = data.aws_ami.ubuntu.id
+		011: 
+		012: resource "aws_vpc" "main" {
+		013:   cidr_block = local.cidr_block
 
 
-	[4]: /src/main.tf:94
+	[3]: /src/main.tf:94
 
 		093: 
 		094: resource "aws_vpc_endpoint" "sqs-vpc-endpoint" {
 		095:   vpc_id            = aws_vpc.main.id
+
+
+	[4]: /src/main.tf:107
+
+		106: 
+		107: resource "aws_internet_gateway" "igw" {
+		108:   vpc_id = aws_vpc.main.id
 
 
 	[5]: /src/main.tf:50
@@ -84,25 +84,25 @@ Platform: Terraform
 		051:   name        = "public-internet-sg"
 
 
-	[6]: /src/main.tf:12
+	[6]: /src/main.tf:87
 
-		011: 
-		012: resource "aws_vpc" "main" {
-		013:   cidr_block = local.cidr_block
-
-
-	[7]: /src/main.tf:22
-
-		021: 
-		022:   tags = {
-		023:     Name = "public-subnet"
+		086: 
+		087: resource "aws_instance" "test-ec2-instance" {
+		088:   ami = data.aws_ami.ubuntu.id
 
 
-	[8]: /src/main.tf:40
+	[7]: /src/main.tf:40
 
 		039: 
 		040:   tags = {
 		041:     Name = "public-rtb"
+
+
+	[8]: /src/main.tf:22
+
+		021: 
+		022:   tags = {
+		023:     Name = "public-subnet"
 
 
 EC2 Not EBS Optimized, Severity: INFO, Results: 1
@@ -138,6 +138,17 @@ Platform: Terraform
 		013:   cidr_block = local.cidr_block
 
 
+SQS VPC Endpoint Without DNS Resolution, Severity: MEDIUM, Results: 1
+Description: SQS VPC Endpoint should have DNS resolution enabled
+Platform: Terraform
+
+	[1]: /src/main.tf:95
+
+		094: resource "aws_vpc_endpoint" "sqs-vpc-endpoint" {
+		095:   vpc_id            = aws_vpc.main.id
+		096:   service_name      = "com.amazonaws.${local.region}.sqs"
+
+
 SQS With SSE Disabled, Severity: HIGH, Results: 1
 Description: Amazon Simple Queue Service (SQS) queue is not protecting the contents of their messages using Server-Side Encryption (SSE)
 Platform: Terraform
@@ -163,9 +174,9 @@ Platform: Terraform
 
 Results Summary:
 HIGH: 2
-MEDIUM: 1
+MEDIUM: 2
 LOW: 0
 INFO: 12
-TOTAL: 15
+TOTAL: 16
 
-Scan duration: 4.041183756s
+Scan duration: 5.141669867s

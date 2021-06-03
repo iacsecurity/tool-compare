@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.1
+Scanning with Keeping Infrastructure as Code Secure v1.3.2
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 559
+Queries loaded: 575
 Queries failed to execute: 0
 
 ------------------------------------
@@ -47,6 +47,17 @@ Platform: Terraform
 		004: 
 		005: resource "aws_elasticsearch_domain" "es-not-secure-policy" {
 		006:   domain_name = "es-not-secure-policy"
+
+
+Elasticsearch Domain With Vulnerable Policy, Severity: MEDIUM, Results: 1
+Description: Elasticsearch Domain policy should avoid wildcard in 'Action' and 'Principal'.
+Platform: Terraform
+
+	[1]: /src/main.tf:18
+
+		017: 
+		018:   access_policies = <<POLICIES
+		019: {
 
 
 Elasticsearch Domain Not Encrypted Node To Node, Severity: MEDIUM, Results: 1
@@ -74,9 +85,9 @@ Platform: Terraform
 
 Results Summary:
 HIGH: 0
-MEDIUM: 3
+MEDIUM: 4
 LOW: 0
 INFO: 1
-TOTAL: 4
+TOTAL: 5
 
-Scan duration: 3.932666066s
+Scan duration: 5.003881761s

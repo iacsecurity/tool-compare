@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.1
+Scanning with Keeping Infrastructure as Code Secure v1.3.2
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 559
+Queries loaded: 575
 Queries failed to execute: 0
 
 ------------------------------------
@@ -31,18 +31,18 @@ Resource Not Using Tags, Severity: INFO, Results: 2
 Description: AWS services resource tags are an essential part of managing components
 Platform: Terraform
 
-	[1]: /src/main.tf:5
-
-		004: 
-		005: resource "aws_api_gateway_rest_api" "api_gw" {
-		006:   name        = "api-gw-cache-non-encrypted"
-
-
-	[2]: /src/main.tf:44
+	[1]: /src/main.tf:44
 
 		043: 
 		044: resource "aws_api_gateway_stage" "api_gw_stage" {
 		045:   stage_name    = "prod"
+
+
+	[2]: /src/main.tf:5
+
+		004: 
+		005: resource "aws_api_gateway_rest_api" "api_gw" {
+		006:   name        = "api-gw-cache-non-encrypted"
 
 
 Open Access To Resources Through API, Severity: LOW, Results: 1
@@ -196,4 +196,4 @@ LOW: 3
 INFO: 2
 TOTAL: 15
 
-Scan duration: 3.904491604s
+Scan duration: 4.973956646s

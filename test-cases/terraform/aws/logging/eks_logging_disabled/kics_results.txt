@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.1
+Scanning with Keeping Infrastructure as Code Secure v1.3.2
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 559
+Queries loaded: 575
 Queries failed to execute: 0
 
 ------------------------------------
@@ -31,32 +31,32 @@ Resource Not Using Tags, Severity: INFO, Results: 4
 Description: AWS services resource tags are an essential part of managing components
 Platform: Terraform
 
-	[1]: /src/main.tf:19
-
-		018: 
-		019: resource "aws_eks_cluster" "test" {
-		020:   name = "test"
-
-
-	[2]: /src/main.tf:6
+	[1]: /src/main.tf:6
 
 		005: 
 		006: resource "aws_iam_role" "eksrole" {
 		007:   assume_role_policy = ""
 
 
-	[3]: /src/main.tf:16
+	[2]: /src/main.tf:10
 
-		015:   cidr_block = "10.0.0.0/24"
-		016:   vpc_id = aws_vpc.vpc.id
-		017: }
+		009: 
+		010: resource "aws_vpc" "vpc" {
+		011:   cidr_block = "10.0.0.0/16"
 
 
-	[4]: /src/main.tf:14
+	[3]: /src/main.tf:14
 
 		013: 
 		014: resource "aws_subnet" "subnet1" {
 		015:   cidr_block = "10.0.0.0/24"
+
+
+	[4]: /src/main.tf:19
+
+		018: 
+		019: resource "aws_eks_cluster" "test" {
+		020:   name = "test"
 
 
 EKS cluster logging is not enabled, Severity: LOW, Results: 1
@@ -74,11 +74,11 @@ VPC FlowLogs Disabled, Severity: MEDIUM, Results: 1
 Description: VPC hasn't got any FlowLog associated
 Platform: Terraform
 
-	[1]: /src/main.tf:16
+	[1]: /src/main.tf:10
 
-		015:   cidr_block = "10.0.0.0/24"
-		016:   vpc_id = aws_vpc.vpc.id
-		017: }
+		009: 
+		010: resource "aws_vpc" "vpc" {
+		011:   cidr_block = "10.0.0.0/16"
 
 
 
@@ -89,4 +89,4 @@ LOW: 1
 INFO: 4
 TOTAL: 6
 
-Scan duration: 3.892363436s
+Scan duration: 4.738419237s

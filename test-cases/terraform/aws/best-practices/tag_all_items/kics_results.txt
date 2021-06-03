@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.1
+Scanning with Keeping Infrastructure as Code Secure v1.3.2
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 559
+Queries loaded: 575
 Queries failed to execute: 0
 
 ------------------------------------
@@ -31,18 +31,18 @@ Resource Not Using Tags, Severity: INFO, Results: 2
 Description: AWS services resource tags are an essential part of managing components
 Platform: Terraform
 
-	[1]: /src/main.tf:14
-
-		013:   name = "sqs_non_encrypted"
-		014:   tags = {
-		015:     Name = "Sqs Cloudrail Test"
-
-
-	[2]: /src/main.tf:7
+	[1]: /src/main.tf:7
 
 		006:   name              = "sns_not_ecnrypted-1"
 		007:   tags = {
 		008:     Name = "Sns Topic Cloudrail Test"
+
+
+	[2]: /src/main.tf:14
+
+		013:   name = "sqs_non_encrypted"
+		014:   tags = {
+		015:     Name = "Sqs Cloudrail Test"
 
 
 SQS With SSE Disabled, Severity: HIGH, Results: 1
@@ -64,4 +64,4 @@ LOW: 0
 INFO: 2
 TOTAL: 3
 
-Scan duration: 4.272079344s
+Scan duration: 4.582518356s
