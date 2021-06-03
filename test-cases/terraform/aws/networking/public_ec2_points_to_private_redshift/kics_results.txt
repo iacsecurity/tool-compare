@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.1
+Scanning with Keeping Infrastructure as Code Secure v1.3.2
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 559
+Queries loaded: 575
 Queries failed to execute: 0
 
 ------------------------------------
@@ -60,67 +60,67 @@ Resource Not Using Tags, Severity: INFO, Results: 11
 Description: AWS services resource tags are an essential part of managing components
 Platform: Terraform
 
-	[1]: /src/main.tf:80
-
-		079: 
-		080: resource "aws_internet_gateway" "igw" {
-		081:   vpc_id = aws_vpc.nondefault.id
-
-
-	[2]: /src/main.tf:114
-
-		113: 
-		114: resource "aws_security_group" "publicly_accessible_sg" {
-		115:   vpc_id = aws_vpc.nondefault.id
-
-
-	[3]: /src/main.tf:103
-
-		102: 
-		103: resource "aws_redshift_cluster" "test" {
-		104:   cluster_identifier = "redshift-defaults-only"
-
-
-	[4]: /src/main.tf:97
+	[1]: /src/main.tf:97
 
 		096: 
 		097: resource "aws_redshift_subnet_group" nondefault {
 		098:   name = "nondefault"
 
 
-	[5]: /src/main.tf:10
-
-		009: 
-		010: resource "aws_vpc" "nondefault" {
-		011:   cidr_block = "10.1.1.0/24"
-
-
-	[6]: /src/main.tf:68
+	[2]: /src/main.tf:68
 
 		067: 
 		068: resource "aws_subnet" "nondefault_1" {
 		069:   vpc_id = aws_vpc.nondefault.id
 
 
-	[7]: /src/main.tf:74
+	[3]: /src/main.tf:74
 
 		073: 
 		074: resource "aws_subnet" "nondefault_2" {
 		075:   vpc_id = aws_vpc.nondefault.id
 
 
-	[8]: /src/main.tf:131
+	[4]: /src/main.tf:10
 
-		130: // This instance is can potentially be used to hop into the DB
-		131: resource "aws_instance" "public_ins" {
-		132:   ami = "ami-0130bec6e5047f596"
+		009: 
+		010: resource "aws_vpc" "nondefault" {
+		011:   cidr_block = "10.1.1.0/24"
 
 
-	[9]: /src/main.tf:84
+	[5]: /src/main.tf:80
+
+		079: 
+		080: resource "aws_internet_gateway" "igw" {
+		081:   vpc_id = aws_vpc.nondefault.id
+
+
+	[6]: /src/main.tf:84
 
 		083: 
 		084: resource aws_route_table "nondefault_1" {
 		085:   vpc_id = aws_vpc.nondefault.id
+
+
+	[7]: /src/main.tf:103
+
+		102: 
+		103: resource "aws_redshift_cluster" "test" {
+		104:   cluster_identifier = "redshift-defaults-only"
+
+
+	[8]: /src/main.tf:114
+
+		113: 
+		114: resource "aws_security_group" "publicly_accessible_sg" {
+		115:   vpc_id = aws_vpc.nondefault.id
+
+
+	[9]: /src/main.tf:131
+
+		130: // This instance is can potentially be used to hop into the DB
+		131: resource "aws_instance" "public_ins" {
+		132:   ami = "ami-0130bec6e5047f596"
 
 
 	[10]: /src/main.tf:36
@@ -656,4 +656,4 @@ LOW: 0
 INFO: 16
 TOTAL: 79
 
-Scan duration: 3.983704401s
+Scan duration: 4.956924852s

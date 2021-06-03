@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.1
+Scanning with Keeping Infrastructure as Code Secure v1.3.2
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 559
+Queries loaded: 575
 Queries failed to execute: 0
 
 ------------------------------------
@@ -31,32 +31,32 @@ Resource Not Using Tags, Severity: INFO, Results: 4
 Description: AWS services resource tags are an essential part of managing components
 Platform: Terraform
 
-	[1]: /src/main.tf:98
-
-		097: 
-		098: resource "aws_instance" "pub_ins" {
-		099:   ami           = "${data.aws_ami.ubuntu.id}"
-
-
-	[2]: /src/main.tf:106
-
-		105: 
-		106: resource "aws_instance" "priv_ins" {
-		107:   ami           = "${data.aws_ami.ubuntu.id}"
-
-
-	[3]: /src/main.tf:50
+	[1]: /src/main.tf:50
 
 		049: 
 		050: resource "aws_iam_role" "test_role" {
 		051:   name = "test_role"
 
 
-	[4]: /src/main.tf:71
+	[2]: /src/main.tf:71
 
 		070: 
 		071: resource "aws_iam_instance_profile" "test_profile" {
 		072:   name = "test_profile"
+
+
+	[3]: /src/main.tf:98
+
+		097: 
+		098: resource "aws_instance" "pub_ins" {
+		099:   ami           = "${data.aws_ami.ubuntu.id}"
+
+
+	[4]: /src/main.tf:106
+
+		105: 
+		106: resource "aws_instance" "priv_ins" {
+		107:   ami           = "${data.aws_ami.ubuntu.id}"
 
 
 EC2 Not EBS Optimized, Severity: INFO, Results: 2
@@ -93,6 +93,17 @@ Platform: Terraform
 		105: 
 		106: resource "aws_instance" "priv_ins" {
 		107:   ami           = "${data.aws_ami.ubuntu.id}"
+
+
+Public and Private EC2 Share Role, Severity: MEDIUM, Results: 1
+Description: Public and private EC2 istances should not share the same role.
+Platform: Terraform
+
+	[1]: /src/main.tf:102
+
+		101:   subnet_id = module.vpc.public_subnets[0]
+		102:   iam_instance_profile = aws_iam_instance_profile.test_profile.name
+		103: 
 
 
 Instance With No VPC, Severity: MEDIUM, Results: 2
@@ -145,9 +156,9 @@ Platform: Terraform
 
 Results Summary:
 HIGH: 2
-MEDIUM: 3
+MEDIUM: 4
 LOW: 0
 INFO: 8
-TOTAL: 13
+TOTAL: 14
 
-Scan duration: 4.28883074s
+Scan duration: 4.78881555s

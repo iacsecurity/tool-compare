@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.1
+Scanning with Keeping Infrastructure as Code Secure v1.3.2
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 559
+Queries loaded: 575
 Queries failed to execute: 0
 
 ------------------------------------
@@ -76,6 +76,17 @@ Platform: Terraform
 		037: 
 		038: resource "aws_api_gateway_deployment" "api_gw_deploy" {
 		039:   depends_on  = [aws_api_gateway_integration.api_gw_int]
+
+
+REST API With Vulnerable Policy, Severity: MEDIUM, Results: 1
+Description: REST API policy should avoid wildcard in 'Action' and 'Principal'
+Platform: Terraform
+
+	[1]: /src/main.tf:15
+
+		014: 
+		015:   policy = <<EOF
+		016: {
 
 
 CloudWatch Metrics Disabled, Severity: MEDIUM, Results: 1
@@ -180,9 +191,9 @@ Platform: Terraform
 
 Results Summary:
 HIGH: 0
-MEDIUM: 9
+MEDIUM: 10
 LOW: 3
 INFO: 2
-TOTAL: 14
+TOTAL: 15
 
-Scan duration: 3.980618769s
+Scan duration: 4.759151486s

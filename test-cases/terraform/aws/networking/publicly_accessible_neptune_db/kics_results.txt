@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.1
+Scanning with Keeping Infrastructure as Code Secure v1.3.2
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 559
+Queries loaded: 575
 Queries failed to execute: 0
 
 ------------------------------------
@@ -53,18 +53,18 @@ Resource Not Using Tags, Severity: INFO, Results: 9
 Description: AWS services resource tags are an essential part of managing components
 Platform: Terraform
 
-	[1]: /src/main.tf:53
+	[1]: /src/main.tf:18
 
-		052: 
-		053: resource "aws_subnet" "free_2" {
-		054:   vpc_id = aws_vpc.external.id
+		017: 
+		018: resource "aws_security_group" "free" {
+		019:   vpc_id = aws_vpc.external.id
 
 
-	[2]: /src/main.tf:47
+	[2]: /src/main.tf:29
 
-		046: 
-		047: resource "aws_subnet" "free_1" {
-		048:   vpc_id = aws_vpc.external.id
+		028: 
+		029: resource "aws_route_table" "rt" {
+		030:   vpc_id = aws_vpc.external.id
 
 
 	[3]: /src/main.tf:59
@@ -74,18 +74,18 @@ Platform: Terraform
 		060:   name = "free"
 
 
-	[4]: /src/main.tf:18
-
-		017: 
-		018: resource "aws_security_group" "free" {
-		019:   vpc_id = aws_vpc.external.id
-
-
-	[5]: /src/main.tf:76
+	[4]: /src/main.tf:76
 
 		075: 
 		076: resource "aws_neptune_cluster_instance" "neptune_instance" {
 		077:   count              = 2
+
+
+	[5]: /src/main.tf:66
+
+		065: 
+		066: resource "aws_neptune_cluster" "encrypted_neptune_cluster" {
+		067:   cluster_identifier  = "cloudrail-test-encrypted"
 
 
 	[6]: /src/main.tf:14
@@ -95,18 +95,18 @@ Platform: Terraform
 		015:   vpc_id = aws_vpc.external.id
 
 
-	[7]: /src/main.tf:29
+	[7]: /src/main.tf:47
 
-		028: 
-		029: resource "aws_route_table" "rt" {
-		030:   vpc_id = aws_vpc.external.id
+		046: 
+		047: resource "aws_subnet" "free_1" {
+		048:   vpc_id = aws_vpc.external.id
 
 
-	[8]: /src/main.tf:66
+	[8]: /src/main.tf:53
 
-		065: 
-		066: resource "aws_neptune_cluster" "encrypted_neptune_cluster" {
-		067:   cluster_identifier  = "cloudrail-test-encrypted"
+		052: 
+		053: resource "aws_subnet" "free_2" {
+		054:   vpc_id = aws_vpc.external.id
 
 
 	[9]: /src/main.tf:9
@@ -547,4 +547,4 @@ LOW: 0
 INFO: 12
 TOTAL: 68
 
-Scan duration: 3.893985296s
+Scan duration: 5.10516111s

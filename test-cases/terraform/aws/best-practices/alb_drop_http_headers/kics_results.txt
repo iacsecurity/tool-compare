@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.1
+Scanning with Keeping Infrastructure as Code Secure v1.3.2
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 559
+Queries loaded: 575
 Queries failed to execute: 0
 
 ------------------------------------
@@ -31,18 +31,18 @@ Resource Not Using Tags, Severity: INFO, Results: 2
 Description: AWS services resource tags are an essential part of managing components
 Platform: Terraform
 
-	[1]: /src/main.tf:39
-
-		038: 
-		039: resource "aws_lb" "disabled" {
-		040:   internal           = false
-
-
-	[2]: /src/main.tf:25
+	[1]: /src/main.tf:25
 
 		024: 
 		025: resource "aws_lb" "default" {
 		026:   internal           = false
+
+
+	[2]: /src/main.tf:39
+
+		038: 
+		039: resource "aws_lb" "disabled" {
+		040:   internal           = false
 
 
 ALB Not Dropping Invalid Headers, Severity: MEDIUM, Results: 4
@@ -95,18 +95,18 @@ Platform: Terraform
 		049:   internal           = false
 
 
-	[3]: /src/main.tf:25
-
-		024: 
-		025: resource "aws_lb" "default" {
-		026:   internal           = false
-
-
-	[4]: /src/main.tf:39
+	[3]: /src/main.tf:39
 
 		038: 
 		039: resource "aws_lb" "disabled" {
 		040:   internal           = false
+
+
+	[4]: /src/main.tf:25
+
+		024: 
+		025: resource "aws_lb" "default" {
+		026:   internal           = false
 
 
 
@@ -117,4 +117,4 @@ LOW: 0
 INFO: 2
 TOTAL: 10
 
-Scan duration: 3.974462738s
+Scan duration: 4.53761852s

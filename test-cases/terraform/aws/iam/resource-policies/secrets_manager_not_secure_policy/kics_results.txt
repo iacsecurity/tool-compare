@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.1
+Scanning with Keeping Infrastructure as Code Secure v1.3.2
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 559
+Queries loaded: 575
 Queries failed to execute: 0
 
 ------------------------------------
@@ -49,12 +49,23 @@ Platform: Terraform
 		006:   name = "not_secure_secret"
 
 
+Secrets Manager With Vulnerable Policy, Severity: MEDIUM, Results: 1
+Description: Secrets Manager policy should avoid wildcard in 'Principal' and 'Action'
+Platform: Terraform
+
+	[1]: /src/main.tf:12
+
+		011: 
+		012:   policy = <<POLICY
+		013: {
+
+
 
 Results Summary:
 HIGH: 0
-MEDIUM: 1
+MEDIUM: 2
 LOW: 0
 INFO: 1
-TOTAL: 2
+TOTAL: 3
 
-Scan duration: 4.283351907s
+Scan duration: 4.756419197s

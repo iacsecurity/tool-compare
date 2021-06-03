@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.1
+Scanning with Keeping Infrastructure as Code Secure v1.3.2
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 559
+Queries loaded: 575
 Queries failed to execute: 0
 
 ------------------------------------
@@ -42,18 +42,18 @@ Resource Not Using Tags, Severity: INFO, Results: 4
 Description: AWS services resource tags are an essential part of managing components
 Platform: Terraform
 
-	[1]: /src/main.tf:17
+	[1]: /src/main.tf:10
 
-		016:   name        = "examplerulename"
-		017:   vpc_id      = aws_vpc.vpc.id
-		018: 
+		009: 
+		010: resource "aws_vpc" "vpc" {
+		011:   cidr_block = local.cidr_block
 
 
-	[2]: /src/main.tf:66
+	[2]: /src/main.tf:40
 
-		065:   instance_type = "t2.micro"
-		066:   subnet_id     = aws_subnet.subnet.id
-		067:   vpc_security_group_ids  = [aws_security_group.default.id]
+		039: 
+		040: resource "aws_subnet" "subnet" {
+		041:   vpc_id     = aws_vpc.vpc.id
 
 
 	[3]: /src/main.tf:63
@@ -96,11 +96,11 @@ VPC FlowLogs Disabled, Severity: MEDIUM, Results: 1
 Description: VPC hasn't got any FlowLog associated
 Platform: Terraform
 
-	[1]: /src/main.tf:17
+	[1]: /src/main.tf:10
 
-		016:   name        = "examplerulename"
-		017:   vpc_id      = aws_vpc.vpc.id
-		018: 
+		009: 
+		010: resource "aws_vpc" "vpc" {
+		011:   cidr_block = local.cidr_block
 
 
 EC2 Instance Has Public IP, Severity: HIGH, Results: 1
@@ -122,4 +122,4 @@ LOW: 0
 INFO: 7
 TOTAL: 9
 
-Scan duration: 3.902204998s
+Scan duration: 4.827169438s
