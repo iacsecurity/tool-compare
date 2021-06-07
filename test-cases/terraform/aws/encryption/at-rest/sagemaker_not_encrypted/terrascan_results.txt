@@ -1,14 +1,25 @@
 
 
+Violation Details -
+    
+	Description    :	Ensure SageMaker Instance is Encrypted
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	23
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+
 Scan Summary -
 
 	File/Folder         :	tool-compare/test-cases/terraform/aws/encryption/at-rest/sagemaker_not_encrypted
-	IaC Type            :	terraform
-	Scanned At          :	2021-04-30 19:28:12.159123 +0000 UTC
-	Policies Validated  :	561
-	Violated Policies   :	0
+	IaC Type            :	all
+	Scanned At          :	2021-06-01 05:55:07.333568 +0000 UTC
+	Policies Validated  :	612
+	Violated Policies   :	1
 	Low                 :	0
-	Medium              :	0
+	Medium              :	1
 	High                :	0
 	
 

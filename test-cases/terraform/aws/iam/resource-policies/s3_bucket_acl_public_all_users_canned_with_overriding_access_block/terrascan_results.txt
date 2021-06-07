@@ -2,15 +2,17 @@
 
 Violation Details -
     
-	Description    :	Misconfigured S3 buckets can leak private information to the entire internet or allow unauthorized data tampering / deletion
+	Description    :	Ensure S3 buckets have access logging enabled.
 	File           :	main.tf
+	Plan Root      :	./
 	Line           :	5
-	Severity       :	HIGH
+	Severity       :	MEDIUM
 	
 	-----------------------------------------------------------------------
 	
 	Description    :	Misconfigured S3 buckets can leak private information to the entire internet or allow unauthorized data tampering / deletion
 	File           :	main.tf
+	Plan Root      :	./
 	Line           :	5
 	Severity       :	HIGH
 	
@@ -18,6 +20,31 @@ Violation Details -
 	
 	Description    :	Enabling S3 versioning will enable easy recovery from both unintended user actions, like deletes and overwrites
 	File           :	main.tf
+	Plan Root      :	./
+	Line           :	5
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Misconfigured S3 buckets can leak private information to the entire internet or allow unauthorized data tampering / deletion
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	5
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that S3 Buckets have server side encryption at rest enabled with KMS key to protect sensitive data.
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	5
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure S3 buckets do not have, a both public ACL on the bucket and a public access block.
+	File           :	main.tf
+	Plan Root      :	./
 	Line           :	5
 	Severity       :	HIGH
 	
@@ -25,6 +52,7 @@ Violation Details -
 	
 	Description    :	S3 bucket Access is allowed to all AWS Account Users.
 	File           :	main.tf
+	Plan Root      :	./
 	Line           :	5
 	Severity       :	HIGH
 	
@@ -34,12 +62,12 @@ Violation Details -
 Scan Summary -
 
 	File/Folder         :	tool-compare/test-cases/terraform/aws/iam/resource-policies/s3_bucket_acl_public_all_users_canned_with_overriding_access_block
-	IaC Type            :	terraform
-	Scanned At          :	2021-04-29 23:53:19.965255 +0000 UTC
-	Policies Validated  :	561
-	Violated Policies   :	4
+	IaC Type            :	all
+	Scanned At          :	2021-06-01 05:55:31.37197 +0000 UTC
+	Policies Validated  :	612
+	Violated Policies   :	7
 	Low                 :	0
-	Medium              :	0
-	High                :	4
+	Medium              :	1
+	High                :	6
 	
 

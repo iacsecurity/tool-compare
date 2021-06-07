@@ -2,8 +2,17 @@
 
 Violation Details -
     
+	Description    :	Ensure AWS Cloudwatch log group has retention policy set.
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	5
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
 	Description    :	AWS CloudWatch log group is not encrypted with a KMS CMK
 	File           :	main.tf
+	Plan Root      :	./
 	Line           :	5
 	Severity       :	HIGH
 	
@@ -13,12 +22,12 @@ Violation Details -
 Scan Summary -
 
 	File/Folder         :	tool-compare/test-cases/terraform/aws/logging/cloudwatch_log_groups_no_retention
-	IaC Type            :	terraform
-	Scanned At          :	2021-04-29 23:53:29.411365 +0000 UTC
-	Policies Validated  :	561
-	Violated Policies   :	1
+	IaC Type            :	all
+	Scanned At          :	2021-06-01 05:55:55.526452 +0000 UTC
+	Policies Validated  :	612
+	Violated Policies   :	2
 	Low                 :	0
-	Medium              :	0
+	Medium              :	1
 	High                :	1
 	
 

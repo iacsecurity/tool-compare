@@ -2,22 +2,33 @@
 
 Violation Details -
     
-	Description    :	Security group attached to launch configuration is wide open to internet and this can be related to reconnaissance phase
+	Description    :	Ensure every security group should have a description to ease the process of Auditing
 	File           :	main.tf
-	Line           :	146
-	Severity       :	HIGH
+	Plan Root      :	./
+	Line           :	129
+	Severity       :	LOW
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	Ensure that your RDS database instances encrypt the underlying storage. Encrypted RDS instances use the industry standard AES-256 encryption algorithm to encrypt data on the server that hosts RDS DB instances. After data is encrypted, RDS handles authentication of access and descryption of data transparently with minimal impact on performance.
+	Description    :	Ensure every security group should have a description to ease the process of Auditing
 	File           :	main.tf
-	Line           :	113
-	Severity       :	HIGH
+	Plan Root      :	./
+	Line           :	103
+	Severity       :	LOW
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
+	Description    :	Ensure VPC flow logging is enabled in all VPCs
 	File           :	main.tf
+	Plan Root      :	./
+	Line           :	10
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that EC2 is EBS optimized
+	File           :	main.tf
+	Plan Root      :	./
 	Line           :	146
 	Severity       :	MEDIUM
 	
@@ -25,21 +36,56 @@ Violation Details -
 	
 	Description    :	Ensure that your RDS database has IAM Authentication enabled.
 	File           :	main.tf
+	Plan Root      :	./
 	Line           :	113
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Security group attached to launch configuration is wide open to internet and this can be related to reconnaissance phase
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	146
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that detailed monitoring is enabled for EC2 instances.
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	146
 	Severity       :	HIGH
 	
 	-----------------------------------------------------------------------
 	
 	Description    :	It is recommended that no security group allows unrestricted ingress access
 	File           :	main.tf
+	Plan Root      :	./
 	Line           :	129
 	Severity       :	HIGH
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	Ensure VPC flow logging is enabled in all VPCs
+	Description    :	Ensure AWS RDS instances have logging enabled.
 	File           :	main.tf
-	Line           :	10
+	Plan Root      :	./
+	Line           :	113
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that your RDS database instances encrypt the underlying storage. Encrypted RDS instances use the industry standard AES-256 encryption algorithm to encrypt data on the server that hosts RDS DB instances. After data is encrypted, RDS handles authentication of access and descryption of data transparently with minimal impact on performance.
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	113
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	146
 	Severity       :	MEDIUM
 	
 	-----------------------------------------------------------------------
@@ -48,12 +94,12 @@ Violation Details -
 Scan Summary -
 
 	File/Folder         :	tool-compare/test-cases/terraform/aws/networking/public_ec2_points_to_private_rds
-	IaC Type            :	terraform
-	Scanned At          :	2021-04-29 23:53:09.107171 +0000 UTC
-	Policies Validated  :	561
-	Violated Policies   :	6
-	Low                 :	0
-	Medium              :	2
-	High                :	4
+	IaC Type            :	all
+	Scanned At          :	2021-06-01 05:55:18.829553 +0000 UTC
+	Policies Validated  :	612
+	Violated Policies   :	11
+	Low                 :	2
+	Medium              :	4
+	High                :	5
 	
 

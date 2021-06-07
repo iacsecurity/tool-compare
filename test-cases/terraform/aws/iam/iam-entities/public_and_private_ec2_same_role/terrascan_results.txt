@@ -2,30 +2,66 @@
 
 Violation Details -
     
-	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
+	Description    :	Ensure that your AWS application is not deployed within the default Virtual Private Cloud in order to follow security best practices
 	File           :	main.tf
-	Line           :	99
-	Severity       :	MEDIUM
-	
-	-----------------------------------------------------------------------
-	
-	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
-	File           :	main.tf
-	Line           :	107
+	Plan Root      :	./
+	Line           :	106
 	Severity       :	MEDIUM
 	
 	-----------------------------------------------------------------------
 	
 	Description    :	Ensure that your AWS application is not deployed within the default Virtual Private Cloud in order to follow security best practices
 	File           :	main.tf
-	Line           :	99
+	Plan Root      :	./
+	Line           :	98
 	Severity       :	MEDIUM
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	Ensure that your AWS application is not deployed within the default Virtual Private Cloud in order to follow security best practices
+	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
 	File           :	main.tf
-	Line           :	107
+	Plan Root      :	./
+	Line           :	106
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	98
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that detailed monitoring is enabled for EC2 instances.
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	106
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that detailed monitoring is enabled for EC2 instances.
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	98
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that EC2 is EBS optimized
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	106
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that EC2 is EBS optimized
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	98
 	Severity       :	MEDIUM
 	
 	-----------------------------------------------------------------------
@@ -34,12 +70,12 @@ Violation Details -
 Scan Summary -
 
 	File/Folder         :	tool-compare/test-cases/terraform/aws/iam/iam-entities/public_and_private_ec2_same_role
-	IaC Type            :	terraform
-	Scanned At          :	2021-04-29 23:53:25.644229 +0000 UTC
-	Policies Validated  :	561
-	Violated Policies   :	4
+	IaC Type            :	all
+	Scanned At          :	2021-06-01 05:55:46.980248 +0000 UTC
+	Policies Validated  :	612
+	Violated Policies   :	8
 	Low                 :	0
-	Medium              :	4
-	High                :	0
+	Medium              :	6
+	High                :	2
 	
 

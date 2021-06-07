@@ -2,8 +2,49 @@
 
 Violation Details -
     
+	Description    :	Ensure CloudTrail has log file validation enabled.
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	3
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure S3 buckets have access logging enabled.
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	10
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Cloud Trail Multi Region not enabled
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	3
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure CloudTrail logs are encrypted using KMS
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	3
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that S3 Buckets have server side encryption at rest enabled with KMS key to protect sensitive data.
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	10
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
 	Description    :	Enabling S3 versioning will enable easy recovery from both unintended user actions, like deletes and overwrites
 	File           :	main.tf
+	Plan Root      :	./
 	Line           :	10
 	Severity       :	HIGH
 	
@@ -13,12 +54,12 @@ Violation Details -
 Scan Summary -
 
 	File/Folder         :	tool-compare/test-cases/terraform/aws/best-practices/cloudtrail_enabled_on_multi_region
-	IaC Type            :	terraform
-	Scanned At          :	2021-04-30 19:28:37.85306 +0000 UTC
-	Policies Validated  :	561
-	Violated Policies   :	1
+	IaC Type            :	all
+	Scanned At          :	2021-06-01 05:56:25.972856 +0000 UTC
+	Policies Validated  :	612
+	Violated Policies   :	6
 	Low                 :	0
-	Medium              :	0
-	High                :	1
+	Medium              :	3
+	High                :	3
 	
 

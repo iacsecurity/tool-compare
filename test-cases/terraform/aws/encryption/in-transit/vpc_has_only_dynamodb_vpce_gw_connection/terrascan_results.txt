@@ -2,16 +2,50 @@
 
 Violation Details -
     
+	Description    :	Ensure that detailed monitoring is enabled for EC2 instances.
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	136
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure Point In Time Recovery is enabled for DynamoDB Tables
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	143
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
 	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
 	File           :	main.tf
+	Plan Root      :	./
 	Line           :	136
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure DynamoDb is encrypted at rest
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	143
 	Severity       :	MEDIUM
 	
 	-----------------------------------------------------------------------
 	
 	Description    :	Ensure VPC flow logging is enabled in all VPCs
 	File           :	main.tf
+	Plan Root      :	./
 	Line           :	5
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that EC2 is EBS optimized
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	136
 	Severity       :	MEDIUM
 	
 	-----------------------------------------------------------------------
@@ -20,12 +54,12 @@ Violation Details -
 Scan Summary -
 
 	File/Folder         :	tool-compare/test-cases/terraform/aws/encryption/in-transit/vpc_has_only_dynamodb_vpce_gw_connection
-	IaC Type            :	terraform
-	Scanned At          :	2021-04-29 23:52:10.638905 +0000 UTC
-	Policies Validated  :	561
-	Violated Policies   :	2
+	IaC Type            :	all
+	Scanned At          :	2021-06-01 05:54:45.337784 +0000 UTC
+	Policies Validated  :	612
+	Violated Policies   :	6
 	Low                 :	0
-	Medium              :	2
-	High                :	0
+	Medium              :	5
+	High                :	1
 	
 

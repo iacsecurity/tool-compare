@@ -2,15 +2,41 @@
 
 Violation Details -
     
+	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	63
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure every security group should have a description to ease the process of Auditing
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	15
+	Severity       :	LOW
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that detailed monitoring is enabled for EC2 instances.
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	63
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
 	Description    :	Ensure VPC flow logging is enabled in all VPCs
 	File           :	main.tf
+	Plan Root      :	./
 	Line           :	10
 	Severity       :	MEDIUM
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
+	Description    :	Ensure that EC2 is EBS optimized
 	File           :	main.tf
+	Plan Root      :	./
 	Line           :	63
 	Severity       :	MEDIUM
 	
@@ -20,12 +46,12 @@ Violation Details -
 Scan Summary -
 
 	File/Folder         :	tool-compare/test-cases/terraform/aws/best-practices/security_group_no_description_for_security_group
-	IaC Type            :	terraform
-	Scanned At          :	2021-04-29 23:53:33.938394 +0000 UTC
-	Policies Validated  :	561
-	Violated Policies   :	2
-	Low                 :	0
-	Medium              :	2
-	High                :	0
+	IaC Type            :	all
+	Scanned At          :	2021-06-01 05:56:29.93529 +0000 UTC
+	Policies Validated  :	612
+	Violated Policies   :	5
+	Low                 :	1
+	Medium              :	3
+	High                :	1
 	
 

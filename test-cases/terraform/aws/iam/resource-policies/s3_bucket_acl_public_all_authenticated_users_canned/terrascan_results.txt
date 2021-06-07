@@ -4,6 +4,31 @@ Violation Details -
     
 	Description    :	Misconfigured S3 buckets can leak private information to the entire internet or allow unauthorized data tampering / deletion
 	File           :	main.tf
+	Plan Root      :	./
+	Line           :	5
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that S3 Buckets have server side encryption at rest enabled with KMS key to protect sensitive data.
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	5
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure S3 buckets have access logging enabled.
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	5
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	S3 bucket Access is allowed to all AWS Account Users.
+	File           :	main.tf
+	Plan Root      :	./
 	Line           :	5
 	Severity       :	HIGH
 	
@@ -11,13 +36,7 @@ Violation Details -
 	
 	Description    :	Enabling S3 versioning will enable easy recovery from both unintended user actions, like deletes and overwrites
 	File           :	main.tf
-	Line           :	5
-	Severity       :	HIGH
-	
-	-----------------------------------------------------------------------
-	
-	Description    :	S3 bucket Access is allowed to all AWS Account Users.
-	File           :	main.tf
+	Plan Root      :	./
 	Line           :	5
 	Severity       :	HIGH
 	
@@ -27,12 +46,12 @@ Violation Details -
 Scan Summary -
 
 	File/Folder         :	tool-compare/test-cases/terraform/aws/iam/resource-policies/s3_bucket_acl_public_all_authenticated_users_canned
-	IaC Type            :	terraform
-	Scanned At          :	2021-04-29 23:53:20.617991 +0000 UTC
-	Policies Validated  :	561
-	Violated Policies   :	3
+	IaC Type            :	all
+	Scanned At          :	2021-06-01 05:55:32.134328 +0000 UTC
+	Policies Validated  :	612
+	Violated Policies   :	5
 	Low                 :	0
-	Medium              :	0
-	High                :	3
+	Medium              :	1
+	High                :	4
 	
 

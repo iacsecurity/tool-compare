@@ -1,14 +1,25 @@
 
 
+Violation Details -
+    
+	Description    :	Ensure SNS topic is Encrypted using KMS master key
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	5
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+
 Scan Summary -
 
 	File/Folder         :	tool-compare/test-cases/terraform/aws/iam/resource-policies/glacier_vault_not_secure_policy
-	IaC Type            :	terraform
-	Scanned At          :	2021-04-29 23:53:17.384426 +0000 UTC
-	Policies Validated  :	561
-	Violated Policies   :	0
+	IaC Type            :	all
+	Scanned At          :	2021-06-01 05:55:28.261127 +0000 UTC
+	Policies Validated  :	612
+	Violated Policies   :	1
 	Low                 :	0
-	Medium              :	0
+	Medium              :	1
 	High                :	0
 	
 

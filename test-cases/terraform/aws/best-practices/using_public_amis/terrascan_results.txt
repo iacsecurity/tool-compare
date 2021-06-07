@@ -2,36 +2,81 @@
 
 Violation Details -
     
-	Description    :	Enable AWS EBS Snapshot Encryption
+	Description    :	Ensure that detailed monitoring is enabled for EC2 instances.
 	File           :	main.tf
-	Line           :	15
+	Plan Root      :	./
+	Line           :	80
 	Severity       :	HIGH
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
+	Description    :	Ensure that detailed monitoring is enabled for EC2 instances.
 	File           :	main.tf
-	Line           :	45
-	Severity       :	MEDIUM
+	Plan Root      :	./
+	Line           :	98
+	Severity       :	HIGH
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
+	Description    :	Ensure that detailed monitoring is enabled for EC2 instances.
 	File           :	main.tf
+	Plan Root      :	./
+	Line           :	45
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that detailed monitoring is enabled for EC2 instances.
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	93
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that EC2 is EBS optimized
+	File           :	main.tf
+	Plan Root      :	./
 	Line           :	80
 	Severity       :	MEDIUM
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
+	Description    :	Ensure that EC2 is EBS optimized
 	File           :	main.tf
+	Plan Root      :	./
+	Line           :	98
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that EC2 is EBS optimized
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	45
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that EC2 is EBS optimized
+	File           :	main.tf
+	Plan Root      :	./
 	Line           :	93
 	Severity       :	MEDIUM
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
+	Description    :	Ensure that your AWS application is not deployed within the default Virtual Private Cloud in order to follow security best practices
 	File           :	main.tf
+	Plan Root      :	./
+	Line           :	80
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that your AWS application is not deployed within the default Virtual Private Cloud in order to follow security best practices
+	File           :	main.tf
+	Plan Root      :	./
 	Line           :	98
 	Severity       :	MEDIUM
 	
@@ -39,6 +84,7 @@ Violation Details -
 	
 	Description    :	Ensure that your AWS application is not deployed within the default Virtual Private Cloud in order to follow security best practices
 	File           :	main.tf
+	Plan Root      :	./
 	Line           :	45
 	Severity       :	MEDIUM
 	
@@ -46,22 +92,49 @@ Violation Details -
 	
 	Description    :	Ensure that your AWS application is not deployed within the default Virtual Private Cloud in order to follow security best practices
 	File           :	main.tf
-	Line           :	80
-	Severity       :	MEDIUM
-	
-	-----------------------------------------------------------------------
-	
-	Description    :	Ensure that your AWS application is not deployed within the default Virtual Private Cloud in order to follow security best practices
-	File           :	main.tf
+	Plan Root      :	./
 	Line           :	93
 	Severity       :	MEDIUM
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	Ensure that your AWS application is not deployed within the default Virtual Private Cloud in order to follow security best practices
+	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
 	File           :	main.tf
+	Plan Root      :	./
+	Line           :	80
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
+	File           :	main.tf
+	Plan Root      :	./
 	Line           :	98
 	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	45
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	93
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Enable AWS EBS Snapshot Encryption
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	15
+	Severity       :	HIGH
 	
 	-----------------------------------------------------------------------
 	
@@ -69,12 +142,12 @@ Violation Details -
 Scan Summary -
 
 	File/Folder         :	tool-compare/test-cases/terraform/aws/best-practices/using_public_amis
-	IaC Type            :	terraform
-	Scanned At          :	2021-04-29 23:53:34.620646 +0000 UTC
-	Policies Validated  :	561
-	Violated Policies   :	9
+	IaC Type            :	all
+	Scanned At          :	2021-06-01 05:56:30.75039 +0000 UTC
+	Policies Validated  :	612
+	Violated Policies   :	17
 	Low                 :	0
-	Medium              :	8
-	High                :	1
+	Medium              :	12
+	High                :	5
 	
 

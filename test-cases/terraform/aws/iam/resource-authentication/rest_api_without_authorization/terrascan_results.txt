@@ -2,10 +2,27 @@
 
 Violation Details -
     
-	Description    :	Enable AWS CloudWatch Logs for APIs
+	Description    :	Ensure AWS API Gateway has active xray tracing enabled
 	File           :	main.tf
+	Plan Root      :	./
 	Line           :	44
 	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Enable AWS CloudWatch Logs for APIs
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	44
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure there is no open access to back-end resources through API
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	22
+	Severity       :	LOW
 	
 	-----------------------------------------------------------------------
 	
@@ -13,12 +30,12 @@ Violation Details -
 Scan Summary -
 
 	File/Folder         :	tool-compare/test-cases/terraform/aws/iam/resource-authentication/rest_api_without_authorization
-	IaC Type            :	terraform
-	Scanned At          :	2021-04-30 19:28:22.44393 +0000 UTC
-	Policies Validated  :	561
-	Violated Policies   :	1
-	Low                 :	0
-	Medium              :	1
+	IaC Type            :	all
+	Scanned At          :	2021-06-01 05:55:50.114126 +0000 UTC
+	Policies Validated  :	612
+	Violated Policies   :	3
+	Low                 :	1
+	Medium              :	2
 	High                :	0
 	
 

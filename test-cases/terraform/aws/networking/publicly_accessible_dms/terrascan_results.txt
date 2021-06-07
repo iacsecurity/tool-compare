@@ -3,9 +3,9 @@
 Scan Summary -
 
 	File/Folder         :	tool-compare/test-cases/terraform/aws/networking/publicly_accessible_dms
-	IaC Type            :	terraform
-	Scanned At          :	2021-04-30 19:28:19.492046 +0000 UTC
-	Policies Validated  :	561
+	IaC Type            :	all
+	Scanned At          :	2021-06-01 05:55:19.646537 +0000 UTC
+	Policies Validated  :	612
 	Violated Policies   :	0
 	Low                 :	0
 	Medium              :	0
