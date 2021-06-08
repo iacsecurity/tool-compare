@@ -34,3 +34,6 @@ override.tf.json
 
 # Ignore the tool version files.
 version_*.txt
+venv
+.vscode
+.idea
