@@ -1,24 +1,24 @@
 
 WARNINGs found:
-Rule: Ensure S3 buckets are set to be encrypted at rest
+Rule: Ensure S3 bucket has access logging enabled
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_s3_bucket.b] (main.tf:1)
      Violating Resource: [aws_s3_bucket.b]  (main.tf:1)
 
      Evidence:
-             | The S3 Bucket aws_s3_bucket.b is not set to be encrypted at rest
+             | The S3 Bucket aws_s3_bucket.b does not have access logging enabled
 
 
 -----------------------------------------------
-Rule: Ensure S3 buckets have versioning enabled
+Rule: Enforce use of HTTPS in S3 bucket policy
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_s3_bucket.b] (main.tf:1)
      Violating Resource: [aws_s3_bucket.b]  (main.tf:1)
 
      Evidence:
-             | The S3 Bucket aws_s3_bucket.b does not have versioning enabled
+             | The S3 Bucket aws_s3_bucket.b does not have a policy with the aws:SecureTransport condition
 
 
 -----------------------------------------------
@@ -33,14 +33,25 @@ Rule: Ensure use of S3 bucket policy, and no action wildcards are being used
 
 
 -----------------------------------------------
-Rule: Enforce use of HTTPS in S3 bucket policy
+Rule: Ensure S3 buckets have versioning enabled
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_s3_bucket.b] (main.tf:1)
      Violating Resource: [aws_s3_bucket.b]  (main.tf:1)
 
      Evidence:
-             | The S3 Bucket aws_s3_bucket.b does not have a policy with the aws:SecureTransport condition
+             | The S3 Bucket aws_s3_bucket.b does not have versioning enabled
+
+
+-----------------------------------------------
+Rule: Ensure S3 buckets are set to be encrypted at rest
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.b] (main.tf:1)
+     Violating Resource: [aws_s3_bucket.b]  (main.tf:1)
+
+     Evidence:
+             | The S3 Bucket aws_s3_bucket.b is not set to be encrypted at rest
 
 
 -----------------------------------------------

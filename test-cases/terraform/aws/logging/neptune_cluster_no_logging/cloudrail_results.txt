@@ -1,13 +1,13 @@
 
 WARNINGs found:
-Rule: Ensure Neptune clusters being created are set to be encrypted at rest
+Rule: Ensure Neptune cluster has logging enabled
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_neptune_cluster.test] (main.tf:1)
      Violating Resource: [aws_neptune_cluster.test]  (main.tf:1)
 
      Evidence:
-             | The Neptune DB Cluster aws_neptune_cluster.test is not set to use encryption at rest
+             | The Neptune DB Cluster aws_neptune_cluster.test does not have Cloudwatch log export enabled
 
 
 -----------------------------------------------
@@ -19,6 +19,17 @@ Rule: Ensure all resources that can be tagged have at least one tag
 
      Evidence:
              | Resource Neptune DB Cluster aws_neptune_cluster.test does not have any tags set
+
+
+-----------------------------------------------
+Rule: Ensure Neptune clusters being created are set to be encrypted at rest
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_neptune_cluster.test] (main.tf:1)
+     Violating Resource: [aws_neptune_cluster.test]  (main.tf:1)
+
+     Evidence:
+             | The Neptune DB Cluster aws_neptune_cluster.test is not set to use encryption at rest
 
 
 -----------------------------------------------
