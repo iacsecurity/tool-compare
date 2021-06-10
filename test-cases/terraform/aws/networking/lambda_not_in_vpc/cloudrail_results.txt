@@ -1,13 +1,44 @@
 
 WARNINGs found:
-Rule: Ensure use of Lambda function policy, and no action wildcards are being used
+Rule: Ensure Lambda function has X-Ray tracing enabled
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_lambda_function.test_lambda] (main.tf:21)
      Violating Resource: [aws_lambda_function.test_lambda]  (main.tf:21)
 
      Evidence:
-             | There is no resource policy or no statements attached to aws_lambda_function.test_lambda
+             | The Lambda Function aws_lambda_function.test_lambda does not have X-Ray tracing enabled
+
+
+-----------------------------------------------
+Rule: Ensure IAM policies pass Access Analyzer policy validation without WARNING and SUGGESTION issues
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_iam_role.iam_for_lambda] (main.tf:1)
+     Violating Resource: [aws_iam_role.iam_for_lambda]  (main.tf:1)
+
+     Evidence:
+         Line 10, Col 13:
+             | Add a value to the empty string in the Sid element
+             | See https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-reference-policy-checks.html#access-analyzer-reference-policy-checks-suggestion-empty-sid-value
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_iam_role.iam_for_lambda] (main.tf:1)
+     Violating Resource: [aws_iam_role.iam_for_lambda]  (main.tf:1)
+
+     Evidence:
+             | Resource IAM Role aws_iam_role.iam_for_lambda does not have any tags set
+
+
+   - Exposed Resource: [aws_lambda_function.test_lambda] (main.tf:21)
+     Violating Resource: [aws_lambda_function.test_lambda]  (main.tf:21)
+
+     Evidence:
+             | Resource Lambda Function aws_lambda_function.test_lambda does not have any tags set
 
 
 -----------------------------------------------
@@ -22,34 +53,14 @@ Rule: Ensure each Lambda function has a non-infinite log retention
 
 
 -----------------------------------------------
-Rule: Ensure all resources that can be tagged have at least one tag
- - 2 Resources Exposed:
+Rule: Ensure use of Lambda function policy, and no action wildcards are being used
+ - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_lambda_function.test_lambda] (main.tf:21)
      Violating Resource: [aws_lambda_function.test_lambda]  (main.tf:21)
 
      Evidence:
-             | Resource Lambda Function aws_lambda_function.test_lambda does not have any tags set
-
-
-   - Exposed Resource: [aws_iam_role.iam_for_lambda] (main.tf:1)
-     Violating Resource: [aws_iam_role.iam_for_lambda]  (main.tf:1)
-
-     Evidence:
-             | Resource IAM Role aws_iam_role.iam_for_lambda does not have any tags set
-
-
------------------------------------------------
-Rule: Ensure IAM policies pass Access Analyzer policy validation without WARNING and SUGGESTION issues
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_iam_role.iam_for_lambda] (main.tf:1)
-     Violating Resource: [aws_iam_role.iam_for_lambda]  (main.tf:1)
-
-     Evidence:
-         Line 10, Col 13:
-             | Add a value to the empty string in the Sid element
-             | See https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-reference-policy-checks.html#access-analyzer-reference-policy-checks-suggestion-empty-sid-value
+             | There is no resource policy or no statements attached to aws_lambda_function.test_lambda
 
 
 -----------------------------------------------

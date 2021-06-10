@@ -17,7 +17,7 @@ def recurse_dir(path, level, total_case_catch_stats, is_root):
 
     found_sub_categories = False
     for subdir in sorted(os.listdir(path)):
-        if os.path.isdir(os.path.join(path, subdir)) and not os.path.exists(os.path.join(path, subdir, "main.tf")):
+        if os.path.isdir(os.path.join(path, subdir)) and not os.path.exists(os.path.join(path, subdir, "main.tf")) and not subdir == ".terraform":
             found_sub_categories = True
 
             results += recurse_dir(os.path.join(path, subdir), level + 1, total_case_catch_stats, is_root = False)
@@ -61,7 +61,8 @@ def generate_category_test_case_table(path, total_case_catch_stats):
 
     summary_line = f"|Category Catch Rate|"
     for tool in tools:
-        summary_line += f"{round(category_catch_summary[tool] * 100 / category_catch_summary['total'])}%|"
+        if category_catch_summary['total'] > 0:
+            summary_line += f"{round(category_catch_summary[tool] * 100 / category_catch_summary['total'])}%|"
     results += f"{summary_line}\n\n"
 
     return results

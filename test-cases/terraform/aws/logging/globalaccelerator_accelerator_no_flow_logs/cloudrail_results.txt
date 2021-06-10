@@ -1,0 +1,27 @@
+
+WARNINGs found:
+Rule: Ensure Global Accelerator accelerator has flow logs enabled
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_globalaccelerator_accelerator.example] (main.tf:1)
+     Violating Resource: [aws_globalaccelerator_accelerator.example]  (main.tf:1)
+
+     Evidence:
+             | The Global Accelerator aws_globalaccelerator_accelerator.example does not have flow logs enabled
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_globalaccelerator_accelerator.example] (main.tf:1)
+     Violating Resource: [aws_globalaccelerator_accelerator.example]  (main.tf:1)
+
+     Evidence:
+             | Resource Global Accelerator aws_globalaccelerator_accelerator.example does not have any tags set
+
+
+-----------------------------------------------
+
+Cloudrail ran this assessment without any policies and so all rule violations show as warnings.
+You can increase a rule's enforcement level by creating a Policy in the Web UI and adding the rule to it.

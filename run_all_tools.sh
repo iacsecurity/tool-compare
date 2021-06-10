@@ -86,7 +86,7 @@ function run_cloudrail {
   fi
 
   docker pull indeni/cloudrail-cli:latest
-  docker run -t -v $PWD:/tf indeni/cloudrail-cli --version | awk '{print $NF}' >version_cloudrail.txt
+  docker run -t -v $PWD:/tf indeni/cloudrail-cli --version | awk '{print $NF}' | head -n 1 >version_cloudrail.txt
   find . -name "main.tf" -exec dirname {} \; | grep -v "\.terraform" | while read -r test_case; do
     echo $test_case
     ORG_PATH=$PWD
