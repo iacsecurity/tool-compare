@@ -1,48 +1,16 @@
 
 WARNINGs found:
-Rule: Ensure Elasticsearch Domain enforces HTTPS
+Rule: Ensure Elasticsearch Domain is not publicly accessible
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_elasticsearch_domain.example] (main.tf:1)
      Violating Resource: [aws_elasticsearch_domain.example]  (main.tf:1)
 
      Evidence:
-             | This rule evaluated aws_elasticsearch_domain.example's configuration
-
-
------------------------------------------------
-Rule: Ensure Elasticsearch Domain has logging enabled
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_elasticsearch_domain.example] (main.tf:1)
-     Violating Resource: [aws_elasticsearch_domain.example]  (main.tf:1)
-
-     Evidence:
-             | The ElasticSearch Domain aws_elasticsearch_domain.example does not have logging configured at all
-
-
------------------------------------------------
-Rule: Ensure use of Elasticsearch Service domain policy, and no action wildcards are being used
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_elasticsearch_domain.example] (main.tf:1)
-     Violating Resource: [aws_elasticsearch_domain.example]  (main.tf:1)
-
-     Evidence:
-             | There is no resource policy or no statements attached to aws_elasticsearch_domain.example
-
-
------------------------------------------------
-Rule: Ensure Elasticsearch domains being created are set to be encrypted node-to-node
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_elasticsearch_domain.example] (main.tf:1)
-     Violating Resource: [aws_elasticsearch_domain.example]  (main.tf:1)
-
-     Evidence:
-         ElasticSearch Domain
-             | ElasticSearch Domain aws_elasticsearch_domain.example
-             | is not set to use encrypt node-to-node
+         Internet
+             | ElasticSearch Domain: aws_elasticsearch_domain.example is publicly accessible
+             | ElasticSearch Domain is currently not deployed within a VPC
+         ElasticSearch
 
 
 -----------------------------------------------
@@ -59,17 +27,38 @@ Rule: Ensure Elasticsearch Domains being created are set to be encrypted at rest
 
 
 -----------------------------------------------
-Rule: Ensure Elasticsearch Domain is not publicly accessible
+Rule: Ensure Elasticsearch domains being created are set to be encrypted node-to-node
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_elasticsearch_domain.example] (main.tf:1)
      Violating Resource: [aws_elasticsearch_domain.example]  (main.tf:1)
 
      Evidence:
-         Internet
-             | ElasticSearch Domain: aws_elasticsearch_domain.example is publicly accessible
-             | ElasticSearch Domain is currently not deployed within a VPC
-         ElasticSearch
+         ElasticSearch Domain
+             | ElasticSearch Domain aws_elasticsearch_domain.example
+             | is not set to use encrypt node-to-node
+
+
+-----------------------------------------------
+Rule: Ensure use of Elasticsearch Service domain policy, and no action wildcards are being used
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_elasticsearch_domain.example] (main.tf:1)
+     Violating Resource: [aws_elasticsearch_domain.example]  (main.tf:1)
+
+     Evidence:
+             | There is no resource policy or no statements attached to aws_elasticsearch_domain.example
+
+
+-----------------------------------------------
+Rule: Ensure Elasticsearch Domain enforces HTTPS
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_elasticsearch_domain.example] (main.tf:1)
+     Violating Resource: [aws_elasticsearch_domain.example]  (main.tf:1)
+
+     Evidence:
+             | This rule evaluated aws_elasticsearch_domain.example's configuration
 
 
 -----------------------------------------------

@@ -1,57 +1,13 @@
 
 WARNINGs found:
-Rule: Ensure Athena database is encrypted at rest
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_athena_database.hoge] (main.tf:5)
-     Violating Resource: [aws_athena_database.hoge]  (main.tf:5)
-
-     Evidence:
-             | The Athena Database aws_athena_database.hoge is not encrypted at rest
-
-
------------------------------------------------
-Rule: Ensure S3 bucket has access logging enabled
+Rule: Ensure S3 buckets are set to be encrypted at rest
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_s3_bucket.hoge] (main.tf:1)
      Violating Resource: [aws_s3_bucket.hoge]  (main.tf:1)
 
      Evidence:
-             | The S3 Bucket aws_s3_bucket.hoge does not have access logging enabled
-
-
------------------------------------------------
-Rule: Ensure all resources that can be tagged have at least one tag
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_s3_bucket.hoge] (main.tf:1)
-     Violating Resource: [aws_s3_bucket.hoge]  (main.tf:1)
-
-     Evidence:
-             | Resource S3 Bucket aws_s3_bucket.hoge does not have any tags set
-
-
------------------------------------------------
-Rule: Enforce use of HTTPS in S3 bucket policy
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_s3_bucket.hoge] (main.tf:1)
-     Violating Resource: [aws_s3_bucket.hoge]  (main.tf:1)
-
-     Evidence:
-             | The S3 Bucket aws_s3_bucket.hoge does not have a policy with the aws:SecureTransport condition
-
-
------------------------------------------------
-Rule: Ensure use of S3 bucket policy, and no action wildcards are being used
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_s3_bucket.hoge] (main.tf:1)
-     Violating Resource: [aws_s3_bucket.hoge]  (main.tf:1)
-
-     Evidence:
-             | There is no resource policy or no statements attached to aws_s3_bucket.hoge
+             | The S3 Bucket aws_s3_bucket.hoge is not set to be encrypted at rest
 
 
 -----------------------------------------------
@@ -66,14 +22,36 @@ Rule: Ensure S3 buckets have versioning enabled
 
 
 -----------------------------------------------
-Rule: Ensure S3 buckets are set to be encrypted at rest
+Rule: Ensure use of S3 bucket policy, and no action wildcards are being used
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_s3_bucket.hoge] (main.tf:1)
      Violating Resource: [aws_s3_bucket.hoge]  (main.tf:1)
 
      Evidence:
-             | The S3 Bucket aws_s3_bucket.hoge is not set to be encrypted at rest
+             | There is no resource policy or no statements attached to aws_s3_bucket.hoge
+
+
+-----------------------------------------------
+Rule: Enforce use of HTTPS in S3 bucket policy
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.hoge] (main.tf:1)
+     Violating Resource: [aws_s3_bucket.hoge]  (main.tf:1)
+
+     Evidence:
+             | The S3 Bucket aws_s3_bucket.hoge does not have a policy with the aws:SecureTransport condition
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.hoge] (main.tf:1)
+     Violating Resource: [aws_s3_bucket.hoge]  (main.tf:1)
+
+     Evidence:
+             | Resource S3 Bucket aws_s3_bucket.hoge does not have any tags set
 
 
 -----------------------------------------------

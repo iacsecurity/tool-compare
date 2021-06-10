@@ -1,51 +1,13 @@
 
 WARNINGs found:
-Rule: Ensure IAM policies pass Access Analyzer policy validation without WARNING and SUGGESTION issues
- - 3 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_iam_role.dms-access-for-endpoint] (main.tf:12)
-     Violating Resource: [aws_iam_role.dms-access-for-endpoint]  (main.tf:12)
-
-     Evidence:
-         Line 5, Col 13:
-             | Add a value to the empty string in the Sid element
-             | See https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-reference-policy-checks.html#access-analyzer-reference-policy-checks-suggestion-empty-sid-value
-
-
-   - Exposed Resource: [aws_iam_role.dms-cloudwatch-logs-role] (main.tf:22)
-     Violating Resource: [aws_iam_role.dms-cloudwatch-logs-role]  (main.tf:22)
-
-     Evidence:
-         Line 5, Col 13:
-             | Add a value to the empty string in the Sid element
-             | See https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-reference-policy-checks.html#access-analyzer-reference-policy-checks-suggestion-empty-sid-value
-
-
-   - Exposed Resource: [aws_iam_role.dms-vpc-role] (main.tf:32)
-     Violating Resource: [aws_iam_role.dms-vpc-role]  (main.tf:32)
-
-     Evidence:
-         Line 5, Col 13:
-             | Add a value to the empty string in the Sid element
-             | See https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-reference-policy-checks.html#access-analyzer-reference-policy-checks-suggestion-empty-sid-value
-
-
------------------------------------------------
 Rule: Ensure all resources that can be tagged have at least one tag
  - 4 Resources Exposed:
 -----------------------------------------------
-   - Exposed Resource: [aws_iam_role.dms-access-for-endpoint] (main.tf:12)
-     Violating Resource: [aws_iam_role.dms-access-for-endpoint]  (main.tf:12)
+   - Exposed Resource: [aws_dms_replication_subnet_group.test] (main.tf:42)
+     Violating Resource: [aws_dms_replication_subnet_group.test]  (main.tf:42)
 
      Evidence:
-             | Resource IAM Role aws_iam_role.dms-access-for-endpoint does not have any tags set
-
-
-   - Exposed Resource: [aws_iam_role.dms-cloudwatch-logs-role] (main.tf:22)
-     Violating Resource: [aws_iam_role.dms-cloudwatch-logs-role]  (main.tf:22)
-
-     Evidence:
-             | Resource IAM Role aws_iam_role.dms-cloudwatch-logs-role does not have any tags set
+             | Resource Dms Subnet Group aws_dms_replication_subnet_group.test does not have any tags set other than "Name"
 
 
    - Exposed Resource: [aws_iam_role.dms-vpc-role] (main.tf:32)
@@ -55,11 +17,49 @@ Rule: Ensure all resources that can be tagged have at least one tag
              | Resource IAM Role aws_iam_role.dms-vpc-role does not have any tags set
 
 
-   - Exposed Resource: [aws_dms_replication_subnet_group.test] (main.tf:42)
-     Violating Resource: [aws_dms_replication_subnet_group.test]  (main.tf:42)
+   - Exposed Resource: [aws_iam_role.dms-cloudwatch-logs-role] (main.tf:22)
+     Violating Resource: [aws_iam_role.dms-cloudwatch-logs-role]  (main.tf:22)
 
      Evidence:
-             | Resource Dms Subnet Group aws_dms_replication_subnet_group.test does not have any tags set other than "Name"
+             | Resource IAM Role aws_iam_role.dms-cloudwatch-logs-role does not have any tags set
+
+
+   - Exposed Resource: [aws_iam_role.dms-access-for-endpoint] (main.tf:12)
+     Violating Resource: [aws_iam_role.dms-access-for-endpoint]  (main.tf:12)
+
+     Evidence:
+             | Resource IAM Role aws_iam_role.dms-access-for-endpoint does not have any tags set
+
+
+-----------------------------------------------
+Rule: Ensure IAM policies pass Access Analyzer policy validation without WARNING and SUGGESTION issues
+ - 3 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_iam_role.dms-vpc-role] (main.tf:32)
+     Violating Resource: [aws_iam_role.dms-vpc-role]  (main.tf:32)
+
+     Evidence:
+         Line 5, Col 13:
+             | Add a value to the empty string in the Sid element
+             | See https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-reference-policy-checks.html#access-analyzer-reference-policy-checks-suggestion-empty-sid-value
+
+
+   - Exposed Resource: [aws_iam_role.dms-cloudwatch-logs-role] (main.tf:22)
+     Violating Resource: [aws_iam_role.dms-cloudwatch-logs-role]  (main.tf:22)
+
+     Evidence:
+         Line 5, Col 13:
+             | Add a value to the empty string in the Sid element
+             | See https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-reference-policy-checks.html#access-analyzer-reference-policy-checks-suggestion-empty-sid-value
+
+
+   - Exposed Resource: [aws_iam_role.dms-access-for-endpoint] (main.tf:12)
+     Violating Resource: [aws_iam_role.dms-access-for-endpoint]  (main.tf:12)
+
+     Evidence:
+         Line 5, Col 13:
+             | Add a value to the empty string in the Sid element
+             | See https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-reference-policy-checks.html#access-analyzer-reference-policy-checks-suggestion-empty-sid-value
 
 
 -----------------------------------------------

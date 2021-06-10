@@ -1,13 +1,13 @@
 
 WARNINGs found:
-Rule: Ensure ECR repositories being created are set to be encrypted at rest using customer-managed CMK
+Rule: Ensure use of ECR repository policy, and no action wildcards are being used
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_ecr_repository.foo] (main.tf:1)
      Violating Resource: [aws_ecr_repository.foo]  (main.tf:1)
 
      Evidence:
-             | The ECR repository aws_ecr_repository.foo is not set to be encrypted at rest using customer-managed CMK
+             | There is no resource policy or no statements attached to aws_ecr_repository.foo
 
 
 -----------------------------------------------
@@ -19,17 +19,6 @@ Rule: Ensure all resources that can be tagged have at least one tag
 
      Evidence:
              | Resource ECR repository aws_ecr_repository.foo does not have any tags set
-
-
------------------------------------------------
-Rule: Ensure use of ECR repository policy, and no action wildcards are being used
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_ecr_repository.foo] (main.tf:1)
-     Violating Resource: [aws_ecr_repository.foo]  (main.tf:1)
-
-     Evidence:
-             | There is no resource policy or no statements attached to aws_ecr_repository.foo
 
 
 -----------------------------------------------
