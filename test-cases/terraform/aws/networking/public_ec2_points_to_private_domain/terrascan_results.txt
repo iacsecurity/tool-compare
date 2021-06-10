@@ -2,22 +2,17 @@
 
 Violation Details -
     
-	Description    :	Ensure VPC flow logging is enabled in all VPCs
-	File           :	main.tf
-	Line           :	5
-	Severity       :	MEDIUM
-	
-	-----------------------------------------------------------------------
-	
 	Description    :	Enable AWS ElasticSearch Encryption At Rest
 	File           :	main.tf
+	Plan Root      :	./
 	Line           :	107
 	Severity       :	MEDIUM
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	Ensure that your AWS Elasticsearch clusters have enabled the support for publishing slow logs to AWS CloudWatch Logs. This feature enables you to publish slow logs from the indexing and search operations performed on your ES clusters and gain full insight into the performance of these operations.
+	Description    :	Ensure Elasticsearch domains being created are set to be encrypted node-to-node
 	File           :	main.tf
+	Plan Root      :	./
 	Line           :	107
 	Severity       :	MEDIUM
 	
@@ -25,6 +20,7 @@ Violation Details -
 	
 	Description    :	Security group attached to launch configuration is wide open to internet and this can be related to reconnaissance phase
 	File           :	main.tf
+	Plan Root      :	./
 	Line           :	138
 	Severity       :	HIGH
 	
@@ -32,14 +28,64 @@ Violation Details -
 	
 	Description    :	It is recommended that no security group allows unrestricted ingress access
 	File           :	main.tf
+	Plan Root      :	./
 	Line           :	121
 	Severity       :	HIGH
 	
 	-----------------------------------------------------------------------
 	
+	Description    :	Ensure every security group should have a description to ease the process of Auditing
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	92
+	Severity       :	LOW
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure every security group should have a description to ease the process of Auditing
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	121
+	Severity       :	LOW
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that your AWS Elasticsearch clusters have enabled the support for publishing slow logs to AWS CloudWatch Logs. This feature enables you to publish slow logs from the indexing and search operations performed on your ES clusters and gain full insight into the performance of these operations.
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	107
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that detailed monitoring is enabled for EC2 instances.
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	138
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that EC2 is EBS optimized
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	138
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
 	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
 	File           :	main.tf
+	Plan Root      :	./
 	Line           :	138
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure VPC flow logging is enabled in all VPCs
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	5
 	Severity       :	MEDIUM
 	
 	-----------------------------------------------------------------------
@@ -48,12 +94,12 @@ Violation Details -
 Scan Summary -
 
 	File/Folder         :	tool-compare/test-cases/terraform/aws/networking/public_ec2_points_to_private_domain
-	IaC Type            :	terraform
-	Scanned At          :	2021-04-29 23:52:48.388072 +0000 UTC
-	Policies Validated  :	561
-	Violated Policies   :	6
-	Low                 :	0
-	Medium              :	4
-	High                :	2
+	IaC Type            :	all
+	Scanned At          :	2021-06-01 05:55:12.967792 +0000 UTC
+	Policies Validated  :	612
+	Violated Policies   :	11
+	Low                 :	2
+	Medium              :	6
+	High                :	3
 	
 

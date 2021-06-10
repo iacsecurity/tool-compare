@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.1
+Scanning with Keeping Infrastructure as Code Secure v1.3.2
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 559
+Queries loaded: 575
 Queries failed to execute: 0
 
 ------------------------------------
@@ -31,11 +31,11 @@ Resource Not Using Tags, Severity: INFO, Results: 9
 Description: AWS services resource tags are an essential part of managing components
 Platform: Terraform
 
-	[1]: /src/main.tf:162
+	[1]: /src/main.tf:20
 
-		161: 
-		162: resource "aws_route_table" "subnet2_1" {
-		163:   vpc_id = aws_vpc.vpc2.id
+		019: 
+		020: resource "aws_vpc" "vpc1" {
+		021:   cidr_block = "10.5.0.0/16"
 
 
 	[2]: /src/main.tf:35
@@ -45,53 +45,53 @@ Platform: Terraform
 		036:   cidr_block = "10.7.0.0/16"
 
 
-	[3]: /src/main.tf:20
-
-		019: 
-		020: resource "aws_vpc" "vpc1" {
-		021:   cidr_block = "10.5.0.0/16"
-
-
-	[4]: /src/main.tf:25
-
-		024: 
-		025: resource "aws_subnet" "subnet1_1" {
-		026:   vpc_id = aws_vpc.vpc1.id
-
-
-	[5]: /src/main.tf:30
+	[3]: /src/main.tf:30
 
 		029: 
 		030: resource "aws_subnet" "subnet1_2" {
 		031:   vpc_id = aws_vpc.vpc1.id
 
 
-	[6]: /src/main.tf:40
+	[4]: /src/main.tf:40
 
 		039: 
 		040: resource "aws_subnet" "subnet2_1" {
 		041:   vpc_id = aws_vpc.vpc2.id
 
 
-	[7]: /src/main.tf:45
+	[5]: /src/main.tf:45
 
 		044: 
 		045: resource "aws_subnet" "subnet2_2" {
 		046:   vpc_id = aws_vpc.vpc2.id
 
 
-	[8]: /src/main.tf:92
+	[6]: /src/main.tf:25
+
+		024: 
+		025: resource "aws_subnet" "subnet1_1" {
+		026:   vpc_id = aws_vpc.vpc1.id
+
+
+	[7]: /src/main.tf:92
 
 		091: ##########################
 		092: resource "aws_vpc_peering_connection" "this" {
 		093:   provider      = aws.this
 
 
-	[9]: /src/main.tf:103
+	[8]: /src/main.tf:103
 
 		102: ######################################
 		103: resource "aws_vpc_peering_connection_accepter" "peer_accepter" {
 		104:   provider                  = aws.peer
+
+
+	[9]: /src/main.tf:162
+
+		161: 
+		162: resource "aws_route_table" "subnet2_1" {
+		163:   vpc_id = aws_vpc.vpc2.id
 
 
 VPC FlowLogs Disabled, Severity: MEDIUM, Results: 2
@@ -120,4 +120,4 @@ LOW: 0
 INFO: 9
 TOTAL: 11
 
-Scan duration: 3.988754571s
+Scan duration: 7.313931904s

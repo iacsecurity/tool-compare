@@ -2,8 +2,17 @@
 
 Violation Details -
     
-	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
+	Description    :	Ensure that your Amazon Simple Queue Service (SQS) queues are protecting the contents of their messages using Server-Side Encryption (SSE). The SQS service uses an AWS KMS Customer Master Key (CMK) to generate data keys required for the encryption/decryption process of SQS messages. There is no additional charge for using SQS Server-Side Encryption, however, there is a charge for using AWS KMS
 	File           :	main.tf
+	Plan Root      :	./
+	Line           :	103
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that EC2 is EBS optimized
+	File           :	main.tf
+	Plan Root      :	./
 	Line           :	87
 	Severity       :	MEDIUM
 	
@@ -11,7 +20,24 @@ Violation Details -
 	
 	Description    :	Ensure VPC flow logging is enabled in all VPCs
 	File           :	main.tf
+	Plan Root      :	./
 	Line           :	12
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that detailed monitoring is enabled for EC2 instances.
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	87
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	87
 	Severity       :	MEDIUM
 	
 	-----------------------------------------------------------------------
@@ -20,12 +46,12 @@ Violation Details -
 Scan Summary -
 
 	File/Folder         :	tool-compare/test-cases/terraform/aws/networking/vpc-endpoints/sqs-vpc-endpoint-without-dns-resolution
-	IaC Type            :	terraform
-	Scanned At          :	2021-04-29 23:53:04.054841 +0000 UTC
-	Policies Validated  :	561
-	Violated Policies   :	2
+	IaC Type            :	all
+	Scanned At          :	2021-06-01 05:55:13.810903 +0000 UTC
+	Policies Validated  :	612
+	Violated Policies   :	5
 	Low                 :	0
-	Medium              :	2
-	High                :	0
+	Medium              :	3
+	High                :	2
 	
 

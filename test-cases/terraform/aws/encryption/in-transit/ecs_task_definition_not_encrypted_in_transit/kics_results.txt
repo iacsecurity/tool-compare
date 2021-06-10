@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.1
+Scanning with Keeping Infrastructure as Code Secure v1.3.2
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 559
+Queries loaded: 575
 Queries failed to execute: 0
 
 ------------------------------------
@@ -31,18 +31,18 @@ Resource Not Using Tags, Severity: INFO, Results: 2
 Description: AWS services resource tags are an essential part of managing components
 Platform: Terraform
 
-	[1]: /src/main.tf:9
-
-		008: 
-		009: resource "aws_ecs_task_definition" "service" {
-		010:   family                = "cloudrail-test-encryption"
-
-
-	[2]: /src/main.tf:5
+	[1]: /src/main.tf:5
 
 		004: 
 		005: resource "aws_efs_file_system" "test" {
 		006:   creation_token = "cloudrail-test"
+
+
+	[2]: /src/main.tf:9
+
+		008: 
+		009: resource "aws_ecs_task_definition" "service" {
+		010:   family                = "cloudrail-test-encryption"
 
 
 EFS Without KMS, Severity: HIGH, Results: 1
@@ -86,4 +86,4 @@ LOW: 0
 INFO: 2
 TOTAL: 5
 
-Scan duration: 3.996466142s
+Scan duration: 4.526464807s

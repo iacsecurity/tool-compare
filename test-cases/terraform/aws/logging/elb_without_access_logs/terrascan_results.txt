@@ -4,8 +4,17 @@ Violation Details -
     
 	Description    :	AWS ELB incoming traffic not encrypted
 	File           :	main.tf
+	Plan Root      :	./
 	Line           :	1
 	Severity       :	LOW
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure AWS ELB has access logging enabled.
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	1
+	Severity       :	MEDIUM
 	
 	-----------------------------------------------------------------------
 	
@@ -13,12 +22,12 @@ Violation Details -
 Scan Summary -
 
 	File/Folder         :	tool-compare/test-cases/terraform/aws/logging/elb_without_access_logs
-	IaC Type            :	terraform
-	Scanned At          :	2021-04-30 19:28:30.324921 +0000 UTC
-	Policies Validated  :	561
-	Violated Policies   :	1
+	IaC Type            :	all
+	Scanned At          :	2021-06-01 05:56:03.382724 +0000 UTC
+	Policies Validated  :	612
+	Violated Policies   :	2
 	Low                 :	1
-	Medium              :	0
+	Medium              :	1
 	High                :	0
 	
 

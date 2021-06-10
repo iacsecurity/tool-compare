@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.1
+Scanning with Keeping Infrastructure as Code Secure v1.3.2
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 559
+Queries loaded: 575
 Queries failed to execute: 0
 
 ------------------------------------
@@ -42,18 +42,18 @@ Resource Not Using Tags, Severity: INFO, Results: 12
 Description: AWS services resource tags are an essential part of managing components
 Platform: Terraform
 
-	[1]: /src/main.tf:98
+	[1]: /src/main.tf:5
+
+		004: 
+		005: resource "aws_vpc" "main" {
+		006:   cidr_block = "192.168.100.0/24"
+
+
+	[2]: /src/main.tf:98
 
 		097: 
 		098: resource "aws_security_group" "allow-public-outbound-sg" {
 		099:   name        = "allow-public-outbound-sg"
-
-
-	[2]: /src/main.tf:56
-
-		055: 
-		056: resource "aws_eip" "allocate-ip-to-nat-gw" {
-		057:   vpc      = true
 
 
 	[3]: /src/main.tf:136
@@ -63,11 +63,11 @@ Platform: Terraform
 		137:   ami = data.aws_ami.ubuntu.id
 
 
-	[4]: /src/main.tf:5
+	[4]: /src/main.tf:56
 
-		004: 
-		005: resource "aws_vpc" "main" {
-		006:   cidr_block = "192.168.100.0/24"
+		055: 
+		056: resource "aws_eip" "allocate-ip-to-nat-gw" {
+		057:   vpc      = true
 
 
 	[5]: /src/main.tf:143
@@ -77,53 +77,53 @@ Platform: Terraform
 		144:   name           = "GameScores"
 
 
-	[6]: /src/main.tf:51
-
-		050: 
-		051:   tags = {
-		052:     Name = "gw NAT"
-
-
-	[7]: /src/main.tf:28
-
-		027: 
-		028:   tags = {
-		029:     Name = "public-rtb"
-
-
-	[8]: /src/main.tf:75
-
-		074: 
-		075:   tags = {
-		076:     Name = "private-rtb"
-
-
-	[9]: /src/main.tf:93
+	[6]: /src/main.tf:93
 
 		092: 
 		093:   tags = {
 		094:     Name = "allow-public-outbound-nacl"
 
 
-	[10]: /src/main.tf:15
+	[7]: /src/main.tf:115
+
+		114: 
+		115:   tags = {
+		116:     Name = "internet-gateway"
+
+
+	[8]: /src/main.tf:15
 
 		014: 
 		015:   tags = {
 		016:     Name = "public-subnet"
 
 
-	[11]: /src/main.tf:42
+	[9]: /src/main.tf:42
 
 		041: 
 		042:   tags = {
 		043:     Name = "private-subnet"
 
 
-	[12]: /src/main.tf:115
+	[10]: /src/main.tf:28
 
-		114: 
-		115:   tags = {
-		116:     Name = "internet-gateway"
+		027: 
+		028:   tags = {
+		029:     Name = "public-rtb"
+
+
+	[11]: /src/main.tf:75
+
+		074: 
+		075:   tags = {
+		076:     Name = "private-rtb"
+
+
+	[12]: /src/main.tf:51
+
+		050: 
+		051:   tags = {
+		052:     Name = "gw NAT"
 
 
 EC2 Not EBS Optimized, Severity: INFO, Results: 1
@@ -200,4 +200,4 @@ LOW: 0
 INFO: 16
 TOTAL: 19
 
-Scan duration: 4.082359955s
+Scan duration: 5.601543337s

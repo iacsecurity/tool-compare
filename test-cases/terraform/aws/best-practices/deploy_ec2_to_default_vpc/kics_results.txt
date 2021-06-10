@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.1
+Scanning with Keeping Infrastructure as Code Secure v1.3.2
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 559
+Queries loaded: 575
 Queries failed to execute: 0
 
 ------------------------------------
@@ -31,25 +31,25 @@ Resource Not Using Tags, Severity: INFO, Results: 3
 Description: AWS services resource tags are an essential part of managing components
 Platform: Terraform
 
-	[1]: /src/main.tf:18
-
-		017: 
-		018: resource "aws_subnet" "default-subnet" {
-		019:   vpc_id     = aws_default_vpc.default.id
-
-
-	[2]: /src/main.tf:24
+	[1]: /src/main.tf:24
 
 		023: 
 		024: resource "aws_route_table" "default-route-table" {
 		025:   vpc_id = aws_default_vpc.default.id
 
 
-	[3]: /src/main.tf:49
+	[2]: /src/main.tf:49
 
 		048: 
 		049: resource "aws_instance" "t2-instance" {
 		050:   ami = data.aws_ami.ubuntu.id
+
+
+	[3]: /src/main.tf:18
+
+		017: 
+		018: resource "aws_subnet" "default-subnet" {
+		019:   vpc_id     = aws_default_vpc.default.id
 
 
 EC2 Not EBS Optimized, Severity: INFO, Results: 1
@@ -115,4 +115,4 @@ LOW: 0
 INFO: 5
 TOTAL: 8
 
-Scan duration: 3.706313938s
+Scan duration: 4.602470761s

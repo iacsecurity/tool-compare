@@ -2,43 +2,65 @@
 
 Violation Details -
     
-	Description    :	Use encrypted connection between CloudFront and origin server
+	Description    :	Ensure that cloud-front has web application firewall enabled
 	File           :	main.tf
+	Plan Root      :	./
 	Line           :	44
-	Severity       :	HIGH
+	Severity       :	Medium
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	Use encrypted connection between CloudFront and origin server
+	Description    :	Ensure that S3 Buckets have server side encryption at rest enabled with KMS key to protect sensitive data.
 	File           :	main.tf
-	Line           :	44
-	Severity       :	HIGH
-	
-	-----------------------------------------------------------------------
-	
-	Description    :	Enabling S3 versioning will enable easy recovery from both unintended user actions, like deletes and overwrites
-	File           :	main.tf
+	Plan Root      :	./
 	Line           :	10
 	Severity       :	HIGH
 	
 	-----------------------------------------------------------------------
 	
+	Description    :	Ensure S3 buckets have access logging enabled.
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	10
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
 	Description    :	Ensure that geo restriction is enabled for your Amazon CloudFront CDN distribution to whitelist or blacklist a country in order to allow or restrict users in specific locations from accessing web application content.
 	File           :	main.tf
+	Plan Root      :	./
 	Line           :	44
 	Severity       :	Medium
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	Ensure that cloud-front has web application firewall enabled
+	Description    :	Enabling S3 versioning will enable easy recovery from both unintended user actions, like deletes and overwrites
 	File           :	main.tf
+	Plan Root      :	./
+	Line           :	10
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Use encrypted connection between CloudFront and origin server
+	File           :	main.tf
+	Plan Root      :	./
 	Line           :	44
-	Severity       :	Medium
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Use encrypted connection between CloudFront and origin server
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	44
+	Severity       :	HIGH
 	
 	-----------------------------------------------------------------------
 	
 	Description    :	Ensure that your AWS Cloudfront distributions have the Logging feature enabled in order to track all viewer requests for the content delivered through the Content Delivery Network (CDN).
 	File           :	main.tf
+	Plan Root      :	./
 	Line           :	44
 	Severity       :	MEDIUM
 	
@@ -48,12 +70,12 @@ Violation Details -
 Scan Summary -
 
 	File/Folder         :	tool-compare/test-cases/terraform/aws/encryption/in-transit/cloudfront_distribution_not_encrypted
-	IaC Type            :	terraform
-	Scanned At          :	2021-04-29 23:52:11.31587 +0000 UTC
-	Policies Validated  :	561
-	Violated Policies   :	6
+	IaC Type            :	all
+	Scanned At          :	2021-06-01 05:54:46.967953 +0000 UTC
+	Policies Validated  :	612
+	Violated Policies   :	8
 	Low                 :	0
-	Medium              :	3
-	High                :	3
+	Medium              :	4
+	High                :	4
 	
 

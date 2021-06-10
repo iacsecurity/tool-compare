@@ -1,14 +1,33 @@
 
 
+Violation Details -
+    
+	Description    :	Ensure Neptune Cluster is Encrypted
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	1
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure AWS Neptune clusters have logging enabled.
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	1
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+
 Scan Summary -
 
 	File/Folder         :	tool-compare/test-cases/terraform/aws/encryption/at-rest/neptune_cluster_no_encryption
-	IaC Type            :	terraform
-	Scanned At          :	2021-04-30 19:28:12.749237 +0000 UTC
-	Policies Validated  :	561
-	Violated Policies   :	0
+	IaC Type            :	all
+	Scanned At          :	2021-06-01 05:55:08.105586 +0000 UTC
+	Policies Validated  :	612
+	Violated Policies   :	2
 	Low                 :	0
-	Medium              :	0
+	Medium              :	2
 	High                :	0
 	
 

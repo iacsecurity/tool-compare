@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.1
+Scanning with Keeping Infrastructure as Code Secure v1.3.2
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 559
+Queries loaded: 575
 Queries failed to execute: 0
 
 ------------------------------------
@@ -49,6 +49,17 @@ Platform: Terraform
 		006:   creation_token = "efs-not-secure"
 
 
+EFS With Vulnerable Policy, Severity: HIGH, Results: 1
+Description: EFS (Elastic File System) policy should avoid wildcard in 'Action' and 'Principal'.
+Platform: Terraform
+
+	[1]: /src/main.tf:16
+
+		015: 
+		016:   policy = <<POLICY
+		017: {
+
+
 EFS Not Encrypted, Severity: HIGH, Results: 1
 Description: Elastic File System (EFS) must be encrypted
 Platform: Terraform
@@ -62,10 +73,10 @@ Platform: Terraform
 
 
 Results Summary:
-HIGH: 2
+HIGH: 3
 MEDIUM: 0
 LOW: 0
 INFO: 1
-TOTAL: 3
+TOTAL: 4
 
-Scan duration: 4.222296047s
+Scan duration: 4.785297851s

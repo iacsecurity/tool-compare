@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.1
+Scanning with Keeping Infrastructure as Code Secure v1.3.2
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 559
+Queries loaded: 575
 Queries failed to execute: 0
 
 ------------------------------------
@@ -67,6 +67,17 @@ Platform: Terraform
 		006:   filename = "~/Downloads/lambda.json.zip"
 
 
+Lambda With Vulnerable Policy, Severity: MEDIUM, Results: 1
+Description: The attribute 'action' should not have wildcard
+Platform: Terraform
+
+	[1]: /src/main.tf:35
+
+		034:   statement_id  = "AllowAllResources"
+		035:   action        = "lambda:*"
+		036:   function_name = aws_lambda_function.my-lambda.function_name
+
+
 Lambda Function Without Tags, Severity: MEDIUM, Results: 1
 Description: AWS Lambda Functions must have associated tags.
 Platform: Terraform
@@ -81,9 +92,9 @@ Platform: Terraform
 
 Results Summary:
 HIGH: 0
-MEDIUM: 1
+MEDIUM: 2
 LOW: 2
 INFO: 2
-TOTAL: 5
+TOTAL: 6
 
-Scan duration: 3.675476498s
+Scan duration: 4.557551192s

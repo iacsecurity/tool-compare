@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.1
+Scanning with Keeping Infrastructure as Code Secure v1.3.2
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 559
+Queries loaded: 575
 Queries failed to execute: 0
 
 ------------------------------------
@@ -49,78 +49,78 @@ Security Group Rules Without Description, Severity: INFO, Results: 3
 Description: It's considered a best practice for all rules in AWS Security Group to have a description
 Platform: Terraform
 
-	[1]: /src/main.tf:137
-
-		136:   }
-		137:   egress {
-		138:     from_port = 0
-
-
-	[2]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[3]: /src/main.tf:105
+	[1]: /src/main.tf:105
 
 		104:   vpc_id = aws_vpc.nondefault.id
 		105:   ingress {
 		106:     from_port = 3306
 
 
+	[2]: /src/main.tf:137
+
+		136:   }
+		137:   egress {
+		138:     from_port = 0
+
+
+	[3]: /src/main.tf:131
+
+		130:   vpc_id = aws_vpc.nondefault.id
+		131:   ingress {
+		132:     from_port = 0
+
+
 Resource Not Using Tags, Severity: INFO, Results: 12
 Description: AWS services resource tags are an essential part of managing components
 Platform: Terraform
 
-	[1]: /src/main.tf:68
-
-		067: 
-		068: resource "aws_subnet" "nondefault_1" {
-		069:   vpc_id = aws_vpc.nondefault.id
-
-
-	[2]: /src/main.tf:74
-
-		073: 
-		074: resource "aws_subnet" "nondefault_2" {
-		075:   vpc_id = aws_vpc.nondefault.id
-
-
-	[3]: /src/main.tf:129
-
-		128: 
-		129: resource "aws_security_group" "publicly_accessible_sg" {
-		130:   vpc_id = aws_vpc.nondefault.id
-
-
-	[4]: /src/main.tf:103
-
-		102: 
-		103: resource "aws_security_group" "db" {
-		104:   vpc_id = aws_vpc.nondefault.id
-
-
-	[5]: /src/main.tf:84
+	[1]: /src/main.tf:84
 
 		083: 
 		084: resource aws_route_table "nondefault_1" {
 		085:   vpc_id = aws_vpc.nondefault.id
 
 
-	[6]: /src/main.tf:97
+	[2]: /src/main.tf:97
 
 		096: 
 		097: resource "aws_db_subnet_group" "db" {
 		098:   name = "rds_db"
 
 
-	[7]: /src/main.tf:113
+	[3]: /src/main.tf:10
 
-		112: 
-		113: resource "aws_db_instance" "test" {
-		114:   identifier = "tf-test-db"
+		009: 
+		010: resource "aws_vpc" "nondefault" {
+		011:   cidr_block = "10.1.1.0/24"
+
+
+	[4]: /src/main.tf:129
+
+		128: 
+		129: resource "aws_security_group" "publicly_accessible_sg" {
+		130:   vpc_id = aws_vpc.nondefault.id
+
+
+	[5]: /src/main.tf:103
+
+		102: 
+		103: resource "aws_security_group" "db" {
+		104:   vpc_id = aws_vpc.nondefault.id
+
+
+	[6]: /src/main.tf:68
+
+		067: 
+		068: resource "aws_subnet" "nondefault_1" {
+		069:   vpc_id = aws_vpc.nondefault.id
+
+
+	[7]: /src/main.tf:74
+
+		073: 
+		074: resource "aws_subnet" "nondefault_2" {
+		075:   vpc_id = aws_vpc.nondefault.id
 
 
 	[8]: /src/main.tf:146
@@ -130,11 +130,11 @@ Platform: Terraform
 		147:   ami = "ami-0130bec6e5047f596"
 
 
-	[9]: /src/main.tf:10
+	[9]: /src/main.tf:113
 
-		009: 
-		010: resource "aws_vpc" "nondefault" {
-		011:   cidr_block = "10.1.1.0/24"
+		112: 
+		113: resource "aws_db_instance" "test" {
+		114:   identifier = "tf-test-db"
 
 
 	[10]: /src/main.tf:80
@@ -699,4 +699,4 @@ LOW: 0
 INFO: 20
 TOTAL: 84
 
-Scan duration: 3.761606887s
+Scan duration: 5.15866696s

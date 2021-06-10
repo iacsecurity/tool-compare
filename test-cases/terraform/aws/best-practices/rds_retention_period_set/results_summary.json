@@ -3,6 +3,6 @@
   "cloudrail": "no",
   "kics": "yes",
   "snyk": "no",
-  "terrascan": "no",
+  "terrascan": "yes",
   "tfsec": "yes"
 }

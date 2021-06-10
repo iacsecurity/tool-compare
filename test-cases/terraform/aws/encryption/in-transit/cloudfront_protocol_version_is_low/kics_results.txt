@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.1
+Scanning with Keeping Infrastructure as Code Secure v1.3.2
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 559
+Queries loaded: 575
 Queries failed to execute: 0
 
 ------------------------------------
@@ -71,18 +71,18 @@ S3 Bucket Without Versioning, Severity: MEDIUM, Results: 2
 Description: S3 bucket without versioning
 Platform: Terraform
 
-	[1]: /src/main.tf:14
-
-		013: 
-		014: resource "aws_s3_bucket" "dist" {
-		015:   bucket = "dist-cloud-test"
-
-
-	[2]: /src/main.tf:5
+	[1]: /src/main.tf:5
 
 		004: 
 		005: resource "aws_s3_bucket" "logging" {
 		006:   bucket = "dist-cloud-test-logs"
+
+
+	[2]: /src/main.tf:14
+
+		013: 
+		014: resource "aws_s3_bucket" "dist" {
+		015:   bucket = "dist-cloud-test"
 
 
 Vulnerable Default SSL Certificate, Severity: HIGH, Results: 1
@@ -166,4 +166,4 @@ LOW: 2
 INFO: 2
 TOTAL: 13
 
-Scan duration: 3.904232017s
+Scan duration: 4.765313599s

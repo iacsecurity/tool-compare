@@ -2,15 +2,49 @@
 
 Violation Details -
     
+	Description    :	Ensure Point In Time Recovery is enabled for DynamoDB Tables
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	90
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that detailed monitoring is enabled for EC2 instances.
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	83
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that EC2 is EBS optimized
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	83
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
 	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
 	File           :	main.tf
+	Plan Root      :	./
 	Line           :	83
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure DynamoDb is encrypted at rest
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	90
 	Severity       :	MEDIUM
 	
 	-----------------------------------------------------------------------
 	
 	Description    :	Ensure VPC flow logging is enabled in all VPCs
 	File           :	main.tf
+	Plan Root      :	./
 	Line           :	8
 	Severity       :	MEDIUM
 	
@@ -19,13 +53,13 @@ Violation Details -
 
 Scan Summary -
 
-	File/Folder         :	tool-compare/test-cases/terraform/aws/encryption/in-transit/dynamodb-vpce-exist-without-routeassociation
-	IaC Type            :	terraform
-	Scanned At          :	2021-04-29 23:52:13.892141 +0000 UTC
-	Policies Validated  :	561
-	Violated Policies   :	2
+	File/Folder         :	tool-compare/test-cases/terraform/aws/networking/vpc-endpoints/dynamodb-vpce-exist-without-routeassociation
+	IaC Type            :	all
+	Scanned At          :	2021-06-01 05:55:14.647627 +0000 UTC
+	Policies Validated  :	612
+	Violated Policies   :	6
 	Low                 :	0
-	Medium              :	2
-	High                :	0
+	Medium              :	5
+	High                :	1
 	
 

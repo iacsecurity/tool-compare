@@ -2,22 +2,33 @@
 
 Violation Details -
     
-	Description    :	Lambda function doesn't not include a VPC configuration.
-	File           :	main.tf
-	Line           :	21
-	Severity       :	Low
-	
-	-----------------------------------------------------------------------
-	
 	Description    :	Lambda does not use KMS CMK key to protect environment variables.
 	File           :	main.tf
+	Plan Root      :	./
 	Line           :	21
 	Severity       :	High
 	
 	-----------------------------------------------------------------------
 	
+	Description    :	Ensure AWS Lambda function has policy attached.
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	21
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Lambda function doesn't not include a VPC configuration.
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	21
+	Severity       :	Low
+	
+	-----------------------------------------------------------------------
+	
 	Description    :	Lambda tracing is not enabled.
 	File           :	main.tf
+	Plan Root      :	./
 	Line           :	21
 	Severity       :	LOW
 	
@@ -27,12 +38,12 @@ Violation Details -
 Scan Summary -
 
 	File/Folder         :	tool-compare/test-cases/terraform/aws/logging/lambda_without_xray
-	IaC Type            :	terraform
-	Scanned At          :	2021-04-30 19:28:29.705942 +0000 UTC
-	Policies Validated  :	561
-	Violated Policies   :	3
+	IaC Type            :	all
+	Scanned At          :	2021-06-01 05:56:02.581213 +0000 UTC
+	Policies Validated  :	612
+	Violated Policies   :	4
 	Low                 :	2
-	Medium              :	0
+	Medium              :	1
 	High                :	1
 	
 

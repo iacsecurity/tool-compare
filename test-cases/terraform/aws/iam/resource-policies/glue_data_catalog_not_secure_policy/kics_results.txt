@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.1
+Scanning with Keeping Infrastructure as Code Secure v1.3.2
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 559
+Queries loaded: 575
 Queries failed to execute: 0
 
 ------------------------------------
@@ -31,25 +31,25 @@ Resource Not Using Tags, Severity: INFO, Results: 3
 Description: AWS services resource tags are an essential part of managing components
 Platform: Terraform
 
-	[1]: /src/main.tf:14
-
-		013: 
-		014: resource "aws_iam_role" "cloudrail_glue_iam" {
-		015:   name = "cloudrail_glue_iam"
-
-
-	[2]: /src/main.tf:33
+	[1]: /src/main.tf:33
 
 		032: 
 		033: resource "aws_s3_bucket" "cloudrail" {
 		034:   bucket = "cloudrail-glue"
 
 
-	[3]: /src/main.tf:38
+	[2]: /src/main.tf:38
 
 		037: 
 		038: resource "aws_glue_crawler" "cloudrail_table_crawler" {
 		039:   database_name = aws_glue_catalog_database.cloudrail_table_database.name
+
+
+	[3]: /src/main.tf:14
+
+		013: 
+		014: resource "aws_iam_role" "cloudrail_glue_iam" {
+		015:   name = "cloudrail_glue_iam"
 
 
 S3 Bucket Logging Disabled, Severity: LOW, Results: 1
@@ -74,6 +74,17 @@ Platform: Terraform
 		034:   bucket = "cloudrail-glue"
 
 
+Glue With Vulnerable Policy, Severity: MEDIUM, Results: 1
+Description: Glue policy should avoid wildcard in 'principals' and 'actions'
+Platform: Terraform
+
+	[1]: /src/main.tf:68
+
+		067: resource "aws_glue_resource_policy" "example" {
+		068:   policy = data.aws_iam_policy_document.glue-example-policy.json
+		069: }
+
+
 S3 Bucket Without Server-side-encryption, Severity: HIGH, Results: 1
 Description: S3 bucket should have encryption defined
 Platform: Terraform
@@ -88,9 +99,9 @@ Platform: Terraform
 
 Results Summary:
 HIGH: 1
-MEDIUM: 1
+MEDIUM: 2
 LOW: 1
 INFO: 3
-TOTAL: 6
+TOTAL: 7
 
-Scan duration: 3.843192227s
+Scan duration: 4.897984778s

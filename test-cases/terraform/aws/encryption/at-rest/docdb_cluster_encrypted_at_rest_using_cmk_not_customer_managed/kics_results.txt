@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.1
+Scanning with Keeping Infrastructure as Code Secure v1.3.2
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 559
+Queries loaded: 575
 Queries failed to execute: 0
 
 ------------------------------------
@@ -49,6 +49,17 @@ Platform: Terraform
 		010:   cluster_identifier  = "my-docdb-cluster-test2"
 
 
+DOCDB Cluster Encrypted With AWS Managed Key, Severity: MEDIUM, Results: 1
+Description: DOCDB Cluster should be encrypted with customer-managed KMS keys instead of AWS managed keys
+Platform: Terraform
+
+	[1]: /src/main.tf:16
+
+		015:   storage_encrypted   = true
+		016:   kms_key_id          = data.aws_kms_key.test.arn
+		017: }
+
+
 Passwords And Secrets In Infrastructure Code, Severity: HIGH, Results: 1
 Description: Query to find passwords and secrets in infrastructure code.
 Platform: Common
@@ -63,9 +74,9 @@ Platform: Common
 
 Results Summary:
 HIGH: 1
-MEDIUM: 0
+MEDIUM: 1
 LOW: 1
 INFO: 1
-TOTAL: 3
+TOTAL: 4
 
-Scan duration: 3.939131257s
+Scan duration: 4.480490055s

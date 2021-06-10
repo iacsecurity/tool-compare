@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.1
+Scanning with Keeping Infrastructure as Code Secure v1.3.2
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 559
+Queries loaded: 575
 Queries failed to execute: 0
 
 ------------------------------------
@@ -36,6 +36,17 @@ Platform: Terraform
 		004: 
 		005: resource "aws_kms_key" "secure_policy" {
 		006:   description             = "KMS key + secure_policy"
+
+
+Policy Without Principal, Severity: MEDIUM, Results: 1
+Description: All policies, except IAM identity-based policies, should have the 'Principal' element defined
+Platform: Terraform
+
+	[1]: /src/main.tf:12
+
+		011:     "Version": "2008-10-17",
+		012:     "Statement": [
+		013:         {
 
 
 CMK Rotation Disabled, Severity: HIGH, Results: 1
@@ -52,9 +63,9 @@ Platform: Terraform
 
 Results Summary:
 HIGH: 1
-MEDIUM: 0
+MEDIUM: 1
 LOW: 0
 INFO: 1
-TOTAL: 2
+TOTAL: 3
 
-Scan duration: 3.922523708s
+Scan duration: 4.792620396s

@@ -2,8 +2,25 @@
 
 Violation Details -
     
+	Description    :	Ensure S3 buckets have access logging enabled.
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	5
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
 	Description    :	Enabling S3 versioning will enable easy recovery from both unintended user actions, like deletes and overwrites
 	File           :	main.tf
+	Plan Root      :	./
+	Line           :	5
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that S3 Buckets have server side encryption at rest enabled with KMS key to protect sensitive data.
+	File           :	main.tf
+	Plan Root      :	./
 	Line           :	5
 	Severity       :	HIGH
 	
@@ -11,6 +28,7 @@ Violation Details -
 	
 	Description    :	S3 bucket Access is allowed to all AWS Account Users.
 	File           :	main.tf
+	Plan Root      :	./
 	Line           :	5
 	Severity       :	HIGH
 	
@@ -20,12 +38,12 @@ Violation Details -
 Scan Summary -
 
 	File/Folder         :	tool-compare/test-cases/terraform/aws/iam/resource-policies/s3_bucket_policy_public_to_all_authenticated_users
-	IaC Type            :	terraform
-	Scanned At          :	2021-04-29 23:53:18.635858 +0000 UTC
-	Policies Validated  :	561
-	Violated Policies   :	2
+	IaC Type            :	all
+	Scanned At          :	2021-06-01 05:55:29.82912 +0000 UTC
+	Policies Validated  :	612
+	Violated Policies   :	4
 	Low                 :	0
-	Medium              :	0
-	High                :	2
+	Medium              :	1
+	High                :	3
 	
 

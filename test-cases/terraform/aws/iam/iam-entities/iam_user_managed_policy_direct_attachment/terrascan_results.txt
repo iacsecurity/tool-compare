@@ -1,14 +1,25 @@
 
 
+Violation Details -
+    
+	Description    :	Ensure IAM permissions are not given directly to users
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	28
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+
 Scan Summary -
 
 	File/Folder         :	tool-compare/test-cases/terraform/aws/iam/iam-entities/iam_user_managed_policy_direct_attachment
-	IaC Type            :	terraform
-	Scanned At          :	2021-04-29 23:53:22.502456 +0000 UTC
-	Policies Validated  :	561
-	Violated Policies   :	0
+	IaC Type            :	all
+	Scanned At          :	2021-06-01 05:55:34.469469 +0000 UTC
+	Policies Validated  :	612
+	Violated Policies   :	1
 	Low                 :	0
-	Medium              :	0
+	Medium              :	1
 	High                :	0
 	
 

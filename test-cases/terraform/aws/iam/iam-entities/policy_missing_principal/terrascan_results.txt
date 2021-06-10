@@ -1,14 +1,33 @@
 
 
+Violation Details -
+    
+	Description    :	Ensure rotation for customer created CMKs is enabled
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	5
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure IAM policies do not have 'Principal' element missing from the policy statement.
+	File           :	main.tf
+	Plan Root      :	./
+	Line           :	5
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+
 Scan Summary -
 
 	File/Folder         :	tool-compare/test-cases/terraform/aws/iam/iam-entities/policy_missing_principal
-	IaC Type            :	terraform
-	Scanned At          :	2021-04-29 23:53:26.896808 +0000 UTC
-	Policies Validated  :	561
-	Violated Policies   :	0
+	IaC Type            :	all
+	Scanned At          :	2021-06-01 05:55:48.528384 +0000 UTC
+	Policies Validated  :	612
+	Violated Policies   :	2
 	Low                 :	0
-	Medium              :	0
-	High                :	0
+	Medium              :	1
+	High                :	1
 	
 
