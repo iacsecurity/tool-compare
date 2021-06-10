@@ -1,13 +1,42 @@
 
 WARNINGs found:
-Rule: Ensure API Gateway with caching enabled is set to be encrypted
+Rule: Ensure REST API Gateway has access logging enabled
  - 1 Resources Exposed:
 -----------------------------------------------
+   - Exposed Resource: [aws_api_gateway_rest_api.api_gw] (main.tf:5)
+     Violating Resource: [aws_api_gateway_stage.api_gw_stage]  (main.tf:44)
+
+     Evidence:
+             | The API Gateway aws_api_gateway_rest_api.api_gw does not have access logging enabled for stage aws_api_gateway_stage.api_gw_stage
+
+
+-----------------------------------------------
+Rule: Ensure API Gateway has X-Ray tracing enabled
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_api_gateway_rest_api.api_gw] (main.tf:5)
+     Violating Resource: [aws_api_gateway_stage.api_gw_stage]  (main.tf:44)
+
+     Evidence:
+             | The API Gateway aws_api_gateway_rest_api.api_gw has X-Ray tracing disabled for stage aws_api_gateway_stage.api_gw_stage
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_api_gateway_stage.api_gw_stage] (main.tf:44)
+     Violating Resource: [aws_api_gateway_stage.api_gw_stage]  (main.tf:44)
+
+     Evidence:
+             | Resource API stage aws_api_gateway_stage.api_gw_stage does not have any tags set
+
+
    - Exposed Resource: [aws_api_gateway_rest_api.api_gw] (main.tf:5)
      Violating Resource: [aws_api_gateway_rest_api.api_gw]  (main.tf:5)
 
      Evidence:
-             | The API Gateway aws_api_gateway_rest_api.api_gw.id has caching enabled and not encrypted for method GET in the stage prod
+             | Resource API Gateway aws_api_gateway_rest_api.api_gw does not have any tags set
 
 
 -----------------------------------------------
@@ -22,14 +51,14 @@ Rule: Ensure use of API Gateway endpoint policy, and no action wildcards are bei
 
 
 -----------------------------------------------
-Rule: Ensure all resources that can be tagged have at least one tag
+Rule: Ensure API Gateway with caching enabled is set to be encrypted
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_api_gateway_rest_api.api_gw] (main.tf:5)
      Violating Resource: [aws_api_gateway_rest_api.api_gw]  (main.tf:5)
 
      Evidence:
-             | Resource API Gateway aws_api_gateway_rest_api.api_gw does not have any tags set
+             | The API Gateway aws_api_gateway_rest_api.api_gw.id has caching enabled and not encrypted for method GET in the stage prod
 
 
 -----------------------------------------------

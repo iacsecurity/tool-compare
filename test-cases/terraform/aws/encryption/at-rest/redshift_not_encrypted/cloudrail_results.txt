@@ -1,5 +1,17 @@
 
 WARNINGs found:
+Rule: Ensure Redshift clusters have logging enabled
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_redshift_cluster.default] (main.tf:5)
+     Violating Resource: [aws_redshift_cluster.default]  (main.tf:5)
+
+     Evidence:
+             | The Redshift cluster aws_redshift_cluster.default does not have logging enabled
+
+
+-----------------------------------------------
+>>>>>>> e9bfb03 (Updated results with Cloudrail 1.3.39)
 Rule: Ensure all resources that can be tagged have at least one tag
  - 1 Resources Exposed:
 -----------------------------------------------

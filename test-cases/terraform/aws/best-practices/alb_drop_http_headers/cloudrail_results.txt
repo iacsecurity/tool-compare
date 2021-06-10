@@ -1,5 +1,23 @@
 
 WARNINGs found:
+Rule: Ensure ELB has logging enabled
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_lb.disabled] (main.tf:39)
+     Violating Resource: [aws_lb.disabled]  (main.tf:39)
+
+     Evidence:
+             | The Load Balancer aws_lb.disabled does not have logging enabled
+
+
+   - Exposed Resource: [aws_lb.default] (main.tf:25)
+     Violating Resource: [aws_lb.default]  (main.tf:25)
+
+     Evidence:
+             | The Load Balancer aws_lb.default does not have logging enabled
+
+
+-----------------------------------------------
 Rule: Ensure Load Balancer drops invalid HTTP headers
  - 2 Resources Exposed:
 -----------------------------------------------
@@ -21,11 +39,18 @@ Rule: Ensure Load Balancer drops invalid HTTP headers
 Rule: Ensure all resources that can be tagged have at least one tag
  - 20 Resources Exposed:
 -----------------------------------------------
-   - Exposed Resource: [module.vpc.aws_vpc.this[0]] (.terraform/modules/vpc/main.tf:25)
-     Violating Resource: [module.vpc.aws_vpc.this[0]]  (.terraform/modules/vpc/main.tf:25)
+   - Exposed Resource: [module.vpc.aws_subnet.private[2]] (.terraform/modules/vpc/main.tf:400)
+     Violating Resource: [module.vpc.aws_subnet.private[2]]  (.terraform/modules/vpc/main.tf:400)
 
      Evidence:
-             | Resource VPC module.vpc.aws_vpc.this[0] does not have any tags set other than "Name"
+             | Resource Subnet module.vpc.aws_subnet.private[2] does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [module.vpc.aws_subnet.private[0]] (.terraform/modules/vpc/main.tf:400)
+     Violating Resource: [module.vpc.aws_subnet.private[0]]  (.terraform/modules/vpc/main.tf:400)
+
+     Evidence:
+             | Resource Subnet module.vpc.aws_subnet.private[0] does not have any tags set other than "Name"
 
 
    - Exposed Resource: [module.vpc.aws_subnet.public[2]] (.terraform/modules/vpc/main.tf:371)
@@ -35,25 +60,11 @@ Rule: Ensure all resources that can be tagged have at least one tag
              | Resource Subnet module.vpc.aws_subnet.public[2] does not have any tags set other than "Name"
 
 
-   - Exposed Resource: [module.vpc.aws_subnet.private[2]] (.terraform/modules/vpc/main.tf:400)
-     Violating Resource: [module.vpc.aws_subnet.private[2]]  (.terraform/modules/vpc/main.tf:400)
+   - Exposed Resource: [module.vpc.aws_vpc.this[0]] (.terraform/modules/vpc/main.tf:25)
+     Violating Resource: [module.vpc.aws_vpc.this[0]]  (.terraform/modules/vpc/main.tf:25)
 
      Evidence:
-             | Resource Subnet module.vpc.aws_subnet.private[2] does not have any tags set other than "Name"
-
-
-   - Exposed Resource: [module.vpc.aws_subnet.public[0]] (.terraform/modules/vpc/main.tf:371)
-     Violating Resource: [module.vpc.aws_subnet.public[0]]  (.terraform/modules/vpc/main.tf:371)
-
-     Evidence:
-             | Resource Subnet module.vpc.aws_subnet.public[0] does not have any tags set other than "Name"
-
-
-   - Exposed Resource: [module.vpc.aws_subnet.private[0]] (.terraform/modules/vpc/main.tf:400)
-     Violating Resource: [module.vpc.aws_subnet.private[0]]  (.terraform/modules/vpc/main.tf:400)
-
-     Evidence:
-             | Resource Subnet module.vpc.aws_subnet.private[0] does not have any tags set other than "Name"
+             | Resource VPC module.vpc.aws_vpc.this[0] does not have any tags set other than "Name"
 
 
    - Exposed Resource: [module.vpc.aws_subnet.private[1]] (.terraform/modules/vpc/main.tf:400)
@@ -68,6 +79,13 @@ Rule: Ensure all resources that can be tagged have at least one tag
 
      Evidence:
              | Resource Subnet module.vpc.aws_subnet.public[1] does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [module.vpc.aws_subnet.public[0]] (.terraform/modules/vpc/main.tf:371)
+     Violating Resource: [module.vpc.aws_subnet.public[0]]  (.terraform/modules/vpc/main.tf:371)
+
+     Evidence:
+             | Resource Subnet module.vpc.aws_subnet.public[0] does not have any tags set other than "Name"
 
 
    - Exposed Resource: [aws_lb.default] (main.tf:25)
@@ -112,13 +130,6 @@ Rule: Ensure all resources that can be tagged have at least one tag
              | Resource Security group module.vpc.aws_default_security_group.this[0] does not have any tags set other than "Name"
 
 
-   - Exposed Resource: [module.vpc.aws_route_table.private[0]] (.terraform/modules/vpc/main.tf:237)
-     Violating Resource: [module.vpc.aws_route_table.private[0]]  (.terraform/modules/vpc/main.tf:237)
-
-     Evidence:
-             | Resource Route table module.vpc.aws_route_table.private[0] does not have any tags set other than "Name"
-
-
    - Exposed Resource: [module.vpc.aws_route_table.private[1]] (.terraform/modules/vpc/main.tf:237)
      Violating Resource: [module.vpc.aws_route_table.private[1]]  (.terraform/modules/vpc/main.tf:237)
 
@@ -126,18 +137,25 @@ Rule: Ensure all resources that can be tagged have at least one tag
              | Resource Route table module.vpc.aws_route_table.private[1] does not have any tags set other than "Name"
 
 
-   - Exposed Resource: [module.vpc.aws_route_table.public[0]] (.terraform/modules/vpc/main.tf:198)
-     Violating Resource: [module.vpc.aws_route_table.public[0]]  (.terraform/modules/vpc/main.tf:198)
-
-     Evidence:
-             | Resource Route table module.vpc.aws_route_table.public[0] does not have any tags set other than "Name"
-
-
    - Exposed Resource: [module.vpc.aws_route_table.private[2]] (.terraform/modules/vpc/main.tf:237)
      Violating Resource: [module.vpc.aws_route_table.private[2]]  (.terraform/modules/vpc/main.tf:237)
 
      Evidence:
              | Resource Route table module.vpc.aws_route_table.private[2] does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [module.vpc.aws_route_table.private[0]] (.terraform/modules/vpc/main.tf:237)
+     Violating Resource: [module.vpc.aws_route_table.private[0]]  (.terraform/modules/vpc/main.tf:237)
+
+     Evidence:
+             | Resource Route table module.vpc.aws_route_table.private[0] does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [module.vpc.aws_route_table.public[0]] (.terraform/modules/vpc/main.tf:198)
+     Violating Resource: [module.vpc.aws_route_table.public[0]]  (.terraform/modules/vpc/main.tf:198)
+
+     Evidence:
+             | Resource Route table module.vpc.aws_route_table.public[0] does not have any tags set other than "Name"
 
 
    - Exposed Resource: [module.vpc.aws_nat_gateway.this[0]] (.terraform/modules/vpc/main.tf:1083)
@@ -181,7 +199,7 @@ Rule: Ensure all used default security groups of every VPC restrict all traffic
 
      Evidence:
          VPC module.vpc.aws_vpc.this[0]
-             | aws_lb.default uses ENI eni-pseudo-5562e8b5-b9d5-43ec-9ae9-fa8154e63366
+             | aws_lb.default uses ENI eni-pseudo-ce87de21-3d4b-4619-8d2a-85d96e06ad42
              | The ENI is secured by default Security group module.vpc.aws_default_security_group.this[0] and allows all traffic
 
 

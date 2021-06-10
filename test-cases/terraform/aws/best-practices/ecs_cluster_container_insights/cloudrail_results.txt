@@ -1,5 +1,16 @@
 
 WARNINGs found:
+Rule: Ensure ECS cluster has container insights enabled
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_ecs_cluster.foo] (main.tf:1)
+     Violating Resource: [aws_ecs_cluster.foo]  (main.tf:1)
+
+     Evidence:
+             | The ECS cluster aws_ecs_cluster.foo has container insights disabled
+
+
+-----------------------------------------------
 Rule: Ensure all resources that can be tagged have at least one tag
  - 1 Resources Exposed:
 -----------------------------------------------
