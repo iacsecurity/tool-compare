@@ -1,0 +1,60 @@
+
+                   .0MO.                                    
+                   OMMMx                                    
+                   ;NMX;                                    
+                    ...           ...              ....     
+WMMMd     cWMMM0.  KMMMO      ;xKWMMMMNOc.     ,xXMMMMMWXkc.
+WMMMd   .0MMMN:    KMMMO    :XMMMMMMMMMMMWl   xMMMMMWMMMMMMl
+WMMMd  lWMMMO.     KMMMO   xMMMMKc...'lXMk   ,MMMMx   .;dXx 
+WMMMd.0MMMX;       KMMMO  cMMMMd        '    'MMMMNl'       
+WMMMNWMMMMl        KMMMO  0MMMN               oMMMMMMMXkl.  
+WMMMMMMMMMMo       KMMMO  0MMMX                .ckKWMMMMMM0.
+WMMMMWokMMMMk      KMMMO  oMMMMc              .     .:OMMMM0
+WMMMK.  dMMMM0.    KMMMO   KMMMMx'    ,kNc   :WOc.    .NMMMX
+WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
+WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
+xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
+
+
+Scanning with Keeping Infrastructure as Code Secure v1.3.2
+
+
+
+Files scanned: 1
+Parsed files: 1
+Queries loaded: 575
+Queries failed to execute: 0
+
+------------------------------------
+
+Resource Not Using Tags, Severity: INFO, Results: 1
+Description: AWS services resource tags are an essential part of managing components
+Platform: Terraform
+
+	[1]: /src/main.tf:5
+
+		004: 
+		005: resource "aws_iam_user" "example" {
+		006:   name          = "example"
+
+
+IAM User With Access To Console, Severity: MEDIUM, Results: 1
+Description: AWS IAM Users should not have access to console
+Platform: Terraform
+
+	[1]: /src/main.tf:12
+
+		011: locals {
+		012:   user_name = aws_iam_user.example.name
+		013: }
+
+
+
+Results Summary:
+HIGH: 0
+MEDIUM: 1
+LOW: 0
+INFO: 1
+TOTAL: 2
+
+Scan duration: 24.358057679s

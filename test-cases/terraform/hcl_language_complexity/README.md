@@ -1,0 +1,3 @@
+The HCL language has a lot of features and capabilities that are often used by users' code, and the modules they use. When analyzing Terraform code, tools should be able to expand expressions and evaluate their results correctly. Otherwise, false positives and false negatives may occur.
+
+This directory will include a few examples of such complexities and test which tools can "see" through these complexities. In all cases, we will be focusing on the same rule - identifying whether an IAM user in AWS has a login profile configured (meaning it has the ability to access the console using a password). We will evaluate different permutations of this basic case.
