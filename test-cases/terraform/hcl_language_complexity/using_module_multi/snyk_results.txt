@@ -1,0 +1,54 @@
+[
+  {
+    "meta": {
+      "isPrivate": true,
+      "isLicensesEnabled": false,
+      "ignoreSettings": null,
+      "org": "iacsec.toolcompare",
+      "projectId": "",
+      "policy": ""
+    },
+    "filesystemPolicy": false,
+    "vulnerabilities": [],
+    "dependencyCount": 0,
+    "licensesPolicy": null,
+    "ignoreSettings": null,
+    "targetFile": "main.tf",
+    "projectName": "project",
+    "org": "iacsec.toolcompare",
+    "policy": "",
+    "isPrivate": true,
+    "targetFilePath": "/project/main.tf",
+    "packageManager": "terraformconfig",
+    "path": "/project",
+    "projectType": "terraformconfig",
+    "ok": true,
+    "infrastructureAsCodeIssues": []
+  },
+  {
+    "meta": {
+      "isPrivate": true,
+      "isLicensesEnabled": false,
+      "ignoreSettings": null,
+      "org": "iacsec.toolcompare",
+      "projectId": "",
+      "policy": ""
+    },
+    "filesystemPolicy": false,
+    "vulnerabilities": [],
+    "dependencyCount": 0,
+    "licensesPolicy": null,
+    "ignoreSettings": null,
+    "targetFile": "mymodule/user.tf",
+    "projectName": "project",
+    "org": "iacsec.toolcompare",
+    "policy": "",
+    "isPrivate": true,
+    "targetFilePath": "/project/mymodule/user.tf",
+    "packageManager": "terraformconfig",
+    "path": "/project",
+    "projectType": "terraformconfig",
+    "ok": true,
+    "infrastructureAsCodeIssues": []
+  }
+]

@@ -1,0 +1,34 @@
+
+WARNINGs found:
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [module.jack.aws_iam_user.user] (mymodule/user.tf:13)
+     Violating Resource: [module.jack.aws_iam_user.user]  (mymodule/user.tf:13)
+
+     Evidence:
+             | Resource IAM user module.jack.aws_iam_user.user does not have any tags set
+
+
+   - Exposed Resource: [module.jull.aws_iam_user.user] (mymodule/user.tf:13)
+     Violating Resource: [module.jull.aws_iam_user.user]  (mymodule/user.tf:13)
+
+     Evidence:
+             | Resource IAM user module.jull.aws_iam_user.user does not have any tags set
+
+
+-----------------------------------------------
+Rule: Ensure no human IAM users defined
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [module.jack.aws_iam_user.user] (mymodule/user.tf:13)
+     Violating Resource: [module.jack.aws_iam_user.user]  (mymodule/user.tf:13)
+
+     Evidence:
+             | The IAM user module.jack.aws_iam_user.user has console access, and so is considered human
+
+
+-----------------------------------------------
+
+Cloudrail ran this assessment without any policies and so all rule violations show as warnings.
+You can increase a rule's enforcement level by creating a Policy in the Web UI and adding the rule to it.
