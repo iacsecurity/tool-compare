@@ -1,0 +1,62 @@
+Failed to run the process ...
+{
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "ignoreSettings": null,
+    "org": "iacsec.toolcompare",
+    "projectId": "",
+    "policy": ""
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "main.tf",
+  "projectName": "project",
+  "org": "iacsec.toolcompare",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
+  "ok": false,
+  "infrastructureAsCodeIssues": [
+    {
+      "resolve": "Set `Principal` attribute to specific service or account, e.g. `Service: ec2.amazonaws.com`",
+      "id": "SNYK-CC-TF-117",
+      "impact": "Anyone will be allowed to assume the role, and perform actions granted in attached policies",
+      "remediation": {
+        "cloudformation": "Set `Principal` in `Properties.AssumeRolePolicyDocument` attribute to specific service or account, e.g. `Service: ec2.amazonaws.com`",
+        "terraform": "Set `Principal` attribute to specific service or account, e.g. `Service: ec2.amazonaws.com`"
+      },
+      "subType": "IAM",
+      "policyEngineType": "opa",
+      "publicId": "SNYK-CC-TF-117",
+      "title": "IAM Role can be assumed by anyone",
+      "severity": "high",
+      "msg": "resource.aws_iam_role[over-privilege-role1].assume_role_policy['Statement'][0]",
+      "issue": "The IAM role can be assumed by any service or principal",
+      "type": "terraform",
+      "references": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_permissions-to-switch.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_compare-resource-policies.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "The IAM role can be assumed by any service or principal",
+        "impact": "Anyone will be allowed to assume the role, and perform actions granted in attached policies",
+        "resolve": "Set `Principal` attribute to specific service or account, e.g. `Service: ec2.amazonaws.com`"
+      },
+      "lineNumber": 3,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-117",
+      "path": [
+        "resource",
+        "aws_iam_role[over-privilege-role1]",
+        "assume_role_policy['Statement'][0]"
+      ]
+    }
+  ]
+}
