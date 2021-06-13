@@ -1,0 +1,73 @@
+
+Check 1
+
+  [AWS008][WARNING] Resource 'aws_security_group.allow_tls' defines a fully open ingress security group.
+  /src/main.tf:17
+
+
+      14 |     from_port        = 443
+      15 |     to_port          = 443
+      16 |     protocol         = "tcp"
+      17 |     cidr_blocks      = ["0.0.0.0/0"]
+      18 |   }
+      19 | 
+      20 |   egress {
+
+  Impact:     The port is exposed for ingress from the internet
+  Resolution: Set a more restrictive cidr range
+
+
+Check 2
+
+  [AWS009][WARNING] Resource 'aws_security_group.allow_tls' defines a fully open egress security group.
+  /src/main.tf:24
+
+
+      21 |     from_port        = 0
+      22 |     to_port          = 0
+      23 |     protocol         = "-1"
+      24 |     cidr_blocks      = ["0.0.0.0/0"]
+      25 |     ipv6_cidr_blocks = ["::/0"]
+      26 |   }
+      27 | 
+
+  Impact:     The port is exposed for egressing data to the internet
+  Resolution: Set a more restrictive cidr range
+
+
+Check 3
+
+  [AWS009][WARNING] Resource 'aws_security_group.allow_tls' defines a fully open egress security group.
+  /src/main.tf:25
+
+
+      22 |     to_port          = 0
+      23 |     protocol         = "-1"
+      24 |     cidr_blocks      = ["0.0.0.0/0"]
+      25 |     ipv6_cidr_blocks = ["::/0"]
+      26 |   }
+      27 | 
+      28 |   tags = {
+
+  Impact:     The port is exposed for egressing data to the internet
+  Resolution: Set a more restrictive cidr range
+
+
+  times
+  ------------------------------------------
+  disk i/o             60.468ms
+  parsing HCL          494.542µs
+  evaluating values    1.684082ms
+  running checks       16.343458ms
+
+  counts
+  ------------------------------------------
+  files loaded         1
+  blocks               2
+  evaluated blocks     2
+  modules              0
+  module blocks        0
+  ignored checks       0
+
+3 potential problems detected.
+

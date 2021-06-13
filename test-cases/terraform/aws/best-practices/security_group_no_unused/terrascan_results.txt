@@ -1,0 +1,26 @@
+
+
+Violation Details -
+    
+	Description    :	Ensure VPC flow logging is enabled in all VPCs
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	3
+	Severity       :	LOW
+	
+	-----------------------------------------------------------------------
+	
+
+Scan Summary -
+
+	File/Folder         :	/iac
+	IaC Type            :	all
+	Scanned At          :	2021-06-13 01:19:47.287890794 +0000 UTC
+	Policies Validated  :	45
+	Violated Policies   :	1
+	Low                 :	1
+	Medium              :	0
+	High                :	0
+	
+
