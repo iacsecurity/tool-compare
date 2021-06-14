@@ -1,0 +1,23 @@
+metadata:
+  name: Cloudrail
+  license: Freemium
+  requiresRegistration: true
+  maintainer: Indeni
+  links:
+    website: https://www.indeni.com/cloudrail
+    github: todo
+    builtinRules: todo
+capabilities:
+  languageSupport: [terraform-plan, cloudformation]
+  providerSupport: [aws]
+  customRules: {} # no support
+  output:
+    formats: [junit-xml, gitlab-sast, sarif, human-readable]
+    showsFilenames: false
+    showsLineNumbers: false
+  suppression:
+    fromCode: false
+    byRule: true
+    byResource: false
+
+illustration: {}
