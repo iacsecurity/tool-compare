@@ -1,0 +1,27 @@
+metadata:
+  name: Checkov
+  license: OSS (Apache-2.0)
+  requiresRegistration: false
+  maintainer: Bridgecrew
+  links:
+    website: https://checkov.io
+    github: https://github.com/bridgecrewio/checkov
+    builtinRules: TODO
+capabilities:
+  languageSupport: [terraform, terraform-plan, cloudformation]
+  providerSupport: [aws, azure, gcp]
+  customRules:
+    language: python or YAML
+    supportsMultiResourceCorrelation: true
+    supportsRuntimeIacCorrelation: false
+    supportsUnitTests: false
+  output:
+    formats: [todo]
+    showsFilenames: true
+    showsLineNumbers: true
+  suppression:
+    fromCode: true
+    byRule: true
+    byResource: true
+
+illustration: {}
