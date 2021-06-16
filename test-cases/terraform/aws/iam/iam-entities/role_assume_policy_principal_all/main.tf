@@ -1,4 +1,5 @@
-# Two roles, both are bad and should be caught
+# Two roles, both are bad and should be caught. The test will be considered "passed" only if the tool
+# catches both roles.
 
 resource "aws_iam_role" "over-privilege-role1" {
   name = "over-privilege-role"
