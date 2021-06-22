@@ -23,12 +23,12 @@ The tables below list test cases included in this repository. For each case, it 
 are able to catch it specifically, and which don't.
 
 ### Summary
-Last update: 2021-06-10
+Last update: 2021-06-22
 
 |     | Checkov | Indeni Cloudrail | Kics | Snyk | Terrascan | Tfsec |
 |----|----|----|----|----|----|----|
-|Tested Version|2.0.138|1.3.6|1.3.2|1.563.0|1.4.0|0.39.34|
-|Total Catch Rate|66%|92%|95%|43%|75%|54%|
+|Tested Version|2.0.192|1.3.48|1.3.2|1.630.0|1.7.0|0.40.2|
+|Total Catch Rate|65%|91%|92%|41%|70%|50%|
 
 
 ### test-cases/terraform/aws/best-practices
@@ -50,9 +50,10 @@ Last update: 2021-06-10
 |[rds_retention_period_set](test-cases/terraform/aws/best-practices/rds_retention_period_set)|:white_check_mark:|:x:|:white_check_mark:|:x:|:white_check_mark:|:white_check_mark:|
 |[security_group_no_description_for_rules](test-cases/terraform/aws/best-practices/security_group_no_description_for_rules)|:x:|:white_check_mark:|:white_check_mark:|:x:|:white_check_mark:|:white_check_mark:|
 |[security_group_no_description_for_securi..](test-cases/terraform/aws/best-practices/security_group_no_description_for_security_group)|:x:|:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|[security_group_no_unused](test-cases/terraform/aws/best-practices/security_group_no_unused)|:white_check_mark:|:x:|:x:|:x:|:x:|:x:|
 |[tag_all_items](test-cases/terraform/aws/best-practices/tag_all_items)|:x:|:white_check_mark:|:white_check_mark:|:x:|:x:|:x:|
 |[using_public_amis](test-cases/terraform/aws/best-practices/using_public_amis)|:x:|:white_check_mark:|:x:|:x:|:x:|:x:|
-|Category Catch Rate|78%|83%|94%|44%|67%|83%|
+|Category Catch Rate|79%|79%|89%|42%|63%|79%|
 
 ### test-cases/terraform/aws/encryption/at-rest
 | Test Case | Checkov | Indeni Cloudrail | Kics | Snyk | Terrascan | Tfsec |
@@ -109,7 +110,8 @@ Last update: 2021-06-10
 |[policy-too-broad](test-cases/terraform/aws/iam/iam-entities/policy-too-broad)|:x:|:white_check_mark:|:x:|:x:|:x:|:x:|
 |[policy_missing_principal](test-cases/terraform/aws/iam/iam-entities/policy_missing_principal)|:x:|:white_check_mark:|:white_check_mark:|:x:|:white_check_mark:|:x:|
 |[public_and_private_ec2_same_role](test-cases/terraform/aws/iam/iam-entities/public_and_private_ec2_same_role)|:x:|:white_check_mark:|:white_check_mark:|:x:|:x:|:x:|
-|Category Catch Rate|43%|100%|86%|29%|57%|0%|
+|[role_assume_policy_principal_all](test-cases/terraform/aws/iam/iam-entities/role_assume_policy_principal_all)|:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|:x:|:x:|
+|Category Catch Rate|50%|100%|88%|38%|50%|0%|
 
 ### test-cases/terraform/aws/iam/resource-authentication
 | Test Case | Checkov | Indeni Cloudrail | Kics | Snyk | Terrascan | Tfsec |
@@ -165,6 +167,16 @@ Last update: 2021-06-10
 |[dynamodb-vpce-exist-without-routeassocia..](test-cases/terraform/aws/networking/vpc-endpoints/dynamodb-vpce-exist-without-routeassociation)|:x:|:white_check_mark:|:white_check_mark:|:x:|:x:|:x:|
 |[sqs-vpc-endpoint-without-dns-resolution](test-cases/terraform/aws/networking/vpc-endpoints/sqs-vpc-endpoint-without-dns-resolution)|:x:|:white_check_mark:|:white_check_mark:|:x:|:x:|:x:|
 |Category Catch Rate|0%|100%|100%|0%|0%|0%|
+
+### test-cases/terraform/hcl_language_complexity
+| Test Case | Checkov | Indeni Cloudrail | Kics | Snyk | Terrascan | Tfsec |
+|----|----|----|----|----|----|----|
+|[using_count_and_ternary_expr](test-cases/terraform/hcl_language_complexity/using_count_and_ternary_expr)|:x:|:white_check_mark:|:white_check_mark:|:x:|:x:|:x:|
+|[using_for_each](test-cases/terraform/hcl_language_complexity/using_for_each)|:x:|:white_check_mark:|:white_check_mark:|:x:|:x:|:x:|
+|[using_locals](test-cases/terraform/hcl_language_complexity/using_locals)|:x:|:white_check_mark:|:white_check_mark:|:x:|:x:|:x:|
+|[using_module_multi](test-cases/terraform/hcl_language_complexity/using_module_multi)|:white_check_mark:|:white_check_mark:|:x:|:x:|:x:|:x:|
+|[using_module_simple](test-cases/terraform/hcl_language_complexity/using_module_simple)|:x:|:white_check_mark:|:x:|:x:|:x:|:x:|
+|Category Catch Rate|20%|100%|60%|0%|0%|0%|
 
 
 ## Contributing
