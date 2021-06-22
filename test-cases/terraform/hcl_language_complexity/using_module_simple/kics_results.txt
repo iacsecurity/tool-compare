@@ -1,0 +1,85 @@
+
+                   .0MO.                                    
+                   OMMMx                                    
+                   ;NMX;                                    
+                    ...           ...              ....     
+WMMMd     cWMMM0.  KMMMO      ;xKWMMMMNOc.     ,xXMMMMMWXkc.
+WMMMd   .0MMMN:    KMMMO    :XMMMMMMMMMMMWl   xMMMMMWMMMMMMl
+WMMMd  lWMMMO.     KMMMO   xMMMMKc...'lXMk   ,MMMMx   .;dXx 
+WMMMd.0MMMX;       KMMMO  cMMMMd        '    'MMMMNl'       
+WMMMNWMMMMl        KMMMO  0MMMN               oMMMMMMMXkl.  
+WMMMMMMMMMMo       KMMMO  0MMMX                .ckKWMMMMMM0.
+WMMMMWokMMMMk      KMMMO  oMMMMc              .     .:OMMMM0
+WMMMK.  dMMMM0.    KMMMO   KMMMMx'    ,kNc   :WOc.    .NMMMX
+WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
+WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
+xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
+
+
+Scanning with Keeping Infrastructure as Code Secure v1.3.2
+
+
+
+Files scanned: 55
+Parsed files: 55
+Queries loaded: 809
+Queries failed to execute: 0
+
+------------------------------------
+
+Resource Not Using Tags, Severity: INFO, Results: 1
+Description: AWS services resource tags are an essential part of managing components
+Platform: Terraform
+
+	[1]: /src/.terraform/modules/jack.this/examples/autoscalinggroup/main.tf:13
+
+		012: #######################
+		013: resource "aws_launch_template" "default" {
+		014:   # terraform-null-label example used here: Set template name prefix
+
+
+Auto Scaling Group With No Associated ELB, Severity: MEDIUM, Results: 1
+Description: AWS Auto Scaling Groups must have associated ELBs to ensure high availability and improve application performance. This means the attribute 'load_balancers' must be defined and not empty.
+Platform: Terraform
+
+	[1]: /src/.terraform/modules/jack.this/examples/autoscalinggroup/main.tf:36
+
+		035: ######################
+		036: resource "aws_autoscaling_group" "default" {
+		037:   # terraform-null-label example used here: Set ASG name prefix
+
+
+Passwords And Secrets In Infrastructure Code, Severity: HIGH, Results: 3
+Description: Query to find passwords and secrets in infrastructure code.
+Platform: Common
+
+	[1]: /src/.terraform/modules/jack.this/examples/complete/label2.tf:7
+
+		006:   delimiter           = "+"
+		007:   regex_replace_chars = "/[^a-zA-Z0-9-+]/"
+		008: 
+
+
+	[2]: /src/.terraform/modules/jack.this/examples/complete/label3c.tf:7
+
+		006:   delimiter           = "."
+		007:   regex_replace_chars = "/[^-a-zA-Z0-9.]/"
+		008: 
+
+
+	[3]: /src/.terraform/modules/jack.this/examples/complete/label3n.tf:7
+
+		006:   delimiter           = "."
+		007:   regex_replace_chars = "/[^-a-zA-Z0-9.]/"
+		008: 
+
+
+
+Results Summary:
+HIGH: 3
+MEDIUM: 1
+LOW: 0
+INFO: 1
+TOTAL: 5
+
+Scan duration: 46.568984063s

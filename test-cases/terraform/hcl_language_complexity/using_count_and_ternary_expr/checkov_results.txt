@@ -1,0 +1,35 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.192 
+
+terraform scan results:
+
+Passed checks: 0, Failed checks: 2, Skipped checks: 0
+
+Check: CKV2_AWS_22: "Ensure an IAM User does not have access to the console"
+	FAILED for resource: aws_iam_user.jack
+	File: /main.tf:10-14
+
+		10 | resource "aws_iam_user" "jack" {
+		11 |   name          = "jack"
+		12 |   path          = "/"
+		13 |   force_destroy = true
+		14 | }
+
+
+Check: CKV2_AWS_22: "Ensure an IAM User does not have access to the console"
+	FAILED for resource: aws_iam_user.jill
+	File: /main.tf:22-26
+
+		22 | resource "aws_iam_user" "jill" {
+		23 |   name          = "jill"
+		24 |   path          = "/"
+		25 |   force_destroy = true
+		26 | }
+
+
