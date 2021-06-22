@@ -1,0 +1,63 @@
+
+WARNINGs found:
+Rule: Ensure IAM policies pass Access Analyzer policy validation without WARNING and SUGGESTION issues
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_iam_role.over-privilege-role2] (main.tf:21)
+     Violating Resource: [aws_iam_role.over-privilege-role2]  (main.tf:21)
+
+     Evidence:
+         Line 10, Col 17:
+             | Add a value to the empty string in the Sid element
+             | See https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-reference-policy-checks.html#access-analyzer-reference-policy-checks-suggestion-empty-sid-value
+
+
+   - Exposed Resource: [aws_iam_role.over-privilege-role1] (main.tf:3)
+     Violating Resource: [aws_iam_role.over-privilege-role1]  (main.tf:3)
+
+     Evidence:
+         Line 8, Col 17:
+             | Add a value to the empty string in the Sid element
+             | See https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-reference-policy-checks.html#access-analyzer-reference-policy-checks-suggestion-empty-sid-value
+
+
+-----------------------------------------------
+Rule: Ensure no role uses an overly wide principal for assume role policy
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_iam_role.over-privilege-role1] (main.tf:3)
+     Violating Resource: [aws_iam_role.over-privilege-role1]  (main.tf:3)
+
+     Evidence:
+             | The IAM role aws_iam_role.over-privilege-role1 has a trust policy that allows '*' principal to assume it
+
+
+   - Exposed Resource: [aws_iam_role.over-privilege-role2] (main.tf:21)
+     Violating Resource: [aws_iam_role.over-privilege-role2]  (main.tf:21)
+
+     Evidence:
+             | The IAM role aws_iam_role.over-privilege-role2 has a trust policy that allows '*' principal to assume it
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_iam_role.over-privilege-role2] (main.tf:21)
+     Violating Resource: [aws_iam_role.over-privilege-role2]  (main.tf:21)
+
+     Evidence:
+             | Resource IAM Role aws_iam_role.over-privilege-role2 does not have any tags set
+
+
+   - Exposed Resource: [aws_iam_role.over-privilege-role1] (main.tf:3)
+     Violating Resource: [aws_iam_role.over-privilege-role1]  (main.tf:3)
+
+     Evidence:
+             | Resource IAM Role aws_iam_role.over-privilege-role1 does not have any tags set
+
+
+-----------------------------------------------
+
+Cloudrail ran this assessment without any policies and so all rule violations show as warnings.
+You can increase a rule's enforcement level by creating a Policy in the Web UI and adding the rule to it.

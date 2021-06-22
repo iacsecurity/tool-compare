@@ -1,0 +1,47 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.192 
+
+terraform scan results:
+
+Passed checks: 3, Failed checks: 1, Skipped checks: 0
+
+Check: CKV_AWS_60: "Ensure IAM role allows only specific services or principals to assume it"
+	FAILED for resource: aws_iam_role.over-privilege-role2
+	File: /main.tf:21-47
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_iam_44
+
+		21 | resource "aws_iam_role" "over-privilege-role2" {
+		22 |   name = "over-privilege-role"
+		23 | 
+		24 |   assume_role_policy = <<EOF
+		25 |     {
+		26 |       "Version": "2012-10-17",
+		27 |       "Statement": [
+		28 |         {
+		29 |           "Action": "sts:AssumeRole",
+		30 |           "Principal": {
+		31 |             "Service": "ec2.amazonaws.com"
+		32 |           },
+		33 |           "Effect": "Allow",
+		34 |           "Sid": ""
+		35 |         },
+		36 |         {
+		37 |           "Action": "sts:AssumeRole",
+		38 |           "Principal": {
+		39 |             "AWS": "*"
+		40 |           },
+		41 |           "Effect": "Allow",
+		42 |           "Sid": ""
+		43 |         }
+		44 |       ]
+		45 |     }
+		46 | EOF
+		47 | }
+
+
