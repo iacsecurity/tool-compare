@@ -1,0 +1,100 @@
+
+                   .0MO.                                    
+                   OMMMx                                    
+                   ;NMX;                                    
+                    ...           ...              ....     
+WMMMd     cWMMM0.  KMMMO      ;xKWMMMMNOc.     ,xXMMMMMWXkc.
+WMMMd   .0MMMN:    KMMMO    :XMMMMMMMMMMMWl   xMMMMMWMMMMMMl
+WMMMd  lWMMMO.     KMMMO   xMMMMKc...'lXMk   ,MMMMx   .;dXx 
+WMMMd.0MMMX;       KMMMO  cMMMMd        '    'MMMMNl'       
+WMMMNWMMMMl        KMMMO  0MMMN               oMMMMMMMXkl.  
+WMMMMMMMMMMo       KMMMO  0MMMX                .ckKWMMMMMM0.
+WMMMMWokMMMMk      KMMMO  oMMMMc              .     .:OMMMM0
+WMMMK.  dMMMM0.    KMMMO   KMMMMx'    ,kNc   :WOc.    .NMMMX
+WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
+WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
+xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
+
+
+Scanning with Keeping Infrastructure as Code Secure v1.3.2
+
+
+
+Files scanned: 1
+Parsed files: 1
+Queries loaded: 575
+Queries failed to execute: 0
+
+------------------------------------
+
+Security Group Rules Without Description, Severity: INFO, Results: 1
+Description: It's considered a best practice for all rules in AWS Security Group to have a description
+Platform: Terraform
+
+	[1]: /src/main.tf:20
+
+		019: 
+		020:   egress {
+		021:     from_port        = 0
+
+
+Resource Not Using Tags, Severity: INFO, Results: 2
+Description: AWS services resource tags are an essential part of managing components
+Platform: Terraform
+
+	[1]: /src/main.tf:3
+
+		002: 
+		003: resource "aws_vpc" "example" {
+		004:     cidr_block = "10.0.0.0/16"
+
+
+	[2]: /src/main.tf:28
+
+		027: 
+		028:   tags = {
+		029:     Name = "allow_tls"
+
+
+VPC FlowLogs Disabled, Severity: MEDIUM, Results: 1
+Description: VPC hasn't got any FlowLog associated
+Platform: Terraform
+
+	[1]: /src/main.tf:3
+
+		002: 
+		003: resource "aws_vpc" "example" {
+		004:     cidr_block = "10.0.0.0/16"
+
+
+Unrestricted Security Group Ingress, Severity: HIGH, Results: 1
+Description: Security groups allow ingress from 0.0.0.0:0
+Platform: Terraform
+
+	[1]: /src/main.tf:17
+
+		016:     protocol         = "tcp"
+		017:     cidr_blocks      = ["0.0.0.0/0"]
+		018:   }
+
+
+Unknown Port Exposed To Internet, Severity: HIGH, Results: 1
+Description: AWS Security Group should not have an unknown port exposed to the entire Internet
+Platform: Terraform
+
+	[1]: /src/main.tf:17
+
+		016:     protocol         = "tcp"
+		017:     cidr_blocks      = ["0.0.0.0/0"]
+		018:   }
+
+
+
+Results Summary:
+HIGH: 2
+MEDIUM: 1
+LOW: 0
+INFO: 3
+TOTAL: 6
+
+Scan duration: 23.351623345s

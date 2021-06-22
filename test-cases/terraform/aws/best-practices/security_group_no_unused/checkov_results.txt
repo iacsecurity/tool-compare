@@ -1,0 +1,75 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.192 
+
+terraform scan results:
+
+Passed checks: 3, Failed checks: 4, Skipped checks: 0
+
+Check: CKV2_AWS_11: "Ensure VPC flow logging is enabled in all VPCs"
+	FAILED for resource: aws_vpc.example
+	File: /main.tf:3-5
+	Guide: https://docs.bridgecrew.io/docs/logging_9-enable-vpc-flow-logging
+
+		3 | resource "aws_vpc" "example" {
+		4 |     cidr_block = "10.0.0.0/16"
+		5 | }
+
+
+Check: CKV2_AWS_5: "Ensure that Security Groups are attached to an other resource"
+	FAILED for resource: aws_security_group.allow_tls
+	File: /main.tf:7-31
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-security-groups-are-attached-to-ec2-instances-or-elastic-network-interfaces-enis
+
+		7  | resource "aws_security_group" "allow_tls" {
+		8  |   name        = "allow_tls"
+		9  |   vpc_id = aws_vpc.example.id
+		10 |   description = "Allow TLS inbound traffic"
+		11 | 
+		12 |   ingress {
+		13 |     description      = "TLS anywhere"
+		14 |     from_port        = 443
+		15 |     to_port          = 443
+		16 |     protocol         = "tcp"
+		17 |     cidr_blocks      = ["0.0.0.0/0"]
+		18 |   }
+		19 | 
+		20 |   egress {
+		21 |     from_port        = 0
+		22 |     to_port          = 0
+		23 |     protocol         = "-1"
+		24 |     cidr_blocks      = ["0.0.0.0/0"]
+		25 |     ipv6_cidr_blocks = ["::/0"]
+		26 |   }
+		27 | 
+		28 |   tags = {
+		29 |     Name = "allow_tls"
+		30 |   }
+		31 | }
+
+
+Check: CKV2_AWS_1: "Ensure that all NACL are attached to subnets"
+	FAILED for resource: aws_vpc.example
+	File: /main.tf:3-5
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-all-nacl-are-attached-to-subnets
+
+		3 | resource "aws_vpc" "example" {
+		4 |     cidr_block = "10.0.0.0/16"
+		5 | }
+
+
+Check: CKV2_AWS_12: "Ensure the default security group of every VPC restricts all traffic"
+	FAILED for resource: aws_vpc.example
+	File: /main.tf:3-5
+	Guide: https://docs.bridgecrew.io/docs/networking_4
+
+		3 | resource "aws_vpc" "example" {
+		4 |     cidr_block = "10.0.0.0/16"
+		5 | }
+
+
