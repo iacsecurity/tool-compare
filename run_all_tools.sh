@@ -106,12 +106,19 @@ function run_all {
   run_tfsec
 }
 
-# Set up AWS access for plan
+# Verify AWS access for plan
 if [ -z "$AWS_ACCESS_KEY_ID" -a -z "$AWS_DEFAULT_PROFILE" ]; then
   echo "To run this script, you'll need AWS credentials (for use with terraform plan)."
   exit 1
 fi
 export AWS_REGION=us-west-1
+
+# Verify Azure access for plan
+az account list
+if [ $? -ne 0 ]; then
+  echo "To run this script, you'll need working Azure credentials (for use with terraform plan). Make sure you use 'az login'."
+  exit 1
+fi
 
 # Generate all plan files
 echo Generating plan files, where they do not exist yet
