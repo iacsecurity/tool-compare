@@ -31,7 +31,7 @@ Last update: 2021-08-19
 |Terraform - AWS|69%|93%|94%|62%|73%|61%|
 |Terraform - Azure|0%|0%|0%|0%|0%|0%|
 |Terraform - Advanced Language Expressions|20%|100%|20%|0%|0%|0%|
-|Total Catch Rate|54%|76%|74%|48%|57%|47%|
+|Total Catch Rate|42%|58%|56%|37%|44%|36%|
 
 
 <details><summary>test-cases/terraform/aws/best-practices</summary>
@@ -195,11 +195,33 @@ Last update: 2021-08-19
 
 </details>
 
-<details><summary>test-cases/terraform/azure/best-practices/webapp_python_isnot_latest/account-data/ae7905ce-4577-4a32-934b-9f662c77869d</summary>
+<details><summary>test-cases/terraform/azure/best-practices</summary>
 
 | Test Case | Checkov | Indeni Cloudrail | Kics | Snyk | Terrascan | Tfsec |
 |----|----|----|----|----|----|----|
-|Sub-category Catch Rate|
+|[defender_for_app_services_disabled](test-cases/terraform/azure/best-practices/defender_for_app_services_disabled)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[defender_for_container_registry_not_used](test-cases/terraform/azure/best-practices/defender_for_container_registry_not_used)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[defender_for_keyvault_disabled](test-cases/terraform/azure/best-practices/defender_for_keyvault_disabled)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[defender_for_kubernetes_not_used](test-cases/terraform/azure/best-practices/defender_for_kubernetes_not_used)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[defender_for_servers_not_used](test-cases/terraform/azure/best-practices/defender_for_servers_not_used)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[defender_for_sql_servers_not_used](test-cases/terraform/azure/best-practices/defender_for_sql_servers_not_used)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[defender_for_storage_not_used](test-cases/terraform/azure/best-practices/defender_for_storage_not_used)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[email_notifications_for_high_severity_al..](test-cases/terraform/azure/best-practices/email_notifications_for_high_severity_alerts_not_used)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[func_app_not_using_http2](test-cases/terraform/azure/best-practices/func_app_not_using_http2)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[func_app_not_using_latest_tls](test-cases/terraform/azure/best-practices/func_app_not_using_latest_tls)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[functionapp_lin_java_isnot_latest](test-cases/terraform/azure/best-practices/functionapp_lin_java_isnot_latest)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[functionapp_python_isnot_latest](test-cases/terraform/azure/best-practices/functionapp_python_isnot_latest)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[functionapp_win_java_isnot_latest](test-cases/terraform/azure/best-practices/functionapp_win_java_isnot_latest)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[sql_vulnerability_assessment_not_enabled](test-cases/terraform/azure/best-practices/sql_vulnerability_assessment_not_enabled)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[sql_vulnerability_email_not_set](test-cases/terraform/azure/best-practices/sql_vulnerability_email_not_set)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[vm_unmanaged_disks](test-cases/terraform/azure/best-practices/vm_unmanaged_disks)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[vmss_unmanaged_disks](test-cases/terraform/azure/best-practices/vmss_unmanaged_disks)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[vpn_gw_using_basic_sku](test-cases/terraform/azure/best-practices/vpn_gw_using_basic_sku)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[webapp_http2_not_enabled](test-cases/terraform/azure/best-practices/webapp_http2_not_enabled)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[webapp_lin_java_isnot_latest](test-cases/terraform/azure/best-practices/webapp_lin_java_isnot_latest)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[webapp_php_isnot_latest](test-cases/terraform/azure/best-practices/webapp_php_isnot_latest)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[webapp_win_java_isnot_latest](test-cases/terraform/azure/best-practices/webapp_win_java_isnot_latest)|:x:|:x:|:x:|:x:|:x:|:x:|
+|Sub-category Catch Rate|0%|0%|0%|0%|0%|0%|
 
 </details>
 
@@ -244,11 +266,27 @@ Last update: 2021-08-19
 
 </details>
 
-<details><summary>test-cases/terraform/azure/logging/vmss_linux_diagnostic_log_disabled/account-data/ae7905ce-4577-4a32-934b-9f662c77869d</summary>
+<details><summary>test-cases/terraform/azure/logging</summary>
 
 | Test Case | Checkov | Indeni Cloudrail | Kics | Snyk | Terrascan | Tfsec |
 |----|----|----|----|----|----|----|
-|Sub-category Catch Rate|
+|[auto_prov_log_analytics_agent_disabled](test-cases/terraform/azure/logging/auto_prov_log_analytics_agent_disabled)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[batch_diagnostic_disabled](test-cases/terraform/azure/logging/batch_diagnostic_disabled)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[dl_analytics_diagnostic_not_enabled](test-cases/terraform/azure/logging/dl_analytics_diagnostic_not_enabled)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[dl_store_diagnostic_not_enabled](test-cases/terraform/azure/logging/dl_store_diagnostic_not_enabled)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[event_hub_diagnostic_not_enabled](test-cases/terraform/azure/logging/event_hub_diagnostic_not_enabled)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[iot_hub_diagnostic_not_enabled](test-cases/terraform/azure/logging/iot_hub_diagnostic_not_enabled)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[logic_app_wf_diagnostic_not_enabled](test-cases/terraform/azure/logging/logic_app_wf_diagnostic_not_enabled)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[postgresql_log_connections_not_enabled](test-cases/terraform/azure/logging/postgresql_log_connections_not_enabled)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[postgresql_log_disconnections_not_enable..](test-cases/terraform/azure/logging/postgresql_log_disconnections_not_enabled)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[postgresql_logcheckpoints_not_enabled](test-cases/terraform/azure/logging/postgresql_logcheckpoints_not_enabled)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[search_diagnostic_not_enabled](test-cases/terraform/azure/logging/search_diagnostic_not_enabled)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[servicebus_namespace_not_enabled](test-cases/terraform/azure/logging/servicebus_namespace_not_enabled)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[sql-server-audit-retention-30](test-cases/terraform/azure/logging/sql-server-audit-retention-30)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[sql_server_audit_not_used](test-cases/terraform/azure/logging/sql_server_audit_not_used)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[stream_analytics_diagnostic_not_enabled](test-cases/terraform/azure/logging/stream_analytics_diagnostic_not_enabled)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[vmss_win_diagnostic_log_disabled](test-cases/terraform/azure/logging/vmss_win_diagnostic_log_disabled)|:x:|:x:|:x:|:x:|:x:|:x:|
+|Sub-category Catch Rate|0%|0%|0%|0%|0%|0%|
 
 </details>
 
