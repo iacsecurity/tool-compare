@@ -3,10 +3,10 @@ Failed to run the process ...
   "meta": {
     "isPrivate": true,
     "isLicensesEnabled": false,
-    "policy": "",
     "ignoreSettings": null,
+    "org": "yi2020",
     "projectId": "",
-    "org": "y"
+    "policy": ""
   },
   "filesystemPolicy": false,
   "vulnerabilities": [],
@@ -15,39 +15,32 @@ Failed to run the process ...
   "ignoreSettings": null,
   "targetFile": "main.tf",
   "projectName": "project",
-  "org": "y",
+  "org": "yi2020",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
   "packageManager": "terraformconfig",
   "path": "/project",
   "projectType": "terraformconfig",
+  "ok": false,
   "infrastructureAsCodeIssues": [
     {
-      "id": "SNYK-CC-TF-47",
-      "title": "Load balancer endpoint does not enforce HTTPS",
-      "type": "terraform",
-      "subType": "Elastic Load Balancing v2 (ALB/NLB)",
-      "severity": "medium",
-      "isIgnored": false,
-      "iacDescription": {
-        "issue": "Load balancer endpoint does not enforce HTTPS",
-        "impact": "The content could be intercepted and manipulated in transit",
-        "resolve": "Use `HTTPS` or `TLS` protocol"
-      },
-      "lineNumber": 68,
-      "path": [
-        "resource",
-        "aws_lb_listener[lb_listener_test]",
-        "protocol"
-      ]
-    },
-    {
-      "id": "SNYK-CC-TF-48",
-      "title": "Load balancer is internet facing",
-      "type": "terraform",
-      "subType": "Elastic Load Balancing (ELB Classic)",
       "severity": "low",
+      "resolve": "Set `internal` attribute to `true`",
+      "id": "SNYK-CC-TF-48",
+      "impact": "Increases attack vector reachability",
+      "msg": "resource.aws_lb[alb_test].internal",
+      "remediation": {
+        "cloudformation": "Set `Properties.Scheme` attribute to `internal`",
+        "terraform": "Set `internal` attribute to `true`"
+      },
+      "subType": "Elastic Load Balancing (ELB Classic)",
+      "issue": "Load balancer is internet facing",
+      "publicId": "SNYK-CC-TF-48",
+      "title": "Load balancer is internet facing",
+      "references": [
+        "https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-internet-facing-load-balancers.html"
+      ],
       "isIgnored": false,
       "iacDescription": {
         "issue": "Load balancer is internet facing",
@@ -55,10 +48,72 @@ Failed to run the process ...
         "resolve": "Set `internal` attribute to `true`"
       },
       "lineNumber": 60,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-48",
       "path": [
         "resource",
         "aws_lb[alb_test]",
         "internal"
+      ]
+    },
+    {
+      "severity": "medium",
+      "resolve": "Set the `protocol` attribute to `HTTPS` or `TLS`",
+      "id": "SNYK-CC-TF-47",
+      "impact": "The content could be intercepted and manipulated in transit",
+      "msg": "resource.aws_lb_listener[lb_listener_test].protocol",
+      "remediation": {
+        "cloudformation": "Set the `Properties.Protocol` attribute to `HTTPS` or `TLS`",
+        "terraform": "Set the `protocol` attribute to `HTTPS` or `TLS`"
+      },
+      "subType": "Elastic Load Balancing v2 (ALB/NLB)",
+      "issue": "Load balancer endpoint does not enforce HTTPS",
+      "publicId": "SNYK-CC-TF-47",
+      "title": "Load balancer endpoint does not enforce HTTPS",
+      "references": [
+        "https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-listeners.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Load balancer endpoint does not enforce HTTPS",
+        "impact": "The content could be intercepted and manipulated in transit",
+        "resolve": "Set the `protocol` attribute to `HTTPS` or `TLS`"
+      },
+      "lineNumber": 68,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-47",
+      "path": [
+        "resource",
+        "aws_lb_listener[lb_listener_test]",
+        "protocol"
+      ]
+    },
+    {
+      "severity": "low",
+      "resolve": "Set `drop_invalid_header_fields` to `true`",
+      "id": "SNYK-CC-AWS-405",
+      "impact": "Maliciously crafted headers may be accepted by the load balancer",
+      "msg": "resource.aws_lb[alb_test]",
+      "remediation": {
+        "cloudformation": "Set `Properties.LoadBalancerAttributes.Key` to `routing.http.drop_invalid_header_fields.enabled` and `Properties.LoadBalancerAttributes.Value` to `true`",
+        "terraform": "Set `drop_invalid_header_fields` to `true`"
+      },
+      "subType": "Elastic Load Balancing v2 (ALB/NLB)",
+      "issue": "The application load balancer is not set to drop invalid headers.",
+      "publicId": "SNYK-CC-AWS-405",
+      "title": "ALB does not drop invalid headers",
+      "references": [
+        "https://docs.aws.amazon.com/config/latest/developerguide/alb-http-drop-invalid-header-enabled.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "The application load balancer is not set to drop invalid headers.",
+        "impact": "Maliciously crafted headers may be accepted by the load balancer",
+        "resolve": "Set `drop_invalid_header_fields` to `true`"
+      },
+      "lineNumber": 60,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-405",
+      "path": [
+        "resource",
+        "aws_lb[alb_test]"
       ]
     }
   ]

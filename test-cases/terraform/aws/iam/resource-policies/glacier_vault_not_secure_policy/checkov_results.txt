@@ -6,14 +6,14 @@
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.135 
-Update available 2.0.135 -> 2.0.136
+By bridgecrew.io | version: 2.0.358 
+Update available 2.0.358 -> 2.0.359
 Run pip3 install -U checkov to update 
 
 
 terraform scan results:
 
-Passed checks: 1, Failed checks: 1, Skipped checks: 0
+Passed checks: 1, Failed checks: 2, Skipped checks: 0
 
 Check: CKV_AWS_26: "Ensure all data stored in the SNS topic is encrypted"
 	FAILED for resource: aws_sns_topic.aws_sns_topic
@@ -24,4 +24,35 @@ Check: CKV_AWS_26: "Ensure all data stored in the SNS topic is encrypted"
 		6 |   name = "glacier-sns-topic"
 		7 | }
 
+
+Check: CKV_AWS_167: "Ensure Glacier Vault access policy is not public by only allowing specific services or principals to access it"
+	FAILED for resource: aws_glacier_vault.not_secure_archive
+	File: /main.tf:9-33
+	Guide: https://docs.bridgecrew.io/docs/ensure-glacier-vault-access-policy-is-not-public-by-only-allowing-specific-services-or-principals-to-access-it
+
+		9  | resource "aws_glacier_vault" "not_secure_archive" {
+		10 |   name = "not_secure_archive"
+		11 | 
+		12 |   notification {
+		13 |     sns_topic = aws_sns_topic.aws_sns_topic.arn
+		14 |     events    = ["ArchiveRetrievalCompleted", "InventoryRetrievalCompleted"]
+		15 |   }
+		16 | 
+		17 |   access_policy = <<EOF
+		18 | {
+		19 |     "Version":"2012-10-17",
+		20 |     "Statement":[
+		21 |        {
+		22 |           "Sid": "add-read-only-perm",
+		23 |           "Principal": "*",
+		24 |           "Effect": "Allow",
+		25 |           "Action": [
+		26 |              "glacier:*"
+		27 |           ],
+		28 |           "Resource": "arn:aws:glacier:us-east-1:115553109071:vaults/not_secure_archive"
+		29 |        }
+		30 |     ]
+		31 | }
+		32 | EOF
+		33 | }
 

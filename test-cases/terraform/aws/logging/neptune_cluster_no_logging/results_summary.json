@@ -4,5 +4,5 @@
   "kics": "yes",
   "snyk": "no",
   "terrascan": "yes",
-  "tfsec": "no"
+  "tfsec": "yes"
 }

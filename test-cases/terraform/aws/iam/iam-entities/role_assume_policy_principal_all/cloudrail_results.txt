@@ -25,13 +25,6 @@ Rule: Ensure IAM policies pass Access Analyzer policy validation without WARNING
 Rule: Ensure no role uses an overly wide principal for assume role policy
  - 2 Resources Exposed:
 -----------------------------------------------
-   - Exposed Resource: [aws_iam_role.over-privilege-role1] (main.tf:3)
-     Violating Resource: [aws_iam_role.over-privilege-role1]  (main.tf:3)
-
-     Evidence:
-             | The IAM role aws_iam_role.over-privilege-role1 has a trust policy that allows '*' principal to assume it
-
-
    - Exposed Resource: [aws_iam_role.over-privilege-role2] (main.tf:21)
      Violating Resource: [aws_iam_role.over-privilege-role2]  (main.tf:21)
 
@@ -39,22 +32,29 @@ Rule: Ensure no role uses an overly wide principal for assume role policy
              | The IAM role aws_iam_role.over-privilege-role2 has a trust policy that allows '*' principal to assume it
 
 
+   - Exposed Resource: [aws_iam_role.over-privilege-role1] (main.tf:3)
+     Violating Resource: [aws_iam_role.over-privilege-role1]  (main.tf:3)
+
+     Evidence:
+             | The IAM role aws_iam_role.over-privilege-role1 has a trust policy that allows '*' principal to assume it
+
+
 -----------------------------------------------
 Rule: Ensure all resources that can be tagged have at least one tag
  - 2 Resources Exposed:
 -----------------------------------------------
-   - Exposed Resource: [aws_iam_role.over-privilege-role2] (main.tf:21)
-     Violating Resource: [aws_iam_role.over-privilege-role2]  (main.tf:21)
-
-     Evidence:
-             | Resource IAM Role aws_iam_role.over-privilege-role2 does not have any tags set
-
-
    - Exposed Resource: [aws_iam_role.over-privilege-role1] (main.tf:3)
      Violating Resource: [aws_iam_role.over-privilege-role1]  (main.tf:3)
 
      Evidence:
              | Resource IAM Role aws_iam_role.over-privilege-role1 does not have any tags set
+
+
+   - Exposed Resource: [aws_iam_role.over-privilege-role2] (main.tf:21)
+     Violating Resource: [aws_iam_role.over-privilege-role2]  (main.tf:21)
+
+     Evidence:
+             | Resource IAM Role aws_iam_role.over-privilege-role2 does not have any tags set
 
 
 -----------------------------------------------

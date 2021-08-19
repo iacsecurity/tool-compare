@@ -4,46 +4,41 @@ Violation Details -
     
 	Description    :	Ensure AWS Neptune clusters have logging enabled.
 	File           :	main.tf
+	Module Name    :	root
 	Plan Root      :	./
 	Line           :	66
 	Severity       :	MEDIUM
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	Ensure every security group should have a description to ease the process of Auditing
+	Description    :	Ensure VPC flow logging is enabled in all VPCs
 	File           :	main.tf
+	Module Name    :	root
 	Plan Root      :	./
-	Line           :	18
+	Line           :	5
 	Severity       :	LOW
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	It is recommended that no security group allows unrestricted ingress access
+	Description    :	Ensure no security groups is wide open to public, that is, allows traffic from 0.0.0.0/0 to ALL ports and protocols
 	File           :	main.tf
+	Module Name    :	root
 	Plan Root      :	./
 	Line           :	18
 	Severity       :	HIGH
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	Ensure VPC flow logging is enabled in all VPCs
-	File           :	main.tf
-	Plan Root      :	./
-	Line           :	5
-	Severity       :	MEDIUM
-	
-	-----------------------------------------------------------------------
-	
 
 Scan Summary -
 
-	File/Folder         :	tool-compare/test-cases/terraform/aws/networking/publicly_accessible_neptune_db
+	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-06-01 05:55:20.467412 +0000 UTC
-	Policies Validated  :	612
-	Violated Policies   :	4
+	Scanned At          :	2021-08-18 17:43:31.302166129 +0000 UTC
+	Policies Validated  :	141
+	Violated Policies   :	3
 	Low                 :	1
-	Medium              :	2
+	Medium              :	1
 	High                :	1
 	
 

@@ -4,7 +4,7 @@ Failed to run the process ...
     "isPrivate": true,
     "isLicensesEnabled": false,
     "ignoreSettings": null,
-    "org": "y",
+    "org": "yi2020",
     "projectId": "",
     "policy": ""
   },
@@ -13,14 +13,48 @@ Failed to run the process ...
   "dependencyCount": 0,
   "licensesPolicy": null,
   "ignoreSettings": null,
-  "targetFile": "/project/main.tf",
+  "targetFile": "main.tf",
   "projectName": "project",
-  "org": "y",
+  "org": "yi2020",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
   "packageManager": "terraformconfig",
   "path": "/project",
   "projectType": "terraformconfig",
-  "infrastructureAsCodeIssues": []
+  "ok": false,
+  "infrastructureAsCodeIssues": [
+    {
+      "severity": "low",
+      "resolve": "Set `kms_key_id` attribute to customer managed key id",
+      "id": "SNYK-CC-AWS-420",
+      "impact": "Scope of use of the encryption key cannot be controlled via KMS/IAM policies",
+      "msg": "resource.aws_sagemaker_notebook_instance[ni].kms_key_id",
+      "remediation": {
+        "cloudformation": "Set `Properties.KmsKeyId` to customer managed key id ",
+        "terraform": "Set `kms_key_id` attribute to customer managed key id"
+      },
+      "subType": "Sagemaker",
+      "issue": "Sagemaker is note encrypted with customer managed key",
+      "publicId": "SNYK-CC-AWS-420",
+      "title": "Sagemaker is not encrypted with customer managed key",
+      "references": [
+        "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-sagemaker-notebookinstance.html",
+        "https://docs.aws.amazon.com/whitepapers/latest/kms-best-practices/aws-managed-and-customer-managed-cmks.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Sagemaker is note encrypted with customer managed key",
+        "impact": "Scope of use of the encryption key cannot be controlled via KMS/IAM policies",
+        "resolve": "Set `kms_key_id` attribute to customer managed key id"
+      },
+      "lineNumber": 23,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-420",
+      "path": [
+        "resource",
+        "aws_sagemaker_notebook_instance[ni]",
+        "kms_key_id"
+      ]
+    }
+  ]
 }

@@ -1,14 +1,309 @@
 
-ERRORs found:
-Rule: EC2(s) within the public and private subnets should not share identical IAM roles
-Description: Having the same IAM role for both public and private instances may be dangerous. Someone may expand the permissions for the role in order to use it in a private workload, not realizing a public workload has the same privileges.
- - 1 Resources Exposed:
+WARNINGs found:
+Rule: Ensure all data stored in the Launch configuration EBS is securely encrypted
+ - 2 Resources Exposed:
 -----------------------------------------------
-   - Exposed Resource: [aws_instance.priv_ins] (main.tf:107)
-     Violating Resource: [aws_iam_role.test_role]  (main.tf:51)
+   - Exposed Resource: [aws_instance.pub_ins] (main.tf:98)
+     Violating Resource: [aws_instance.pub_ins]  (main.tf:98)
 
      Evidence:
-         Instance ['aws_instance.pub_ins']
+             | This rule evaluated aws_instance.pub_ins's configuration
+
+
+   - Exposed Resource: [aws_instance.priv_ins] (main.tf:106)
+     Violating Resource: [aws_instance.priv_ins]  (main.tf:106)
+
+     Evidence:
+             | This rule evaluated aws_instance.priv_ins's configuration
+
+
+-----------------------------------------------
+Rule: Ensure EC2 instance has detailed monitoring enabled
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.priv_ins] (main.tf:106)
+     Violating Resource: [aws_instance.priv_ins]  (main.tf:106)
+
+     Evidence:
+             | The EC2 Instance aws_instance.priv_ins has detailed monitoring disabled
+
+
+   - Exposed Resource: [aws_instance.pub_ins] (main.tf:98)
+     Violating Resource: [aws_instance.pub_ins]  (main.tf:98)
+
+     Evidence:
+             | The EC2 Instance aws_instance.pub_ins has detailed monitoring disabled
+
+
+-----------------------------------------------
+Rule: Ensure EC2 instance is EBS optimized
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.priv_ins] (main.tf:106)
+     Violating Resource: [aws_instance.priv_ins]  (main.tf:106)
+
+     Evidence:
+             | The EC2 Instance aws_instance.priv_ins is not EBS optimized
+
+
+   - Exposed Resource: [aws_instance.pub_ins] (main.tf:98)
+     Violating Resource: [aws_instance.pub_ins]  (main.tf:98)
+
+     Evidence:
+             | The EC2 Instance aws_instance.pub_ins is not EBS optimized
+
+
+-----------------------------------------------
+Rule: Ensure IAM policies pass Access Analyzer policy validation without WARNING and SUGGESTION issues
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_iam_role.test_role] (main.tf:50)
+     Violating Resource: [aws_iam_role.test_role]  (main.tf:50)
+
+     Evidence:
+         Line 10, Col 13:
+             | Add a value to the empty string in the Sid element
+             | See https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-reference-policy-checks.html#access-analyzer-reference-policy-checks-suggestion-empty-sid-value
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 21 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [module.vpc.aws_route_table.public[0]] (.terraform/modules/vpc/main.tf:198)
+     Violating Resource: [module.vpc.aws_route_table.public[0]]  (.terraform/modules/vpc/main.tf:198)
+
+     Evidence:
+             | Resource Route table module.vpc.aws_route_table.public[0] does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [aws_instance.priv_ins] (main.tf:106)
+     Violating Resource: [aws_instance.priv_ins]  (main.tf:106)
+
+     Evidence:
+             | Resource EC2 Instance aws_instance.priv_ins does not have any tags set
+
+
+   - Exposed Resource: [aws_instance.pub_ins] (main.tf:98)
+     Violating Resource: [aws_instance.pub_ins]  (main.tf:98)
+
+     Evidence:
+             | Resource EC2 Instance aws_instance.pub_ins does not have any tags set
+
+
+   - Exposed Resource: [aws_iam_role.test_role] (main.tf:50)
+     Violating Resource: [aws_iam_role.test_role]  (main.tf:50)
+
+     Evidence:
+             | Resource IAM Role aws_iam_role.test_role does not have any tags set
+
+
+   - Exposed Resource: [module.vpc.aws_eip.nat[0]] (.terraform/modules/vpc/main.tf:1065)
+     Violating Resource: [module.vpc.aws_eip.nat[0]]  (.terraform/modules/vpc/main.tf:1065)
+
+     Evidence:
+             | Resource Elastic IP address module.vpc.aws_eip.nat[0] does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [module.vpc.aws_eip.nat[1]] (.terraform/modules/vpc/main.tf:1065)
+     Violating Resource: [module.vpc.aws_eip.nat[1]]  (.terraform/modules/vpc/main.tf:1065)
+
+     Evidence:
+             | Resource Elastic IP address module.vpc.aws_eip.nat[1] does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [module.vpc.aws_eip.nat[2]] (.terraform/modules/vpc/main.tf:1065)
+     Violating Resource: [module.vpc.aws_eip.nat[2]]  (.terraform/modules/vpc/main.tf:1065)
+
+     Evidence:
+             | Resource Elastic IP address module.vpc.aws_eip.nat[2] does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [module.vpc.aws_default_security_group.this[0]] (.terraform/modules/vpc/main.tf:53)
+     Violating Resource: [module.vpc.aws_default_security_group.this[0]]  (.terraform/modules/vpc/main.tf:53)
+
+     Evidence:
+             | Resource Security group module.vpc.aws_default_security_group.this[0] does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [module.vpc.aws_route_table.private[0]] (.terraform/modules/vpc/main.tf:237)
+     Violating Resource: [module.vpc.aws_route_table.private[0]]  (.terraform/modules/vpc/main.tf:237)
+
+     Evidence:
+             | Resource Route table module.vpc.aws_route_table.private[0] does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [module.vpc.aws_route_table.private[2]] (.terraform/modules/vpc/main.tf:237)
+     Violating Resource: [module.vpc.aws_route_table.private[2]]  (.terraform/modules/vpc/main.tf:237)
+
+     Evidence:
+             | Resource Route table module.vpc.aws_route_table.private[2] does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [module.vpc.aws_route_table.private[1]] (.terraform/modules/vpc/main.tf:237)
+     Violating Resource: [module.vpc.aws_route_table.private[1]]  (.terraform/modules/vpc/main.tf:237)
+
+     Evidence:
+             | Resource Route table module.vpc.aws_route_table.private[1] does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [module.vpc.aws_nat_gateway.this[2]] (.terraform/modules/vpc/main.tf:1083)
+     Violating Resource: [module.vpc.aws_nat_gateway.this[2]]  (.terraform/modules/vpc/main.tf:1083)
+
+     Evidence:
+             | Resource NAT gateway module.vpc.aws_nat_gateway.this[2] does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [module.vpc.aws_nat_gateway.this[0]] (.terraform/modules/vpc/main.tf:1083)
+     Violating Resource: [module.vpc.aws_nat_gateway.this[0]]  (.terraform/modules/vpc/main.tf:1083)
+
+     Evidence:
+             | Resource NAT gateway module.vpc.aws_nat_gateway.this[0] does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [module.vpc.aws_nat_gateway.this[1]] (.terraform/modules/vpc/main.tf:1083)
+     Violating Resource: [module.vpc.aws_nat_gateway.this[1]]  (.terraform/modules/vpc/main.tf:1083)
+
+     Evidence:
+             | Resource NAT gateway module.vpc.aws_nat_gateway.this[1] does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [module.vpc.aws_vpc.this[0]] (.terraform/modules/vpc/main.tf:25)
+     Violating Resource: [module.vpc.aws_vpc.this[0]]  (.terraform/modules/vpc/main.tf:25)
+
+     Evidence:
+             | Resource VPC module.vpc.aws_vpc.this[0] does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [module.vpc.aws_subnet.public[1]] (.terraform/modules/vpc/main.tf:371)
+     Violating Resource: [module.vpc.aws_subnet.public[1]]  (.terraform/modules/vpc/main.tf:371)
+
+     Evidence:
+             | Resource Subnet module.vpc.aws_subnet.public[1] does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [module.vpc.aws_subnet.private[2]] (.terraform/modules/vpc/main.tf:400)
+     Violating Resource: [module.vpc.aws_subnet.private[2]]  (.terraform/modules/vpc/main.tf:400)
+
+     Evidence:
+             | Resource Subnet module.vpc.aws_subnet.private[2] does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [module.vpc.aws_subnet.public[2]] (.terraform/modules/vpc/main.tf:371)
+     Violating Resource: [module.vpc.aws_subnet.public[2]]  (.terraform/modules/vpc/main.tf:371)
+
+     Evidence:
+             | Resource Subnet module.vpc.aws_subnet.public[2] does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [module.vpc.aws_subnet.private[0]] (.terraform/modules/vpc/main.tf:400)
+     Violating Resource: [module.vpc.aws_subnet.private[0]]  (.terraform/modules/vpc/main.tf:400)
+
+     Evidence:
+             | Resource Subnet module.vpc.aws_subnet.private[0] does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [module.vpc.aws_subnet.private[1]] (.terraform/modules/vpc/main.tf:400)
+     Violating Resource: [module.vpc.aws_subnet.private[1]]  (.terraform/modules/vpc/main.tf:400)
+
+     Evidence:
+             | Resource Subnet module.vpc.aws_subnet.private[1] does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [module.vpc.aws_subnet.public[0]] (.terraform/modules/vpc/main.tf:371)
+     Violating Resource: [module.vpc.aws_subnet.public[0]]  (.terraform/modules/vpc/main.tf:371)
+
+     Evidence:
+             | Resource Subnet module.vpc.aws_subnet.public[0] does not have any tags set other than "Name"
+
+
+-----------------------------------------------
+Rule: Ensure all security groups and rules have a description detailing the rule
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [module.vpc.aws_default_security_group.this[0]] (.terraform/modules/vpc/main.tf:53)
+     Violating Resource: [module.vpc.aws_default_security_group.this[0]]  (.terraform/modules/vpc/main.tf:53)
+
+     Evidence:
+             | The Security group module.vpc.aws_default_security_group.this[0] does not have a description for the ingress rule of 0.0.0.0/0 for ports 22:22 using protocol TCP
+
+
+-----------------------------------------------
+Rule: Allow only private AMIs to be used
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.priv_ins] (main.tf:106)
+     Violating Resource: [ami-0ee02acd56a52998e]  (Not found in TF)
+
+     Evidence:
+             | The EC2 Instance aws_instance.priv_ins uses AMI ami-0ee02acd56a52998e, which is public
+
+
+   - Exposed Resource: [aws_instance.pub_ins] (main.tf:98)
+     Violating Resource: [ami-0ee02acd56a52998e]  (Not found in TF)
+
+     Evidence:
+             | The EC2 Instance aws_instance.pub_ins uses AMI ami-0ee02acd56a52998e, which is public
+
+
+-----------------------------------------------
+Rule: Ensure IMDSv2 is used and IMDSv1 is disabled
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.pub_ins] (main.tf:98)
+     Violating Resource: [aws_instance.pub_ins]  (main.tf:98)
+
+     Evidence:
+             | The EC2 Instance aws_instance.pub_ins is allowing IMDSv1
+
+
+   - Exposed Resource: [aws_instance.priv_ins] (main.tf:106)
+     Violating Resource: [aws_instance.priv_ins]  (main.tf:106)
+
+     Evidence:
+             | The EC2 Instance aws_instance.priv_ins is allowing IMDSv1
+
+
+-----------------------------------------------
+Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 22 (SSH)
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.pub_ins] (main.tf:98)
+     Violating Resource: [module.vpc.aws_default_security_group.this[0]]  (.terraform/modules/vpc/main.tf:53)
+
+     Evidence:
+         Internet
+             | Subnet module.vpc.aws_subnet.public[0] has internet gateway
+             | Instance aws_instance.pub_ins is on module.vpc.aws_subnet.public[0]
+             | Subnet routes traffic from instance to internet gateway
+             | Subnet uses Network ACL's nacl-pseudo-f3cec8f7-9838-46a0-9364-2b302363347a which allows port 22
+             | Instance uses security group module.vpc.aws_default_security_group.this[0]
+             | module.vpc.aws_default_security_group.this[0] allows port 22
+         Instance
+
+
+-----------------------------------------------
+Rule: Ensure all used default security groups of every VPC restrict all traffic
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.priv_ins] (main.tf:106)
+     Violating Resource: [module.vpc.aws_default_security_group.this[0]]  (.terraform/modules/vpc/main.tf:53)
+
+     Evidence:
+         VPC module.vpc.aws_vpc.this[0]
+             | aws_instance.priv_ins uses ENI eni-pseudo-0f1a3a6a-f2f4-447e-b966-9eaf33e100ab
+             | The ENI is secured by default Security group module.vpc.aws_default_security_group.this[0] and allows all traffic
+
+
+-----------------------------------------------
+Rule: EC2(s) within the public and private subnets should not share identical IAM roles
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.priv_ins] (main.tf:106)
+     Violating Resource: [aws_iam_role.test_role]  (main.tf:50)
+
+     Evidence:
+         Instance aws_instance.pub_ins
              | Instance is publicly exposed
              | Instance uses IAM role aws_iam_role.test_role
              | Private EC2 instance shares IAM role aws_iam_role.test_role as well
@@ -16,100 +311,6 @@ Description: Having the same IAM role for both public and private instances may 
 
 
 -----------------------------------------------
-WARNINGs found:
-Rule: Ensure all used default security groups of every VPC restrict all traffic
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.priv_ins] (main.tf:107)
-     Violating Resource: [module.vpc.aws_default_security_group.this[0]]  (.terraform/modules/vpc/main.tf:57)
 
-     Evidence:
-         VPC module.vpc.aws_vpc.this[0]
-             | aws_instance.priv_ins uses ENI eni-pseudo-f5aee602-320b-4763-a698-f334fc275061
-             | The ENI is secured by default Security group module.vpc.aws_default_security_group.this[0] and allows all traffic
-
-
------------------------------------------------
-Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 22 (SSH)
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.pub_ins] (main.tf:99)
-     Violating Resource: [module.vpc.aws_default_security_group.this[0]]  (.terraform/modules/vpc/main.tf:57)
-
-     Evidence:
-         Internet
-             | Subnet module.vpc.aws_subnet.public[0] has internet gateway
-             | Instance aws_instance.pub_ins is on module.vpc.aws_subnet.public[0]
-             | Subnet routes traffic from instance to internet gateway
-             | Subnet uses Network ACL's nacl-pseudo-c5cdbdd4-ecc9-4d0c-a557-a3529a310b4c which allows port 22
-             | Instance uses security group module.vpc.aws_default_security_group.this[0]
-             | module.vpc.aws_default_security_group.this[0] allows port 22
-         Instance
-
-
------------------------------------------------
-Rule: Ensure IMDSv2 is used and IMDSv1 is disabled
- - 2 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.pub_ins] (main.tf:99)
-     Violating Resource: [aws_instance.pub_ins]  (main.tf:99)
-
-     Evidence:
-             | The EC2 Instance aws_instance.pub_ins is allowing IMDSv1
-
-
-   - Exposed Resource: [aws_instance.priv_ins] (main.tf:107)
-     Violating Resource: [aws_instance.priv_ins]  (main.tf:107)
-
-     Evidence:
-             | The EC2 Instance aws_instance.priv_ins is allowing IMDSv1
-
-
------------------------------------------------
-Rule: Allow only private AMIs to be used
- - 2 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.pub_ins] (main.tf:99)
-     Violating Resource: [ami-0f593aebffc0070e1]  (Not found in TF)
-
-     Evidence:
-             | The EC2 Instance aws_instance.pub_ins uses AMI ami-0f593aebffc0070e1, which is public
-
-
-   - Exposed Resource: [aws_instance.priv_ins] (main.tf:107)
-     Violating Resource: [ami-0f593aebffc0070e1]  (Not found in TF)
-
-     Evidence:
-             | The EC2 Instance aws_instance.priv_ins uses AMI ami-0f593aebffc0070e1, which is public
-
-
------------------------------------------------
-Rule: Ensure all security groups and rules have a description detailing the rule
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [module.vpc.aws_default_security_group.this[0]] (.terraform/modules/vpc/main.tf:57)
-     Violating Resource: [module.vpc.aws_default_security_group.this[0]]  (.terraform/modules/vpc/main.tf:57)
-
-     Evidence:
-             | The Security group module.vpc.aws_default_security_group.this[0] does not have a description for the ingress rule of 0.0.0.0/0 for ports 22:22 using protocol tcp
-
-
------------------------------------------------
-Rule: Ensure all data stored in the Launch configuration EBS is securely encrypted
- - 2 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.priv_ins] (main.tf:107)
-     Violating Resource: [aws_instance.priv_ins]  (main.tf:107)
-
-     Evidence:
-             | This rule evaluated aws_instance.priv_ins's configuration
-
-
-   - Exposed Resource: [aws_instance.pub_ins] (main.tf:99)
-     Violating Resource: [aws_instance.pub_ins]  (main.tf:99)
-
-     Evidence:
-             | This rule evaluated aws_instance.pub_ins's configuration
-
-
------------------------------------------------
+Cloudrail ran this assessment without any policies and so all rule violations show as warnings.
+You can increase a rule's enforcement level by creating a Policy in the Web UI and adding the rule to it.

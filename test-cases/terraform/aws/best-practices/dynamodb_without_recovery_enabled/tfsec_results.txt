@@ -1,7 +1,7 @@
 
-Check 1
+  Result 1
 
-  [AWS086][WARNING] Resource 'aws_dynamodb_table.basic-dynamodb-table' doesn't have point in time recovery
+  [aws-dynamodb-enable-recovery][[0m[33mMEDIUM[39m[0m] Resource 'aws_dynamodb_table.basic-dynamodb-table' doesn't have point in time recovery
   /src/main.tf:1-43
 
 
@@ -50,14 +50,18 @@ Check 1
       43 | }
       44 | 
 
+  Legacy ID:  AWS086
   Impact:     Accidental or malicious writes and deletes can't be rolled back
   Resolution: Enable point in time recovery
 
-  See https://tfsec.dev/docs/aws/AWS086/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/dynamodb/enable-recovery#aws/dynamodb 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table#point_in_time_recovery 
+  - https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/PointInTimeRecovery.html 
 
-Check 2
+  Result 2
 
-  [AWS092][WARNING] Resource 'aws_dynamodb_table.basic-dynamodb-table' is not using KMS CMK for encryption
+  [aws-dynamodb-table-customer-key][[0m[97mLOW[39m[0m] Resource 'aws_dynamodb_table.basic-dynamodb-table' is not using KMS CMK for encryption
   /src/main.tf:1-43
 
 
@@ -106,26 +110,35 @@ Check 2
       43 | }
       44 | 
 
+  Legacy ID:  AWS092
   Impact:     Using AWS managed keys does not allow for fine grained control
-  Resolution: Enable server side encrytion with a customer managed key
+  Resolution: Enable server side encryption with a customer managed key
 
-  See https://tfsec.dev/docs/aws/AWS092/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/dynamodb/table-customer-key#aws/dynamodb 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table#server_side_encryption 
+  - https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/EncryptionAtRest.html 
 
   times
   ------------------------------------------
-  disk i/o             25.6768ms
-  parsing HCL          17.7µs
-  evaluating values    234µs
-  running checks       3.2349ms
+  disk i/o             49.601418ms
+  parsing HCL          579.209µs
+  evaluating values    2.183875ms
+  running checks       19.421208ms
 
   counts
   ------------------------------------------
   files loaded         1
   blocks               1
-  evaluated blocks     1
   modules              0
-  module blocks        0
-  ignored checks       0
 
-2 potential problems detected.
+  results
+  ------------------------------------------
+  critical             0
+  high                 0
+  medium               1
+  low                  1
+  ignored              0
+
+  2 potential problems detected.
 

@@ -6,14 +6,14 @@
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.135 
-Update available 2.0.135 -> 2.0.136
+By bridgecrew.io | version: 2.0.358 
+Update available 2.0.358 -> 2.0.359
 Run pip3 install -U checkov to update 
 
 
 terraform scan results:
 
-Passed checks: 10, Failed checks: 8, Skipped checks: 0
+Passed checks: 10, Failed checks: 9, Skipped checks: 0
 
 Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration EBS is securely encrypted"
 	FAILED for resource: aws_instance.test
@@ -117,10 +117,10 @@ Check: CKV_AWS_119: "Ensure DynamoDB Tables are encrypted using KMS"
 		107 | }
 
 
-Check: CKV2_AWS_12: "Ensure the default security group of every VPC restricts all traffic"
+Check: CKV2_AWS_11: "Ensure VPC flow logging is enabled in all VPCs"
 	FAILED for resource: aws_vpc.main
 	File: /main.tf:8-11
-	Guide: https://docs.bridgecrew.io/docs/networking_4
+	Guide: https://docs.bridgecrew.io/docs/logging_9-enable-vpc-flow-logging
 
 		8  | resource "aws_vpc" "main" {
 		9  |   cidr_block = "192.168.100.0/24"
@@ -128,10 +128,35 @@ Check: CKV2_AWS_12: "Ensure the default security group of every VPC restricts al
 		11 | }
 
 
-Check: CKV2_AWS_11: "Ensure VPC flow logging is enabled in all VPCs"
+Check: CKV2_AWS_16: "Ensure that Auto Scaling is enabled on your DynamoDB tables"
+	FAILED for resource: aws_dynamodb_table.basic-dynamodb-table
+	File: /main.tf:90-107
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-auto-scaling-is-enabled-on-your-dynamodb-tables
+
+		90  | resource "aws_dynamodb_table" "basic-dynamodb-table" {
+		91  |   name           = "GameScores"
+		92  |   billing_mode   = "PROVISIONED"
+		93  |   read_capacity  = 5
+		94  |   write_capacity = 5
+		95  |   hash_key       = "UserId"
+		96  |   range_key      = "GameTitle"
+		97  | 
+		98  |   attribute {
+		99  |     name = "UserId"
+		100 |     type = "S"
+		101 |   }
+		102 | 
+		103 |   attribute {
+		104 |     name = "GameTitle"
+		105 |     type = "S"
+		106 |   }
+		107 | }
+
+
+Check: CKV2_AWS_12: "Ensure the default security group of every VPC restricts all traffic"
 	FAILED for resource: aws_vpc.main
 	File: /main.tf:8-11
-	Guide: https://docs.bridgecrew.io-vpc-flow-logging
+	Guide: https://docs.bridgecrew.io/docs/networking_4
 
 		8  | resource "aws_vpc" "main" {
 		9  |   cidr_block = "192.168.100.0/24"

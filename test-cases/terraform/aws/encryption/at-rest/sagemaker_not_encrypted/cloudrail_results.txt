@@ -1,24 +1,13 @@
 
 WARNINGs found:
-Rule: Ensure all resources that can be tagged have at least one tag
+Rule: Ensure no direct internet access is allowed from Sagemaker Notebook instances
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_sagemaker_notebook_instance.ni] (main.tf:23)
      Violating Resource: [aws_sagemaker_notebook_instance.ni]  (main.tf:23)
 
      Evidence:
-             | Resource SageMaker Notebook Instance aws_sagemaker_notebook_instance.ni does not have any tags set other than "Name"
-
-
------------------------------------------------
-Rule: Ensure Sagemaker Notebook instances being created are set to encrypt artifacts at rest with customer-managed CMK
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_sagemaker_notebook_instance.ni] (main.tf:23)
-     Violating Resource: [aws_sagemaker_notebook_instance.ni]  (main.tf:23)
-
-     Evidence:
-             | The SageMaker Notebook Instance aws_sagemaker_notebook_instance.ni is not set to encrypt artifacts at rest using a customer-managed CMK
+             | The SageMaker Notebook Instance aws_sagemaker_notebook_instance.ni uses direct internet access
 
 
 -----------------------------------------------
@@ -35,14 +24,25 @@ Rule: Ensure IAM policies pass Access Analyzer policy validation without WARNING
 
 
 -----------------------------------------------
-Rule: Ensure no direct internet access is allowed from Sagemaker Notebook instances
+Rule: Ensure Sagemaker Notebook instances being created are set to encrypt artifacts at rest with customer-managed CMK
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_sagemaker_notebook_instance.ni] (main.tf:23)
      Violating Resource: [aws_sagemaker_notebook_instance.ni]  (main.tf:23)
 
      Evidence:
-             | The SageMaker Notebook Instance aws_sagemaker_notebook_instance.ni uses direct internet access
+             | The SageMaker Notebook Instance aws_sagemaker_notebook_instance.ni is not set to encrypt artifacts at rest using a customer-managed CMK
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_sagemaker_notebook_instance.ni] (main.tf:23)
+     Violating Resource: [aws_sagemaker_notebook_instance.ni]  (main.tf:23)
+
+     Evidence:
+             | Resource SageMaker Notebook Instance aws_sagemaker_notebook_instance.ni does not have any tags set other than "Name"
 
 
 -----------------------------------------------

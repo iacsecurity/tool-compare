@@ -2,29 +2,31 @@
 
 Violation Details -
     
-	Description    :	Encrypt Amazon RDS instances and snapshots at rest, by enabling the encryption option for your Amazon RDS DB instance
-	File           :	main.tf
-	Plan Root      :	./
-	Line           :	1
-	Severity       :	HIGH
-	
-	-----------------------------------------------------------------------
-	
 	Description    :	Ensure backup retention period is set for rds cluster
 	File           :	main.tf
+	Module Name    :	root
 	Plan Root      :	./
 	Line           :	1
 	Severity       :	MEDIUM
 	
 	-----------------------------------------------------------------------
 	
+	Description    :	Encrypt Amazon RDS instances and snapshots at rest, by enabling the encryption option for your Amazon RDS DB instance
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	1
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
 
 Scan Summary -
 
-	File/Folder         :	tool-compare/test-cases/terraform/aws/best-practices/rds_retention_period_set
+	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-06-01 05:56:27.5721 +0000 UTC
-	Policies Validated  :	612
+	Scanned At          :	2021-08-18 18:05:35.113883506 +0000 UTC
+	Policies Validated  :	2
 	Violated Policies   :	2
 	Low                 :	0
 	Medium              :	1

@@ -2,24 +2,18 @@
 
 Violation Details -
     
-	Description    :	Unscanned images may contain vulnerabilities
+	Description    :	Ensure ECR repository has policy attached.
 	File           :	main.tf
+	Module Name    :	root
 	Plan Root      :	./
 	Line           :	1
 	Severity       :	MEDIUM
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	ECR should have an image tag be immutable
+	Description    :	Unscanned images may contain vulnerabilities
 	File           :	main.tf
-	Plan Root      :	./
-	Line           :	1
-	Severity       :	LOW
-	
-	-----------------------------------------------------------------------
-	
-	Description    :	Ensure ECR repository has policy attached.
-	File           :	main.tf
+	Module Name    :	root
 	Plan Root      :	./
 	Line           :	1
 	Severity       :	MEDIUM
@@ -28,6 +22,7 @@ Violation Details -
 	
 	Description    :	Ensure ECR repository is encrypted at rest
 	File           :	main.tf
+	Module Name    :	root
 	Plan Root      :	./
 	Line           :	1
 	Severity       :	MEDIUM
@@ -37,12 +32,12 @@ Violation Details -
 
 Scan Summary -
 
-	File/Folder         :	tool-compare/test-cases/terraform/aws/best-practices/ecr_use_image_scanning
+	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-06-01 05:56:04.918796 +0000 UTC
-	Policies Validated  :	612
-	Violated Policies   :	4
-	Low                 :	1
+	Scanned At          :	2021-08-18 18:00:50.581166096 +0000 UTC
+	Policies Validated  :	3
+	Violated Policies   :	3
+	Low                 :	0
 	Medium              :	3
 	High                :	0
 	

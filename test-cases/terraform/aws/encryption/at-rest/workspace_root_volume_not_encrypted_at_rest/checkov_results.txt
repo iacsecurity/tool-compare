@@ -6,8 +6,8 @@
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.135 
-Update available 2.0.135 -> 2.0.136
+By bridgecrew.io | version: 2.0.358 
+Update available 2.0.358 -> 2.0.359
 Run pip3 install -U checkov to update 
 
 
@@ -18,6 +18,7 @@ Passed checks: 10, Failed checks: 2, Skipped checks: 0
 Check: CKV_AWS_156: "Ensure that Workspace root volumes are encrypted"
 	FAILED for resource: aws_workspaces_workspace.test
 	File: /main.tf:76-88
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-workspace-root-volumes-are-encrypted
 
 		76 | resource "aws_workspaces_workspace" "test" {
 		77 |   directory_id = aws_workspaces_directory.test.id
@@ -37,6 +38,7 @@ Check: CKV_AWS_156: "Ensure that Workspace root volumes are encrypted"
 Check: CKV_AWS_155: "Ensure that Workspace user volumes are encrypted"
 	FAILED for resource: aws_workspaces_workspace.test
 	File: /main.tf:76-88
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-workspace-user-volumes-are-encrypted
 
 		76 | resource "aws_workspaces_workspace" "test" {
 		77 |   directory_id = aws_workspaces_directory.test.id

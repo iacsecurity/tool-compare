@@ -4,7 +4,7 @@ Failed to run the process ...
     "isPrivate": true,
     "isLicensesEnabled": false,
     "ignoreSettings": null,
-    "org": "y",
+    "org": "yi2020",
     "projectId": "",
     "policy": ""
   },
@@ -13,28 +13,31 @@ Failed to run the process ...
   "dependencyCount": 0,
   "licensesPolicy": null,
   "ignoreSettings": null,
-  "targetFile": "/project/main.tf",
+  "targetFile": "main.tf",
   "projectName": "project",
-  "org": "y",
+  "org": "yi2020",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
   "packageManager": "terraformconfig",
   "path": "/project",
   "projectType": "terraformconfig",
+  "ok": false,
   "infrastructureAsCodeIssues": [
     {
+      "severity": "medium",
       "resolve": "Set `domain_endpoint_options.enforce_https` attribute to `true`",
       "id": "SNYK-CC-TF-67",
       "impact": "The content could be intercepted and manipulated in transit",
+      "msg": "resource.aws_elasticsearch_domain[example].domain_endpoint_options.enforce_https",
+      "remediation": {
+        "cloudformation": "Set `Properties.DomainEndpointOptions.EnforceHTTPS` attribute to `true`",
+        "terraform": "Set `domain_endpoint_options.enforce_https` attribute to `true`"
+      },
       "subType": "ElasticSearch",
-      "policyEngineType": "opa",
+      "issue": "The HTTPS is not enforced for elasticsearch cluster",
       "publicId": "SNYK-CC-TF-67",
       "title": "Cluster does not enforce HTTPS",
-      "severity": "medium",
-      "msg": "resource.aws_elasticsearch_domain[example].domain_endpoint_options.enforce_https",
-      "issue": "The HTTPS is not enforced for elasticsearch cluster",
-      "type": "terraform",
       "references": [
         "https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-data-protection.html"
       ],
@@ -45,6 +48,7 @@ Failed to run the process ...
         "resolve": "Set `domain_endpoint_options.enforce_https` attribute to `true`"
       },
       "lineNumber": 1,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-67",
       "path": [
         "resource",
         "aws_elasticsearch_domain[example]",
@@ -53,19 +57,23 @@ Failed to run the process ...
       ]
     },
     {
+      "severity": "medium",
       "resolve": "Set `domain_endpoint_options.tls_security_policy` attribute to `Policy-Min-TLS-1-2-2019-07`",
       "id": "SNYK-CC-TF-68",
       "impact": "Older cipher suites could be vulnerable to hijacking and information disclosure",
+      "msg": "resource.aws_elasticsearch_domain[example].domain_endpoint_options.tls_security_policy",
+      "remediation": {
+        "cloudformation": "Set `Properties.DomainEndpointOptions.TLSSecurityPolicy` attribute to `Policy-Min-TLS-1-2-2019-07`",
+        "terraform": "Set `domain_endpoint_options.tls_security_policy` attribute to `Policy-Min-TLS-1-2-2019-07`"
+      },
       "subType": "ElasticSearch",
-      "policyEngineType": "opa",
+      "issue": "The elasticsearch cluster will accept older TLS/SSL cipher suits",
       "publicId": "SNYK-CC-TF-68",
       "title": "Cluster does not enforce latest TLS/SSL policy",
-      "severity": "medium",
-      "msg": "resource.aws_elasticsearch_domain[example].domain_endpoint_options.tls_security_policy",
-      "issue": "The elasticsearch cluster will accept older TLS/SSL cipher suits",
-      "type": "terraform",
       "references": [
-        "https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-data-protection.html"
+        "https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-data-protection.html",
+        "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-elasticsearch-domain.html",
+        "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cloudfront-distribution-distributionconfig.html"
       ],
       "isIgnored": false,
       "iacDescription": {
@@ -74,6 +82,7 @@ Failed to run the process ...
         "resolve": "Set `domain_endpoint_options.tls_security_policy` attribute to `Policy-Min-TLS-1-2-2019-07`"
       },
       "lineNumber": 1,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-68",
       "path": [
         "resource",
         "aws_elasticsearch_domain[example]",
@@ -82,17 +91,19 @@ Failed to run the process ...
       ]
     },
     {
+      "severity": "medium",
       "resolve": "Set `node_to_node_encryption.enabled` attribute to `true`",
       "id": "SNYK-CC-TF-66",
       "impact": "The content could be intercepted and manipulated in transit",
+      "msg": "resource.aws_elasticsearch_domain[example].node_to_node_encryption",
+      "remediation": {
+        "cloudformation": "Set `Properties.NodeToNodeEncryptionOptions` attribute to `true`",
+        "terraform": "Set `node_to_node_encryption.enabled` attribute to `true`"
+      },
       "subType": "ElasticSearch",
-      "policyEngineType": "opa",
+      "issue": "The inter-cluster traffic will not be encrypted in transit",
       "publicId": "SNYK-CC-TF-66",
       "title": "Node-to-node encryption is disabled",
-      "severity": "medium",
-      "msg": "resource.aws_elasticsearch_domain[example].node_to_node_encryption",
-      "issue": "The inter-cluster traffic will not be encrypted in transit",
-      "type": "terraform",
       "references": [
         "https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/ntn.html"
       ],
@@ -103,6 +114,7 @@ Failed to run the process ...
         "resolve": "Set `node_to_node_encryption.enabled` attribute to `true`"
       },
       "lineNumber": 1,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-66",
       "path": [
         "resource",
         "aws_elasticsearch_domain[example]",
@@ -110,17 +122,19 @@ Failed to run the process ...
       ]
     },
     {
+      "severity": "low",
       "resolve": "Set `log_publishing_options` attribute",
       "id": "SNYK-CC-TF-140",
       "impact": "Audit records may not be available during investigation",
+      "msg": "resource.aws_elasticsearch_domain[example]",
+      "remediation": {
+        "cloudformation": "Set `Properties.LogPublishingOptions.AUDIT_LOGS.Enabled` attribute to `true`",
+        "terraform": "Set `log_publishing_options` attribute"
+      },
       "subType": "ElasticSearch",
-      "policyEngineType": "opa",
+      "issue": "Amazon Elasticsearch domain logging is not enabled",
       "publicId": "SNYK-CC-TF-140",
       "title": "Elasticsearch domain logging disabled",
-      "severity": "low",
-      "msg": "resource.aws_elasticsearch_domain[example]",
-      "issue": "Amazon Elasticsearch domain logging is not enabled",
-      "type": "terraform",
       "references": [
         "https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-createdomain-configure-slow-logs.html"
       ],
@@ -131,23 +145,26 @@ Failed to run the process ...
         "resolve": "Set `log_publishing_options` attribute"
       },
       "lineNumber": 1,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-140",
       "path": [
         "resource",
         "aws_elasticsearch_domain[example]"
       ]
     },
     {
+      "severity": "medium",
       "resolve": "Set `encrypt_at_rest.enabled` attribute to `true`",
       "id": "SNYK-CC-TF-64",
       "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+      "msg": "resource.aws_elasticsearch_domain[example].encrypt_at_rest",
+      "remediation": {
+        "cloudformation": "Set `Properties.EncryptionAtRestOptions` attribute to `true`",
+        "terraform": "Set `encrypt_at_rest.enabled` attribute to `true`"
+      },
       "subType": "ElasticSearch",
-      "policyEngineType": "opa",
+      "issue": "The elasticsearch cluster is not encrypted at rest",
       "publicId": "SNYK-CC-TF-64",
       "title": "Encryption at rest is disabled",
-      "severity": "medium",
-      "msg": "resource.aws_elasticsearch_domain[example].encrypt_at_rest",
-      "issue": "The elasticsearch cluster is not encrypted at rest",
-      "type": "terraform",
       "references": [
         "https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/encryption-at-rest.html",
         "https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/aes-supported-instance-types.html"
@@ -159,6 +176,7 @@ Failed to run the process ...
         "resolve": "Set `encrypt_at_rest.enabled` attribute to `true`"
       },
       "lineNumber": 1,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-64",
       "path": [
         "resource",
         "aws_elasticsearch_domain[example]",

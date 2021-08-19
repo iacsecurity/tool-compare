@@ -1,65 +1,150 @@
 Failed to run the process ...
-{
-  "meta": {
-    "isPrivate": true,
-    "isLicensesEnabled": false,
-    "policy": "",
-    "ignoreSettings": null,
-    "projectId": "",
-    "org": "y"
-  },
-  "filesystemPolicy": false,
-  "vulnerabilities": [],
-  "dependencyCount": 0,
-  "licensesPolicy": null,
-  "ignoreSettings": null,
-  "targetFile": "main.tf",
-  "projectName": "project",
-  "org": "y",
-  "policy": "",
-  "isPrivate": true,
-  "targetFilePath": "/project/main.tf",
-  "packageManager": "terraformconfig",
-  "path": "/project",
-  "projectType": "terraformconfig",
-  "infrastructureAsCodeIssues": [
-    {
-      "id": "SNYK-CC-TF-54",
-      "title": "Non-Encrypted SQS Queue",
-      "type": "terraform",
-      "subType": "SQS",
-      "severity": "medium",
-      "isIgnored": false,
-      "iacDescription": {
-        "issue": "The SQS queue is not encrypted at rest",
-        "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
-        "resolve": "Set `kms_master_key_id` attribute to KMS key"
-      },
-      "lineNumber": 12,
-      "path": [
-        "resource",
-        "aws_sqs_queue[cloudrail]",
-        "kms_master_key_id"
-      ]
+[
+  {
+    "meta": {
+      "isPrivate": true,
+      "isLicensesEnabled": false,
+      "ignoreSettings": null,
+      "org": "yi2020",
+      "projectId": "",
+      "policy": ""
     },
-    {
-      "id": "SNYK-CC-TF-55",
-      "title": "Non-Encrypted SNS Topic",
-      "type": "terraform",
-      "subType": "SNS",
-      "severity": "medium",
-      "isIgnored": false,
-      "iacDescription": {
-        "issue": "The SNS topic is not encrypted at rest",
+    "filesystemPolicy": false,
+    "vulnerabilities": [],
+    "dependencyCount": 0,
+    "licensesPolicy": null,
+    "ignoreSettings": null,
+    "targetFile": "main.tf",
+    "projectName": "project",
+    "org": "yi2020",
+    "policy": "",
+    "isPrivate": true,
+    "targetFilePath": "/project/main.tf",
+    "packageManager": "terraformconfig",
+    "path": "/project",
+    "projectType": "terraformconfig",
+    "ok": false,
+    "infrastructureAsCodeIssues": [
+      {
+        "severity": "medium",
+        "resolve": "Set `kms_master_key_id` attribute to KMS key",
+        "id": "SNYK-CC-TF-54",
         "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
-        "resolve": "Set `kms_master_key_id` attribute to KMS key"
+        "msg": "resource.aws_sqs_queue[cloudrail].kms_master_key_id",
+        "remediation": {
+          "cloudformation": "Set `Properties.KmsMasterKeyId` attribute to KMS key, for example `alias/aws/sqs`",
+          "terraform": "Set `kms_master_key_id` attribute to KMS key"
+        },
+        "subType": "SQS",
+        "issue": "The SQS queue is not encrypted at rest",
+        "publicId": "SNYK-CC-TF-54",
+        "title": "Non-Encrypted SQS Queue",
+        "references": [
+          "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-server-side-encryption.html"
+        ],
+        "isIgnored": false,
+        "iacDescription": {
+          "issue": "The SQS queue is not encrypted at rest",
+          "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+          "resolve": "Set `kms_master_key_id` attribute to KMS key"
+        },
+        "lineNumber": 12,
+        "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-54",
+        "path": [
+          "resource",
+          "aws_sqs_queue[cloudrail]",
+          "kms_master_key_id"
+        ]
       },
-      "lineNumber": 5,
-      "path": [
-        "resource",
-        "aws_sns_topic[cloudrail_1]",
-        "kms_master_key_id"
-      ]
-    }
-  ]
-}
+      {
+        "severity": "medium",
+        "resolve": "Set `kms_master_key_id` attribute to KMS key",
+        "id": "SNYK-CC-TF-55",
+        "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+        "msg": "resource.aws_sns_topic[cloudrail_1].kms_master_key_id",
+        "remediation": {
+          "cloudformation": "Set `KmsMasterKeyId` attribute to KMS key for example `alias/aws/sns`",
+          "terraform": "Set `kms_master_key_id` attribute to KMS key"
+        },
+        "subType": "SNS",
+        "issue": "The SNS topic is not encrypted at rest",
+        "publicId": "SNYK-CC-TF-55",
+        "title": "Non-Encrypted SNS Topic",
+        "references": [
+          "https://docs.aws.amazon.com/sns/latest/dg/sns-server-side-encryption.html"
+        ],
+        "isIgnored": false,
+        "iacDescription": {
+          "issue": "The SNS topic is not encrypted at rest",
+          "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+          "resolve": "Set `kms_master_key_id` attribute to KMS key"
+        },
+        "lineNumber": 5,
+        "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-55",
+        "path": [
+          "resource",
+          "aws_sns_topic[cloudrail_1]",
+          "kms_master_key_id"
+        ]
+      },
+      {
+        "severity": "low",
+        "resolve": "Set `kms_master_key_id` attribute to a customer managed key id",
+        "id": "SNYK-CC-AWS-422",
+        "impact": "Scope of use of the encryption key cannot be controlled via KMS/IAM policies",
+        "msg": "resource.aws_sns_topic[cloudrail_1].kms_master_key_id",
+        "remediation": {
+          "cloudformation": "Set `Properties.KmsMasterKeyId` attribute to a customer managed key id ",
+          "terraform": "Set `kms_master_key_id` attribute to a customer managed key id"
+        },
+        "subType": "SNS",
+        "issue": "SNS topic is not encrypted with customer managed key",
+        "publicId": "SNYK-CC-AWS-422",
+        "title": "SNS topic is not encrypted with customer managed key",
+        "references": [
+          "https://docs.aws.amazon.com/sns/latest/dg/sns-create-topic.html",
+          "https://docs.aws.amazon.com/whitepapers/latest/kms-best-practices/aws-managed-and-customer-managed-cmks.html"
+        ],
+        "isIgnored": false,
+        "iacDescription": {
+          "issue": "SNS topic is not encrypted with customer managed key",
+          "impact": "Scope of use of the encryption key cannot be controlled via KMS/IAM policies",
+          "resolve": "Set `kms_master_key_id` attribute to a customer managed key id"
+        },
+        "lineNumber": 5,
+        "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-422",
+        "path": [
+          "resource",
+          "aws_sns_topic[cloudrail_1]",
+          "kms_master_key_id"
+        ]
+      }
+    ]
+  },
+  {
+    "meta": {
+      "isPrivate": true,
+      "isLicensesEnabled": false,
+      "ignoreSettings": null,
+      "org": "yi2020",
+      "projectId": "",
+      "policy": ""
+    },
+    "filesystemPolicy": false,
+    "vulnerabilities": [],
+    "dependencyCount": 0,
+    "licensesPolicy": null,
+    "ignoreSettings": null,
+    "targetFile": "plan.json",
+    "projectName": "project",
+    "org": "yi2020",
+    "policy": "",
+    "isPrivate": true,
+    "targetFilePath": "/project/plan.json",
+    "packageManager": "terraformconfig",
+    "path": "/project",
+    "projectType": "terraformconfig",
+    "ok": true,
+    "infrastructureAsCodeIssues": []
+  }
+]

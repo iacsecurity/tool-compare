@@ -1,28 +1,7 @@
 
-Check 1
+  Result 1
 
-  [AWS048][ERROR] Resource 'aws_efs_file_system.test' does not specify if encryption should be used.
-  /src/main.tf:5-7
-
-
-       2 |   region = "us-east-1"
-       3 | }
-       4 | 
-       5 | resource "aws_efs_file_system" "test" {
-       6 |   creation_token = "cloudrail-test"
-       7 | }
-       8 | 
-       9 | resource "aws_ecs_task_definition" "service" {
-      10 |   family                = "cloudrail-test-encryption"
-
-  Impact:     Data can be read from the EFS if compromised
-  Resolution: Enable encryption for EFS
-
-  See https://tfsec.dev/docs/aws/AWS048/ for more information. 
-
-Check 2
-
-  [AWS096][ERROR] Resource 'aws_ecs_task_definition.service' has efs configuration with in transit encryption implicitly disabled
+  [aws-ecs-enable-in-transit-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_ecs_task_definition.service' has efs configuration with in transit encryption implicitly disabled
   /src/main.tf:9-49
 
 
@@ -72,26 +51,61 @@ Check 2
       49 | }
       50 | 
 
+  Legacy ID:  AWS096
   Impact:     Intercepted traffic to and from EFS may lead to data loss
   Resolution: Enable in transit encryption when using efs
 
-  See https://tfsec.dev/docs/aws/AWS096/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/ecs/enable-in-transit-encryption#aws/ecs 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecs_task_definition#transit_encryption 
+  - https://docs.aws.amazon.com/AmazonECS/latest/userguide/efs-volumes.html 
+  - https://docs.aws.amazon.com/efs/latest/ug/encryption-in-transit.html 
+
+  Result 2
+
+  [aws-efs-enable-at-rest-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_efs_file_system.test' does not specify if encryption should be used.
+  /src/main.tf:5-7
+
+
+       2 |   region = "us-east-1"
+       3 | }
+       4 | 
+       5 | resource "aws_efs_file_system" "test" {
+       6 |   creation_token = "cloudrail-test"
+       7 | }
+       8 | 
+       9 | resource "aws_ecs_task_definition" "service" {
+      10 |   family                = "cloudrail-test-encryption"
+
+  Legacy ID:  AWS048
+  Impact:     Data can be read from the EFS if compromised
+  Resolution: Enable encryption for EFS
+
+  More Info:
+  - https://tfsec.dev/docs/aws/efs/enable-at-rest-encryption#aws/efs 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/efs_file_system 
+  - https://docs.aws.amazon.com/efs/latest/ug/encryption.html 
 
   times
   ------------------------------------------
-  disk i/o             17.6769ms
-  parsing HCL          22.1µs
-  evaluating values    135.4µs
-  running checks       2.7638ms
+  disk i/o             49.380917ms
+  parsing HCL          542.291µs
+  evaluating values    1.931124ms
+  running checks       24.049334ms
 
   counts
   ------------------------------------------
   files loaded         1
   blocks               3
-  evaluated blocks     3
   modules              0
-  module blocks        0
-  ignored checks       0
 
-2 potential problems detected.
+  results
+  ------------------------------------------
+  critical             0
+  high                 2
+  medium               0
+  low                  0
+  ignored              0
+
+  2 potential problems detected.
 

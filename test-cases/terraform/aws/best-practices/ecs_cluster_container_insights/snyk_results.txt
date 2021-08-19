@@ -4,7 +4,7 @@ Failed to run the process ...
     "isPrivate": true,
     "isLicensesEnabled": false,
     "ignoreSettings": null,
-    "org": "y",
+    "org": "yi2020",
     "projectId": "",
     "policy": ""
   },
@@ -13,28 +13,31 @@ Failed to run the process ...
   "dependencyCount": 0,
   "licensesPolicy": null,
   "ignoreSettings": null,
-  "targetFile": "/project/main.tf",
+  "targetFile": "main.tf",
   "projectName": "project",
-  "org": "y",
+  "org": "yi2020",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
   "packageManager": "terraformconfig",
   "path": "/project",
   "projectType": "terraformconfig",
+  "ok": false,
   "infrastructureAsCodeIssues": [
     {
+      "severity": "low",
       "resolve": "Set `settings.name` attribute to `containerInsights`, and `settings.value` to `enabled`",
       "id": "SNYK-CC-TF-128",
       "impact": "Performance log events will not be collected and displayed in CloudWatch",
+      "msg": "resource.aws_ecs_cluster[foo].setting",
+      "remediation": {
+        "cloudformation": "Set `Properties.ClusterSettings.Name` attribute to `containerInsights`, and `Properties.ClusterSettings.Value` to `enabled`",
+        "terraform": "Set `settings.name` attribute to `containerInsights`, and `settings.value` to `enabled`"
+      },
       "subType": "ECS",
-      "policyEngineType": "opa",
+      "issue": "ECS ContainerInsights will not be enabled on the cluster",
       "publicId": "SNYK-CC-TF-128",
       "title": "ECS ContainerInsights disabled",
-      "severity": "low",
-      "msg": "resource.aws_ecs_cluster[foo].setting",
-      "issue": "ECS ContainerInsights will not be enabled on the cluster",
-      "type": "terraform",
       "references": [
         "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/ContainerInsights.html"
       ],
@@ -45,6 +48,7 @@ Failed to run the process ...
         "resolve": "Set `settings.name` attribute to `containerInsights`, and `settings.value` to `enabled`"
       },
       "lineNumber": 1,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-128",
       "path": [
         "resource",
         "aws_ecs_cluster[foo]",

@@ -4,6 +4,7 @@ Violation Details -
     
 	Description    :	Ensure DocDb clusters have log exports enabled.
 	File           :	main.tf
+	Module Name    :	root
 	Plan Root      :	./
 	Line           :	9
 	Severity       :	MEDIUM
@@ -13,10 +14,10 @@ Violation Details -
 
 Scan Summary -
 
-	File/Folder         :	tool-compare/test-cases/terraform/aws/encryption/at-rest/docdb_cluster_encrypted_at_rest_using_cmk_not_customer_managed
+	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-06-01 05:54:56.478007 +0000 UTC
-	Policies Validated  :	612
+	Scanned At          :	2021-08-18 16:20:30.716551838 +0000 UTC
+	Policies Validated  :	2
 	Violated Policies   :	1
 	Low                 :	0
 	Medium              :	1

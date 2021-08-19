@@ -3,10 +3,10 @@ Failed to run the process ...
   "meta": {
     "isPrivate": true,
     "isLicensesEnabled": false,
-    "policy": "",
     "ignoreSettings": null,
+    "org": "yi2020",
     "projectId": "",
-    "org": "y"
+    "policy": ""
   },
   "filesystemPolicy": false,
   "vulnerabilities": [],
@@ -15,26 +15,40 @@ Failed to run the process ...
   "ignoreSettings": null,
   "targetFile": "main.tf",
   "projectName": "project",
-  "org": "y",
+  "org": "yi2020",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
   "packageManager": "terraformconfig",
   "path": "/project",
   "projectType": "terraformconfig",
+  "ok": false,
   "infrastructureAsCodeIssues": [
     {
-      "id": "SNYK-CC-TF-62",
-      "title": "Non-Encrypted Kinesis Stream",
-      "type": "terraform",
-      "subType": "Kinesis",
       "severity": "medium",
+      "resolve": "Set `encryption_type` attribute to `KMS`",
+      "id": "SNYK-CC-TF-62",
+      "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+      "msg": "resource.aws_kinesis_stream[kinesis_for_cloudwatch].encryption_type",
+      "remediation": {
+        "cloudformation": "Set `Properties.StreamEncryption.EncryptionType` attribute to `KMS`",
+        "terraform": "Set `encryption_type` attribute to `KMS`"
+      },
+      "subType": "Kinesis",
+      "issue": "The AWS kinesis server-side encryption is disabled",
+      "publicId": "SNYK-CC-TF-62",
+      "title": "Non-Encrypted Kinesis Stream",
+      "references": [
+        "https://docs.aws.amazon.com/AmazonECR/latest/userguide/image-scanning.htm://docs.aws.amazon.com/streams/latest/dev/server-side-encryption.html"
+      ],
       "isIgnored": false,
       "iacDescription": {
         "issue": "The AWS kinesis server-side encryption is disabled",
         "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
         "resolve": "Set `encryption_type` attribute to `KMS`"
       },
+      "lineNumber": -1,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-62",
       "path": [
         "resource",
         "aws_kinesis_stream[kinesis_for_cloudwatch]",

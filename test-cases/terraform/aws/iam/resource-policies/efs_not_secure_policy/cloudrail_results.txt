@@ -1,13 +1,13 @@
 
 WARNINGs found:
-Rule: Ensure use of EFS file system policy, and no action wildcards are being used
+Rule: Ensure all resources that can be tagged have at least one tag
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_efs_file_system.not_secure] (main.tf:5)
-     Violating Resource: [aws_efs_file_system_policy.not_secure_policy]  (main.tf:13)
+     Violating Resource: [aws_efs_file_system.not_secure]  (main.tf:5)
 
      Evidence:
-             | The policy attached to the EFS file system aws_efs_file_system.not_secure is using wildcard action elasticfilesystem:*, and principal AWS: *, without any condition
+             | Resource Elastic File System aws_efs_file_system.not_secure does not have any tags set other than "Name"
 
 
 -----------------------------------------------
@@ -18,18 +18,18 @@ Rule: Ensure EFS filesystems being created are set to be encrypted at rest
      Violating Resource: [aws_efs_file_system.not_secure]  (main.tf:5)
 
      Evidence:
-             | The EFS file system aws_efs_file_system.not_secure is not set to use encryption at rest
+             | The Elastic File System aws_efs_file_system.not_secure is not set to use encryption at rest
 
 
 -----------------------------------------------
-Rule: Ensure all resources that can be tagged have at least one tag
+Rule: Ensure use of EFS file system policy, and no action wildcards are being used
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_efs_file_system.not_secure] (main.tf:5)
-     Violating Resource: [aws_efs_file_system.not_secure]  (main.tf:5)
+     Violating Resource: [aws_efs_file_system_policy.not_secure_policy]  (main.tf:13)
 
      Evidence:
-             | Resource EFS file system aws_efs_file_system.not_secure does not have any tags set other than "Name"
+             | The policy attached to the Elastic File System aws_efs_file_system.not_secure is using wildcard action elasticfilesystem:*, and principal AWS: *, without any condition
 
 
 -----------------------------------------------

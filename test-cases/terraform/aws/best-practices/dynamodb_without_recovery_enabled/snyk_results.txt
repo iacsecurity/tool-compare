@@ -4,7 +4,7 @@ Failed to run the process ...
     "isPrivate": true,
     "isLicensesEnabled": false,
     "ignoreSettings": null,
-    "org": "y",
+    "org": "yi2020",
     "projectId": "",
     "policy": ""
   },
@@ -13,28 +13,64 @@ Failed to run the process ...
   "dependencyCount": 0,
   "licensesPolicy": null,
   "ignoreSettings": null,
-  "targetFile": "/project/main.tf",
+  "targetFile": "main.tf",
   "projectName": "project",
-  "org": "y",
+  "org": "yi2020",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
   "packageManager": "terraformconfig",
   "path": "/project",
   "projectType": "terraformconfig",
+  "ok": false,
   "infrastructureAsCodeIssues": [
     {
+      "severity": "low",
+      "resolve": "Set `server_side_encryption.kms_key_arn` attribute to customer managed key ARN",
+      "id": "SNYK-CC-AWS-417",
+      "impact": "Scope of use of the key cannot be controlled via KMS/IAM policies",
+      "msg": "resource.aws_dynamodb_table[basic-dynamodb-table].server_side_encryption.kms_key_arn",
+      "remediation": {
+        "cloudformation": "Set `Properties.SSESpecification.SSEType` attribute to `KMS`, and `Properties.SSESpecification.KMSMasterKeyId` attribute to customer managed key ARN",
+        "terraform": "Set `server_side_encryption.kms_key_arn` attribute to customer managed key ARN"
+      },
+      "subType": "DynamoDB",
+      "issue": "DynamoDB table is not encrypted with customer managed KMS key",
+      "publicId": "SNYK-CC-AWS-417",
+      "title": "DynamoDB not encrypted with customer managed key",
+      "references": [
+        "https://docs.aws.amazon.com/kms/latest/developerguide/services-dynamodb.html",
+        "https://docs.aws.amazon.com/whitepapers/latest/kms-best-practices/aws-managed-and-customer-managed-cmks.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "DynamoDB table is not encrypted with customer managed KMS key",
+        "impact": "Scope of use of the key cannot be controlled via KMS/IAM policies",
+        "resolve": "Set `server_side_encryption.kms_key_arn` attribute to customer managed key ARN"
+      },
+      "lineNumber": 1,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-417",
+      "path": [
+        "resource",
+        "aws_dynamodb_table[basic-dynamodb-table]",
+        "server_side_encryption",
+        "kms_key_arn"
+      ]
+    },
+    {
+      "severity": "medium",
       "resolve": "Set `point_in_time_recovery.enabled` attribute to `true`",
       "id": "SNYK-CC-TF-125",
       "impact": "No automated backups of DynamoDB data",
+      "msg": "resource.aws_dynamodb_table[basic-dynamodb-table]",
+      "remediation": {
+        "cloudformation": "Set `Properties.PointInTimeRecoverySpecification.PointInTimeRecoveryEnabled` attribute to `true`",
+        "terraform": "Set `point_in_time_recovery.enabled` attribute to `true`"
+      },
       "subType": "DynamoDB",
-      "policyEngineType": "opa",
+      "issue": "DynamoDB does not have Point-in-Time Recovery enabled",
       "publicId": "SNYK-CC-TF-125",
       "title": "DynamoDB point-in-time recovery disabled",
-      "severity": "medium",
-      "msg": "resource.aws_dynamodb_table[basic-dynamodb-table]",
-      "issue": "DynamoDB does not have Point-in-Time Recovery enabled",
-      "type": "terraform",
       "references": [
         "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/PointInTimeRecovery_Howitworks.html",
         "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table#point_in_time_recovery"
@@ -46,6 +82,7 @@ Failed to run the process ...
         "resolve": "Set `point_in_time_recovery.enabled` attribute to `true`"
       },
       "lineNumber": 1,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-125",
       "path": [
         "resource",
         "aws_dynamodb_table[basic-dynamodb-table]"

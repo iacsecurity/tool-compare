@@ -1,7 +1,29 @@
 
-Check 1
+  Result 1
 
-  [AWS088][WARNING] Resource 'aws_elasticache_cluster.default' should have snapshot retention specified
+  [aws-elasticache-enable-backup-retention][[0m[33mMEDIUM[39m[0m] Resource 'aws_elasticache_cluster.disabled' has snapshot retention set to 0
+  /src/main.tf:16
+
+
+      13 |   num_cache_nodes      = 1
+      14 |   parameter_group_name = "default.redis6.x"
+      15 | 
+      16 |   snapshot_retention_limit = 0    number: 0.000000
+      17 | }
+      18 | 
+
+  Legacy ID:  AWS088
+  Impact:     Without backups of the redis cluster recovery is made difficult
+  Resolution: Configure snapshot retention for redis cluster
+
+  More Info:
+  - https://tfsec.dev/docs/aws/elasticache/enable-backup-retention#aws/elasticache 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticache_cluster#snapshot_retention_limit 
+  - https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/backups-automatic.html 
+
+  Result 2
+
+  [aws-elasticache-enable-backup-retention][[0m[33mMEDIUM[39m[0m] Resource 'aws_elasticache_cluster.default' should have snapshot retention specified
   /src/main.tf:1-7
 
 
@@ -16,44 +38,35 @@ Check 1
        9 | resource "aws_elasticache_cluster" "disabled" {
       10 |   cluster_id           = "cluster"
 
+  Legacy ID:  AWS088
   Impact:     Without backups of the redis cluster recovery is made difficult
   Resolution: Configure snapshot retention for redis cluster
 
-  See https://tfsec.dev/docs/aws/AWS088/ for more information. 
-
-Check 2
-
-  [AWS088][WARNING] Resource 'aws_elasticache_cluster.disabled' has snapshot retention set to 0
-  /src/main.tf:16
-
-
-      13 |   num_cache_nodes      = 1
-      14 |   parameter_group_name = "default.redis6.x"
-      15 | 
-      16 |   snapshot_retention_limit = 0
-      17 | }
-      18 | 
-
-  Impact:     Without backups of the redis cluster recovery is made difficult
-  Resolution: Configure snapshot retention for redis cluster
-
-  See https://tfsec.dev/docs/aws/AWS088/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/elasticache/enable-backup-retention#aws/elasticache 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticache_cluster#snapshot_retention_limit 
+  - https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/backups-automatic.html 
 
   times
   ------------------------------------------
-  disk i/o             32.3504ms
-  parsing HCL          37.2µs
-  evaluating values    170.1µs
-  running checks       5.0551ms
+  disk i/o             47.115458ms
+  parsing HCL          525.417µs
+  evaluating values    1.922207ms
+  running checks       27.678334ms
 
   counts
   ------------------------------------------
   files loaded         1
   blocks               2
-  evaluated blocks     2
   modules              0
-  module blocks        0
-  ignored checks       0
 
-2 potential problems detected.
+  results
+  ------------------------------------------
+  critical             0
+  high                 0
+  medium               2
+  low                  0
+  ignored              0
+
+  2 potential problems detected.
 

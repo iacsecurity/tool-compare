@@ -1,44 +1,13 @@
 
 WARNINGs found:
-Rule: Ensure IMDSv2 is used and IMDSv1 is disabled
+Rule: Ensure DynamoDB Point-in-Time recovery (backup) is enabled
  - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.test] (main.tf:136)
-     Violating Resource: [aws_instance.test]  (main.tf:136)
-
-     Evidence:
-             | The EC2 Instance aws_instance.test is allowing IMDSv1
-
-
------------------------------------------------
-Rule: Ensure VPC Endpoint for DynamoDB is enabled in all VPCs
- - 2 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_dynamodb_table.basic-dynamodb-table] (main.tf:143)
-     Violating Resource: [aws_vpc.main]  (main.tf:5)
+     Violating Resource: [aws_dynamodb_table.basic-dynamodb-table]  (main.tf:143)
 
      Evidence:
-         The VPC
-             | aws_vpc.main in region us-east-1 is in use but not leveraging DynamoDB Endpoint Gateway
-
-
-   - Exposed Resource: [consoleme_cloudtrail] (Not found in TF)
-     Violating Resource: [aws_vpc.main]  (main.tf:5)
-
-     Evidence:
-         The VPC
-             | aws_vpc.main in region us-east-1 is in use but not leveraging DynamoDB Endpoint Gateway
-
-
------------------------------------------------
-Rule: Allow only private AMIs to be used
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.test] (main.tf:136)
-     Violating Resource: [ami-0f593aebffc0070e1]  (Not found in TF)
-
-     Evidence:
-             | The EC2 Instance aws_instance.test uses AMI ami-0f593aebffc0070e1, which is public
+             | This rule evaluated aws_dynamodb_table.basic-dynamodb-table's configuration
 
 
 -----------------------------------------------
@@ -53,14 +22,182 @@ Rule: Ensure all data stored in the Launch configuration EBS is securely encrypt
 
 
 -----------------------------------------------
-Rule: Ensure DynamoDB Point-in-Time recovery (backup) is enabled
+Rule: Ensure EC2 instance has detailed monitoring enabled
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.test] (main.tf:136)
+     Violating Resource: [aws_instance.test]  (main.tf:136)
+
+     Evidence:
+             | The EC2 Instance aws_instance.test has detailed monitoring disabled
+
+
+-----------------------------------------------
+Rule: Ensure EC2 instance is EBS optimized
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.test] (main.tf:136)
+     Violating Resource: [aws_instance.test]  (main.tf:136)
+
+     Evidence:
+             | The EC2 Instance aws_instance.test is not EBS optimized
+
+
+-----------------------------------------------
+Rule: Ensure DynamoDB tables are encrypted at rest with customer-managed CMK
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_dynamodb_table.basic-dynamodb-table] (main.tf:143)
      Violating Resource: [aws_dynamodb_table.basic-dynamodb-table]  (main.tf:143)
 
      Evidence:
-             | This rule evaluated aws_dynamodb_table.basic-dynamodb-table's configuration
+             | The DynamoDB table aws_dynamodb_table.basic-dynamodb-table is not set to be encrypted at rest using customer-managed CMK
 
 
 -----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 11 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.test] (main.tf:136)
+     Violating Resource: [aws_instance.test]  (main.tf:136)
+
+     Evidence:
+             | Resource EC2 Instance aws_instance.test does not have any tags set
+
+
+   - Exposed Resource: [aws_nat_gateway.private-subnet-nat-gw] (main.tf:47)
+     Violating Resource: [aws_nat_gateway.private-subnet-nat-gw]  (main.tf:47)
+
+     Evidence:
+             | Resource NAT gateway aws_nat_gateway.private-subnet-nat-gw does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [aws_network_acl.allow-public-outbound-nacl] (main.tf:80)
+     Violating Resource: [aws_network_acl.allow-public-outbound-nacl]  (main.tf:80)
+
+     Evidence:
+             | Resource Network ACL's aws_network_acl.allow-public-outbound-nacl does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [aws_route_table.private-rtb] (main.tf:66)
+     Violating Resource: [aws_route_table.private-rtb]  (main.tf:66)
+
+     Evidence:
+             | Resource Route table aws_route_table.private-rtb does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [aws_route_table.public-rtb] (main.tf:20)
+     Violating Resource: [aws_route_table.public-rtb]  (main.tf:20)
+
+     Evidence:
+             | Resource Route table aws_route_table.public-rtb does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [aws_security_group.allow-public-outbound-sg] (main.tf:98)
+     Violating Resource: [aws_security_group.allow-public-outbound-sg]  (main.tf:98)
+
+     Evidence:
+             | Resource Security group aws_security_group.allow-public-outbound-sg does not have any tags set
+
+
+   - Exposed Resource: [aws_dynamodb_table.basic-dynamodb-table] (main.tf:143)
+     Violating Resource: [aws_dynamodb_table.basic-dynamodb-table]  (main.tf:143)
+
+     Evidence:
+             | Resource DynamoDB table aws_dynamodb_table.basic-dynamodb-table does not have any tags set
+
+
+   - Exposed Resource: [aws_eip.allocate-ip-to-nat-gw] (main.tf:56)
+     Violating Resource: [aws_eip.allocate-ip-to-nat-gw]  (main.tf:56)
+
+     Evidence:
+             | Resource Elastic IP address aws_eip.allocate-ip-to-nat-gw does not have any tags set
+
+
+   - Exposed Resource: [aws_vpc.main] (main.tf:5)
+     Violating Resource: [aws_vpc.main]  (main.tf:5)
+
+     Evidence:
+             | Resource VPC aws_vpc.main does not have any tags set
+
+
+   - Exposed Resource: [aws_subnet.private-subnet] (main.tf:38)
+     Violating Resource: [aws_subnet.private-subnet]  (main.tf:38)
+
+     Evidence:
+             | Resource Subnet aws_subnet.private-subnet does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [aws_subnet.public-subnet] (main.tf:10)
+     Violating Resource: [aws_subnet.public-subnet]  (main.tf:10)
+
+     Evidence:
+             | Resource Subnet aws_subnet.public-subnet does not have any tags set other than "Name"
+
+
+-----------------------------------------------
+Rule: Ensure VPC Endpoint for EC2 is enabled in all VPCs in use
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.test] (main.tf:136)
+     Violating Resource: [aws_vpc.main]  (main.tf:5)
+
+     Evidence:
+             | The service EC2 is in use in region us-east-1, but VPC aws_vpc.main
+             | is not configured to use a VPC Endpoint for EC2
+
+
+-----------------------------------------------
+Rule: Allow only private AMIs to be used
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.test] (main.tf:136)
+     Violating Resource: [ami-0ee02acd56a52998e]  (Not found in TF)
+
+     Evidence:
+             | The EC2 Instance aws_instance.test uses AMI ami-0ee02acd56a52998e, which is public
+
+
+-----------------------------------------------
+Rule: Ensure VPC Endpoint for DynamoDB is enabled in all VPCs
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_dynamodb_table.basic-dynamodb-table] (main.tf:143)
+     Violating Resource: [aws_vpc.main]  (main.tf:5)
+
+     Evidence:
+         The VPC
+             | aws_vpc.main in region us-east-1 is in use but not leveraging DYNAMODB Endpoint Gateway
+
+
+-----------------------------------------------
+Rule: Ensure IMDSv2 is used and IMDSv1 is disabled
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.test] (main.tf:136)
+     Violating Resource: [aws_instance.test]  (main.tf:136)
+
+     Evidence:
+             | The EC2 Instance aws_instance.test is allowing IMDSv1
+
+
+-----------------------------------------------
+Rule: Ensure all used default security groups of every VPC restrict all traffic
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_nat_gateway.private-subnet-nat-gw] (main.tf:47)
+     Violating Resource: [sg-pseudo-9cec852c-4af5-486a-8381-6ea7441e42f2]  (Not found in TF)
+
+     Evidence:
+         VPC aws_vpc.main
+             | aws_nat_gateway.private-subnet-nat-gw uses ENI eni-pseudo-c804b948-0419-467b-9ee3-c67b6dac732c
+             | The ENI is secured by default Security group sg-pseudo-9cec852c-4af5-486a-8381-6ea7441e42f2 and allows all traffic
+
+
+-----------------------------------------------
+
+Cloudrail has listed "pseudo" objects in the above results.
+These are resources that don't exist yet, or don't show in the Terraform input, but we know will be created in the real live environment.
+
+Cloudrail ran this assessment without any policies and so all rule violations show as warnings.
+You can increase a rule's enforcement level by creating a Policy in the Web UI and adding the rule to it.

@@ -1,26 +1,7 @@
 
-Check 1
+  Result 1
 
-  [AWS008][WARNING] Resource 'aws_security_group.free' defines a fully open ingress security group.
-  /src/main.tf:25
-
-
-      22 |     from_port = 0
-      23 |     protocol = "TCP"
-      24 |     to_port = 64000
-      25 |     cidr_blocks = ["0.0.0.0/0"]
-      26 |   }
-      27 | }
-      28 | 
-
-  Impact:     The port is exposed for ingress from the internet
-  Resolution: Set a more restrictive cidr range
-
-  See https://tfsec.dev/docs/aws/AWS008/ for more information. 
-
-Check 2
-
-  [AWS018][ERROR] Resource 'aws_security_group.free' should include a description for auditing purposes.
+  [aws-vpc-add-decription-to-security-group][[0m[97mLOW[39m[0m] Resource 'aws_security_group.free' should include a description for auditing purposes.
   /src/main.tf:18-27
 
 
@@ -41,26 +22,87 @@ Check 2
       29 | resource "aws_route_table" "rt" {
       30 |   vpc_id = aws_vpc.external.id
 
+  Legacy ID:  AWS018
   Impact:     Descriptions provide context for the firewall rule reasons
-  Resolution: Add descriptions for all security groups anf rules
+  Resolution: Add descriptions for all security groups and rules
 
-  See https://tfsec.dev/docs/aws/AWS018/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/vpc/add-decription-to-security-group#aws/vpc 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule 
+  - https://www.cloudconformity.com/knowledge-base/aws/EC2/security-group-rules-description.html 
+
+  Result 2
+
+  [aws-vpc-no-public-ingress-sg][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'aws_security_group.free' defines a fully open ingress security group.
+  /src/main.tf:25
+
+
+      22 |     from_port = 0
+      23 |     protocol = "TCP"
+      24 |     to_port = 64000
+      25 |     cidr_blocks = ["0.0.0.0/0"]    list: ["0.0.0.0/0"]
+      26 |   }
+      27 | }
+      28 | 
+
+  Legacy ID:  AWS008
+  Impact:     The port is exposed for ingress from the internet
+  Resolution: Set a more restrictive cidr range
+
+  More Info:
+  - https://tfsec.dev/docs/aws/vpc/no-public-ingress-sg#aws/vpc 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
+
+  Result 3
+
+  [aws-neptune-enable-log-export][[0m[33mMEDIUM[39m[0m] Resource 'aws_neptune_cluster.encrypted_neptune_cluster' uses default value for enable_cloudwatch_logs_exports
+  /src/main.tf:66-74
+
+
+      63 |     aws_subnet.free_2.id]
+      64 | }
+      65 | 
+      66 | resource "aws_neptune_cluster" "encrypted_neptune_cluster" {
+      67 |   cluster_identifier  = "cloudrail-test-encrypted"
+      68 |   engine              = "neptune"
+      69 |   skip_final_snapshot = true
+      70 |   apply_immediately   = true
+      71 |   storage_encrypted   = true
+      72 |   neptune_subnet_group_name = aws_db_subnet_group.free.name
+      73 |   vpc_security_group_ids = [aws_security_group.free.id]
+      74 | }
+      75 | 
+      76 | resource "aws_neptune_cluster_instance" "neptune_instance" {
+      77 |   count              = 2
+
+  Impact:     Limited visibility of audit trail for changes to Neptune
+  Resolution: Enable export logs
+
+  More Info:
+  - https://tfsec.dev/docs/aws/neptune/enable-log-export#aws/neptune 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/neptune_cluster#enable_cloudwatch_logs_exports 
 
   times
   ------------------------------------------
-  disk i/o             21.5148ms
-  parsing HCL          28.1µs
-  evaluating values    515.8µs
-  running checks       3.8646ms
+  disk i/o             51.049ms
+  parsing HCL          623.209µs
+  evaluating values    6.856874ms
+  running checks       31.92775ms
 
   counts
   ------------------------------------------
   files loaded         1
   blocks               12
-  evaluated blocks     12
   modules              0
-  module blocks        0
-  ignored checks       0
 
-2 potential problems detected.
+  results
+  ------------------------------------------
+  critical             1
+  high                 0
+  medium               1
+  low                  1
+  ignored              0
+
+  3 potential problems detected.
 

@@ -6,14 +6,14 @@
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.135 
-Update available 2.0.135 -> 2.0.136
+By bridgecrew.io | version: 2.0.358 
+Update available 2.0.358 -> 2.0.359
 Run pip3 install -U checkov to update 
 
 
 terraform scan results:
 
-Passed checks: 11, Failed checks: 6, Skipped checks: 0
+Passed checks: 10, Failed checks: 5, Skipped checks: 0
 
 Check: CKV_AWS_21: "Ensure all data stored in the S3 bucket have versioning enabled"
 	FAILED for resource: aws_s3_bucket.cloudrail
@@ -30,16 +30,6 @@ Check: CKV_AWS_144: "Ensure that S3 bucket has cross-region replication enabled"
 	FAILED for resource: aws_s3_bucket.cloudrail
 	File: /main.tf:5-8
 	Guide: https://docs.bridgecrew.io/docs/ensure-that-s3-bucket-has-cross-region-replication-enabled
-
-		5 | resource "aws_s3_bucket" "cloudrail" {
-		6 |   bucket = "cloudrail-non-encrypted-czx7zxchs"
-		7 |   acl    = "private"
-		8 | }
-
-
-Check: CKV_AWS_52: "Ensure S3 bucket has MFA delete enabled"
-	FAILED for resource: aws_s3_bucket.cloudrail
-	File: /main.tf:5-8
 
 		5 | resource "aws_s3_bucket" "cloudrail" {
 		6 |   bucket = "cloudrail-non-encrypted-czx7zxchs"

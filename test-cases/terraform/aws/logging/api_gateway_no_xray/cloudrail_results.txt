@@ -22,21 +22,32 @@ Rule: Ensure API Gateway has X-Ray tracing enabled
 
 
 -----------------------------------------------
+Rule: Ensure API Gateway methods use authentication
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_api_gateway_rest_api.api_gw] (main.tf:5)
+     Violating Resource: [aws_api_gateway_method.api_gw_method]  (main.tf:22)
+
+     Evidence:
+             | The API Gateway aws_api_gateway_rest_api.api_gw is not requiring authorization for the method aws_api_gateway_method.api_gw_method
+
+
+-----------------------------------------------
 Rule: Ensure all resources that can be tagged have at least one tag
  - 2 Resources Exposed:
 -----------------------------------------------
-   - Exposed Resource: [aws_api_gateway_stage.api_gw_stage] (main.tf:44)
-     Violating Resource: [aws_api_gateway_stage.api_gw_stage]  (main.tf:44)
-
-     Evidence:
-             | Resource API stage aws_api_gateway_stage.api_gw_stage does not have any tags set
-
-
    - Exposed Resource: [aws_api_gateway_rest_api.api_gw] (main.tf:5)
      Violating Resource: [aws_api_gateway_rest_api.api_gw]  (main.tf:5)
 
      Evidence:
              | Resource API Gateway aws_api_gateway_rest_api.api_gw does not have any tags set
+
+
+   - Exposed Resource: [aws_api_gateway_stage.api_gw_stage] (main.tf:44)
+     Violating Resource: [aws_api_gateway_stage.api_gw_stage]  (main.tf:44)
+
+     Evidence:
+             | Resource API stage aws_api_gateway_stage.api_gw_stage does not have any tags set
 
 
 -----------------------------------------------

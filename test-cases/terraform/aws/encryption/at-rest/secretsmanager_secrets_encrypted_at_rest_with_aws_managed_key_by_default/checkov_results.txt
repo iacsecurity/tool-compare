@@ -6,8 +6,8 @@
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.135 
-Update available 2.0.135 -> 2.0.136
+By bridgecrew.io | version: 2.0.358 
+Update available 2.0.358 -> 2.0.359
 Run pip3 install -U checkov to update 
 
 
@@ -18,6 +18,7 @@ Passed checks: 1, Failed checks: 1, Skipped checks: 0
 Check: CKV_AWS_149: "Ensure that Secrets Manager secret is encrypted using KMS"
 	FAILED for resource: aws_secretsmanager_secret.test
 	File: /main.tf:5-7
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-secrets-manager-secret-is-encrypted-using-kms
 
 		5 | resource "aws_secretsmanager_secret" "test" {
 		6 |   name = "test-cloudrail"

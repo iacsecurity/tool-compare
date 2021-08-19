@@ -1,7 +1,7 @@
 
-Check 1
+  Result 1
 
-  [AWS095][WARNING] Resource 'aws_secretsmanager_secret.not_secure_policy' does not use CMK
+  [aws-ssm-secret-use-customer-key][[0m[97mLOW[39m[0m] Resource 'aws_secretsmanager_secret.not_secure_policy' does not use CMK
   /src/main.tf:5-7
 
 
@@ -15,26 +15,35 @@ Check 1
        9 | resource "aws_secretsmanager_secret_policy" "example" {
       10 |   secret_arn = aws_secretsmanager_secret.not_secure_policy.arn
 
+  Legacy ID:  AWS095
   Impact:     Using AWS managed keys reduces the flexibility and control over the encryption key
   Resolution: Use customer managed keys
 
-  See https://tfsec.dev/docs/aws/AWS095/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/ssm/secret-use-customer-key#aws/ssm 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/secretsmanager_secret#kms_key_id 
+  - https://docs.aws.amazon.com/kms/latest/developerguide/services-secrets-manager.html#asm-encrypt 
 
   times
   ------------------------------------------
-  disk i/o             37.9531ms
-  parsing HCL          24.7µs
-  evaluating values    281.2µs
-  running checks       3.4412ms
+  disk i/o             57.109209ms
+  parsing HCL          527.542µs
+  evaluating values    3.314417ms
+  running checks       21.842208ms
 
   counts
   ------------------------------------------
   files loaded         1
   blocks               3
-  evaluated blocks     3
   modules              0
-  module blocks        0
-  ignored checks       0
 
-1 potential problems detected.
+  results
+  ------------------------------------------
+  critical             0
+  high                 0
+  medium               0
+  low                  1
+  ignored              0
+
+  1 potential problems detected.
 

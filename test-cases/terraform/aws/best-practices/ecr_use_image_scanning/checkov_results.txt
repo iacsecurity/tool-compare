@@ -6,8 +6,8 @@
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.135 
-Update available 2.0.135 -> 2.0.136
+By bridgecrew.io | version: 2.0.358 
+Update available 2.0.358 -> 2.0.359
 Run pip3 install -U checkov to update 
 
 
@@ -30,7 +30,7 @@ Check: CKV_AWS_51: "Ensure ECR Image Tags are immutable"
 		8 | }
 
 
-Check: CKV_AWS_33: "Ensure ECR image scanning on push is enabled"
+Check: CKV_AWS_163: "Ensure ECR image scanning on push is enabled"
 	FAILED for resource: aws_ecr_repository.foo
 	File: /main.tf:1-8
 	Guide: https://docs.bridgecrew.io/docs/general_8

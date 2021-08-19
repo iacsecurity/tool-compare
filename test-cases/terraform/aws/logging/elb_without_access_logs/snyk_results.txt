@@ -4,7 +4,7 @@ Failed to run the process ...
     "isPrivate": true,
     "isLicensesEnabled": false,
     "ignoreSettings": null,
-    "org": "y",
+    "org": "yi2020",
     "projectId": "",
     "policy": ""
   },
@@ -13,28 +13,31 @@ Failed to run the process ...
   "dependencyCount": 0,
   "licensesPolicy": null,
   "ignoreSettings": null,
-  "targetFile": "/project/main.tf",
+  "targetFile": "main.tf",
   "projectName": "project",
-  "org": "y",
+  "org": "yi2020",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
   "packageManager": "terraformconfig",
   "path": "/project",
   "projectType": "terraformconfig",
+  "ok": false,
   "infrastructureAsCodeIssues": [
     {
+      "severity": "low",
       "resolve": "Set `internal` attribute to `true`",
       "id": "SNYK-CC-TF-48",
       "impact": "Increases attack vector reachability",
+      "msg": "resource.aws_elb[test].internal",
+      "remediation": {
+        "cloudformation": "Set `Properties.Scheme` attribute to `internal`",
+        "terraform": "Set `internal` attribute to `true`"
+      },
       "subType": "Elastic Load Balancing (ELB Classic)",
-      "policyEngineType": "opa",
+      "issue": "Load balancer is internet facing",
       "publicId": "SNYK-CC-TF-48",
       "title": "Load balancer is internet facing",
-      "severity": "low",
-      "msg": "resource.aws_elb[test].internal",
-      "issue": "Load balancer is internet facing",
-      "type": "terraform",
       "references": [
         "https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-internet-facing-load-balancers.html"
       ],
@@ -45,6 +48,7 @@ Failed to run the process ...
         "resolve": "Set `internal` attribute to `true`"
       },
       "lineNumber": 1,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-48",
       "path": [
         "resource",
         "aws_elb[test]",

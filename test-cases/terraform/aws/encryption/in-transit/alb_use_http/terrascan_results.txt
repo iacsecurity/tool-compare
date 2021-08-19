@@ -2,112 +2,97 @@
 
 Violation Details -
     
-	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
+	Description    :	Ensure that detailed monitoring is enabled for EC2 instances.
 	File           :	main.tf
-	Plan Root      :	./
-	Line           :	82
-	Severity       :	MEDIUM
-	
-	-----------------------------------------------------------------------
-	
-	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
-	File           :	main.tf
+	Module Name    :	root
 	Plan Root      :	./
 	Line           :	95
-	Severity       :	MEDIUM
+	Severity       :	HIGH
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
+	Description    :	Ensure that detailed monitoring is enabled for EC2 instances.
 	File           :	main.tf
+	Module Name    :	root
 	Plan Root      :	./
 	Line           :	108
-	Severity       :	MEDIUM
+	Severity       :	HIGH
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	Ensure that EC2 is EBS optimized
+	Description    :	Ensure that detailed monitoring is enabled for EC2 instances.
 	File           :	main.tf
+	Module Name    :	root
 	Plan Root      :	./
 	Line           :	82
-	Severity       :	MEDIUM
+	Severity       :	HIGH
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	Ensure that EC2 is EBS optimized
+	Description    :	Ensure VPC flow logging is enabled in all VPCs
 	File           :	main.tf
+	Module Name    :	root
 	Plan Root      :	./
-	Line           :	95
-	Severity       :	MEDIUM
-	
-	-----------------------------------------------------------------------
-	
-	Description    :	Ensure that EC2 is EBS optimized
-	File           :	main.tf
-	Plan Root      :	./
-	Line           :	108
-	Severity       :	MEDIUM
-	
-	-----------------------------------------------------------------------
-	
-	Description    :	Ensure there is a one listener configured on HTTPs or with a port 443
-	File           :	main.tf
-	Plan Root      :	./
-	Line           :	67
-	Severity       :	MEDIUM
+	Line           :	26
+	Severity       :	LOW
 	
 	-----------------------------------------------------------------------
 	
 	Description    :	Ensure Target Group use HTTPs to ensure end to end encryption
 	File           :	main.tf
+	Module Name    :	root
 	Plan Root      :	./
 	Line           :	56
 	Severity       :	MEDIUM
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	Ensure VPC flow logging is enabled in all VPCs
+	Description    :	Ensure there is a listener configured on HTTPs or with a port 443
 	File           :	main.tf
+	Module Name    :	root
 	Plan Root      :	./
-	Line           :	26
+	Line           :	67
 	Severity       :	MEDIUM
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	Ensure that detailed monitoring is enabled for EC2 instances.
+	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
 	File           :	main.tf
-	Plan Root      :	./
-	Line           :	82
-	Severity       :	HIGH
-	
-	-----------------------------------------------------------------------
-	
-	Description    :	Ensure that detailed monitoring is enabled for EC2 instances.
-	File           :	main.tf
+	Module Name    :	root
 	Plan Root      :	./
 	Line           :	95
-	Severity       :	HIGH
+	Severity       :	MEDIUM
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	Ensure that detailed monitoring is enabled for EC2 instances.
+	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
 	File           :	main.tf
+	Module Name    :	root
 	Plan Root      :	./
 	Line           :	108
-	Severity       :	HIGH
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	82
+	Severity       :	MEDIUM
 	
 	-----------------------------------------------------------------------
 	
 
 Scan Summary -
 
-	File/Folder         :	tool-compare/test-cases/terraform/aws/encryption/in-transit/alb_use_http
+	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-06-01 05:54:51.012515 +0000 UTC
-	Policies Validated  :	612
-	Violated Policies   :	12
-	Low                 :	0
-	Medium              :	9
+	Scanned At          :	2021-08-18 16:17:56.732264627 +0000 UTC
+	Policies Validated  :	9
+	Violated Policies   :	9
+	Low                 :	1
+	Medium              :	5
 	High                :	3
 	
 

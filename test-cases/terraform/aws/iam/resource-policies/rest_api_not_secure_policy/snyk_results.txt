@@ -3,10 +3,10 @@ Failed to run the process ...
   "meta": {
     "isPrivate": true,
     "isLicensesEnabled": false,
-    "policy": "",
     "ignoreSettings": null,
+    "org": "yi2020",
     "projectId": "",
-    "org": "y"
+    "policy": ""
   },
   "filesystemPolicy": false,
   "vulnerabilities": [],
@@ -15,58 +15,100 @@ Failed to run the process ...
   "ignoreSettings": null,
   "targetFile": "main.tf",
   "projectName": "project",
-  "org": "y",
+  "org": "yi2020",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
   "packageManager": "terraformconfig",
   "path": "/project",
   "projectType": "terraformconfig",
+  "ok": false,
   "infrastructureAsCodeIssues": [
     {
-      "id": "SNYK-CC-TF-99",
-      "title": "API Gateway allows anonymous access",
-      "type": "terraform",
+      "severity": "medium",
+      "resolve": "Set `Principal` attribute in the policy to specific entities for example `arn:aws:iam::123456789012:user/JohnDoe`",
+      "id": "SNYK-CC-AWS-453",
+      "impact": "Using wild card will grant unnecessary access to any IAM entity in the account",
+      "msg": "resource.aws_api_gateway_rest_api_policy[test].policy",
+      "remediation": {
+        "cloudformation": "Set `Principal` attribute in the policy to specific entities for example `arn:aws:iam::123456789012:user/JohnDoe`",
+        "terraform": "Set `Principal` attribute in the policy to specific entities for example `arn:aws:iam::123456789012:user/JohnDoe`"
+      },
       "subType": "API Gateway (REST APIs)",
-      "severity": "high",
+      "issue": "Wildcard principal has been specified in rest API access policy",
+      "publicId": "SNYK-CC-AWS-453",
+      "title": "Wildcard principal in rest api access policy",
+      "references": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#grant-least-privilege",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_rest_api",
+        "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-apigateway-restapi.html#cfn-apigateway-restapi-policy"
+      ],
       "isIgnored": false,
       "iacDescription": {
-        "issue": "API gateway will accept http methods without authorization header",
-        "impact": "Anyone could potentially access resources behind the gateway",
-        "resolve": "Set `authorization` attribute to value other than `NONE`"
+        "issue": "Wildcard principal has been specified in rest API access policy",
+        "impact": "Using wild card will grant unnecessary access to any IAM entity in the account",
+        "resolve": "Set `Principal` attribute in the policy to specific entities for example `arn:aws:iam::123456789012:user/JohnDoe`"
       },
-      "lineNumber": 54,
+      "lineNumber": 15,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-453",
       "path": [
         "resource",
-        "aws_api_gateway_method[api_gw_method]",
-        "authorization"
+        "aws_api_gateway_rest_api_policy[test]",
+        "policy"
       ]
     },
     {
-      "id": "SNYK-CC-TF-138",
-      "title": "API Gateway access logging disabled",
-      "type": "terraform",
+      "severity": "medium",
+      "resolve": "Remove `*` values from `Action` in policy document. Add specific permissions only for example `execute-api:Invoke`",
+      "id": "SNYK-CC-AWS-452",
+      "impact": "Granting permission to perform any action is against 'least privilege' principle",
+      "msg": "resource.aws_api_gateway_rest_api_policy[test].policy",
+      "remediation": {
+        "cloudformation": "Remove `*` values from `Action` in policy document. Add specific permissions only for example `execute-api:Invoke`",
+        "terraform": "Remove `*` values from `Action` in policy document. Add specific permissions only for example `execute-api:Invoke`"
+      },
       "subType": "API Gateway (REST APIs)",
+      "issue": "Wildcard action has been specified in access policy",
+      "publicId": "SNYK-CC-AWS-452",
+      "title": "Wildcard action in api gateway access policy",
+      "references": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#grant-least-privilege",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_rest_api",
+        "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-apigateway-restapi.html#cfn-apigateway-restapi-policy"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Wildcard action has been specified in access policy",
+        "impact": "Granting permission to perform any action is against 'least privilege' principle",
+        "resolve": "Remove `*` values from `Action` in policy document. Add specific permissions only for example `execute-api:Invoke`"
+      },
+      "lineNumber": 15,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-452",
+      "path": [
+        "resource",
+        "aws_api_gateway_rest_api_policy[test]",
+        "policy"
+      ]
+    },
+    {
       "severity": "low",
-      "isIgnored": false,
-      "iacDescription": {
-        "issue": "Amazon Api Gateway access logging is not enabled",
-        "impact": "Audit records may not be available during investigation",
-        "resolve": "Set `access_log_settings` attribute"
-      },
-      "lineNumber": 72,
-      "path": [
-        "resource",
-        "aws_api_gateway_stage[api_gw_stage]",
-        "access_log_settings"
-      ]
-    },
-    {
+      "resolve": "Set `xray_tracing_enabled` attribute to `true`",
       "id": "SNYK-CC-TF-129",
-      "title": "API Gateway X-Ray tracing disabled",
-      "type": "terraform",
+      "impact": "Traces will not be collected for this api gateway, which can impede incident management",
+      "msg": "resource.aws_api_gateway_stage[api_gw_stage].xray_tracing_enabled",
+      "remediation": {
+        "cloudformation": "Set `Properties.TracingEnabled` attribute to `true`",
+        "terraform": "Set `xray_tracing_enabled` attribute to `true`"
+      },
       "subType": "API Gateway (REST APIs)",
-      "severity": "low",
+      "issue": "X-Ray tracing is not enabled for this api gateway stage",
+      "publicId": "SNYK-CC-TF-129",
+      "title": "API Gateway X-Ray tracing disabled",
+      "references": [
+        "https://docs.aws.amazon.com/xray/latest/devguide/xray-services-apigateway.html",
+        "https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-enabling-xray.html",
+        "https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-understanding-xray-traces.html"
+      ],
       "isIgnored": false,
       "iacDescription": {
         "issue": "X-Ray tracing is not enabled for this api gateway stage",
@@ -74,10 +116,74 @@ Failed to run the process ...
         "resolve": "Set `xray_tracing_enabled` attribute to `true`"
       },
       "lineNumber": 72,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-129",
       "path": [
         "resource",
         "aws_api_gateway_stage[api_gw_stage]",
         "xray_tracing_enabled"
+      ]
+    },
+    {
+      "severity": "high",
+      "resolve": "Set `authorization` attribute to value other than `NONE`",
+      "id": "SNYK-CC-TF-99",
+      "impact": "Anyone could potentially access resources behind the gateway",
+      "msg": "resource.aws_api_gateway_method[api_gw_method].authorization",
+      "remediation": {
+        "cloudformation": "Set `Properties.AuthorizationType` attribute to value other than `NONE`",
+        "terraform": "Set `authorization` attribute to value other than `NONE`"
+      },
+      "subType": "API Gateway (REST APIs)",
+      "issue": "API gateway will accept http methods without authorization header",
+      "publicId": "SNYK-CC-TF-99",
+      "title": "API Gateway allows anonymous access",
+      "references": [
+        "https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-method-settings-method-request.html",
+        "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-apigateway-method.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "API gateway will accept http methods without authorization header",
+        "impact": "Anyone could potentially access resources behind the gateway",
+        "resolve": "Set `authorization` attribute to value other than `NONE`"
+      },
+      "lineNumber": 54,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-99",
+      "path": [
+        "resource",
+        "aws_api_gateway_method[api_gw_method]",
+        "authorization"
+      ]
+    },
+    {
+      "severity": "low",
+      "resolve": "Set `access_log_settings` attribute",
+      "id": "SNYK-CC-TF-138",
+      "impact": "Audit records may not be available during investigation",
+      "msg": "resource.aws_api_gateway_stage[api_gw_stage].access_log_settings",
+      "remediation": {
+        "cloudformation": "Set `Properties.AccessLogSetting.DestinationArn` attribute",
+        "terraform": "Set `access_log_settings` attribute"
+      },
+      "subType": "API Gateway (REST APIs)",
+      "issue": "Amazon Api Gateway access logging is not enabled",
+      "publicId": "SNYK-CC-TF-138",
+      "title": "API Gateway access logging disabled",
+      "references": [
+        "https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-logging.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Amazon Api Gateway access logging is not enabled",
+        "impact": "Audit records may not be available during investigation",
+        "resolve": "Set `access_log_settings` attribute"
+      },
+      "lineNumber": 72,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-138",
+      "path": [
+        "resource",
+        "aws_api_gateway_stage[api_gw_stage]",
+        "access_log_settings"
       ]
     }
   ]

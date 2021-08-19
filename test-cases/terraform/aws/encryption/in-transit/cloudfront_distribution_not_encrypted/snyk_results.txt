@@ -3,10 +3,10 @@ Failed to run the process ...
   "meta": {
     "isPrivate": true,
     "isLicensesEnabled": false,
-    "policy": "",
     "ignoreSettings": null,
+    "org": "yi2020",
     "projectId": "",
-    "org": "y"
+    "policy": ""
   },
   "filesystemPolicy": false,
   "vulnerabilities": [],
@@ -15,44 +15,73 @@ Failed to run the process ...
   "ignoreSettings": null,
   "targetFile": "main.tf",
   "projectName": "project",
-  "org": "y",
+  "org": "yi2020",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
   "packageManager": "terraformconfig",
   "path": "/project",
   "projectType": "terraformconfig",
+  "ok": false,
   "infrastructureAsCodeIssues": [
     {
-      "id": "SNYK-CC-TF-75",
-      "title": "Cloudfront distribution without WAF",
-      "type": "terraform",
-      "subType": "CloudFront",
       "severity": "low",
+      "resolve": "Set `versioning.enabled` attribute to `true`",
+      "id": "SNYK-CC-TF-124",
+      "impact": "Changes or deletion of objects will not be reversible",
+      "msg": "resource.aws_s3_bucket[cdn-content].versioning.enabled",
+      "remediation": {
+        "cloudformation": "Set `Properties.VersioningConfiguration.Status` attribute to `Enabled`",
+        "terraform": "Set `versioning.enabled` attribute to `true`"
+      },
+      "subType": "S3",
+      "issue": "S3 bucket versioning is disabled",
+      "publicId": "SNYK-CC-TF-124",
+      "title": "S3 bucket versioning disabled",
+      "references": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/dev/Versioning.html"
+      ],
       "isIgnored": false,
       "iacDescription": {
-        "issue": "The AWS WAF is not in front of cloudfront distribution",
-        "impact": "The WAF service will not protect the application from common web based attacks such as SQL injections",
-        "resolve": "Set `web_acl_id` attribute to existing AWS WAF acl ARN"
+        "issue": "S3 bucket versioning is disabled",
+        "impact": "Changes or deletion of objects will not be reversible",
+        "resolve": "Set `versioning.enabled` attribute to `true`"
       },
+      "lineNumber": -1,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-124",
       "path": [
         "resource",
-        "aws_cloudfront_distribution[s3_distribution]",
-        "web_acl_id"
+        "aws_s3_bucket[cdn-content]",
+        "versioning",
+        "enabled"
       ]
     },
     {
-      "id": "SNYK-CC-TF-57",
-      "title": "Cloudfront distribution does not enforce HTTPS",
-      "type": "terraform",
-      "subType": "CloudFront",
       "severity": "medium",
+      "resolve": "Set `default_cache_behavior.viewer_protocol_policy` attribute to `redirect-to-https` or `https-only`",
+      "id": "SNYK-CC-TF-57",
+      "impact": "The content could be intercepted and manipulated in transit",
+      "msg": "resource.aws_cloudfront_distribution[s3_distribution].default_cache_behavior.viewer_protocol_policy",
+      "remediation": {
+        "cloudformation": "Set `Properties.DistributionConfig.ViewerProtocolPolicy` attribute to `redirect-to-https` or `https-only`",
+        "terraform": "Set `default_cache_behavior.viewer_protocol_policy` attribute to `redirect-to-https` or `https-only`"
+      },
+      "subType": "CloudFront",
+      "issue": "Cloudfront distribution does not enforce HTTPS",
+      "publicId": "SNYK-CC-TF-57",
+      "title": "Cloudfront distribution does not enforce HTTPS",
+      "references": [
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/distribution-web-values-specify.html#DownloadDistValuesViewerProtocolPolicy",
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-https-viewers-to-cloudfront.html"
+      ],
       "isIgnored": false,
       "iacDescription": {
         "issue": "Cloudfront distribution does not enforce HTTPS",
         "impact": "The content could be intercepted and manipulated in transit",
-        "resolve": "Set `default_cache_behavior.viewer_protocol_policy` attribute to `redirect-to-https`"
+        "resolve": "Set `default_cache_behavior.viewer_protocol_policy` attribute to `redirect-to-https` or `https-only`"
       },
+      "lineNumber": -1,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-57",
       "path": [
         "resource",
         "aws_cloudfront_distribution[s3_distribution]",
@@ -61,17 +90,30 @@ Failed to run the process ...
       ]
     },
     {
-      "id": "SNYK-CC-TF-45",
-      "title": "S3 server access logging is disabled",
-      "type": "terraform",
-      "subType": "S3",
       "severity": "low",
+      "resolve": "Add `logging` block attribute",
+      "id": "SNYK-CC-TF-45",
+      "impact": "There will be no audit trail of access to s3 objects",
+      "msg": "input.resource.aws_s3_bucket[cdn-content].logging",
+      "remediation": {
+        "cloudformation": "Set `Properties.LoggingConfiguration` attribute",
+        "terraform": "Add `logging` block attribute"
+      },
+      "subType": "S3",
+      "issue": "The s3 access logs will not be collected",
+      "publicId": "SNYK-CC-TF-45",
+      "title": "S3 server access logging is disabled",
+      "references": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerLogs.html"
+      ],
       "isIgnored": false,
       "iacDescription": {
         "issue": "The s3 access logs will not be collected",
         "impact": "There will be no audit trail of access to s3 objects",
         "resolve": "Add `logging` block attribute"
       },
+      "lineNumber": -1,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-45",
       "path": [
         "input",
         "resource",
@@ -80,17 +122,28 @@ Failed to run the process ...
       ]
     },
     {
-      "id": "SNYK-CC-TF-4",
-      "title": "Non-encrypted S3 Bucket",
-      "type": "terraform",
-      "subType": "S3",
       "severity": "medium",
+      "resolve": "Set `server_side_encryption_configuration` block attribute",
+      "id": "SNYK-CC-TF-4",
+      "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+      "msg": "input.resource.aws_s3_bucket[cdn-content]",
+      "remediation": {
+        "cloudformation": "Set `BucketEncryption` attribute",
+        "terraform": "Set `server_side_encryption_configuration` block attribute"
+      },
+      "subType": "S3",
+      "issue": "That by default S3 buckets do not encrypt the objects that are stored.",
+      "publicId": "SNYK-CC-TF-4",
+      "title": "Non-encrypted S3 Bucket",
+      "references": [],
       "isIgnored": false,
       "iacDescription": {
         "issue": "That by default S3 buckets do not encrypt the objects that are stored.",
         "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
-        "resolve": "Adding the `server_side_encryption_configuration` block and associated attributes to configure your encryption key and algorithm."
+        "resolve": "Set `server_side_encryption_configuration` block attribute"
       },
+      "lineNumber": -1,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-4",
       "path": [
         "input",
         "resource",
@@ -98,17 +151,30 @@ Failed to run the process ...
       ]
     },
     {
-      "id": "SNYK-CC-TF-142",
-      "title": "CloudFront access logging disabled",
-      "type": "terraform",
-      "subType": "CloudFront",
       "severity": "low",
+      "resolve": "Set `logging_config` attribute",
+      "id": "SNYK-CC-TF-142",
+      "impact": "Audit records may not be available during investigation",
+      "msg": "resource.aws_cloudfront_distribution[s3_distribution].logging_config",
+      "remediation": {
+        "cloudformation": "Set `Properties.DistributionConfig.Logging` attribute",
+        "terraform": "Set `logging_config` attribute"
+      },
+      "subType": "CloudFront",
+      "issue": "Amazon CloudFront distribution access logging is not enabled",
+      "publicId": "SNYK-CC-TF-142",
+      "title": "CloudFront access logging disabled",
+      "references": [
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/logging_using_cloudtrail.html"
+      ],
       "isIgnored": false,
       "iacDescription": {
         "issue": "Amazon CloudFront distribution access logging is not enabled",
         "impact": "Audit records may not be available during investigation",
         "resolve": "Set `logging_config` attribute"
       },
+      "lineNumber": -1,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-142",
       "path": [
         "resource",
         "aws_cloudfront_distribution[s3_distribution]",
@@ -116,41 +182,64 @@ Failed to run the process ...
       ]
     },
     {
-      "id": "SNYK-CC-TF-127",
-      "title": "S3 bucket MFA delete control disabled",
-      "type": "terraform",
-      "subType": "S3",
       "severity": "low",
+      "resolve": "Set `web_acl_id` attribute to existing AWS WAF acl ARN",
+      "id": "SNYK-CC-TF-75",
+      "impact": "The WAF service will not protect the application from common web based attacks such as SQL injections",
+      "msg": "resource.aws_cloudfront_distribution[s3_distribution].web_acl_id",
+      "remediation": {
+        "cloudformation": "Set `Properties.DistributionConfig.WebACLId` attribute to existing AWS WAF acl ARN",
+        "terraform": "Set `web_acl_id` attribute to existing AWS WAF acl ARN"
+      },
+      "subType": "CloudFront",
+      "issue": "The AWS WAF is not in front of cloudfront distribution",
+      "publicId": "SNYK-CC-TF-75",
+      "title": "Cloudfront distribution without WAF",
+      "references": [
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/distribution-web-awswaf.html",
+        "https://docs.aws.amazon.com/waf/latest/developerguide/web-acl.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "The AWS WAF is not in front of cloudfront distribution",
+        "impact": "The WAF service will not protect the application from common web based attacks such as SQL injections",
+        "resolve": "Set `web_acl_id` attribute to existing AWS WAF acl ARN"
+      },
+      "lineNumber": -1,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-75",
+      "path": [
+        "resource",
+        "aws_cloudfront_distribution[s3_distribution]",
+        "web_acl_id"
+      ]
+    },
+    {
+      "severity": "low",
+      "resolve": "Set `versioning.mfa_delete` attribute to `true`",
+      "id": "SNYK-CC-TF-127",
+      "impact": "Object could be deleted without stronger MFA authorization",
+      "msg": "resource.aws_s3_bucket[cdn-content].versioning.mfa_delete",
+      "subType": "S3",
+      "issue": "S3 bucket will not enforce MFA login on delete requests",
+      "publicId": "SNYK-CC-TF-127",
+      "title": "S3 bucket MFA delete control disabled",
+      "references": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/dev/Versioning.html",
+        "https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingMFADelete.html"
+      ],
       "isIgnored": false,
       "iacDescription": {
         "issue": "S3 bucket will not enforce MFA login on delete requests",
         "impact": "Object could be deleted without stronger MFA authorization",
         "resolve": "Set `versioning.mfa_delete` attribute to `true`"
       },
+      "lineNumber": -1,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-127",
       "path": [
         "resource",
         "aws_s3_bucket[cdn-content]",
         "versioning",
         "mfa_delete"
-      ]
-    },
-    {
-      "id": "SNYK-CC-TF-124",
-      "title": "S3 bucket versioning disabled",
-      "type": "terraform",
-      "subType": "S3",
-      "severity": "low",
-      "isIgnored": false,
-      "iacDescription": {
-        "issue": "S3 bucket versioning is disabled",
-        "impact": "Changes or deletion of objects will not be reversible",
-        "resolve": "Set `versioning.enabled` attribute to `true`"
-      },
-      "path": [
-        "resource",
-        "aws_s3_bucket[cdn-content]",
-        "versioning",
-        "enabled"
       ]
     }
   ]

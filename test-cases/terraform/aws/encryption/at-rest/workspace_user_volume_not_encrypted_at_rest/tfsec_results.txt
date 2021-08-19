@@ -1,96 +1,79 @@
 
-Check 1
+  Result 1
 
-  [GEN003][WARNING] Block 'aws_directory_service_directory.test' includes a potentially sensitive attribute which is defined within the project.
+  [aws-workspace-enable-disk-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_workspaces_workspace.test' should have user volume encryption enabled
+  /src/main.tf:76-88
+
+
+      73 |   policy_arn = "arn:aws:iam::aws:policy/AmazonWorkSpacesSelfServiceAccess"
+      74 | }
+      75 | 
+      76 | resource "aws_workspaces_workspace" "test" {
+      77 |   directory_id = aws_workspaces_directory.test.id
+      78 |   bundle_id    = data.aws_workspaces_bundle.value_windows_10.id
+      79 |   user_name    = "Administrator"
+      80 | 
+      81 |   workspace_properties {
+      82 |     compute_type_name                         = "VALUE"
+      83 |     user_volume_size_gib                      = 10
+      84 |     root_volume_size_gib                      = 80
+      85 |     running_mode                              = "AUTO_STOP"
+      86 |     running_mode_auto_stop_timeout_in_minutes = 60
+      87 |   }
+      88 | }
+      89 | 
+
+  Legacy ID:  AWS084
+  Impact:     Data can be freely read if compromised
+  Resolution: Root and user volume encryption should be enabled
+
+  More Info:
+  - https://tfsec.dev/docs/aws/workspace/enable-disk-encryption#aws/workspace 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/workspaces_workspace#root_volume_encryption_enabled 
+  - https://docs.aws.amazon.com/workspaces/latest/adminguide/encrypt-workspaces.html 
+
+  Result 2
+
+  [general-secrets-sensitive-in-attribute][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Block 'aws_directory_service_directory.test' includes a potentially sensitive attribute which is defined within the project.
   /src/main.tf:34
 
 
       31 | 
       32 | resource "aws_directory_service_directory" "test" {
       33 |   name     = "corp.notexample.com"
-      34 |   password = "SuperSecretPassw0rd"
+      34 |   password = "SuperSecretPassw0rd"    string: "SuperSecretPassw0rd"
       35 |   size     = "Small"
       36 | 
       37 |   vpc_settings {
 
+  Legacy ID:  GEN003
   Impact:     Block attribute could be leaking secrets
   Resolution: Don't include sensitive data in blocks
 
-  See https://tfsec.dev/docs/general/GEN003/ for more information. 
-
-Check 2
-
-  [AWS084][ERROR] Resource 'aws_workspaces_workspace.test' should have root volume encryption enables
-  /src/main.tf:76-88
-
-
-      73 |   policy_arn = "arn:aws:iam::aws:policy/AmazonWorkSpacesSelfServiceAccess"
-      74 | }
-      75 | 
-      76 | resource "aws_workspaces_workspace" "test" {
-      77 |   directory_id = aws_workspaces_directory.test.id
-      78 |   bundle_id    = data.aws_workspaces_bundle.value_windows_10.id
-      79 |   user_name    = "Administrator"
-      80 | 
-      81 |   workspace_properties {
-      82 |     compute_type_name                         = "VALUE"
-      83 |     user_volume_size_gib                      = 10
-      84 |     root_volume_size_gib                      = 80
-      85 |     running_mode                              = "AUTO_STOP"
-      86 |     running_mode_auto_stop_timeout_in_minutes = 60
-      87 |   }
-      88 | }
-      89 | 
-
-  Impact:     Data can be freely read if compromised
-  Resolution: Root and user volume encryption should be enabled
-
-  See https://tfsec.dev/docs/aws/AWS084/ for more information. 
-
-Check 3
-
-  [AWS084][ERROR] Resource 'aws_workspaces_workspace.test' should have user volume encryption enables
-  /src/main.tf:76-88
-
-
-      73 |   policy_arn = "arn:aws:iam::aws:policy/AmazonWorkSpacesSelfServiceAccess"
-      74 | }
-      75 | 
-      76 | resource "aws_workspaces_workspace" "test" {
-      77 |   directory_id = aws_workspaces_directory.test.id
-      78 |   bundle_id    = data.aws_workspaces_bundle.value_windows_10.id
-      79 |   user_name    = "Administrator"
-      80 | 
-      81 |   workspace_properties {
-      82 |     compute_type_name                         = "VALUE"
-      83 |     user_volume_size_gib                      = 10
-      84 |     root_volume_size_gib                      = 80
-      85 |     running_mode                              = "AUTO_STOP"
-      86 |     running_mode_auto_stop_timeout_in_minutes = 60
-      87 |   }
-      88 | }
-      89 | 
-
-  Impact:     Data can be freely read if compromised
-  Resolution: Root and user volume encryption should be enabled
-
-  See https://tfsec.dev/docs/aws/AWS084/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/general/secrets/sensitive-in-attribute#general/secrets 
+  - https://www.terraform.io/docs/state/sensitive-data.html 
 
   times
   ------------------------------------------
-  disk i/o             34.449ms
-  parsing HCL          28.1µs
-  evaluating values    1.1615ms
-  running checks       9.143ms
+  disk i/o             45.802334ms
+  parsing HCL          571.833µs
+  evaluating values    5.164876ms
+  running checks       43.649292ms
 
   counts
   ------------------------------------------
   files loaded         1
   blocks               12
-  evaluated blocks     12
   modules              0
-  module blocks        0
-  ignored checks       0
 
-3 potential problems detected.
+  results
+  ------------------------------------------
+  critical             1
+  high                 1
+  medium               0
+  low                  0
+  ignored              0
+
+  2 potential problems detected.
 

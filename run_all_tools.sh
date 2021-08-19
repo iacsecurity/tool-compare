@@ -17,13 +17,13 @@ function run_checkov {
 # tfsec
 function run_tfsec {
   echo Now running tfsec on all cases
-  docker pull tfsec/tfsec:latest
-  docker run -t -v $PWD:/tf tfsec/tfsec --version >version_tfsec.txt
+  docker pull aquasec/tfsec:latest
+  docker run -t -v $PWD:/tf aquasec/tfsec --version >version_tfsec.txt
   find . -name "main.tf" -exec dirname {} \; | grep -v "\.terraform" | while read -r test_case; do
     echo $test_case
     ORG_PATH=$PWD
     cd $test_case
-    if [ ! -f tfsec_results.txt ]; then docker run --rm -v "$(pwd):/src" tfsec/tfsec /src --no-color | sed "s~$ORG_PATH~tool-compare~" >tfsec_results.txt; fi
+    if [ ! -f tfsec_results.txt ]; then docker run --rm -v "$(pwd):/src" aquasec/tfsec /src --no-color | sed "s~$ORG_PATH~tool-compare~" >tfsec_results.txt; fi
     cd $ORG_PATH
   done
 }
@@ -45,13 +45,14 @@ function run_kics {
 # Terrascan
 function run_terrascan {
   echo Now running Terrascan on all cases
-  brew install terrascan
-  terrascan version | awk '{print $NF}' >version_terrascan.txt
+
+  docker pull accurics/terrascan:latest
+  docker run --rm accurics/terrascan version | awk '{print $NF}' >version_terrascan.txt
   find . -name "main.tf" -exec dirname {} \; | grep -v "\.terraform" | while read -r test_case; do
     echo $test_case
     ORG_PATH=$PWD
     cd $test_case
-    if [ ! -f terrascan_results.txt ]; then terrascan scan | sed "s~$ORG_PATH~tool-compare~" >terrascan_results.txt; fi
+    if [ ! -f terrascan_results.txt ]; then docker run --rm -v "$(pwd):/iac" -w /iac accurics/terrascan scan | sed "s~$ORG_PATH~tool-compare~" >terrascan_results.txt; fi
     cd $ORG_PATH
   done
 }
@@ -71,7 +72,7 @@ function run_snyk {
     echo $test_case
     ORG_PATH=$PWD
     cd $test_case
-    if [ ! -f snyk_results.txt ]; then docker run --rm -v "$(pwd):/project" -e SNYK_TOKEN snyk/snyk-cli:docker iac test --experimental /project | sed "s~$ORG_PATH~tool-compare~" >snyk_results.txt; fi
+    if [ ! -f snyk_results.txt ]; then docker run --rm -v "$(pwd):/project" -e SNYK_TOKEN snyk/snyk-cli:docker iac test /project | sed "s~$ORG_PATH~tool-compare~" >snyk_results.txt; fi
     cd $ORG_PATH
   done
 }
@@ -91,7 +92,7 @@ function run_cloudrail {
     echo $test_case
     ORG_PATH=$PWD
     cd $test_case
-    if [ ! -f cloudrail_results.txt ]; then docker run --rm -v $PWD:/data -e CLOUDRAIL_API_KEY indeni/cloudrail-cli run --tf-plan plan.out --output-file cloudrail_results.txt --no-cloud-account --auto-approve -v; fi
+    if [ ! -f cloudrail_results.txt ]; then docker run --rm $IT_FLAG -u 0:0 -v $PWD:/data -v cloudrail:/indeni indeni/cloudrail-cli run --tf-plan plan.out --output-file cloudrail_results.txt --no-cloud-account --auto-approve -v; fi
     cd $ORG_PATH
   done
 }

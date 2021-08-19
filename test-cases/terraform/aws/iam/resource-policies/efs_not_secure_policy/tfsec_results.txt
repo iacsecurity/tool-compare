@@ -1,7 +1,7 @@
 
-Check 1
+  Result 1
 
-  [AWS048][ERROR] Resource 'aws_efs_file_system.not_secure' does not specify if encryption should be used.
+  [aws-efs-enable-at-rest-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_efs_file_system.not_secure' does not specify if encryption should be used.
   /src/main.tf:5-11
 
 
@@ -19,26 +19,35 @@ Check 1
       13 | resource "aws_efs_file_system_policy" "not_secure_policy" {
       14 |   file_system_id = aws_efs_file_system.not_secure.id
 
+  Legacy ID:  AWS048
   Impact:     Data can be read from the EFS if compromised
   Resolution: Enable encryption for EFS
 
-  See https://tfsec.dev/docs/aws/AWS048/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/efs/enable-at-rest-encryption#aws/efs 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/efs_file_system 
+  - https://docs.aws.amazon.com/efs/latest/ug/encryption.html 
 
   times
   ------------------------------------------
-  disk i/o             33.3866ms
-  parsing HCL          38.9µs
-  evaluating values    195.3µs
-  running checks       4.0712ms
+  disk i/o             68.345625ms
+  parsing HCL          540.25µs
+  evaluating values    3.316625ms
+  running checks       16.888167ms
 
   counts
   ------------------------------------------
   files loaded         1
   blocks               3
-  evaluated blocks     3
   modules              0
-  module blocks        0
-  ignored checks       0
 
-1 potential problems detected.
+  results
+  ------------------------------------------
+  critical             0
+  high                 1
+  medium               0
+  low                  0
+  ignored              0
+
+  1 potential problems detected.
 

@@ -3,10 +3,10 @@ Failed to run the process ...
   "meta": {
     "isPrivate": true,
     "isLicensesEnabled": false,
-    "policy": "",
     "ignoreSettings": null,
+    "org": "yi2020",
     "projectId": "",
-    "org": "y"
+    "policy": ""
   },
   "filesystemPolicy": false,
   "vulnerabilities": [],
@@ -15,27 +15,39 @@ Failed to run the process ...
   "ignoreSettings": null,
   "targetFile": "main.tf",
   "projectName": "project",
-  "org": "y",
+  "org": "yi2020",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
   "packageManager": "terraformconfig",
   "path": "/project",
   "projectType": "terraformconfig",
+  "ok": false,
   "infrastructureAsCodeIssues": [
     {
-      "id": "SNYK-CC-TF-73",
-      "title": "AWS Security Group allows open egress",
-      "type": "terraform",
-      "subType": "VPC",
       "severity": "low",
+      "id": "SNYK-CC-TF-73",
+      "impact": "Open egress can be used to exfiltrate data to unauthorized destinations, and enable access to potentially malicious resources",
+      "msg": "resource.aws_security_group[default].egress",
+      "remediation": {
+        "cloudformation": "Set `Properties.SecurityGroupEgress.CidrIp` attribute to specific ranges e.g. `192.168.1.0/24`",
+        "terraform": "Set `egress.cidr_blocks` attribute to specific ranges e.g. `192.168.1.0/24`"
+      },
+      "subType": "VPC",
+      "issue": "The inline security group rule allows open egress",
+      "publicId": "SNYK-CC-TF-73",
+      "title": "AWS Security Group allows open egress",
+      "references": [
+        "https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html",
+        "https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-best-practices.html"
+      ],
       "isIgnored": false,
       "iacDescription": {
         "issue": "The inline security group rule allows open egress",
-        "impact": "Open egress can be used to exfiltrate data to unauthorized destinations, and enable access to potentially malicious resources",
-        "resolve": "Set `egress.cidr_blocks` attribute to specific ranges e.g. `192.168.1.0/24`"
+        "impact": "Open egress can be used to exfiltrate data to unauthorized destinations, and enable access to potentially malicious resources"
       },
       "lineNumber": 27,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-73",
       "path": [
         "resource",
         "aws_security_group[default]",
@@ -43,49 +55,25 @@ Failed to run the process ...
       ]
     },
     {
-      "id": "SNYK-CC-TF-56",
-      "title": "Missing description",
-      "type": "terraform",
-      "subType": "VPC",
-      "severity": "low",
-      "isIgnored": false,
-      "iacDescription": {
-        "issue": "The description field is missing in the security group",
-        "impact": "Increases the security management overhead",
-        "resolve": "Set `description` attribute to meaningful statement"
-      },
-      "lineNumber": 15,
-      "path": [
-        "resource",
-        "aws_security_group[default]",
-        "description"
-      ]
-    },
-    {
-      "id": "SNYK-CC-TF-130",
-      "title": "EC2 instance accepts IMDSv1",
-      "type": "terraform",
-      "subType": "EC2",
-      "severity": "low",
-      "isIgnored": false,
-      "iacDescription": {
-        "issue": "Instance Metadata Service v2 is not enforced",
-        "impact": "Metadata service may be vulnerable to reverse proxy/open firewall misconfigurations and server side request forgery attacks",
-        "resolve": "Set `metadata_options.http_tokens` attribute to `required`"
-      },
-      "lineNumber": 63,
-      "path": [
-        "resource",
-        "aws_instance[ec2]",
-        "metadata_options"
-      ]
-    },
-    {
-      "id": "SNYK-CC-TF-53",
-      "title": "Non-Encrypted root block device",
-      "type": "terraform",
-      "subType": "EC2",
       "severity": "medium",
+      "resolve": "Set `root_block_device.encrypted` attribute to `true`",
+      "id": "SNYK-CC-TF-53",
+      "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+      "msg": "resource.aws_instance[ec2].root_block_device.encrypted",
+      "remediation": {
+        "cloudformation": "Set `BlockDeviceMappings.Encrypted` attribute of root device to `true`",
+        "terraform": "Set `root_block_device.encrypted` attribute to `true`"
+      },
+      "subType": "EC2",
+      "issue": "The root block device for ec2 instance is not encrypted",
+      "publicId": "SNYK-CC-TF-53",
+      "title": "Non-Encrypted root block device",
+      "references": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/RootDeviceStorage.html",
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html",
+        "https://aws.amazon.com/premiumsupport/knowledge-center/cloudformation-root-volume-property/",
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/device_naming.html"
+      ],
       "isIgnored": false,
       "iacDescription": {
         "issue": "The root block device for ec2 instance is not encrypted",
@@ -93,11 +81,100 @@ Failed to run the process ...
         "resolve": "Set `root_block_device.encrypted` attribute to `true`"
       },
       "lineNumber": 63,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-53",
       "path": [
         "resource",
         "aws_instance[ec2]",
         "root_block_device",
         "encrypted"
+      ]
+    },
+    {
+      "severity": "low",
+      "resolve": "Set `description` attribute to meaningful statement",
+      "id": "SNYK-CC-TF-56",
+      "impact": "Increases the security management overhead",
+      "msg": "resource.aws_security_group[default].description",
+      "subType": "VPC",
+      "issue": "The description field is missing in the security group",
+      "publicId": "SNYK-CC-TF-56",
+      "title": "Missing description",
+      "references": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-security-groups.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "The description field is missing in the security group",
+        "impact": "Increases the security management overhead",
+        "resolve": "Set `description` attribute to meaningful statement"
+      },
+      "lineNumber": 15,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-56",
+      "path": [
+        "resource",
+        "aws_security_group[default]",
+        "description"
+      ]
+    },
+    {
+      "severity": "low",
+      "resolve": "Set `metadata_options.http_tokens` attribute to `required`",
+      "id": "SNYK-CC-TF-130",
+      "impact": "Metadata service may be vulnerable to reverse proxy/open firewall misconfigurations and server side request forgery attacks",
+      "msg": "resource.aws_instance[ec2].metadata_options",
+      "subType": "EC2",
+      "issue": "Instance Metadata Service v2 is not enforced",
+      "publicId": "SNYK-CC-TF-130",
+      "title": "EC2 instance accepts IMDSv1",
+      "references": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html",
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html",
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-data-retrieval.html",
+        "https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service/"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Instance Metadata Service v2 is not enforced",
+        "impact": "Metadata service may be vulnerable to reverse proxy/open firewall misconfigurations and server side request forgery attacks",
+        "resolve": "Set `metadata_options.http_tokens` attribute to `required`"
+      },
+      "lineNumber": 63,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-130",
+      "path": [
+        "resource",
+        "aws_instance[ec2]",
+        "metadata_options"
+      ]
+    },
+    {
+      "severity": "low",
+      "resolve": "Set `disable_api_termination` attribute  with value `true`",
+      "id": "SNYK-CC-AWS-426",
+      "impact": "Without this setting enabled the instances can be terminated by accident. This setting should only be used for instances with high availability requirements. Enabling this may prevent IaC workflows from updating the instance, for example terraform will not be able to terminate the instance to update instance type",
+      "msg": "resource.aws_instance[ec2].disable_api_termination",
+      "remediation": {
+        "cloudformation": "Set `DisableApiTermination` attribute with value `true`",
+        "terraform": "Set `disable_api_termination` attribute  with value `true`"
+      },
+      "subType": "EC2",
+      "issue": "To prevent instance from being accidentally terminated using Amazon EC2, you can enable termination protection for the instance",
+      "publicId": "SNYK-CC-AWS-426",
+      "title": "EC2 API termination protection is not enabled",
+      "references": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/terminating-instances.html#Using_ChangingDisableAPITermination"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "To prevent instance from being accidentally terminated using Amazon EC2, you can enable termination protection for the instance",
+        "impact": "Without this setting enabled the instances can be terminated by accident. This setting should only be used for instances with high availability requirements. Enabling this may prevent IaC workflows from updating the instance, for example terraform will not be able to terminate the instance to update instance type",
+        "resolve": "Set `disable_api_termination` attribute  with value `true`"
+      },
+      "lineNumber": 63,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-426",
+      "path": [
+        "resource",
+        "aws_instance[ec2]",
+        "disable_api_termination"
       ]
     }
   ]

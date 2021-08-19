@@ -6,8 +6,8 @@
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.135 
-Update available 2.0.135 -> 2.0.136
+By bridgecrew.io | version: 2.0.358 
+Update available 2.0.358 -> 2.0.359
 Run pip3 install -U checkov to update 
 
 
@@ -15,32 +15,10 @@ terraform scan results:
 
 Passed checks: 7, Failed checks: 6, Skipped checks: 0
 
-Check: CKV2_AWS_12: "Ensure the default security group of every VPC restricts all traffic"
-	FAILED for resource: aws_vpc.vpc1
-	File: /main.tf:20-23
-	Guide: https://docs.bridgecrew.io/docs/networking_4
-
-		20 | resource "aws_vpc" "vpc1" {
-		21 |   cidr_block = "10.5.0.0/16"
-		22 |   enable_dns_hostnames = true
-		23 | }
-
-
-Check: CKV2_AWS_12: "Ensure the default security group of every VPC restricts all traffic"
-	FAILED for resource: aws_vpc.vpc2
-	File: /main.tf:35-38
-	Guide: https://docs.bridgecrew.io/docs/networking_4
-
-		35 | resource "aws_vpc" "vpc2" {
-		36 |   cidr_block = "10.7.0.0/16"
-		37 |   enable_dns_hostnames = true
-		38 | }
-
-
 Check: CKV2_AWS_11: "Ensure VPC flow logging is enabled in all VPCs"
 	FAILED for resource: aws_vpc.vpc1
 	File: /main.tf:20-23
-	Guide: https://docs.bridgecrew.io-vpc-flow-logging
+	Guide: https://docs.bridgecrew.io/docs/logging_9-enable-vpc-flow-logging
 
 		20 | resource "aws_vpc" "vpc1" {
 		21 |   cidr_block = "10.5.0.0/16"
@@ -51,7 +29,7 @@ Check: CKV2_AWS_11: "Ensure VPC flow logging is enabled in all VPCs"
 Check: CKV2_AWS_11: "Ensure VPC flow logging is enabled in all VPCs"
 	FAILED for resource: aws_vpc.vpc2
 	File: /main.tf:35-38
-	Guide: https://docs.bridgecrew.io-vpc-flow-logging
+	Guide: https://docs.bridgecrew.io/docs/logging_9-enable-vpc-flow-logging
 
 		35 | resource "aws_vpc" "vpc2" {
 		36 |   cidr_block = "10.7.0.0/16"
@@ -74,6 +52,28 @@ Check: CKV2_AWS_1: "Ensure that all NACL are attached to subnets"
 	FAILED for resource: aws_vpc.vpc2
 	File: /main.tf:35-38
 	Guide: https://docs.bridgecrew.io/docs/ensure-that-all-nacl-are-attached-to-subnets
+
+		35 | resource "aws_vpc" "vpc2" {
+		36 |   cidr_block = "10.7.0.0/16"
+		37 |   enable_dns_hostnames = true
+		38 | }
+
+
+Check: CKV2_AWS_12: "Ensure the default security group of every VPC restricts all traffic"
+	FAILED for resource: aws_vpc.vpc1
+	File: /main.tf:20-23
+	Guide: https://docs.bridgecrew.io/docs/networking_4
+
+		20 | resource "aws_vpc" "vpc1" {
+		21 |   cidr_block = "10.5.0.0/16"
+		22 |   enable_dns_hostnames = true
+		23 | }
+
+
+Check: CKV2_AWS_12: "Ensure the default security group of every VPC restricts all traffic"
+	FAILED for resource: aws_vpc.vpc2
+	File: /main.tf:35-38
+	Guide: https://docs.bridgecrew.io/docs/networking_4
 
 		35 | resource "aws_vpc" "vpc2" {
 		36 |   cidr_block = "10.7.0.0/16"

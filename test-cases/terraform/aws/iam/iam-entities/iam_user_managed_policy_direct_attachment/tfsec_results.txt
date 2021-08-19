@@ -1,19 +1,60 @@
 
+  Result 1
+
+  [aws-iam-no-policy-wildcards][[0m[31mHIGH[39m[0m] Resource 'aws_iam_policy.managed-policy' defines a policy with wildcarded resources.
+  /src/main.tf:12-25
+
+
+       9 | resource "aws_iam_policy" "managed-policy" {
+      10 |   name        = "managed-policy"
+      11 |   description = "A test policy"
+      12 |   policy      = <<EOF    string: "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Action\": [\n        \"ec2:Describe*\"\n      ],\n      \"Effect\": \"Allow\",\n      \"Resource\": \"*\"\n    }\n  ]\n}\n"
+      13 | {
+      14 |   "Version": "2012-10-17",
+      15 |   "Statement": [
+      16 |     {
+      17 |       "Action": [
+      18 |         "ec2:Describe*"
+      19 |       ],
+      20 |       "Effect": "Allow",
+      21 |       "Resource": "*"
+      22 |     }
+      23 |   ]
+      24 | }
+      25 | EOF
+      26 | }
+      27 | 
+      28 | resource "aws_iam_user_policy_attachment" "managed-policy-attach" {
+
+  Legacy ID:  AWS099
+  Impact:     Overly permissive policies may grant access to sensitive resources
+  Resolution: Specify the exact permissions required, and to which resources they should apply instead of using wildcards.
+
+  More Info:
+  - https://tfsec.dev/docs/aws/iam/no-policy-wildcards#aws/iam 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document 
+  - https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html 
+
   times
   ------------------------------------------
-  disk i/o             31.2696ms
-  parsing HCL          23.2µs
-  evaluating values    423.4µs
-  running checks       323.9µs
+  disk i/o             52.666626ms
+  parsing HCL          612.5µs
+  evaluating values    3.668667ms
+  running checks       45.452291ms
 
   counts
   ------------------------------------------
   files loaded         1
   blocks               4
-  evaluated blocks     4
   modules              0
-  module blocks        0
-  ignored checks       0
 
-No problems detected!
+  results
+  ------------------------------------------
+  critical             0
+  high                 1
+  medium               0
+  low                  0
+  ignored              0
+
+  1 potential problems detected.
 

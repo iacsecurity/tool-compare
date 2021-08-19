@@ -1,20 +1,31 @@
 
 WARNINGs found:
+Rule: Ensure no unused Security Group exists in the account
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_security_group.allow_tls] (main.tf:7)
+     Violating Resource: [aws_security_group.allow_tls]  (main.tf:7)
+
+     Evidence:
+             | The Security group aws_security_group.allow_tls is not used by any AWS resource
+
+
+-----------------------------------------------
 Rule: Ensure all resources that can be tagged have at least one tag
  - 2 Resources Exposed:
 -----------------------------------------------
-   - Exposed Resource: [aws_vpc.example] (main.tf:3)
-     Violating Resource: [aws_vpc.example]  (main.tf:3)
-
-     Evidence:
-             | Resource VPC aws_vpc.example does not have any tags set
-
-
    - Exposed Resource: [aws_security_group.allow_tls] (main.tf:7)
      Violating Resource: [aws_security_group.allow_tls]  (main.tf:7)
 
      Evidence:
              | Resource Security group aws_security_group.allow_tls does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [aws_vpc.example] (main.tf:3)
+     Violating Resource: [aws_vpc.example]  (main.tf:3)
+
+     Evidence:
+             | Resource VPC aws_vpc.example does not have any tags set
 
 
 -----------------------------------------------

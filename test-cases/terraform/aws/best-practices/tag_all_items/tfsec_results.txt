@@ -1,29 +1,7 @@
 
-Check 1
+  Result 1
 
-  [AWS015][ERROR] Resource 'aws_sqs_queue.cloudrail' defines an unencrypted SQS queue.
-  /src/main.tf:12-17
-
-
-       9 |   }
-      10 | }
-      11 | 
-      12 | resource "aws_sqs_queue" "cloudrail" {
-      13 |   name = "sqs_non_encrypted"
-      14 |   tags = {
-      15 |     Name = "Sqs Cloudrail Test"
-      16 |   }
-      17 | }
-      18 | 
-
-  Impact:     The SQS queue messages could be read if compromised
-  Resolution: Turn on SQS Queue encryption
-
-  See https://tfsec.dev/docs/aws/AWS015/ for more information. 
-
-Check 2
-
-  [AWS016][ERROR] Resource 'aws_sns_topic.cloudrail_1' defines an unencrypted SNS topic.
+  [aws-sns-enable-topic-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_sns_topic.cloudrail_1' defines an unencrypted SNS topic.
   /src/main.tf:5-10
 
 
@@ -40,26 +18,61 @@ Check 2
       12 | resource "aws_sqs_queue" "cloudrail" {
       13 |   name = "sqs_non_encrypted"
 
+  Legacy ID:  AWS016
   Impact:     The SNS topic messages could be read if compromised
   Resolution: Turn on SNS Topic encryption
 
-  See https://tfsec.dev/docs/aws/AWS016/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/sns/enable-topic-encryption#aws/sns 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sns_topic#example-with-server-side-encryption-sse 
+  - https://docs.aws.amazon.com/sns/latest/dg/sns-server-side-encryption.html 
+
+  Result 2
+
+  [aws-sqs-enable-queue-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_sqs_queue.cloudrail' defines an unencrypted SQS queue.
+  /src/main.tf:12-17
+
+
+       9 |   }
+      10 | }
+      11 | 
+      12 | resource "aws_sqs_queue" "cloudrail" {
+      13 |   name = "sqs_non_encrypted"
+      14 |   tags = {
+      15 |     Name = "Sqs Cloudrail Test"
+      16 |   }
+      17 | }
+      18 | 
+
+  Legacy ID:  AWS015
+  Impact:     The SQS queue messages could be read if compromised
+  Resolution: Turn on SQS Queue encryption
+
+  More Info:
+  - https://tfsec.dev/docs/aws/sqs/enable-queue-encryption#aws/sqs 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sqs_queue#server-side-encryption-sse 
+  - https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-server-side-encryption.html 
 
   times
   ------------------------------------------
-  disk i/o             37.815ms
-  parsing HCL          36.8µs
-  evaluating values    199.1µs
-  running checks       8.5307ms
+  disk i/o             54.450375ms
+  parsing HCL          498.625µs
+  evaluating values    2.376875ms
+  running checks       19.330833ms
 
   counts
   ------------------------------------------
   files loaded         1
   blocks               3
-  evaluated blocks     3
   modules              0
-  module blocks        0
-  ignored checks       0
 
-2 potential problems detected.
+  results
+  ------------------------------------------
+  critical             0
+  high                 2
+  medium               0
+  low                  0
+  ignored              0
+
+  2 potential problems detected.
 

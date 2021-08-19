@@ -3,10 +3,10 @@ Failed to run the process ...
   "meta": {
     "isPrivate": true,
     "isLicensesEnabled": false,
-    "policy": "",
     "ignoreSettings": null,
+    "org": "yi2020",
     "projectId": "",
-    "org": "y"
+    "policy": ""
   },
   "filesystemPolicy": false,
   "vulnerabilities": [],
@@ -15,12 +15,46 @@ Failed to run the process ...
   "ignoreSettings": null,
   "targetFile": "main.tf",
   "projectName": "project",
-  "org": "y",
+  "org": "yi2020",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
   "packageManager": "terraformconfig",
   "path": "/project",
   "projectType": "terraformconfig",
-  "infrastructureAsCodeIssues": []
+  "ok": false,
+  "infrastructureAsCodeIssues": [
+    {
+      "severity": "medium",
+      "resolve": "Set `storage_encrypted` attribute to `true`",
+      "id": "SNYK-CC-AWS-439",
+      "impact": "In the occurrence of a data breach, sensitive data stored on the RDS cluster will be accessible",
+      "msg": "resource.aws_rds_cluster[default].storage_encrypted",
+      "remediation": {
+        "cloudformation": "Set `Properties.StorageEncrypted` attribute to `true`",
+        "terraform": "Set `storage_encrypted` attribute to `true`"
+      },
+      "subType": "RDS",
+      "issue": "RDS cluster does not have encryption enabled which means data is stored on cluster in plaintext",
+      "publicId": "SNYK-CC-AWS-439",
+      "title": "RDS cluster does not have encryption enabled",
+      "references": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html",
+        "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-rds-dbcluster.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "RDS cluster does not have encryption enabled which means data is stored on cluster in plaintext",
+        "impact": "In the occurrence of a data breach, sensitive data stored on the RDS cluster will be accessible",
+        "resolve": "Set `storage_encrypted` attribute to `true`"
+      },
+      "lineNumber": 5,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-439",
+      "path": [
+        "resource",
+        "aws_rds_cluster[default]",
+        "storage_encrypted"
+      ]
+    }
+  ]
 }

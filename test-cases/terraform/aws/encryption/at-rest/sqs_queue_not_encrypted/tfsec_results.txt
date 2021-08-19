@@ -1,7 +1,7 @@
 
-Check 1
+  Result 1
 
-  [AWS015][ERROR] Resource 'aws_sqs_queue.cloudrail' defines an unencrypted SQS queue.
+  [aws-sqs-enable-queue-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_sqs_queue.cloudrail' defines an unencrypted SQS queue.
   /src/main.tf:5-7
 
 
@@ -13,26 +13,35 @@ Check 1
        7 | }
        8 | 
 
+  Legacy ID:  AWS015
   Impact:     The SQS queue messages could be read if compromised
   Resolution: Turn on SQS Queue encryption
 
-  See https://tfsec.dev/docs/aws/AWS015/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/sqs/enable-queue-encryption#aws/sqs 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sqs_queue#server-side-encryption-sse 
+  - https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-server-side-encryption.html 
 
   times
   ------------------------------------------
-  disk i/o             34.3122ms
-  parsing HCL          27.2µs
-  evaluating values    250.8µs
-  running checks       5.5886ms
+  disk i/o             48.687875ms
+  parsing HCL          503.875µs
+  evaluating values    1.863959ms
+  running checks       18.54925ms
 
   counts
   ------------------------------------------
   files loaded         1
   blocks               2
-  evaluated blocks     2
   modules              0
-  module blocks        0
-  ignored checks       0
 
-1 potential problems detected.
+  results
+  ------------------------------------------
+  critical             0
+  high                 1
+  medium               0
+  low                  0
+  ignored              0
+
+  1 potential problems detected.
 

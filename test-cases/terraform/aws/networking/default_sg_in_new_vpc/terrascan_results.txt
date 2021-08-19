@@ -2,16 +2,27 @@
 
 Violation Details -
     
-	Description    :	Ensure that EC2 is EBS optimized
+	Description    :	Ensure VPC flow logging is enabled in all VPCs
 	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	14
+	Severity       :	LOW
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that your AWS application is not deployed within the default Virtual Private Cloud in order to follow security best practices
+	File           :	main.tf
+	Module Name    :	root
 	Plan Root      :	./
 	Line           :	31
 	Severity       :	MEDIUM
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	Ensure that your AWS application is not deployed within the default Virtual Private Cloud in order to follow security best practices
+	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
 	File           :	main.tf
+	Module Name    :	root
 	Plan Root      :	./
 	Line           :	31
 	Severity       :	MEDIUM
@@ -20,38 +31,23 @@ Violation Details -
 	
 	Description    :	Ensure that detailed monitoring is enabled for EC2 instances.
 	File           :	main.tf
+	Module Name    :	root
 	Plan Root      :	./
 	Line           :	31
 	Severity       :	HIGH
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
-	File           :	main.tf
-	Plan Root      :	./
-	Line           :	31
-	Severity       :	MEDIUM
-	
-	-----------------------------------------------------------------------
-	
-	Description    :	Ensure VPC flow logging is enabled in all VPCs
-	File           :	main.tf
-	Plan Root      :	./
-	Line           :	14
-	Severity       :	MEDIUM
-	
-	-----------------------------------------------------------------------
-	
 
 Scan Summary -
 
-	File/Folder         :	tool-compare/test-cases/terraform/aws/networking/default_sg_in_new_vpc
+	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-06-01 05:55:15.414012 +0000 UTC
-	Policies Validated  :	612
-	Violated Policies   :	5
-	Low                 :	0
-	Medium              :	4
+	Scanned At          :	2021-08-18 17:41:18.838704971 +0000 UTC
+	Policies Validated  :	7
+	Violated Policies   :	4
+	Low                 :	1
+	Medium              :	2
 	High                :	1
 	
 

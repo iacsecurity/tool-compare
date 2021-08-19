@@ -6,8 +6,8 @@
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.135 
-Update available 2.0.135 -> 2.0.136
+By bridgecrew.io | version: 2.0.358 
+Update available 2.0.358 -> 2.0.359
 Run pip3 install -U checkov to update 
 
 
@@ -15,10 +15,10 @@ terraform scan results:
 
 Passed checks: 1, Failed checks: 2, Skipped checks: 0
 
-Check: CKV_AWS_66: "Ensure cloudwatch log groups specify retention days"
+Check: CKV_AWS_158: "Ensure that CloudWatch Log Group is encrypted by KMS"
 	FAILED for resource: aws_cloudwatch_log_group.yada
 	File: /main.tf:5-12
-	Guide: https://docs.bridgecrew.io/docs/logging_13
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-cloudwatch-log-group-is-encrypted-by-kms
 
 		5  | resource "aws_cloudwatch_log_group" "yada" {
 		6  |   name = "Yada"
@@ -29,9 +29,10 @@ Check: CKV_AWS_66: "Ensure cloudwatch log groups specify retention days"
 		11 |   }
 		12 | }
 
-Check: CKV_AWS_158: "Ensure that CloudWatch Group is encrypted by KMS"
+Check: CKV_AWS_66: "Ensure that CloudWatch Log Group specifies retention days"
 	FAILED for resource: aws_cloudwatch_log_group.yada
 	File: /main.tf:5-12
+	Guide: https://docs.bridgecrew.io/docs/logging_13
 
 		5  | resource "aws_cloudwatch_log_group" "yada" {
 		6  |   name = "Yada"

@@ -6,14 +6,14 @@
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.135 
-Update available 2.0.135 -> 2.0.136
+By bridgecrew.io | version: 2.0.358 
+Update available 2.0.358 -> 2.0.359
 Run pip3 install -U checkov to update 
 
 
 terraform scan results:
 
-Passed checks: 11, Failed checks: 16, Skipped checks: 0
+Passed checks: 12, Failed checks: 16, Skipped checks: 0
 
 Check: CKV_AWS_23: "Ensure every security groups rule has a description"
 	FAILED for resource: aws_security_group.db
@@ -29,6 +29,27 @@ Check: CKV_AWS_23: "Ensure every security groups rule has a description"
 		109 |     cidr_blocks = [aws_subnet.nondefault_1.cidr_block]
 		110 |   }
 		111 | }
+
+
+Check: CKV_AWS_161: "Ensure RDS database has IAM authentication enabled"
+	FAILED for resource: aws_db_instance.test
+	File: /main.tf:113-126
+	Guide: https://docs.bridgecrew.io/docs/ensure-rds-database-has-iam-authentication-enabled
+
+		113 | resource "aws_db_instance" "test" {
+		114 |   identifier = "tf-test-db"
+		115 |   allocated_storage = "5"
+		116 |   multi_az = "false"
+		117 |   engine = "mysql"
+		118 |   instance_class = "db.t2.small"
+		119 |   username = "admin"
+		120 |   password = "password123"
+		121 |   db_subnet_group_name = aws_db_subnet_group.db.name
+		122 |   vpc_security_group_ids = [ aws_security_group.db.id]
+		123 |   storage_type = "gp2"
+		124 |   skip_final_snapshot = true
+		125 |   publicly_accessible = false
+		126 | }
 
 
 Check: CKV_AWS_118: "Ensure that enhanced monitoring is enabled for Amazon RDS instances"
@@ -55,6 +76,7 @@ Check: CKV_AWS_118: "Ensure that enhanced monitoring is enabled for Amazon RDS i
 Check: CKV_AWS_157: "Ensure that RDS instances have Multi-AZ enabled"
 	FAILED for resource: aws_db_instance.test
 	File: /main.tf:113-126
+	Guide: https://docs.bridgecrew.io/docs/general_73
 
 		113 | resource "aws_db_instance" "test" {
 		114 |   identifier = "tf-test-db"
@@ -245,6 +267,16 @@ Check: CKV_AWS_126: "Ensure that detailed monitoring is enabled for EC2 instance
 		151 |   subnet_id = aws_subnet.nondefault_1.id
 		152 | }
 
+Check: CKV2_AWS_11: "Ensure VPC flow logging is enabled in all VPCs"
+	FAILED for resource: aws_vpc.nondefault
+	File: /main.tf:10-12
+	Guide: https://docs.bridgecrew.io/docs/logging_9-enable-vpc-flow-logging
+
+		10 | resource "aws_vpc" "nondefault" {
+		11 |   cidr_block = "10.1.1.0/24"
+		12 | }
+
+
 Check: CKV2_AWS_12: "Ensure the default security group of every VPC restricts all traffic"
 	FAILED for resource: aws_vpc.nondefault
 	File: /main.tf:10-12
@@ -253,31 +285,5 @@ Check: CKV2_AWS_12: "Ensure the default security group of every VPC restricts al
 		10 | resource "aws_vpc" "nondefault" {
 		11 |   cidr_block = "10.1.1.0/24"
 		12 | }
-
-
-Check: CKV2_AWS_11: "Ensure VPC flow logging is enabled in all VPCs"
-	FAILED for resource: aws_vpc.nondefault
-	File: /main.tf:10-12
-	Guide: https://docs.bridgecrew.io-vpc-flow-logging
-
-		10 | resource "aws_vpc" "nondefault" {
-		11 |   cidr_block = "10.1.1.0/24"
-		12 | }
-
-
-Check: CKV2_AWS_5: "Ensure that Security Groups are attached to EC2 instances or elastic network interfaces (ENIs)"
-	FAILED for resource: aws_security_group.db
-	File: /main.tf:103-111
-	Guide: https://docs.bridgecrew.io/docs/ensure-that-security-groups-are-attached-to-ec2-instances-or-elastic-network-interfaces-enis
-
-		103 | resource "aws_security_group" "db" {
-		104 |   vpc_id = aws_vpc.nondefault.id
-		105 |   ingress {
-		106 |     from_port = 3306
-		107 |     protocol = "tcp"
-		108 |     to_port = 3306
-		109 |     cidr_blocks = [aws_subnet.nondefault_1.cidr_block]
-		110 |   }
-		111 | }
 
 

@@ -1,25 +1,14 @@
 
 
-Violation Details -
-    
-	Description    :	AWS CloudWatch log group is not encrypted with a KMS CMK
-	File           :	main.tf
-	Plan Root      :	./
-	Line           :	5
-	Severity       :	HIGH
-	
-	-----------------------------------------------------------------------
-	
-
 Scan Summary -
 
-	File/Folder         :	tool-compare/test-cases/terraform/aws/encryption/at-rest/cloudwatch_groups_not_encrypted
+	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-06-01 05:54:54.088154 +0000 UTC
-	Policies Validated  :	612
-	Violated Policies   :	1
+	Scanned At          :	2021-08-18 16:19:23.707523668 +0000 UTC
+	Policies Validated  :	1
+	Violated Policies   :	0
 	Low                 :	0
 	Medium              :	0
-	High                :	1
+	High                :	0
 	
 

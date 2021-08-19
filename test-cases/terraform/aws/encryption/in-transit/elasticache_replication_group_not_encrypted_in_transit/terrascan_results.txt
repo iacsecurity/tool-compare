@@ -1,33 +1,14 @@
 
 
-Violation Details -
-    
-	Description    :	Ensure Elastic Cache Replication Group is encrypted in transit
-	File           :	main.tf
-	Plan Root      :	./
-	Line           :	5
-	Severity       :	MEDIUM
-	
-	-----------------------------------------------------------------------
-	
-	Description    :	Ensure Elastic Cache Replication Group is encrypted at rest
-	File           :	main.tf
-	Plan Root      :	./
-	Line           :	5
-	Severity       :	MEDIUM
-	
-	-----------------------------------------------------------------------
-	
-
 Scan Summary -
 
-	File/Folder         :	tool-compare/test-cases/terraform/aws/encryption/in-transit/elasticache_replication_group_not_encrypted_in_transit
+	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-06-01 05:54:46.148885 +0000 UTC
-	Policies Validated  :	612
-	Violated Policies   :	2
+	Scanned At          :	2021-08-18 16:15:47.26619222 +0000 UTC
+	Policies Validated  :	0
+	Violated Policies   :	0
 	Low                 :	0
-	Medium              :	2
+	Medium              :	0
 	High                :	0
 	
 

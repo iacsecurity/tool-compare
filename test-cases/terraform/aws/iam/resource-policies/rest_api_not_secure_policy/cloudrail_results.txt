@@ -1,19 +1,48 @@
 
 WARNINGs found:
-Rule: Ensure use of API Gateway endpoint policy, and no action wildcards are being used
+Rule: Ensure REST API Gateway has access logging enabled
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_api_gateway_rest_api.api_gw] (main.tf:5)
-     Violating Resource: [aws_api_gateway_rest_api_policy.test]  (main.tf:12)
+     Violating Resource: [aws_api_gateway_stage.api_gw_stage]  (main.tf:72)
 
      Evidence:
-             | The policy attached to the API Gateway aws_api_gateway_rest_api.api_gw is using wildcard action execute-api:*
+             | The API Gateway aws_api_gateway_rest_api.api_gw does not have access logging enabled for stage aws_api_gateway_stage.api_gw_stage
+
+
+-----------------------------------------------
+Rule: Ensure API Gateway has X-Ray tracing enabled
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_api_gateway_rest_api.api_gw] (main.tf:5)
+     Violating Resource: [aws_api_gateway_stage.api_gw_stage]  (main.tf:72)
+
+     Evidence:
+             | The API Gateway aws_api_gateway_rest_api.api_gw has X-Ray tracing disabled for stage aws_api_gateway_stage.api_gw_stage
+
+
+-----------------------------------------------
+Rule: Ensure API Gateway methods use authentication
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_api_gateway_rest_api.api_gw] (main.tf:5)
+     Violating Resource: [aws_api_gateway_method.api_gw_method]  (main.tf:50)
+
+     Evidence:
+             | The API Gateway aws_api_gateway_rest_api.api_gw is not requiring authorization for the method aws_api_gateway_method.api_gw_method
 
 
 -----------------------------------------------
 Rule: Ensure all resources that can be tagged have at least one tag
- - 1 Resources Exposed:
+ - 2 Resources Exposed:
 -----------------------------------------------
+   - Exposed Resource: [aws_api_gateway_stage.api_gw_stage] (main.tf:72)
+     Violating Resource: [aws_api_gateway_stage.api_gw_stage]  (main.tf:72)
+
+     Evidence:
+             | Resource API stage aws_api_gateway_stage.api_gw_stage does not have any tags set
+
+
    - Exposed Resource: [aws_api_gateway_rest_api.api_gw] (main.tf:5)
      Violating Resource: [aws_api_gateway_rest_api.api_gw]  (main.tf:5)
 
@@ -22,3 +51,6 @@ Rule: Ensure all resources that can be tagged have at least one tag
 
 
 -----------------------------------------------
+
+Cloudrail ran this assessment without any policies and so all rule violations show as warnings.
+You can increase a rule's enforcement level by creating a Policy in the Web UI and adding the rule to it.

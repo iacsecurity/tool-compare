@@ -2,61 +2,67 @@
 
 Violation Details -
     
-	Description    :	Ensure S3 buckets have access logging enabled.
+	Description    :	Ensure that S3 Buckets have server side encryption at rest enabled with KMS key to protect sensitive data.
 	File           :	main.tf
-	Plan Root      :	./
-	Line           :	18
-	Severity       :	MEDIUM
-	
-	-----------------------------------------------------------------------
-	
-	Description    :	Enabling S3 versioning will enable easy recovery from both unintended user actions, like deletes and overwrites
-	File           :	main.tf
+	Module Name    :	root
 	Plan Root      :	./
 	Line           :	18
 	Severity       :	HIGH
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	Cloud Trail Multi Region not enabled
+	Description    :	Ensure CloudTrail logs are encrypted using KMS
 	File           :	main.tf
+	Module Name    :	root
 	Plan Root      :	./
 	Line           :	11
-	Severity       :	MEDIUM
-	
-	-----------------------------------------------------------------------
-	
-	Description    :	Ensure that S3 Buckets have server side encryption at rest enabled with KMS key to protect sensitive data.
-	File           :	main.tf
-	Plan Root      :	./
-	Line           :	18
 	Severity       :	HIGH
 	
 	-----------------------------------------------------------------------
 	
 	Description    :	Ensure CloudTrail has log file validation enabled.
 	File           :	main.tf
+	Module Name    :	root
 	Plan Root      :	./
 	Line           :	11
 	Severity       :	MEDIUM
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	Ensure CloudTrail logs are encrypted using KMS
+	Description    :	Enabling S3 versioning will enable easy recovery from both unintended user actions, like deletes and overwrites
 	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	18
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure S3 buckets have access logging enabled.
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	18
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Cloud Trail Multi Region not enabled
+	File           :	main.tf
+	Module Name    :	root
 	Plan Root      :	./
 	Line           :	11
-	Severity       :	HIGH
+	Severity       :	MEDIUM
 	
 	-----------------------------------------------------------------------
 	
 
 Scan Summary -
 
-	File/Folder         :	tool-compare/test-cases/terraform/aws/logging/cloudtrail_file_log_validation_disabled
+	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-06-01 05:55:59.427903 +0000 UTC
-	Policies Validated  :	612
+	Scanned At          :	2021-08-18 17:56:42.841238676 +0000 UTC
+	Policies Validated  :	18
 	Violated Policies   :	6
 	Low                 :	0
 	Medium              :	3

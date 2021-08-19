@@ -4,7 +4,7 @@ Failed to run the process ...
     "isPrivate": true,
     "isLicensesEnabled": false,
     "ignoreSettings": null,
-    "org": "y",
+    "org": "yi2020",
     "projectId": "",
     "policy": ""
   },
@@ -13,14 +13,76 @@ Failed to run the process ...
   "dependencyCount": 0,
   "licensesPolicy": null,
   "ignoreSettings": null,
-  "targetFile": "/project/main.tf",
+  "targetFile": "main.tf",
   "projectName": "project",
-  "org": "y",
+  "org": "yi2020",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
   "packageManager": "terraformconfig",
   "path": "/project",
   "projectType": "terraformconfig",
-  "infrastructureAsCodeIssues": []
+  "ok": false,
+  "infrastructureAsCodeIssues": [
+    {
+      "severity": "medium",
+      "resolve": "Set `resource.snapshot_retention_limit` to `1` or more",
+      "id": "SNYK-CC-AWS-407",
+      "impact": "No cluster backups will be saved automatically, rebuilding after disaster may be more difficult",
+      "msg": "resource.aws_elasticache_cluster[disabled]",
+      "remediation": {
+        "cloudformation": "Set `Properties.SnapshotRetentionLimit` to `1` or more",
+        "terraform": "Set `resource.snapshot_retention_limit` to `1` or more"
+      },
+      "subType": "ElastiCache",
+      "issue": "ElastiCache cluster automatic backup is disabled",
+      "publicId": "SNYK-CC-AWS-407",
+      "title": "ElastiCache automatic backup is disabled",
+      "references": [
+        "https://docs.aws.amazon.com/AmazonElastiCache/latest/APIReference/API_Snapshot.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "ElastiCache cluster automatic backup is disabled",
+        "impact": "No cluster backups will be saved automatically, rebuilding after disaster may be more difficult",
+        "resolve": "Set `resource.snapshot_retention_limit` to `1` or more"
+      },
+      "lineNumber": 9,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-407",
+      "path": [
+        "resource",
+        "aws_elasticache_cluster[disabled]"
+      ]
+    },
+    {
+      "severity": "medium",
+      "resolve": "Set `resource.snapshot_retention_limit` to `1` or more",
+      "id": "SNYK-CC-AWS-407",
+      "impact": "No cluster backups will be saved automatically, rebuilding after disaster may be more difficult",
+      "msg": "resource.aws_elasticache_cluster[default]",
+      "remediation": {
+        "cloudformation": "Set `Properties.SnapshotRetentionLimit` to `1` or more",
+        "terraform": "Set `resource.snapshot_retention_limit` to `1` or more"
+      },
+      "subType": "ElastiCache",
+      "issue": "ElastiCache cluster automatic backup is disabled",
+      "publicId": "SNYK-CC-AWS-407",
+      "title": "ElastiCache automatic backup is disabled",
+      "references": [
+        "https://docs.aws.amazon.com/AmazonElastiCache/latest/APIReference/API_Snapshot.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "ElastiCache cluster automatic backup is disabled",
+        "impact": "No cluster backups will be saved automatically, rebuilding after disaster may be more difficult",
+        "resolve": "Set `resource.snapshot_retention_limit` to `1` or more"
+      },
+      "lineNumber": 1,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-407",
+      "path": [
+        "resource",
+        "aws_elasticache_cluster[default]"
+      ]
+    }
+  ]
 }

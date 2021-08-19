@@ -3,11 +3,68 @@ WARNINGs found:
 Rule: Ensure Amazon EKS control plane logging enabled for all log types
  - 1 Resources Exposed:
 -----------------------------------------------
-   - Exposed Resource: [aws_eks_cluster.test] (main.tf:20)
-     Violating Resource: [aws_eks_cluster.test]  (main.tf:20)
+   - Exposed Resource: [aws_eks_cluster.test] (main.tf:19)
+     Violating Resource: [aws_eks_cluster.test]  (main.tf:19)
 
      Evidence:
              | This rule evaluated aws_eks_cluster.test's configuration
 
 
 -----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 4 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_vpc.vpc] (main.tf:10)
+     Violating Resource: [aws_vpc.vpc]  (main.tf:10)
+
+     Evidence:
+             | Resource VPC aws_vpc.vpc does not have any tags set
+
+
+   - Exposed Resource: [aws_iam_role.eksrole] (main.tf:6)
+     Violating Resource: [aws_iam_role.eksrole]  (main.tf:6)
+
+     Evidence:
+             | Resource IAM Role aws_iam_role.eksrole does not have any tags set
+
+
+   - Exposed Resource: [aws_eks_cluster.test] (main.tf:19)
+     Violating Resource: [aws_eks_cluster.test]  (main.tf:19)
+
+     Evidence:
+             | Resource EKS cluster aws_eks_cluster.test does not have any tags set
+
+
+   - Exposed Resource: [aws_subnet.subnet1] (main.tf:14)
+     Violating Resource: [aws_subnet.subnet1]  (main.tf:14)
+
+     Evidence:
+             | Resource Subnet aws_subnet.subnet1 does not have any tags set
+
+
+-----------------------------------------------
+Rule: Disallow IAM permissions which can lead to privilege escalation
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_iam_role_policy.allow-policy-1] (main.tf:25)
+     Violating Resource: [aws_iam_role_policy.allow-policy-1]  (main.tf:25)
+
+     Evidence:
+         aws_iam_role_policy.allow-policy-1
+             | is applied to arn:aws:iam::000000000000:role/role
+             | in conjunction with aws_iam_role_policy.allow-policy-1, aws_iam_role_policy.allow-policy-2 {'iam:passrole', 'lambda:invokefunc*', 'lambda:createfunction'} allows a hacker to trigger a Lambda function with a role they choose
+
+
+   - Exposed Resource: [aws_iam_role_policy.policy] (main.tf:25)
+     Violating Resource: [aws_iam_role_policy.policy]  (main.tf:25)
+
+     Evidence:
+         aws_iam_role_policy.policy
+             | is applied to arn:aws:iam::000000000000:role/role
+             | granting the problematic permissions {'iam:*', 'iam: AttachUser*'} which can allow for privilege escalation
+
+
+-----------------------------------------------
+
+Cloudrail ran this assessment without any policies and so all rule violations show as warnings.
+You can increase a rule's enforcement level by creating a Policy in the Web UI and adding the rule to it.

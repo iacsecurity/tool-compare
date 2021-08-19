@@ -27,18 +27,18 @@ Rule: Ensure IAM policies pass Access Analyzer policy validation without WARNING
 Rule: Ensure all resources that can be tagged have at least one tag
  - 2 Resources Exposed:
 -----------------------------------------------
-   - Exposed Resource: [aws_iam_role.iam_for_lambda] (main.tf:1)
-     Violating Resource: [aws_iam_role.iam_for_lambda]  (main.tf:1)
-
-     Evidence:
-             | Resource IAM Role aws_iam_role.iam_for_lambda does not have any tags set
-
-
    - Exposed Resource: [aws_lambda_function.test_lambda] (main.tf:21)
      Violating Resource: [aws_lambda_function.test_lambda]  (main.tf:21)
 
      Evidence:
              | Resource Lambda Function aws_lambda_function.test_lambda does not have any tags set
+
+
+   - Exposed Resource: [aws_iam_role.iam_for_lambda] (main.tf:1)
+     Violating Resource: [aws_iam_role.iam_for_lambda]  (main.tf:1)
+
+     Evidence:
+             | Resource IAM Role aws_iam_role.iam_for_lambda does not have any tags set
 
 
 -----------------------------------------------

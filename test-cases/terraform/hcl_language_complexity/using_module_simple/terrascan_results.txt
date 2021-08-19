@@ -2,10 +2,10 @@
 
 Scan Summary -
 
-	File/Folder         :	tool-compare/test-cases/terraform/hcl_language_complexity/using_module_simple
-	IaC Type            :	terraform
-	Scanned At          :	2021-06-11 19:17:35.309912 +0000 UTC
-	Policies Validated  :	561
+	File/Folder         :	/iac
+	IaC Type            :	all
+	Scanned At          :	2021-08-18 16:14:49.82672618 +0000 UTC
+	Policies Validated  :	1
 	Violated Policies   :	0
 	Low                 :	0
 	Medium              :	0

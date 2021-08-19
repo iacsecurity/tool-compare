@@ -1,7 +1,7 @@
 
-Check 1
+  Result 1
 
-  [AWS093][WARNING] Resource 'aws_ecr_repository.foo' does not have CMK encryption configured
+  [aws-ecr-repository-customer-key][[0m[97mLOW[39m[0m] Resource 'aws_ecr_repository.foo' does not have CMK encryption configured
   /src/main.tf:1-8
 
 
@@ -14,26 +14,35 @@ Check 1
        7 |   }
        8 | }
 
+  Legacy ID:  AWS093
   Impact:     Using AWS managed keys does not allow for fine grained control
   Resolution: Use customer managed keys
 
-  See https://tfsec.dev/docs/aws/AWS093/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/ecr/repository-customer-key#aws/ecr 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecr_repository#encryption_configuration 
+  - https://docs.aws.amazon.com/AmazonECR/latest/userguide/encryption-at-rest.html 
 
   times
   ------------------------------------------
-  disk i/o             25.3237ms
-  parsing HCL          22.4µs
-  evaluating values    94.5µs
-  running checks       3.4997ms
+  disk i/o             49.468584ms
+  parsing HCL          538.083µs
+  evaluating values    1.78675ms
+  running checks       18.413875ms
 
   counts
   ------------------------------------------
   files loaded         1
   blocks               1
-  evaluated blocks     1
   modules              0
-  module blocks        0
-  ignored checks       0
 
-1 potential problems detected.
+  results
+  ------------------------------------------
+  critical             0
+  high                 0
+  medium               0
+  low                  1
+  ignored              0
+
+  1 potential problems detected.
 

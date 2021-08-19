@@ -2,10 +2,10 @@
 
 Scan Summary -
 
-	File/Folder         :	tool-compare/test-cases/terraform/aws/best-practices/ecs_cluster_container_insights
+	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-06-01 05:56:25.20203 +0000 UTC
-	Policies Validated  :	612
+	Scanned At          :	2021-08-18 18:04:10.068219925 +0000 UTC
+	Policies Validated  :	0
 	Violated Policies   :	0
 	Low                 :	0
 	Medium              :	0

@@ -1,7 +1,7 @@
 
-Check 1
+  Result 1
 
-  [AWS052][ERROR] Resource 'aws_db_instance.default' has no storage encryption defined.
+  [aws-rds-backup-retention-specified][[0m[33mMEDIUM[39m[0m] Resource 'aws_db_instance.default' does not have backup retention explicitly set
   /src/main.tf:1-11
 
 
@@ -18,69 +18,86 @@ Check 1
       11 | }
       12 | 
 
-  Impact:     Data can be read from the RDS instances if it is compromised
-  Resolution: Enable encryption for RDS clusters and instances
-
-  See https://tfsec.dev/docs/aws/AWS052/ for more information. 
-
-Check 2
-
-  [AWS091][WARNING] Resource 'aws_db_instance.default' does not have backup retention explicitly set
-  /src/main.tf:1-11
-
-
-       1 | resource "aws_db_instance" "default" {
-       2 |   allocated_storage    = 10
-       3 |   engine               = "mysql"
-       4 |   engine_version       = "5.7"
-       5 |   instance_class       = "db.t3.micro"
-       6 |   name                 = "mydb"
-       7 |   username             = "foo"
-       8 |   password             = "foobarbaz"
-       9 |   parameter_group_name = "default.mysql5.7"
-      10 |   skip_final_snapshot  = true
-      11 | }
-      12 | 
-
+  Legacy ID:  AWS091
   Impact:     Potential loss of data and short opportunity for recovery
   Resolution: Explicitly set the retention period to greater than the default
 
-  See https://tfsec.dev/docs/aws/AWS091/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/rds/backup-retention-specified#aws/rds 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/rds_cluster#backup_retention_period 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_instance#backup_retention_period 
+  - https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupRetention 
 
-Check 3
+  Result 2
 
-  [GEN003][WARNING] Block 'aws_db_instance.default' includes a potentially sensitive attribute which is defined within the project.
+  [aws-rds-encrypt-instance-storage-data][[0m[31mHIGH[39m[0m] Resource 'aws_db_instance.default' has no storage encryption defined.
+  /src/main.tf:1-11
+
+
+       1 | resource "aws_db_instance" "default" {
+       2 |   allocated_storage    = 10
+       3 |   engine               = "mysql"
+       4 |   engine_version       = "5.7"
+       5 |   instance_class       = "db.t3.micro"
+       6 |   name                 = "mydb"
+       7 |   username             = "foo"
+       8 |   password             = "foobarbaz"
+       9 |   parameter_group_name = "default.mysql5.7"
+      10 |   skip_final_snapshot  = true
+      11 | }
+      12 | 
+
+  Legacy ID:  AWS052
+  Impact:     Data can be read from RDS instances if compromised
+  Resolution: Enable encryption for RDS instances
+
+  More Info:
+  - https://tfsec.dev/docs/aws/rds/encrypt-instance-storage-data#aws/rds 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_instance 
+  - https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html 
+
+  Result 3
+
+  [general-secrets-sensitive-in-attribute][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Block 'aws_db_instance.default' includes a potentially sensitive attribute which is defined within the project.
   /src/main.tf:8
 
 
        5 |   instance_class       = "db.t3.micro"
        6 |   name                 = "mydb"
        7 |   username             = "foo"
-       8 |   password             = "foobarbaz"
+       8 |   password             = "foobarbaz"    string: "foobarbaz"
        9 |   parameter_group_name = "default.mysql5.7"
       10 |   skip_final_snapshot  = true
       11 | }
 
+  Legacy ID:  GEN003
   Impact:     Block attribute could be leaking secrets
   Resolution: Don't include sensitive data in blocks
 
-  See https://tfsec.dev/docs/general/GEN003/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/general/secrets/sensitive-in-attribute#general/secrets 
+  - https://www.terraform.io/docs/state/sensitive-data.html 
 
   times
   ------------------------------------------
-  disk i/o             21.586ms
-  parsing HCL          17.6µs
-  evaluating values    100µs
-  running checks       4.9928ms
+  disk i/o             47.911583ms
+  parsing HCL          509.667µs
+  evaluating values    1.821875ms
+  running checks       26.184625ms
 
   counts
   ------------------------------------------
   files loaded         1
   blocks               1
-  evaluated blocks     1
   modules              0
-  module blocks        0
-  ignored checks       0
 
-3 potential problems detected.
+  results
+  ------------------------------------------
+  critical             1
+  high                 1
+  medium               1
+  low                  0
+  ignored              0
+
+  3 potential problems detected.
 

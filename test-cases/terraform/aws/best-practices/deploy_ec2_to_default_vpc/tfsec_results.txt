@@ -1,7 +1,32 @@
 
-Check 1
+  Result 1
 
-  [AWS082][ERROR] Resource 'aws_default_vpc.default' should not exist
+  [aws-ec2-enforce-http-token-imds][[0m[31mHIGH[39m[0m] Resource 'aws_instance.t2-instance' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
+  /src/main.tf:49-53
+
+
+      46 |   owners = ["099720109477"] # Canonical
+      47 | }
+      48 | 
+      49 | resource "aws_instance" "t2-instance" {
+      50 |   ami = data.aws_ami.ubuntu.id
+      51 |   instance_type = "t2.micro"
+      52 |   subnet_id = aws_subnet.default-subnet.id
+      53 | }
+      54 | 
+
+  Legacy ID:  AWS079
+  Impact:     Instance metadata service can be interacted with freely
+  Resolution: Enable HTTP token requirement for IMDS
+
+  More Info:
+  - https://tfsec.dev/docs/aws/ec2/enforce-http-token-imds#aws/ec2 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#metadata-options 
+  - https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service 
+
+  Result 2
+
+  [aws-vpc-no-default-vpc][[0m[31mHIGH[39m[0m] Resource 'aws_default_vpc.default' should not exist
   /src/main.tf:12-16
 
 
@@ -17,47 +42,35 @@ Check 1
       18 | resource "aws_subnet" "default-subnet" {
       19 |   vpc_id     = aws_default_vpc.default.id
 
+  Legacy ID:  AWS082
   Impact:     The default VPC does not have critical security features applied
   Resolution: Create a non-default vpc for resources to be created in
 
-  See https://tfsec.dev/docs/aws/AWS082/ for more information. 
-
-Check 2
-
-  [AWS079][ERROR] Resource 'aws_instance.t2-instance' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
-  /src/main.tf:49-53
-
-
-      46 |   owners = ["099720109477"] # Canonical
-      47 | }
-      48 | 
-      49 | resource "aws_instance" "t2-instance" {
-      50 |   ami = data.aws_ami.ubuntu.id
-      51 |   instance_type = "t2.micro"
-      52 |   subnet_id = aws_subnet.default-subnet.id
-      53 | }
-      54 | 
-
-  Impact:     Instance metadata service can be interacted with freely
-  Resolution: Enable HTTP token requirement for IMDS
-
-  See https://tfsec.dev/docs/aws/AWS079/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/vpc/no-default-vpc#aws/vpc 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/default_vpc 
+  - https://docs.aws.amazon.com/vpc/latest/userguide/default-vpc.html 
 
   times
   ------------------------------------------
-  disk i/o             27.1522ms
-  parsing HCL          72.5µs
-  evaluating values    415.1µs
-  running checks       4.2144ms
+  disk i/o             50.030459ms
+  parsing HCL          626.541µs
+  evaluating values    5.142251ms
+  running checks       24.936959ms
 
   counts
   ------------------------------------------
   files loaded         1
   blocks               8
-  evaluated blocks     8
   modules              0
-  module blocks        0
-  ignored checks       0
 
-2 potential problems detected.
+  results
+  ------------------------------------------
+  critical             0
+  high                 2
+  medium               0
+  low                  0
+  ignored              0
+
+  2 potential problems detected.
 

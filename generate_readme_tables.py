@@ -23,8 +23,11 @@ def recurse_dir(path, level, total_case_catch_stats, is_root):
             results += recurse_dir(os.path.join(path, subdir), level + 1, total_case_catch_stats, is_root = False)
 
     if not found_sub_categories:
-        results += f'### {path}\n'
+        results += "<details>"
+        results += f'<summary>{path}</summary>\n\n'
         results += generate_category_test_case_table(path, total_case_catch_stats)
+        results += "</details>\n\n"
+
 
     return results
 

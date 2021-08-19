@@ -4,7 +4,7 @@ Failed to run the process ...
     "isPrivate": true,
     "isLicensesEnabled": false,
     "ignoreSettings": null,
-    "org": "y",
+    "org": "yi2020",
     "projectId": "",
     "policy": ""
   },
@@ -13,14 +13,48 @@ Failed to run the process ...
   "dependencyCount": 0,
   "licensesPolicy": null,
   "ignoreSettings": null,
-  "targetFile": "/project/main.tf",
+  "targetFile": "main.tf",
   "projectName": "project",
-  "org": "y",
+  "org": "yi2020",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
   "packageManager": "terraformconfig",
   "path": "/project",
   "projectType": "terraformconfig",
-  "infrastructureAsCodeIssues": []
+  "ok": false,
+  "infrastructureAsCodeIssues": [
+    {
+      "severity": "low",
+      "resolve": "Set `encryption_configuration.kms_key` attribute to customer managed KMS key",
+      "id": "SNYK-CC-AWS-418",
+      "impact": "Scope of use of the key cannot be controlled via KMS/IAM policies",
+      "msg": "resource.aws_ecr_repository[foo].encryption_configuration",
+      "remediation": {
+        "cloudformation": "Set `Properties.EncryptionConfiguration.KmsKey` attribute to customer managed KMS key",
+        "terraform": "Set `encryption_configuration.kms_key` attribute to customer managed KMS key"
+      },
+      "subType": "ECR",
+      "issue": "ECR repository is not encrypted with customer managed key",
+      "publicId": "SNYK-CC-AWS-418",
+      "title": "ECR repository is not encrypted with customer managed key",
+      "references": [
+        "https://docs.aws.amazon.com/AmazonECR/latest/userguide/encryption-at-rest.html",
+        "https://docs.aws.amazon.com/whitepapers/latest/kms-best-practices/aws-managed-and-customer-managed-cmks.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "ECR repository is not encrypted with customer managed key",
+        "impact": "Scope of use of the key cannot be controlled via KMS/IAM policies",
+        "resolve": "Set `encryption_configuration.kms_key` attribute to customer managed KMS key"
+      },
+      "lineNumber": 1,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-418",
+      "path": [
+        "resource",
+        "aws_ecr_repository[foo]",
+        "encryption_configuration"
+      ]
+    }
+  ]
 }

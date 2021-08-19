@@ -4,7 +4,7 @@ Failed to run the process ...
     "isPrivate": true,
     "isLicensesEnabled": false,
     "ignoreSettings": null,
-    "org": "y",
+    "org": "yi2020",
     "projectId": "",
     "policy": ""
   },
@@ -13,14 +13,48 @@ Failed to run the process ...
   "dependencyCount": 0,
   "licensesPolicy": null,
   "ignoreSettings": null,
-  "targetFile": "/project/main.tf",
+  "targetFile": "main.tf",
   "projectName": "project",
-  "org": "y",
+  "org": "yi2020",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
   "packageManager": "terraformconfig",
   "path": "/project",
   "projectType": "terraformconfig",
-  "infrastructureAsCodeIssues": []
+  "ok": false,
+  "infrastructureAsCodeIssues": [
+    {
+      "severity": "low",
+      "resolve": "Set `organization_aggregation_source.all_regions` attribute to `true`",
+      "id": "SNYK-CC-AWS-406",
+      "impact": "Compliance reports and dashboards may not include all relevant information",
+      "msg": "resource.aws_config_configuration_aggregator[organization].organization_aggregation_source.all_regions",
+      "remediation": {
+        "cloudformation": "Set `Properties.AccountAggregationSources.AllAwsRegions` attribute to `true`",
+        "terraform": "Set `organization_aggregation_source.all_regions` attribute to `true`"
+      },
+      "subType": "Config",
+      "issue": "Configuration aggregator does not collect data from all regions",
+      "publicId": "SNYK-CC-AWS-406",
+      "title": "Configuration aggregator does not contain all regions",
+      "references": [
+        "https://docs.aws.amazon.com/config/latest/developerguide/aggregate-data.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Configuration aggregator does not collect data from all regions",
+        "impact": "Compliance reports and dashboards may not include all relevant information",
+        "resolve": "Set `organization_aggregation_source.all_regions` attribute to `true`"
+      },
+      "lineNumber": 1,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-406",
+      "path": [
+        "resource",
+        "aws_config_configuration_aggregator[organization]",
+        "organization_aggregation_source",
+        "all_regions"
+      ]
+    }
+  ]
 }

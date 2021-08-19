@@ -2,56 +2,52 @@
 
 Violation Details -
     
-	Description    :	Ensure every security group should have a description to ease the process of Auditing
-	File           :	main.tf
-	Plan Root      :	./
-	Line           :	15
-	Severity       :	LOW
-	
-	-----------------------------------------------------------------------
-	
-	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
-	File           :	main.tf
-	Plan Root      :	./
-	Line           :	61
-	Severity       :	MEDIUM
-	
-	-----------------------------------------------------------------------
-	
-	Description    :	Ensure VPC flow logging is enabled in all VPCs
-	File           :	main.tf
-	Plan Root      :	./
-	Line           :	10
-	Severity       :	MEDIUM
-	
-	-----------------------------------------------------------------------
-	
-	Description    :	Ensure that EC2 is EBS optimized
-	File           :	main.tf
-	Plan Root      :	./
-	Line           :	61
-	Severity       :	MEDIUM
-	
-	-----------------------------------------------------------------------
-	
 	Description    :	Ensure that detailed monitoring is enabled for EC2 instances.
 	File           :	main.tf
+	Module Name    :	root
 	Plan Root      :	./
 	Line           :	61
 	Severity       :	HIGH
 	
 	-----------------------------------------------------------------------
 	
+	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	61
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure Security Groups Unrestricted Specific Ports https (TCP,443) is not exposed to private hosts more than 32
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	15
+	Severity       :	LOW
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure VPC flow logging is enabled in all VPCs
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	10
+	Severity       :	LOW
+	
+	-----------------------------------------------------------------------
+	
 
 Scan Summary -
 
-	File/Folder         :	tool-compare/test-cases/terraform/aws/best-practices/security_group_no_description_for_rules
+	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-06-01 05:56:05.713475 +0000 UTC
-	Policies Validated  :	612
-	Violated Policies   :	5
-	Low                 :	1
-	Medium              :	3
+	Scanned At          :	2021-08-18 18:01:11.939803926 +0000 UTC
+	Policies Validated  :	144
+	Violated Policies   :	4
+	Low                 :	2
+	Medium              :	1
 	High                :	1
 	
 

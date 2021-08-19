@@ -3,10 +3,10 @@ Failed to run the process ...
   "meta": {
     "isPrivate": true,
     "isLicensesEnabled": false,
-    "policy": "",
     "ignoreSettings": null,
+    "org": "yi2020",
     "projectId": "",
-    "org": "y"
+    "policy": ""
   },
   "filesystemPolicy": false,
   "vulnerabilities": [],
@@ -15,27 +15,41 @@ Failed to run the process ...
   "ignoreSettings": null,
   "targetFile": "main.tf",
   "projectName": "project",
-  "org": "y",
+  "org": "yi2020",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
   "packageManager": "terraformconfig",
   "path": "/project",
   "projectType": "terraformconfig",
+  "ok": false,
   "infrastructureAsCodeIssues": [
     {
-      "id": "SNYK-CC-TF-116",
-      "title": "IAM Policy attached to user",
-      "type": "terraform",
-      "subType": "IAM",
       "severity": "low",
+      "resolve": "Attach policy to a group or role, instead of user. For example, use `aws_iam_group_policy_attachment` resource",
+      "id": "SNYK-CC-TF-116",
+      "impact": "Increases the security management overhead",
+      "msg": "resource.aws_iam_user_policy_attachment[managed-policy-attach]",
+      "remediation": {
+        "cloudformation": "Attach policy to a group or role, instead of user. Remove `Properties.Users` attribute",
+        "terraform": "Attach policy to a group or role, instead of user. For example, use `aws_iam_group_policy_attachment` resource"
+      },
+      "subType": "IAM",
+      "issue": "The IAM policy is directly attached to a user",
+      "publicId": "SNYK-CC-TF-116",
+      "title": "IAM Policy attached to user",
+      "references": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/id.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#use-groups-for-permissions"
+      ],
       "isIgnored": false,
       "iacDescription": {
-        "issue": "The IAM policy is directly attached to an user",
+        "issue": "The IAM policy is directly attached to a user",
         "impact": "Increases the security management overhead",
-        "resolve": "Attach policy to a group or role, instead of user. For example use `aws_iam_group_policy_attachment` resource"
+        "resolve": "Attach policy to a group or role, instead of user. For example, use `aws_iam_group_policy_attachment` resource"
       },
       "lineNumber": 28,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-116",
       "path": [
         "resource",
         "aws_iam_user_policy_attachment[managed-policy-attach]"

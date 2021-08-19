@@ -1,7 +1,7 @@
 
-Check 1
+  Result 1
 
-  [AWS035][ERROR] Resource 'aws_elasticache_replication_group.example' defines an unencrypted Elasticache Replication Group (missing at_rest_encryption_enabled attribute).
+  [aws-elastic-search-encrypt-replication-group][[0m[31mHIGH[39m[0m] Resource 'aws_elasticache_replication_group.example' defines an unencrypted Elasticache Replication Group (missing at_rest_encryption_enabled attribute).
   /src/main.tf:1-10
 
 
@@ -17,14 +17,18 @@ Check 1
       10 | }
       11 | 
 
+  Legacy ID:  AWS035
   Impact:     Data in the replication group could be readable if compromised
   Resolution: Enable encryption for replication group
 
-  See https://tfsec.dev/docs/aws/AWS035/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/elastic-search/encrypt-replication-group#aws/elastic-search 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticache_replication_group#at_rest_encryption_enabled 
+  - https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/at-rest-encryption.html 
 
-Check 2
+  Result 2
 
-  [AWS036][ERROR] Resource 'aws_elasticache_replication_group.example' defines an unencrypted Elasticache Replication Group (missing transit_encryption_enabled attribute).
+  [aws-elasticache-enable-in-transit-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_elasticache_replication_group.example' defines an unencrypted Elasticache Replication Group (missing transit_encryption_enabled attribute).
   /src/main.tf:1-10
 
 
@@ -40,26 +44,35 @@ Check 2
       10 | }
       11 | 
 
+  Legacy ID:  AWS036
   Impact:     In transit data in the Replication Group could be read if intercepted
-  Resolution: Enable in transit encryptuon for replication group
+  Resolution: Enable in transit encryption for replication group
 
-  See https://tfsec.dev/docs/aws/AWS036/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/elasticache/enable-in-transit-encryption#aws/elasticache 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticache_replication_group#transit_encryption_enabled 
+  - https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/in-transit-encryption.html 
 
   times
   ------------------------------------------
-  disk i/o             23.3595ms
-  parsing HCL          18.4µs
-  evaluating values    332.8µs
-  running checks       5.0468ms
+  disk i/o             51.278792ms
+  parsing HCL          603.458µs
+  evaluating values    2.237999ms
+  running checks       18.739666ms
 
   counts
   ------------------------------------------
   files loaded         1
   blocks               1
-  evaluated blocks     1
   modules              0
-  module blocks        0
-  ignored checks       0
 
-2 potential problems detected.
+  results
+  ------------------------------------------
+  critical             0
+  high                 2
+  medium               0
+  low                  0
+  ignored              0
+
+  2 potential problems detected.
 

@@ -4,7 +4,7 @@ Failed to run the process ...
     "isPrivate": true,
     "isLicensesEnabled": false,
     "ignoreSettings": null,
-    "org": "y",
+    "org": "yi2020",
     "projectId": "",
     "policy": ""
   },
@@ -13,32 +13,63 @@ Failed to run the process ...
   "dependencyCount": 0,
   "licensesPolicy": null,
   "ignoreSettings": null,
-  "targetFile": "/project/main.tf",
+  "targetFile": "main.tf",
   "projectName": "project",
-  "org": "y",
+  "org": "yi2020",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
   "packageManager": "terraformconfig",
   "path": "/project",
   "projectType": "terraformconfig",
+  "ok": false,
   "infrastructureAsCodeIssues": [
     {
+      "severity": "low",
+      "resolve": "Set `versioning.enabled` attribute to `true`",
+      "id": "SNYK-CC-TF-124",
+      "impact": "Changes or deletion of objects will not be reversible",
+      "msg": "resource.aws_s3_bucket[b].versioning.enabled",
+      "remediation": {
+        "cloudformation": "Set `Properties.VersioningConfiguration.Status` attribute to `Enabled`",
+        "terraform": "Set `versioning.enabled` attribute to `true`"
+      },
+      "subType": "S3",
+      "issue": "S3 bucket versioning is disabled",
+      "publicId": "SNYK-CC-TF-124",
+      "title": "S3 bucket versioning disabled",
+      "references": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/dev/Versioning.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "S3 bucket versioning is disabled",
+        "impact": "Changes or deletion of objects will not be reversible",
+        "resolve": "Set `versioning.enabled` attribute to `true`"
+      },
+      "lineNumber": 1,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-124",
+      "path": [
+        "resource",
+        "aws_s3_bucket[b]",
+        "versioning",
+        "enabled"
+      ]
+    },
+    {
+      "severity": "medium",
       "resolve": "Set `server_side_encryption_configuration` block attribute",
       "id": "SNYK-CC-TF-4",
       "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+      "msg": "input.resource.aws_s3_bucket[b]",
       "remediation": {
         "cloudformation": "Set `BucketEncryption` attribute",
         "terraform": "Set `server_side_encryption_configuration` block attribute"
       },
       "subType": "S3",
-      "policyEngineType": "opa",
+      "issue": "That by default S3 buckets do not encrypt the objects that are stored.",
       "publicId": "SNYK-CC-TF-4",
       "title": "Non-encrypted S3 Bucket",
-      "severity": "medium",
-      "msg": "input.resource.aws_s3_bucket[b]",
-      "issue": "That by default S3 buckets do not encrypt the objects that are stored.",
-      "type": "terraform",
       "references": [],
       "isIgnored": false,
       "iacDescription": {
@@ -47,6 +78,7 @@ Failed to run the process ...
         "resolve": "Set `server_side_encryption_configuration` block attribute"
       },
       "lineNumber": 1,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-4",
       "path": [
         "input",
         "resource",
@@ -54,21 +86,19 @@ Failed to run the process ...
       ]
     },
     {
+      "severity": "low",
       "resolve": "Add `logging` block attribute",
       "id": "SNYK-CC-TF-45",
       "impact": "There will be no audit trail of access to s3 objects",
+      "msg": "input.resource.aws_s3_bucket[b].logging",
       "remediation": {
         "cloudformation": "Set `Properties.LoggingConfiguration` attribute",
         "terraform": "Add `logging` block attribute"
       },
       "subType": "S3",
-      "policyEngineType": "opa",
+      "issue": "The s3 access logs will not be collected",
       "publicId": "SNYK-CC-TF-45",
       "title": "S3 server access logging is disabled",
-      "severity": "low",
-      "msg": "input.resource.aws_s3_bucket[b].logging",
-      "issue": "The s3 access logs will not be collected",
-      "type": "terraform",
       "references": [
         "https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerLogs.html"
       ],
@@ -79,6 +109,7 @@ Failed to run the process ...
         "resolve": "Add `logging` block attribute"
       },
       "lineNumber": 1,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-45",
       "path": [
         "input",
         "resource",
@@ -87,17 +118,15 @@ Failed to run the process ...
       ]
     },
     {
+      "severity": "low",
       "resolve": "Set `versioning.mfa_delete` attribute to `true`",
       "id": "SNYK-CC-TF-127",
       "impact": "Object could be deleted without stronger MFA authorization",
+      "msg": "resource.aws_s3_bucket[b].versioning.mfa_delete",
       "subType": "S3",
-      "policyEngineType": "opa",
+      "issue": "S3 bucket will not enforce MFA login on delete requests",
       "publicId": "SNYK-CC-TF-127",
       "title": "S3 bucket MFA delete control disabled",
-      "severity": "low",
-      "msg": "resource.aws_s3_bucket[b].versioning.mfa_delete",
-      "issue": "S3 bucket will not enforce MFA login on delete requests",
-      "type": "terraform",
       "references": [
         "https://docs.aws.amazon.com/AmazonS3/latest/dev/Versioning.html",
         "https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingMFADelete.html"
@@ -109,40 +138,12 @@ Failed to run the process ...
         "resolve": "Set `versioning.mfa_delete` attribute to `true`"
       },
       "lineNumber": 1,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-127",
       "path": [
         "resource",
         "aws_s3_bucket[b]",
         "versioning",
         "mfa_delete"
-      ]
-    },
-    {
-      "resolve": "Set `versioning.enabled` attribute to `true`",
-      "id": "SNYK-CC-TF-124",
-      "impact": "Changes or deletion of objects will not be reversible",
-      "subType": "S3",
-      "policyEngineType": "opa",
-      "publicId": "SNYK-CC-TF-124",
-      "title": "S3 bucket versioning disabled",
-      "severity": "low",
-      "msg": "resource.aws_s3_bucket[b].versioning.enabled",
-      "issue": "S3 bucket versioning is disabled",
-      "type": "terraform",
-      "references": [
-        "https://docs.aws.amazon.com/AmazonS3/latest/dev/Versioning.html"
-      ],
-      "isIgnored": false,
-      "iacDescription": {
-        "issue": "S3 bucket versioning is disabled",
-        "impact": "Changes or deletion of objects will not be reversible",
-        "resolve": "Set `versioning.enabled` attribute to `true`"
-      },
-      "lineNumber": 1,
-      "path": [
-        "resource",
-        "aws_s3_bucket[b]",
-        "versioning",
-        "enabled"
       ]
     }
   ]

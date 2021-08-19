@@ -1,108 +1,7 @@
 
-Check 1
+  Result 1
 
-  [AWS017][ERROR] Resource 'aws_s3_bucket.logging' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
-  /src/main.tf:5-12
-
-
-       2 |   region = "us-east-2"
-       3 | }
-       4 | 
-       5 | resource "aws_s3_bucket" "logging" {
-       6 |   bucket = "dist-cloud-test-logs"
-       7 |   acl    = "log-delivery-write"
-       8 | 
-       9 |   tags = {
-      10 |     Name = "dist-cloud-test-logs"
-      11 |   }
-      12 | }
-      13 | 
-      14 | resource "aws_s3_bucket" "dist" {
-      15 |   bucket = "dist-cloud-test"
-
-  Impact:     The bucket objects could be read if compromised
-  Resolution: Configure bucket encryption
-
-  See https://tfsec.dev/docs/aws/AWS017/ for more information. 
-
-Check 2
-
-  [AWS077][ERROR] Resource 'aws_s3_bucket.logging' does not have versioning enabled
-  /src/main.tf:5-12
-
-
-       2 |   region = "us-east-2"
-       3 | }
-       4 | 
-       5 | resource "aws_s3_bucket" "logging" {
-       6 |   bucket = "dist-cloud-test-logs"
-       7 |   acl    = "log-delivery-write"
-       8 | 
-       9 |   tags = {
-      10 |     Name = "dist-cloud-test-logs"
-      11 |   }
-      12 | }
-      13 | 
-      14 | resource "aws_s3_bucket" "dist" {
-      15 |   bucket = "dist-cloud-test"
-
-  Impact:     Deleted or modified data would not be recoverable
-  Resolution: Enable versioning to protect against accidental/malicious removal or modification
-
-  See https://tfsec.dev/docs/aws/AWS077/ for more information. 
-
-Check 3
-
-  [AWS077][ERROR] Resource 'aws_s3_bucket.dist' does not have versioning enabled
-  /src/main.tf:14-25
-
-
-      11 |   }
-      12 | }
-      13 | 
-      14 | resource "aws_s3_bucket" "dist" {
-      15 |   bucket = "dist-cloud-test"
-      16 |   acl    = "public-read-write"
-      17 | 
-      18 |   tags = {
-      19 |     Name = "dist-cloud-test"
-      20 |   }
-      21 |   logging {
-      22 |    	target_bucket = aws_s3_bucket.logging.id
-      23 |   	target_prefix = "log/"
-      24 |   }
-      25 | }
-      26 | 
-      27 | locals {
-      28 |   s3_origin_id = "myDistTestCloduFront"
-
-  Impact:     Deleted or modified data would not be recoverable
-  Resolution: Enable versioning to protect against accidental/malicious removal or modification
-
-  See https://tfsec.dev/docs/aws/AWS077/ for more information. 
-
-Check 4
-
-  [AWS020][ERROR] Resource 'aws_cloudfront_distribution.s3_distribution' defines a CloudFront distribution that allows unencrypted communications.
-  /src/main.tf:64
-
-
-      61 |       }
-      62 |     }
-      63 | 
-      64 |     viewer_protocol_policy = "allow-all"
-      65 |     min_ttl                = 0
-      66 |     default_ttl            = 3600
-      67 |     max_ttl                = 86400
-
-  Impact:     CloudFront is available through an unencrypted connection
-  Resolution: Only allow HTTPS for CloudFront distribution communication
-
-  See https://tfsec.dev/docs/aws/AWS020/ for more information. 
-
-Check 5
-
-  [AWS021][ERROR] Resource 'aws_cloudfront_distribution.s3_distribution' defines outdated SSL/TLS policies (missing minimum_protocol_version attribute)
+  [aws-cloudfront-use-secure-tls-policy][[0m[31mHIGH[39m[0m] Resource 'aws_cloudfront_distribution.s3_distribution' defines outdated SSL/TLS policies (missing minimum_protocol_version attribute)
   /src/main.tf:128-130
 
 
@@ -114,69 +13,78 @@ Check 5
      130 |   }
      131 | }
 
-  Impact:     Outdated SSL policies increase exposure to known vulnerabilites
+  Legacy ID:  AWS021
+  Impact:     Outdated SSL policies increase exposure to known vulnerabilities
   Resolution: Use the most modern TLS/SSL policies available
 
-  See https://tfsec.dev/docs/aws/AWS021/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/cloudfront/use-secure-tls-policy#aws/cloudfront 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution#minimum_protocol_version 
+  - https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/secure-connections-supported-viewer-protocols-ciphers.html 
 
-Check 6
+  Result 2
 
-  [AWS072][ERROR] Resource 'aws_cloudfront_distribution.s3_distribution' does not use HTTPS in Viewer Protocol Policy
-  /src/main.tf:51-68
-
-
-      48 | 
-      49 |   aliases = ["mysite.example.com", "yoursite.example.com"]
-      50 | 
-      51 |   default_cache_behavior {
-      52 |     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
-      53 |     cached_methods   = ["GET", "HEAD"]
-      54 |     target_origin_id = local.s3_origin_id
-      55 | 
-      56 |     forwarded_values {
-      57 |       query_string = false
-      58 | 
-      59 |       cookies {
-      60 |         forward = "none"
-      61 |       }
-      62 |     }
-      63 | 
-      64 |     viewer_protocol_policy = "allow-all"
-      65 |     min_ttl                = 0
-      66 |     default_ttl            = 3600
-      67 |     max_ttl                = 86400
-      68 |   }
-      69 | 
-      70 |   # Cache behavior with precedence 0
-      71 |   ordered_cache_behavior {
-
-  Impact:     HTTP traffic can be read if intercepted
-  Resolution: Only use HTTPS in the Viewer Protocol Policy
-
-  See https://tfsec.dev/docs/aws/AWS072/ for more information. 
-
-Check 7
-
-  [AWS001][WARNING] Resource 'aws_s3_bucket.dist' has an ACL which allows public access.
-  /src/main.tf:16
+  [aws-s3-enable-bucket-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_s3_bucket.logging' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
+  /src/main.tf:5-12
 
 
+       2 |   region = "us-east-2"
+       3 | }
+       4 | 
+       5 | resource "aws_s3_bucket" "logging" {
+       6 |   bucket = "dist-cloud-test-logs"
+       7 |   acl    = "log-delivery-write"
+       8 | 
+       9 |   tags = {
+      10 |     Name = "dist-cloud-test-logs"
+      11 |   }
+      12 | }
       13 | 
       14 | resource "aws_s3_bucket" "dist" {
       15 |   bucket = "dist-cloud-test"
-      16 |   acl    = "public-read-write"
-      17 | 
-      18 |   tags = {
-      19 |     Name = "dist-cloud-test"
 
-  Impact:     The contents of the bucket can be accessed publicly
-  Resolution: Apply a more restrictive bucket ACL
+  Legacy ID:  AWS017
+  Impact:     The bucket objects could be read if compromised
+  Resolution: Configure bucket encryption
 
-  See https://tfsec.dev/docs/aws/AWS001/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/s3/enable-bucket-encryption#aws/s3 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#enable-default-server-side-encryption 
+  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-encryption.html 
 
-Check 8
+  Result 3
 
-  [AWS017][ERROR] Resource 'aws_s3_bucket.dist' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
+  [aws-s3-enable-versioning][[0m[33mMEDIUM[39m[0m] Resource 'aws_s3_bucket.logging' does not have versioning enabled
+  /src/main.tf:5-12
+
+
+       2 |   region = "us-east-2"
+       3 | }
+       4 | 
+       5 | resource "aws_s3_bucket" "logging" {
+       6 |   bucket = "dist-cloud-test-logs"
+       7 |   acl    = "log-delivery-write"
+       8 | 
+       9 |   tags = {
+      10 |     Name = "dist-cloud-test-logs"
+      11 |   }
+      12 | }
+      13 | 
+      14 | resource "aws_s3_bucket" "dist" {
+      15 |   bucket = "dist-cloud-test"
+
+  Legacy ID:  AWS077
+  Impact:     Deleted or modified data would not be recoverable
+  Resolution: Enable versioning to protect against accidental/malicious removal or modification
+
+  More Info:
+  - https://tfsec.dev/docs/aws/s3/enable-versioning#aws/s3 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#versioning 
+  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/Versioning.html 
+
+  Result 4
+
+  [aws-s3-enable-versioning][[0m[33mMEDIUM[39m[0m] Resource 'aws_s3_bucket.dist' does not have versioning enabled
   /src/main.tf:14-25
 
 
@@ -199,14 +107,18 @@ Check 8
       27 | locals {
       28 |   s3_origin_id = "myDistTestCloduFront"
 
-  Impact:     The bucket objects could be read if compromised
-  Resolution: Configure bucket encryption
+  Legacy ID:  AWS077
+  Impact:     Deleted or modified data would not be recoverable
+  Resolution: Enable versioning to protect against accidental/malicious removal or modification
 
-  See https://tfsec.dev/docs/aws/AWS017/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/s3/enable-versioning#aws/s3 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#versioning 
+  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/Versioning.html 
 
-Check 9
+  Result 5
 
-  [AWS045][WARNING] Resource 'aws_cloudfront_distribution.s3_distribution' does not have a WAF in front of it.
+  [aws-cloudfront-enable-waf][[0m[31mHIGH[39m[0m] Resource 'aws_cloudfront_distribution.s3_distribution' does not have a WAF in front of it.
   /src/main.tf:32-131
 
 
@@ -314,26 +226,179 @@ Check 9
      130 |   }
      131 | }
 
+  Legacy ID:  AWS045
   Impact:     Complex web application attacks can more easily be performed without a WAF
   Resolution: Enable WAF for the CloudFront distribution
 
-  See https://tfsec.dev/docs/aws/AWS045/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/cloudfront/enable-waf#aws/cloudfront 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution#web_acl_id 
+  - https://docs.aws.amazon.com/waf/latest/developerguide/cloudfront-features.html 
+
+  Result 6
+
+  [aws-cloudfront-enforce-https][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'aws_cloudfront_distribution.s3_distribution' defines a CloudFront distribution that allows unencrypted communications.
+  /src/main.tf:64
+
+
+      61 |       }
+      62 |     }
+      63 | 
+      64 |     viewer_protocol_policy = "allow-all"    string: "allow-all"
+      65 |     min_ttl                = 0
+      66 |     default_ttl            = 3600
+      67 |     max_ttl                = 86400
+
+  Legacy ID:  AWS020
+  Impact:     CloudFront is available through an unencrypted connection
+  Resolution: Only allow HTTPS for CloudFront distribution communication
+
+  More Info:
+  - https://tfsec.dev/docs/aws/cloudfront/enforce-https#aws/cloudfront 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution#viewer_protocol_policy 
+  - https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-https-cloudfront-to-s3-origin.html 
+
+  Result 7
+
+  [aws-s3-enable-bucket-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_s3_bucket.dist' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
+  /src/main.tf:14-25
+
+
+      11 |   }
+      12 | }
+      13 | 
+      14 | resource "aws_s3_bucket" "dist" {
+      15 |   bucket = "dist-cloud-test"
+      16 |   acl    = "public-read-write"
+      17 | 
+      18 |   tags = {
+      19 |     Name = "dist-cloud-test"
+      20 |   }
+      21 |   logging {
+      22 |    	target_bucket = aws_s3_bucket.logging.id
+      23 |   	target_prefix = "log/"
+      24 |   }
+      25 | }
+      26 | 
+      27 | locals {
+      28 |   s3_origin_id = "myDistTestCloduFront"
+
+  Legacy ID:  AWS017
+  Impact:     The bucket objects could be read if compromised
+  Resolution: Configure bucket encryption
+
+  More Info:
+  - https://tfsec.dev/docs/aws/s3/enable-bucket-encryption#aws/s3 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#enable-default-server-side-encryption 
+  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-encryption.html 
+
+  Result 8
+
+  [aws-s3-no-public-access-with-acl][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'aws_s3_bucket.dist' has an ACL which allows public access.
+  /src/main.tf:16
+
+
+      13 | 
+      14 | resource "aws_s3_bucket" "dist" {
+      15 |   bucket = "dist-cloud-test"
+      16 |   acl    = "public-read-write"    string: "public-read-write"
+      17 | 
+      18 |   tags = {
+      19 |     Name = "dist-cloud-test"
+
+  Legacy ID:  AWS001
+  Impact:     The contents of the bucket can be accessed publicly
+  Resolution: Apply a more restrictive bucket ACL
+
+  More Info:
+  - https://tfsec.dev/docs/aws/s3/no-public-access-with-acl#aws/s3 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket 
+  - https://aws.amazon.com/premiumsupport/knowledge-center/secure-s3-resources/ 
+
+  Result 9
+
+  [aws-s3-specify-public-access-block][[0m[33mMEDIUM[39m[0m] Resource aws_s3_bucket.logging has no associated aws_s3_bucket_public_access_block.
+  /src/main.tf:5-12
+
+
+       2 |   region = "us-east-2"
+       3 | }
+       4 | 
+       5 | resource "aws_s3_bucket" "logging" {
+       6 |   bucket = "dist-cloud-test-logs"
+       7 |   acl    = "log-delivery-write"
+       8 | 
+       9 |   tags = {
+      10 |     Name = "dist-cloud-test-logs"
+      11 |   }
+      12 | }
+      13 | 
+      14 | resource "aws_s3_bucket" "dist" {
+      15 |   bucket = "dist-cloud-test"
+
+  Legacy ID:  AWS098
+  Impact:     Public access policies may be applied to sensitive data buckets
+  Resolution: Define a aws_s3_bucket_public_access_block for the given bucket to control public access policies
+
+  More Info:
+  - https://tfsec.dev/docs/aws/s3/specify-public-access-block#aws/s3 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#bucket 
+  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html 
+
+  Result 10
+
+  [aws-s3-specify-public-access-block][[0m[33mMEDIUM[39m[0m] Resource aws_s3_bucket.dist has no associated aws_s3_bucket_public_access_block.
+  /src/main.tf:14-25
+
+
+      11 |   }
+      12 | }
+      13 | 
+      14 | resource "aws_s3_bucket" "dist" {
+      15 |   bucket = "dist-cloud-test"
+      16 |   acl    = "public-read-write"
+      17 | 
+      18 |   tags = {
+      19 |     Name = "dist-cloud-test"
+      20 |   }
+      21 |   logging {
+      22 |    	target_bucket = aws_s3_bucket.logging.id
+      23 |   	target_prefix = "log/"
+      24 |   }
+      25 | }
+      26 | 
+      27 | locals {
+      28 |   s3_origin_id = "myDistTestCloduFront"
+
+  Legacy ID:  AWS098
+  Impact:     Public access policies may be applied to sensitive data buckets
+  Resolution: Define a aws_s3_bucket_public_access_block for the given bucket to control public access policies
+
+  More Info:
+  - https://tfsec.dev/docs/aws/s3/specify-public-access-block#aws/s3 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#bucket 
+  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html 
 
   times
   ------------------------------------------
-  disk i/o             21.5351ms
-  parsing HCL          21.7µs
-  evaluating values    352.1µs
-  running checks       14.9154ms
+  disk i/o             50.612751ms
+  parsing HCL          584.959µs
+  evaluating values    2.858417ms
+  running checks       79.13975ms
 
   counts
   ------------------------------------------
   files loaded         1
   blocks               5
-  evaluated blocks     5
   modules              0
-  module blocks        0
-  ignored checks       0
 
-9 potential problems detected.
+  results
+  ------------------------------------------
+  critical             2
+  high                 4
+  medium               4
+  low                  0
+  ignored              0
+
+  10 potential problems detected.
 

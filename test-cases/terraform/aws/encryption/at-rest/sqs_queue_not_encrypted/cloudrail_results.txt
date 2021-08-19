@@ -1,13 +1,13 @@
 
 WARNINGs found:
-Rule: Ensure SQS queues are set to be encrypted at rest
+Rule: Ensure all resources that can be tagged have at least one tag
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_sqs_queue.cloudrail] (main.tf:5)
      Violating Resource: [aws_sqs_queue.cloudrail]  (main.tf:5)
 
      Evidence:
-             | The SQS queue aws_sqs_queue.cloudrail                             is not set to use encryption at rest
+             | Resource SQS queue aws_sqs_queue.cloudrail does not have any tags set
 
 
 -----------------------------------------------
@@ -22,14 +22,14 @@ Rule: Ensure use of SQS queue policy, and no action wildcards are being used
 
 
 -----------------------------------------------
-Rule: Ensure all resources that can be tagged have at least one tag
+Rule: Ensure SQS queues are set to be encrypted at rest
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_sqs_queue.cloudrail] (main.tf:5)
      Violating Resource: [aws_sqs_queue.cloudrail]  (main.tf:5)
 
      Evidence:
-             | Resource SQS queue aws_sqs_queue.cloudrail does not have any tags set
+             | The SQS queue aws_sqs_queue.cloudrail                             is not set to use encryption at rest
 
 
 -----------------------------------------------

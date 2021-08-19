@@ -4,7 +4,7 @@ Failed to run the process ...
     "isPrivate": true,
     "isLicensesEnabled": false,
     "ignoreSettings": null,
-    "org": "y",
+    "org": "yi2020",
     "projectId": "",
     "policy": ""
   },
@@ -13,28 +13,31 @@ Failed to run the process ...
   "dependencyCount": 0,
   "licensesPolicy": null,
   "ignoreSettings": null,
-  "targetFile": "/project/main.tf",
+  "targetFile": "main.tf",
   "projectName": "project",
-  "org": "y",
+  "org": "yi2020",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
   "packageManager": "terraformconfig",
   "path": "/project",
   "projectType": "terraformconfig",
+  "ok": false,
   "infrastructureAsCodeIssues": [
     {
-      "resolve": "Set `storage_encrypted` attribute to true",
+      "severity": "medium",
+      "resolve": "Set `storage_encrypted` attribute to `true`",
       "id": "SNYK-CC-TF-205",
       "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+      "msg": "resource.aws_neptune_cluster[test].storage_encrypted",
+      "remediation": {
+        "cloudformation": "Set `Properties.StorageEncrypted` attribute to `true`",
+        "terraform": "Set `storage_encrypted` attribute to `true`"
+      },
       "subType": "Neptune",
-      "policyEngineType": "opa",
+      "issue": "The Neptune Cluster storage encrypted set by default to false",
       "publicId": "SNYK-CC-TF-205",
       "title": "Non-encrypted Neptune cluster at rest",
-      "severity": "medium",
-      "msg": "resource.aws_neptune_cluster[test].storage_encrypted",
-      "issue": "The Neptune Cluster storage encrypted set by default to false",
-      "type": "terraform",
       "references": [
         "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/neptune_cluster#storage_encrypted",
         "https://docs.aws.amazon.com/neptune/latest/userguide/encrypt.html"
@@ -43,9 +46,10 @@ Failed to run the process ...
       "iacDescription": {
         "issue": "The Neptune Cluster storage encrypted set by default to false",
         "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
-        "resolve": "Set `storage_encrypted` attribute to true"
+        "resolve": "Set `storage_encrypted` attribute to `true`"
       },
       "lineNumber": 1,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-205",
       "path": [
         "resource",
         "aws_neptune_cluster[test]",

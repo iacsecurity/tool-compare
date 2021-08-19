@@ -1,16 +1,5 @@
 
 WARNINGs found:
-Rule: Ensure IAM permissions are not given directly to users
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_iam_user.user-1] (main.tf:5)
-     Violating Resource: [aws_iam_policy.managed-policy]  (main.tf:9)
-
-     Evidence:
-             | The user aws_iam_user.user-1 has the policy aws_iam_policy.managed-policy  attached directly to it
-
-
------------------------------------------------
 Rule: Ensure all resources that can be tagged have at least one tag
  - 1 Resources Exposed:
 -----------------------------------------------
@@ -19,6 +8,17 @@ Rule: Ensure all resources that can be tagged have at least one tag
 
      Evidence:
              | Resource IAM user aws_iam_user.user-1 does not have any tags set
+
+
+-----------------------------------------------
+Rule: Ensure IAM permissions are not given directly to users
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_iam_user.user-1] (main.tf:5)
+     Violating Resource: [aws_iam_policy.managed-policy]  (main.tf:9)
+
+     Evidence:
+             | The user aws_iam_user.user-1 has the policy aws_iam_policy.managed-policy  attached directly to it
 
 
 -----------------------------------------------

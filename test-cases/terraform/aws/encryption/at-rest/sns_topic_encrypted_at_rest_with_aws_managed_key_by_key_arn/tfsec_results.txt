@@ -1,37 +1,46 @@
 
-Check 1
+  Result 1
 
-  [AWS016][WARNING] Resource 'aws_sns_topic.test' explicitly uses the default CMK
+  [aws-sns-enable-topic-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_sns_topic.test' explicitly uses the default CMK
   /src/main.tf:11
 
 
        8 | 
        9 | resource "aws_sns_topic" "test" {
       10 |   name              = "sns_ecnrypted"
-      11 |   kms_master_key_id = data.aws_kms_key.by_alias.arn
+      11 |   kms_master_key_id = data.aws_kms_key.by_alias.arn    unknown: ???
       12 | }
       13 | 
 
+  Legacy ID:  AWS016
   Impact:     The SNS topic messages could be read if compromised
   Resolution: Turn on SNS Topic encryption
 
-  See https://tfsec.dev/docs/aws/AWS016/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/sns/enable-topic-encryption#aws/sns 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sns_topic#example-with-server-side-encryption-sse 
+  - https://docs.aws.amazon.com/sns/latest/dg/sns-server-side-encryption.html 
 
   times
   ------------------------------------------
-  disk i/o             42.6916ms
-  parsing HCL          26.2µs
-  evaluating values    656.7µs
-  running checks       5.3201ms
+  disk i/o             44.757792ms
+  parsing HCL          537.792µs
+  evaluating values    3.0815ms
+  running checks       19.800291ms
 
   counts
   ------------------------------------------
   files loaded         1
   blocks               3
-  evaluated blocks     3
   modules              0
-  module blocks        0
-  ignored checks       0
 
-1 potential problems detected.
+  results
+  ------------------------------------------
+  critical             0
+  high                 1
+  medium               0
+  low                  0
+  ignored              0
+
+  1 potential problems detected.
 

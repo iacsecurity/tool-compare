@@ -1,6 +1,90 @@
 Failed to run the process ...
 {
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "ignoreSettings": null,
+    "org": "yi2020",
+    "projectId": "",
+    "policy": ""
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "main.tf",
+  "projectName": "project",
+  "org": "yi2020",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
   "ok": false,
-  "error": "Internal server error",
-  "path": "/project"
+  "infrastructureAsCodeIssues": [
+    {
+      "severity": "medium",
+      "resolve": "Set `root_volume_encryption_enabled` to `true`.",
+      "id": "SNYK-CC-AWS-411",
+      "impact": "Should someone gain unauthorized access to the device or backup the data may be accessed",
+      "msg": "resource.aws_workspaces_workspace[test].root_volume_encryption_enabled",
+      "remediation": {
+        "cloudformation": "Set `Properties.RootVolumeEncryptionEnabled` to `true`.",
+        "terraform": "Set `root_volume_encryption_enabled` to `true`."
+      },
+      "subType": "WorkSpace",
+      "issue": "Root volume in WorkSpace is not encrypted",
+      "publicId": "SNYK-CC-AWS-411",
+      "title": "WorkSpace root device encryption is disabled",
+      "references": [
+        "https://docs.aws.amazon.com/workspaces/latest/adminguide/encrypt-workspaces.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Root volume in WorkSpace is not encrypted",
+        "impact": "Should someone gain unauthorized access to the device or backup the data may be accessed",
+        "resolve": "Set `root_volume_encryption_enabled` to `true`."
+      },
+      "lineNumber": 76,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-411",
+      "path": [
+        "resource",
+        "aws_workspaces_workspace[test]",
+        "root_volume_encryption_enabled"
+      ]
+    },
+    {
+      "severity": "medium",
+      "resolve": "Set `user_volume_encryption_enabled` to `true`",
+      "id": "SNYK-CC-AWS-412",
+      "impact": "Should someone gain unauthorized access to the device or backup they would be able to read the contents",
+      "msg": "resource.aws_workspaces_workspace[test].user_volume_encryption_enabled",
+      "remediation": {
+        "cloudformation": "Set `Properties.UserVolumeEncryptionEnabled` to `true`",
+        "terraform": "Set `user_volume_encryption_enabled` to `true`"
+      },
+      "subType": "WorkSpace",
+      "issue": "User volumes in WorkSpace are not encrypted",
+      "publicId": "SNYK-CC-AWS-412",
+      "title": "WorkSpace user volume encryption is disabled",
+      "references": [
+        "https://docs.aws.amazon.com/workspaces/latest/adminguide/encrypt-workspaces.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "User volumes in WorkSpace are not encrypted",
+        "impact": "Should someone gain unauthorized access to the device or backup they would be able to read the contents",
+        "resolve": "Set `user_volume_encryption_enabled` to `true`"
+      },
+      "lineNumber": 76,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-412",
+      "path": [
+        "resource",
+        "aws_workspaces_workspace[test]",
+        "user_volume_encryption_enabled"
+      ]
+    }
+  ]
 }

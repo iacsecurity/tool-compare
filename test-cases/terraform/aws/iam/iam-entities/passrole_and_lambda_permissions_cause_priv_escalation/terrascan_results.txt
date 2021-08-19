@@ -1,33 +1,14 @@
 
 
-Violation Details -
-    
-	Description    :	Ensure IAM roles do not have any policies attached that may cause priviledge escalation.
-	File           :	main.tf
-	Plan Root      :	./
-	Line           :	25
-	Severity       :	HIGH
-	
-	-----------------------------------------------------------------------
-	
-	Description    :	Ensure IAM roles do not have any policies attached that may cause priviledge escalation.
-	File           :	main.tf
-	Plan Root      :	./
-	Line           :	45
-	Severity       :	HIGH
-	
-	-----------------------------------------------------------------------
-	
-
 Scan Summary -
 
-	File/Folder         :	tool-compare/test-cases/terraform/aws/iam/iam-entities/passrole_and_lambda_permissions_cause_priv_escalation
+	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-06-01 05:55:32.910976 +0000 UTC
-	Policies Validated  :	612
-	Violated Policies   :	2
+	Scanned At          :	2021-08-18 17:49:28.995464128 +0000 UTC
+	Policies Validated  :	0
+	Violated Policies   :	0
 	Low                 :	0
 	Medium              :	0
-	High                :	2
+	High                :	0
 	
 

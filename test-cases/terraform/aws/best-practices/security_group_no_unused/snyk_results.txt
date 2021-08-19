@@ -4,7 +4,7 @@ Failed to run the process ...
     "isPrivate": true,
     "isLicensesEnabled": false,
     "ignoreSettings": null,
-    "org": "iacsec.toolcompare",
+    "org": "yi2020",
     "projectId": "",
     "policy": ""
   },
@@ -15,7 +15,7 @@ Failed to run the process ...
   "ignoreSettings": null,
   "targetFile": "main.tf",
   "projectName": "project",
-  "org": "iacsec.toolcompare",
+  "org": "yi2020",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
@@ -25,21 +25,19 @@ Failed to run the process ...
   "ok": false,
   "infrastructureAsCodeIssues": [
     {
+      "severity": "medium",
       "resolve": "Set `cidr_block` attribute with a more restrictive IP, for example `192.16.0.0/24`",
       "id": "SNYK-CC-TF-1",
       "impact": "That potentially everyone can access your resource",
+      "msg": "input.resource.aws_security_group[allow_tls].ingress",
       "remediation": {
         "cloudformation": "Set `Properties.SecurityGroupIngress.CidrIp` attribute with a more restrictive IP, for example `192.16.0.0/24`",
         "terraform": "Set `cidr_block` attribute with a more restrictive IP, for example `192.16.0.0/24`"
       },
       "subType": "VPC",
-      "policyEngineType": "opa",
+      "issue": "That inbound traffic is allowed to a resource from any source instead of a restricted range",
       "publicId": "SNYK-CC-TF-1",
       "title": "Security Group allows open ingress",
-      "severity": "medium",
-      "msg": "input.resource.aws_security_group[allow_tls].ingress",
-      "issue": "That inbound traffic is allowed to a resource from any source instead of a restricted range",
-      "type": "terraform",
       "references": [
         "https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html"
       ],
@@ -59,20 +57,18 @@ Failed to run the process ...
       ]
     },
     {
+      "severity": "low",
       "id": "SNYK-CC-TF-73",
       "impact": "Open egress can be used to exfiltrate data to unauthorized destinations, and enable access to potentially malicious resources",
+      "msg": "resource.aws_security_group[allow_tls].egress",
       "remediation": {
         "cloudformation": "Set `Properties.SecurityGroupEgress.CidrIp` attribute to specific ranges e.g. `192.168.1.0/24`",
         "terraform": "Set `egress.cidr_blocks` attribute to specific ranges e.g. `192.168.1.0/24`"
       },
       "subType": "VPC",
-      "policyEngineType": "opa",
+      "issue": "The inline security group rule allows open egress",
       "publicId": "SNYK-CC-TF-73",
       "title": "AWS Security Group allows open egress",
-      "severity": "low",
-      "msg": "resource.aws_security_group[allow_tls].egress",
-      "issue": "The inline security group rule allows open egress",
-      "type": "terraform",
       "references": [
         "https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html",
         "https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-best-practices.html"
