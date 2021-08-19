@@ -28,7 +28,10 @@ Last update: 2021-08-19
 |     | Checkov | Indeni Cloudrail | Kics | Snyk | Terrascan | Tfsec |
 |----|----|----|----|----|----|----|
 |Tested Version|2.0.363|1.3.282|1.4.0|1.683.0|1.9.0|0.58.4|
-|Total Catch Rate|67%|93%|90%|59%|70%|58%|
+|Terraform - AWS|69%|93%|94%|62%|73%|61%|
+|Terraform - Azure|0%|0%|0%|0%|0%|0%|
+|Terraform - Advanced Language Expressions|20%|100%|20%|0%|0%|0%|
+|Total Catch Rate|54%|76%|74%|48%|57%|47%|
 
 
 <details><summary>test-cases/terraform/aws/best-practices</summary>
@@ -54,7 +57,7 @@ Last update: 2021-08-19
 |[security_group_no_unused](test-cases/terraform/aws/best-practices/security_group_no_unused)|:white_check_mark:|:white_check_mark:|:x:|:x:|:x:|:x:|
 |[tag_all_items](test-cases/terraform/aws/best-practices/tag_all_items)|:x:|:white_check_mark:|:white_check_mark:|:x:|:x:|:x:|
 |[using_public_amis](test-cases/terraform/aws/best-practices/using_public_amis)|:x:|:white_check_mark:|:x:|:x:|:x:|:x:|
-|Category Catch Rate|84%|84%|89%|63%|63%|79%|
+|Sub-category Catch Rate|84%|84%|89%|63%|63%|79%|
 
 </details>
 
@@ -89,7 +92,7 @@ Last update: 2021-08-19
 |[workgroups_non_encrypted](test-cases/terraform/aws/encryption/at-rest/workgroups_non_encrypted)|:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|:x:|:white_check_mark:|
 |[workspace_root_volume_not_encrypted_at_r..](test-cases/terraform/aws/encryption/at-rest/workspace_root_volume_not_encrypted_at_rest)|:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |[workspace_user_volume_not_encrypted_at_r..](test-cases/terraform/aws/encryption/at-rest/workspace_user_volume_not_encrypted_at_rest)|:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|
-|Category Catch Rate|74%|100%|100%|81%|78%|89%|
+|Sub-category Catch Rate|74%|100%|100%|81%|78%|89%|
 
 </details>
 
@@ -105,7 +108,7 @@ Last update: 2021-08-19
 |[elasticsearch_encrypt_node_to_node_disab..](test-cases/terraform/aws/encryption/in-transit/elasticsearch_encrypt_node_to_node_disabled)|:x:|:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |[load_balancer_listener_http](test-cases/terraform/aws/encryption/in-transit/load_balancer_listener_http)|:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |[vpc_has_only_dynamodb_vpce_gw_connection](test-cases/terraform/aws/encryption/in-transit/vpc_has_only_dynamodb_vpce_gw_connection)|:x:|:white_check_mark:|:x:|:x:|:x:|:x:|
-|Category Catch Rate|75%|100%|88%|75%|88%|88%|
+|Sub-category Catch Rate|75%|100%|88%|75%|88%|88%|
 
 </details>
 
@@ -121,7 +124,7 @@ Last update: 2021-08-19
 |[policy_missing_principal](test-cases/terraform/aws/iam/iam-entities/policy_missing_principal)|:x:|:white_check_mark:|:white_check_mark:|:x:|:white_check_mark:|:x:|
 |[public_and_private_ec2_same_role](test-cases/terraform/aws/iam/iam-entities/public_and_private_ec2_same_role)|:x:|:white_check_mark:|:white_check_mark:|:x:|:x:|:x:|
 |[role_assume_policy_principal_all](test-cases/terraform/aws/iam/iam-entities/role_assume_policy_principal_all)|:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|:x:|:x:|
-|Category Catch Rate|50%|100%|88%|38%|50%|0%|
+|Sub-category Catch Rate|50%|100%|88%|38%|50%|0%|
 
 </details>
 
@@ -131,7 +134,7 @@ Last update: 2021-08-19
 |----|----|----|----|----|----|----|
 |[rds_without_authentication](test-cases/terraform/aws/iam/resource-authentication/rds_without_authentication)|:white_check_mark:|:x:|:white_check_mark:|:white_check_mark:|:white_check_mark:|:x:|
 |[rest_api_without_authorization](test-cases/terraform/aws/iam/resource-authentication/rest_api_without_authorization)|:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|:x:|:x:|
-|Category Catch Rate|100%|50%|100%|100%|50%|0%|
+|Sub-category Catch Rate|100%|50%|100%|100%|50%|0%|
 
 </details>
 
@@ -153,7 +156,7 @@ Last update: 2021-08-19
 |[s3_bucket_acl_public_all_users_canned_wi..](test-cases/terraform/aws/iam/resource-policies/s3_bucket_acl_public_all_users_canned_with_overriding_access_block)|:x:|:white_check_mark:|:white_check_mark:|:x:|:white_check_mark:|:x:|
 |[s3_bucket_policy_public_to_all_authentic..](test-cases/terraform/aws/iam/resource-policies/s3_bucket_policy_public_to_all_authenticated_users)|:x:|:white_check_mark:|:white_check_mark:|:x:|:white_check_mark:|:x:|
 |[secrets_manager_not_secure_policy](test-cases/terraform/aws/iam/resource-policies/secrets_manager_not_secure_policy)|:x:|:white_check_mark:|:white_check_mark:|:x:|:white_check_mark:|:x:|
-|Category Catch Rate|21%|100%|93%|21%|71%|21%|
+|Sub-category Catch Rate|21%|100%|93%|21%|71%|21%|
 
 </details>
 
@@ -178,7 +181,7 @@ Last update: 2021-08-19
 |[redshift_without_logging](test-cases/terraform/aws/logging/redshift_without_logging)|:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|:x:|
 |[rest_api_no_access_logging](test-cases/terraform/aws/logging/rest_api_no_access_logging)|:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |[s3_access_logging_disabled](test-cases/terraform/aws/logging/s3_access_logging_disabled)|:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|
-|Category Catch Rate|94%|82%|94%|71%|94%|59%|
+|Sub-category Catch Rate|94%|82%|94%|71%|94%|59%|
 
 </details>
 
@@ -188,7 +191,78 @@ Last update: 2021-08-19
 |----|----|----|----|----|----|----|
 |[dynamodb-vpce-exist-without-routeassocia..](test-cases/terraform/aws/networking/vpc-endpoints/dynamodb-vpce-exist-without-routeassociation)|:x:|:white_check_mark:|:white_check_mark:|:x:|:x:|:x:|
 |[sqs-vpc-endpoint-without-dns-resolution](test-cases/terraform/aws/networking/vpc-endpoints/sqs-vpc-endpoint-without-dns-resolution)|:x:|:white_check_mark:|:white_check_mark:|:x:|:x:|:x:|
-|Category Catch Rate|0%|100%|100%|0%|0%|0%|
+|Sub-category Catch Rate|0%|100%|100%|0%|0%|0%|
+
+</details>
+
+<details><summary>test-cases/terraform/azure/best-practices/webapp_python_isnot_latest/account-data/ae7905ce-4577-4a32-934b-9f662c77869d</summary>
+
+| Test Case | Checkov | Indeni Cloudrail | Kics | Snyk | Terrascan | Tfsec |
+|----|----|----|----|----|----|----|
+|Sub-category Catch Rate|
+
+</details>
+
+<details><summary>test-cases/terraform/azure/encryption/at-rest</summary>
+
+| Test Case | Checkov | Indeni Cloudrail | Kics | Snyk | Terrascan | Tfsec |
+|----|----|----|----|----|----|----|
+|[activitylog_storage_account_encryption_n..](test-cases/terraform/azure/encryption/at-rest/activitylog_storage_account_encryption_not_enabled)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[sql_encryption_customer_key_not_set](test-cases/terraform/azure/encryption/at-rest/sql_encryption_customer_key_not_set)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[storacc_encryption_not_enabled](test-cases/terraform/azure/encryption/at-rest/storacc_encryption_not_enabled)|:x:|:x:|:x:|:x:|:x:|:x:|
+|Sub-category Catch Rate|0%|0%|0%|0%|0%|0%|
+
+</details>
+
+<details><summary>test-cases/terraform/azure/encryption/in-transit</summary>
+
+| Test Case | Checkov | Indeni Cloudrail | Kics | Snyk | Terrascan | Tfsec |
+|----|----|----|----|----|----|----|
+|[app_service_use_most_recent_supported_tl..](test-cases/terraform/azure/encryption/in-transit/app_service_use_most_recent_supported_tls)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[func_app_ftps_disabled](test-cases/terraform/azure/encryption/in-transit/func_app_ftps_disabled)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[mysql_not_forcing_ssl](test-cases/terraform/azure/encryption/in-transit/mysql_not_forcing_ssl)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[postgresql_not_forcing_ssl](test-cases/terraform/azure/encryption/in-transit/postgresql_not_forcing_ssl)|:x:|:x:|:x:|:x:|:x:|:x:|
+|Sub-category Catch Rate|0%|0%|0%|0%|0%|0%|
+
+</details>
+
+<details><summary>test-cases/terraform/azure/iam</summary>
+
+| Test Case | Checkov | Indeni Cloudrail | Kics | Snyk | Terrascan | Tfsec |
+|----|----|----|----|----|----|----|
+|[app_service_authentication_missing](test-cases/terraform/azure/iam/app_service_authentication_missing)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[app_service_ftps_unused](test-cases/terraform/azure/iam/app_service_ftps_unused)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[custom-role-owner-exists](test-cases/terraform/azure/iam/custom-role-owner-exists)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[func_app_authentication](test-cases/terraform/azure/iam/func_app_authentication)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[func_app_client_cert_optional](test-cases/terraform/azure/iam/func_app_client_cert_optional)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[functionapp_not_use_managedidentity](test-cases/terraform/azure/iam/functionapp_not_use_managedidentity)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[sql-server-ad-admin-not-set](test-cases/terraform/azure/iam/sql-server-ad-admin-not-set)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[storage_account_public_access_disabled](test-cases/terraform/azure/iam/storage_account_public_access_disabled)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[webapp_client_cert_not_enabled](test-cases/terraform/azure/iam/webapp_client_cert_not_enabled)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[webapp_not_use_managedidentity](test-cases/terraform/azure/iam/webapp_not_use_managedidentity)|:x:|:x:|:x:|:x:|:x:|:x:|
+|Sub-category Catch Rate|0%|0%|0%|0%|0%|0%|
+
+</details>
+
+<details><summary>test-cases/terraform/azure/logging/vmss_linux_diagnostic_log_disabled/account-data/ae7905ce-4577-4a32-934b-9f662c77869d</summary>
+
+| Test Case | Checkov | Indeni Cloudrail | Kics | Snyk | Terrascan | Tfsec |
+|----|----|----|----|----|----|----|
+|Sub-category Catch Rate|
+
+</details>
+
+<details><summary>test-cases/terraform/azure/networking</summary>
+
+| Test Case | Checkov | Indeni Cloudrail | Kics | Snyk | Terrascan | Tfsec |
+|----|----|----|----|----|----|----|
+|[no_unused_nsg](test-cases/terraform/azure/networking/no_unused_nsg)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[public_access_sql_db](test-cases/terraform/azure/networking/public_access_sql_db)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[stacc_trusted_vnet_access_allowed1](test-cases/terraform/azure/networking/stacc_trusted_vnet_access_allowed1)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[vm_public_rdp_lb_opened](test-cases/terraform/azure/networking/vm_public_rdp_lb_opened)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[vm_public_rdp_nat_opened](test-cases/terraform/azure/networking/vm_public_rdp_nat_opened)|:x:|:x:|:x:|:x:|:x:|:x:|
+|[vmss_public_rdp_lb_opened](test-cases/terraform/azure/networking/vmss_public_rdp_lb_opened)|:x:|:x:|:x:|:x:|:x:|:x:|
+|Sub-category Catch Rate|0%|0%|0%|0%|0%|0%|
 
 </details>
 
@@ -201,7 +275,7 @@ Last update: 2021-08-19
 |[using_locals](test-cases/terraform/hcl_language_complexity/using_locals)|:x:|:white_check_mark:|:white_check_mark:|:x:|:x:|:x:|
 |[using_module_multi](test-cases/terraform/hcl_language_complexity/using_module_multi)|:white_check_mark:|:white_check_mark:|:x:|:x:|:x:|:x:|
 |[using_module_simple](test-cases/terraform/hcl_language_complexity/using_module_simple)|:x:|:white_check_mark:|:x:|:x:|:x:|:x:|
-|Category Catch Rate|20%|100%|20%|0%|0%|0%|
+|Sub-category Catch Rate|20%|100%|20%|0%|0%|0%|
 
 </details>
 
