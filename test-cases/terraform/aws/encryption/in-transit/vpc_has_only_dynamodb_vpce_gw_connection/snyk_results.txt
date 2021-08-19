@@ -3,10 +3,10 @@ Failed to run the process ...
   "meta": {
     "isPrivate": true,
     "isLicensesEnabled": false,
-    "policy": "",
     "ignoreSettings": null,
+    "org": "yi2020",
     "projectId": "",
-    "org": "y"
+    "policy": ""
   },
   "filesystemPolicy": false,
   "vulnerabilities": [],
@@ -15,39 +15,62 @@ Failed to run the process ...
   "ignoreSettings": null,
   "targetFile": "main.tf",
   "projectName": "project",
-  "org": "y",
+  "org": "yi2020",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
   "packageManager": "terraformconfig",
   "path": "/project",
   "projectType": "terraformconfig",
+  "ok": false,
   "infrastructureAsCodeIssues": [
     {
-      "id": "SNYK-CC-TF-73",
-      "title": "AWS Security Group allows open egress",
-      "type": "terraform",
-      "subType": "VPC",
       "severity": "low",
+      "resolve": "Set `map_public_ip_on_launch` attribute  with value `true`",
+      "id": "SNYK-CC-AWS-427",
+      "impact": "Instances will be potentially accessible over public internet, which may lead to unauthorized access",
+      "msg": "resource.aws_subnet[public-subnet].map_public_ip_on_launch",
+      "remediation": {
+        "cloudformation": "Set `Properties.MapPublicIpOnLaunch` attribute with value `true`",
+        "terraform": "Set `map_public_ip_on_launch` attribute  with value `true`"
+      },
+      "subType": "VPC",
+      "issue": "Instances launched in this subnet will automatically have public IP assigned",
+      "publicId": "SNYK-CC-AWS-427",
+      "title": "Public IPs are automatically mapped to instances",
+      "references": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html"
+      ],
       "isIgnored": false,
       "iacDescription": {
-        "issue": "The inline security group rule allows open egress",
-        "impact": "Open egress can be used to exfiltrate data to unauthorized destinations, and enable access to potentially malicious resources",
-        "resolve": "Set `egress.cidr_blocks` attribute to specific ranges e.g. `192.168.1.0/24`"
+        "issue": "Instances launched in this subnet will automatically have public IP assigned",
+        "impact": "Instances will be potentially accessible over public internet, which may lead to unauthorized access",
+        "resolve": "Set `map_public_ip_on_launch` attribute  with value `true`"
       },
-      "lineNumber": 103,
+      "lineNumber": 13,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-427",
       "path": [
         "resource",
-        "aws_security_group[allow-public-outbound-sg]",
-        "egress"
+        "aws_subnet[public-subnet]",
+        "map_public_ip_on_launch"
       ]
     },
     {
-      "id": "SNYK-CC-TF-130",
-      "title": "EC2 instance accepts IMDSv1",
-      "type": "terraform",
-      "subType": "EC2",
       "severity": "low",
+      "resolve": "Set `metadata_options.http_tokens` attribute to `required`",
+      "id": "SNYK-CC-TF-130",
+      "impact": "Metadata service may be vulnerable to reverse proxy/open firewall misconfigurations and server side request forgery attacks",
+      "msg": "resource.aws_instance[test].metadata_options",
+      "subType": "EC2",
+      "issue": "Instance Metadata Service v2 is not enforced",
+      "publicId": "SNYK-CC-TF-130",
+      "title": "EC2 instance accepts IMDSv1",
+      "references": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html",
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html",
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-data-retrieval.html",
+        "https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service/"
+      ],
       "isIgnored": false,
       "iacDescription": {
         "issue": "Instance Metadata Service v2 is not enforced",
@@ -55,6 +78,7 @@ Failed to run the process ...
         "resolve": "Set `metadata_options.http_tokens` attribute to `required`"
       },
       "lineNumber": 136,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-130",
       "path": [
         "resource",
         "aws_instance[test]",
@@ -62,11 +86,87 @@ Failed to run the process ...
       ]
     },
     {
-      "id": "SNYK-CC-TF-125",
-      "title": "DynamoDB point-in-time recovery disabled",
-      "type": "terraform",
+      "severity": "low",
+      "resolve": "Set `disable_api_termination` attribute  with value `true`",
+      "id": "SNYK-CC-AWS-426",
+      "impact": "Without this setting enabled the instances can be terminated by accident. This setting should only be used for instances with high availability requirements. Enabling this may prevent IaC workflows from updating the instance, for example terraform will not be able to terminate the instance to update instance type",
+      "msg": "resource.aws_instance[test].disable_api_termination",
+      "remediation": {
+        "cloudformation": "Set `DisableApiTermination` attribute with value `true`",
+        "terraform": "Set `disable_api_termination` attribute  with value `true`"
+      },
+      "subType": "EC2",
+      "issue": "To prevent instance from being accidentally terminated using Amazon EC2, you can enable termination protection for the instance",
+      "publicId": "SNYK-CC-AWS-426",
+      "title": "EC2 API termination protection is not enabled",
+      "references": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/terminating-instances.html#Using_ChangingDisableAPITermination"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "To prevent instance from being accidentally terminated using Amazon EC2, you can enable termination protection for the instance",
+        "impact": "Without this setting enabled the instances can be terminated by accident. This setting should only be used for instances with high availability requirements. Enabling this may prevent IaC workflows from updating the instance, for example terraform will not be able to terminate the instance to update instance type",
+        "resolve": "Set `disable_api_termination` attribute  with value `true`"
+      },
+      "lineNumber": 136,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-426",
+      "path": [
+        "resource",
+        "aws_instance[test]",
+        "disable_api_termination"
+      ]
+    },
+    {
+      "severity": "low",
+      "resolve": "Set `server_side_encryption.kms_key_arn` attribute to customer managed key ARN",
+      "id": "SNYK-CC-AWS-417",
+      "impact": "Scope of use of the key cannot be controlled via KMS/IAM policies",
+      "msg": "resource.aws_dynamodb_table[basic-dynamodb-table].server_side_encryption.kms_key_arn",
+      "remediation": {
+        "cloudformation": "Set `Properties.SSESpecification.SSEType` attribute to `KMS`, and `Properties.SSESpecification.KMSMasterKeyId` attribute to customer managed key ARN",
+        "terraform": "Set `server_side_encryption.kms_key_arn` attribute to customer managed key ARN"
+      },
       "subType": "DynamoDB",
+      "issue": "DynamoDB table is not encrypted with customer managed KMS key",
+      "publicId": "SNYK-CC-AWS-417",
+      "title": "DynamoDB not encrypted with customer managed key",
+      "references": [
+        "https://docs.aws.amazon.com/kms/latest/developerguide/services-dynamodb.html",
+        "https://docs.aws.amazon.com/whitepapers/latest/kms-best-practices/aws-managed-and-customer-managed-cmks.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "DynamoDB table is not encrypted with customer managed KMS key",
+        "impact": "Scope of use of the key cannot be controlled via KMS/IAM policies",
+        "resolve": "Set `server_side_encryption.kms_key_arn` attribute to customer managed key ARN"
+      },
+      "lineNumber": 143,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-417",
+      "path": [
+        "resource",
+        "aws_dynamodb_table[basic-dynamodb-table]",
+        "server_side_encryption",
+        "kms_key_arn"
+      ]
+    },
+    {
       "severity": "medium",
+      "resolve": "Set `point_in_time_recovery.enabled` attribute to `true`",
+      "id": "SNYK-CC-TF-125",
+      "impact": "No automated backups of DynamoDB data",
+      "msg": "resource.aws_dynamodb_table[basic-dynamodb-table]",
+      "remediation": {
+        "cloudformation": "Set `Properties.PointInTimeRecoverySpecification.PointInTimeRecoveryEnabled` attribute to `true`",
+        "terraform": "Set `point_in_time_recovery.enabled` attribute to `true`"
+      },
+      "subType": "DynamoDB",
+      "issue": "DynamoDB does not have Point-in-Time Recovery enabled",
+      "publicId": "SNYK-CC-TF-125",
+      "title": "DynamoDB point-in-time recovery disabled",
+      "references": [
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/PointInTimeRecovery_Howitworks.html",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table#point_in_time_recovery"
+      ],
       "isIgnored": false,
       "iacDescription": {
         "issue": "DynamoDB does not have Point-in-Time Recovery enabled",
@@ -74,17 +174,32 @@ Failed to run the process ...
         "resolve": "Set `point_in_time_recovery.enabled` attribute to `true`"
       },
       "lineNumber": 143,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-125",
       "path": [
         "resource",
         "aws_dynamodb_table[basic-dynamodb-table]"
       ]
     },
     {
-      "id": "SNYK-CC-TF-53",
-      "title": "Non-Encrypted root block device",
-      "type": "terraform",
-      "subType": "EC2",
       "severity": "medium",
+      "resolve": "Set `root_block_device.encrypted` attribute to `true`",
+      "id": "SNYK-CC-TF-53",
+      "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+      "msg": "resource.aws_instance[test].root_block_device.encrypted",
+      "remediation": {
+        "cloudformation": "Set `BlockDeviceMappings.Encrypted` attribute of root device to `true`",
+        "terraform": "Set `root_block_device.encrypted` attribute to `true`"
+      },
+      "subType": "EC2",
+      "issue": "The root block device for ec2 instance is not encrypted",
+      "publicId": "SNYK-CC-TF-53",
+      "title": "Non-Encrypted root block device",
+      "references": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/RootDeviceStorage.html",
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html",
+        "https://aws.amazon.com/premiumsupport/knowledge-center/cloudformation-root-volume-property/",
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/device_naming.html"
+      ],
       "isIgnored": false,
       "iacDescription": {
         "issue": "The root block device for ec2 instance is not encrypted",
@@ -92,11 +207,42 @@ Failed to run the process ...
         "resolve": "Set `root_block_device.encrypted` attribute to `true`"
       },
       "lineNumber": 136,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-53",
       "path": [
         "resource",
         "aws_instance[test]",
         "root_block_device",
         "encrypted"
+      ]
+    },
+    {
+      "severity": "low",
+      "id": "SNYK-CC-TF-73",
+      "impact": "Open egress can be used to exfiltrate data to unauthorized destinations, and enable access to potentially malicious resources",
+      "msg": "resource.aws_security_group[allow-public-outbound-sg].egress",
+      "remediation": {
+        "cloudformation": "Set `Properties.SecurityGroupEgress.CidrIp` attribute to specific ranges e.g. `192.168.1.0/24`",
+        "terraform": "Set `egress.cidr_blocks` attribute to specific ranges e.g. `192.168.1.0/24`"
+      },
+      "subType": "VPC",
+      "issue": "The inline security group rule allows open egress",
+      "publicId": "SNYK-CC-TF-73",
+      "title": "AWS Security Group allows open egress",
+      "references": [
+        "https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html",
+        "https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-best-practices.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "The inline security group rule allows open egress",
+        "impact": "Open egress can be used to exfiltrate data to unauthorized destinations, and enable access to potentially malicious resources"
+      },
+      "lineNumber": 103,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-73",
+      "path": [
+        "resource",
+        "aws_security_group[allow-public-outbound-sg]",
+        "egress"
       ]
     }
   ]

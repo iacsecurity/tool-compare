@@ -33,32 +33,6 @@ Rule: Ensure use of Elasticsearch Service domain policy, and no action wildcards
 
 
 -----------------------------------------------
-Rule: Ensure Elasticsearch domains being created are set to be encrypted node-to-node
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_elasticsearch_domain.example] (main.tf:1)
-     Violating Resource: [aws_elasticsearch_domain.example]  (main.tf:1)
-
-     Evidence:
-         ElasticSearch Domain
-             | ElasticSearch Domain aws_elasticsearch_domain.example
-             | is not set to use encrypt node-to-node
-
-
------------------------------------------------
-Rule: Ensure Elasticsearch Domains being created are set to be encrypted at rest
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_elasticsearch_domain.example] (main.tf:1)
-     Violating Resource: [aws_elasticsearch_domain.example]  (main.tf:1)
-
-     Evidence:
-         ElasticSearch Domain
-             | ElasticSearch Domain aws_elasticsearch_domain.example
-             | is not set to use encrypt at rest
-
-
------------------------------------------------
 Rule: Ensure Elasticsearch Domain is not publicly accessible
  - 1 Resources Exposed:
 -----------------------------------------------

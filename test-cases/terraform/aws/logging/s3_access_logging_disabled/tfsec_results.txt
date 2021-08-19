@@ -1,7 +1,7 @@
 
-Check 1
+  Result 1
 
-  [AWS002][ERROR] Resource 'aws_s3_bucket.b' does not have logging enabled.
+  [aws-s3-enable-bucket-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_s3_bucket.b' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
   /src/main.tf:1-9
 
 
@@ -16,36 +16,18 @@ Check 1
        9 | }
       10 | 
 
-  Impact:     There is no way to determine the access to this bucket
-  Resolution: Add a logging block to the resource to enable access logging
-
-  See https://tfsec.dev/docs/aws/AWS002/ for more information. 
-
-Check 2
-
-  [AWS017][ERROR] Resource 'aws_s3_bucket.b' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
-  /src/main.tf:1-9
-
-
-       1 | resource "aws_s3_bucket" "b" {
-       2 |   bucket = "my-tf-test-bucket"
-       3 |   acl    = "private"
-       4 | 
-       5 |   tags = {
-       6 |     Name        = "My bucket"
-       7 |     Environment = "Dev"
-       8 |   }
-       9 | }
-      10 | 
-
+  Legacy ID:  AWS017
   Impact:     The bucket objects could be read if compromised
   Resolution: Configure bucket encryption
 
-  See https://tfsec.dev/docs/aws/AWS017/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/s3/enable-bucket-encryption#aws/s3 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#enable-default-server-side-encryption 
+  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-encryption.html 
 
-Check 3
+  Result 2
 
-  [AWS077][ERROR] Resource 'aws_s3_bucket.b' does not have versioning enabled
+  [aws-s3-enable-bucket-logging][[0m[33mMEDIUM[39m[0m] Resource 'aws_s3_bucket.b' does not have logging enabled.
   /src/main.tf:1-9
 
 
@@ -60,26 +42,87 @@ Check 3
        9 | }
       10 | 
 
+  Legacy ID:  AWS002
+  Impact:     There is no way to determine the access to this bucket
+  Resolution: Add a logging block to the resource to enable access logging
+
+  More Info:
+  - https://tfsec.dev/docs/aws/s3/enable-bucket-logging#aws/s3 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket 
+  - https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerLogs.html 
+
+  Result 3
+
+  [aws-s3-enable-versioning][[0m[33mMEDIUM[39m[0m] Resource 'aws_s3_bucket.b' does not have versioning enabled
+  /src/main.tf:1-9
+
+
+       1 | resource "aws_s3_bucket" "b" {
+       2 |   bucket = "my-tf-test-bucket"
+       3 |   acl    = "private"
+       4 | 
+       5 |   tags = {
+       6 |     Name        = "My bucket"
+       7 |     Environment = "Dev"
+       8 |   }
+       9 | }
+      10 | 
+
+  Legacy ID:  AWS077
   Impact:     Deleted or modified data would not be recoverable
   Resolution: Enable versioning to protect against accidental/malicious removal or modification
 
-  See https://tfsec.dev/docs/aws/AWS077/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/s3/enable-versioning#aws/s3 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#versioning 
+  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/Versioning.html 
+
+  Result 4
+
+  [aws-s3-specify-public-access-block][[0m[33mMEDIUM[39m[0m] Resource aws_s3_bucket.b has no associated aws_s3_bucket_public_access_block.
+  /src/main.tf:1-9
+
+
+       1 | resource "aws_s3_bucket" "b" {
+       2 |   bucket = "my-tf-test-bucket"
+       3 |   acl    = "private"
+       4 | 
+       5 |   tags = {
+       6 |     Name        = "My bucket"
+       7 |     Environment = "Dev"
+       8 |   }
+       9 | }
+      10 | 
+
+  Legacy ID:  AWS098
+  Impact:     Public access policies may be applied to sensitive data buckets
+  Resolution: Define a aws_s3_bucket_public_access_block for the given bucket to control public access policies
+
+  More Info:
+  - https://tfsec.dev/docs/aws/s3/specify-public-access-block#aws/s3 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#bucket 
+  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html 
 
   times
   ------------------------------------------
-  disk i/o             30.0972ms
-  parsing HCL          27.3µs
-  evaluating values    235.7µs
-  running checks       7.2302ms
+  disk i/o             45.994083ms
+  parsing HCL          542.25µs
+  evaluating values    2.089667ms
+  running checks       26.877916ms
 
   counts
   ------------------------------------------
   files loaded         1
   blocks               1
-  evaluated blocks     1
   modules              0
-  module blocks        0
-  ignored checks       0
 
-3 potential problems detected.
+  results
+  ------------------------------------------
+  critical             0
+  high                 1
+  medium               3
+  low                  0
+  ignored              0
+
+  4 potential problems detected.
 

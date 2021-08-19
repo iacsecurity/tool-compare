@@ -1,15 +1,70 @@
 
 WARNINGs found:
-Rule: Ensure all used default security groups of every VPC restrict all traffic
+Rule: Ensure ELB has logging enabled
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_lb.alb_test] (main.tf:60)
-     Violating Resource: [sg-pseudo-e46c9bf1-d4e3-484b-bc0d-0ec7ab630b80]  (Not found in TF)
+     Violating Resource: [aws_lb.alb_test]  (main.tf:60)
 
      Evidence:
-         VPC aws_vpc.vpc1
-             | aws_lb.alb_test uses ENI eni-pseudo-bdbe3146-1820-46a0-b18e-3bc3123f7942
-             | The ENI is secured by default Security group sg-pseudo-e46c9bf1-d4e3-484b-bc0d-0ec7ab630b80 and allows all traffic
+             | The Load Balancer aws_lb.alb_test does not have logging enabled
+
+
+-----------------------------------------------
+Rule: Ensure Load Balancer drops invalid HTTP headers
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_lb.alb_test] (main.tf:60)
+     Violating Resource: [aws_lb.alb_test]  (main.tf:60)
+
+     Evidence:
+             | The Load Balancer aws_lb.alb_test does not drop invalid HTTP headers
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 6 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_lb.alb_test] (main.tf:60)
+     Violating Resource: [aws_lb.alb_test]  (main.tf:60)
+
+     Evidence:
+             | Resource Load Balancer aws_lb.alb_test does not have any tags set
+
+
+   - Exposed Resource: [aws_vpc.vpc1] (main.tf:5)
+     Violating Resource: [aws_vpc.vpc1]  (main.tf:5)
+
+     Evidence:
+             | Resource VPC aws_vpc.vpc1 does not have any tags set
+
+
+   - Exposed Resource: [aws_subnet.subnet2] (main.tf:22)
+     Violating Resource: [aws_subnet.subnet2]  (main.tf:22)
+
+     Evidence:
+             | Resource Subnet aws_subnet.subnet2 does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [aws_lb_target_group.test] (main.tf:54)
+     Violating Resource: [aws_lb_target_group.test]  (main.tf:54)
+
+     Evidence:
+             | Resource Load Balancer Target Group aws_lb_target_group.test does not have any tags set
+
+
+   - Exposed Resource: [aws_route_table.rt1] (main.tf:36)
+     Violating Resource: [aws_route_table.rt1]  (main.tf:36)
+
+     Evidence:
+             | Resource Route table aws_route_table.rt1 does not have any tags set
+
+
+   - Exposed Resource: [aws_subnet.subnet1] (main.tf:13)
+     Violating Resource: [aws_subnet.subnet1]  (main.tf:13)
+
+     Evidence:
+             | Resource Subnet aws_subnet.subnet1 does not have any tags set other than "Name"
 
 
 -----------------------------------------------
@@ -25,6 +80,22 @@ Rule: Ensure ALB is using HTTPS and not HTTP
 
 
 -----------------------------------------------
+Rule: Ensure all used default security groups of every VPC restrict all traffic
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_lb.alb_test] (main.tf:60)
+     Violating Resource: [sg-pseudo-0912f4a5-d406-4343-9cf0-358629f51ab6]  (Not found in TF)
+
+     Evidence:
+         VPC aws_vpc.vpc1
+             | aws_lb.alb_test uses ENI eni-pseudo-3343e1de-0db3-49a5-bbd3-7fa2101bca53
+             | The ENI is secured by default Security group sg-pseudo-0912f4a5-d406-4343-9cf0-358629f51ab6 and allows all traffic
+
+
+-----------------------------------------------
 
 Cloudrail has listed "pseudo" objects in the above results.
 These are resources that don't exist yet, or don't show in the Terraform input, but we know will be created in the real live environment.
+
+Cloudrail ran this assessment without any policies and so all rule violations show as warnings.
+You can increase a rule's enforcement level by creating a Policy in the Web UI and adding the rule to it.

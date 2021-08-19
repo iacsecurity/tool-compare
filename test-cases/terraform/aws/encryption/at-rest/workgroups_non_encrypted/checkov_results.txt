@@ -6,14 +6,14 @@
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.135 
-Update available 2.0.135 -> 2.0.136
+By bridgecrew.io | version: 2.0.358 
+Update available 2.0.358 -> 2.0.359
 Run pip3 install -U checkov to update 
 
 
 terraform scan results:
 
-Passed checks: 23, Failed checks: 14, Skipped checks: 0
+Passed checks: 21, Failed checks: 12, Skipped checks: 0
 
 Check: CKV_AWS_21: "Ensure all data stored in the S3 bucket have versioning enabled"
 	FAILED for resource: aws_s3_bucket.cloudrail_anthena_bucket
@@ -30,16 +30,6 @@ Check: CKV_AWS_144: "Ensure that S3 bucket has cross-region replication enabled"
 	FAILED for resource: aws_s3_bucket.cloudrail_anthena_bucket
 	File: /main.tf:5-8
 	Guide: https://docs.bridgecrew.io/docs/ensure-that-s3-bucket-has-cross-region-replication-enabled
-
-		5 | resource "aws_s3_bucket" "cloudrail_anthena_bucket" {
-		6 |   bucket = "cloudrail-wg-encrypted-sse-s3"
-		7 |   acl    = "private"
-		8 | }
-
-
-Check: CKV_AWS_52: "Ensure S3 bucket has MFA delete enabled"
-	FAILED for resource: aws_s3_bucket.cloudrail_anthena_bucket
-	File: /main.tf:5-8
 
 		5 | resource "aws_s3_bucket" "cloudrail_anthena_bucket" {
 		6 |   bucket = "cloudrail-wg-encrypted-sse-s3"
@@ -83,6 +73,7 @@ Check: CKV_AWS_19: "Ensure all data stored in the S3 bucket is securely encrypte
 Check: CKV_AWS_159: "Ensure that Athena Workgroup is encrypted"
 	FAILED for resource: aws_athena_workgroup.cloudrail_wg
 	File: /main.tf:18-30
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-athena-workgroup-is-encrypted
 
 		18 | resource "aws_athena_workgroup" "cloudrail_wg" {
 		19 |   name = "cloudrail-wg-encrypted-sse-s3"
@@ -114,16 +105,6 @@ Check: CKV_AWS_144: "Ensure that S3 bucket has cross-region replication enabled"
 	FAILED for resource: aws_s3_bucket.cloudrail_anthena_bucket_2
 	File: /main.tf:32-35
 	Guide: https://docs.bridgecrew.io/docs/ensure-that-s3-bucket-has-cross-region-replication-enabled
-
-		32 | resource "aws_s3_bucket" "cloudrail_anthena_bucket_2" {
-		33 |   bucket = "cloudrail-wg-encrypted-sse-s3-2"
-		34 |   acl    = "private"
-		35 | }
-
-
-Check: CKV_AWS_52: "Ensure S3 bucket has MFA delete enabled"
-	FAILED for resource: aws_s3_bucket.cloudrail_anthena_bucket_2
-	File: /main.tf:32-35
 
 		32 | resource "aws_s3_bucket" "cloudrail_anthena_bucket_2" {
 		33 |   bucket = "cloudrail-wg-encrypted-sse-s3-2"
@@ -167,6 +148,7 @@ Check: CKV_AWS_19: "Ensure all data stored in the S3 bucket is securely encrypte
 Check: CKV_AWS_159: "Ensure that Athena Workgroup is encrypted"
 	FAILED for resource: aws_athena_workgroup.cloudrail_wg_2
 	File: /main.tf:45-57
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-athena-workgroup-is-encrypted
 
 		45 | resource "aws_athena_workgroup" "cloudrail_wg_2" {
 		46 |   name = "cloudrail-wg-encrypted-sse-s3-2"

@@ -3,6 +3,13 @@ WARNINGs found:
 Rule: Ensure all resources that can be tagged have at least one tag
  - 3 Resources Exposed:
 -----------------------------------------------
+   - Exposed Resource: [aws_iam_user.example[jane]] (main.tf:4)
+     Violating Resource: [aws_iam_user.example[jane]]  (main.tf:4)
+
+     Evidence:
+             | Resource IAM user aws_iam_user.example[jane] does not have any tags set
+
+
    - Exposed Resource: [aws_iam_user.example[jill]] (main.tf:4)
      Violating Resource: [aws_iam_user.example[jill]]  (main.tf:4)
 
@@ -17,29 +24,22 @@ Rule: Ensure all resources that can be tagged have at least one tag
              | Resource IAM user aws_iam_user.example[jack] does not have any tags set
 
 
-   - Exposed Resource: [aws_iam_user.example[jane]] (main.tf:4)
-     Violating Resource: [aws_iam_user.example[jane]]  (main.tf:4)
-
-     Evidence:
-             | Resource IAM user aws_iam_user.example[jane] does not have any tags set
-
-
 -----------------------------------------------
 Rule: Ensure no human IAM users defined
  - 2 Resources Exposed:
 -----------------------------------------------
-   - Exposed Resource: [aws_iam_user.example[jack]] (main.tf:4)
-     Violating Resource: [aws_iam_user.example[jack]]  (main.tf:4)
-
-     Evidence:
-             | The IAM user aws_iam_user.example[jack] has console access, and so is considered human
-
-
    - Exposed Resource: [aws_iam_user.example[jill]] (main.tf:4)
      Violating Resource: [aws_iam_user.example[jill]]  (main.tf:4)
 
      Evidence:
              | The IAM user aws_iam_user.example[jill] has console access, and so is considered human
+
+
+   - Exposed Resource: [aws_iam_user.example[jack]] (main.tf:4)
+     Violating Resource: [aws_iam_user.example[jack]]  (main.tf:4)
+
+     Evidence:
+             | The IAM user aws_iam_user.example[jack] has console access, and so is considered human
 
 
 -----------------------------------------------

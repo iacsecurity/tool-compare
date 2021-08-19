@@ -1,10 +1,41 @@
 
-Check 1
+  Result 1
 
-  [GEN003][WARNING] Block 'aws_db_instance.test' includes a potentially sensitive attribute which is defined within the project.
-  /src/main.tf:120
+  [aws-autoscaling-no-public-ip][[0m[31mHIGH[39m[0m] Resource 'aws_instance.public_ins' has a public IP address associated.
+  /src/main.tf:149
 
 
+     146 | resource "aws_instance" "public_ins" {
+     147 |   ami = "ami-0130bec6e5047f596"
+     148 |   instance_type = "t3.nano"
+     149 |   associate_public_ip_address = true    bool: true
+     150 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
+     151 |   subnet_id = aws_subnet.nondefault_1.id
+     152 | }
+
+  Legacy ID:  AWS012
+  Impact:     The instance or configuration is publicly accessible
+  Resolution: Set the instance to not be publicly accessible
+
+  More Info:
+  - https://tfsec.dev/docs/aws/autoscaling/no-public-ip#aws/autoscaling 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/launch_configuration#associate_public_ip_address 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#associate_public_ip_address 
+  - https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html 
+
+  Result 2
+
+  [aws-rds-backup-retention-specified][[0m[33mMEDIUM[39m[0m] Resource 'aws_db_instance.test' does not have backup retention explicitly set
+  /src/main.tf:113-126
+
+
+     110 |   }
+     111 | }
+     112 | 
+     113 | resource "aws_db_instance" "test" {
+     114 |   identifier = "tf-test-db"
+     115 |   allocated_storage = "5"
+     116 |   multi_az = "false"
      117 |   engine = "mysql"
      118 |   instance_class = "db.t2.small"
      119 |   username = "admin"
@@ -12,34 +43,26 @@ Check 1
      121 |   db_subnet_group_name = aws_db_subnet_group.db.name
      122 |   vpc_security_group_ids = [ aws_security_group.db.id]
      123 |   storage_type = "gp2"
+     124 |   skip_final_snapshot = true
+     125 |   publicly_accessible = false
+     126 | }
+     127 | 
+     128 | 
+     129 | resource "aws_security_group" "publicly_accessible_sg" {
 
-  Impact:     Block attribute could be leaking secrets
-  Resolution: Don't include sensitive data in blocks
+  Legacy ID:  AWS091
+  Impact:     Potential loss of data and short opportunity for recovery
+  Resolution: Explicitly set the retention period to greater than the default
 
-  See https://tfsec.dev/docs/general/GEN003/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/rds/backup-retention-specified#aws/rds 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/rds_cluster#backup_retention_period 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_instance#backup_retention_period 
+  - https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupRetention 
 
-Check 2
+  Result 3
 
-  [AWS009][WARNING] Resource 'aws_security_group.publicly_accessible_sg' defines a fully open egress security group.
-  /src/main.tf:141
-
-
-     138 |     from_port = 0
-     139 |     protocol = "tcp"
-     140 |     to_port = 65000
-     141 |     cidr_blocks = ["0.0.0.0/0"]
-     142 |   }
-     143 | }
-     144 | 
-
-  Impact:     The port is exposed for egressing data to the internet
-  Resolution: Set a more restrictive cidr range
-
-  See https://tfsec.dev/docs/aws/AWS009/ for more information. 
-
-Check 3
-
-  [AWS018][ERROR] Resource 'aws_security_group.publicly_accessible_sg' should include a description for auditing purposes.
+  [aws-vpc-add-decription-to-security-group][[0m[97mLOW[39m[0m] Resource 'aws_security_group.publicly_accessible_sg' should include a description for auditing purposes.
   /src/main.tf:129-143
 
 
@@ -65,14 +88,41 @@ Check 3
      145 | // This instance is can potentially be used to hop into the DB
      146 | resource "aws_instance" "public_ins" {
 
+  Legacy ID:  AWS018
   Impact:     Descriptions provide context for the firewall rule reasons
-  Resolution: Add descriptions for all security groups anf rules
+  Resolution: Add descriptions for all security groups and rules
 
-  See https://tfsec.dev/docs/aws/AWS018/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/vpc/add-decription-to-security-group#aws/vpc 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule 
+  - https://www.cloudconformity.com/knowledge-base/aws/EC2/security-group-rules-description.html 
 
-Check 4
+  Result 4
 
-  [AWS079][ERROR] Resource 'aws_instance.public_ins' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
+  [general-secrets-sensitive-in-attribute][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Block 'aws_db_instance.test' includes a potentially sensitive attribute which is defined within the project.
+  /src/main.tf:120
+
+
+     117 |   engine = "mysql"
+     118 |   instance_class = "db.t2.small"
+     119 |   username = "admin"
+     120 |   password = "password123"    string: "password123"
+     121 |   db_subnet_group_name = aws_db_subnet_group.db.name
+     122 |   vpc_security_group_ids = [ aws_security_group.db.id]
+     123 |   storage_type = "gp2"
+
+  Legacy ID:  GEN003
+  Impact:     Block attribute could be leaking secrets
+  Resolution: Don't include sensitive data in blocks
+
+  More Info:
+  - https://tfsec.dev/docs/general/secrets/sensitive-in-attribute#general/secrets 
+  - https://www.terraform.io/docs/state/sensitive-data.html 
+
+  Result 5
+
+  [aws-ec2-enforce-http-token-imds][[0m[31mHIGH[39m[0m] Resource 'aws_instance.public_ins' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
   /src/main.tf:146-152
 
 
@@ -87,14 +137,54 @@ Check 4
      151 |   subnet_id = aws_subnet.nondefault_1.id
      152 | }
 
+  Legacy ID:  AWS079
   Impact:     Instance metadata service can be interacted with freely
   Resolution: Enable HTTP token requirement for IMDS
 
-  See https://tfsec.dev/docs/aws/AWS079/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/ec2/enforce-http-token-imds#aws/ec2 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#metadata-options 
+  - https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service 
 
-Check 5
+  Result 6
 
-  [AWS018][ERROR] Resource 'aws_security_group.db' should include a description for auditing purposes.
+  [aws-rds-encrypt-instance-storage-data][[0m[31mHIGH[39m[0m] Resource 'aws_db_instance.test' has no storage encryption defined.
+  /src/main.tf:113-126
+
+
+     110 |   }
+     111 | }
+     112 | 
+     113 | resource "aws_db_instance" "test" {
+     114 |   identifier = "tf-test-db"
+     115 |   allocated_storage = "5"
+     116 |   multi_az = "false"
+     117 |   engine = "mysql"
+     118 |   instance_class = "db.t2.small"
+     119 |   username = "admin"
+     120 |   password = "password123"
+     121 |   db_subnet_group_name = aws_db_subnet_group.db.name
+     122 |   vpc_security_group_ids = [ aws_security_group.db.id]
+     123 |   storage_type = "gp2"
+     124 |   skip_final_snapshot = true
+     125 |   publicly_accessible = false
+     126 | }
+     127 | 
+     128 | 
+     129 | resource "aws_security_group" "publicly_accessible_sg" {
+
+  Legacy ID:  AWS052
+  Impact:     Data can be read from RDS instances if compromised
+  Resolution: Enable encryption for RDS instances
+
+  More Info:
+  - https://tfsec.dev/docs/aws/rds/encrypt-instance-storage-data#aws/rds 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_instance 
+  - https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html 
+
+  Result 7
+
+  [aws-vpc-add-decription-to-security-group][[0m[97mLOW[39m[0m] Resource 'aws_security_group.db' should include a description for auditing purposes.
   /src/main.tf:103-111
 
 
@@ -114,128 +204,80 @@ Check 5
      113 | resource "aws_db_instance" "test" {
      114 |   identifier = "tf-test-db"
 
+  Legacy ID:  AWS018
   Impact:     Descriptions provide context for the firewall rule reasons
-  Resolution: Add descriptions for all security groups anf rules
+  Resolution: Add descriptions for all security groups and rules
 
-  See https://tfsec.dev/docs/aws/AWS018/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/vpc/add-decription-to-security-group#aws/vpc 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule 
+  - https://www.cloudconformity.com/knowledge-base/aws/EC2/security-group-rules-description.html 
 
-Check 6
+  Result 8
 
-  [AWS052][ERROR] Resource 'aws_db_instance.test' has no storage encryption defined.
-  /src/main.tf:113-126
-
-
-     110 |   }
-     111 | }
-     112 | 
-     113 | resource "aws_db_instance" "test" {
-     114 |   identifier = "tf-test-db"
-     115 |   allocated_storage = "5"
-     116 |   multi_az = "false"
-     117 |   engine = "mysql"
-     118 |   instance_class = "db.t2.small"
-     119 |   username = "admin"
-     120 |   password = "password123"
-     121 |   db_subnet_group_name = aws_db_subnet_group.db.name
-     122 |   vpc_security_group_ids = [ aws_security_group.db.id]
-     123 |   storage_type = "gp2"
-     124 |   skip_final_snapshot = true
-     125 |   publicly_accessible = false
-     126 | }
-     127 | 
-     128 | 
-     129 | resource "aws_security_group" "publicly_accessible_sg" {
-
-  Impact:     Data can be read from the RDS instances if it is compromised
-  Resolution: Enable encryption for RDS clusters and instances
-
-  See https://tfsec.dev/docs/aws/AWS052/ for more information. 
-
-Check 7
-
-  [AWS091][WARNING] Resource 'aws_db_instance.test' does not have backup retention explicitly set
-  /src/main.tf:113-126
+  [aws-vpc-no-public-egress-sg][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'aws_security_group.publicly_accessible_sg' defines a fully open egress security group.
+  /src/main.tf:141
 
 
-     110 |   }
-     111 | }
-     112 | 
-     113 | resource "aws_db_instance" "test" {
-     114 |   identifier = "tf-test-db"
-     115 |   allocated_storage = "5"
-     116 |   multi_az = "false"
-     117 |   engine = "mysql"
-     118 |   instance_class = "db.t2.small"
-     119 |   username = "admin"
-     120 |   password = "password123"
-     121 |   db_subnet_group_name = aws_db_subnet_group.db.name
-     122 |   vpc_security_group_ids = [ aws_security_group.db.id]
-     123 |   storage_type = "gp2"
-     124 |   skip_final_snapshot = true
-     125 |   publicly_accessible = false
-     126 | }
-     127 | 
-     128 | 
-     129 | resource "aws_security_group" "publicly_accessible_sg" {
+     138 |     from_port = 0
+     139 |     protocol = "tcp"
+     140 |     to_port = 65000
+     141 |     cidr_blocks = ["0.0.0.0/0"]    list: ["0.0.0.0/0"]
+     142 |   }
+     143 | }
+     144 | 
 
-  Impact:     Potential loss of data and short opportunity for recovery
-  Resolution: Explicitly set the retention period to greater than the default
+  Legacy ID:  AWS009
+  Impact:     The port is exposed for egressing data to the internet
+  Resolution: Set a more restrictive cidr range
 
-  See https://tfsec.dev/docs/aws/AWS091/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/vpc/no-public-egress-sg#aws/vpc 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
 
-Check 8
+  Result 9
 
-  [AWS008][WARNING] Resource 'aws_security_group.publicly_accessible_sg' defines a fully open ingress security group.
+  [aws-vpc-no-public-ingress-sg][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'aws_security_group.publicly_accessible_sg' defines a fully open ingress security group.
   /src/main.tf:135
 
 
      132 |     from_port = 0
      133 |     protocol = "tcp"
      134 |     to_port = 65000
-     135 |     cidr_blocks = ["0.0.0.0/0"]
+     135 |     cidr_blocks = ["0.0.0.0/0"]    list: ["0.0.0.0/0"]
      136 |   }
      137 |   egress {
      138 |     from_port = 0
 
+  Legacy ID:  AWS008
   Impact:     The port is exposed for ingress from the internet
   Resolution: Set a more restrictive cidr range
 
-  See https://tfsec.dev/docs/aws/AWS008/ for more information. 
-
-Check 9
-
-  [AWS012][ERROR] Resource 'aws_instance.public_ins' has a public IP address associated.
-  /src/main.tf:149
-
-
-     146 | resource "aws_instance" "public_ins" {
-     147 |   ami = "ami-0130bec6e5047f596"
-     148 |   instance_type = "t3.nano"
-     149 |   associate_public_ip_address = true
-     150 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
-     151 |   subnet_id = aws_subnet.nondefault_1.id
-     152 | }
-
-  Impact:     The instance or configuration is publically accessible
-  Resolution: Set the instance to not be publically accessible
-
-  See https://tfsec.dev/docs/aws/AWS012/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/vpc/no-public-ingress-sg#aws/vpc 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
 
   times
   ------------------------------------------
-  disk i/o             21.2325ms
-  parsing HCL          29.5µs
-  evaluating values    553.6µs
-  running checks       12.7184ms
+  disk i/o             61.408458ms
+  parsing HCL          546.583µs
+  evaluating values    11.646376ms
+  running checks       200.553001ms
 
   counts
   ------------------------------------------
   files loaded         1
   blocks               15
-  evaluated blocks     15
   modules              0
-  module blocks        0
-  ignored checks       0
 
-9 potential problems detected.
+  results
+  ------------------------------------------
+  critical             3
+  high                 3
+  medium               1
+  low                  2
+  ignored              0
+
+  9 potential problems detected.
 

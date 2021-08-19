@@ -4,6 +4,7 @@ Violation Details -
     
 	Description    :	Ensure that your Amazon Simple Queue Service (SQS) queues are protecting the contents of their messages using Server-Side Encryption (SSE). The SQS service uses an AWS KMS Customer Master Key (CMK) to generate data keys required for the encryption/decryption process of SQS messages. There is no additional charge for using SQS Server-Side Encryption, however, there is a charge for using AWS KMS
 	File           :	main.tf
+	Module Name    :	root
 	Plan Root      :	./
 	Line           :	5
 	Severity       :	HIGH
@@ -13,10 +14,10 @@ Violation Details -
 
 Scan Summary -
 
-	File/Folder         :	tool-compare/test-cases/terraform/aws/encryption/at-rest/sqs_queue_not_encrypted
+	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-06-01 05:54:58.767943 +0000 UTC
-	Policies Validated  :	612
+	Scanned At          :	2021-08-18 16:21:34.904624381 +0000 UTC
+	Policies Validated  :	2
 	Violated Policies   :	1
 	Low                 :	0
 	Medium              :	0

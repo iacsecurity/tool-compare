@@ -1,25 +1,14 @@
 
 
-Violation Details -
-    
-	Description    :	Ensure EFS file system does not use insecure wildcard policies.
-	File           :	main.tf
-	Plan Root      :	./
-	Line           :	13
-	Severity       :	HIGH
-	
-	-----------------------------------------------------------------------
-	
-
 Scan Summary -
 
-	File/Folder         :	tool-compare/test-cases/terraform/aws/iam/resource-policies/efs_not_secure_policy
+	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-06-01 05:55:25.885409 +0000 UTC
-	Policies Validated  :	612
-	Violated Policies   :	1
+	Scanned At          :	2021-08-18 17:46:12.416928801 +0000 UTC
+	Policies Validated  :	2
+	Violated Policies   :	0
 	Low                 :	0
 	Medium              :	0
-	High                :	1
+	High                :	0
 	
 

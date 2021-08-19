@@ -1,8 +1,231 @@
 
 WARNINGs found:
+Rule: Ensure all data stored in the Launch configuration EBS is securely encrypted
+ - 3 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.inst3] (main.tf:108)
+     Violating Resource: [aws_instance.inst3]  (main.tf:108)
+
+     Evidence:
+             | This rule evaluated aws_instance.inst3's configuration
+
+
+   - Exposed Resource: [aws_instance.inst1] (main.tf:82)
+     Violating Resource: [aws_instance.inst1]  (main.tf:82)
+
+     Evidence:
+             | This rule evaluated aws_instance.inst1's configuration
+
+
+   - Exposed Resource: [aws_instance.inst2] (main.tf:95)
+     Violating Resource: [aws_instance.inst2]  (main.tf:95)
+
+     Evidence:
+             | This rule evaluated aws_instance.inst2's configuration
+
+
+-----------------------------------------------
+Rule: Ensure ELB has logging enabled
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_lb.test] (main.tf:49)
+     Violating Resource: [aws_lb.test]  (main.tf:49)
+
+     Evidence:
+             | The Load Balancer aws_lb.test does not have logging enabled
+
+
+-----------------------------------------------
+Rule: Ensure EC2 instance has detailed monitoring enabled
+ - 3 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.inst3] (main.tf:108)
+     Violating Resource: [aws_instance.inst3]  (main.tf:108)
+
+     Evidence:
+             | The EC2 Instance aws_instance.inst3 has detailed monitoring disabled
+
+
+   - Exposed Resource: [aws_instance.inst1] (main.tf:82)
+     Violating Resource: [aws_instance.inst1]  (main.tf:82)
+
+     Evidence:
+             | The EC2 Instance aws_instance.inst1 has detailed monitoring disabled
+
+
+   - Exposed Resource: [aws_instance.inst2] (main.tf:95)
+     Violating Resource: [aws_instance.inst2]  (main.tf:95)
+
+     Evidence:
+             | The EC2 Instance aws_instance.inst2 has detailed monitoring disabled
+
+
+-----------------------------------------------
+Rule: Ensure EC2 instance is EBS optimized
+ - 3 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.inst1] (main.tf:82)
+     Violating Resource: [aws_instance.inst1]  (main.tf:82)
+
+     Evidence:
+             | The EC2 Instance aws_instance.inst1 is not EBS optimized
+
+
+   - Exposed Resource: [aws_instance.inst2] (main.tf:95)
+     Violating Resource: [aws_instance.inst2]  (main.tf:95)
+
+     Evidence:
+             | The EC2 Instance aws_instance.inst2 is not EBS optimized
+
+
+   - Exposed Resource: [aws_instance.inst3] (main.tf:108)
+     Violating Resource: [aws_instance.inst3]  (main.tf:108)
+
+     Evidence:
+             | The EC2 Instance aws_instance.inst3 is not EBS optimized
+
+
+-----------------------------------------------
+Rule: Ensure Load Balancer drops invalid HTTP headers
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_lb.test] (main.tf:49)
+     Violating Resource: [aws_lb.test]  (main.tf:49)
+
+     Evidence:
+             | The Load Balancer aws_lb.test does not drop invalid HTTP headers
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 9 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.inst1] (main.tf:82)
+     Violating Resource: [aws_instance.inst1]  (main.tf:82)
+
+     Evidence:
+             | Resource EC2 Instance aws_instance.inst1 does not have any tags set
+
+
+   - Exposed Resource: [aws_instance.inst2] (main.tf:95)
+     Violating Resource: [aws_instance.inst2]  (main.tf:95)
+
+     Evidence:
+             | Resource EC2 Instance aws_instance.inst2 does not have any tags set
+
+
+   - Exposed Resource: [aws_instance.inst3] (main.tf:108)
+     Violating Resource: [aws_instance.inst3]  (main.tf:108)
+
+     Evidence:
+             | Resource EC2 Instance aws_instance.inst3 does not have any tags set
+
+
+   - Exposed Resource: [aws_lb.test] (main.tf:49)
+     Violating Resource: [aws_lb.test]  (main.tf:49)
+
+     Evidence:
+             | Resource Load Balancer aws_lb.test does not have any tags set
+
+
+   - Exposed Resource: [aws_lb_target_group.test] (main.tf:56)
+     Violating Resource: [aws_lb_target_group.test]  (main.tf:56)
+
+     Evidence:
+             | Resource Load Balancer Target Group aws_lb_target_group.test does not have any tags set
+
+
+   - Exposed Resource: [aws_default_security_group.dsg] (main.tf:63)
+     Violating Resource: [aws_default_security_group.dsg]  (main.tf:63)
+
+     Evidence:
+             | Resource Security group aws_default_security_group.dsg does not have any tags set
+
+
+   - Exposed Resource: [aws_vpc.vpc1] (main.tf:26)
+     Violating Resource: [aws_vpc.vpc1]  (main.tf:26)
+
+     Evidence:
+             | Resource VPC aws_vpc.vpc1 does not have any tags set
+
+
+   - Exposed Resource: [aws_subnet.subnet1] (main.tf:30)
+     Violating Resource: [aws_subnet.subnet1]  (main.tf:30)
+
+     Evidence:
+             | Resource Subnet aws_subnet.subnet1 does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [aws_subnet.subnet2] (main.tf:39)
+     Violating Resource: [aws_subnet.subnet2]  (main.tf:39)
+
+     Evidence:
+             | Resource Subnet aws_subnet.subnet2 does not have any tags set other than "Name"
+
+
+-----------------------------------------------
+Rule: Allow only private AMIs to be used
+ - 3 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.inst1] (main.tf:82)
+     Violating Resource: [ami-0dd273d94ed0540c0]  (Not found in TF)
+
+     Evidence:
+             | The EC2 Instance aws_instance.inst1 uses AMI ami-0dd273d94ed0540c0, which is public
+
+
+   - Exposed Resource: [aws_instance.inst3] (main.tf:108)
+     Violating Resource: [ami-0dd273d94ed0540c0]  (Not found in TF)
+
+     Evidence:
+             | The EC2 Instance aws_instance.inst3 uses AMI ami-0dd273d94ed0540c0, which is public
+
+
+   - Exposed Resource: [aws_instance.inst2] (main.tf:95)
+     Violating Resource: [ami-0dd273d94ed0540c0]  (Not found in TF)
+
+     Evidence:
+             | The EC2 Instance aws_instance.inst2 uses AMI ami-0dd273d94ed0540c0, which is public
+
+
+-----------------------------------------------
+Rule: Ensure IMDSv2 is used and IMDSv1 is disabled
+ - 3 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.inst3] (main.tf:108)
+     Violating Resource: [aws_instance.inst3]  (main.tf:108)
+
+     Evidence:
+             | The EC2 Instance aws_instance.inst3 is allowing IMDSv1
+
+
+   - Exposed Resource: [aws_instance.inst1] (main.tf:82)
+     Violating Resource: [aws_instance.inst1]  (main.tf:82)
+
+     Evidence:
+             | The EC2 Instance aws_instance.inst1 is allowing IMDSv1
+
+
+   - Exposed Resource: [aws_instance.inst2] (main.tf:95)
+     Violating Resource: [aws_instance.inst2]  (main.tf:95)
+
+     Evidence:
+             | The EC2 Instance aws_instance.inst2 is allowing IMDSv1
+
+
+-----------------------------------------------
 Rule: Ensure target groups are not using HTTP
  - 3 Resources Exposed:
 -----------------------------------------------
+   - Exposed Resource: [aws_lb_target_group_attachment.attach1] (main.tf:76)
+     Violating Resource: [aws_lb_target_group.test]  (main.tf:56)
+
+     Evidence:
+         Load Balancer
+             | The Load Balancer Target Group aws_lb_target_group.test is set to use HTTP with its targets
+             | This exposes traffic between the load balancer and its targets
+
+
    - Exposed Resource: [aws_lb_target_group_attachment.attach3] (main.tf:102)
      Violating Resource: [aws_lb_target_group.test]  (main.tf:56)
 
@@ -21,88 +244,7 @@ Rule: Ensure target groups are not using HTTP
              | This exposes traffic between the load balancer and its targets
 
 
-   - Exposed Resource: [aws_lb_target_group_attachment.attach1] (main.tf:76)
-     Violating Resource: [aws_lb_target_group.test]  (main.tf:56)
-
-     Evidence:
-         Load Balancer
-             | The Load Balancer Target Group aws_lb_target_group.test is set to use HTTP with its targets
-             | This exposes traffic between the load balancer and its targets
-
-
 -----------------------------------------------
-Rule: Ensure IMDSv2 is used and IMDSv1 is disabled
- - 3 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.inst3] (main.tf:108)
-     Violating Resource: [aws_instance.inst3]  (main.tf:108)
 
-     Evidence:
-             | The EC2 Instance aws_instance.inst3 is allowing IMDSv1
-
-
-   - Exposed Resource: [aws_instance.inst2] (main.tf:95)
-     Violating Resource: [aws_instance.inst2]  (main.tf:95)
-
-     Evidence:
-             | The EC2 Instance aws_instance.inst2 is allowing IMDSv1
-
-
-   - Exposed Resource: [aws_instance.inst1] (main.tf:82)
-     Violating Resource: [aws_instance.inst1]  (main.tf:82)
-
-     Evidence:
-             | The EC2 Instance aws_instance.inst1 is allowing IMDSv1
-
-
------------------------------------------------
-Rule: Ensure all data stored in the Launch configuration EBS is securely encrypted
- - 3 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.inst3] (main.tf:108)
-     Violating Resource: [aws_instance.inst3]  (main.tf:108)
-
-     Evidence:
-             | This rule evaluated aws_instance.inst3's configuration
-
-
-   - Exposed Resource: [aws_instance.inst2] (main.tf:95)
-     Violating Resource: [aws_instance.inst2]  (main.tf:95)
-
-     Evidence:
-             | This rule evaluated aws_instance.inst2's configuration
-
-
-   - Exposed Resource: [aws_instance.inst1] (main.tf:82)
-     Violating Resource: [aws_instance.inst1]  (main.tf:82)
-
-     Evidence:
-             | This rule evaluated aws_instance.inst1's configuration
-
-
------------------------------------------------
-Rule: Allow only private AMIs to be used
- - 3 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.inst3] (main.tf:108)
-     Violating Resource: [ami-076cbb27c223df09a]  (Not found in TF)
-
-     Evidence:
-             | The EC2 Instance aws_instance.inst3 uses AMI ami-076cbb27c223df09a, which is public
-
-
-   - Exposed Resource: [aws_instance.inst2] (main.tf:95)
-     Violating Resource: [ami-076cbb27c223df09a]  (Not found in TF)
-
-     Evidence:
-             | The EC2 Instance aws_instance.inst2 uses AMI ami-076cbb27c223df09a, which is public
-
-
-   - Exposed Resource: [aws_instance.inst1] (main.tf:82)
-     Violating Resource: [ami-076cbb27c223df09a]  (Not found in TF)
-
-     Evidence:
-             | The EC2 Instance aws_instance.inst1 uses AMI ami-076cbb27c223df09a, which is public
-
-
------------------------------------------------
+Cloudrail ran this assessment without any policies and so all rule violations show as warnings.
+You can increase a rule's enforcement level by creating a Policy in the Web UI and adding the rule to it.

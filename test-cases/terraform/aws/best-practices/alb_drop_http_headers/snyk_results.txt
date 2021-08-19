@@ -4,7 +4,7 @@ Failed to run the process ...
     "isPrivate": true,
     "isLicensesEnabled": false,
     "ignoreSettings": null,
-    "org": "y",
+    "org": "yi2020",
     "projectId": "",
     "policy": ""
   },
@@ -13,56 +13,61 @@ Failed to run the process ...
   "dependencyCount": 0,
   "licensesPolicy": null,
   "ignoreSettings": null,
-  "targetFile": "/project/main.tf",
+  "targetFile": "main.tf",
   "projectName": "project",
-  "org": "y",
+  "org": "yi2020",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
   "packageManager": "terraformconfig",
   "path": "/project",
   "projectType": "terraformconfig",
+  "ok": false,
   "infrastructureAsCodeIssues": [
     {
-      "resolve": "Set `internal` attribute to `true`",
-      "id": "SNYK-CC-TF-48",
-      "impact": "Increases attack vector reachability",
-      "subType": "Elastic Load Balancing (ELB Classic)",
-      "policyEngineType": "opa",
-      "publicId": "SNYK-CC-TF-48",
-      "title": "Load balancer is internet facing",
       "severity": "low",
-      "msg": "resource.aws_lb[default].internal",
-      "issue": "Load balancer is internet facing",
-      "type": "terraform",
+      "resolve": "Set `drop_invalid_header_fields` to `true`",
+      "id": "SNYK-CC-AWS-405",
+      "impact": "Maliciously crafted headers may be accepted by the load balancer",
+      "msg": "resource.aws_alb[default]",
+      "remediation": {
+        "cloudformation": "Set `Properties.LoadBalancerAttributes.Key` to `routing.http.drop_invalid_header_fields.enabled` and `Properties.LoadBalancerAttributes.Value` to `true`",
+        "terraform": "Set `drop_invalid_header_fields` to `true`"
+      },
+      "subType": "Elastic Load Balancing v2 (ALB/NLB)",
+      "issue": "The application load balancer is not set to drop invalid headers.",
+      "publicId": "SNYK-CC-AWS-405",
+      "title": "ALB does not drop invalid headers",
       "references": [
-        "https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-internet-facing-load-balancers.html"
+        "https://docs.aws.amazon.com/config/latest/developerguide/alb-http-drop-invalid-header-enabled.html"
       ],
       "isIgnored": false,
       "iacDescription": {
-        "issue": "Load balancer is internet facing",
-        "impact": "Increases attack vector reachability",
-        "resolve": "Set `internal` attribute to `true`"
+        "issue": "The application load balancer is not set to drop invalid headers.",
+        "impact": "Maliciously crafted headers may be accepted by the load balancer",
+        "resolve": "Set `drop_invalid_header_fields` to `true`"
       },
       "lineNumber": -1,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-405",
       "path": [
         "resource",
-        "aws_lb[default]",
-        "internal"
+        "aws_alb[default]"
       ]
     },
     {
+      "severity": "low",
       "resolve": "Set `internal` attribute to `true`",
       "id": "SNYK-CC-TF-48",
       "impact": "Increases attack vector reachability",
+      "msg": "resource.aws_alb[default].internal",
+      "remediation": {
+        "cloudformation": "Set `Properties.Scheme` attribute to `internal`",
+        "terraform": "Set `internal` attribute to `true`"
+      },
       "subType": "Elastic Load Balancing (ELB Classic)",
-      "policyEngineType": "opa",
+      "issue": "Load balancer is internet facing",
       "publicId": "SNYK-CC-TF-48",
       "title": "Load balancer is internet facing",
-      "severity": "low",
-      "msg": "resource.aws_alb[default].internal",
-      "issue": "Load balancer is internet facing",
-      "type": "terraform",
       "references": [
         "https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-internet-facing-load-balancers.html"
       ],
@@ -73,6 +78,7 @@ Failed to run the process ...
         "resolve": "Set `internal` attribute to `true`"
       },
       "lineNumber": -1,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-48",
       "path": [
         "resource",
         "aws_alb[default]",
@@ -80,17 +86,79 @@ Failed to run the process ...
       ]
     },
     {
+      "severity": "low",
+      "resolve": "Set `drop_invalid_header_fields` to `true`",
+      "id": "SNYK-CC-AWS-405",
+      "impact": "Maliciously crafted headers may be accepted by the load balancer",
+      "msg": "resource.aws_alb[disabled]",
+      "remediation": {
+        "cloudformation": "Set `Properties.LoadBalancerAttributes.Key` to `routing.http.drop_invalid_header_fields.enabled` and `Properties.LoadBalancerAttributes.Value` to `true`",
+        "terraform": "Set `drop_invalid_header_fields` to `true`"
+      },
+      "subType": "Elastic Load Balancing v2 (ALB/NLB)",
+      "issue": "The application load balancer is not set to drop invalid headers.",
+      "publicId": "SNYK-CC-AWS-405",
+      "title": "ALB does not drop invalid headers",
+      "references": [
+        "https://docs.aws.amazon.com/config/latest/developerguide/alb-http-drop-invalid-header-enabled.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "The application load balancer is not set to drop invalid headers.",
+        "impact": "Maliciously crafted headers may be accepted by the load balancer",
+        "resolve": "Set `drop_invalid_header_fields` to `true`"
+      },
+      "lineNumber": -1,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-405",
+      "path": [
+        "resource",
+        "aws_alb[disabled]"
+      ]
+    },
+    {
+      "severity": "low",
+      "resolve": "Set `drop_invalid_header_fields` to `true`",
+      "id": "SNYK-CC-AWS-405",
+      "impact": "Maliciously crafted headers may be accepted by the load balancer",
+      "msg": "resource.aws_lb[disabled]",
+      "remediation": {
+        "cloudformation": "Set `Properties.LoadBalancerAttributes.Key` to `routing.http.drop_invalid_header_fields.enabled` and `Properties.LoadBalancerAttributes.Value` to `true`",
+        "terraform": "Set `drop_invalid_header_fields` to `true`"
+      },
+      "subType": "Elastic Load Balancing v2 (ALB/NLB)",
+      "issue": "The application load balancer is not set to drop invalid headers.",
+      "publicId": "SNYK-CC-AWS-405",
+      "title": "ALB does not drop invalid headers",
+      "references": [
+        "https://docs.aws.amazon.com/config/latest/developerguide/alb-http-drop-invalid-header-enabled.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "The application load balancer is not set to drop invalid headers.",
+        "impact": "Maliciously crafted headers may be accepted by the load balancer",
+        "resolve": "Set `drop_invalid_header_fields` to `true`"
+      },
+      "lineNumber": -1,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-405",
+      "path": [
+        "resource",
+        "aws_lb[disabled]"
+      ]
+    },
+    {
+      "severity": "low",
       "resolve": "Set `internal` attribute to `true`",
       "id": "SNYK-CC-TF-48",
       "impact": "Increases attack vector reachability",
+      "msg": "resource.aws_alb[disabled].internal",
+      "remediation": {
+        "cloudformation": "Set `Properties.Scheme` attribute to `internal`",
+        "terraform": "Set `internal` attribute to `true`"
+      },
       "subType": "Elastic Load Balancing (ELB Classic)",
-      "policyEngineType": "opa",
+      "issue": "Load balancer is internet facing",
       "publicId": "SNYK-CC-TF-48",
       "title": "Load balancer is internet facing",
-      "severity": "low",
-      "msg": "resource.aws_lb[disabled].internal",
-      "issue": "Load balancer is internet facing",
-      "type": "terraform",
       "references": [
         "https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-internet-facing-load-balancers.html"
       ],
@@ -101,24 +169,57 @@ Failed to run the process ...
         "resolve": "Set `internal` attribute to `true`"
       },
       "lineNumber": -1,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-48",
       "path": [
         "resource",
-        "aws_lb[disabled]",
+        "aws_alb[disabled]",
         "internal"
       ]
     },
     {
+      "severity": "low",
+      "resolve": "Set `drop_invalid_header_fields` to `true`",
+      "id": "SNYK-CC-AWS-405",
+      "impact": "Maliciously crafted headers may be accepted by the load balancer",
+      "msg": "resource.aws_lb[default]",
+      "remediation": {
+        "cloudformation": "Set `Properties.LoadBalancerAttributes.Key` to `routing.http.drop_invalid_header_fields.enabled` and `Properties.LoadBalancerAttributes.Value` to `true`",
+        "terraform": "Set `drop_invalid_header_fields` to `true`"
+      },
+      "subType": "Elastic Load Balancing v2 (ALB/NLB)",
+      "issue": "The application load balancer is not set to drop invalid headers.",
+      "publicId": "SNYK-CC-AWS-405",
+      "title": "ALB does not drop invalid headers",
+      "references": [
+        "https://docs.aws.amazon.com/config/latest/developerguide/alb-http-drop-invalid-header-enabled.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "The application load balancer is not set to drop invalid headers.",
+        "impact": "Maliciously crafted headers may be accepted by the load balancer",
+        "resolve": "Set `drop_invalid_header_fields` to `true`"
+      },
+      "lineNumber": -1,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-405",
+      "path": [
+        "resource",
+        "aws_lb[default]"
+      ]
+    },
+    {
+      "severity": "low",
       "resolve": "Set `internal` attribute to `true`",
       "id": "SNYK-CC-TF-48",
       "impact": "Increases attack vector reachability",
+      "msg": "resource.aws_lb[default].internal",
+      "remediation": {
+        "cloudformation": "Set `Properties.Scheme` attribute to `internal`",
+        "terraform": "Set `internal` attribute to `true`"
+      },
       "subType": "Elastic Load Balancing (ELB Classic)",
-      "policyEngineType": "opa",
+      "issue": "Load balancer is internet facing",
       "publicId": "SNYK-CC-TF-48",
       "title": "Load balancer is internet facing",
-      "severity": "low",
-      "msg": "resource.aws_alb[disabled].internal",
-      "issue": "Load balancer is internet facing",
-      "type": "terraform",
       "references": [
         "https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-internet-facing-load-balancers.html"
       ],
@@ -129,9 +230,41 @@ Failed to run the process ...
         "resolve": "Set `internal` attribute to `true`"
       },
       "lineNumber": -1,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-48",
       "path": [
         "resource",
-        "aws_alb[disabled]",
+        "aws_lb[default]",
+        "internal"
+      ]
+    },
+    {
+      "severity": "low",
+      "resolve": "Set `internal` attribute to `true`",
+      "id": "SNYK-CC-TF-48",
+      "impact": "Increases attack vector reachability",
+      "msg": "resource.aws_lb[disabled].internal",
+      "remediation": {
+        "cloudformation": "Set `Properties.Scheme` attribute to `internal`",
+        "terraform": "Set `internal` attribute to `true`"
+      },
+      "subType": "Elastic Load Balancing (ELB Classic)",
+      "issue": "Load balancer is internet facing",
+      "publicId": "SNYK-CC-TF-48",
+      "title": "Load balancer is internet facing",
+      "references": [
+        "https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-internet-facing-load-balancers.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Load balancer is internet facing",
+        "impact": "Increases attack vector reachability",
+        "resolve": "Set `internal` attribute to `true`"
+      },
+      "lineNumber": -1,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-48",
+      "path": [
+        "resource",
+        "aws_lb[disabled]",
         "internal"
       ]
     }

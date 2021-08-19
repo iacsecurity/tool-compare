@@ -1,7 +1,7 @@
 
-Check 1
+  Result 1
 
-  [AWS019][WARNING] Resource 'aws_kms_key.secure_policy' does not have KMS Key auto-rotation enabled.
+  [aws-kms-auto-rotate-keys][[0m[33mMEDIUM[39m[0m] Resource 'aws_kms_key.secure_policy' does not have KMS Key auto-rotation enabled.
   /src/main.tf:5-37
 
 
@@ -42,26 +42,35 @@ Check 1
       36 | EOF
       37 | }
 
+  Legacy ID:  AWS019
   Impact:     Long life KMS keys increase the attack surface when compromised
   Resolution: Configure KMS key to auto rotate
 
-  See https://tfsec.dev/docs/aws/AWS019/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/kms/auto-rotate-keys#aws/kms 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kms_key#enable_key_rotation 
+  - https://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html 
 
   times
   ------------------------------------------
-  disk i/o             26.15ms
-  parsing HCL          16.7µs
-  evaluating values    109.6µs
-  running checks       2.4045ms
+  disk i/o             82.125251ms
+  parsing HCL          557.5µs
+  evaluating values    1.758958ms
+  running checks       17.162916ms
 
   counts
   ------------------------------------------
   files loaded         1
   blocks               2
-  evaluated blocks     2
   modules              0
-  module blocks        0
-  ignored checks       0
 
-1 potential problems detected.
+  results
+  ------------------------------------------
+  critical             0
+  high                 0
+  medium               1
+  low                  0
+  ignored              0
+
+  1 potential problems detected.
 

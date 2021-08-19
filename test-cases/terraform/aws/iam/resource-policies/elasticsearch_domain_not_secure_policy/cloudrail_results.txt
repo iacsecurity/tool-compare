@@ -1,53 +1,24 @@
 
 WARNINGs found:
-Rule: Ensure Elasticsearch Domain is not publicly accessible
+Rule: Ensure Elasticsearch Domain enforces HTTPS
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_elasticsearch_domain.es-not-secure-policy] (main.tf:5)
      Violating Resource: [aws_elasticsearch_domain.es-not-secure-policy]  (main.tf:5)
 
      Evidence:
-         Internet
-             | ElasticSearch Domain: aws_elasticsearch_domain.es-not-secure-policy is publicly accessible
-             | ElasticSearch Domain is currently not deployed within a VPC
-         ElasticSearch
+             | This rule evaluated aws_elasticsearch_domain.es-not-secure-policy's configuration
 
 
 -----------------------------------------------
-Rule: Ensure Elasticsearch Domains being created are set to be encrypted at rest
+Rule: Ensure Elasticsearch Domain has logging enabled
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_elasticsearch_domain.es-not-secure-policy] (main.tf:5)
      Violating Resource: [aws_elasticsearch_domain.es-not-secure-policy]  (main.tf:5)
 
      Evidence:
-         ElasticSearch Domain
-             | ElasticSearch Domain aws_elasticsearch_domain.es-not-secure-policy
-             | is not set to use encrypt at rest
-
-
------------------------------------------------
-Rule: Ensure Elasticsearch domains being created are set to be encrypted node-to-node
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_elasticsearch_domain.es-not-secure-policy] (main.tf:5)
-     Violating Resource: [aws_elasticsearch_domain.es-not-secure-policy]  (main.tf:5)
-
-     Evidence:
-         ElasticSearch Domain
-             | ElasticSearch Domain aws_elasticsearch_domain.es-not-secure-policy
-             | is not set to use encrypt node-to-node
-
-
------------------------------------------------
-Rule: Ensure use of Elasticsearch Service domain policy, and no action wildcards are being used
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_elasticsearch_domain.es-not-secure-policy] (main.tf:5)
-     Violating Resource: [aws_elasticsearch_domain_policy.main]  (main.tf:15)
-
-     Evidence:
-             | The policy attached to the ElasticSearch Domain aws_elasticsearch_domain.es-not-secure-policy is using wildcard action es:*, and principal AWS: *, without any condition
+             | The ElasticSearch Domain aws_elasticsearch_domain.es-not-secure-policy does not have logging configured at all
 
 
 -----------------------------------------------
@@ -62,14 +33,28 @@ Rule: Ensure all resources that can be tagged have at least one tag
 
 
 -----------------------------------------------
-Rule: Ensure Elasticsearch Domain enforces HTTPS
+Rule: Ensure use of Elasticsearch Service domain policy, and no action wildcards are being used
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_elasticsearch_domain.es-not-secure-policy] (main.tf:5)
+     Violating Resource: [aws_elasticsearch_domain_policy.main]  (main.tf:15)
+
+     Evidence:
+             | The policy attached to the ElasticSearch Domain aws_elasticsearch_domain.es-not-secure-policy is using wildcard action es:*, and principal AWS: *, without any condition
+
+
+-----------------------------------------------
+Rule: Ensure Elasticsearch Domain is not publicly accessible
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_elasticsearch_domain.es-not-secure-policy] (main.tf:5)
      Violating Resource: [aws_elasticsearch_domain.es-not-secure-policy]  (main.tf:5)
 
      Evidence:
-             | This rule evaluated aws_elasticsearch_domain.es-not-secure-policy's configuration
+         Internet
+             | ElasticSearch Domain: aws_elasticsearch_domain.es-not-secure-policy is publicly accessible
+             | ElasticSearch Domain is currently not deployed within a VPC
+         ElasticSearch
 
 
 -----------------------------------------------

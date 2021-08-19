@@ -3,10 +3,10 @@ Failed to run the process ...
   "meta": {
     "isPrivate": true,
     "isLicensesEnabled": false,
-    "policy": "",
     "ignoreSettings": null,
+    "org": "yi2020",
     "projectId": "",
-    "org": "y"
+    "policy": ""
   },
   "filesystemPolicy": false,
   "vulnerabilities": [],
@@ -15,20 +15,32 @@ Failed to run the process ...
   "ignoreSettings": null,
   "targetFile": "main.tf",
   "projectName": "project",
-  "org": "y",
+  "org": "yi2020",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
   "packageManager": "terraformconfig",
   "path": "/project",
   "projectType": "terraformconfig",
+  "ok": false,
   "infrastructureAsCodeIssues": [
     {
-      "id": "SNYK-CC-TF-54",
-      "title": "Non-Encrypted SQS Queue",
-      "type": "terraform",
-      "subType": "SQS",
       "severity": "medium",
+      "resolve": "Set `kms_master_key_id` attribute to KMS key",
+      "id": "SNYK-CC-TF-54",
+      "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+      "msg": "resource.aws_sqs_queue[cloudrail].kms_master_key_id",
+      "remediation": {
+        "cloudformation": "Set `Properties.KmsMasterKeyId` attribute to KMS key, for example `alias/aws/sqs`",
+        "terraform": "Set `kms_master_key_id` attribute to KMS key"
+      },
+      "subType": "SQS",
+      "issue": "The SQS queue is not encrypted at rest",
+      "publicId": "SNYK-CC-TF-54",
+      "title": "Non-Encrypted SQS Queue",
+      "references": [
+        "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-server-side-encryption.html"
+      ],
       "isIgnored": false,
       "iacDescription": {
         "issue": "The SQS queue is not encrypted at rest",
@@ -36,6 +48,7 @@ Failed to run the process ...
         "resolve": "Set `kms_master_key_id` attribute to KMS key"
       },
       "lineNumber": 5,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-54",
       "path": [
         "resource",
         "aws_sqs_queue[cloudrail]",

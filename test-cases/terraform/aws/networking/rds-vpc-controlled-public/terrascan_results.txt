@@ -2,48 +2,9 @@
 
 Violation Details -
     
-	Description    :	Ensure AWS RDS instances have logging enabled.
+	Description    :	Ensure no security groups is wide open to public, that is, allows traffic from 0.0.0.0/0 to ALL ports and protocols
 	File           :	main.tf
-	Plan Root      :	./
-	Line           :	60
-	Severity       :	MEDIUM
-	
-	-----------------------------------------------------------------------
-	
-	Description    :	RDS Instance publicly_accessible flag is true
-	File           :	main.tf
-	Plan Root      :	./
-	Line           :	60
-	Severity       :	HIGH
-	
-	-----------------------------------------------------------------------
-	
-	Description    :	Ensure every security group should have a description to ease the process of Auditing
-	File           :	main.tf
-	Plan Root      :	./
-	Line           :	9
-	Severity       :	LOW
-	
-	-----------------------------------------------------------------------
-	
-	Description    :	Ensure VPC flow logging is enabled in all VPCs
-	File           :	main.tf
-	Plan Root      :	./
-	Line           :	5
-	Severity       :	MEDIUM
-	
-	-----------------------------------------------------------------------
-	
-	Description    :	Ensure that your RDS database has IAM Authentication enabled.
-	File           :	main.tf
-	Plan Root      :	./
-	Line           :	60
-	Severity       :	HIGH
-	
-	-----------------------------------------------------------------------
-	
-	Description    :	It is recommended that no security group allows unrestricted ingress access
-	File           :	main.tf
+	Module Name    :	root
 	Plan Root      :	./
 	Line           :	9
 	Severity       :	HIGH
@@ -52,22 +13,59 @@ Violation Details -
 	
 	Description    :	Ensure that your RDS database instances encrypt the underlying storage. Encrypted RDS instances use the industry standard AES-256 encryption algorithm to encrypt data on the server that hosts RDS DB instances. After data is encrypted, RDS handles authentication of access and descryption of data transparently with minimal impact on performance.
 	File           :	main.tf
+	Module Name    :	root
 	Plan Root      :	./
 	Line           :	60
 	Severity       :	HIGH
 	
 	-----------------------------------------------------------------------
 	
+	Description    :	RDS Instance publicly_accessible flag is true
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	60
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure VPC flow logging is enabled in all VPCs
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	5
+	Severity       :	LOW
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure AWS RDS instances have logging enabled.
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	60
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that your RDS database has IAM Authentication enabled.
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	60
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
 
 Scan Summary -
 
-	File/Folder         :	tool-compare/test-cases/terraform/aws/networking/rds-vpc-controlled-public
+	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-06-01 05:55:17.918909 +0000 UTC
-	Policies Validated  :	612
-	Violated Policies   :	7
+	Scanned At          :	2021-08-18 17:42:23.623377417 +0000 UTC
+	Policies Validated  :	145
+	Violated Policies   :	6
 	Low                 :	1
 	Medium              :	2
-	High                :	4
+	High                :	3
 	
 

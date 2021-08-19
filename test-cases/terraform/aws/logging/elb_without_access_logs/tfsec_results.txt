@@ -1,7 +1,7 @@
 
-Check 1
+  Result 1
 
-  [AWS005][WARNING] Resource 'aws_elb.test' is exposed publicly.
+  [aws-elbv2-alb-not-public][[0m[31mHIGH[39m[0m] Resource 'aws_elb.test' is exposed publicly.
   /src/main.tf:1-10
 
 
@@ -17,26 +17,34 @@ Check 1
       10 | }
       11 | 
 
+  Legacy ID:  AWS005
   Impact:     The load balancer is exposed on the internet
   Resolution: Switch to an internal load balancer or add a tfsec ignore
 
-  See https://tfsec.dev/docs/aws/AWS005/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/elbv2/alb-not-public#aws/elbv2 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb 
 
   times
   ------------------------------------------
-  disk i/o             28.4069ms
-  parsing HCL          19µs
-  evaluating values    101.3µs
-  running checks       4.0335ms
+  disk i/o             47.672917ms
+  parsing HCL          489.458µs
+  evaluating values    1.901667ms
+  running checks       15.275583ms
 
   counts
   ------------------------------------------
   files loaded         1
   blocks               1
-  evaluated blocks     1
   modules              0
-  module blocks        0
-  ignored checks       0
 
-1 potential problems detected.
+  results
+  ------------------------------------------
+  critical             0
+  high                 1
+  medium               0
+  low                  0
+  ignored              0
+
+  1 potential problems detected.
 

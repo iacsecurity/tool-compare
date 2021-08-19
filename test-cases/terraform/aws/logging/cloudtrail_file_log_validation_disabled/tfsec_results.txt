@@ -1,7 +1,7 @@
 
-Check 1
+  Result 1
 
-  [AWS063][WARNING] Resource 'aws_cloudtrail.foobar' does not set multi region trail config.
+  [aws-cloudtrail-enable-all-regions][[0m[33mMEDIUM[39m[0m] Resource 'aws_cloudtrail.foobar' does not set multi region trail config.
   /src/main.tf:11-16
 
 
@@ -18,14 +18,18 @@ Check 1
       18 | resource "aws_s3_bucket" "foo" {
       19 |   bucket        = local.name
 
+  Legacy ID:  AWS063
   Impact:     Activity could be happening in your account in a different region
   Resolution: Enable Cloudtrail in all regions
 
-  See https://tfsec.dev/docs/aws/AWS063/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/cloudtrail/enable-all-regions#aws/cloudtrail 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudtrail#is_multi_region_trail 
+  - https://docs.aws.amazon.com/awscloudtrail/latest/userguide/receive-cloudtrail-log-files-from-multiple-regions.html 
 
-Check 2
+  Result 2
 
-  [AWS064][WARNING] Resource 'aws_cloudtrail.foobar' does not enable log file validation.
+  [aws-cloudtrail-enable-at-rest-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_cloudtrail.foobar' does not have a kms_key_id set.
   /src/main.tf:11-16
 
 
@@ -42,38 +46,46 @@ Check 2
       18 | resource "aws_s3_bucket" "foo" {
       19 |   bucket        = local.name
 
-  Impact:     Illicit activity could be removed from the logs
-  Resolution: Turn on log validation for Cloudtrail
-
-  See https://tfsec.dev/docs/aws/AWS064/ for more information. 
-
-Check 3
-
-  [AWS065][ERROR] Resource 'aws_cloudtrail.foobar' does not have a kms_key_id set.
-  /src/main.tf:11-16
-
-
-       8 | 
-       9 | data "aws_caller_identity" "current" {}
-      10 | 
-      11 | resource "aws_cloudtrail" "foobar" {
-      12 |   name                          = local.name
-      13 |   s3_bucket_name                = aws_s3_bucket.foo.id
-      14 |   s3_key_prefix                 = "prefix"
-      15 |   include_global_service_events = false
-      16 | }
-      17 | 
-      18 | resource "aws_s3_bucket" "foo" {
-      19 |   bucket        = local.name
-
+  Legacy ID:  AWS065
   Impact:     Data can be freely read if compromised
   Resolution: Enable encryption at rest
 
-  See https://tfsec.dev/docs/aws/AWS065/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/cloudtrail/enable-at-rest-encryption#aws/cloudtrail 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudtrail#kms_key_id 
+  - https://docs.aws.amazon.com/awscloudtrail/latest/userguide/encrypting-cloudtrail-log-files-with-aws-kms.html 
 
-Check 4
+  Result 3
 
-  [AWS002][ERROR] Resource 'aws_s3_bucket.foo' does not have logging enabled.
+  [aws-cloudtrail-enable-log-validation][[0m[31mHIGH[39m[0m] Resource 'aws_cloudtrail.foobar' does not enable log file validation.
+  /src/main.tf:11-16
+
+
+       8 | 
+       9 | data "aws_caller_identity" "current" {}
+      10 | 
+      11 | resource "aws_cloudtrail" "foobar" {
+      12 |   name                          = local.name
+      13 |   s3_bucket_name                = aws_s3_bucket.foo.id
+      14 |   s3_key_prefix                 = "prefix"
+      15 |   include_global_service_events = false
+      16 | }
+      17 | 
+      18 | resource "aws_s3_bucket" "foo" {
+      19 |   bucket        = local.name
+
+  Legacy ID:  AWS064
+  Impact:     Illicit activity could be removed from the logs
+  Resolution: Turn on log validation for Cloudtrail
+
+  More Info:
+  - https://tfsec.dev/docs/aws/cloudtrail/enable-log-validation#aws/cloudtrail 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudtrail#enable_log_file_validation 
+  - https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-log-file-validation-intro.html 
+
+  Result 4
+
+  [aws-s3-enable-bucket-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_s3_bucket.foo' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
   /src/main.tf:18-52
 
 
@@ -116,64 +128,18 @@ Check 4
       51 | POLICY
       52 | }
 
-  Impact:     There is no way to determine the access to this bucket
-  Resolution: Add a logging block to the resource to enable access logging
-
-  See https://tfsec.dev/docs/aws/AWS002/ for more information. 
-
-Check 5
-
-  [AWS017][ERROR] Resource 'aws_s3_bucket.foo' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
-  /src/main.tf:18-52
-
-
-      15 |   include_global_service_events = false
-      16 | }
-      17 | 
-      18 | resource "aws_s3_bucket" "foo" {
-      19 |   bucket        = local.name
-      20 |   force_destroy = true
-      21 | 
-      22 |   policy = <<POLICY
-      23 | {
-      24 |     "Version": "2012-10-17",
-      25 |     "Statement": [
-      26 |         {
-      27 |             "Sid": "AWSCloudTrailAclCheck",
-      28 |             "Effect": "Allow",
-      29 |             "Principal": {
-      30 |               "Service": "cloudtrail.amazonaws.com"
-      31 |             },
-      32 |             "Action": "s3:GetBucketAcl",
-      33 |             "Resource": "arn:aws:s3:::${local.name}"
-      34 |         },
-      35 |         {
-      36 |             "Sid": "AWSCloudTrailWrite",
-      37 |             "Effect": "Allow",
-      38 |             "Principal": {
-      39 |               "Service": "cloudtrail.amazonaws.com"
-      40 |             },
-      41 |             "Action": "s3:PutObject",
-      42 |             "Resource": "arn:aws:s3:::${local.name}/prefix/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
-      43 |             "Condition": {
-      44 |                 "StringEquals": {
-      45 |                     "s3:x-amz-acl": "bucket-owner-full-control"
-      46 |                 }
-      47 |             }
-      48 |         }
-      49 |     ]
-      50 | }
-      51 | POLICY
-      52 | }
-
+  Legacy ID:  AWS017
   Impact:     The bucket objects could be read if compromised
   Resolution: Configure bucket encryption
 
-  See https://tfsec.dev/docs/aws/AWS017/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/s3/enable-bucket-encryption#aws/s3 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#enable-default-server-side-encryption 
+  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-encryption.html 
 
-Check 6
+  Result 5
 
-  [AWS077][ERROR] Resource 'aws_s3_bucket.foo' does not have versioning enabled
+  [aws-s3-enable-bucket-logging][[0m[33mMEDIUM[39m[0m] Resource 'aws_s3_bucket.foo' does not have logging enabled.
   /src/main.tf:18-52
 
 
@@ -216,26 +182,143 @@ Check 6
       51 | POLICY
       52 | }
 
+  Legacy ID:  AWS002
+  Impact:     There is no way to determine the access to this bucket
+  Resolution: Add a logging block to the resource to enable access logging
+
+  More Info:
+  - https://tfsec.dev/docs/aws/s3/enable-bucket-logging#aws/s3 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket 
+  - https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerLogs.html 
+
+  Result 6
+
+  [aws-s3-enable-versioning][[0m[33mMEDIUM[39m[0m] Resource 'aws_s3_bucket.foo' does not have versioning enabled
+  /src/main.tf:18-52
+
+
+      15 |   include_global_service_events = false
+      16 | }
+      17 | 
+      18 | resource "aws_s3_bucket" "foo" {
+      19 |   bucket        = local.name
+      20 |   force_destroy = true
+      21 | 
+      22 |   policy = <<POLICY
+      23 | {
+      24 |     "Version": "2012-10-17",
+      25 |     "Statement": [
+      26 |         {
+      27 |             "Sid": "AWSCloudTrailAclCheck",
+      28 |             "Effect": "Allow",
+      29 |             "Principal": {
+      30 |               "Service": "cloudtrail.amazonaws.com"
+      31 |             },
+      32 |             "Action": "s3:GetBucketAcl",
+      33 |             "Resource": "arn:aws:s3:::${local.name}"
+      34 |         },
+      35 |         {
+      36 |             "Sid": "AWSCloudTrailWrite",
+      37 |             "Effect": "Allow",
+      38 |             "Principal": {
+      39 |               "Service": "cloudtrail.amazonaws.com"
+      40 |             },
+      41 |             "Action": "s3:PutObject",
+      42 |             "Resource": "arn:aws:s3:::${local.name}/prefix/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
+      43 |             "Condition": {
+      44 |                 "StringEquals": {
+      45 |                     "s3:x-amz-acl": "bucket-owner-full-control"
+      46 |                 }
+      47 |             }
+      48 |         }
+      49 |     ]
+      50 | }
+      51 | POLICY
+      52 | }
+
+  Legacy ID:  AWS077
   Impact:     Deleted or modified data would not be recoverable
   Resolution: Enable versioning to protect against accidental/malicious removal or modification
 
-  See https://tfsec.dev/docs/aws/AWS077/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/s3/enable-versioning#aws/s3 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#versioning 
+  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/Versioning.html 
+
+  Result 7
+
+  [aws-s3-specify-public-access-block][[0m[33mMEDIUM[39m[0m] Resource aws_s3_bucket.foo has no associated aws_s3_bucket_public_access_block.
+  /src/main.tf:18-52
+
+
+      15 |   include_global_service_events = false
+      16 | }
+      17 | 
+      18 | resource "aws_s3_bucket" "foo" {
+      19 |   bucket        = local.name
+      20 |   force_destroy = true
+      21 | 
+      22 |   policy = <<POLICY
+      23 | {
+      24 |     "Version": "2012-10-17",
+      25 |     "Statement": [
+      26 |         {
+      27 |             "Sid": "AWSCloudTrailAclCheck",
+      28 |             "Effect": "Allow",
+      29 |             "Principal": {
+      30 |               "Service": "cloudtrail.amazonaws.com"
+      31 |             },
+      32 |             "Action": "s3:GetBucketAcl",
+      33 |             "Resource": "arn:aws:s3:::${local.name}"
+      34 |         },
+      35 |         {
+      36 |             "Sid": "AWSCloudTrailWrite",
+      37 |             "Effect": "Allow",
+      38 |             "Principal": {
+      39 |               "Service": "cloudtrail.amazonaws.com"
+      40 |             },
+      41 |             "Action": "s3:PutObject",
+      42 |             "Resource": "arn:aws:s3:::${local.name}/prefix/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
+      43 |             "Condition": {
+      44 |                 "StringEquals": {
+      45 |                     "s3:x-amz-acl": "bucket-owner-full-control"
+      46 |                 }
+      47 |             }
+      48 |         }
+      49 |     ]
+      50 | }
+      51 | POLICY
+      52 | }
+
+  Legacy ID:  AWS098
+  Impact:     Public access policies may be applied to sensitive data buckets
+  Resolution: Define a aws_s3_bucket_public_access_block for the given bucket to control public access policies
+
+  More Info:
+  - https://tfsec.dev/docs/aws/s3/specify-public-access-block#aws/s3 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#bucket 
+  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html 
 
   times
   ------------------------------------------
-  disk i/o             41.5017ms
-  parsing HCL          26.9µs
-  evaluating values    369.9µs
-  running checks       15.48ms
+  disk i/o             50.785584ms
+  parsing HCL          555.583µs
+  evaluating values    3.525918ms
+  running checks       47.219667ms
 
   counts
   ------------------------------------------
   files loaded         1
   blocks               5
-  evaluated blocks     5
   modules              0
-  module blocks        0
-  ignored checks       0
 
-6 potential problems detected.
+  results
+  ------------------------------------------
+  critical             0
+  high                 3
+  medium               4
+  low                  0
+  ignored              0
+
+  7 potential problems detected.
 

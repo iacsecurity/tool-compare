@@ -1,9 +1,122 @@
 Failed to run the process ...
-
-<--- Last few GCs --->
-
-[37:0x26980a0]     3872 ms: Mark-sweep 25.1 (40.8) -> 18.8 (58.3) MB, 36.2 / 1.0 ms  (+ 17.4 ms in 15 steps since start of marking, biggest step 7.2 ms, walltime since start of marking 256 ms) (average mu = 1.000, current mu = 1.000) finalize incremental [37:0x26980a0]     5318 ms: Scavenge 37.3 (58.8) -> 27.5 (60.3) MB, 7.5 / 0.0 ms  (average mu = 1.000, current mu = 1.000) allocation failure 
-
-
-<--- JS stacktrace --->
-Cannot get stack trace in GC.
+{
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "ignoreSettings": null,
+    "org": "yi2020",
+    "projectId": "",
+    "policy": ""
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "main.tf",
+  "projectName": "project",
+  "org": "yi2020",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
+  "ok": false,
+  "infrastructureAsCodeIssues": [
+    {
+      "severity": "low",
+      "resolve": "Set `kms_key_id` attribute to customer managed key id",
+      "id": "SNYK-CC-AWS-416",
+      "impact": "Scope of use of the key cannot be controlled via KMS/IAM policies",
+      "msg": "resource.aws_docdb_cluster[docdb]",
+      "remediation": {
+        "cloudformation": "Set `Properties.KmsKeyId` attribute to customer managed key id",
+        "terraform": "Set `kms_key_id` attribute to customer managed key id"
+      },
+      "subType": "DocumentDB",
+      "issue": "Docdb cluster is not encrypted with customer managed key",
+      "publicId": "SNYK-CC-AWS-416",
+      "title": "Docdb cluster not encrypted with customer managed key",
+      "references": [
+        "https://docs.aws.amazon.com/documentdb/latest/developerguide/encryption-at-rest.html",
+        "https://docs.aws.amazon.com/whitepapers/latest/kms-best-practices/aws-managed-and-customer-managed-cmks.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Docdb cluster is not encrypted with customer managed key",
+        "impact": "Scope of use of the key cannot be controlled via KMS/IAM policies",
+        "resolve": "Set `kms_key_id` attribute to customer managed key id"
+      },
+      "lineNumber": 1,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-416",
+      "path": [
+        "resource",
+        "aws_docdb_cluster[docdb]"
+      ]
+    },
+    {
+      "severity": "medium",
+      "resolve": "Set `storage_encrypted` attribute to `true`.",
+      "id": "SNYK-CC-TF-109",
+      "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+      "msg": "resource.aws_docdb_cluster[docdb].storage_encrypted",
+      "remediation": {
+        "cloudformation": "Set `Properties.StorageEncrypted` attribute to `true`",
+        "terraform": "Set `storage_encrypted` attribute to `true`."
+      },
+      "subType": "DocumentDB",
+      "issue": "DocDB is not encrypted",
+      "publicId": "SNYK-CC-TF-109",
+      "title": "Non-encrypted DocDB at rest",
+      "references": [
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/docdb_cluster#storage_encrypted",
+        "https://docs.aws.amazon.com/documentdb/latest/developerguide/encryption-at-rest.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "DocDB is not encrypted",
+        "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+        "resolve": "Set `storage_encrypted` attribute to `true`."
+      },
+      "lineNumber": 1,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-109",
+      "path": [
+        "resource",
+        "aws_docdb_cluster[docdb]",
+        "storage_encrypted"
+      ]
+    },
+    {
+      "severity": "low",
+      "resolve": "Set `enabled_cloudwatch_logs_exports` attribute to `['profiler', 'audit']`",
+      "id": "SNYK-CC-TF-141",
+      "impact": "Audit records may not be available during investigation",
+      "msg": "resource.aws_docdb_cluster[docdb].enabled_cloudwatch_logs_exports",
+      "remediation": {
+        "cloudformation": "Set `Properties.EnableCloudwatchLogsExports` attribute to `['profiler', 'audit']`",
+        "terraform": "Set `enabled_cloudwatch_logs_exports` attribute to `['profiler', 'audit']`"
+      },
+      "subType": "DocumentDB",
+      "issue": "Amazon DocDB logging is not enabled",
+      "publicId": "SNYK-CC-TF-141",
+      "title": "DocDB logging disabled",
+      "references": [
+        "https://docs.aws.amazon.com/documentdb/latest/developerguide/logging-and-monitoring.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Amazon DocDB logging is not enabled",
+        "impact": "Audit records may not be available during investigation",
+        "resolve": "Set `enabled_cloudwatch_logs_exports` attribute to `['profiler', 'audit']`"
+      },
+      "lineNumber": 1,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-141",
+      "path": [
+        "resource",
+        "aws_docdb_cluster[docdb]",
+        "enabled_cloudwatch_logs_exports"
+      ]
+    }
+  ]
+}

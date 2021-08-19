@@ -6,8 +6,8 @@
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.135 
-Update available 2.0.135 -> 2.0.136
+By bridgecrew.io | version: 2.0.358 
+Update available 2.0.358 -> 2.0.359
 Run pip3 install -U checkov to update 
 
 
@@ -15,7 +15,7 @@ terraform scan results:
 
 Passed checks: 3, Failed checks: 1, Skipped checks: 0
 
-Check: CKV_AWS_22: "Ensure all data stored in the Sagemaker Notebook is securely encrypted at rest"
+Check: CKV_AWS_22: "Ensure SageMaker Notebook is encrypted at rest using KMS CMK"
 	FAILED for resource: aws_sagemaker_notebook_instance.ni
 	File: /main.tf:23-31
 	Guide: https://docs.bridgecrew.io/docs/general_14

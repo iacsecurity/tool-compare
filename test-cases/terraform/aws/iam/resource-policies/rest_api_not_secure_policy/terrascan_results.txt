@@ -2,48 +2,43 @@
 
 Violation Details -
     
-	Description    :	Ensure AWS API Gateway has active xray tracing enabled
-	File           :	main.tf
-	Plan Root      :	./
-	Line           :	72
-	Severity       :	MEDIUM
-	
-	-----------------------------------------------------------------------
-	
-	Description    :	Enable AWS CloudWatch Logs for APIs
-	File           :	main.tf
-	Plan Root      :	./
-	Line           :	72
-	Severity       :	MEDIUM
-	
-	-----------------------------------------------------------------------
-	
 	Description    :	Ensure there is no open access to back-end resources through API
 	File           :	main.tf
+	Module Name    :	root
 	Plan Root      :	./
 	Line           :	50
 	Severity       :	LOW
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	Ensure use of API Gateway endpoint policy, and no action wildcards are being used.
+	Description    :	Ensure AWS API Gateway has active xray tracing enabled
 	File           :	main.tf
+	Module Name    :	root
 	Plan Root      :	./
-	Line           :	12
-	Severity       :	HIGH
+	Line           :	72
+	Severity       :	LOW
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Enable AWS CloudWatch Logs for APIs
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	72
+	Severity       :	MEDIUM
 	
 	-----------------------------------------------------------------------
 	
 
 Scan Summary -
 
-	File/Folder         :	tool-compare/test-cases/terraform/aws/iam/resource-policies/rest_api_not_secure_policy
+	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-06-01 05:55:26.688401 +0000 UTC
-	Policies Validated  :	612
-	Violated Policies   :	4
-	Low                 :	1
-	Medium              :	2
-	High                :	1
+	Scanned At          :	2021-08-18 17:46:34.296832255 +0000 UTC
+	Policies Validated  :	8
+	Violated Policies   :	3
+	Low                 :	2
+	Medium              :	1
+	High                :	0
 	
 

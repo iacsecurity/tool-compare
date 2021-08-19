@@ -2,32 +2,25 @@
 
 Violation Details -
     
-	Description    :	Ensure KMS key policy does not have wildcard policies attached.
+	Description    :	Ensure rotation for customer created CMKs is enabled
 	File           :	main.tf
+	Module Name    :	root
 	Plan Root      :	./
 	Line           :	5
 	Severity       :	HIGH
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	Ensure rotation for customer created CMKs is enabled
-	File           :	main.tf
-	Plan Root      :	./
-	Line           :	5
-	Severity       :	MEDIUM
-	
-	-----------------------------------------------------------------------
-	
 
 Scan Summary -
 
-	File/Folder         :	tool-compare/test-cases/terraform/aws/iam/resource-policies/kms_key_not_secure_policy
+	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-06-01 05:55:24.351213 +0000 UTC
-	Policies Validated  :	612
-	Violated Policies   :	2
+	Scanned At          :	2021-08-18 17:45:29.895344003 +0000 UTC
+	Policies Validated  :	1
+	Violated Policies   :	1
 	Low                 :	0
-	Medium              :	1
+	Medium              :	0
 	High                :	1
 	
 

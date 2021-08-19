@@ -1,13 +1,13 @@
 
 WARNINGs found:
-Rule: Ensure use of KMS key policy, and no action wildcards are being used
+Rule: Ensure rotation for customer created CMKs is enabled
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_kms_key.a] (main.tf:1)
      Violating Resource: [aws_kms_key.a]  (main.tf:1)
 
      Evidence:
-             | The policy attached to the KMS key aws_kms_key.a is using wildcard action kms:*, and principal AWS: *, without any condition
+             | This rule evaluated aws_kms_key.a's configuration
 
 
 -----------------------------------------------
@@ -22,14 +22,14 @@ Rule: Ensure all resources that can be tagged have at least one tag
 
 
 -----------------------------------------------
-Rule: Ensure rotation for customer created CMKs is enabled
+Rule: Ensure use of KMS key policy, and no action wildcards are being used
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_kms_key.a] (main.tf:1)
      Violating Resource: [aws_kms_key.a]  (main.tf:1)
 
      Evidence:
-             | This rule evaluated aws_kms_key.a's configuration
+             | The policy attached to the KMS key aws_kms_key.a is using wildcard action kms:*, and principal AWS: *, without any condition
 
 
 -----------------------------------------------

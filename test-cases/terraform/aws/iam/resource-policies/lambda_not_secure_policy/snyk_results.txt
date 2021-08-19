@@ -3,10 +3,10 @@ Failed to run the process ...
   "meta": {
     "isPrivate": true,
     "isLicensesEnabled": false,
-    "policy": "",
     "ignoreSettings": null,
+    "org": "yi2020",
     "projectId": "",
-    "org": "y"
+    "policy": ""
   },
   "filesystemPolicy": false,
   "vulnerabilities": [],
@@ -15,20 +15,32 @@ Failed to run the process ...
   "ignoreSettings": null,
   "targetFile": "main.tf",
   "projectName": "project",
-  "org": "y",
+  "org": "yi2020",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
   "packageManager": "terraformconfig",
   "path": "/project",
   "projectType": "terraformconfig",
+  "ok": false,
   "infrastructureAsCodeIssues": [
     {
-      "id": "SNYK-CC-TF-133",
-      "title": "X-ray tracing is disabled for Lambda function",
-      "type": "terraform",
-      "subType": "Lambda",
       "severity": "low",
+      "resolve": "Set `tracing_config.mode` attribute to `Active` or `PassThrough`",
+      "id": "SNYK-CC-TF-133",
+      "impact": "Trace logs will not be available during investigation",
+      "msg": "resource.aws_lambda_function[my-lambda].tracing_config",
+      "remediation": {
+        "cloudformation": "Set `Properties.TracingConfig.Mode` attribute to `Active` or `PassThrough`",
+        "terraform": "Set `tracing_config.mode` attribute to `Active` or `PassThrough`"
+      },
+      "subType": "Lambda",
+      "issue": "Amazon X-Ray tracing is not enabled for Lambda function",
+      "publicId": "SNYK-CC-TF-133",
+      "title": "X-ray tracing is disabled for Lambda function",
+      "references": [
+        "https://docs.aws.amazon.com/lambda/latest/dg/services-xray.html"
+      ],
       "isIgnored": false,
       "iacDescription": {
         "issue": "Amazon X-Ray tracing is not enabled for Lambda function",
@@ -36,10 +48,44 @@ Failed to run the process ...
         "resolve": "Set `tracing_config.mode` attribute to `Active` or `PassThrough`"
       },
       "lineNumber": 5,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-133",
       "path": [
         "resource",
         "aws_lambda_function[my-lambda]",
         "tracing_config"
+      ]
+    },
+    {
+      "severity": "medium",
+      "resolve": "Remove wildcard `*` from `Action`",
+      "id": "SNYK-CC-AWS-436",
+      "impact": "Wildcard permissions grant broad permissions. The best practice recommends to providing only required permissions explicitly",
+      "msg": "resource.aws_lambda_permission[all].action",
+      "remediation": {
+        "cloudformation": "Remove wildcard `*` from `Properties.Action`",
+        "terraform": "Remove wildcard `*` from `Action`"
+      },
+      "subType": "Lambda",
+      "issue": "Unsafe wildcard action in Lambda permission object",
+      "publicId": "SNYK-CC-AWS-436",
+      "title": "Wildcard action in Lambda permission",
+      "references": [
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_permission",
+        "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-lambda-permission.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#grant-least-privilege"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Unsafe wildcard action in Lambda permission object",
+        "impact": "Wildcard permissions grant broad permissions. The best practice recommends to providing only required permissions explicitly",
+        "resolve": "Remove wildcard `*` from `Action`"
+      },
+      "lineNumber": 35,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-436",
+      "path": [
+        "resource",
+        "aws_lambda_permission[all]",
+        "action"
       ]
     }
   ]

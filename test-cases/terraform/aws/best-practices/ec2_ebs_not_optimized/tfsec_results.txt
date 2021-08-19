@@ -1,7 +1,7 @@
 
-Check 1
+  Result 1
 
-  [AWS079][ERROR] Resource 'aws_instance.web' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
+  [aws-ec2-enforce-http-token-imds][[0m[31mHIGH[39m[0m] Resource 'aws_instance.web' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
   /src/main.tf:17-24
 
 
@@ -10,33 +10,43 @@ Check 1
       16 | 
       17 | resource "aws_instance" "web" {
       18 |   ami           = data.aws_ami.ubuntu.id
-      19 |   instance_type = "t3.micro"
+      19 |   instance_type = "c1.xlarge"
       20 | 
       21 |   tags = {
       22 |     Name = "HelloWorld"
       23 |   }
       24 | }
+      25 | 
 
+  Legacy ID:  AWS079
   Impact:     Instance metadata service can be interacted with freely
   Resolution: Enable HTTP token requirement for IMDS
 
-  See https://tfsec.dev/docs/aws/AWS079/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/ec2/enforce-http-token-imds#aws/ec2 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#metadata-options 
+  - https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service 
 
   times
   ------------------------------------------
-  disk i/o             43.9522ms
-  parsing HCL          24.1µs
-  evaluating values    194.3µs
-  running checks       2.5349ms
+  disk i/o             53.989667ms
+  parsing HCL          551.667µs
+  evaluating values    3.513833ms
+  running checks       15.07925ms
 
   counts
   ------------------------------------------
   files loaded         1
   blocks               2
-  evaluated blocks     2
   modules              0
-  module blocks        0
-  ignored checks       0
 
-1 potential problems detected.
+  results
+  ------------------------------------------
+  critical             0
+  high                 1
+  medium               0
+  low                  0
+  ignored              0
+
+  1 potential problems detected.
 

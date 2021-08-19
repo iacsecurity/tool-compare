@@ -1,7 +1,7 @@
 
-Check 1
+  Result 1
 
-  [AWS089][WARNING] Resource 'aws_cloudwatch_log_group.cloudrail-test' is only using default encryption
+  [aws-cloudwatch-log-group-customer-key][[0m[97mLOW[39m[0m] Resource 'aws_cloudwatch_log_group.cloudrail-test' is only using default encryption
   /src/main.tf:5-7
 
 
@@ -13,26 +13,35 @@ Check 1
        7 | }
        8 | 
 
-  Impact:     Log data may be leaked if the logs are compromised
+  Legacy ID:  AWS089
+  Impact:     Log data may be leaked if the logs are compromised. No auditing of who have viewed the logs.
   Resolution: Enable CMK encryption of CloudWatch Log Groups
 
-  See https://tfsec.dev/docs/aws/AWS089/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/cloudwatch/log-group-customer-key#aws/cloudwatch 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_log_group#kms_key_id 
+  - https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/encrypt-log-data-kms.html 
 
   times
   ------------------------------------------
-  disk i/o             31.959ms
-  parsing HCL          27.8µs
-  evaluating values    204.6µs
-  running checks       4.4612ms
+  disk i/o             55.901417ms
+  parsing HCL          595.292µs
+  evaluating values    2.165708ms
+  running checks       18.474708ms
 
   counts
   ------------------------------------------
   files loaded         1
   blocks               2
-  evaluated blocks     2
   modules              0
-  module blocks        0
-  ignored checks       0
 
-1 potential problems detected.
+  results
+  ------------------------------------------
+  critical             0
+  high                 0
+  medium               0
+  low                  1
+  ignored              0
+
+  1 potential problems detected.
 

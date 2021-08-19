@@ -4,7 +4,7 @@ Failed to run the process ...
     "isPrivate": true,
     "isLicensesEnabled": false,
     "ignoreSettings": null,
-    "org": "y",
+    "org": "yi2020",
     "projectId": "",
     "policy": ""
   },
@@ -13,31 +13,36 @@ Failed to run the process ...
   "dependencyCount": 0,
   "licensesPolicy": null,
   "ignoreSettings": null,
-  "targetFile": "/project/main.tf",
+  "targetFile": "main.tf",
   "projectName": "project",
-  "org": "y",
+  "org": "yi2020",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
   "packageManager": "terraformconfig",
   "path": "/project",
   "projectType": "terraformconfig",
+  "ok": false,
   "infrastructureAsCodeIssues": [
     {
+      "severity": "medium",
       "resolve": "Set `root_block_device.encrypted` attribute to `true`",
       "id": "SNYK-CC-TF-53",
       "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+      "msg": "resource.aws_instance[web].root_block_device.encrypted",
+      "remediation": {
+        "cloudformation": "Set `BlockDeviceMappings.Encrypted` attribute of root device to `true`",
+        "terraform": "Set `root_block_device.encrypted` attribute to `true`"
+      },
       "subType": "EC2",
-      "policyEngineType": "opa",
+      "issue": "The root block device for ec2 instance is not encrypted",
       "publicId": "SNYK-CC-TF-53",
       "title": "Non-Encrypted root block device",
-      "severity": "medium",
-      "msg": "resource.aws_instance[web].root_block_device.encrypted",
-      "issue": "The root block device for ec2 instance is not encrypted",
-      "type": "terraform",
       "references": [
         "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/RootDeviceStorage.html",
-        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html"
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html",
+        "https://aws.amazon.com/premiumsupport/knowledge-center/cloudformation-root-volume-property/",
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/device_naming.html"
       ],
       "isIgnored": false,
       "iacDescription": {
@@ -46,6 +51,7 @@ Failed to run the process ...
         "resolve": "Set `root_block_device.encrypted` attribute to `true`"
       },
       "lineNumber": 17,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-53",
       "path": [
         "resource",
         "aws_instance[web]",
@@ -54,17 +60,15 @@ Failed to run the process ...
       ]
     },
     {
+      "severity": "low",
       "resolve": "Set `metadata_options.http_tokens` attribute to `required`",
       "id": "SNYK-CC-TF-130",
       "impact": "Metadata service may be vulnerable to reverse proxy/open firewall misconfigurations and server side request forgery attacks",
+      "msg": "resource.aws_instance[web].metadata_options",
       "subType": "EC2",
-      "policyEngineType": "opa",
+      "issue": "Instance Metadata Service v2 is not enforced",
       "publicId": "SNYK-CC-TF-130",
       "title": "EC2 instance accepts IMDSv1",
-      "severity": "low",
-      "msg": "resource.aws_instance[web].metadata_options",
-      "issue": "Instance Metadata Service v2 is not enforced",
-      "type": "terraform",
       "references": [
         "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html",
         "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html",
@@ -78,10 +82,42 @@ Failed to run the process ...
         "resolve": "Set `metadata_options.http_tokens` attribute to `required`"
       },
       "lineNumber": 17,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-130",
       "path": [
         "resource",
         "aws_instance[web]",
         "metadata_options"
+      ]
+    },
+    {
+      "severity": "low",
+      "resolve": "Set `disable_api_termination` attribute  with value `true`",
+      "id": "SNYK-CC-AWS-426",
+      "impact": "Without this setting enabled the instances can be terminated by accident. This setting should only be used for instances with high availability requirements. Enabling this may prevent IaC workflows from updating the instance, for example terraform will not be able to terminate the instance to update instance type",
+      "msg": "resource.aws_instance[web].disable_api_termination",
+      "remediation": {
+        "cloudformation": "Set `DisableApiTermination` attribute with value `true`",
+        "terraform": "Set `disable_api_termination` attribute  with value `true`"
+      },
+      "subType": "EC2",
+      "issue": "To prevent instance from being accidentally terminated using Amazon EC2, you can enable termination protection for the instance",
+      "publicId": "SNYK-CC-AWS-426",
+      "title": "EC2 API termination protection is not enabled",
+      "references": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/terminating-instances.html#Using_ChangingDisableAPITermination"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "To prevent instance from being accidentally terminated using Amazon EC2, you can enable termination protection for the instance",
+        "impact": "Without this setting enabled the instances can be terminated by accident. This setting should only be used for instances with high availability requirements. Enabling this may prevent IaC workflows from updating the instance, for example terraform will not be able to terminate the instance to update instance type",
+        "resolve": "Set `disable_api_termination` attribute  with value `true`"
+      },
+      "lineNumber": 17,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-426",
+      "path": [
+        "resource",
+        "aws_instance[web]",
+        "disable_api_termination"
       ]
     }
   ]

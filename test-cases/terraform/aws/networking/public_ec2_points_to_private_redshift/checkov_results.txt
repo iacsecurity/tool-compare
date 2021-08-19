@@ -6,8 +6,8 @@
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.135 
-Update available 2.0.135 -> 2.0.136
+By bridgecrew.io | version: 2.0.358 
+Update available 2.0.358 -> 2.0.359
 Run pip3 install -U checkov to update 
 
 
@@ -197,20 +197,10 @@ Check: CKV_AWS_126: "Ensure that detailed monitoring is enabled for EC2 instance
 		136 |   subnet_id = aws_subnet.nondefault_1.id
 		137 | }
 
-Check: CKV2_AWS_12: "Ensure the default security group of every VPC restricts all traffic"
-	FAILED for resource: aws_vpc.nondefault
-	File: /main.tf:10-12
-	Guide: https://docs.bridgecrew.io/docs/networking_4
-
-		10 | resource "aws_vpc" "nondefault" {
-		11 |   cidr_block = "10.1.1.0/24"
-		12 | }
-
-
 Check: CKV2_AWS_11: "Ensure VPC flow logging is enabled in all VPCs"
 	FAILED for resource: aws_vpc.nondefault
 	File: /main.tf:10-12
-	Guide: https://docs.bridgecrew.io-vpc-flow-logging
+	Guide: https://docs.bridgecrew.io/docs/logging_9-enable-vpc-flow-logging
 
 		10 | resource "aws_vpc" "nondefault" {
 		11 |   cidr_block = "10.1.1.0/24"
@@ -232,5 +222,15 @@ Check: CKV2_AWS_13: "Ensure that Redshift clusters has backup plan of AWS Backup
 		110 |   cluster_subnet_group_name = aws_redshift_subnet_group.nondefault.name
 		111 |   publicly_accessible = false // Note that while the subnet itself has public access, the redshift is set NOT to have a public IP
 		112 | }
+
+
+Check: CKV2_AWS_12: "Ensure the default security group of every VPC restricts all traffic"
+	FAILED for resource: aws_vpc.nondefault
+	File: /main.tf:10-12
+	Guide: https://docs.bridgecrew.io/docs/networking_4
+
+		10 | resource "aws_vpc" "nondefault" {
+		11 |   cidr_block = "10.1.1.0/24"
+		12 | }
 
 

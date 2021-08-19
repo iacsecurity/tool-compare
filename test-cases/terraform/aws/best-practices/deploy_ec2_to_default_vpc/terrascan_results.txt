@@ -2,24 +2,9 @@
 
 Violation Details -
     
-	Description    :	Ensure that your AWS application is not deployed within the default Virtual Private Cloud in order to follow security best practices
-	File           :	main.tf
-	Plan Root      :	./
-	Line           :	49
-	Severity       :	MEDIUM
-	
-	-----------------------------------------------------------------------
-	
-	Description    :	Ensure that EC2 is EBS optimized
-	File           :	main.tf
-	Plan Root      :	./
-	Line           :	49
-	Severity       :	MEDIUM
-	
-	-----------------------------------------------------------------------
-	
 	Description    :	Ensure that detailed monitoring is enabled for EC2 instances.
 	File           :	main.tf
+	Module Name    :	root
 	Plan Root      :	./
 	Line           :	49
 	Severity       :	HIGH
@@ -28,6 +13,16 @@ Violation Details -
 	
 	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
 	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	49
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that your AWS application is not deployed within the default Virtual Private Cloud in order to follow security best practices
+	File           :	main.tf
+	Module Name    :	root
 	Plan Root      :	./
 	Line           :	49
 	Severity       :	MEDIUM
@@ -37,13 +32,13 @@ Violation Details -
 
 Scan Summary -
 
-	File/Folder         :	tool-compare/test-cases/terraform/aws/best-practices/deploy_ec2_to_default_vpc
+	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-06-01 05:56:06.488563 +0000 UTC
-	Policies Validated  :	612
-	Violated Policies   :	4
+	Scanned At          :	2021-08-18 18:01:33.667250338 +0000 UTC
+	Policies Validated  :	5
+	Violated Policies   :	3
 	Low                 :	0
-	Medium              :	3
+	Medium              :	2
 	High                :	1
 	
 

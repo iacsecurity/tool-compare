@@ -1,36 +1,24 @@
 
 WARNINGs found:
-Rule: Ensure S3 buckets are not made widely accessible through ACLs and bucket policies
+Rule: Ensure S3 bucket has access logging enabled
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_s3_bucket.public-bucket] (main.tf:5)
      Violating Resource: [aws_s3_bucket.public-bucket]  (main.tf:5)
 
      Evidence:
-         The S3 Bucket
-             | aws_s3_bucket.public-bucket is publicly exposed through the S3 ACL with identifier aws_s3_bucket.public-bucket.
+             | The S3 Bucket aws_s3_bucket.public-bucket does not have access logging enabled
 
 
 -----------------------------------------------
-Rule: Ensure S3 buckets have versioning enabled
+Rule: Ensure all resources that can be tagged have at least one tag
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_s3_bucket.public-bucket] (main.tf:5)
      Violating Resource: [aws_s3_bucket.public-bucket]  (main.tf:5)
 
      Evidence:
-             | The S3 Bucket aws_s3_bucket.public-bucket does not have versioning enabled
-
-
------------------------------------------------
-Rule: Ensure use of S3 bucket policy, and no action wildcards are being used
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_s3_bucket.public-bucket] (main.tf:5)
-     Violating Resource: [aws_s3_bucket.public-bucket]  (main.tf:5)
-
-     Evidence:
-             | There is no resource policy or no statements attached to aws_s3_bucket.public-bucket
+             | Resource S3 Bucket aws_s3_bucket.public-bucket does not have any tags set
 
 
 -----------------------------------------------
@@ -45,14 +33,37 @@ Rule: Enforce use of HTTPS in S3 bucket policy
 
 
 -----------------------------------------------
-Rule: Ensure all resources that can be tagged have at least one tag
+Rule: Ensure use of S3 bucket policy, and no action wildcards are being used
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_s3_bucket.public-bucket] (main.tf:5)
      Violating Resource: [aws_s3_bucket.public-bucket]  (main.tf:5)
 
      Evidence:
-             | Resource S3 Bucket aws_s3_bucket.public-bucket does not have any tags set
+             | There is no resource policy or no statements attached to aws_s3_bucket.public-bucket
+
+
+-----------------------------------------------
+Rule: Ensure S3 buckets have versioning enabled
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.public-bucket] (main.tf:5)
+     Violating Resource: [aws_s3_bucket.public-bucket]  (main.tf:5)
+
+     Evidence:
+             | The S3 Bucket aws_s3_bucket.public-bucket does not have versioning enabled
+
+
+-----------------------------------------------
+Rule: Ensure S3 buckets are not made widely accessible through ACLs and bucket policies
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.public-bucket] (main.tf:5)
+     Violating Resource: [aws_s3_bucket.public-bucket]  (main.tf:5)
+
+     Evidence:
+         The S3 Bucket
+             | aws_s3_bucket.public-bucket is publicly exposed through the S3 ACL with identifier aws_s3_bucket.public-bucket.
 
 
 -----------------------------------------------

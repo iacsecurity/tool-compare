@@ -1,7 +1,7 @@
 
-Check 1
+  Result 1
 
-  [AWS002][ERROR] Resource 'aws_s3_bucket.public-bucket' does not have logging enabled.
+  [aws-s3-specify-public-access-block][[0m[33mMEDIUM[39m[0m] Resource aws_s3_bucket.public-bucket has no associated aws_s3_bucket_public_access_block.
   /src/main.tf:5-7
 
 
@@ -15,14 +15,18 @@ Check 1
        9 | resource "aws_s3_bucket_policy" "bucket_2_policy" {
       10 |   bucket = aws_s3_bucket.public-bucket.id
 
-  Impact:     There is no way to determine the access to this bucket
-  Resolution: Add a logging block to the resource to enable access logging
+  Legacy ID:  AWS098
+  Impact:     Public access policies may be applied to sensitive data buckets
+  Resolution: Define a aws_s3_bucket_public_access_block for the given bucket to control public access policies
 
-  See https://tfsec.dev/docs/aws/AWS002/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/s3/specify-public-access-block#aws/s3 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#bucket 
+  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html 
 
-Check 2
+  Result 2
 
-  [AWS017][ERROR] Resource 'aws_s3_bucket.public-bucket' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
+  [aws-s3-enable-bucket-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_s3_bucket.public-bucket' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
   /src/main.tf:5-7
 
 
@@ -36,14 +40,18 @@ Check 2
        9 | resource "aws_s3_bucket_policy" "bucket_2_policy" {
       10 |   bucket = aws_s3_bucket.public-bucket.id
 
+  Legacy ID:  AWS017
   Impact:     The bucket objects could be read if compromised
   Resolution: Configure bucket encryption
 
-  See https://tfsec.dev/docs/aws/AWS017/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/s3/enable-bucket-encryption#aws/s3 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#enable-default-server-side-encryption 
+  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-encryption.html 
 
-Check 3
+  Result 3
 
-  [AWS077][ERROR] Resource 'aws_s3_bucket.public-bucket' does not have versioning enabled
+  [aws-s3-enable-bucket-logging][[0m[33mMEDIUM[39m[0m] Resource 'aws_s3_bucket.public-bucket' does not have logging enabled.
   /src/main.tf:5-7
 
 
@@ -57,26 +65,60 @@ Check 3
        9 | resource "aws_s3_bucket_policy" "bucket_2_policy" {
       10 |   bucket = aws_s3_bucket.public-bucket.id
 
+  Legacy ID:  AWS002
+  Impact:     There is no way to determine the access to this bucket
+  Resolution: Add a logging block to the resource to enable access logging
+
+  More Info:
+  - https://tfsec.dev/docs/aws/s3/enable-bucket-logging#aws/s3 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket 
+  - https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerLogs.html 
+
+  Result 4
+
+  [aws-s3-enable-versioning][[0m[33mMEDIUM[39m[0m] Resource 'aws_s3_bucket.public-bucket' does not have versioning enabled
+  /src/main.tf:5-7
+
+
+       2 |   region = "us-east-1"
+       3 | }
+       4 | 
+       5 | resource "aws_s3_bucket" "public-bucket" {
+       6 |   bucket = "bucket-with-public-policy-2"
+       7 | }
+       8 | 
+       9 | resource "aws_s3_bucket_policy" "bucket_2_policy" {
+      10 |   bucket = aws_s3_bucket.public-bucket.id
+
+  Legacy ID:  AWS077
   Impact:     Deleted or modified data would not be recoverable
   Resolution: Enable versioning to protect against accidental/malicious removal or modification
 
-  See https://tfsec.dev/docs/aws/AWS077/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/s3/enable-versioning#aws/s3 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#versioning 
+  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/Versioning.html 
 
   times
   ------------------------------------------
-  disk i/o             23.4448ms
-  parsing HCL          17µs
-  evaluating values    147µs
-  running checks       4.5822ms
+  disk i/o             64.786875ms
+  parsing HCL          629.833µs
+  evaluating values    5.760416ms
+  running checks       43.313959ms
 
   counts
   ------------------------------------------
   files loaded         1
   blocks               3
-  evaluated blocks     3
   modules              0
-  module blocks        0
-  ignored checks       0
 
-3 potential problems detected.
+  results
+  ------------------------------------------
+  critical             0
+  high                 1
+  medium               3
+  low                  0
+  ignored              0
+
+  4 potential problems detected.
 

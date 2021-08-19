@@ -1,7 +1,7 @@
 
-Check 1
+  Result 1
 
-  [AWS016][ERROR] Resource 'aws_sns_topic.aws_sns_topic' defines an unencrypted SNS topic.
+  [aws-sns-enable-topic-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_sns_topic.aws_sns_topic' defines an unencrypted SNS topic.
   /src/main.tf:5-7
 
 
@@ -15,26 +15,35 @@ Check 1
        9 | resource "aws_glacier_vault" "not_secure_archive" {
       10 |   name = "not_secure_archive"
 
+  Legacy ID:  AWS016
   Impact:     The SNS topic messages could be read if compromised
   Resolution: Turn on SNS Topic encryption
 
-  See https://tfsec.dev/docs/aws/AWS016/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/sns/enable-topic-encryption#aws/sns 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sns_topic#example-with-server-side-encryption-sse 
+  - https://docs.aws.amazon.com/sns/latest/dg/sns-server-side-encryption.html 
 
   times
   ------------------------------------------
-  disk i/o             26.2389ms
-  parsing HCL          21.5µs
-  evaluating values    162.3µs
-  running checks       5.5165ms
+  disk i/o             62.4385ms
+  parsing HCL          496.583µs
+  evaluating values    2.055583ms
+  running checks       17.006291ms
 
   counts
   ------------------------------------------
   files loaded         1
   blocks               3
-  evaluated blocks     3
   modules              0
-  module blocks        0
-  ignored checks       0
 
-1 potential problems detected.
+  results
+  ------------------------------------------
+  critical             0
+  high                 1
+  medium               0
+  low                  0
+  ignored              0
+
+  1 potential problems detected.
 

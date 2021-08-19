@@ -1,26 +1,93 @@
 
-Check 1
+  Result 1
 
-  [AWS009][WARNING] Resource 'aws_security_group.allow-public-outbound-sg' defines a fully open egress security group.
-  /src/main.tf:107
+  [aws-dynamodb-enable-recovery][[0m[33mMEDIUM[39m[0m] Resource 'aws_dynamodb_table.basic-dynamodb-table' doesn't have point in time recovery
+  /src/main.tf:143-166
 
 
-     104 |     from_port   = 443
-     105 |     to_port     = 443
-     106 |     protocol    = "tcp"
-     107 |     cidr_blocks = ["0.0.0.0/0"]
-     108 |   }
-     109 | 
-     110 | }
+     140 |   subnet_id = aws_subnet.private-subnet.id
+     141 | }
+     142 | 
+     143 | resource "aws_dynamodb_table" "basic-dynamodb-table" {
+     144 |   name           = "GameScores"
+     145 |   billing_mode   = "PROVISIONED"
+     146 |   read_capacity  = 5
+     147 |   write_capacity = 5
+     148 |   hash_key       = "UserId"
+     149 |   range_key      = "GameTitle"
+     150 | 
+     151 |   attribute {
+     152 |     name = "UserId"
+     153 |     type = "S"
+     154 |   }
+     155 | 
+     156 |   attribute {
+     157 |     name = "GameTitle"
+     158 |     type = "S"
+     159 |   }
+     160 | 
+     161 |   ttl {
+     162 |     attribute_name = "TimeToExist"
+     163 |     enabled        = false
+     164 |   }
+     165 | 
+     166 | }
 
-  Impact:     The port is exposed for egressing data to the internet
-  Resolution: Set a more restrictive cidr range
+  Legacy ID:  AWS086
+  Impact:     Accidental or malicious writes and deletes can't be rolled back
+  Resolution: Enable point in time recovery
 
-  See https://tfsec.dev/docs/aws/AWS009/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/dynamodb/enable-recovery#aws/dynamodb 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table#point_in_time_recovery 
+  - https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/PointInTimeRecovery.html 
 
-Check 2
+  Result 2
 
-  [AWS079][ERROR] Resource 'aws_instance.test' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
+  [aws-dynamodb-table-customer-key][[0m[97mLOW[39m[0m] Resource 'aws_dynamodb_table.basic-dynamodb-table' is not using KMS CMK for encryption
+  /src/main.tf:143-166
+
+
+     140 |   subnet_id = aws_subnet.private-subnet.id
+     141 | }
+     142 | 
+     143 | resource "aws_dynamodb_table" "basic-dynamodb-table" {
+     144 |   name           = "GameScores"
+     145 |   billing_mode   = "PROVISIONED"
+     146 |   read_capacity  = 5
+     147 |   write_capacity = 5
+     148 |   hash_key       = "UserId"
+     149 |   range_key      = "GameTitle"
+     150 | 
+     151 |   attribute {
+     152 |     name = "UserId"
+     153 |     type = "S"
+     154 |   }
+     155 | 
+     156 |   attribute {
+     157 |     name = "GameTitle"
+     158 |     type = "S"
+     159 |   }
+     160 | 
+     161 |   ttl {
+     162 |     attribute_name = "TimeToExist"
+     163 |     enabled        = false
+     164 |   }
+     165 | 
+     166 | }
+
+  Legacy ID:  AWS092
+  Impact:     Using AWS managed keys does not allow for fine grained control
+  Resolution: Enable server side encryption with a customer managed key
+
+  More Info:
+  - https://tfsec.dev/docs/aws/dynamodb/table-customer-key#aws/dynamodb 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table#server_side_encryption 
+  - https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/EncryptionAtRest.html 
+
+  Result 3
+
+  [aws-ec2-enforce-http-token-imds][[0m[31mHIGH[39m[0m] Resource 'aws_instance.test' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
   /src/main.tf:136-141
 
 
@@ -37,104 +104,57 @@ Check 2
      143 | resource "aws_dynamodb_table" "basic-dynamodb-table" {
      144 |   name           = "GameScores"
 
+  Legacy ID:  AWS079
   Impact:     Instance metadata service can be interacted with freely
   Resolution: Enable HTTP token requirement for IMDS
 
-  See https://tfsec.dev/docs/aws/AWS079/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/ec2/enforce-http-token-imds#aws/ec2 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#metadata-options 
+  - https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service 
 
-Check 3
+  Result 4
 
-  [AWS086][WARNING] Resource 'aws_dynamodb_table.basic-dynamodb-table' doesn't have point in time recovery
-  /src/main.tf:143-166
-
-
-     140 |   subnet_id = aws_subnet.private-subnet.id
-     141 | }
-     142 | 
-     143 | resource "aws_dynamodb_table" "basic-dynamodb-table" {
-     144 |   name           = "GameScores"
-     145 |   billing_mode   = "PROVISIONED"
-     146 |   read_capacity  = 5
-     147 |   write_capacity = 5
-     148 |   hash_key       = "UserId"
-     149 |   range_key      = "GameTitle"
-     150 | 
-     151 |   attribute {
-     152 |     name = "UserId"
-     153 |     type = "S"
-     154 |   }
-     155 | 
-     156 |   attribute {
-     157 |     name = "GameTitle"
-     158 |     type = "S"
-     159 |   }
-     160 | 
-     161 |   ttl {
-     162 |     attribute_name = "TimeToExist"
-     163 |     enabled        = false
-     164 |   }
-     165 | 
-     166 | }
-
-  Impact:     Accidental or malicious writes and deletes can't be rolled back
-  Resolution: Enable point in time recovery
-
-  See https://tfsec.dev/docs/aws/AWS086/ for more information. 
-
-Check 4
-
-  [AWS092][WARNING] Resource 'aws_dynamodb_table.basic-dynamodb-table' is not using KMS CMK for encryption
-  /src/main.tf:143-166
+  [aws-vpc-no-public-egress-sg][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'aws_security_group.allow-public-outbound-sg' defines a fully open egress security group.
+  /src/main.tf:107
 
 
-     140 |   subnet_id = aws_subnet.private-subnet.id
-     141 | }
-     142 | 
-     143 | resource "aws_dynamodb_table" "basic-dynamodb-table" {
-     144 |   name           = "GameScores"
-     145 |   billing_mode   = "PROVISIONED"
-     146 |   read_capacity  = 5
-     147 |   write_capacity = 5
-     148 |   hash_key       = "UserId"
-     149 |   range_key      = "GameTitle"
-     150 | 
-     151 |   attribute {
-     152 |     name = "UserId"
-     153 |     type = "S"
-     154 |   }
-     155 | 
-     156 |   attribute {
-     157 |     name = "GameTitle"
-     158 |     type = "S"
-     159 |   }
-     160 | 
-     161 |   ttl {
-     162 |     attribute_name = "TimeToExist"
-     163 |     enabled        = false
-     164 |   }
-     165 | 
-     166 | }
+     104 |     from_port   = 443
+     105 |     to_port     = 443
+     106 |     protocol    = "tcp"
+     107 |     cidr_blocks = ["0.0.0.0/0"]    list: ["0.0.0.0/0"]
+     108 |   }
+     109 | 
+     110 | }
 
-  Impact:     Using AWS managed keys does not allow for fine grained control
-  Resolution: Enable server side encrytion with a customer managed key
+  Legacy ID:  AWS009
+  Impact:     The port is exposed for egressing data to the internet
+  Resolution: Set a more restrictive cidr range
 
-  See https://tfsec.dev/docs/aws/AWS092/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/vpc/no-public-egress-sg#aws/vpc 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
 
   times
   ------------------------------------------
-  disk i/o             34.6531ms
-  parsing HCL          34.1µs
-  evaluating values    797.5µs
-  running checks       10.0339ms
+  disk i/o             54.814584ms
+  parsing HCL          546.625µs
+  evaluating values    7.051543ms
+  running checks       38.009375ms
 
   counts
   ------------------------------------------
   files loaded         1
   blocks               16
-  evaluated blocks     16
   modules              0
-  module blocks        0
-  ignored checks       0
 
-4 potential problems detected.
+  results
+  ------------------------------------------
+  critical             1
+  high                 1
+  medium               1
+  low                  1
+  ignored              0
+
+  4 potential problems detected.
 

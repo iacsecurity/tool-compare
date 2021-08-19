@@ -1,7 +1,30 @@
 
-Check 1
+  Result 1
 
-  [AWS067][ERROR] Resource 'aws_eks_cluster.test' missing the enabled_cluster_log_types attribute to enable control plane logging
+  [aws-eks-no-public-cluster-access-to-cidr][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'aws_eks_cluster.test' uses the default public access cidr of 0.0.0.0/0
+  /src/main.tf:22-24
+
+
+      19 | resource "aws_eks_cluster" "test" {
+      20 |   name = "test"
+      21 |   role_arn = aws_iam_role.eksrole.arn
+      22 |   vpc_config {
+      23 |     subnet_ids = [aws_subnet.subnet1.id]
+      24 |   }
+      25 | }
+
+  Legacy ID:  AWS068
+  Impact:     EKS can be access from the internet
+  Resolution: Don't enable public access to EKS Clusters
+
+  More Info:
+  - https://tfsec.dev/docs/aws/eks/no-public-cluster-access-to-cidr#aws/eks 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eks_cluster#vpc_config 
+  - https://docs.aws.amazon.com/eks/latest/userguide/create-public-private-vpc.html 
+
+  Result 2
+
+  [aws-eks-enable-control-plane-logging][[0m[33mMEDIUM[39m[0m] Resource 'aws_eks_cluster.test' missing the enabled_cluster_log_types attribute to enable control plane logging
   /src/main.tf:19-25
 
 
@@ -16,52 +39,18 @@ Check 1
       24 |   }
       25 | }
 
+  Legacy ID:  AWS067
   Impact:     Logging provides valuable information about access and usage
   Resolution: Enable logging for the EKS control plane
 
-  See https://tfsec.dev/docs/aws/AWS067/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/eks/enable-control-plane-logging#aws/eks 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eks_cluster#enabled_cluster_log_types 
+  - https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html 
 
-Check 2
+  Result 3
 
-  [AWS068][ERROR] Resource 'aws_eks_cluster.test' is using default public access cidrs in the vpc config
-  /src/main.tf:22-24
-
-
-      19 | resource "aws_eks_cluster" "test" {
-      20 |   name = "test"
-      21 |   role_arn = aws_iam_role.eksrole.arn
-      22 |   vpc_config {
-      23 |     subnet_ids = [aws_subnet.subnet1.id]
-      24 |   }
-      25 | }
-
-  Impact:     EKS can be access from the internet
-  Resolution: Don't enable public access to EKS Clusters
-
-  See https://tfsec.dev/docs/aws/AWS068/ for more information. 
-
-Check 3
-
-  [AWS069][ERROR] Resource 'aws_eks_cluster.test' is using default public access in the vpc config
-  /src/main.tf:22-24
-
-
-      19 | resource "aws_eks_cluster" "test" {
-      20 |   name = "test"
-      21 |   role_arn = aws_iam_role.eksrole.arn
-      22 |   vpc_config {
-      23 |     subnet_ids = [aws_subnet.subnet1.id]
-      24 |   }
-      25 | }
-
-  Impact:     EKS can be access from the internet
-  Resolution: Don't enable public access to EKS Clusters
-
-  See https://tfsec.dev/docs/aws/AWS069/ for more information. 
-
-Check 4
-
-  [AWS066][ERROR] Resource 'aws_eks_cluster.test' has no encryption_config block
+  [aws-eks-encrypt-secrets][[0m[31mHIGH[39m[0m] Resource 'aws_eks_cluster.test' has no encryptionConfigBlock block
   /src/main.tf:19-25
 
 
@@ -76,26 +65,58 @@ Check 4
       24 |   }
       25 | }
 
+  Legacy ID:  AWS066
   Impact:     EKS secrets could be read if compromised
   Resolution: Enable encryption of EKS secrets
 
-  See https://tfsec.dev/docs/aws/AWS066/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/eks/encrypt-secrets#aws/eks 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eks_cluster#encryption_config 
+  - https://aws.amazon.com/about-aws/whats-new/2020/03/amazon-eks-adds-envelope-encryption-for-secrets-with-aws-kms/ 
+
+  Result 4
+
+  [aws-eks-no-public-cluster-access][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'aws_eks_cluster.test' is using default public access in the vpc config
+  /src/main.tf:22-24
+
+
+      19 | resource "aws_eks_cluster" "test" {
+      20 |   name = "test"
+      21 |   role_arn = aws_iam_role.eksrole.arn
+      22 |   vpc_config {
+      23 |     subnet_ids = [aws_subnet.subnet1.id]
+      24 |   }
+      25 | }
+
+  Legacy ID:  AWS069
+  Impact:     EKS can be access from the internet
+  Resolution: Don't enable public access to EKS Clusters
+
+  More Info:
+  - https://tfsec.dev/docs/aws/eks/no-public-cluster-access#aws/eks 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eks_cluster#endpoint_public_access 
+  - https://docs.aws.amazon.com/eks/latest/userguide/cluster-endpoint.html 
 
   times
   ------------------------------------------
-  disk i/o             22.4559ms
-  parsing HCL          16.7µs
-  evaluating values    527.8µs
-  running checks       9.925ms
+  disk i/o             45.273918ms
+  parsing HCL          588.833µs
+  evaluating values    3.127001ms
+  running checks       36.190333ms
 
   counts
   ------------------------------------------
   files loaded         1
   blocks               5
-  evaluated blocks     5
   modules              0
-  module blocks        0
-  ignored checks       0
 
-4 potential problems detected.
+  results
+  ------------------------------------------
+  critical             2
+  high                 1
+  medium               1
+  low                  0
+  ignored              0
+
+  4 potential problems detected.
 

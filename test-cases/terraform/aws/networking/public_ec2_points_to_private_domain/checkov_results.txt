@@ -6,14 +6,14 @@
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.135 
-Update available 2.0.135 -> 2.0.136
+By bridgecrew.io | version: 2.0.358 
+Update available 2.0.358 -> 2.0.359
 Run pip3 install -U checkov to update 
 
 
 terraform scan results:
 
-Passed checks: 12, Failed checks: 15, Skipped checks: 0
+Passed checks: 13, Failed checks: 14, Skipped checks: 0
 
 Check: CKV_AWS_23: "Ensure every security groups rule has a description"
 	FAILED for resource: aws_security_group.esdomain
@@ -222,6 +222,16 @@ Check: CKV_AWS_126: "Ensure that detailed monitoring is enabled for EC2 instance
 		143 |   subnet_id = aws_subnet.nondefault_1.id
 		144 | }
 
+Check: CKV2_AWS_11: "Ensure VPC flow logging is enabled in all VPCs"
+	FAILED for resource: aws_vpc.nondefault
+	File: /main.tf:5-7
+	Guide: https://docs.bridgecrew.io/docs/logging_9-enable-vpc-flow-logging
+
+		5 | resource "aws_vpc" "nondefault" {
+		6 |   cidr_block = "10.1.1.0/24"
+		7 | }
+
+
 Check: CKV2_AWS_12: "Ensure the default security group of every VPC restricts all traffic"
 	FAILED for resource: aws_vpc.nondefault
 	File: /main.tf:5-7
@@ -230,31 +240,5 @@ Check: CKV2_AWS_12: "Ensure the default security group of every VPC restricts al
 		5 | resource "aws_vpc" "nondefault" {
 		6 |   cidr_block = "10.1.1.0/24"
 		7 | }
-
-
-Check: CKV2_AWS_11: "Ensure VPC flow logging is enabled in all VPCs"
-	FAILED for resource: aws_vpc.nondefault
-	File: /main.tf:5-7
-	Guide: https://docs.bridgecrew.io-vpc-flow-logging
-
-		5 | resource "aws_vpc" "nondefault" {
-		6 |   cidr_block = "10.1.1.0/24"
-		7 | }
-
-
-Check: CKV2_AWS_5: "Ensure that Security Groups are attached to EC2 instances or elastic network interfaces (ENIs)"
-	FAILED for resource: aws_security_group.esdomain
-	File: /main.tf:92-100
-	Guide: https://docs.bridgecrew.io/docs/ensure-that-security-groups-are-attached-to-ec2-instances-or-elastic-network-interfaces-enis
-
-		92  | resource "aws_security_group" "esdomain" {
-		93  |   vpc_id = aws_vpc.nondefault.id
-		94  |   ingress {
-		95  |     from_port = 443
-		96  |     protocol = "tcp"
-		97  |     to_port = 443
-		98  |     cidr_blocks = [aws_subnet.nondefault_1.cidr_block]
-		99  |   }
-		100 | }
 
 

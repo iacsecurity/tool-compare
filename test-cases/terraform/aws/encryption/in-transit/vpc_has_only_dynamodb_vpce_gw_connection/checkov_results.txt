@@ -6,18 +6,19 @@
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.135 
-Update available 2.0.135 -> 2.0.136
+By bridgecrew.io | version: 2.0.358 
+Update available 2.0.358 -> 2.0.359
 Run pip3 install -U checkov to update 
 
 
 terraform scan results:
 
-Passed checks: 10, Failed checks: 10, Skipped checks: 0
+Passed checks: 11, Failed checks: 10, Skipped checks: 0
 
 Check: CKV_AWS_130: "Ensure VPC subnets do not assign public IP by default"
 	FAILED for resource: aws_subnet.public-subnet
 	File: /main.tf:10-18
+	Guide: https://docs.bridgecrew.io/docs/ensure-vpc-subnets-do-not-assign-public-ip-by-default
 
 		10 | resource "aws_subnet" "public-subnet" {
 		11 |   vpc_id     = aws_vpc.main.id
@@ -142,6 +143,47 @@ Check: CKV_AWS_119: "Ensure DynamoDB Tables are encrypted using KMS"
 		165 | 
 		166 | }
 
+Check: CKV2_AWS_11: "Ensure VPC flow logging is enabled in all VPCs"
+	FAILED for resource: aws_vpc.main
+	File: /main.tf:5-8
+	Guide: https://docs.bridgecrew.io/docs/logging_9-enable-vpc-flow-logging
+
+		5 | resource "aws_vpc" "main" {
+		6 |   cidr_block = "192.168.100.0/24"
+		7 |   enable_dns_support = true
+		8 | }
+
+
+Check: CKV2_AWS_16: "Ensure that Auto Scaling is enabled on your DynamoDB tables"
+	FAILED for resource: aws_dynamodb_table.basic-dynamodb-table
+	File: /main.tf:143-166
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-auto-scaling-is-enabled-on-your-dynamodb-tables
+
+		143 | resource "aws_dynamodb_table" "basic-dynamodb-table" {
+		144 |   name           = "GameScores"
+		145 |   billing_mode   = "PROVISIONED"
+		146 |   read_capacity  = 5
+		147 |   write_capacity = 5
+		148 |   hash_key       = "UserId"
+		149 |   range_key      = "GameTitle"
+		150 | 
+		151 |   attribute {
+		152 |     name = "UserId"
+		153 |     type = "S"
+		154 |   }
+		155 | 
+		156 |   attribute {
+		157 |     name = "GameTitle"
+		158 |     type = "S"
+		159 |   }
+		160 | 
+		161 |   ttl {
+		162 |     attribute_name = "TimeToExist"
+		163 |     enabled        = false
+		164 |   }
+		165 | 
+		166 | }
+
 Check: CKV2_AWS_12: "Ensure the default security group of every VPC restricts all traffic"
 	FAILED for resource: aws_vpc.main
 	File: /main.tf:5-8
@@ -151,27 +193,5 @@ Check: CKV2_AWS_12: "Ensure the default security group of every VPC restricts al
 		6 |   cidr_block = "192.168.100.0/24"
 		7 |   enable_dns_support = true
 		8 | }
-
-
-Check: CKV2_AWS_11: "Ensure VPC flow logging is enabled in all VPCs"
-	FAILED for resource: aws_vpc.main
-	File: /main.tf:5-8
-	Guide: https://docs.bridgecrew.io-vpc-flow-logging
-
-		5 | resource "aws_vpc" "main" {
-		6 |   cidr_block = "192.168.100.0/24"
-		7 |   enable_dns_support = true
-		8 | }
-
-
-Check: CKV2_AWS_19: "Ensure that all EIP addresses allocated to a VPC are attached to EC2 instances"
-	FAILED for resource: aws_eip.allocate-ip-to-nat-gw
-	File: /main.tf:56-59
-	Guide: https://docs.bridgecrew.io/docs/ensure-that-all-eip-addresses-allocated-to-a-vpc-are-attached-to-ec2-instances
-
-		56 | resource "aws_eip" "allocate-ip-to-nat-gw" {
-		57 |   vpc      = true
-		58 |   depends_on = [aws_internet_gateway.internet-gateway]
-		59 | }
 
 

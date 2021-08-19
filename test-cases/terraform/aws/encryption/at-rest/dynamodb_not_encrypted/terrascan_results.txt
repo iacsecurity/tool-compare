@@ -2,16 +2,18 @@
 
 Violation Details -
     
-	Description    :	Ensure DynamoDb is encrypted at rest
+	Description    :	Ensure Point In Time Recovery is enabled for DynamoDB Tables
 	File           :	main.tf
+	Module Name    :	root
 	Plan Root      :	./
 	Line           :	1
 	Severity       :	MEDIUM
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	Ensure Point In Time Recovery is enabled for DynamoDB Tables
+	Description    :	Ensure DynamoDb is encrypted at rest
 	File           :	main.tf
+	Module Name    :	root
 	Plan Root      :	./
 	Line           :	1
 	Severity       :	MEDIUM
@@ -21,10 +23,10 @@ Violation Details -
 
 Scan Summary -
 
-	File/Folder         :	tool-compare/test-cases/terraform/aws/encryption/at-rest/dynamodb_not_encrypted
+	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-06-01 05:55:10.466658 +0000 UTC
-	Policies Validated  :	612
+	Scanned At          :	2021-08-18 17:38:57.980247002 +0000 UTC
+	Policies Validated  :	2
 	Violated Policies   :	2
 	Low                 :	0
 	Medium              :	2

@@ -2,8 +2,18 @@
 
 Violation Details -
     
+	Description    :	Ensure that your RDS database instances encrypt the underlying storage. Encrypted RDS instances use the industry standard AES-256 encryption algorithm to encrypt data on the server that hosts RDS DB instances. After data is encrypted, RDS handles authentication of access and descryption of data transparently with minimal impact on performance.
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	1
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
 	Description    :	Ensure AWS RDS instances have logging enabled.
 	File           :	main.tf
+	Module Name    :	root
 	Plan Root      :	./
 	Line           :	1
 	Severity       :	MEDIUM
@@ -12,30 +22,23 @@ Violation Details -
 	
 	Description    :	Ensure that your RDS database has IAM Authentication enabled.
 	File           :	main.tf
+	Module Name    :	root
 	Plan Root      :	./
 	Line           :	1
-	Severity       :	HIGH
-	
-	-----------------------------------------------------------------------
-	
-	Description    :	Ensure that your RDS database instances encrypt the underlying storage. Encrypted RDS instances use the industry standard AES-256 encryption algorithm to encrypt data on the server that hosts RDS DB instances. After data is encrypted, RDS handles authentication of access and descryption of data transparently with minimal impact on performance.
-	File           :	main.tf
-	Plan Root      :	./
-	Line           :	1
-	Severity       :	HIGH
+	Severity       :	MEDIUM
 	
 	-----------------------------------------------------------------------
 	
 
 Scan Summary -
 
-	File/Folder         :	tool-compare/test-cases/terraform/aws/iam/resource-authentication/rds_without_authentication
+	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-06-01 05:55:50.882903 +0000 UTC
-	Policies Validated  :	612
+	Scanned At          :	2021-08-18 17:52:43.364986635 +0000 UTC
+	Policies Validated  :	6
 	Violated Policies   :	3
 	Low                 :	0
-	Medium              :	1
-	High                :	2
+	Medium              :	2
+	High                :	1
 	
 

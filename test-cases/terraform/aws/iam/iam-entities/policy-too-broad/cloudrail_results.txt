@@ -1,39 +1,5 @@
 
 WARNINGs found:
-Rule: Ensure all resources that can be tagged have at least one tag
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_iam_role.role] (main.tf:5)
-     Violating Resource: [aws_iam_role.role]  (main.tf:5)
-
-     Evidence:
-             | Resource IAM Role aws_iam_role.role does not have any tags set
-
-
------------------------------------------------
-Rule: Ensure IAM policies pass Access Analyzer policy validation without WARNING and SUGGESTION issues
- - 2 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_iam_role.role] (main.tf:5)
-     Violating Resource: [aws_iam_role.role]  (main.tf:5)
-
-     Evidence:
-         Line 10, Col 17:
-             | Add a value to the empty string in the Sid element
-             | See https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-reference-policy-checks.html#access-analyzer-reference-policy-checks-suggestion-empty-sid-value
-
-
-   - Exposed Resource: [aws_iam_role_policy.policy] (main.tf:25)
-     Violating Resource: [aws_iam_role_policy.policy]  (main.tf:25)
-
-     Evidence:
-         Line 6, Col 8:
-             | Using wildcards (*) in the action and the resource can allow creation of unintended service-linked roles because it allows iam:CreateServiceLinkedRole permissions on all resources
-             | We recommend that you specify resource ARNs instead
-             | See https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-reference-policy-checks.html#access-analyzer-reference-policy-checks-general-warning-create-slr-with-star-in-action-and-resource
-
-
------------------------------------------------
 Rule: Ensure IAM policies pass Access Analyzer policy validation without SECURITY and ERROR issues
  - 1 Resources Exposed:
 -----------------------------------------------
@@ -48,6 +14,62 @@ Rule: Ensure IAM policies pass Access Analyzer policy validation without SECURIT
          Line 6, Col 17:
              | The action 'iam: AttachUser*' does not exist
              | See https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-reference-policy-checks.html#access-analyzer-reference-policy-checks-error-invalid-action
+
+
+-----------------------------------------------
+Rule: Ensure IAM policies pass Access Analyzer policy validation without WARNING and SUGGESTION issues
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_iam_role_policy.policy] (main.tf:25)
+     Violating Resource: [aws_iam_role_policy.policy]  (main.tf:25)
+
+     Evidence:
+         Line 6, Col 8:
+             | Using wildcards (*) in the action and the resource can allow creation of unintended service-linked roles because it allows iam:CreateServiceLinkedRole permissions on all resources
+             | We recommend that you specify resource ARNs instead
+             | See https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-reference-policy-checks.html#access-analyzer-reference-policy-checks-general-warning-create-slr-with-star-in-action-and-resource
+
+
+   - Exposed Resource: [aws_iam_role.role] (main.tf:5)
+     Violating Resource: [aws_iam_role.role]  (main.tf:5)
+
+     Evidence:
+         Line 10, Col 17:
+             | Add a value to the empty string in the Sid element
+             | See https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-reference-policy-checks.html#access-analyzer-reference-policy-checks-suggestion-empty-sid-value
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_iam_role.role] (main.tf:5)
+     Violating Resource: [aws_iam_role.role]  (main.tf:5)
+
+     Evidence:
+             | Resource IAM Role aws_iam_role.role does not have any tags set
+
+
+-----------------------------------------------
+Rule: Disallow IAM permissions which can lead to privilege escalation
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_iam_role_policy.allow-policy-1] (main.tf:25)
+     Violating Resource: [aws_iam_role_policy.allow-policy-1]  (main.tf:25)
+
+     Evidence:
+         aws_iam_role_policy.allow-policy-1
+             | is applied to arn:aws:iam::000000000000:role/role
+             | in conjunction with aws_iam_role_policy.allow-policy-1, aws_iam_role_policy.allow-policy-2 {'iam:passrole', 'lambda:invokefunc*', 'lambda:createfunction'} allows a hacker to trigger a Lambda function with a role they choose
+
+
+   - Exposed Resource: [aws_iam_role_policy.policy] (main.tf:25)
+     Violating Resource: [aws_iam_role_policy.policy]  (main.tf:25)
+
+     Evidence:
+         aws_iam_role_policy.policy
+             | is applied to arn:aws:iam::000000000000:role/role
+             | granting the problematic permissions {'iam:*', 'iam: AttachUser*'} which can allow for privilege escalation
 
 
 -----------------------------------------------

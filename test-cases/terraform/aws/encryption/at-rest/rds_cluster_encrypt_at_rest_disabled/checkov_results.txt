@@ -6,19 +6,36 @@
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.135 
-Update available 2.0.135 -> 2.0.136
+By bridgecrew.io | version: 2.0.358 
+Update available 2.0.358 -> 2.0.359
 Run pip3 install -U checkov to update 
 
 
 terraform scan results:
 
-Passed checks: 1, Failed checks: 5, Skipped checks: 0
+Passed checks: 1, Failed checks: 6, Skipped checks: 0
 
 Check: CKV_AWS_128: "Ensure that an Amazon RDS Clusters have AWS Identity and Access Management (IAM) authentication enabled"
 	FAILED for resource: aws_rds_cluster.default
 	File: /main.tf:5-14
 	Guide: https://docs.bridgecrew.io/docs/ensure-that-an-amazon-rds-clusters-have-iam-authentication-enabled
+
+		5  | resource "aws_rds_cluster" "default" {
+		6  |   cluster_identifier  = "cloudrail-test-non-encrypted"
+		7  |   engine              = "aurora-mysql"
+		8  |   engine_version      = "5.7.mysql_aurora.2.03.2"
+		9  |   availability_zones  = ["eu-west-1a", "eu-west-1b", "eu-west-1c"]
+		10 |   database_name       = "cloudrail"
+		11 |   master_username     = "administrator"
+		12 |   master_password     = "cloudrail-TEST-password"
+		13 |   skip_final_snapshot = true
+		14 | }
+
+
+Check: CKV_AWS_162: "Ensure RDS cluster has IAM authentication enabled"
+	FAILED for resource: aws_rds_cluster.default
+	File: /main.tf:5-14
+	Guide: https://docs.bridgecrew.io/docs/ensure-rds-cluster-has-iam-authentication-enabled
 
 		5  | resource "aws_rds_cluster" "default" {
 		6  |   cluster_identifier  = "cloudrail-test-non-encrypted"

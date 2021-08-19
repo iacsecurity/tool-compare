@@ -3,8 +3,8 @@ WARNINGs found:
 Rule: Ensure S3 bucket has access logging enabled
  - 1 Resources Exposed:
 -----------------------------------------------
-   - Exposed Resource: [aws_cloudtrail.foobar] (main.tf:3)
-     Violating Resource: [aws_cloudtrail.foobar]  (main.tf:3)
+   - Exposed Resource: [aws_s3_bucket.foo] (main.tf:10)
+     Violating Resource: [aws_s3_bucket.foo]  (main.tf:10)
 
      Evidence:
              | The S3 Bucket aws_s3_bucket.foo does not have access logging enabled
@@ -25,18 +25,18 @@ Rule: Ensure CloudTrail is enabled in all regions
 Rule: Ensure all resources that can be tagged have at least one tag
  - 2 Resources Exposed:
 -----------------------------------------------
-   - Exposed Resource: [aws_s3_bucket.foo] (main.tf:10)
-     Violating Resource: [aws_s3_bucket.foo]  (main.tf:10)
-
-     Evidence:
-             | Resource S3 Bucket aws_s3_bucket.foo does not have any tags set
-
-
    - Exposed Resource: [aws_cloudtrail.foobar] (main.tf:3)
      Violating Resource: [aws_cloudtrail.foobar]  (main.tf:3)
 
      Evidence:
              | Resource CloudTrail aws_cloudtrail.foobar does not have any tags set
+
+
+   - Exposed Resource: [aws_s3_bucket.foo] (main.tf:10)
+     Violating Resource: [aws_s3_bucket.foo]  (main.tf:10)
+
+     Evidence:
+             | Resource S3 Bucket aws_s3_bucket.foo does not have any tags set
 
 
 -----------------------------------------------

@@ -6,14 +6,14 @@
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.135 
-Update available 2.0.135 -> 2.0.136
+By bridgecrew.io | version: 2.0.358 
+Update available 2.0.358 -> 2.0.359
 Run pip3 install -U checkov to update 
 
 
 terraform scan results:
 
-Passed checks: 5, Failed checks: 11, Skipped checks: 0
+Passed checks: 4, Failed checks: 10, Skipped checks: 0
 
 Check: CKV_AWS_36: "Ensure CloudTrail log file validation is enabled"
 	FAILED for resource: aws_cloudtrail.foobar
@@ -100,47 +100,6 @@ Check: CKV_AWS_144: "Ensure that S3 bucket has cross-region replication enabled"
 	FAILED for resource: aws_s3_bucket.foo
 	File: /main.tf:10-44
 	Guide: https://docs.bridgecrew.io/docs/ensure-that-s3-bucket-has-cross-region-replication-enabled
-
-		10 | resource "aws_s3_bucket" "foo" {
-		11 |   bucket        = "tf-test-trail"
-		12 |   force_destroy = true
-		13 | 
-		14 |   policy = <<POLICY
-		15 | {
-		16 |     "Version": "2012-10-17",
-		17 |     "Statement": [
-		18 |         {
-		19 |             "Sid": "AWSCloudTrailAclCheck",
-		20 |             "Effect": "Allow",
-		21 |             "Principal": {
-		22 |               "Service": "cloudtrail.amazonaws.com"
-		23 |             },
-		24 |             "Action": "s3:GetBucketAcl",
-		25 |             "Resource": "arn:aws:s3:::tf-test-trail"
-		26 |         },
-		27 |         {
-		28 |             "Sid": "AWSCloudTrailWrite",
-		29 |             "Effect": "Allow",
-		30 |             "Principal": {
-		31 |               "Service": "cloudtrail.amazonaws.com"
-		32 |             },
-		33 |             "Action": "s3:PutObject",
-		34 |             "Resource": "arn:aws:s3:::tf-test-trail/prefix/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
-		35 |             "Condition": {
-		36 |                 "StringEquals": {
-		37 |                     "s3:x-amz-acl": "bucket-owner-full-control"
-		38 |                 }
-		39 |             }
-		40 |         }
-		41 |     ]
-		42 | }
-		43 | POLICY
-		44 | }
-
-
-Check: CKV_AWS_52: "Ensure S3 bucket has MFA delete enabled"
-	FAILED for resource: aws_s3_bucket.foo
-	File: /main.tf:10-44
 
 		10 | resource "aws_s3_bucket" "foo" {
 		11 |   bucket        = "tf-test-trail"

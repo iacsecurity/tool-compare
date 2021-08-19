@@ -4,7 +4,7 @@ Failed to run the process ...
     "isPrivate": true,
     "isLicensesEnabled": false,
     "ignoreSettings": null,
-    "org": "y",
+    "org": "yi2020",
     "projectId": "",
     "policy": ""
   },
@@ -13,28 +13,27 @@ Failed to run the process ...
   "dependencyCount": 0,
   "licensesPolicy": null,
   "ignoreSettings": null,
-  "targetFile": "/project/main.tf",
+  "targetFile": "main.tf",
   "projectName": "project",
-  "org": "y",
+  "org": "yi2020",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
   "packageManager": "terraformconfig",
   "path": "/project",
   "projectType": "terraformconfig",
+  "ok": false,
   "infrastructureAsCodeIssues": [
     {
+      "severity": "low",
       "resolve": "Set `attributes.flow_logs_enabled` attribute to `true`",
       "id": "SNYK-CC-TF-137",
       "impact": "Audit records may not be available during investigation",
+      "msg": "resource.aws_globalaccelerator_accelerator[example].attributes.flow_logs_enabled",
       "subType": "Global Accelerator",
-      "policyEngineType": "opa",
+      "issue": "Amazon Global Accelerator flow logs are disabled",
       "publicId": "SNYK-CC-TF-137",
       "title": "Global Accelerator flow logs disabled",
-      "severity": "low",
-      "msg": "resource.aws_globalaccelerator_accelerator[example].attributes.flow_logs_enabled",
-      "issue": "Amazon Global Accelerator flow logs are disabled",
-      "type": "terraform",
       "references": [
         "https://docs.aws.amazon.com/global-accelerator/latest/dg/monitoring-global-accelerator.flow-logs.html"
       ],
@@ -45,6 +44,7 @@ Failed to run the process ...
         "resolve": "Set `attributes.flow_logs_enabled` attribute to `true`"
       },
       "lineNumber": 6,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-137",
       "path": [
         "resource",
         "aws_globalaccelerator_accelerator[example]",

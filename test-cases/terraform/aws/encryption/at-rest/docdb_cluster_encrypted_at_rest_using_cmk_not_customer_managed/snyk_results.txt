@@ -3,10 +3,10 @@ Failed to run the process ...
   "meta": {
     "isPrivate": true,
     "isLicensesEnabled": false,
-    "policy": "",
     "ignoreSettings": null,
+    "org": "yi2020",
     "projectId": "",
-    "org": "y"
+    "policy": ""
   },
   "filesystemPolicy": false,
   "vulnerabilities": [],
@@ -15,20 +15,32 @@ Failed to run the process ...
   "ignoreSettings": null,
   "targetFile": "main.tf",
   "projectName": "project",
-  "org": "y",
+  "org": "yi2020",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
   "packageManager": "terraformconfig",
   "path": "/project",
   "projectType": "terraformconfig",
+  "ok": false,
   "infrastructureAsCodeIssues": [
     {
-      "id": "SNYK-CC-TF-141",
-      "title": "DocDB logging disabled",
-      "type": "terraform",
-      "subType": "DocumentDB",
       "severity": "low",
+      "resolve": "Set `enabled_cloudwatch_logs_exports` attribute to `['profiler', 'audit']`",
+      "id": "SNYK-CC-TF-141",
+      "impact": "Audit records may not be available during investigation",
+      "msg": "resource.aws_docdb_cluster[test2].enabled_cloudwatch_logs_exports",
+      "remediation": {
+        "cloudformation": "Set `Properties.EnableCloudwatchLogsExports` attribute to `['profiler', 'audit']`",
+        "terraform": "Set `enabled_cloudwatch_logs_exports` attribute to `['profiler', 'audit']`"
+      },
+      "subType": "DocumentDB",
+      "issue": "Amazon DocDB logging is not enabled",
+      "publicId": "SNYK-CC-TF-141",
+      "title": "DocDB logging disabled",
+      "references": [
+        "https://docs.aws.amazon.com/documentdb/latest/developerguide/logging-and-monitoring.html"
+      ],
       "isIgnored": false,
       "iacDescription": {
         "issue": "Amazon DocDB logging is not enabled",
@@ -36,6 +48,7 @@ Failed to run the process ...
         "resolve": "Set `enabled_cloudwatch_logs_exports` attribute to `['profiler', 'audit']`"
       },
       "lineNumber": 9,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-141",
       "path": [
         "resource",
         "aws_docdb_cluster[test2]",

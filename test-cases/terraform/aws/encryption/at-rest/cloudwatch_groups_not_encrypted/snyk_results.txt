@@ -3,10 +3,10 @@ Failed to run the process ...
   "meta": {
     "isPrivate": true,
     "isLicensesEnabled": false,
-    "policy": "",
     "ignoreSettings": null,
+    "org": "yi2020",
     "projectId": "",
-    "org": "y"
+    "policy": ""
   },
   "filesystemPolicy": false,
   "vulnerabilities": [],
@@ -15,12 +15,46 @@ Failed to run the process ...
   "ignoreSettings": null,
   "targetFile": "main.tf",
   "projectName": "project",
-  "org": "y",
+  "org": "yi2020",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
   "packageManager": "terraformconfig",
   "path": "/project",
   "projectType": "terraformconfig",
-  "infrastructureAsCodeIssues": []
+  "ok": false,
+  "infrastructureAsCodeIssues": [
+    {
+      "severity": "low",
+      "resolve": "Set `kms_key_id` attribute with customer managed key id",
+      "id": "SNYK-CC-AWS-415",
+      "impact": "Scope of use of the key cannot be controlled via KMS/IAM policies",
+      "msg": "resource.aws_cloudwatch_log_group[cloudrail-test].kms_key_id",
+      "remediation": {
+        "cloudformation": "Set `Properties.KmsKeyId` attribute with customer managed key id",
+        "terraform": "Set `kms_key_id` attribute with customer managed key id"
+      },
+      "subType": "CloudWatch",
+      "issue": "Log group is not encrypted with customer managed key",
+      "publicId": "SNYK-CC-AWS-415",
+      "title": "CloudWatch log group not encrypted with managed key",
+      "references": [
+        "https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/encrypt-log-data-kms.html",
+        "https://docs.aws.amazon.com/whitepapers/latest/kms-best-practices/aws-managed-and-customer-managed-cmks.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Log group is not encrypted with customer managed key",
+        "impact": "Scope of use of the key cannot be controlled via KMS/IAM policies",
+        "resolve": "Set `kms_key_id` attribute with customer managed key id"
+      },
+      "lineNumber": 5,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-415",
+      "path": [
+        "resource",
+        "aws_cloudwatch_log_group[cloudrail-test]",
+        "kms_key_id"
+      ]
+    }
+  ]
 }

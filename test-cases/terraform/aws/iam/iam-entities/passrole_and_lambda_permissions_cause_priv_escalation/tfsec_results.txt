@@ -1,19 +1,95 @@
 
+  Result 1
+
+  [aws-iam-no-policy-wildcards][[0m[31mHIGH[39m[0m] Resource 'aws_iam_role_policy.allow-policy-2' defines a policy with wildcarded resources.
+  /src/main.tf:49-62
+
+
+      46 |   name = "allow-policy-2"
+      47 |   role = aws_iam_role.role.id
+      48 | 
+      49 |   policy = <<-EOF    string: "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Action\": [\n        \"lambda:createfunction\", \"lambda:invokefunc*\"\n      ],\n      \"Effect\": \"Allow\",\n      \"Resource\": \"*\"\n    }\n  ]\n}\n"
+      50 |   {
+      51 |     "Version": "2012-10-17",
+      52 |     "Statement": [
+      53 |       {
+      54 |         "Action": [
+      55 |           "lambda:createfunction", "lambda:invokefunc*"
+      56 |         ],
+      57 |         "Effect": "Allow",
+      58 |         "Resource": "*"
+      59 |       }
+      60 |     ]
+      61 |   }
+      62 |   EOF
+      63 | }
+      64 | 
+
+  Legacy ID:  AWS099
+  Impact:     Overly permissive policies may grant access to sensitive resources
+  Resolution: Specify the exact permissions required, and to which resources they should apply instead of using wildcards.
+
+  More Info:
+  - https://tfsec.dev/docs/aws/iam/no-policy-wildcards#aws/iam 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document 
+  - https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html 
+
+  Result 2
+
+  [aws-iam-no-policy-wildcards][[0m[31mHIGH[39m[0m] Resource 'aws_iam_role_policy.allow-policy-1' defines a policy with wildcarded resources.
+  /src/main.tf:29-42
+
+
+      26 |   name = "allow-policy-1"
+      27 |   role = aws_iam_role.role.id
+      28 | 
+      29 |   policy = <<-EOF    string: "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Action\": [\n        \"iam:passrole\"\n      ],\n      \"Effect\": \"Allow\",\n      \"Resource\": \"*\"\n    }\n  ]\n}\n"
+      30 |   {
+      31 |     "Version": "2012-10-17",
+      32 |     "Statement": [
+      33 |       {
+      34 |         "Action": [
+      35 |           "iam:passrole"
+      36 |         ],
+      37 |         "Effect": "Allow",
+      38 |         "Resource": "*"
+      39 |       }
+      40 |     ]
+      41 |   }
+      42 |   EOF
+      43 | }
+      44 | 
+      45 | resource "aws_iam_role_policy" "allow-policy-2" {
+
+  Legacy ID:  AWS099
+  Impact:     Overly permissive policies may grant access to sensitive resources
+  Resolution: Specify the exact permissions required, and to which resources they should apply instead of using wildcards.
+
+  More Info:
+  - https://tfsec.dev/docs/aws/iam/no-policy-wildcards#aws/iam 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document 
+  - https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html 
+
   times
   ------------------------------------------
-  disk i/o             28.3733ms
-  parsing HCL          34µs
-  evaluating values    415.4µs
-  running checks       473.4µs
+  disk i/o             75.198709ms
+  parsing HCL          505µs
+  evaluating values    7.275499ms
+  running checks       74.349625ms
 
   counts
   ------------------------------------------
   files loaded         1
   blocks               4
-  evaluated blocks     4
   modules              0
-  module blocks        0
-  ignored checks       0
 
-No problems detected!
+  results
+  ------------------------------------------
+  critical             0
+  high                 2
+  medium               0
+  low                  0
+  ignored              0
+
+  2 potential problems detected.
 

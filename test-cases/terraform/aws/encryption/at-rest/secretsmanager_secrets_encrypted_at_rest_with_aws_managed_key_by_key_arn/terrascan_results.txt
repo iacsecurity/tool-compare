@@ -2,10 +2,10 @@
 
 Scan Summary -
 
-	File/Folder         :	tool-compare/test-cases/terraform/aws/encryption/at-rest/secretsmanager_secrets_encrypted_at_rest_with_aws_managed_key_by_key_arn
+	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-06-01 05:54:51.785039 +0000 UTC
-	Policies Validated  :	612
+	Scanned At          :	2021-08-18 16:18:18.592421138 +0000 UTC
+	Policies Validated  :	1
 	Violated Policies   :	0
 	Low                 :	0
 	Medium              :	0

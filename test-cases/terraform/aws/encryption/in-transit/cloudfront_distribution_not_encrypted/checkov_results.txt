@@ -6,14 +6,14 @@
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.135 
-Update available 2.0.135 -> 2.0.136
+By bridgecrew.io | version: 2.0.358 
+Update available 2.0.358 -> 2.0.359
 Run pip3 install -U checkov to update 
 
 
 terraform scan results:
 
-Passed checks: 11, Failed checks: 9, Skipped checks: 0
+Passed checks: 10, Failed checks: 8, Skipped checks: 0
 
 Check: CKV_AWS_21: "Ensure all data stored in the S3 bucket have versioning enabled"
 	FAILED for resource: aws_s3_bucket.cdn-content
@@ -47,33 +47,6 @@ Check: CKV_AWS_144: "Ensure that S3 bucket has cross-region replication enabled"
 	FAILED for resource: aws_s3_bucket.cdn-content
 	File: /main.tf:10-30
 	Guide: https://docs.bridgecrew.io/docs/ensure-that-s3-bucket-has-cross-region-replication-enabled
-
-		10 | resource "aws_s3_bucket" "cdn-content" {
-		11 |   bucket = local.name
-		12 |   acl    = "private"
-		13 |   policy = <<POLICY
-		14 | {
-		15 |   "Version": "2012-10-17",
-		16 |   "Id": "AllowCloudFrontOAI",
-		17 |   "Statement": [
-		18 |     {
-		19 |       "Sid": "AllowCloudFrontOAI",
-		20 |       "Effect": "Allow",
-		21 |       "Principal": {
-		22 |         "CanonicalUser": "${aws_cloudfront_origin_access_identity.oai.s3_canonical_user_id}"
-		23 |       },
-		24 |       "Action": "s3:GetObject",
-		25 |       "Resource": "arn:aws:s3:::${local.name}/*"
-		26 |     }
-		27 |   ]
-		28 | }
-		29 | POLICY
-		30 | }
-
-
-Check: CKV_AWS_52: "Ensure S3 bucket has MFA delete enabled"
-	FAILED for resource: aws_s3_bucket.cdn-content
-	File: /main.tf:10-30
 
 		10 | resource "aws_s3_bucket" "cdn-content" {
 		11 |   bucket = local.name

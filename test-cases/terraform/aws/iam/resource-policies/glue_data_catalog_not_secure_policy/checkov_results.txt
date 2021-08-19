@@ -6,14 +6,33 @@
  | (__| | | |  __/ (__|   < (_) \ V / 
   \___|_| |_|\___|\___|_|\_\___/ \_/  
                                       
-By bridgecrew.io | version: 2.0.135 
-Update available 2.0.135 -> 2.0.136
+By bridgecrew.io | version: 2.0.358 
+Update available 2.0.358 -> 2.0.359
 Run pip3 install -U checkov to update 
 
 
 terraform scan results:
 
-Passed checks: 15, Failed checks: 7, Skipped checks: 0
+Passed checks: 13, Failed checks: 7, Skipped checks: 0
+
+Check: CKV_AWS_110: "Ensure IAM policies does not allow privilege escalation"
+	FAILED for resource: aws_iam_policy_document.glue-example-policy
+	File: /main.tf:54-65
+	Guide: https://docs.bridgecrew.io/docs/ensure-iam-policies-does-not-allow-privilege-escalation
+
+		54 | data "aws_iam_policy_document" "glue-example-policy" {
+		55 |   statement {
+		56 |     actions = [
+		57 |       "glue:*",
+		58 |     ]
+		59 |     resources = ["arn:${data.aws_partition.current.partition}:glue:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:*"]
+		60 |     principals {
+		61 |       identifiers = ["*"]
+		62 |       type        = "AWS"
+		63 |     }
+		64 |   }
+		65 | }
+
 
 Check: CKV_AWS_21: "Ensure all data stored in the S3 bucket have versioning enabled"
 	FAILED for resource: aws_s3_bucket.cloudrail
@@ -30,16 +49,6 @@ Check: CKV_AWS_144: "Ensure that S3 bucket has cross-region replication enabled"
 	FAILED for resource: aws_s3_bucket.cloudrail
 	File: /main.tf:33-36
 	Guide: https://docs.bridgecrew.io/docs/ensure-that-s3-bucket-has-cross-region-replication-enabled
-
-		33 | resource "aws_s3_bucket" "cloudrail" {
-		34 |   bucket = "cloudrail-glue"
-		35 |   acl    = "private"
-		36 | }
-
-
-Check: CKV_AWS_52: "Ensure S3 bucket has MFA delete enabled"
-	FAILED for resource: aws_s3_bucket.cloudrail
-	File: /main.tf:33-36
 
 		33 | resource "aws_s3_bucket" "cloudrail" {
 		34 |   bucket = "cloudrail-glue"

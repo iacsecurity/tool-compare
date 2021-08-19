@@ -2,32 +2,34 @@
 
 Violation Details -
     
-	Description    :	Ensure VPC flow logging is enabled in all VPCs
-	File           :	main.tf
-	Plan Root      :	./
-	Line           :	10
-	Severity       :	MEDIUM
-	
-	-----------------------------------------------------------------------
-	
 	Description    :	Ensure EKS clusters have control plane logging enabled.
 	File           :	main.tf
+	Module Name    :	root
 	Plan Root      :	./
 	Line           :	19
 	Severity       :	MEDIUM
 	
 	-----------------------------------------------------------------------
 	
+	Description    :	Ensure VPC flow logging is enabled in all VPCs
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	10
+	Severity       :	LOW
+	
+	-----------------------------------------------------------------------
+	
 
 Scan Summary -
 
-	File/Folder         :	tool-compare/test-cases/terraform/aws/logging/eks_logging_disabled
+	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-06-01 05:56:01.804525 +0000 UTC
-	Policies Validated  :	612
+	Scanned At          :	2021-08-18 17:57:45.299560761 +0000 UTC
+	Policies Validated  :	3
 	Violated Policies   :	2
-	Low                 :	0
-	Medium              :	2
+	Low                 :	1
+	Medium              :	1
 	High                :	0
 	
 

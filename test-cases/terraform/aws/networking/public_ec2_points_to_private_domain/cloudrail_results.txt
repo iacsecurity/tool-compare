@@ -1,436 +1,89 @@
 
 WARNINGs found:
-Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 22 (SSH)
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
-     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:121)
-
-     Evidence:
-         Internet
-             | Subnet aws_subnet.nondefault_1 has internet gateway
-             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
-             | Subnet routes traffic from instance to internet gateway
-             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 22
-             | Instance uses security group aws_security_group.publicly_accessible_sg
-             | aws_security_group.publicly_accessible_sg allows port 22
-         Instance
-
-
------------------------------------------------
-Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 3389 (RDP)
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
-     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:121)
-
-     Evidence:
-         Internet
-             | Subnet aws_subnet.nondefault_1 has internet gateway
-             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
-             | Subnet routes traffic from instance to internet gateway
-             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 3389
-             | Instance uses security group aws_security_group.publicly_accessible_sg
-             | aws_security_group.publicly_accessible_sg allows port 3389
-         Instance
-
-
------------------------------------------------
-Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 1521 (ORACLE DB DEFAULT)
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
-     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:121)
-
-     Evidence:
-         Internet
-             | Subnet aws_subnet.nondefault_1 has internet gateway
-             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
-             | Subnet routes traffic from instance to internet gateway
-             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 1521
-             | Instance uses security group aws_security_group.publicly_accessible_sg
-             | aws_security_group.publicly_accessible_sg allows port 1521
-         Instance
-
-
------------------------------------------------
-Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 2483 (ORACLE DB)
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
-     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:121)
-
-     Evidence:
-         Internet
-             | Subnet aws_subnet.nondefault_1 has internet gateway
-             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
-             | Subnet routes traffic from instance to internet gateway
-             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 2483
-             | Instance uses security group aws_security_group.publicly_accessible_sg
-             | aws_security_group.publicly_accessible_sg allows port 2483
-         Instance
-
-
------------------------------------------------
-Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 2484 (ORACLE DB SSL)
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
-     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:121)
-
-     Evidence:
-         Internet
-             | Subnet aws_subnet.nondefault_1 has internet gateway
-             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
-             | Subnet routes traffic from instance to internet gateway
-             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 2484
-             | Instance uses security group aws_security_group.publicly_accessible_sg
-             | aws_security_group.publicly_accessible_sg allows port 2484
-         Instance
-
-
------------------------------------------------
-Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 3306 (MYSQL)
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
-     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:121)
-
-     Evidence:
-         Internet
-             | Subnet aws_subnet.nondefault_1 has internet gateway
-             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
-             | Subnet routes traffic from instance to internet gateway
-             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 3306
-             | Instance uses security group aws_security_group.publicly_accessible_sg
-             | aws_security_group.publicly_accessible_sg allows port 3306
-         Instance
-
-
------------------------------------------------
-Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 5432 (POSTGRES)
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
-     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:121)
-
-     Evidence:
-         Internet
-             | Subnet aws_subnet.nondefault_1 has internet gateway
-             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
-             | Subnet routes traffic from instance to internet gateway
-             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 5432
-             | Instance uses security group aws_security_group.publicly_accessible_sg
-             | aws_security_group.publicly_accessible_sg allows port 5432
-         Instance
-
-
------------------------------------------------
-Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 6379 (REDIS)
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
-     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:121)
-
-     Evidence:
-         Internet
-             | Subnet aws_subnet.nondefault_1 has internet gateway
-             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
-             | Subnet routes traffic from instance to internet gateway
-             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 6379
-             | Instance uses security group aws_security_group.publicly_accessible_sg
-             | aws_security_group.publicly_accessible_sg allows port 6379
-         Instance
-
-
------------------------------------------------
-Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 27017 (MONGODB)
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
-     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:121)
-
-     Evidence:
-         Internet
-             | Subnet aws_subnet.nondefault_1 has internet gateway
-             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
-             | Subnet routes traffic from instance to internet gateway
-             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 27017
-             | Instance uses security group aws_security_group.publicly_accessible_sg
-             | aws_security_group.publicly_accessible_sg allows port 27017
-         Instance
-
-
------------------------------------------------
-Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 27018 (MONGODB SHARD CLUSTER)
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
-     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:121)
-
-     Evidence:
-         Internet
-             | Subnet aws_subnet.nondefault_1 has internet gateway
-             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
-             | Subnet routes traffic from instance to internet gateway
-             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 27018
-             | Instance uses security group aws_security_group.publicly_accessible_sg
-             | aws_security_group.publicly_accessible_sg allows port 27018
-         Instance
-
-
------------------------------------------------
-Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 7199 (CASSANDRA)
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
-     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:121)
-
-     Evidence:
-         Internet
-             | Subnet aws_subnet.nondefault_1 has internet gateway
-             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
-             | Subnet routes traffic from instance to internet gateway
-             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 7199
-             | Instance uses security group aws_security_group.publicly_accessible_sg
-             | aws_security_group.publicly_accessible_sg allows port 7199
-         Instance
-
-
------------------------------------------------
-Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 9160 (CASSANDRA THRIFT)
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
-     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:121)
-
-     Evidence:
-         Internet
-             | Subnet aws_subnet.nondefault_1 has internet gateway
-             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
-             | Subnet routes traffic from instance to internet gateway
-             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 9160
-             | Instance uses security group aws_security_group.publicly_accessible_sg
-             | aws_security_group.publicly_accessible_sg allows port 9160
-         Instance
-
-
------------------------------------------------
-Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 8888 (CASSANDRA MNG)
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
-     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:121)
-
-     Evidence:
-         Internet
-             | Subnet aws_subnet.nondefault_1 has internet gateway
-             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
-             | Subnet routes traffic from instance to internet gateway
-             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 8888
-             | Instance uses security group aws_security_group.publicly_accessible_sg
-             | aws_security_group.publicly_accessible_sg allows port 8888
-         Instance
-
-
------------------------------------------------
-Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 11211 (MEMCACHED)
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
-     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:121)
-
-     Evidence:
-         Internet
-             | Subnet aws_subnet.nondefault_1 has internet gateway
-             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
-             | Subnet routes traffic from instance to internet gateway
-             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 11211
-             | Instance uses security group aws_security_group.publicly_accessible_sg
-             | aws_security_group.publicly_accessible_sg allows port 11211
-         Instance
-
-
------------------------------------------------
-Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 9300 (ELASTICSEARCH NODES)
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
-     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:121)
-
-     Evidence:
-         Internet
-             | Subnet aws_subnet.nondefault_1 has internet gateway
-             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
-             | Subnet routes traffic from instance to internet gateway
-             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 9300
-             | Instance uses security group aws_security_group.publicly_accessible_sg
-             | aws_security_group.publicly_accessible_sg allows port 9300
-         Instance
-
-
------------------------------------------------
-Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 9200 (ELASTICSEARCH)
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
-     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:121)
-
-     Evidence:
-         Internet
-             | Subnet aws_subnet.nondefault_1 has internet gateway
-             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
-             | Subnet routes traffic from instance to internet gateway
-             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 9200
-             | Instance uses security group aws_security_group.publicly_accessible_sg
-             | aws_security_group.publicly_accessible_sg allows port 9200
-         Instance
-
-
------------------------------------------------
-Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 5601 (KIBANA)
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
-     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:121)
-
-     Evidence:
-         Internet
-             | Subnet aws_subnet.nondefault_1 has internet gateway
-             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
-             | Subnet routes traffic from instance to internet gateway
-             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 5601
-             | Instance uses security group aws_security_group.publicly_accessible_sg
-             | aws_security_group.publicly_accessible_sg allows port 5601
-         Instance
-
-
------------------------------------------------
-Rule: Ensure Elasticsearch Domain is not accessible indirectly via a publicly accessible resource
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_elasticsearch_domain.test] (main.tf:107)
-     Violating Resource: [aws_security_group.esdomain]  (main.tf:92)
-
-     Evidence:
-         Internet
-             | Instance aws_instance.public_ins resides in subnet(s) that are routable to internet gateway
-             | Instance has public IP address
-             | Instance accepts incoming traffic on port 443
-         Instance aws_instance.public_ins
-             | ElasticSearch Domain aws_elasticsearch_domain.test is on Vpc aws_vpc.nondefault
-             | ElasticSearch Domain is not publically accessible and uses subnets aws_subnet.nondefault_1
-             | ElasticSearch Domain resides in same subnet as Instanceaws_instance.public_ins
-             | ElasticSearch Domain uses Network ACL's aws_network_acl.ec2_nacl
-             | ElasticSearch Domain is indirectly accessible from instance aws_instance.public_ins
-         ElasticSearch Domain aws_elasticsearch_domain.test
-
-
------------------------------------------------
-Rule: Ensure Elasticsearch Domains being created are set to be encrypted at rest
+Rule: Ensure Elasticsearch Domain enforces HTTPS
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_elasticsearch_domain.test] (main.tf:107)
      Violating Resource: [aws_elasticsearch_domain.test]  (main.tf:107)
 
      Evidence:
-         ElasticSearch Domain
-             | ElasticSearch Domain aws_elasticsearch_domain.test
-             | is not set to use encrypt at rest
+             | This rule evaluated aws_elasticsearch_domain.test's configuration
 
 
 -----------------------------------------------
-Rule: Ensure Elasticsearch domains being created are set to be encrypted node-to-node
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_elasticsearch_domain.test] (main.tf:107)
-     Violating Resource: [aws_elasticsearch_domain.test]  (main.tf:107)
-
-     Evidence:
-         ElasticSearch Domain
-             | ElasticSearch Domain aws_elasticsearch_domain.test
-             | is not set to use encrypt node-to-node
-
-
------------------------------------------------
-Rule: Ensure IMDSv2 is used and IMDSv1 is disabled
+Rule: Ensure all data stored in the Launch configuration EBS is securely encrypted
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
      Violating Resource: [aws_instance.public_ins]  (main.tf:138)
 
      Evidence:
-             | The EC2 Instance aws_instance.public_ins is allowing IMDSv1
+             | This rule evaluated aws_instance.public_ins's configuration
 
 
 -----------------------------------------------
-Rule: Allow only private AMIs to be used
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
-     Violating Resource: [ami-0130bec6e5047f596]  (Not found in TF)
-
-     Evidence:
-             | The EC2 Instance aws_instance.public_ins uses AMI ami-0130bec6e5047f596, which is public
-
-
------------------------------------------------
-Rule: Ensure use of Elasticsearch Service domain policy, and no action wildcards are being used
+Rule: Ensure Elasticsearch Domain has logging enabled
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_elasticsearch_domain.test] (main.tf:107)
      Violating Resource: [aws_elasticsearch_domain.test]  (main.tf:107)
 
      Evidence:
-             | There is no resource policy or no statements attached to aws_elasticsearch_domain.test
+             | The ElasticSearch Domain aws_elasticsearch_domain.test does not have logging configured at all
 
 
 -----------------------------------------------
-Rule: Ensure all security groups and rules have a description detailing the rule
- - 2 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_security_group.esdomain] (main.tf:92)
-     Violating Resource: [aws_security_group.esdomain]  (main.tf:92)
-
-     Evidence:
-             | The Security group aws_security_group.esdomain does not have a description for the ingress rule of 10.1.1.128/25 for ports 443:443 using protocol tcp
-
-
-   - Exposed Resource: [aws_security_group.publicly_accessible_sg] (main.tf:121)
-     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:121)
-
-     Evidence:
-             | The Security group aws_security_group.publicly_accessible_sg does not have a description for the ingress rule of 0.0.0.0/0 for ports 0:65000 using protocol tcp
-
-
------------------------------------------------
-Rule: Ensure VPC Endpoint for EC2 is enabled in all VPCs in use
+Rule: Ensure EC2 instance has detailed monitoring enabled
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
-     Violating Resource: [aws_vpc.nondefault]  (main.tf:5)
+     Violating Resource: [aws_instance.public_ins]  (main.tf:138)
 
      Evidence:
-             | The service EC2 is in use in region eu-central-1, but VPC aws_vpc.nondefault
-             | is not configured to use a VPC Endpoint for EC2
+             | The EC2 Instance aws_instance.public_ins has detailed monitoring disabled
+
+
+-----------------------------------------------
+Rule: Ensure EC2 instance is EBS optimized
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
+     Violating Resource: [aws_instance.public_ins]  (main.tf:138)
+
+     Evidence:
+             | The EC2 Instance aws_instance.public_ins is not EBS optimized
 
 
 -----------------------------------------------
 Rule: Ensure all resources that can be tagged have at least one tag
  - 10 Resources Exposed:
 -----------------------------------------------
-   - Exposed Resource: [aws_network_acl.redshift_eni2_nacl] (main.tf:36)
-     Violating Resource: [aws_network_acl.redshift_eni2_nacl]  (main.tf:36)
+   - Exposed Resource: [aws_subnet.nondefault_2] (main.tf:69)
+     Violating Resource: [aws_subnet.nondefault_2]  (main.tf:69)
 
      Evidence:
-             | Resource Network ACL's aws_network_acl.redshift_eni2_nacl does not have any tags set other than "Name"
+             | Resource Subnet aws_subnet.nondefault_2 does not have any tags set
 
 
-   - Exposed Resource: [aws_network_acl.ec2_nacl] (main.tf:9)
-     Violating Resource: [aws_network_acl.ec2_nacl]  (main.tf:9)
+   - Exposed Resource: [aws_subnet.nondefault_1] (main.tf:63)
+     Violating Resource: [aws_subnet.nondefault_1]  (main.tf:63)
 
      Evidence:
-             | Resource Network ACL's aws_network_acl.ec2_nacl does not have any tags set other than "Name"
+             | Resource Subnet aws_subnet.nondefault_1 does not have any tags set
+
+
+   - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
+     Violating Resource: [aws_instance.public_ins]  (main.tf:138)
+
+     Evidence:
+             | Resource EC2 Instance aws_instance.public_ins does not have any tags set
+
+
+   - Exposed Resource: [aws_vpc.nondefault] (main.tf:5)
+     Violating Resource: [aws_vpc.nondefault]  (main.tf:5)
+
+     Evidence:
+             | Resource VPC aws_vpc.nondefault does not have any tags set
 
 
    - Exposed Resource: [aws_route_table.nondefault_1] (main.tf:79)
@@ -461,54 +114,408 @@ Rule: Ensure all resources that can be tagged have at least one tag
              | Resource ElasticSearch Domain aws_elasticsearch_domain.test does not have any tags set
 
 
-   - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
-     Violating Resource: [aws_instance.public_ins]  (main.tf:138)
+   - Exposed Resource: [aws_network_acl.redshift_eni2_nacl] (main.tf:36)
+     Violating Resource: [aws_network_acl.redshift_eni2_nacl]  (main.tf:36)
 
      Evidence:
-             | Resource EC2 Instance aws_instance.public_ins does not have any tags set
+             | Resource Network ACL's aws_network_acl.redshift_eni2_nacl does not have any tags set other than "Name"
 
 
-   - Exposed Resource: [aws_subnet.nondefault_1] (main.tf:63)
-     Violating Resource: [aws_subnet.nondefault_1]  (main.tf:63)
-
-     Evidence:
-             | Resource Subnet aws_subnet.nondefault_1 does not have any tags set
-
-
-   - Exposed Resource: [aws_subnet.nondefault_2] (main.tf:69)
-     Violating Resource: [aws_subnet.nondefault_2]  (main.tf:69)
+   - Exposed Resource: [aws_network_acl.ec2_nacl] (main.tf:9)
+     Violating Resource: [aws_network_acl.ec2_nacl]  (main.tf:9)
 
      Evidence:
-             | Resource Subnet aws_subnet.nondefault_2 does not have any tags set
-
-
-   - Exposed Resource: [aws_vpc.nondefault] (main.tf:5)
-     Violating Resource: [aws_vpc.nondefault]  (main.tf:5)
-
-     Evidence:
-             | Resource VPC aws_vpc.nondefault does not have any tags set
+             | Resource Network ACL's aws_network_acl.ec2_nacl does not have any tags set other than "Name"
 
 
 -----------------------------------------------
-Rule: Ensure all data stored in the Launch configuration EBS is securely encrypted
+Rule: Ensure VPC Endpoint for EC2 is enabled in all VPCs in use
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
-     Violating Resource: [aws_instance.public_ins]  (main.tf:138)
+     Violating Resource: [aws_vpc.nondefault]  (main.tf:5)
 
      Evidence:
-             | This rule evaluated aws_instance.public_ins's configuration
+             | The service EC2 is in use in region eu-central-1, but VPC aws_vpc.nondefault
+             | is not configured to use a VPC Endpoint for EC2
 
 
 -----------------------------------------------
-Rule: Ensure Elasticsearch Domain enforces HTTPS
+Rule: Ensure all security groups and rules have a description detailing the rule
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_security_group.esdomain] (main.tf:92)
+     Violating Resource: [aws_security_group.esdomain]  (main.tf:92)
+
+     Evidence:
+             | The Security group aws_security_group.esdomain does not have a description for the ingress rule of 10.1.1.128/25 for ports 443:443 using protocol TCP
+
+
+   - Exposed Resource: [aws_security_group.publicly_accessible_sg] (main.tf:121)
+     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:121)
+
+     Evidence:
+             | The Security group aws_security_group.publicly_accessible_sg does not have a description for the ingress rule of 0.0.0.0/0 for ports 0:65000 using protocol TCP
+
+
+-----------------------------------------------
+Rule: Ensure use of Elasticsearch Service domain policy, and no action wildcards are being used
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_elasticsearch_domain.test] (main.tf:107)
      Violating Resource: [aws_elasticsearch_domain.test]  (main.tf:107)
 
      Evidence:
-             | This rule evaluated aws_elasticsearch_domain.test's configuration
+             | There is no resource policy or no statements attached to aws_elasticsearch_domain.test
+
+
+-----------------------------------------------
+Rule: Allow only private AMIs to be used
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
+     Violating Resource: [ami-0130bec6e5047f596]  (Not found in TF)
+
+     Evidence:
+             | The EC2 Instance aws_instance.public_ins uses AMI ami-0130bec6e5047f596, which is public
+
+
+-----------------------------------------------
+Rule: Ensure IMDSv2 is used and IMDSv1 is disabled
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
+     Violating Resource: [aws_instance.public_ins]  (main.tf:138)
+
+     Evidence:
+             | The EC2 Instance aws_instance.public_ins is allowing IMDSv1
+
+
+-----------------------------------------------
+Rule: Ensure Elasticsearch Domain is not accessible indirectly via a publicly accessible resource
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_elasticsearch_domain.test] (main.tf:107)
+     Violating Resource: [aws_security_group.esdomain]  (main.tf:92)
+
+     Evidence:
+         Internet
+             | Instance aws_instance.public_ins resides in subnet(s) that are routable to internet gateway
+             | Instance has public IP address
+             | Instance accepts incoming traffic on port 443
+         Instance aws_instance.public_ins
+             | ElasticSearch Domain aws_elasticsearch_domain.test is on Vpc aws_vpc.nondefault
+             | ElasticSearch Domain is not publically accessible and uses subnets aws_subnet.nondefault_1
+             | ElasticSearch Domain resides in same subnet as Instanceaws_instance.public_ins
+             | ElasticSearch Domain uses Network ACL's aws_network_acl.ec2_nacl
+             | ElasticSearch Domain is indirectly accessible from instance aws_instance.public_ins
+         ElasticSearch Domain aws_elasticsearch_domain.test
+
+
+-----------------------------------------------
+Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 5601 (KIBANA)
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
+     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:121)
+
+     Evidence:
+         Internet
+             | Subnet aws_subnet.nondefault_1 has internet gateway
+             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
+             | Subnet routes traffic from instance to internet gateway
+             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 5601
+             | Instance uses security group aws_security_group.publicly_accessible_sg
+             | aws_security_group.publicly_accessible_sg allows port 5601
+         Instance
+
+
+-----------------------------------------------
+Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 9200 (ELASTICSEARCH)
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
+     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:121)
+
+     Evidence:
+         Internet
+             | Subnet aws_subnet.nondefault_1 has internet gateway
+             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
+             | Subnet routes traffic from instance to internet gateway
+             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 9200
+             | Instance uses security group aws_security_group.publicly_accessible_sg
+             | aws_security_group.publicly_accessible_sg allows port 9200
+         Instance
+
+
+-----------------------------------------------
+Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 9300 (ELASTICSEARCH NODES)
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
+     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:121)
+
+     Evidence:
+         Internet
+             | Subnet aws_subnet.nondefault_1 has internet gateway
+             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
+             | Subnet routes traffic from instance to internet gateway
+             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 9300
+             | Instance uses security group aws_security_group.publicly_accessible_sg
+             | aws_security_group.publicly_accessible_sg allows port 9300
+         Instance
+
+
+-----------------------------------------------
+Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 11211 (MEMCACHED)
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
+     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:121)
+
+     Evidence:
+         Internet
+             | Subnet aws_subnet.nondefault_1 has internet gateway
+             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
+             | Subnet routes traffic from instance to internet gateway
+             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 11211
+             | Instance uses security group aws_security_group.publicly_accessible_sg
+             | aws_security_group.publicly_accessible_sg allows port 11211
+         Instance
+
+
+-----------------------------------------------
+Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 8888 (CASSANDRA MNG)
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
+     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:121)
+
+     Evidence:
+         Internet
+             | Subnet aws_subnet.nondefault_1 has internet gateway
+             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
+             | Subnet routes traffic from instance to internet gateway
+             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 8888
+             | Instance uses security group aws_security_group.publicly_accessible_sg
+             | aws_security_group.publicly_accessible_sg allows port 8888
+         Instance
+
+
+-----------------------------------------------
+Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 9160 (CASSANDRA THRIFT)
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
+     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:121)
+
+     Evidence:
+         Internet
+             | Subnet aws_subnet.nondefault_1 has internet gateway
+             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
+             | Subnet routes traffic from instance to internet gateway
+             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 9160
+             | Instance uses security group aws_security_group.publicly_accessible_sg
+             | aws_security_group.publicly_accessible_sg allows port 9160
+         Instance
+
+
+-----------------------------------------------
+Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 7199 (CASSANDRA)
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
+     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:121)
+
+     Evidence:
+         Internet
+             | Subnet aws_subnet.nondefault_1 has internet gateway
+             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
+             | Subnet routes traffic from instance to internet gateway
+             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 7199
+             | Instance uses security group aws_security_group.publicly_accessible_sg
+             | aws_security_group.publicly_accessible_sg allows port 7199
+         Instance
+
+
+-----------------------------------------------
+Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 27018 (MONGODB SHARD CLUSTER)
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
+     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:121)
+
+     Evidence:
+         Internet
+             | Subnet aws_subnet.nondefault_1 has internet gateway
+             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
+             | Subnet routes traffic from instance to internet gateway
+             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 27018
+             | Instance uses security group aws_security_group.publicly_accessible_sg
+             | aws_security_group.publicly_accessible_sg allows port 27018
+         Instance
+
+
+-----------------------------------------------
+Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 27017 (MONGODB)
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
+     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:121)
+
+     Evidence:
+         Internet
+             | Subnet aws_subnet.nondefault_1 has internet gateway
+             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
+             | Subnet routes traffic from instance to internet gateway
+             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 27017
+             | Instance uses security group aws_security_group.publicly_accessible_sg
+             | aws_security_group.publicly_accessible_sg allows port 27017
+         Instance
+
+
+-----------------------------------------------
+Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 6379 (REDIS)
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
+     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:121)
+
+     Evidence:
+         Internet
+             | Subnet aws_subnet.nondefault_1 has internet gateway
+             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
+             | Subnet routes traffic from instance to internet gateway
+             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 6379
+             | Instance uses security group aws_security_group.publicly_accessible_sg
+             | aws_security_group.publicly_accessible_sg allows port 6379
+         Instance
+
+
+-----------------------------------------------
+Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 5432 (POSTGRES)
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
+     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:121)
+
+     Evidence:
+         Internet
+             | Subnet aws_subnet.nondefault_1 has internet gateway
+             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
+             | Subnet routes traffic from instance to internet gateway
+             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 5432
+             | Instance uses security group aws_security_group.publicly_accessible_sg
+             | aws_security_group.publicly_accessible_sg allows port 5432
+         Instance
+
+
+-----------------------------------------------
+Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 3306 (MYSQL)
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
+     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:121)
+
+     Evidence:
+         Internet
+             | Subnet aws_subnet.nondefault_1 has internet gateway
+             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
+             | Subnet routes traffic from instance to internet gateway
+             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 3306
+             | Instance uses security group aws_security_group.publicly_accessible_sg
+             | aws_security_group.publicly_accessible_sg allows port 3306
+         Instance
+
+
+-----------------------------------------------
+Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 2484 (ORACLE DB SSL)
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
+     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:121)
+
+     Evidence:
+         Internet
+             | Subnet aws_subnet.nondefault_1 has internet gateway
+             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
+             | Subnet routes traffic from instance to internet gateway
+             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 2484
+             | Instance uses security group aws_security_group.publicly_accessible_sg
+             | aws_security_group.publicly_accessible_sg allows port 2484
+         Instance
+
+
+-----------------------------------------------
+Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 2483 (ORACLE DB)
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
+     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:121)
+
+     Evidence:
+         Internet
+             | Subnet aws_subnet.nondefault_1 has internet gateway
+             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
+             | Subnet routes traffic from instance to internet gateway
+             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 2483
+             | Instance uses security group aws_security_group.publicly_accessible_sg
+             | aws_security_group.publicly_accessible_sg allows port 2483
+         Instance
+
+
+-----------------------------------------------
+Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 1521 (ORACLE DB DEFAULT)
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
+     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:121)
+
+     Evidence:
+         Internet
+             | Subnet aws_subnet.nondefault_1 has internet gateway
+             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
+             | Subnet routes traffic from instance to internet gateway
+             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 1521
+             | Instance uses security group aws_security_group.publicly_accessible_sg
+             | aws_security_group.publicly_accessible_sg allows port 1521
+         Instance
+
+
+-----------------------------------------------
+Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 3389 (RDP)
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
+     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:121)
+
+     Evidence:
+         Internet
+             | Subnet aws_subnet.nondefault_1 has internet gateway
+             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
+             | Subnet routes traffic from instance to internet gateway
+             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 3389
+             | Instance uses security group aws_security_group.publicly_accessible_sg
+             | aws_security_group.publicly_accessible_sg allows port 3389
+         Instance
+
+
+-----------------------------------------------
+Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 22 (SSH)
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.public_ins] (main.tf:138)
+     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:121)
+
+     Evidence:
+         Internet
+             | Subnet aws_subnet.nondefault_1 has internet gateway
+             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
+             | Subnet routes traffic from instance to internet gateway
+             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 22
+             | Instance uses security group aws_security_group.publicly_accessible_sg
+             | aws_security_group.publicly_accessible_sg allows port 22
+         Instance
 
 
 -----------------------------------------------

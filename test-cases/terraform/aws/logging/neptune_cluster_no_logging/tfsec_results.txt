@@ -1,19 +1,72 @@
 
+  Result 1
+
+  [aws-neptune-enable-log-export][[0m[33mMEDIUM[39m[0m] Resource 'aws_neptune_cluster.test' uses default value for enable_cloudwatch_logs_exports
+  /src/main.tf:1-9
+
+
+       1 | resource "aws_neptune_cluster" "test" {
+       2 |   cluster_identifier                  = "neptune-cluster-demo"
+       3 |   engine                              = "neptune"
+       4 |   backup_retention_period             = 5
+       5 |   preferred_backup_window             = "07:00-09:00"
+       6 |   skip_final_snapshot                 = true
+       7 |   iam_database_authentication_enabled = true
+       8 |   apply_immediately                   = true
+       9 | }
+      10 | 
+
+  Impact:     Limited visibility of audit trail for changes to Neptune
+  Resolution: Enable export logs
+
+  More Info:
+  - https://tfsec.dev/docs/aws/neptune/enable-log-export#aws/neptune 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/neptune_cluster#enable_cloudwatch_logs_exports 
+
+  Result 2
+
+  [aws-neptune-enable-storage-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_neptune_cluster.test' uses default value for storage_encrypted
+  /src/main.tf:1-9
+
+
+       1 | resource "aws_neptune_cluster" "test" {
+       2 |   cluster_identifier                  = "neptune-cluster-demo"
+       3 |   engine                              = "neptune"
+       4 |   backup_retention_period             = 5
+       5 |   preferred_backup_window             = "07:00-09:00"
+       6 |   skip_final_snapshot                 = true
+       7 |   iam_database_authentication_enabled = true
+       8 |   apply_immediately                   = true
+       9 | }
+      10 | 
+
+  Impact:     Unencrypted sensitive data is vulnerable to compromise.
+  Resolution: Enable encryption of Neptune storage
+
+  More Info:
+  - https://tfsec.dev/docs/aws/neptune/enable-storage-encryption#aws/neptune 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/neptune_cluster#storage_encrypted 
+
   times
   ------------------------------------------
-  disk i/o             24.4121ms
-  parsing HCL          20.8µs
-  evaluating values    183µs
-  running checks       189.6µs
+  disk i/o             49.821708ms
+  parsing HCL          660.792µs
+  evaluating values    1.901459ms
+  running checks       18.420959ms
 
   counts
   ------------------------------------------
   files loaded         1
   blocks               1
-  evaluated blocks     1
   modules              0
-  module blocks        0
-  ignored checks       0
 
-No problems detected!
+  results
+  ------------------------------------------
+  critical             0
+  high                 1
+  medium               1
+  low                  0
+  ignored              0
+
+  2 potential problems detected.
 

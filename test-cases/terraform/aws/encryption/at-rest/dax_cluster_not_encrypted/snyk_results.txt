@@ -3,10 +3,10 @@ Failed to run the process ...
   "meta": {
     "isPrivate": true,
     "isLicensesEnabled": false,
-    "policy": "",
     "ignoreSettings": null,
+    "org": "yi2020",
     "projectId": "",
-    "org": "y"
+    "policy": ""
   },
   "filesystemPolicy": false,
   "vulnerabilities": [],
@@ -15,27 +15,41 @@ Failed to run the process ...
   "ignoreSettings": null,
   "targetFile": "main.tf",
   "projectName": "project",
-  "org": "y",
+  "org": "yi2020",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
   "packageManager": "terraformconfig",
   "path": "/project",
   "projectType": "terraformconfig",
+  "ok": false,
   "infrastructureAsCodeIssues": [
     {
-      "id": "SNYK-CC-TF-106",
-      "title": "Non-encrypted DynamoDB DAX",
-      "type": "terraform",
-      "subType": "DynamoDB Accelerator (DAX)",
       "severity": "medium",
+      "resolve": "Set `server_side_encryption.enable` attribute to `true`",
+      "id": "SNYK-CC-TF-106",
+      "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+      "msg": "resource.aws_dax_cluster[cloudrail-test].server_side_encryption.enabled",
+      "remediation": {
+        "cloudformation": "Set `Properties.SSESpecification.SSEEnabled` attribute to `true`",
+        "terraform": "Set `server_side_encryption.enable` attribute to `true`"
+      },
+      "subType": "DynamoDB Accelerator (DAX)",
+      "issue": "DynamoDB Acceleration (DAX) is not encrypted",
+      "publicId": "SNYK-CC-TF-106",
+      "title": "Non-encrypted DynamoDB DAX",
+      "references": [
+        "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-dax-cluster.html#cfn-dax-cluster-ssespecification",
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DAXEncryptionAtRest.html"
+      ],
       "isIgnored": false,
       "iacDescription": {
         "issue": "DynamoDB Acceleration (DAX) is not encrypted",
         "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
-        "resolve": "Set `server_side_encryption.enable` attribute to `true`."
+        "resolve": "Set `server_side_encryption.enable` attribute to `true`"
       },
       "lineNumber": 25,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-106",
       "path": [
         "resource",
         "aws_dax_cluster[cloudrail-test]",

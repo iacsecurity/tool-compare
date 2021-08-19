@@ -1,79 +1,46 @@
 
 WARNINGs found:
-Rule: Ensure RDS database is not publicly accessible
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_db_instance.test] (main.tf:60)
-     Violating Resource: [aws_security_group.nondefault]  (main.tf:9)
-
-     Evidence:
-         Internet
-             | RDS Instance aws_db_instance.test is on VPC aws_vpc.nondefault
-             | instance uses security groups aws_security_group.nondefault 
-             | RDS Instance uses the subnets aws_subnet.nondefault_1, aws_subnet.nondefault_2
-             | RDS Instance is reachable from the internet due to subnet(s) and route table(s)
-             | Subnet uses Network ACL's nacl-pseudo-bbd87e5f-0ec8-48a7-8cdc-da0a0f87b840, nacl-pseudo-bbd87e5f-0ec8-48a7-8cdc-da0a0f87b840
-             | Network ACL's and security group(s) allows the RDS configured ports
-         RDS Instance
-
-
------------------------------------------------
-Rule: Ensure RDS instances/clusters being created are set to be encrypted at rest
+Rule: Ensure RDS instances and clusters have logging enabled
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_db_instance.test] (main.tf:60)
      Violating Resource: [aws_db_instance.test]  (main.tf:60)
 
      Evidence:
-         RDS Instance
-             | RDS Instance aws_db_instance.test is not set to use encrypt at rest
+             | The RDS Instance aws_db_instance.test does not have Cloudwatch log export enabled
 
 
 -----------------------------------------------
-Rule: Ensure RDS cluster instances being created are set to encrypt the performance insights with customer-managed CMK
+Rule: Ensure RDS database has IAM authentication enabled
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_db_instance.test] (main.tf:60)
      Violating Resource: [aws_db_instance.test]  (main.tf:60)
 
      Evidence:
-             | The RDS cluster instance aws_db_instance.test is not set to be encrypted at rest using customer-managed CMK
+             | The RDS Instance aws_db_instance.test has IAM database authentication disabled
 
 
 -----------------------------------------------
-Rule: Ensure all security groups and rules have a description detailing the rule
+Rule: Ensure RDS instances and clusters have a backup retention policy
  - 1 Resources Exposed:
 -----------------------------------------------
-   - Exposed Resource: [aws_security_group.nondefault] (main.tf:9)
-     Violating Resource: [aws_security_group.nondefault]  (main.tf:9)
+   - Exposed Resource: [aws_db_instance.test] (main.tf:60)
+     Violating Resource: [aws_db_instance.test]  (main.tf:60)
 
      Evidence:
-             | The Security group aws_security_group.nondefault does not have a description for the ingress rule of 0.0.0.0/0 for ports 0:65000 using protocol TCP
+             | The RDS Instance aws_db_instance.test does not have a backup retention policy configured
 
 
 -----------------------------------------------
 Rule: Ensure all resources that can be tagged have at least one tag
  - 7 Resources Exposed:
 -----------------------------------------------
-   - Exposed Resource: [aws_db_subnet_group.nondefault] (main.tf:32)
-     Violating Resource: [aws_db_subnet_group.nondefault]  (main.tf:32)
+   - Exposed Resource: [aws_vpc.nondefault] (main.tf:5)
+     Violating Resource: [aws_vpc.nondefault]  (main.tf:5)
 
      Evidence:
-             | Resource DB subnet group aws_db_subnet_group.nondefault does not have any tags set
-
-
-   - Exposed Resource: [aws_route_table.nondefault] (main.tf:42)
-     Violating Resource: [aws_route_table.nondefault]  (main.tf:42)
-
-     Evidence:
-             | Resource Route table aws_route_table.nondefault does not have any tags set
-
-
-   - Exposed Resource: [aws_security_group.nondefault] (main.tf:9)
-     Violating Resource: [aws_security_group.nondefault]  (main.tf:9)
-
-     Evidence:
-             | Resource Security group aws_security_group.nondefault does not have any tags set
+             | Resource VPC aws_vpc.nondefault does not have any tags set
 
 
    - Exposed Resource: [aws_db_instance.test] (main.tf:60)
@@ -97,11 +64,66 @@ Rule: Ensure all resources that can be tagged have at least one tag
              | Resource Subnet aws_subnet.nondefault_1 does not have any tags set
 
 
-   - Exposed Resource: [aws_vpc.nondefault] (main.tf:5)
-     Violating Resource: [aws_vpc.nondefault]  (main.tf:5)
+   - Exposed Resource: [aws_route_table.nondefault] (main.tf:42)
+     Violating Resource: [aws_route_table.nondefault]  (main.tf:42)
 
      Evidence:
-             | Resource VPC aws_vpc.nondefault does not have any tags set
+             | Resource Route table aws_route_table.nondefault does not have any tags set
+
+
+   - Exposed Resource: [aws_db_subnet_group.nondefault] (main.tf:32)
+     Violating Resource: [aws_db_subnet_group.nondefault]  (main.tf:32)
+
+     Evidence:
+             | Resource DB subnet group aws_db_subnet_group.nondefault does not have any tags set
+
+
+   - Exposed Resource: [aws_security_group.nondefault] (main.tf:9)
+     Violating Resource: [aws_security_group.nondefault]  (main.tf:9)
+
+     Evidence:
+             | Resource Security group aws_security_group.nondefault does not have any tags set
+
+
+-----------------------------------------------
+Rule: Ensure all security groups and rules have a description detailing the rule
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_security_group.nondefault] (main.tf:9)
+     Violating Resource: [aws_security_group.nondefault]  (main.tf:9)
+
+     Evidence:
+             | The Security group aws_security_group.nondefault does not have a description for the ingress rule of 0.0.0.0/0 for ports 0:65000 using protocol TCP
+
+
+-----------------------------------------------
+Rule: Ensure RDS instances/clusters being created are set to be encrypted at rest
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_db_instance.test] (main.tf:60)
+     Violating Resource: [aws_db_instance.test]  (main.tf:60)
+
+     Evidence:
+         RDS Instance
+             | RDS Instance aws_db_instance.test is not set to use encrypt at rest
+
+
+-----------------------------------------------
+Rule: Ensure RDS database is not publicly accessible
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_db_instance.test] (main.tf:60)
+     Violating Resource: [aws_security_group.nondefault]  (main.tf:9)
+
+     Evidence:
+         Internet
+             | RDS Instance aws_db_instance.test is on VPC aws_vpc.nondefault
+             | instance uses security groups aws_security_group.nondefault 
+             | RDS Instance uses the subnets aws_subnet.nondefault_1, aws_subnet.nondefault_2
+             | RDS Instance is reachable from the internet due to subnet(s) and route table(s)
+             | Subnet uses Network ACL's nacl-pseudo-e0a00467-6b5c-4af4-94f2-8a989f8bfc00, nacl-pseudo-e0a00467-6b5c-4af4-94f2-8a989f8bfc00
+             | Network ACL's and security group(s) allows the RDS configured ports
+         RDS Instance
 
 
 -----------------------------------------------

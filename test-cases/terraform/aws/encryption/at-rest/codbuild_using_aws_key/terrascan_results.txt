@@ -2,10 +2,10 @@
 
 Scan Summary -
 
-	File/Folder         :	tool-compare/test-cases/terraform/aws/encryption/at-rest/codbuild_using_aws_key
+	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-06-01 05:55:06.54945 +0000 UTC
-	Policies Validated  :	612
+	Scanned At          :	2021-08-18 17:36:59.365095295 +0000 UTC
+	Policies Validated  :	0
 	Violated Policies   :	0
 	Low                 :	0
 	Medium              :	0

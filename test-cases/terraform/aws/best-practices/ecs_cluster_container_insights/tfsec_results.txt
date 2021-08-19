@@ -1,7 +1,7 @@
 
-Check 1
+  Result 1
 
-  [AWS090][WARNING] Resoure 'aws_ecs_cluster.foo' does not have codeInsights enabled
+  [aws-ecs-enable-container-insight][[0m[97mLOW[39m[0m] Resource 'aws_ecs_cluster.foo' does not have containerInsights enabled
   /src/main.tf:1-8
 
 
@@ -15,26 +15,35 @@ Check 1
        8 | }
        9 | 
 
+  Legacy ID:  AWS090
   Impact:     Not all metrics and logs may be gathered for containers when Container Insights isn't enabled
   Resolution: Enable Container Insights
 
-  See https://tfsec.dev/docs/aws/AWS090/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/ecs/enable-container-insight#aws/ecs 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecs_cluster#setting 
+  - https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/ContainerInsights.html 
 
   times
   ------------------------------------------
-  disk i/o             38.9351ms
-  parsing HCL          28.1µs
-  evaluating values    205.9µs
-  running checks       3.0977ms
+  disk i/o             54.015042ms
+  parsing HCL          618.833µs
+  evaluating values    1.825084ms
+  running checks       16.891041ms
 
   counts
   ------------------------------------------
   files loaded         1
   blocks               1
-  evaluated blocks     1
   modules              0
-  module blocks        0
-  ignored checks       0
 
-1 potential problems detected.
+  results
+  ------------------------------------------
+  critical             0
+  high                 0
+  medium               0
+  low                  1
+  ignored              0
+
+  1 potential problems detected.
 

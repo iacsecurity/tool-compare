@@ -2,16 +2,18 @@
 
 Violation Details -
     
-	Description    :	Ensure user volume for Workspaces is Encrypted
+	Description    :	Ensure root volume for Workspaces is Encrypted
 	File           :	main.tf
+	Module Name    :	root
 	Plan Root      :	./
 	Line           :	76
 	Severity       :	MEDIUM
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	Ensure root volume for Workspaces is Encrypted
+	Description    :	Ensure user volume for Workspaces is Encrypted
 	File           :	main.tf
+	Module Name    :	root
 	Plan Root      :	./
 	Line           :	76
 	Severity       :	MEDIUM
@@ -21,10 +23,10 @@ Violation Details -
 
 Scan Summary -
 
-	File/Folder         :	tool-compare/test-cases/terraform/aws/encryption/at-rest/workspace_root_volume_not_encrypted_at_rest
+	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-06-01 05:54:55.711194 +0000 UTC
-	Policies Validated  :	612
+	Scanned At          :	2021-08-18 16:20:08.131796466 +0000 UTC
+	Policies Validated  :	2
 	Violated Policies   :	2
 	Low                 :	0
 	Medium              :	2

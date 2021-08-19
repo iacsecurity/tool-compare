@@ -1,38 +1,46 @@
 
-Check 1
+  Result 1
 
-  [AWS011][WARNING] Resource 'aws_dms_replication_instance.test' is exposed publicly.
-  /src/main.tf:65
+  [aws-rds-no-public-db-access][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'aws_dms_replication_instance.test' is exposed publicly.
+  /src/main.tf:62
 
 
-      62 |   kms_key_arn                  = "arn:aws:kms:us-east-1:123456789012:key/12345678-1234-1234-1234-123456789012"
-      63 |   multi_az                     = false
-      64 |   preferred_maintenance_window = "sun:10:30-sun:14:30"
-      65 |   publicly_accessible          = true
-      66 |   replication_instance_class   = "dms.t2.micro"
-      67 |   replication_instance_id      = "test-dms-replication-instance-tf"
-      68 |   replication_subnet_group_id  = aws_dms_replication_subnet_group.test.replication_subnet_group_id
+      59 |   auto_minor_version_upgrade   = true
+      60 |   multi_az                     = false
+      61 |   preferred_maintenance_window = "sun:10:30-sun:14:30"
+      62 |   publicly_accessible          = true    bool: true
+      63 |   replication_instance_class   = "dms.t2.micro"
+      64 |   replication_instance_id      = "test-dms-replication-instance-tf"
+      65 |   replication_subnet_group_id  = aws_dms_replication_subnet_group.test.id
 
+  Legacy ID:  AWS011
   Impact:     The database instance is publicly accessible
-  Resolution: Set the database to not be publically accessible
+  Resolution: Set the database to not be publicly accessible
 
-  See https://tfsec.dev/docs/aws/AWS011/ for more information. 
+  More Info:
+  - https://tfsec.dev/docs/aws/rds/no-public-db-access#aws/rds 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_instance 
 
   times
   ------------------------------------------
-  disk i/o             29.6621ms
-  parsing HCL          20µs
-  evaluating values    735.5µs
-  running checks       3.2899ms
+  disk i/o             52.546125ms
+  parsing HCL          599.584µs
+  evaluating values    4.642458ms
+  running checks       27.477542ms
 
   counts
   ------------------------------------------
   files loaded         1
   blocks               9
-  evaluated blocks     9
   modules              0
-  module blocks        0
-  ignored checks       0
 
-1 potential problems detected.
+  results
+  ------------------------------------------
+  critical             1
+  high                 0
+  medium               0
+  low                  0
+  ignored              0
+
+  1 potential problems detected.
 

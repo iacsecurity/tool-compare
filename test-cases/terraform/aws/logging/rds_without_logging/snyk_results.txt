@@ -4,7 +4,7 @@ Failed to run the process ...
     "isPrivate": true,
     "isLicensesEnabled": false,
     "ignoreSettings": null,
-    "org": "y",
+    "org": "yi2020",
     "projectId": "",
     "policy": ""
   },
@@ -13,38 +13,106 @@ Failed to run the process ...
   "dependencyCount": 0,
   "licensesPolicy": null,
   "ignoreSettings": null,
-  "targetFile": "/project/main.tf",
+  "targetFile": "main.tf",
   "projectName": "project",
-  "org": "y",
+  "org": "yi2020",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
   "packageManager": "terraformconfig",
   "path": "/project",
   "projectType": "terraformconfig",
+  "ok": false,
   "infrastructureAsCodeIssues": [
     {
-      "resolve": "Set `storage_encrypted` attribute to true",
-      "id": "SNYK-CC-TF-201",
-      "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+      "resolve": "Set `resource.backup_retention_period` to `1` or more",
+      "id": "SNYK-CC-AWS-408",
+      "impact": "No automatic backups will occur, availability risk if disaster occurs and manual backups have not been set",
+      "remediation": {
+        "cloudformation": "Set `Properties.BackupRetentionPeriod` to `1` or more",
+        "terraform": "Set `resource.backup_retention_period` to `1` or more"
+      },
       "subType": "RDS",
       "policyEngineType": "opa",
+      "publicId": "SNYK-CC-AWS-408",
+      "title": "RDS automatic backup is disabled",
+      "severity": "medium",
+      "msg": "resource.aws_db_instance[default].backup_retention_period",
+      "issue": "Automatic backup of AWS Relational Database is disabled",
+      "type": "terraform",
+      "references": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Automatic backup of AWS Relational Database is disabled",
+        "impact": "No automatic backups will occur, availability risk if disaster occurs and manual backups have not been set",
+        "resolve": "Set `resource.backup_retention_period` to `1` or more"
+      },
+      "lineNumber": 1,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-408",
+      "path": [
+        "resource",
+        "aws_db_instance[default]",
+        "backup_retention_period"
+      ]
+    },
+    {
+      "severity": "medium",
+      "resolve": "Set `iam_database_authentication_enabled` to `true`.",
+      "id": "SNYK-CC-AWS-414",
+      "impact": "Users will connect to DB instance with password, which are less secure than temporary tokens which expire",
+      "msg": "resource.aws_db_instance[default].iam_database_authentication_enabled",
+      "remediation": {
+        "cloudformation": "Set `Properties.EnableIAMDatabaseAuthentication` to `true`.",
+        "terraform": "Set `iam_database_authentication_enabled` to `true`."
+      },
+      "subType": "RDS",
+      "issue": "IAM database authentication is disabled, authentication tokens are not used to connect to DB instance",
+      "publicId": "SNYK-CC-AWS-414",
+      "title": "RDS IAM authentication is disabled",
+      "references": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "IAM database authentication is disabled, authentication tokens are not used to connect to DB instance",
+        "impact": "Users will connect to DB instance with password, which are less secure than temporary tokens which expire",
+        "resolve": "Set `iam_database_authentication_enabled` to `true`."
+      },
+      "lineNumber": 1,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-414",
+      "path": [
+        "resource",
+        "aws_db_instance[default]",
+        "iam_database_authentication_enabled"
+      ]
+    },
+    {
+      "severity": "medium",
+      "resolve": "Set `storage_encrypted` attribute to true",
+      "id": "SNYK-CC-TF-201",
+      "impact": "Should someone gain unauthorized access to the data they would be able to read the contents.",
+      "msg": "resource.aws_db_instance[default].storage_encrypted",
+      "remediation": {
+        "cloudformation": "Set `Properties.StorageEncrypted` attribute to `true`",
+        "terraform": "Set `storage_encrypted` attribute to true"
+      },
+      "subType": "RDS",
+      "issue": "The DB instance storage is not encrypted by default",
       "publicId": "SNYK-CC-TF-201",
       "title": "Non-encrypted RDS instance at rest",
-      "severity": "medium",
-      "msg": "resource.aws_db_instance[default].storage_encrypted",
-      "issue": "The DB instance storage encrypted set by default to false",
-      "type": "terraform",
       "references": [
         "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_instance#storage_encrypted"
       ],
       "isIgnored": false,
       "iacDescription": {
-        "issue": "The DB instance storage encrypted set by default to false",
-        "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
+        "issue": "The DB instance storage is not encrypted by default",
+        "impact": "Should someone gain unauthorized access to the data they would be able to read the contents.",
         "resolve": "Set `storage_encrypted` attribute to true"
       },
       "lineNumber": 1,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-201",
       "path": [
         "resource",
         "aws_db_instance[default]",

@@ -1,29 +1,5 @@
 
 WARNINGs found:
-Rule: Ensure all used default security groups of every VPC restrict all traffic
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.ec2] (main.tf:31)
-     Violating Resource: [sg-pseudo-73f7e98d-113b-4717-a895-46acfe3309d1]  (Not found in TF)
-
-     Evidence:
-         VPC aws_vpc.vpc
-             | aws_instance.ec2 uses ENI eni-pseudo-368bafd9-c90e-4df3-b75b-bd8474e1f820
-             | The ENI is secured by default Security group sg-pseudo-73f7e98d-113b-4717-a895-46acfe3309d1 and allows all traffic
-
-
------------------------------------------------
-Rule: Ensure IMDSv2 is used and IMDSv1 is disabled
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.ec2] (main.tf:31)
-     Violating Resource: [aws_instance.ec2]  (main.tf:31)
-
-     Evidence:
-             | The EC2 Instance aws_instance.ec2 is allowing IMDSv1
-
-
------------------------------------------------
 Rule: Ensure all data stored in the Launch configuration EBS is securely encrypted
  - 1 Resources Exposed:
 -----------------------------------------------
@@ -32,6 +8,53 @@ Rule: Ensure all data stored in the Launch configuration EBS is securely encrypt
 
      Evidence:
              | This rule evaluated aws_instance.ec2's configuration
+
+
+-----------------------------------------------
+Rule: Ensure EC2 instance has detailed monitoring enabled
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.ec2] (main.tf:31)
+     Violating Resource: [aws_instance.ec2]  (main.tf:31)
+
+     Evidence:
+             | The EC2 Instance aws_instance.ec2 has detailed monitoring disabled
+
+
+-----------------------------------------------
+Rule: Ensure EC2 instance is EBS optimized
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.ec2] (main.tf:31)
+     Violating Resource: [aws_instance.ec2]  (main.tf:31)
+
+     Evidence:
+             | The EC2 Instance aws_instance.ec2 is not EBS optimized
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 3 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.ec2] (main.tf:31)
+     Violating Resource: [aws_instance.ec2]  (main.tf:31)
+
+     Evidence:
+             | Resource EC2 Instance aws_instance.ec2 does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [aws_subnet.subnet] (main.tf:22)
+     Violating Resource: [aws_subnet.subnet]  (main.tf:22)
+
+     Evidence:
+             | Resource Subnet aws_subnet.subnet does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [aws_vpc.vpc] (main.tf:14)
+     Violating Resource: [aws_vpc.vpc]  (main.tf:14)
+
+     Evidence:
+             | Resource VPC aws_vpc.vpc does not have any tags set other than "Name"
 
 
 -----------------------------------------------
@@ -46,6 +69,33 @@ Rule: Allow only private AMIs to be used
 
 
 -----------------------------------------------
+Rule: Ensure IMDSv2 is used and IMDSv1 is disabled
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.ec2] (main.tf:31)
+     Violating Resource: [aws_instance.ec2]  (main.tf:31)
+
+     Evidence:
+             | The EC2 Instance aws_instance.ec2 is allowing IMDSv1
+
+
+-----------------------------------------------
+Rule: Ensure all used default security groups of every VPC restrict all traffic
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.ec2] (main.tf:31)
+     Violating Resource: [sg-pseudo-ef3ecc0c-3dbf-4ad7-bdec-bc52c5f242c7]  (Not found in TF)
+
+     Evidence:
+         VPC aws_vpc.vpc
+             | aws_instance.ec2 uses ENI eni-pseudo-f58fd964-842a-49d8-97e6-88d0db754591
+             | The ENI is secured by default Security group sg-pseudo-ef3ecc0c-3dbf-4ad7-bdec-bc52c5f242c7 and allows all traffic
+
+
+-----------------------------------------------
 
 Cloudrail has listed "pseudo" objects in the above results.
 These are resources that don't exist yet, or don't show in the Terraform input, but we know will be created in the real live environment.
+
+Cloudrail ran this assessment without any policies and so all rule violations show as warnings.
+You can increase a rule's enforcement level by creating a Policy in the Web UI and adding the rule to it.

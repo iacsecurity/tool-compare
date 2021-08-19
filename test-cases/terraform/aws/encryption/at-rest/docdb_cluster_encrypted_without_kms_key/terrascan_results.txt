@@ -4,6 +4,7 @@ Violation Details -
     
 	Description    :	Ensure DocDb clusters have log exports enabled.
 	File           :	main.tf
+	Module Name    :	root
 	Plan Root      :	./
 	Line           :	5
 	Severity       :	MEDIUM
@@ -12,6 +13,7 @@ Violation Details -
 	
 	Description    :	Ensure DocDb is encrypted at rest
 	File           :	main.tf
+	Module Name    :	root
 	Plan Root      :	./
 	Line           :	5
 	Severity       :	MEDIUM
@@ -21,10 +23,10 @@ Violation Details -
 
 Scan Summary -
 
-	File/Folder         :	tool-compare/test-cases/terraform/aws/encryption/at-rest/docdb_cluster_encrypted_without_kms_key
+	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-06-01 05:55:01.133637 +0000 UTC
-	Policies Validated  :	612
+	Scanned At          :	2021-08-18 16:22:38.432917591 +0000 UTC
+	Policies Validated  :	2
 	Violated Policies   :	2
 	Low                 :	0
 	Medium              :	2

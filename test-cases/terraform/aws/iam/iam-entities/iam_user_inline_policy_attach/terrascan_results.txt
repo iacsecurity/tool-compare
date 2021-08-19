@@ -4,6 +4,7 @@ Violation Details -
     
 	Description    :	Ensure IAM policies are attached only to groups or roles
 	File           :	main.tf
+	Module Name    :	root
 	Plan Root      :	./
 	Line           :	9
 	Severity       :	MEDIUM
@@ -13,10 +14,10 @@ Violation Details -
 
 Scan Summary -
 
-	File/Folder         :	tool-compare/test-cases/terraform/aws/iam/iam-entities/iam_user_inline_policy_attach
+	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-06-01 05:55:47.755819 +0000 UTC
-	Policies Validated  :	612
+	Scanned At          :	2021-08-18 17:50:58.031178877 +0000 UTC
+	Policies Validated  :	1
 	Violated Policies   :	1
 	Low                 :	0
 	Medium              :	1
