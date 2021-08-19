@@ -1,6 +1,6 @@
 {
   "checkov": "yes",
-  "cloudrail": "no",
+  "cloudrail": "yes",
   "kics": "no",
   "snyk": "no",
   "terrascan": "no",
