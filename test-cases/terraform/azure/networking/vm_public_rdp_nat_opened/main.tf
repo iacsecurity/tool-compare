@@ -1,7 +1,6 @@
 # no any nsg
 
 provider "azurerm" {
-  subscription_id = "230613d8-3b34-4790-b650-36f31045f19a"
   features {}
 }
 
