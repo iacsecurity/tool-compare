@@ -1,0 +1,41 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.363 
+
+terraform scan results:
+
+Passed checks: 2, Failed checks: 2, Skipped checks: 0
+
+Check: CKV_AZURE_21: "Ensure that 'Send email notification for high severity alerts' is set to 'On'"
+	FAILED for resource: azurerm_security_center_contact.example
+	File: /main.tf:18-24
+	Guide: https://docs.bridgecrew.io/docs/bc_azr_general_4
+
+		18 | resource "azurerm_security_center_contact" "example" {
+		19 |   email = "contact@example.com"
+		20 |   #phone = "+1-555-555-5555"
+		21 | 
+		22 |   alert_notifications = false
+		23 |   alerts_to_admins    = true
+		24 | }
+
+
+Check: CKV_AZURE_20: "Ensure that security contact 'Phone number' is set"
+	FAILED for resource: azurerm_security_center_contact.example
+	File: /main.tf:18-24
+	Guide: https://docs.bridgecrew.io/docs/bc_azr_general_3
+
+		18 | resource "azurerm_security_center_contact" "example" {
+		19 |   email = "contact@example.com"
+		20 |   #phone = "+1-555-555-5555"
+		21 | 
+		22 |   alert_notifications = false
+		23 |   alerts_to_admins    = true
+		24 | }
+
+

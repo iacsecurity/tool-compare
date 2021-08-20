@@ -1,0 +1,168 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.363 
+
+terraform scan results:
+
+Passed checks: 5, Failed checks: 10, Skipped checks: 0
+
+Check: CKV_AZURE_35: "Ensure default network access rule for Storage Accounts is set to deny"
+	FAILED for resource: azurerm_storage_account.storacc
+	File: /main.tf:16-22
+	Guide: https://docs.bridgecrew.io/docs/set-default-network-access-rule-for-storage-accounts-to-deny
+
+		16 | resource "azurerm_storage_account" "storacc" {
+		17 |   name                     = "${local.resource_prefix}functionapptstsa"
+		18 |   resource_group_name      = azurerm_resource_group.rg.name
+		19 |   location                 = azurerm_resource_group.rg.location
+		20 |   account_tier             = "Standard"
+		21 |   account_replication_type = "LRS"
+		22 | }
+
+
+Check: CKV_AZURE_33: "Ensure Storage logging is enabled for Queue service for read, write and delete requests"
+	FAILED for resource: azurerm_storage_account.storacc
+	File: /main.tf:16-22
+	Guide: https://docs.bridgecrew.io/docs/enable-requests-on-storage-logging-for-queue-service
+
+		16 | resource "azurerm_storage_account" "storacc" {
+		17 |   name                     = "${local.resource_prefix}functionapptstsa"
+		18 |   resource_group_name      = azurerm_resource_group.rg.name
+		19 |   location                 = azurerm_resource_group.rg.location
+		20 |   account_tier             = "Standard"
+		21 |   account_replication_type = "LRS"
+		22 | }
+
+
+Check: CKV_AZURE_44: "Ensure Storage Account is using the latest version of TLS encryption"
+	FAILED for resource: azurerm_storage_account.storacc
+	File: /main.tf:16-22
+	Guide: https://docs.bridgecrew.io/docs/bc_azr_storage_2
+
+		16 | resource "azurerm_storage_account" "storacc" {
+		17 |   name                     = "${local.resource_prefix}functionapptstsa"
+		18 |   resource_group_name      = azurerm_resource_group.rg.name
+		19 |   location                 = azurerm_resource_group.rg.location
+		20 |   account_tier             = "Standard"
+		21 |   account_replication_type = "LRS"
+		22 | }
+
+
+Check: CKV_AZURE_3: "Ensure that 'Secure transfer required' is set to 'Enabled'"
+	FAILED for resource: azurerm_storage_account.storacc
+	File: /main.tf:16-22
+	Guide: https://docs.bridgecrew.io/docs/ensure-secure-transfer-required-is-enabled
+
+		16 | resource "azurerm_storage_account" "storacc" {
+		17 |   name                     = "${local.resource_prefix}functionapptstsa"
+		18 |   resource_group_name      = azurerm_resource_group.rg.name
+		19 |   location                 = azurerm_resource_group.rg.location
+		20 |   account_tier             = "Standard"
+		21 |   account_replication_type = "LRS"
+		22 | }
+
+
+Check: CKV_AZURE_67: "Ensure that 'HTTP Version' is the latest, if used to run the Function app"
+	FAILED for resource: azurerm_function_app.functionapp
+	File: /main.tf:36-47
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-http-version-is-the-latest-if-used-to-run-the-function-app
+
+		36 | resource "azurerm_function_app" "functionapp" {
+		37 |   name = "${local.resource_prefix}-functionapp"
+		38 |   location                   = azurerm_resource_group.rg.location
+		39 |   resource_group_name        = azurerm_resource_group.rg.name
+		40 |   app_service_plan_id        = azurerm_app_service_plan.svcplanconsumption.id
+		41 |   storage_account_name       = azurerm_storage_account.storacc.name
+		42 |   storage_account_access_key = azurerm_storage_account.storacc.primary_access_key
+		43 | 
+		44 |   site_config {
+		45 |     http2_enabled = false
+		46 |   }
+		47 | }
+
+
+Check: CKV_AZURE_70: "Ensure that Function apps is only accessible over HTTPS"
+	FAILED for resource: azurerm_function_app.functionapp
+	File: /main.tf:36-47
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-function-apps-is-only-accessible-over-https
+
+		36 | resource "azurerm_function_app" "functionapp" {
+		37 |   name = "${local.resource_prefix}-functionapp"
+		38 |   location                   = azurerm_resource_group.rg.location
+		39 |   resource_group_name        = azurerm_resource_group.rg.name
+		40 |   app_service_plan_id        = azurerm_app_service_plan.svcplanconsumption.id
+		41 |   storage_account_name       = azurerm_storage_account.storacc.name
+		42 |   storage_account_access_key = azurerm_storage_account.storacc.primary_access_key
+		43 | 
+		44 |   site_config {
+		45 |     http2_enabled = false
+		46 |   }
+		47 | }
+
+
+Check: CKV_AZURE_56: "Ensure that function apps enables Authentication"
+	FAILED for resource: azurerm_function_app.functionapp
+	File: /main.tf:36-47
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-function-apps-enables-authentication
+
+		36 | resource "azurerm_function_app" "functionapp" {
+		37 |   name = "${local.resource_prefix}-functionapp"
+		38 |   location                   = azurerm_resource_group.rg.location
+		39 |   resource_group_name        = azurerm_resource_group.rg.name
+		40 |   app_service_plan_id        = azurerm_app_service_plan.svcplanconsumption.id
+		41 |   storage_account_name       = azurerm_storage_account.storacc.name
+		42 |   storage_account_access_key = azurerm_storage_account.storacc.primary_access_key
+		43 | 
+		44 |   site_config {
+		45 |     http2_enabled = false
+		46 |   }
+		47 | }
+
+
+Check: CKV2_AZURE_18: "Ensure that Storage Accounts use customer-managed key for encryption"
+	FAILED for resource: azurerm_storage_account.storacc
+	File: /main.tf:16-22
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-storage-accounts-use-customer-managed-key-for-encryption
+
+		16 | resource "azurerm_storage_account" "storacc" {
+		17 |   name                     = "${local.resource_prefix}functionapptstsa"
+		18 |   resource_group_name      = azurerm_resource_group.rg.name
+		19 |   location                 = azurerm_resource_group.rg.location
+		20 |   account_tier             = "Standard"
+		21 |   account_replication_type = "LRS"
+		22 | }
+
+
+Check: CKV2_AZURE_8: "Ensure the storage container storing the activity logs is not publicly accessible"
+	FAILED for resource: azurerm_storage_account.storacc
+	File: /main.tf:16-22
+	Guide: https://docs.bridgecrew.io/docs/ensure-the-storage-container-storing-the-activity-logs-is-not-publicly-accessible
+
+		16 | resource "azurerm_storage_account" "storacc" {
+		17 |   name                     = "${local.resource_prefix}functionapptstsa"
+		18 |   resource_group_name      = azurerm_resource_group.rg.name
+		19 |   location                 = azurerm_resource_group.rg.location
+		20 |   account_tier             = "Standard"
+		21 |   account_replication_type = "LRS"
+		22 | }
+
+
+Check: CKV2_AZURE_1: "Ensure storage for critical data are encrypted with Customer Managed Key"
+	FAILED for resource: azurerm_storage_account.storacc
+	File: /main.tf:16-22
+	Guide: https://docs.bridgecrew.io/docs/ensure-storage-for-critical-data-are-encrypted-with-customer-managed-key
+
+		16 | resource "azurerm_storage_account" "storacc" {
+		17 |   name                     = "${local.resource_prefix}functionapptstsa"
+		18 |   resource_group_name      = azurerm_resource_group.rg.name
+		19 |   location                 = azurerm_resource_group.rg.location
+		20 |   account_tier             = "Standard"
+		21 |   account_replication_type = "LRS"
+		22 | }
+
+

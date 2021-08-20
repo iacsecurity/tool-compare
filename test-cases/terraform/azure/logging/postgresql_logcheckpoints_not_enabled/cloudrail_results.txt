@@ -1,0 +1,38 @@
+
+WARNINGs found:
+Rule: Ensure that PostgreSQL server enables Threat detection policy
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [azurerm_postgresql_server.example] (main.tf:15)
+     Violating Resource: [azurerm_postgresql_server.example]  (main.tf:15)
+
+     Evidence:
+             | This rule evaluated asdf-postgresql-server's configuration
+
+
+-----------------------------------------------
+Rule: Ensure that PostgreSQL server enables geo-redundant backups
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [azurerm_postgresql_server.example] (main.tf:15)
+     Violating Resource: [azurerm_postgresql_server.example]  (main.tf:15)
+
+     Evidence:
+             | This rule evaluated asdf-postgresql-server's configuration
+
+
+-----------------------------------------------
+Rule: Ensure PostgreSQL servers have Public Network Access disabled
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [azurerm_postgresql_server.example] (main.tf:15)
+     Violating Resource: [azurerm_postgresql_server.example]  (main.tf:15)
+
+     Evidence:
+             | This rule evaluated asdf-postgresql-server's configuration
+
+
+-----------------------------------------------
+
+Cloudrail ran this assessment without any policies and so all rule violations show as warnings.
+You can increase a rule's enforcement level by creating a Policy in the Web UI and adding the rule to it.

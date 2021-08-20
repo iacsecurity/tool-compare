@@ -1,0 +1,98 @@
+
+  Result 1
+
+  [azure-compute-disable-password-authentication][[0m[31mHIGH[39m[0m] Resource 'azurerm_virtual_machine.main' has password authentication enabled.
+  /src/main.tf:85
+
+
+      82 |     admin_password = "Password1234!"
+      83 |   }
+      84 |   os_profile_linux_config {
+      85 |     disable_password_authentication = false    bool: false
+      86 |   }
+      87 | }
+      88 | 
+
+  Impact:     Using password authentication is less secure that ssh keys may result in compromised servers
+  Resolution: Use ssh authentication for virtual machines
+
+  More Info:
+  - https://tfsec.dev/docs/azure/compute/disable-password-authentication#azure/compute 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_virtual_machine#disable_password_authentication 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_machine#disable_password_authentication 
+
+  Result 2
+
+  [azure-compute-ssh-authentication][[0m[31mHIGH[39m[0m] Resource 'azurerm_virtual_machine.main' has password authentication enabled. Use SSH keys instead.
+  /src/main.tf:85
+
+
+      82 |     admin_password = "Password1234!"
+      83 |   }
+      84 |   os_profile_linux_config {
+      85 |     disable_password_authentication = false    bool: false
+      86 |   }
+      87 | }
+      88 | 
+
+  Legacy ID:  AZU005
+  Impact:     Passwords are potentially easier to compromise than SSH Keys
+  Resolution: Use SSH keys for authentication
+
+  More Info:
+  - https://tfsec.dev/docs/azure/compute/ssh-authentication#azure/compute 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_machine 
+  - https://docs.microsoft.com/en-us/azure/virtual-machines/linux/create-ssh-keys-detailed 
+
+  Result 3
+
+  [azure-storage-use-secure-tls-policy][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'azurerm_storage_account.storacc' should have the min tls version set to TLS1_2 .
+  /src/main.tf:43-49
+
+
+      40 |   }
+      41 | }
+      42 | 
+      43 | resource "azurerm_storage_account" "storacc" {
+      44 |   name                     = "${local.resource_prefix}tstsa"
+      45 |   resource_group_name      = azurerm_resource_group.rg.name
+      46 |   location                 = azurerm_resource_group.rg.location
+      47 |   account_tier             = "Standard"
+      48 |   account_replication_type = "LRS"
+      49 | }
+      50 | 
+      51 | resource "azurerm_storage_container" "container" {
+      52 |   name                  = "vhds"
+
+  Legacy ID:  AZU015
+  Impact:     The TLS version being outdated and has known vulnerabilities
+  Resolution: Use a more recent TLS/SSL policy for the load balancer
+
+  More Info:
+  - https://tfsec.dev/docs/azure/storage/use-secure-tls-policy#azure/storage 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account#min_tls_version 
+  - https://docs.microsoft.com/en-us/azure/storage/common/transport-layer-security-configure-minimum-version 
+
+  times
+  ------------------------------------------
+  disk i/o             948.332µs
+  parsing HCL          7.762µs
+  evaluating values    527.038µs
+  running checks       3.206982ms
+
+  counts
+  ------------------------------------------
+  files loaded         1
+  blocks               9
+  modules              0
+
+  results
+  ------------------------------------------
+  critical             1
+  high                 2
+  medium               0
+  low                  0
+  ignored              0
+
+  3 potential problems detected.
+

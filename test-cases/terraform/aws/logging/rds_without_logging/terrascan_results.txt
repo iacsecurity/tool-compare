@@ -1,0 +1,44 @@
+
+
+Violation Details -
+    
+	Description    :	Ensure that your RDS database has IAM Authentication enabled.
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	1
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure AWS RDS instances have logging enabled.
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	1
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that your RDS database instances encrypt the underlying storage. Encrypted RDS instances use the industry standard AES-256 encryption algorithm to encrypt data on the server that hosts RDS DB instances. After data is encrypted, RDS handles authentication of access and descryption of data transparently with minimal impact on performance.
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	1
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+
+Scan Summary -
+
+	File/Folder         :	/iac
+	IaC Type            :	all
+	Scanned At          :	2021-08-20 04:58:02.923682029 +0000 UTC
+	Policies Validated  :	6
+	Violated Policies   :	3
+	Low                 :	0
+	Medium              :	2
+	High                :	1
+	
+

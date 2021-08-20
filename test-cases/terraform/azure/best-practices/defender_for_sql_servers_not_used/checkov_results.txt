@@ -1,0 +1,35 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.363 
+
+terraform scan results:
+
+Passed checks: 7, Failed checks: 2, Skipped checks: 0
+
+Check: CKV_AZURE_69: "Ensure that Azure Defender is set to On for Azure SQL database servers"
+	FAILED for resource: azurerm_security_center_subscription_pricing.example
+	File: /main.tf:11-14
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-azure-defender-is-set-to-on-for-azure-sql-database-servers
+
+		11 | resource "azurerm_security_center_subscription_pricing" "example" {
+		12 |   tier          = "Free"
+		13 |   resource_type = "SqlServers"
+		14 | }
+
+
+Check: CKV_AZURE_19: "Ensure that standard pricing tier is selected"
+	FAILED for resource: azurerm_security_center_subscription_pricing.example
+	File: /main.tf:11-14
+	Guide: https://docs.bridgecrew.io/docs/ensure-standard-pricing-tier-is-selected
+
+		11 | resource "azurerm_security_center_subscription_pricing" "example" {
+		12 |   tier          = "Free"
+		13 |   resource_type = "SqlServers"
+		14 | }
+
+

@@ -1,0 +1,55 @@
+Failed to run the process ...
+{
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "ignoreSettings": null,
+    "org": "yi2020",
+    "projectId": "",
+    "policy": ""
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "main.tf",
+  "projectName": "project",
+  "org": "yi2020",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
+  "ok": false,
+  "infrastructureAsCodeIssues": [
+    {
+      "severity": "medium",
+      "resolve": "Set `ssl_enforcement_enabled` attribute to `true`",
+      "id": "SNYK-CC-TF-146",
+      "impact": "The content could be intercepted and manipulated in transit",
+      "msg": "resource.azurerm_mysql_server[example].ssl_enforcement_enabled",
+      "subType": "Database",
+      "issue": "Azure MySQL Server does not enforce SSL traffic only",
+      "publicId": "SNYK-CC-TF-146",
+      "title": "Azure MySQL Server does not enforce SSL",
+      "references": [
+        "https://docs.microsoft.com/en-us/azure/mysql/concepts-security"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Azure MySQL Server does not enforce SSL traffic only",
+        "impact": "The content could be intercepted and manipulated in transit",
+        "resolve": "Set `ssl_enforcement_enabled` attribute to `true`"
+      },
+      "lineNumber": 32,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-146",
+      "path": [
+        "resource",
+        "azurerm_mysql_server[example]",
+        "ssl_enforcement_enabled"
+      ]
+    }
+  ]
+}

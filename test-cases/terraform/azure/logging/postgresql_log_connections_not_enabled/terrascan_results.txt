@@ -1,0 +1,44 @@
+
+
+Violation Details -
+    
+	Description    :	Ensure that Geo Redundant Backups is enabled on PostgreSQL
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	16
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure server parameter 'log_connections' is set to 'ON' for PostgreSQL Database Server
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	30
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that Azure Resource Group has resource lock enabled
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	11
+	Severity       :	LOW
+	
+	-----------------------------------------------------------------------
+	
+
+Scan Summary -
+
+	File/Folder         :	/iac
+	IaC Type            :	all
+	Scanned At          :	2021-08-20 05:10:09.131249177 +0000 UTC
+	Policies Validated  :	9
+	Violated Policies   :	3
+	Low                 :	1
+	Medium              :	2
+	High                :	0
+	
+

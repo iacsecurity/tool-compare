@@ -1,0 +1,54 @@
+Failed to run the process ...
+{
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "ignoreSettings": null,
+    "org": "yi2020",
+    "projectId": "",
+    "policy": ""
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "main.tf",
+  "projectName": "project",
+  "org": "yi2020",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
+  "ok": false,
+  "infrastructureAsCodeIssues": [
+    {
+      "severity": "low",
+      "resolve": "Set `name` attribute to `log_checkpoints`, and `value` attribute to `on`",
+      "id": "SNYK-CC-TF-154",
+      "impact": "Verbose logging information of database will not be collected",
+      "msg": "resource.azurerm_postgresql_configuration[example]",
+      "subType": "Database",
+      "issue": "Azure PostgreSQL 'log_checkpoint' is disabled",
+      "publicId": "SNYK-CC-TF-154",
+      "title": "log_checkpoints is disabled on PostgreSQL DB",
+      "references": [
+        "https://docs.microsoft.com/en-us/azure/postgresql/concepts-server-logs"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Azure PostgreSQL 'log_checkpoint' is disabled",
+        "impact": "Verbose logging information of database will not be collected",
+        "resolve": "Set `name` attribute to `log_checkpoints`, and `value` attribute to `on`"
+      },
+      "lineNumber": 30,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-154",
+      "path": [
+        "resource",
+        "azurerm_postgresql_configuration[example]"
+      ]
+    }
+  ]
+}

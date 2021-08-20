@@ -1,0 +1,89 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.363 
+
+terraform scan results:
+
+Passed checks: 7, Failed checks: 2, Skipped checks: 0
+
+Check: CKV2_AZURE_10: "Ensure that Microsoft Antimalware is configured to automatically updates for Virtual Machines"
+	FAILED for resource: azurerm_virtual_machine.main
+	File: /main.tf:92-122
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-microsoft-antimalware-is-configured-to-automatically-updates-for-virtual-machines
+
+		92  | resource "azurerm_virtual_machine" "main" {
+		93  |   name                  = "${local.resource_prefix}-vm"
+		94  |   location              = azurerm_resource_group.rg.location
+		95  |   resource_group_name   = azurerm_resource_group.rg.name
+		96  |   network_interface_ids = [azurerm_network_interface.nic.id]
+		97  |   vm_size               = "Standard_B2s"
+		98  | 
+		99  |   delete_os_disk_on_termination = true
+		100 |   delete_data_disks_on_termination = true
+		101 | 
+		102 |   storage_image_reference {
+		103 |     publisher = "MicrosoftWindowsServer"
+		104 |     offer     = "WindowsServer"
+		105 |     sku       = "2019-Datacenter"
+		106 |     version   = "latest"
+		107 |   }
+		108 | 
+		109 |   storage_os_disk {
+		110 |     name              = "myosdisk1"
+		111 |     caching           = "ReadWrite"
+		112 |     create_option     = "FromImage"
+		113 |     managed_disk_type = "Standard_LRS"
+		114 |   }
+		115 |   os_profile {
+		116 |     computer_name  = "hostname"
+		117 |     admin_username = "testadmin"
+		118 |     admin_password = "Passw0rd78234!"
+		119 |   }
+		120 |   os_profile_windows_config {
+		121 |   }
+		122 | }
+
+
+Check: CKV2_AZURE_12: "Ensure that virtual machines are backed up using Azure Backup"
+	FAILED for resource: azurerm_virtual_machine.main
+	File: /main.tf:92-122
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-virtual-machines-are-backed-up-using-azure-backup
+
+		92  | resource "azurerm_virtual_machine" "main" {
+		93  |   name                  = "${local.resource_prefix}-vm"
+		94  |   location              = azurerm_resource_group.rg.location
+		95  |   resource_group_name   = azurerm_resource_group.rg.name
+		96  |   network_interface_ids = [azurerm_network_interface.nic.id]
+		97  |   vm_size               = "Standard_B2s"
+		98  | 
+		99  |   delete_os_disk_on_termination = true
+		100 |   delete_data_disks_on_termination = true
+		101 | 
+		102 |   storage_image_reference {
+		103 |     publisher = "MicrosoftWindowsServer"
+		104 |     offer     = "WindowsServer"
+		105 |     sku       = "2019-Datacenter"
+		106 |     version   = "latest"
+		107 |   }
+		108 | 
+		109 |   storage_os_disk {
+		110 |     name              = "myosdisk1"
+		111 |     caching           = "ReadWrite"
+		112 |     create_option     = "FromImage"
+		113 |     managed_disk_type = "Standard_LRS"
+		114 |   }
+		115 |   os_profile {
+		116 |     computer_name  = "hostname"
+		117 |     admin_username = "testadmin"
+		118 |     admin_password = "Passw0rd78234!"
+		119 |   }
+		120 |   os_profile_windows_config {
+		121 |   }
+		122 | }
+
+

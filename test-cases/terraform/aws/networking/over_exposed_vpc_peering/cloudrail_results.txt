@@ -1,0 +1,80 @@
+
+WARNINGs found:
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 8 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_vpc.vpc2] (main.tf:35)
+     Violating Resource: [aws_vpc.vpc2]  (main.tf:35)
+
+     Evidence:
+             | Resource VPC aws_vpc.vpc2 does not have any tags set
+
+
+   - Exposed Resource: [aws_subnet.subnet2_2] (main.tf:45)
+     Violating Resource: [aws_subnet.subnet2_2]  (main.tf:45)
+
+     Evidence:
+             | Resource Subnet aws_subnet.subnet2_2 does not have any tags set
+
+
+   - Exposed Resource: [aws_subnet.subnet1_2] (main.tf:30)
+     Violating Resource: [aws_subnet.subnet1_2]  (main.tf:30)
+
+     Evidence:
+             | Resource Subnet aws_subnet.subnet1_2 does not have any tags set
+
+
+   - Exposed Resource: [aws_subnet.subnet2_1] (main.tf:40)
+     Violating Resource: [aws_subnet.subnet2_1]  (main.tf:40)
+
+     Evidence:
+             | Resource Subnet aws_subnet.subnet2_1 does not have any tags set
+
+
+   - Exposed Resource: [aws_subnet.subnet1_1] (main.tf:25)
+     Violating Resource: [aws_subnet.subnet1_1]  (main.tf:25)
+
+     Evidence:
+             | Resource Subnet aws_subnet.subnet1_1 does not have any tags set
+
+
+   - Exposed Resource: [aws_vpc.vpc1] (main.tf:20)
+     Violating Resource: [aws_vpc.vpc1]  (main.tf:20)
+
+     Evidence:
+             | Resource VPC aws_vpc.vpc1 does not have any tags set
+
+
+   - Exposed Resource: [aws_vpc_peering_connection.this] (main.tf:92)
+     Violating Resource: [aws_vpc_peering_connection.this]  (main.tf:92)
+
+     Evidence:
+             | Resource VPC peering connection aws_vpc_peering_connection.this does not have any tags set
+
+
+   - Exposed Resource: [aws_route_table.subnet2_1] (main.tf:162)
+     Violating Resource: [aws_route_table.subnet2_1]  (main.tf:162)
+
+     Evidence:
+             | Resource Route table aws_route_table.subnet2_1 does not have any tags set
+
+
+-----------------------------------------------
+Rule: Ensure used routing tables for VPC peering are "least access"
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_vpc.vpc2] (main.tf:35)
+     Violating Resource: [aws_route_table.subnet2_1]  (main.tf:162)
+
+     Evidence:
+         VPC Peer aws_vpc.vpc1.id
+             | VPC Peer uses CIDR block aws_vpc.vpc1.id
+             | Local VPC's routing table aws_route_table.subnet2_1 has a route matching CIDR block
+             | Local VPC is potentially overexposing resources peering VPC
+         Local VPC aws_vpc.vpc2.id
+
+
+-----------------------------------------------
+
+Cloudrail ran this assessment without any policies and so all rule violations show as warnings.
+You can increase a rule's enforcement level by creating a Policy in the Web UI and adding the rule to it.

@@ -1,0 +1,82 @@
+
+                   .0MO.                                    
+                   OMMMx                                    
+                   ;NMX;                                    
+                    ...           ...              ....     
+WMMMd     cWMMM0.  KMMMO      ;xKWMMMMNOc.     ,xXMMMMMWXkc.
+WMMMd   .0MMMN:    KMMMO    :XMMMMMMMMMMMWl   xMMMMMWMMMMMMl
+WMMMd  lWMMMO.     KMMMO   xMMMMKc...'lXMk   ,MMMMx   .;dXx 
+WMMMd.0MMMX;       KMMMO  cMMMMd        '    'MMMMNl'       
+WMMMNWMMMMl        KMMMO  0MMMN               oMMMMMMMXkl.  
+WMMMMMMMMMMo       KMMMO  0MMMX                .ckKWMMMMMM0.
+WMMMMWokMMMMk      KMMMO  oMMMMc              .     .:OMMMM0
+WMMMK.  dMMMM0.    KMMMO   KMMMMx'    ,kNc   :WOc.    .NMMMX
+WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
+WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
+xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
+
+
+Scanning with Keeping Infrastructure as Code Secure v1.4.1
+
+
+
+Files scanned: 1
+Parsed files: 1
+Queries loaded: 778
+Queries failed to execute: 0
+
+------------------------------------
+
+Storage Account Not Using Latest TLS Encryption Version, Severity: MEDIUM, Results: 1
+Description: Ensure Storage Account is using the latest version of TLS encryption
+Platform: Terraform
+
+	[1]: ../../src/main.tf:42
+
+		041: 
+		042: resource "azurerm_storage_account" "storacc" {
+		043:   name                     = "${local.resource_prefix}tstsa"
+
+
+Trusted Microsoft Services Not Enabled, Severity: HIGH, Results: 1
+Description: Trusted MIcrosoft Services are not enabled for Storage Account access
+Platform: Terraform
+
+	[1]: ../../src/main.tf:42
+
+		041: 
+		042: resource "azurerm_storage_account" "storacc" {
+		043:   name                     = "${local.resource_prefix}tstsa"
+
+
+Storage Account Not Forcing HTTPS, Severity: HIGH, Results: 1
+Description: See that Storage Accounts forces the use of HTTPS
+Platform: Terraform
+
+	[1]: ../../src/main.tf:42
+
+		041: 
+		042: resource "azurerm_storage_account" "storacc" {
+		043:   name                     = "${local.resource_prefix}tstsa"
+
+
+Passwords And Secrets In Infrastructure Code, Severity: HIGH, Results: 1
+Description: Query to find passwords and secrets in infrastructure code.
+Platform: Common
+
+	[1]: ../../src/main.tf:56
+
+		055:   instances           = 1
+		056:   admin_password      = "P@55w0rd1234!"
+		057:   admin_username      = "adminuser"
+
+
+
+Results Summary:
+HIGH: 3
+MEDIUM: 1
+LOW: 0
+INFO: 0
+TOTAL: 4
+
+Scan duration: 15.926665004s

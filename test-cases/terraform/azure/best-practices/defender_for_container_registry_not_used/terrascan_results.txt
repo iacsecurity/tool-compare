@@ -1,0 +1,26 @@
+
+
+Violation Details -
+    
+	Description    :	Ensure that standard pricing tiers are selected
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	18
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+
+Scan Summary -
+
+	File/Folder         :	/iac
+	IaC Type            :	all
+	Scanned At          :	2021-08-20 04:58:56.005625229 +0000 UTC
+	Policies Validated  :	1
+	Violated Policies   :	1
+	Low                 :	0
+	Medium              :	1
+	High                :	0
+	
+

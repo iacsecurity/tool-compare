@@ -1,0 +1,275 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.363 
+
+terraform scan results:
+
+Passed checks: 10, Failed checks: 12, Skipped checks: 0
+
+Check: CKV_AZURE_35: "Ensure default network access rule for Storage Accounts is set to deny"
+	FAILED for resource: azurerm_storage_account.storacc
+	File: /main.tf:43-49
+	Guide: https://docs.bridgecrew.io/docs/set-default-network-access-rule-for-storage-accounts-to-deny
+
+		43 | resource "azurerm_storage_account" "storacc" {
+		44 |   name                     = "${local.resource_prefix}tstsa"
+		45 |   resource_group_name      = azurerm_resource_group.rg.name
+		46 |   location                 = azurerm_resource_group.rg.location
+		47 |   account_tier             = "Standard"
+		48 |   account_replication_type = "LRS"
+		49 | }
+
+
+Check: CKV_AZURE_33: "Ensure Storage logging is enabled for Queue service for read, write and delete requests"
+	FAILED for resource: azurerm_storage_account.storacc
+	File: /main.tf:43-49
+	Guide: https://docs.bridgecrew.io/docs/enable-requests-on-storage-logging-for-queue-service
+
+		43 | resource "azurerm_storage_account" "storacc" {
+		44 |   name                     = "${local.resource_prefix}tstsa"
+		45 |   resource_group_name      = azurerm_resource_group.rg.name
+		46 |   location                 = azurerm_resource_group.rg.location
+		47 |   account_tier             = "Standard"
+		48 |   account_replication_type = "LRS"
+		49 | }
+
+
+Check: CKV_AZURE_44: "Ensure Storage Account is using the latest version of TLS encryption"
+	FAILED for resource: azurerm_storage_account.storacc
+	File: /main.tf:43-49
+	Guide: https://docs.bridgecrew.io/docs/bc_azr_storage_2
+
+		43 | resource "azurerm_storage_account" "storacc" {
+		44 |   name                     = "${local.resource_prefix}tstsa"
+		45 |   resource_group_name      = azurerm_resource_group.rg.name
+		46 |   location                 = azurerm_resource_group.rg.location
+		47 |   account_tier             = "Standard"
+		48 |   account_replication_type = "LRS"
+		49 | }
+
+
+Check: CKV_AZURE_3: "Ensure that 'Secure transfer required' is set to 'Enabled'"
+	FAILED for resource: azurerm_storage_account.storacc
+	File: /main.tf:43-49
+	Guide: https://docs.bridgecrew.io/docs/ensure-secure-transfer-required-is-enabled
+
+		43 | resource "azurerm_storage_account" "storacc" {
+		44 |   name                     = "${local.resource_prefix}tstsa"
+		45 |   resource_group_name      = azurerm_resource_group.rg.name
+		46 |   location                 = azurerm_resource_group.rg.location
+		47 |   account_tier             = "Standard"
+		48 |   account_replication_type = "LRS"
+		49 | }
+
+
+Check: CKV_AZURE_1: "Ensure Azure Instance does not use basic authentication(Use SSH Key Instead)"
+	FAILED for resource: azurerm_virtual_machine.main
+	File: /main.tf:57-87
+	Guide: https://docs.bridgecrew.io/docs/bc_azr_networking_1
+
+		57 | resource "azurerm_virtual_machine" "main" {
+		58 |   name                  = "${local.resource_prefix}-vm"
+		59 |   location              = azurerm_resource_group.rg.location
+		60 |   resource_group_name   = azurerm_resource_group.rg.name
+		61 |   network_interface_ids = [azurerm_network_interface.nic.id]
+		62 |   vm_size               = "Standard_B2s"
+		63 | 
+		64 |   delete_os_disk_on_termination = true
+		65 |   delete_data_disks_on_termination = true
+		66 | 
+		67 |   storage_image_reference {
+		68 |     publisher = "Canonical"
+		69 |     offer     = "UbuntuServer"
+		70 |     sku       = "16.04-LTS"
+		71 |     version   = "latest"
+		72 |   }
+		73 |   storage_os_disk {
+		74 |     name              = "myosdisk1"
+		75 |     vhd_uri           = "${azurerm_storage_account.storacc.primary_blob_endpoint}${azurerm_storage_container.container.name}/myosdisk1.vhd"
+		76 |     caching           = "ReadWrite"
+		77 |     create_option     = "FromImage"
+		78 |   }
+		79 |   os_profile {
+		80 |     computer_name  = "hostname"
+		81 |     admin_username = "testadmin"
+		82 |     admin_password = "Password1234!"
+		83 |   }
+		84 |   os_profile_linux_config {
+		85 |     disable_password_authentication = false
+		86 |   }
+		87 | }
+
+
+Check: CKV2_AZURE_10: "Ensure that Microsoft Antimalware is configured to automatically updates for Virtual Machines"
+	FAILED for resource: azurerm_virtual_machine.main
+	File: /main.tf:57-87
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-microsoft-antimalware-is-configured-to-automatically-updates-for-virtual-machines
+
+		57 | resource "azurerm_virtual_machine" "main" {
+		58 |   name                  = "${local.resource_prefix}-vm"
+		59 |   location              = azurerm_resource_group.rg.location
+		60 |   resource_group_name   = azurerm_resource_group.rg.name
+		61 |   network_interface_ids = [azurerm_network_interface.nic.id]
+		62 |   vm_size               = "Standard_B2s"
+		63 | 
+		64 |   delete_os_disk_on_termination = true
+		65 |   delete_data_disks_on_termination = true
+		66 | 
+		67 |   storage_image_reference {
+		68 |     publisher = "Canonical"
+		69 |     offer     = "UbuntuServer"
+		70 |     sku       = "16.04-LTS"
+		71 |     version   = "latest"
+		72 |   }
+		73 |   storage_os_disk {
+		74 |     name              = "myosdisk1"
+		75 |     vhd_uri           = "${azurerm_storage_account.storacc.primary_blob_endpoint}${azurerm_storage_container.container.name}/myosdisk1.vhd"
+		76 |     caching           = "ReadWrite"
+		77 |     create_option     = "FromImage"
+		78 |   }
+		79 |   os_profile {
+		80 |     computer_name  = "hostname"
+		81 |     admin_username = "testadmin"
+		82 |     admin_password = "Password1234!"
+		83 |   }
+		84 |   os_profile_linux_config {
+		85 |     disable_password_authentication = false
+		86 |   }
+		87 | }
+
+
+Check: CKV2_AZURE_18: "Ensure that Storage Accounts use customer-managed key for encryption"
+	FAILED for resource: azurerm_storage_account.storacc
+	File: /main.tf:43-49
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-storage-accounts-use-customer-managed-key-for-encryption
+
+		43 | resource "azurerm_storage_account" "storacc" {
+		44 |   name                     = "${local.resource_prefix}tstsa"
+		45 |   resource_group_name      = azurerm_resource_group.rg.name
+		46 |   location                 = azurerm_resource_group.rg.location
+		47 |   account_tier             = "Standard"
+		48 |   account_replication_type = "LRS"
+		49 | }
+
+
+Check: CKV2_AZURE_8: "Ensure the storage container storing the activity logs is not publicly accessible"
+	FAILED for resource: azurerm_storage_account.storacc
+	File: /main.tf:43-49
+	Guide: https://docs.bridgecrew.io/docs/ensure-the-storage-container-storing-the-activity-logs-is-not-publicly-accessible
+
+		43 | resource "azurerm_storage_account" "storacc" {
+		44 |   name                     = "${local.resource_prefix}tstsa"
+		45 |   resource_group_name      = azurerm_resource_group.rg.name
+		46 |   location                 = azurerm_resource_group.rg.location
+		47 |   account_tier             = "Standard"
+		48 |   account_replication_type = "LRS"
+		49 | }
+
+
+Check: CKV2_AZURE_1: "Ensure storage for critical data are encrypted with Customer Managed Key"
+	FAILED for resource: azurerm_storage_account.storacc
+	File: /main.tf:43-49
+	Guide: https://docs.bridgecrew.io/docs/ensure-storage-for-critical-data-are-encrypted-with-customer-managed-key
+
+		43 | resource "azurerm_storage_account" "storacc" {
+		44 |   name                     = "${local.resource_prefix}tstsa"
+		45 |   resource_group_name      = azurerm_resource_group.rg.name
+		46 |   location                 = azurerm_resource_group.rg.location
+		47 |   account_tier             = "Standard"
+		48 |   account_replication_type = "LRS"
+		49 | }
+
+
+Check: CKV2_AZURE_21: "Ensure Storage logging is enabled for Blob service for read requests"
+	FAILED for resource: azurerm_storage_container.container
+	File: /main.tf:51-55
+	Guide: https://docs.bridgecrew.io/docs/ensure-storage-logging-is-enabled-for-blob-service-for-read-requests
+
+		51 | resource "azurerm_storage_container" "container" {
+		52 |   name                  = "vhds"
+		53 |   storage_account_name  = azurerm_storage_account.storacc.name
+		54 |   container_access_type = "private"
+		55 | }
+
+
+Check: CKV2_AZURE_12: "Ensure that virtual machines are backed up using Azure Backup"
+	FAILED for resource: azurerm_virtual_machine.main
+	File: /main.tf:57-87
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-virtual-machines-are-backed-up-using-azure-backup
+
+		57 | resource "azurerm_virtual_machine" "main" {
+		58 |   name                  = "${local.resource_prefix}-vm"
+		59 |   location              = azurerm_resource_group.rg.location
+		60 |   resource_group_name   = azurerm_resource_group.rg.name
+		61 |   network_interface_ids = [azurerm_network_interface.nic.id]
+		62 |   vm_size               = "Standard_B2s"
+		63 | 
+		64 |   delete_os_disk_on_termination = true
+		65 |   delete_data_disks_on_termination = true
+		66 | 
+		67 |   storage_image_reference {
+		68 |     publisher = "Canonical"
+		69 |     offer     = "UbuntuServer"
+		70 |     sku       = "16.04-LTS"
+		71 |     version   = "latest"
+		72 |   }
+		73 |   storage_os_disk {
+		74 |     name              = "myosdisk1"
+		75 |     vhd_uri           = "${azurerm_storage_account.storacc.primary_blob_endpoint}${azurerm_storage_container.container.name}/myosdisk1.vhd"
+		76 |     caching           = "ReadWrite"
+		77 |     create_option     = "FromImage"
+		78 |   }
+		79 |   os_profile {
+		80 |     computer_name  = "hostname"
+		81 |     admin_username = "testadmin"
+		82 |     admin_password = "Password1234!"
+		83 |   }
+		84 |   os_profile_linux_config {
+		85 |     disable_password_authentication = false
+		86 |   }
+		87 | }
+
+
+Check: CKV2_AZURE_9: "Ensure Virtual Machines are utilizing Managed Disks"
+	FAILED for resource: azurerm_virtual_machine.main
+	File: /main.tf:57-87
+	Guide: https://docs.bridgecrew.io/docs/ensure-virtual-machines-are-utilizing-managed-disks
+
+		57 | resource "azurerm_virtual_machine" "main" {
+		58 |   name                  = "${local.resource_prefix}-vm"
+		59 |   location              = azurerm_resource_group.rg.location
+		60 |   resource_group_name   = azurerm_resource_group.rg.name
+		61 |   network_interface_ids = [azurerm_network_interface.nic.id]
+		62 |   vm_size               = "Standard_B2s"
+		63 | 
+		64 |   delete_os_disk_on_termination = true
+		65 |   delete_data_disks_on_termination = true
+		66 | 
+		67 |   storage_image_reference {
+		68 |     publisher = "Canonical"
+		69 |     offer     = "UbuntuServer"
+		70 |     sku       = "16.04-LTS"
+		71 |     version   = "latest"
+		72 |   }
+		73 |   storage_os_disk {
+		74 |     name              = "myosdisk1"
+		75 |     vhd_uri           = "${azurerm_storage_account.storacc.primary_blob_endpoint}${azurerm_storage_container.container.name}/myosdisk1.vhd"
+		76 |     caching           = "ReadWrite"
+		77 |     create_option     = "FromImage"
+		78 |   }
+		79 |   os_profile {
+		80 |     computer_name  = "hostname"
+		81 |     admin_username = "testadmin"
+		82 |     admin_password = "Password1234!"
+		83 |   }
+		84 |   os_profile_linux_config {
+		85 |     disable_password_authentication = false
+		86 |   }
+		87 | }
+
+

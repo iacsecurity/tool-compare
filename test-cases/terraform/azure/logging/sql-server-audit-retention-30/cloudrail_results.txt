@@ -1,0 +1,94 @@
+
+WARNINGs found:
+Rule: Ensure MSSQL servers have Public Network Access disabled
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [azurerm_mssql_server.sql] (main.tf:25)
+     Violating Resource: [azurerm_mssql_server.sql]  (main.tf:25)
+
+     Evidence:
+             | This rule evaluated asdf-sqlserver's configuration
+
+
+-----------------------------------------------
+Rule: Ensure MSSQL is using the latest version of TLS encryption
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [azurerm_mssql_server.sql] (main.tf:25)
+     Violating Resource: [azurerm_mssql_server.sql]  (main.tf:25)
+
+     Evidence:
+             | This rule evaluated asdf-sqlserver's configuration
+
+
+-----------------------------------------------
+Rule: Ensure Storage Account is using the latest version of TLS encryption
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [azurerm_storage_account.example] (main.tf:17)
+     Violating Resource: [azurerm_storage_account.example]  (main.tf:17)
+
+     Evidence:
+             | This rule evaluated asdftststacc's configuration
+
+
+-----------------------------------------------
+Rule: Ensure default network access rule for Storage Accounts is set to deny
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [azurerm_storage_account.example] (main.tf:17)
+     Violating Resource: [azurerm_storage_account.example]  (main.tf:17)
+
+     Evidence:
+             | This rule evaluated asdftststacc's configuration
+
+
+-----------------------------------------------
+Rule: Ensure Storage logging is enabled for Queue service for read, write and delete requests
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [azurerm_storage_account.example] (main.tf:17)
+     Violating Resource: [azurerm_storage_account.example]  (main.tf:17)
+
+     Evidence:
+             | This rule evaluated asdftststacc's configuration
+
+
+-----------------------------------------------
+Rule: Ensure SQL servers have auditing enabled
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [azurerm_mssql_server.sql] (main.tf:25)
+     Violating Resource: [azurerm_mssql_server.sql]  (main.tf:25)
+
+     Evidence:
+             | The Azure Sql Server asdf-sqlserver has auditing enabled, but for less than 90 days of retention
+
+
+-----------------------------------------------
+Rule: Ensure Storage Account has default network access denied
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [azurerm_storage_account.example] (main.tf:17)
+     Violating Resource: [azurerm_storage_account.example]  (main.tf:17)
+
+     Evidence:
+             | The Storage Account asdftststacc is not denying default network access
+
+
+-----------------------------------------------
+Rule: Ensure Azure database server is not set to be public
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [azurerm_mssql_server.sql] (main.tf:25)
+     Violating Resource: [azurerm_mssql_server.sql]  (main.tf:25)
+
+     Evidence:
+         Azure Sql Server
+             | Azure Sql Server with database name asdf-sqlserver is exposed to the internet
+
+
+-----------------------------------------------
+
+Cloudrail ran this assessment without any policies and so all rule violations show as warnings.
+You can increase a rule's enforcement level by creating a Policy in the Web UI and adding the rule to it.

@@ -1,0 +1,169 @@
+Failed to run the process ...
+{
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "ignoreSettings": null,
+    "org": "yi2020",
+    "projectId": "",
+    "policy": ""
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "main.tf",
+  "projectName": "project",
+  "org": "yi2020",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
+  "ok": false,
+  "infrastructureAsCodeIssues": [
+    {
+      "severity": "medium",
+      "resolve": "Set `min_tls_version` attribute to `TLS1_2`",
+      "id": "SNYK-CC-TF-149",
+      "impact": "Older cipher suites could be vulnerable to hijacking and information disclosure",
+      "msg": "resource.azurerm_storage_account[storacc].min_tls_version",
+      "subType": "Storage",
+      "issue": "Azure Storage Account does not enforce latest TLS version",
+      "publicId": "SNYK-CC-TF-149",
+      "title": "Storage Account does not enforce latest TLS",
+      "references": [
+        "https://docs.microsoft.com/en-us/azure/storage/common/transport-layer-security-configure-minimum-version?tabs=portal"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Azure Storage Account does not enforce latest TLS version",
+        "impact": "Older cipher suites could be vulnerable to hijacking and information disclosure",
+        "resolve": "Set `min_tls_version` attribute to `TLS1_2`"
+      },
+      "lineNumber": 43,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-149",
+      "path": [
+        "resource",
+        "azurerm_storage_account[storacc]",
+        "min_tls_version"
+      ]
+    },
+    {
+      "severity": "high",
+      "resolve": "Set `admin_ssh_key` attribute instead of password authentication",
+      "id": "SNYK-CC-TF-263",
+      "impact": "The secret value will be readable to anyone with access to VCS, which can lead to unauthorized data disclosure or privilege escalation",
+      "msg": "resource.azurerm_virtual_machine[main].os_profile.admin_password",
+      "subType": "Compute",
+      "issue": "Administrative password has been set in terraform configuration file",
+      "publicId": "SNYK-CC-TF-263",
+      "title": "Hardcoded admin password in VM configuration",
+      "references": [
+        "https://docs.microsoft.com/en-us/azure/virtual-machines/linux/mac-create-ssh-keys"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Administrative password has been set in terraform configuration file",
+        "impact": "The secret value will be readable to anyone with access to VCS, which can lead to unauthorized data disclosure or privilege escalation",
+        "resolve": "Set `admin_ssh_key` attribute instead of password authentication"
+      },
+      "lineNumber": 82,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-263",
+      "path": [
+        "resource",
+        "azurerm_virtual_machine[main]",
+        "os_profile",
+        "admin_password"
+      ]
+    },
+    {
+      "severity": "low",
+      "resolve": "Set `ddos_protection_plan.enable` attribute to `true`",
+      "id": "SNYK-CC-AZURE-516",
+      "impact": "Services deployed in the network will not benefit from advanced DDoS protection features such as attack alerting and analytics",
+      "msg": "resource.azurerm_virtual_network[vnet].ddos_protection_plan",
+      "remediation": {
+        "terraform": "Set `ddos_protection_plan.enable` attribute to `true`"
+      },
+      "subType": "Network",
+      "issue": "Virtual Network DDoS protection plan disabled",
+      "publicId": "SNYK-CC-AZURE-516",
+      "title": "Virtual Network DDoS protection plan disabled",
+      "references": [
+        "https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network#ddos_protection_plan",
+        "https://docs.microsoft.com/en-us/azure/ddos-protection/ddos-protection-overview"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Virtual Network DDoS protection plan disabled",
+        "impact": "Services deployed in the network will not benefit from advanced DDoS protection features such as attack alerting and analytics",
+        "resolve": "Set `ddos_protection_plan.enable` attribute to `true`"
+      },
+      "lineNumber": 17,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AZURE-516",
+      "path": [
+        "resource",
+        "azurerm_virtual_network[vnet]",
+        "ddos_protection_plan"
+      ]
+    },
+    {
+      "severity": "low",
+      "resolve": "Set `network_rules.bypass` attribute to `['Azure Services']`",
+      "id": "SNYK-CC-TF-172",
+      "impact": "Services will not be able to access the storage account over network",
+      "msg": "resource.azurerm_storage_account[storacc].network_rules",
+      "subType": "Storage",
+      "issue": "Network access bypass for Trusted Microsoft Services is not enabled on the storage account",
+      "publicId": "SNYK-CC-TF-172",
+      "title": "Trusted Microsoft Service access to storage account is disabled",
+      "references": [
+        "https://docs.microsoft.com/en-gb/azure/storage/common/storage-network-security#trusted-microsoft-services"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Network access bypass for Trusted Microsoft Services is not enabled on the storage account",
+        "impact": "Services will not be able to access the storage account over network",
+        "resolve": "Set `network_rules.bypass` attribute to `['Azure Services']`"
+      },
+      "lineNumber": 43,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-172",
+      "path": [
+        "resource",
+        "azurerm_storage_account[storacc]",
+        "network_rules"
+      ]
+    },
+    {
+      "severity": "medium",
+      "resolve": "Set `disable_password_authentication` attribute to `true` or remove the attribute",
+      "id": "SNYK-CC-TF-79",
+      "impact": "The password authentication is less resistant to brute force and educated guess attacks then SSH only",
+      "msg": "resource.azurerm_virtual_machine[main].os_profile_linux_config.disable_password_authentication",
+      "subType": "Compute",
+      "issue": "The password authentication for virtual machine has been enabled",
+      "publicId": "SNYK-CC-TF-79",
+      "title": "Password authentication enabled",
+      "references": [
+        "https://docs.microsoft.com/en-us/azure/virtual-machines/security-policy"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "The password authentication for virtual machine has been enabled",
+        "impact": "The password authentication is less resistant to brute force and educated guess attacks then SSH only",
+        "resolve": "Set `disable_password_authentication` attribute to `true` or remove the attribute"
+      },
+      "lineNumber": 85,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-79",
+      "path": [
+        "resource",
+        "azurerm_virtual_machine[main]",
+        "os_profile_linux_config",
+        "disable_password_authentication"
+      ]
+    }
+  ]
+}

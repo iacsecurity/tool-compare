@@ -1,0 +1,104 @@
+
+  Result 1
+
+  [general-secrets-sensitive-in-attribute][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Block 'azurerm_postgresql_server.example' includes a potentially sensitive attribute which is defined within the project.
+  /src/main.tf:24
+
+
+      21 |   sku_name = "B_Gen5_2"
+      22 | 
+      23 |   administrator_login          = "psqladminun"
+      24 |   administrator_login_password = "H@Sh1CoR3!"    string: "H@Sh1CoR3!"
+      25 |   version                      = "11"
+      26 |   ssl_enforcement_enabled      = true
+      27 |   public_network_access_enabled    = true
+
+  Legacy ID:  GEN003
+  Impact:     Block attribute could be leaking secrets
+  Resolution: Don't include sensitive data in blocks
+
+  More Info:
+  - https://tfsec.dev/docs/general/secrets/sensitive-in-attribute#general/secrets 
+  - https://www.terraform.io/docs/state/sensitive-data.html 
+
+  Result 2
+
+  [azure-database-no-public-access][[0m[33mMEDIUM[39m[0m] Resource 'azurerm_postgresql_server.example' has public access explicitly enabled
+  /src/main.tf:27
+
+
+      24 |   administrator_login_password = "H@Sh1CoR3!"
+      25 |   version                      = "11"
+      26 |   ssl_enforcement_enabled      = true
+      27 |   public_network_access_enabled    = true    bool: true
+      28 | }
+      29 | 
+      30 | resource "azurerm_postgresql_configuration" "example" {
+
+  Impact:     Publicly accessible database could lead to compromised data
+  Resolution: Disable public access to database when not required
+
+  More Info:
+  - https://tfsec.dev/docs/azure/database/no-public-access#azure/database 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_server#public_network_access_enabled 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mysql_server#public_network_access_enabled 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mariadb_server#public_network_access_enabled 
+
+  Result 3
+
+  [azure-database-secure-tls-policy][[0m[33mMEDIUM[39m[0m] Resource 'azurerm_postgresql_server.example' does not have ssl_minimal_tls_version_enforced set
+  /src/main.tf:16-28
+
+
+      13 |   location = "West Europe"
+      14 | }
+      15 | 
+      16 | resource "azurerm_postgresql_server" "example" {
+      17 |   name                = "${local.resource_prefix}-postgresql-server"
+      18 |   location            = azurerm_resource_group.rg.location
+      19 |   resource_group_name = azurerm_resource_group.rg.name
+      20 | 
+      21 |   sku_name = "B_Gen5_2"
+      22 | 
+      23 |   administrator_login          = "psqladminun"
+      24 |   administrator_login_password = "H@Sh1CoR3!"
+      25 |   version                      = "11"
+      26 |   ssl_enforcement_enabled      = true
+      27 |   public_network_access_enabled    = true
+      28 | }
+      29 | 
+      30 | resource "azurerm_postgresql_configuration" "example" {
+      31 |   name                = "log_checkpoints"
+
+  Impact:     Outdated TLS policies increase exposure to known issues
+  Resolution: Use the most modern TLS policies available
+
+  More Info:
+  - https://tfsec.dev/docs/azure/database/secure-tls-policy#azure/database 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mssql_server#minimum_tls_version 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mysql_server#ssl_minimal_tls_version_enforced 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_server#ssl_minimal_tls_version_enforced 
+
+  times
+  ------------------------------------------
+  disk i/o             486.11µs
+  parsing HCL          7.756µs
+  evaluating values    317.921µs
+  running checks       2.10446ms
+
+  counts
+  ------------------------------------------
+  files loaded         1
+  blocks               5
+  modules              0
+
+  results
+  ------------------------------------------
+  critical             1
+  high                 0
+  medium               2
+  low                  0
+  ignored              0
+
+  3 potential problems detected.
+

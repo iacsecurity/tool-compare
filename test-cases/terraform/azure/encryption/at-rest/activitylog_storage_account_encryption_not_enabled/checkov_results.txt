@@ -1,0 +1,163 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.363 
+
+terraform scan results:
+
+Passed checks: 7, Failed checks: 8, Skipped checks: 0
+
+Check: CKV_AZURE_35: "Ensure default network access rule for Storage Accounts is set to deny"
+	FAILED for resource: azurerm_storage_account.storacc
+	File: /main.tf:19-28
+	Guide: https://docs.bridgecrew.io/docs/set-default-network-access-rule-for-storage-accounts-to-deny
+
+		19 | resource "azurerm_storage_account" "storacc" {
+		20 |   name                     = "${local.resource_prefix}tststacc"
+		21 |   resource_group_name      = azurerm_resource_group.rg.name
+		22 |   location                 = azurerm_resource_group.rg.location
+		23 |   account_tier             = "Standard"
+		24 |   account_replication_type = "LRS"
+		25 |   identity {
+		26 |     type = "SystemAssigned"
+		27 |   }
+		28 | }
+
+
+Check: CKV_AZURE_33: "Ensure Storage logging is enabled for Queue service for read, write and delete requests"
+	FAILED for resource: azurerm_storage_account.storacc
+	File: /main.tf:19-28
+	Guide: https://docs.bridgecrew.io/docs/enable-requests-on-storage-logging-for-queue-service
+
+		19 | resource "azurerm_storage_account" "storacc" {
+		20 |   name                     = "${local.resource_prefix}tststacc"
+		21 |   resource_group_name      = azurerm_resource_group.rg.name
+		22 |   location                 = azurerm_resource_group.rg.location
+		23 |   account_tier             = "Standard"
+		24 |   account_replication_type = "LRS"
+		25 |   identity {
+		26 |     type = "SystemAssigned"
+		27 |   }
+		28 | }
+
+
+Check: CKV_AZURE_44: "Ensure Storage Account is using the latest version of TLS encryption"
+	FAILED for resource: azurerm_storage_account.storacc
+	File: /main.tf:19-28
+	Guide: https://docs.bridgecrew.io/docs/bc_azr_storage_2
+
+		19 | resource "azurerm_storage_account" "storacc" {
+		20 |   name                     = "${local.resource_prefix}tststacc"
+		21 |   resource_group_name      = azurerm_resource_group.rg.name
+		22 |   location                 = azurerm_resource_group.rg.location
+		23 |   account_tier             = "Standard"
+		24 |   account_replication_type = "LRS"
+		25 |   identity {
+		26 |     type = "SystemAssigned"
+		27 |   }
+		28 | }
+
+
+Check: CKV_AZURE_3: "Ensure that 'Secure transfer required' is set to 'Enabled'"
+	FAILED for resource: azurerm_storage_account.storacc
+	File: /main.tf:19-28
+	Guide: https://docs.bridgecrew.io/docs/ensure-secure-transfer-required-is-enabled
+
+		19 | resource "azurerm_storage_account" "storacc" {
+		20 |   name                     = "${local.resource_prefix}tststacc"
+		21 |   resource_group_name      = azurerm_resource_group.rg.name
+		22 |   location                 = azurerm_resource_group.rg.location
+		23 |   account_tier             = "Standard"
+		24 |   account_replication_type = "LRS"
+		25 |   identity {
+		26 |     type = "SystemAssigned"
+		27 |   }
+		28 | }
+
+
+Check: CKV_AZURE_109: "Ensure that key vault allows firewall rules settings"
+	FAILED for resource: azurerm_key_vault.kv
+	File: /main.tf:30-53
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-key-vault-allows-firewall-rules-settings
+
+		30 | resource "azurerm_key_vault" "kv" {
+		31 |   name                        = "${local.resource_prefix}-keyvault"
+		32 |   location                    = azurerm_resource_group.rg.location
+		33 |   resource_group_name         = azurerm_resource_group.rg.name
+		34 |   #enabled_for_disk_encryption = true
+		35 |   tenant_id                   = data.azurerm_client_config.current.tenant_id
+		36 |   soft_delete_retention_days  = 7
+		37 |   purge_protection_enabled    = true
+		38 |   sku_name = "standard"
+		39 | 
+		40 |   access_policy {
+		41 |     tenant_id = data.azurerm_client_config.current.tenant_id
+		42 |     object_id = data.azurerm_client_config.current.object_id
+		43 |     key_permissions = [
+		44 |       "Get", "List", "create", "delete", "recover",
+		45 |     ]
+		46 |     secret_permissions = [
+		47 |       "Get", "List", "set",
+		48 |     ]
+		49 |     storage_permissions = [
+		50 |       "Get",
+		51 |     ]
+		52 |   }
+		53 | }
+
+
+Check: CKV2_AZURE_18: "Ensure that Storage Accounts use customer-managed key for encryption"
+	FAILED for resource: azurerm_storage_account.storacc
+	File: /main.tf:19-28
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-storage-accounts-use-customer-managed-key-for-encryption
+
+		19 | resource "azurerm_storage_account" "storacc" {
+		20 |   name                     = "${local.resource_prefix}tststacc"
+		21 |   resource_group_name      = azurerm_resource_group.rg.name
+		22 |   location                 = azurerm_resource_group.rg.location
+		23 |   account_tier             = "Standard"
+		24 |   account_replication_type = "LRS"
+		25 |   identity {
+		26 |     type = "SystemAssigned"
+		27 |   }
+		28 | }
+
+
+Check: CKV2_AZURE_8: "Ensure the storage container storing the activity logs is not publicly accessible"
+	FAILED for resource: azurerm_storage_account.storacc
+	File: /main.tf:19-28
+	Guide: https://docs.bridgecrew.io/docs/ensure-the-storage-container-storing-the-activity-logs-is-not-publicly-accessible
+
+		19 | resource "azurerm_storage_account" "storacc" {
+		20 |   name                     = "${local.resource_prefix}tststacc"
+		21 |   resource_group_name      = azurerm_resource_group.rg.name
+		22 |   location                 = azurerm_resource_group.rg.location
+		23 |   account_tier             = "Standard"
+		24 |   account_replication_type = "LRS"
+		25 |   identity {
+		26 |     type = "SystemAssigned"
+		27 |   }
+		28 | }
+
+
+Check: CKV2_AZURE_1: "Ensure storage for critical data are encrypted with Customer Managed Key"
+	FAILED for resource: azurerm_storage_account.storacc
+	File: /main.tf:19-28
+	Guide: https://docs.bridgecrew.io/docs/ensure-storage-for-critical-data-are-encrypted-with-customer-managed-key
+
+		19 | resource "azurerm_storage_account" "storacc" {
+		20 |   name                     = "${local.resource_prefix}tststacc"
+		21 |   resource_group_name      = azurerm_resource_group.rg.name
+		22 |   location                 = azurerm_resource_group.rg.location
+		23 |   account_tier             = "Standard"
+		24 |   account_replication_type = "LRS"
+		25 |   identity {
+		26 |     type = "SystemAssigned"
+		27 |   }
+		28 | }
+
+

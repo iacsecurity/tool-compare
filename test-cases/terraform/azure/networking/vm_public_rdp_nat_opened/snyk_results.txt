@@ -1,0 +1,87 @@
+Failed to run the process ...
+{
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "ignoreSettings": null,
+    "org": "yi2020",
+    "projectId": "",
+    "policy": ""
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "main.tf",
+  "projectName": "project",
+  "org": "yi2020",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
+  "ok": false,
+  "infrastructureAsCodeIssues": [
+    {
+      "severity": "high",
+      "resolve": "Set `admin_ssh_key` attribute instead of password authentication",
+      "id": "SNYK-CC-TF-263",
+      "impact": "The secret value will be readable to anyone with access to VCS, which can lead to unauthorized data disclosure or privilege escalation",
+      "msg": "resource.azurerm_virtual_machine[main].os_profile.admin_password",
+      "subType": "Compute",
+      "issue": "Administrative password has been set in terraform configuration file",
+      "publicId": "SNYK-CC-TF-263",
+      "title": "Hardcoded admin password in VM configuration",
+      "references": [
+        "https://docs.microsoft.com/en-us/azure/virtual-machines/linux/mac-create-ssh-keys"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Administrative password has been set in terraform configuration file",
+        "impact": "The secret value will be readable to anyone with access to VCS, which can lead to unauthorized data disclosure or privilege escalation",
+        "resolve": "Set `admin_ssh_key` attribute instead of password authentication"
+      },
+      "lineNumber": 111,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-263",
+      "path": [
+        "resource",
+        "azurerm_virtual_machine[main]",
+        "os_profile",
+        "admin_password"
+      ]
+    },
+    {
+      "severity": "low",
+      "resolve": "Set `ddos_protection_plan.enable` attribute to `true`",
+      "id": "SNYK-CC-AZURE-516",
+      "impact": "Services deployed in the network will not benefit from advanced DDoS protection features such as attack alerting and analytics",
+      "msg": "resource.azurerm_virtual_network[vnet].ddos_protection_plan",
+      "remediation": {
+        "terraform": "Set `ddos_protection_plan.enable` attribute to `true`"
+      },
+      "subType": "Network",
+      "issue": "Virtual Network DDoS protection plan disabled",
+      "publicId": "SNYK-CC-AZURE-516",
+      "title": "Virtual Network DDoS protection plan disabled",
+      "references": [
+        "https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network#ddos_protection_plan",
+        "https://docs.microsoft.com/en-us/azure/ddos-protection/ddos-protection-overview"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Virtual Network DDoS protection plan disabled",
+        "impact": "Services deployed in the network will not benefit from advanced DDoS protection features such as attack alerting and analytics",
+        "resolve": "Set `ddos_protection_plan.enable` attribute to `true`"
+      },
+      "lineNumber": 18,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AZURE-516",
+      "path": [
+        "resource",
+        "azurerm_virtual_network[vnet]",
+        "ddos_protection_plan"
+      ]
+    }
+  ]
+}

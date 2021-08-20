@@ -1,0 +1,31 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.363 
+
+terraform scan results:
+
+Passed checks: 0, Failed checks: 1, Skipped checks: 0
+
+Check: CKV_AZURE_39: "Ensure that no custom subscription owner roles are created"
+	FAILED for resource: azurerm_role_definition.example
+	File: /main.tf:19-29
+	Guide: https://docs.bridgecrew.io/docs/do-not-create-custom-subscription-owner-roles
+
+		19 | resource "azurerm_role_definition" "example" {
+		20 |   name        = "${local.resource_prefix}-custom-role"
+		21 |   scope       = data.azurerm_subscription.primary.id
+		22 |   description = "This is a custom role created via Terraform"
+		23 | 
+		24 |   permissions {
+		25 |     actions     = ["*"]
+		26 |     not_actions = []
+		27 |   }
+		28 | 
+		29 | }
+
+

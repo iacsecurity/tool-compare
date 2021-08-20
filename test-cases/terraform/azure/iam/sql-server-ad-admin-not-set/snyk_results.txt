@@ -1,0 +1,54 @@
+Failed to run the process ...
+{
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "ignoreSettings": null,
+    "org": "yi2020",
+    "projectId": "",
+    "policy": ""
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "main.tf",
+  "projectName": "project",
+  "org": "yi2020",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
+  "ok": false,
+  "infrastructureAsCodeIssues": [
+    {
+      "severity": "low",
+      "resolve": "Set `extended_auditing_policy` attribute",
+      "id": "SNYK-CC-TF-167",
+      "impact": "Audit records may not be available during investigation",
+      "msg": "resource.azurerm_mssql_server[sql]",
+      "subType": "Database",
+      "issue": "Azure SQL Server Auditing is disabled",
+      "publicId": "SNYK-CC-TF-167",
+      "title": "SQL Server auditing is disabled",
+      "references": [
+        "https://docs.microsoft.com/en-us/azure/azure-sql/database/auditing-overview"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Azure SQL Server Auditing is disabled",
+        "impact": "Audit records may not be available during investigation",
+        "resolve": "Set `extended_auditing_policy` attribute"
+      },
+      "lineNumber": 18,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-167",
+      "path": [
+        "resource",
+        "azurerm_mssql_server[sql]"
+      ]
+    }
+  ]
+}

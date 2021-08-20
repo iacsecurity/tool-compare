@@ -1,0 +1,213 @@
+
+  Result 1
+
+  [aws-elbv2-alb-not-public][[0m[31mHIGH[39m[0m] Resource 'aws_alb.default' is exposed publicly.
+  /src/main.tf:33
+
+
+      30 | }
+      31 | 
+      32 | resource "aws_alb" "default" {
+      33 |   internal           = false    bool: false
+      34 |   load_balancer_type = "application"
+      35 |   name               = "alb"
+      36 |   subnets            = module.vpc.public_subnets
+
+  Legacy ID:  AWS005
+  Impact:     The load balancer is exposed on the internet
+  Resolution: Switch to an internal load balancer or add a tfsec ignore
+
+  More Info:
+  - https://tfsec.dev/docs/aws/elbv2/alb-not-public#aws/elbv2 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb 
+
+  Result 2
+
+  [aws-elb-drop-invalid-headers][[0m[31mHIGH[39m[0m] Resource 'aws_lb.disabled' sets the drop_invalid_header_fields to false
+  /src/main.tf:45
+
+
+      42 |   name               = "alb"
+      43 |   subnets            = module.vpc.public_subnets
+      44 | 
+      45 |   drop_invalid_header_fields = false    bool: false
+      46 | }
+      47 | 
+      48 | resource "aws_alb" "disabled" {
+
+  Legacy ID:  AWS083
+  Impact:     Invalid headers being passed through to the target of the load balance may exploit vulnerabilities
+  Resolution: Set drop_invalid_header_fields to true
+
+  More Info:
+  - https://tfsec.dev/docs/aws/elb/drop-invalid-headers#aws/elb 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb#drop_invalid_header_fields 
+  - https://docs.aws.amazon.com/elasticloadbalancing/latest/application/application-load-balancers.html 
+
+  Result 3
+
+  [aws-elb-drop-invalid-headers][[0m[31mHIGH[39m[0m] Resource 'aws_lb.default' does not drop invalid header fields
+  /src/main.tf:25-30
+
+
+      22 |   default_security_group_egress =[]
+      23 | }
+      24 | 
+      25 | resource "aws_lb" "default" {
+      26 |   internal           = false
+      27 |   load_balancer_type = "application"
+      28 |   name               = "alb"
+      29 |   subnets            = module.vpc.public_subnets
+      30 | }
+      31 | 
+      32 | resource "aws_alb" "default" {
+      33 |   internal           = false
+
+  Legacy ID:  AWS083
+  Impact:     Invalid headers being passed through to the target of the load balance may exploit vulnerabilities
+  Resolution: Set drop_invalid_header_fields to true
+
+  More Info:
+  - https://tfsec.dev/docs/aws/elb/drop-invalid-headers#aws/elb 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb#drop_invalid_header_fields 
+  - https://docs.aws.amazon.com/elasticloadbalancing/latest/application/application-load-balancers.html 
+
+  Result 4
+
+  [aws-elb-drop-invalid-headers][[0m[31mHIGH[39m[0m] Resource 'aws_alb.disabled' sets the drop_invalid_header_fields to false
+  /src/main.tf:54
+
+
+      51 |   name               = "alb"
+      52 |   subnets            = module.vpc.public_subnets
+      53 | 
+      54 |   drop_invalid_header_fields = false    bool: false
+      55 | }
+      56 | 
+
+  Legacy ID:  AWS083
+  Impact:     Invalid headers being passed through to the target of the load balance may exploit vulnerabilities
+  Resolution: Set drop_invalid_header_fields to true
+
+  More Info:
+  - https://tfsec.dev/docs/aws/elb/drop-invalid-headers#aws/elb 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb#drop_invalid_header_fields 
+  - https://docs.aws.amazon.com/elasticloadbalancing/latest/application/application-load-balancers.html 
+
+  Result 5
+
+  [aws-elb-drop-invalid-headers][[0m[31mHIGH[39m[0m] Resource 'aws_alb.default' does not drop invalid header fields
+  /src/main.tf:32-37
+
+
+      29 |   subnets            = module.vpc.public_subnets
+      30 | }
+      31 | 
+      32 | resource "aws_alb" "default" {
+      33 |   internal           = false
+      34 |   load_balancer_type = "application"
+      35 |   name               = "alb"
+      36 |   subnets            = module.vpc.public_subnets
+      37 | }
+      38 | 
+      39 | resource "aws_lb" "disabled" {
+      40 |   internal           = false
+
+  Legacy ID:  AWS083
+  Impact:     Invalid headers being passed through to the target of the load balance may exploit vulnerabilities
+  Resolution: Set drop_invalid_header_fields to true
+
+  More Info:
+  - https://tfsec.dev/docs/aws/elb/drop-invalid-headers#aws/elb 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb#drop_invalid_header_fields 
+  - https://docs.aws.amazon.com/elasticloadbalancing/latest/application/application-load-balancers.html 
+
+  Result 6
+
+  [aws-elbv2-alb-not-public][[0m[31mHIGH[39m[0m] Resource 'aws_lb.disabled' is exposed publicly.
+  /src/main.tf:40
+
+
+      37 | }
+      38 | 
+      39 | resource "aws_lb" "disabled" {
+      40 |   internal           = false    bool: false
+      41 |   load_balancer_type = "application"
+      42 |   name               = "alb"
+      43 |   subnets            = module.vpc.public_subnets
+
+  Legacy ID:  AWS005
+  Impact:     The load balancer is exposed on the internet
+  Resolution: Switch to an internal load balancer or add a tfsec ignore
+
+  More Info:
+  - https://tfsec.dev/docs/aws/elbv2/alb-not-public#aws/elbv2 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb 
+
+  Result 7
+
+  [aws-elbv2-alb-not-public][[0m[31mHIGH[39m[0m] Resource 'aws_lb.default' is exposed publicly.
+  /src/main.tf:26
+
+
+      23 | }
+      24 | 
+      25 | resource "aws_lb" "default" {
+      26 |   internal           = false    bool: false
+      27 |   load_balancer_type = "application"
+      28 |   name               = "alb"
+      29 |   subnets            = module.vpc.public_subnets
+
+  Legacy ID:  AWS005
+  Impact:     The load balancer is exposed on the internet
+  Resolution: Switch to an internal load balancer or add a tfsec ignore
+
+  More Info:
+  - https://tfsec.dev/docs/aws/elbv2/alb-not-public#aws/elbv2 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb 
+
+  Result 8
+
+  [aws-elbv2-alb-not-public][[0m[31mHIGH[39m[0m] Resource 'aws_alb.disabled' is exposed publicly.
+  /src/main.tf:49
+
+
+      46 | }
+      47 | 
+      48 | resource "aws_alb" "disabled" {
+      49 |   internal           = false    bool: false
+      50 |   load_balancer_type = "application"
+      51 |   name               = "alb"
+      52 |   subnets            = module.vpc.public_subnets
+
+  Legacy ID:  AWS005
+  Impact:     The load balancer is exposed on the internet
+  Resolution: Switch to an internal load balancer or add a tfsec ignore
+
+  More Info:
+  - https://tfsec.dev/docs/aws/elbv2/alb-not-public#aws/elbv2 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb 
+
+  times
+  ------------------------------------------
+  disk i/o             41.411645ms
+  parsing HCL          141.456µs
+  evaluating values    98.540203ms
+  running checks       16.298252ms
+
+  counts
+  ------------------------------------------
+  files loaded         6
+  blocks               5
+  modules              1
+
+  results
+  ------------------------------------------
+  critical             0
+  high                 8
+  medium               0
+  low                  0
+  ignored              0
+
+  8 potential problems detected.
+

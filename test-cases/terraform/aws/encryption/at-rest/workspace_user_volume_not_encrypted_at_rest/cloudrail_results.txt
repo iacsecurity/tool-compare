@@ -1,0 +1,58 @@
+
+WARNINGs found:
+Rule: Ensure IAM policies pass Access Analyzer policy validation without WARNING and SUGGESTION issues
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_iam_role.workspaces_default] (main.tf:61)
+     Violating Resource: [aws_iam_role.workspaces_default]  (main.tf:61)
+
+     Evidence:
+         Line 5, Col 13:
+             | Add a value to the empty string in the Sid element
+             | See https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-reference-policy-checks.html#access-analyzer-reference-policy-checks-suggestion-empty-sid-value
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_iam_role.workspaces_default] (main.tf:61)
+     Violating Resource: [aws_iam_role.workspaces_default]  (main.tf:61)
+
+     Evidence:
+             | Resource IAM Role aws_iam_role.workspaces_default does not have any tags set
+
+
+   - Exposed Resource: [aws_workspaces_workspace.test] (main.tf:76)
+     Violating Resource: [aws_workspaces_workspace.test]  (main.tf:76)
+
+     Evidence:
+             | Resource Workspace aws_workspaces_workspace.test does not have any tags set
+
+
+-----------------------------------------------
+Rule: Ensure Workspaces being created are set to encrypt user volume at rest
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_workspaces_workspace.test] (main.tf:76)
+     Violating Resource: [aws_workspaces_workspace.test]  (main.tf:76)
+
+     Evidence:
+             | The Workspace aws_workspaces_workspace.test is not set to encrypt user volume at rest
+
+
+-----------------------------------------------
+Rule: Ensure Workspaces being created are set to encrypt root volume at rest
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_workspaces_workspace.test] (main.tf:76)
+     Violating Resource: [aws_workspaces_workspace.test]  (main.tf:76)
+
+     Evidence:
+             | The Workspace aws_workspaces_workspace.test is not set to encrypt root volume at rest
+
+
+-----------------------------------------------
+
+Cloudrail ran this assessment without any policies and so all rule violations show as warnings.
+You can increase a rule's enforcement level by creating a Policy in the Web UI and adding the rule to it.

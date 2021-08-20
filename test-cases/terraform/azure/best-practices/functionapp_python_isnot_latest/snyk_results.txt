@@ -1,0 +1,113 @@
+Failed to run the process ...
+{
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "ignoreSettings": null,
+    "org": "yi2020",
+    "projectId": "",
+    "policy": ""
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "main.tf",
+  "projectName": "project",
+  "org": "yi2020",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
+  "ok": false,
+  "infrastructureAsCodeIssues": [
+    {
+      "severity": "medium",
+      "resolve": "Set `min_tls_version` attribute to `TLS1_2`",
+      "id": "SNYK-CC-TF-149",
+      "impact": "Older cipher suites could be vulnerable to hijacking and information disclosure",
+      "msg": "resource.azurerm_storage_account[storacc].min_tls_version",
+      "subType": "Storage",
+      "issue": "Azure Storage Account does not enforce latest TLS version",
+      "publicId": "SNYK-CC-TF-149",
+      "title": "Storage Account does not enforce latest TLS",
+      "references": [
+        "https://docs.microsoft.com/en-us/azure/storage/common/transport-layer-security-configure-minimum-version?tabs=portal"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Azure Storage Account does not enforce latest TLS version",
+        "impact": "Older cipher suites could be vulnerable to hijacking and information disclosure",
+        "resolve": "Set `min_tls_version` attribute to `TLS1_2`"
+      },
+      "lineNumber": 16,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-149",
+      "path": [
+        "resource",
+        "azurerm_storage_account[storacc]",
+        "min_tls_version"
+      ]
+    },
+    {
+      "severity": "medium",
+      "resolve": "Set `https_only` attribute to `true`",
+      "id": "SNYK-CC-AZURE-500",
+      "impact": "The connection and transmitted data could be intercepted and manipulated",
+      "msg": "resource.azurerm_function_app[functionapp].https_only",
+      "remediation": {
+        "terraform": "Set `https_only` attribute to `true`"
+      },
+      "subType": "App Service (Web Apps)",
+      "issue": "Function App does not enforce use of HTTPS connections, users can access via HTTP",
+      "publicId": "SNYK-CC-AZURE-500",
+      "title": " Function App does not enforce HTTPS",
+      "references": [
+        "https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/function_app#https_only",
+        "https://docs.microsoft.com/en-us/azure/azure-functions/security-concepts#require-https"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Function App does not enforce use of HTTPS connections, users can access via HTTP",
+        "impact": "The connection and transmitted data could be intercepted and manipulated",
+        "resolve": "Set `https_only` attribute to `true`"
+      },
+      "lineNumber": 38,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AZURE-500",
+      "path": [
+        "resource",
+        "azurerm_function_app[functionapp]",
+        "https_only"
+      ]
+    },
+    {
+      "severity": "low",
+      "resolve": "Set `network_rules.bypass` attribute to `['Azure Services']`",
+      "id": "SNYK-CC-TF-172",
+      "impact": "Services will not be able to access the storage account over network",
+      "msg": "resource.azurerm_storage_account[storacc].network_rules",
+      "subType": "Storage",
+      "issue": "Network access bypass for Trusted Microsoft Services is not enabled on the storage account",
+      "publicId": "SNYK-CC-TF-172",
+      "title": "Trusted Microsoft Service access to storage account is disabled",
+      "references": [
+        "https://docs.microsoft.com/en-gb/azure/storage/common/storage-network-security#trusted-microsoft-services"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Network access bypass for Trusted Microsoft Services is not enabled on the storage account",
+        "impact": "Services will not be able to access the storage account over network",
+        "resolve": "Set `network_rules.bypass` attribute to `['Azure Services']`"
+      },
+      "lineNumber": 16,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-172",
+      "path": [
+        "resource",
+        "azurerm_storage_account[storacc]",
+        "network_rules"
+      ]
+    }
+  ]
+}

@@ -92,7 +92,7 @@ function run_cloudrail {
     echo $test_case
     ORG_PATH=$PWD
     cd $test_case
-    if [ ! -f cloudrail_results.txt ]; then docker run --rm $IT_FLAG -u 0:0 -v $PWD:/data -v cloudrail:/indeni indeni/cloudrail-cli run --tf-plan plan.out --output-file cloudrail_results.txt --no-cloud-account --auto-approve -v; fi
+    if [ ! -f cloudrail_results.txt ]; then docker run --rm $IT_FLAG -u 0:0 -v $PWD:/data -e CLOUDRAIL_API_KEY indeni/cloudrail-cli run --tf-plan plan.out --output-file cloudrail_results.txt --no-cloud-account --auto-approve -v; fi
     cd $ORG_PATH
   done
 }

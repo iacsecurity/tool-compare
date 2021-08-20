@@ -1,0 +1,72 @@
+
+  Result 1
+
+  [azure-security-center-alert-on-severe-notifications][[0m[33mMEDIUM[39m[0m] Resource 'azurerm_security_center_contact.example' has alert_notifications turned off
+  /src/main.tf:22
+
+
+      19 |   email = "contact@example.com"
+      20 |   #phone = "+1-555-555-5555"
+      21 | 
+      22 |   alert_notifications = false    bool: false
+      23 |   alerts_to_admins    = true
+      24 | }
+      25 | 
+
+  Impact:     The ability to react to high severity notifications could be delayed
+  Resolution:  Set alert notifications to be on
+
+  More Info:
+  - https://tfsec.dev/docs/azure/security-center/alert-on-severe-notifications#azure/security-center 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/security_center_contact#alert_notifications 
+  - https://azure.microsoft.com/en-us/services/security-center/ 
+
+  Result 2
+
+  [azure-security-center-set-required-contact-details][[0m[97mLOW[39m[0m] Resource 'azurerm_security_center_contact.example' does not have a phone number set for the security contact
+  /src/main.tf:18-24
+
+
+      15 |   environment = "Tests"
+      16 | }
+      17 | 
+      18 | resource "azurerm_security_center_contact" "example" {
+      19 |   email = "contact@example.com"
+      20 |   #phone = "+1-555-555-5555"
+      21 | 
+      22 |   alert_notifications = false
+      23 |   alerts_to_admins    = true
+      24 | }
+      25 | 
+
+  Impact:     Without a telephone number set, Azure support can't contact
+  Resolution: Set a telephone number for security center contact
+
+  More Info:
+  - https://tfsec.dev/docs/azure/security-center/set-required-contact-details#azure/security-center 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/security_center_contact#phone 
+  - https://azure.microsoft.com/en-us/services/security-center/ 
+
+  times
+  ------------------------------------------
+  disk i/o             470.469µs
+  parsing HCL          7.572µs
+  evaluating values    125.8µs
+  running checks       1.817598ms
+
+  counts
+  ------------------------------------------
+  files loaded         1
+  blocks               4
+  modules              0
+
+  results
+  ------------------------------------------
+  critical             0
+  high                 0
+  medium               1
+  low                  1
+  ignored              0
+
+  2 potential problems detected.
+

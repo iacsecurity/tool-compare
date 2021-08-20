@@ -1,0 +1,16 @@
+
+WARNINGs found:
+Rule: Ensure Azure VPN gateways don't use the basic SKU
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [azurerm_virtual_network_gateway.vnetgw] (main.tf:45)
+     Violating Resource: [azurerm_virtual_network_gateway.vnetgw]  (main.tf:45)
+
+     Evidence:
+             | Azure Virtual Network Gateway azurerm_virtual_network_gateway.vnetgw uses "basic" SKU
+
+
+-----------------------------------------------
+
+Cloudrail ran this assessment without any policies and so all rule violations show as warnings.
+You can increase a rule's enforcement level by creating a Policy in the Web UI and adding the rule to it.
