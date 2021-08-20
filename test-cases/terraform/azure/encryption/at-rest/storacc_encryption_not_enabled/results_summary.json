@@ -1,5 +1,5 @@
 {
-  "checkov": "no",
+  "checkov": "yes",
   "cloudrail": "no",
   "kics": "no",
   "snyk": "no",

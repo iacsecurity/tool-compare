@@ -27,45 +27,23 @@ Queries failed to execute: 0
 
 ------------------------------------
 
-Storage Account Not Using Latest TLS Encryption Version, Severity: MEDIUM, Results: 1
-Description: Ensure Storage Account is using the latest version of TLS encryption
+Web App Accepting Traffic Other Than HTTPS, Severity: HIGH, Results: 1
+Description: Web app should only accept HTTPS traffic in Azure Web App Service.
 Platform: Terraform
 
-	[1]: ../../src/main.tf:33
+	[1]: ../../src/main.tf:36
 
-		032: 
-		033: resource "azurerm_storage_account" "storacc" {
-		034:   name                     = "${local.resource_prefix}tststacc"
-
-
-Trusted Microsoft Services Not Enabled, Severity: HIGH, Results: 1
-Description: Trusted MIcrosoft Services are not enabled for Storage Account access
-Platform: Terraform
-
-	[1]: ../../src/main.tf:40
-
-		039: 
-		040:   network_rules {
-		041:     default_action             = "Deny"
-
-
-Storage Account Not Forcing HTTPS, Severity: HIGH, Results: 1
-Description: See that Storage Accounts forces the use of HTTPS
-Platform: Terraform
-
-	[1]: ../../src/main.tf:33
-
-		032: 
-		033: resource "azurerm_storage_account" "storacc" {
-		034:   name                     = "${local.resource_prefix}tststacc"
+		035: 
+		036: resource "azurerm_app_service" "webapp" {
+		037:   name = "${local.resource_prefix}-webapp"
 
 
 
 Results Summary:
-HIGH: 2
-MEDIUM: 1
+HIGH: 1
+MEDIUM: 0
 LOW: 0
 INFO: 0
-TOTAL: 3
+TOTAL: 1
 
-Scan duration: 15.033665705s
+Scan duration: 25.376334907s

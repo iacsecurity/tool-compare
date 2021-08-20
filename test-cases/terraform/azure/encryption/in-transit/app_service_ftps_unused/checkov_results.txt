@@ -1,0 +1,217 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.363 
+
+terraform scan results:
+
+Passed checks: 6, Failed checks: 12, Skipped checks: 0
+
+Check: CKV_AZURE_13: "Ensure App Service Authentication is set on Azure App Service"
+	FAILED for resource: azurerm_app_service.webapp
+	File: /main.tf:36-45
+	Guide: https://docs.bridgecrew.io/docs/bc_azr_general_2
+
+		36 | resource "azurerm_app_service" "webapp" {
+		37 |   name = "${local.resource_prefix}-webapp"
+		38 |   location                   = azurerm_resource_group.rg.location
+		39 |   resource_group_name        = azurerm_resource_group.rg.name
+		40 |   app_service_plan_id        = azurerm_app_service_plan.plan.id
+		41 | 
+		42 |   site_config {
+		43 |     use_32_bit_worker_process = true
+		44 |   }
+		45 | }
+
+
+Check: CKV_AZURE_65: "Ensure that App service enables detailed error messages"
+	FAILED for resource: azurerm_app_service.webapp
+	File: /main.tf:36-45
+	Guide: https://docs.bridgecrew.io/docs/tbdensure-that-app-service-enables-detailed-error-messages
+
+		36 | resource "azurerm_app_service" "webapp" {
+		37 |   name = "${local.resource_prefix}-webapp"
+		38 |   location                   = azurerm_resource_group.rg.location
+		39 |   resource_group_name        = azurerm_resource_group.rg.name
+		40 |   app_service_plan_id        = azurerm_app_service_plan.plan.id
+		41 | 
+		42 |   site_config {
+		43 |     use_32_bit_worker_process = true
+		44 |   }
+		45 | }
+
+
+Check: CKV_AZURE_80: "Ensure that 'Net Framework' version is the latest, if used as a part of the web app"
+	FAILED for resource: azurerm_app_service.webapp
+	File: /main.tf:36-45
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-net-framework-version-is-the-latest-if-used-as-a-part-of-the-web-app
+
+		36 | resource "azurerm_app_service" "webapp" {
+		37 |   name = "${local.resource_prefix}-webapp"
+		38 |   location                   = azurerm_resource_group.rg.location
+		39 |   resource_group_name        = azurerm_resource_group.rg.name
+		40 |   app_service_plan_id        = azurerm_app_service_plan.plan.id
+		41 | 
+		42 |   site_config {
+		43 |     use_32_bit_worker_process = true
+		44 |   }
+		45 | }
+
+
+Check: CKV_AZURE_66: "Ensure that App service enables failed request tracing"
+	FAILED for resource: azurerm_app_service.webapp
+	File: /main.tf:36-45
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-app-service-enables-failed-request-tracing
+
+		36 | resource "azurerm_app_service" "webapp" {
+		37 |   name = "${local.resource_prefix}-webapp"
+		38 |   location                   = azurerm_resource_group.rg.location
+		39 |   resource_group_name        = azurerm_resource_group.rg.name
+		40 |   app_service_plan_id        = azurerm_app_service_plan.plan.id
+		41 | 
+		42 |   site_config {
+		43 |     use_32_bit_worker_process = true
+		44 |   }
+		45 | }
+
+
+Check: CKV_AZURE_78: "Ensure FTP deployments are disabled"
+	FAILED for resource: azurerm_app_service.webapp
+	File: /main.tf:36-45
+	Guide: https://docs.bridgecrew.io/docs/ensure-ftp-deployments-are-disabled
+
+		36 | resource "azurerm_app_service" "webapp" {
+		37 |   name = "${local.resource_prefix}-webapp"
+		38 |   location                   = azurerm_resource_group.rg.location
+		39 |   resource_group_name        = azurerm_resource_group.rg.name
+		40 |   app_service_plan_id        = azurerm_app_service_plan.plan.id
+		41 | 
+		42 |   site_config {
+		43 |     use_32_bit_worker_process = true
+		44 |   }
+		45 | }
+
+
+Check: CKV_AZURE_14: "Ensure web app redirects all HTTP traffic to HTTPS in Azure App Service"
+	FAILED for resource: azurerm_app_service.webapp
+	File: /main.tf:36-45
+	Guide: https://docs.bridgecrew.io/docs/bc_azr_networking_5
+
+		36 | resource "azurerm_app_service" "webapp" {
+		37 |   name = "${local.resource_prefix}-webapp"
+		38 |   location                   = azurerm_resource_group.rg.location
+		39 |   resource_group_name        = azurerm_resource_group.rg.name
+		40 |   app_service_plan_id        = azurerm_app_service_plan.plan.id
+		41 | 
+		42 |   site_config {
+		43 |     use_32_bit_worker_process = true
+		44 |   }
+		45 | }
+
+
+Check: CKV_AZURE_63: "Ensure that App service enables HTTP logging"
+	FAILED for resource: azurerm_app_service.webapp
+	File: /main.tf:36-45
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-app-service-enables-http-logging
+
+		36 | resource "azurerm_app_service" "webapp" {
+		37 |   name = "${local.resource_prefix}-webapp"
+		38 |   location                   = azurerm_resource_group.rg.location
+		39 |   resource_group_name        = azurerm_resource_group.rg.name
+		40 |   app_service_plan_id        = azurerm_app_service_plan.plan.id
+		41 | 
+		42 |   site_config {
+		43 |     use_32_bit_worker_process = true
+		44 |   }
+		45 | }
+
+
+Check: CKV_AZURE_18: "Ensure that 'HTTP Version' is the latest if used to run the web app"
+	FAILED for resource: azurerm_app_service.webapp
+	File: /main.tf:36-45
+	Guide: https://docs.bridgecrew.io/docs/bc_azr_networking_8
+
+		36 | resource "azurerm_app_service" "webapp" {
+		37 |   name = "${local.resource_prefix}-webapp"
+		38 |   location                   = azurerm_resource_group.rg.location
+		39 |   resource_group_name        = azurerm_resource_group.rg.name
+		40 |   app_service_plan_id        = azurerm_app_service_plan.plan.id
+		41 | 
+		42 |   site_config {
+		43 |     use_32_bit_worker_process = true
+		44 |   }
+		45 | }
+
+
+Check: CKV_AZURE_71: "Ensure that Managed identity provider is enabled for app services"
+	FAILED for resource: azurerm_app_service.webapp
+	File: /main.tf:36-45
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-managed-identity-provider-is-enabled-for-app-services
+
+		36 | resource "azurerm_app_service" "webapp" {
+		37 |   name = "${local.resource_prefix}-webapp"
+		38 |   location                   = azurerm_resource_group.rg.location
+		39 |   resource_group_name        = azurerm_resource_group.rg.name
+		40 |   app_service_plan_id        = azurerm_app_service_plan.plan.id
+		41 | 
+		42 |   site_config {
+		43 |     use_32_bit_worker_process = true
+		44 |   }
+		45 | }
+
+
+Check: CKV_AZURE_88: "Ensure that app services use Azure Files"
+	FAILED for resource: azurerm_app_service.webapp
+	File: /main.tf:36-45
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-app-services-use-azure-files
+
+		36 | resource "azurerm_app_service" "webapp" {
+		37 |   name = "${local.resource_prefix}-webapp"
+		38 |   location                   = azurerm_resource_group.rg.location
+		39 |   resource_group_name        = azurerm_resource_group.rg.name
+		40 |   app_service_plan_id        = azurerm_app_service_plan.plan.id
+		41 | 
+		42 |   site_config {
+		43 |     use_32_bit_worker_process = true
+		44 |   }
+		45 | }
+
+
+Check: CKV_AZURE_17: "Ensure the web app has 'Client Certificates (Incoming client certificates)' set"
+	FAILED for resource: azurerm_app_service.webapp
+	File: /main.tf:36-45
+	Guide: https://docs.bridgecrew.io/docs/bc_azr_networking_7
+
+		36 | resource "azurerm_app_service" "webapp" {
+		37 |   name = "${local.resource_prefix}-webapp"
+		38 |   location                   = azurerm_resource_group.rg.location
+		39 |   resource_group_name        = azurerm_resource_group.rg.name
+		40 |   app_service_plan_id        = azurerm_app_service_plan.plan.id
+		41 | 
+		42 |   site_config {
+		43 |     use_32_bit_worker_process = true
+		44 |   }
+		45 | }
+
+
+Check: CKV_AZURE_16: "Ensure that Register with Azure Active Directory is enabled on App Service"
+	FAILED for resource: azurerm_app_service.webapp
+	File: /main.tf:36-45
+	Guide: https://docs.bridgecrew.io/docs/bc_azr_iam_1
+
+		36 | resource "azurerm_app_service" "webapp" {
+		37 |   name = "${local.resource_prefix}-webapp"
+		38 |   location                   = azurerm_resource_group.rg.location
+		39 |   resource_group_name        = azurerm_resource_group.rg.name
+		40 |   app_service_plan_id        = azurerm_app_service_plan.plan.id
+		41 | 
+		42 |   site_config {
+		43 |     use_32_bit_worker_process = true
+		44 |   }
+		45 | }
+
+
