@@ -1,0 +1,46 @@
+
+  Result 1
+
+  [azure-security-center-enable-standard-subscription][[0m[97mLOW[39m[0m] Resource 'azurerm_security_center_subscription_pricing.example' sets security center subscription type to free.
+  /src/main.tf:12
+
+
+       9 | }
+      10 | 
+      11 | resource "azurerm_security_center_subscription_pricing" "example" {
+      12 |   tier          = "Free"    string: "Free"
+      13 |   resource_type = "AppServices"
+      14 | }
+      15 | 
+
+  Impact:     Using free subscription does not enable Azure Defender for the resource type
+  Resolution: Enable standard subscription tier to benefit from Azure Defender
+
+  More Info:
+  - https://tfsec.dev/docs/azure/security-center/enable-standard-subscription#azure/security-center 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/security_center_subscription_pricing#tier 
+  - https://docs.microsoft.com/en-us/azure/security-center/security-center-pricing 
+
+  times
+  ------------------------------------------
+  disk i/o             416.33µs
+  parsing HCL          7.162µs
+  evaluating values    147.928µs
+  running checks       1.726446ms
+
+  counts
+  ------------------------------------------
+  files loaded         1
+  blocks               3
+  modules              0
+
+  results
+  ------------------------------------------
+  critical             0
+  high                 0
+  medium               0
+  low                  1
+  ignored              0
+
+  1 potential problems detected.
+

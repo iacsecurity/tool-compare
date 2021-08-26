@@ -1,0 +1,104 @@
+
+WARNINGs found:
+Rule: Ensure that Function apps is only accessible over HTTPS
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [azurerm_app_service.webapp] (main.tf:28)
+     Violating Resource: [azurerm_app_service.webapp]  (main.tf:28)
+
+     Evidence:
+             | This rule evaluated azurerm_app_service.webapp's configuration
+
+
+-----------------------------------------------
+Rule: Ensure Storage Account is using the latest version of TLS encryption
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [azurerm_storage_account.storacc] (main.tf:11)
+     Violating Resource: [azurerm_storage_account.storacc]  (main.tf:11)
+
+     Evidence:
+             | This rule evaluated myfuncappstorageaccount's configuration
+
+
+-----------------------------------------------
+Rule: Ensure default network access rule for Storage Accounts is set to deny
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [azurerm_storage_account.storacc] (main.tf:11)
+     Violating Resource: [azurerm_storage_account.storacc]  (main.tf:11)
+
+     Evidence:
+             | This rule evaluated myfuncappstorageaccount's configuration
+
+
+-----------------------------------------------
+Rule: Ensure Storage logging is enabled for Queue service for read, write and delete requests
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [azurerm_storage_account.storacc] (main.tf:11)
+     Violating Resource: [azurerm_storage_account.storacc]  (main.tf:11)
+
+     Evidence:
+             | This rule evaluated myfuncappstorageaccount's configuration
+
+
+-----------------------------------------------
+Rule: Ensure Function App is only accessible via HTTPS
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [azurerm_function_app.functionapp] (main.tf:28)
+     Violating Resource: [azurerm_function_app.functionapp]  (main.tf:28)
+
+     Evidence:
+             | The Function App my-func-app-functionapp does not have HTTPS only enabled.
+
+
+-----------------------------------------------
+Rule: Ensure Storage Account has default network access denied
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [azurerm_storage_account.storacc] (main.tf:11)
+     Violating Resource: [azurerm_storage_account.storacc]  (main.tf:11)
+
+     Evidence:
+             | The Storage Account myfuncappstorageaccount is not denying default network access
+
+
+-----------------------------------------------
+Rule: Ensure HTTP version is the latest in Function Apps
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [azurerm_function_app.functionapp] (main.tf:28)
+     Violating Resource: [azurerm_function_app.functionapp]  (main.tf:28)
+
+     Evidence:
+             | The Function App my-func-app-functionapp does not use the latest HTTP version.
+
+
+-----------------------------------------------
+Rule: Ensure client certificates are required in Function App
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [azurerm_function_app.functionapp] (main.tf:28)
+     Violating Resource: [azurerm_function_app.functionapp]  (main.tf:28)
+
+     Evidence:
+             | The Function App my-func-app-functionapp does not have client certificates mode set to required.
+
+
+-----------------------------------------------
+Rule: Ensure authentication is enabled in Function Apps
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [azurerm_function_app.functionapp] (main.tf:28)
+     Violating Resource: [azurerm_function_app.functionapp]  (main.tf:28)
+
+     Evidence:
+             | The Function App my-func-app-functionapp does not have authentication enabled.
+
+
+-----------------------------------------------
+
+Cloudrail ran this assessment without any policies and so all rule violations show as warnings.
+You can increase a rule's enforcement level by creating a Policy in the Web UI and adding the rule to it.

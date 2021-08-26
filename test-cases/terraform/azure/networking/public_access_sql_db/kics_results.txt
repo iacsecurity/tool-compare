@@ -1,0 +1,150 @@
+
+                   .0MO.                                    
+                   OMMMx                                    
+                   ;NMX;                                    
+                    ...           ...              ....     
+WMMMd     cWMMM0.  KMMMO      ;xKWMMMMNOc.     ,xXMMMMMWXkc.
+WMMMd   .0MMMN:    KMMMO    :XMMMMMMMMMMMWl   xMMMMMWMMMMMMl
+WMMMd  lWMMMO.     KMMMO   xMMMMKc...'lXMk   ,MMMMx   .;dXx 
+WMMMd.0MMMX;       KMMMO  cMMMMd        '    'MMMMNl'       
+WMMMNWMMMMl        KMMMO  0MMMN               oMMMMMMMXkl.  
+WMMMMMMMMMMo       KMMMO  0MMMX                .ckKWMMMMMM0.
+WMMMMWokMMMMk      KMMMO  oMMMMc              .     .:OMMMM0
+WMMMK.  dMMMM0.    KMMMO   KMMMMx'    ,kNc   :WOc.    .NMMMX
+WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
+WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
+xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
+
+
+Scanning with Keeping Infrastructure as Code Secure v1.4.1
+
+
+
+Files scanned: 1
+Parsed files: 1
+Queries loaded: 778
+Queries failed to execute: 0
+
+------------------------------------
+
+Name Is Not Snake Case, Severity: INFO, Results: 6
+Description: All names should follow snake case pattern.
+Platform: Terraform
+
+	[1]: ../../src/main.tf:43
+
+		042: 
+		043: resource "azurerm_sql_database" "my-sql-database" {
+		044:   name                = "${local.resource_prefix}sqldatabase"
+
+
+	[2]: ../../src/main.tf:57
+
+		056:   tags = {
+		057:     ResScope = local.test_description
+		058:   }
+
+
+	[3]: ../../src/main.tf:16
+
+		015: }
+		016: resource "azurerm_resource_group" "tests-resource-group" {
+		017:   name     = "${local.resource_prefix}resourcegroup"
+
+
+	[4]: ../../src/main.tf:21
+
+		020: 
+		021: resource "azurerm_mssql_server" "my-sql-server" {
+		022:   name                          = "${local.resource_prefix}sqlserver"
+
+
+	[5]: ../../src/main.tf:31
+
+		030:   tags = {
+		031:     ResScope = local.test_description
+		032:   }
+
+
+	[6]: ../../src/main.tf:35
+
+		034: 
+		035: resource "azurerm_storage_account" "my-storage-account" {
+		036:   name                     = "${local.resource_prefix}storageaccount"
+
+
+Storage Account Not Using Latest TLS Encryption Version, Severity: MEDIUM, Results: 1
+Description: Ensure Storage Account is using the latest version of TLS encryption
+Platform: Terraform
+
+	[1]: ../../src/main.tf:35
+
+		034: 
+		035: resource "azurerm_storage_account" "my-storage-account" {
+		036:   name                     = "${local.resource_prefix}storageaccount"
+
+
+MSSQL Server Auditing Disabled, Severity: MEDIUM, Results: 1
+Description: Make sure that for MSSQL Servers, that 'Auditing' is set to 'On'
+Platform: Terraform
+
+	[1]: ../../src/main.tf:21
+
+		020: 
+		021: resource "azurerm_mssql_server" "my-sql-server" {
+		022:   name                          = "${local.resource_prefix}sqlserver"
+
+
+Trusted Microsoft Services Not Enabled, Severity: HIGH, Results: 1
+Description: Trusted MIcrosoft Services are not enabled for Storage Account access
+Platform: Terraform
+
+	[1]: ../../src/main.tf:35
+
+		034: 
+		035: resource "azurerm_storage_account" "my-storage-account" {
+		036:   name                     = "${local.resource_prefix}storageaccount"
+
+
+Storage Account Not Forcing HTTPS, Severity: HIGH, Results: 1
+Description: See that Storage Accounts forces the use of HTTPS
+Platform: Terraform
+
+	[1]: ../../src/main.tf:35
+
+		034: 
+		035: resource "azurerm_storage_account" "my-storage-account" {
+		036:   name                     = "${local.resource_prefix}storageaccount"
+
+
+SQL Database Audit Disabled, Severity: HIGH, Results: 1
+Description: Ensure that 'Threat Detection' is enabled for Azure SQL Database
+Platform: Terraform
+
+	[1]: ../../src/main.tf:43
+
+		042: 
+		043: resource "azurerm_sql_database" "my-sql-database" {
+		044:   name                = "${local.resource_prefix}sqldatabase"
+
+
+Passwords And Secrets In Infrastructure Code, Severity: HIGH, Results: 1
+Description: Query to find passwords and secrets in infrastructure code.
+Platform: Common
+
+	[1]: ../../src/main.tf:27
+
+		026:   administrator_login           = "4dm1n157r470r"
+		027:   administrator_login_password  = "4-v3ry-53cr37-p455w0rd"
+		028:   public_network_access_enabled = true
+
+
+
+Results Summary:
+HIGH: 4
+MEDIUM: 2
+LOW: 0
+INFO: 6
+TOTAL: 12
+
+Scan duration: 15.554111464s

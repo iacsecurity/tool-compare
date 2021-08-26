@@ -1,0 +1,105 @@
+
+  Result 1
+
+  [azure-database-no-public-access][[0m[33mMEDIUM[39m[0m] Resource 'azurerm_mssql_server.sql' has default public network access of enabled
+  /src/main.tf:26-33
+
+
+      23 |   account_replication_type = "LRS"
+      24 | }
+      25 | 
+      26 | resource "azurerm_mssql_server" "sql" {
+      27 |   name                         = "${local.resource_prefix}-sqlserver"
+      28 |   resource_group_name          = azurerm_resource_group.rg.name
+      29 |   location                     = azurerm_resource_group.rg.location
+      30 |   version                      = "12.0"
+      31 |   administrator_login          = "4dm1n157r470r"
+      32 |   administrator_login_password = "4-v3ry-53cr37-p455w0rd"
+      33 | }
+      34 | 
+      35 | resource "azurerm_mssql_server_extended_auditing_policy" "example" {
+      36 |   server_id                               = azurerm_mssql_server.sql.id
+
+  Impact:     Publicly accessible database could lead to compromised data
+  Resolution: Disable public access to database when not required
+
+  More Info:
+  - https://tfsec.dev/docs/azure/database/no-public-access#azure/database 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_server#public_network_access_enabled 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mysql_server#public_network_access_enabled 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mariadb_server#public_network_access_enabled 
+
+  Result 2
+
+  [azure-storage-use-secure-tls-policy][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'azurerm_storage_account.example' should have the min tls version set to TLS1_2 .
+  /src/main.tf:18-24
+
+
+      15 |   location = "West Europe"
+      16 | }
+      17 | 
+      18 | resource "azurerm_storage_account" "example" {
+      19 |   name                     = "${local.resource_prefix}tststacc"
+      20 |   resource_group_name      = azurerm_resource_group.rg.name
+      21 |   location                 = azurerm_resource_group.rg.location
+      22 |   account_tier             = "Standard"
+      23 |   account_replication_type = "LRS"
+      24 | }
+      25 | 
+      26 | resource "azurerm_mssql_server" "sql" {
+      27 |   name                         = "${local.resource_prefix}-sqlserver"
+
+  Legacy ID:  AZU015
+  Impact:     The TLS version being outdated and has known vulnerabilities
+  Resolution: Use a more recent TLS/SSL policy for the load balancer
+
+  More Info:
+  - https://tfsec.dev/docs/azure/storage/use-secure-tls-policy#azure/storage 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account#min_tls_version 
+  - https://docs.microsoft.com/en-us/azure/storage/common/transport-layer-security-configure-minimum-version 
+
+  Result 3
+
+  [general-secrets-sensitive-in-attribute][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Block 'azurerm_mssql_server.sql' includes a potentially sensitive attribute which is defined within the project.
+  /src/main.tf:32
+
+
+      29 |   location                     = azurerm_resource_group.rg.location
+      30 |   version                      = "12.0"
+      31 |   administrator_login          = "4dm1n157r470r"
+      32 |   administrator_login_password = "4-v3ry-53cr37-p455w0rd"    string: "4-v3ry-53cr37-p455w0rd"
+      33 | }
+      34 | 
+      35 | resource "azurerm_mssql_server_extended_auditing_policy" "example" {
+
+  Legacy ID:  GEN003
+  Impact:     Block attribute could be leaking secrets
+  Resolution: Don't include sensitive data in blocks
+
+  More Info:
+  - https://tfsec.dev/docs/general/secrets/sensitive-in-attribute#general/secrets 
+  - https://www.terraform.io/docs/state/sensitive-data.html 
+
+  times
+  ------------------------------------------
+  disk i/o             542.953µs
+  parsing HCL          8.642µs
+  evaluating values    381.582µs
+  running checks       2.107262ms
+
+  counts
+  ------------------------------------------
+  files loaded         1
+  blocks               7
+  modules              0
+
+  results
+  ------------------------------------------
+  critical             2
+  high                 0
+  medium               1
+  low                  0
+  ignored              0
+
+  3 potential problems detected.
+

@@ -1,0 +1,59 @@
+Failed to run the process ...
+{
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "ignoreSettings": null,
+    "org": "yi2020",
+    "projectId": "",
+    "policy": ""
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "main.tf",
+  "projectName": "project",
+  "org": "yi2020",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
+  "ok": false,
+  "infrastructureAsCodeIssues": [
+    {
+      "severity": "low",
+      "resolve": "Set `name` attribute to `log_connections`, and `value` attribute to `on`",
+      "id": "SNYK-CC-TF-257",
+      "impact": "Connection logs will not be available for troubleshooting, or investigations",
+      "msg": "resource.azurerm_postgresql_configuration[example]",
+      "remediation": {
+        "terraform": "Set `name` attribute to `log_connections`, and `value` attribute to `on`",
+        "arm": "Set `name`  of child resource to `log_connections`, and `properties.value` attribute to `on`"
+      },
+      "subType": "Database",
+      "issue": "Azure Postgresql server log_connections setting is not enabled",
+      "publicId": "SNYK-CC-TF-257",
+      "title": "The log_connections setting is disabled on Postgresql Server",
+      "references": [
+        "https://docs.microsoft.com/en-us/azure/postgresql/howto-configure-server-parameters-using-cli",
+        "https://docs.microsoft.com/en-us/azure/postgresql/concepts-server-logs"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Azure Postgresql server log_connections setting is not enabled",
+        "impact": "Connection logs will not be available for troubleshooting, or investigations",
+        "resolve": "Set `name` attribute to `log_connections`, and `value` attribute to `on`"
+      },
+      "lineNumber": 30,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-257",
+      "path": [
+        "resource",
+        "azurerm_postgresql_configuration[example]"
+      ]
+    }
+  ]
+}

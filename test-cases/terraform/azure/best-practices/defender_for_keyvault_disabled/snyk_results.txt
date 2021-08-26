@@ -1,0 +1,54 @@
+Failed to run the process ...
+{
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "ignoreSettings": null,
+    "org": "yi2020",
+    "projectId": "",
+    "policy": ""
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "main.tf",
+  "projectName": "project",
+  "org": "yi2020",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
+  "ok": false,
+  "infrastructureAsCodeIssues": [
+    {
+      "severity": "low",
+      "resolve": "Set `tier` attribute to `Standard`",
+      "id": "SNYK-CC-TF-164",
+      "impact": "Most of Azure Security Center features are disabled under the Free tier",
+      "msg": "resource.azurerm_security_center_subscription_pricing[example]",
+      "subType": "Security Center",
+      "issue": "Azure Security Center standard tier pricing is not enabled",
+      "publicId": "SNYK-CC-TF-164",
+      "title": "Security Center Free Tier",
+      "references": [
+        "https://docs.microsoft.com/bs-cyrl-ba/azure/security-center/security-center-pricing"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Azure Security Center standard tier pricing is not enabled",
+        "impact": "Most of Azure Security Center features are disabled under the Free tier",
+        "resolve": "Set `tier` attribute to `Standard`"
+      },
+      "lineNumber": 11,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-164",
+      "path": [
+        "resource",
+        "azurerm_security_center_subscription_pricing[example]"
+      ]
+    }
+  ]
+}

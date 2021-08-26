@@ -1,0 +1,91 @@
+
+  Result 1
+
+  [azure-database-enable-ssl-enforcement][[0m[33mMEDIUM[39m[0m] Resource 'azurerm_mysql_server.example' has ssl_enforcement_enabled disabled
+  /src/main.tf:32
+
+
+      29 |   backup_retention_days             = 7
+      30 |   geo_redundant_backup_enabled      = false
+      31 |   infrastructure_encryption_enabled = false
+      32 |   ssl_enforcement_enabled           = false    bool: false
+      33 |   ssl_minimal_tls_version_enforced  = "TLS1_2"
+      34 |   public_network_access_enabled     = true
+      35 | }
+
+  Impact:     Insecure connections could lead to data loss and other vulnerabilities
+  Resolution: Enable SSL enforcement
+
+  More Info:
+  - https://tfsec.dev/docs/azure/database/enable-ssl-enforcement#azure/database 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_server#ssl_enforcement_enabled 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mysql_server#ssl_enforcement_enabled 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mariadb_server#ssl_enforcement_enabled 
+
+  Result 2
+
+  [azure-database-no-public-access][[0m[33mMEDIUM[39m[0m] Resource 'azurerm_mysql_server.example' has public access explicitly enabled
+  /src/main.tf:34
+
+
+      31 |   infrastructure_encryption_enabled = false
+      32 |   ssl_enforcement_enabled           = false
+      33 |   ssl_minimal_tls_version_enforced  = "TLS1_2"
+      34 |   public_network_access_enabled     = true    bool: true
+      35 | }
+      36 | 
+
+  Impact:     Publicly accessible database could lead to compromised data
+  Resolution: Disable public access to database when not required
+
+  More Info:
+  - https://tfsec.dev/docs/azure/database/no-public-access#azure/database 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_server#public_network_access_enabled 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mysql_server#public_network_access_enabled 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mariadb_server#public_network_access_enabled 
+
+  Result 3
+
+  [general-secrets-sensitive-in-attribute][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Block 'azurerm_mysql_server.example' includes a potentially sensitive attribute which is defined within the project.
+  /src/main.tf:22
+
+
+      19 |   resource_group_name = azurerm_resource_group.rg.name
+      20 | 
+      21 |   administrator_login          = "mysqladminun"
+      22 |   administrator_login_password = "H@Sh1CoR3!"    string: "H@Sh1CoR3!"
+      23 | 
+      24 |   sku_name   = "B_Gen5_2"
+      25 |   storage_mb = 5120
+
+  Legacy ID:  GEN003
+  Impact:     Block attribute could be leaking secrets
+  Resolution: Don't include sensitive data in blocks
+
+  More Info:
+  - https://tfsec.dev/docs/general/secrets/sensitive-in-attribute#general/secrets 
+  - https://www.terraform.io/docs/state/sensitive-data.html 
+
+  times
+  ------------------------------------------
+  disk i/o             842.599µs
+  parsing HCL          7.42µs
+  evaluating values    343.517µs
+  running checks       2.069717ms
+
+  counts
+  ------------------------------------------
+  files loaded         1
+  blocks               4
+  modules              0
+
+  results
+  ------------------------------------------
+  critical             1
+  high                 0
+  medium               2
+  low                  0
+  ignored              0
+
+  3 potential problems detected.
+

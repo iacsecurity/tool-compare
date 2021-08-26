@@ -1,0 +1,73 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.363 
+
+terraform scan results:
+
+Passed checks: 0, Failed checks: 4, Skipped checks: 0
+
+Check: CKV_AZURE_52: "Ensure MSSQL is using the latest version of TLS encryption"
+	FAILED for resource: azurerm_mssql_server.sql
+	File: /main.tf:18-25
+	Guide: https://docs.bridgecrew.io/docs/ensure-mssql-is-using-the-latest-version-of-tls-encryption
+
+		18 | resource "azurerm_mssql_server" "sql" {
+		19 |   name                         = "${local.resource_prefix}-sqlserver"
+		20 |   resource_group_name          = azurerm_resource_group.rg.name
+		21 |   location                     = azurerm_resource_group.rg.location
+		22 |   version                      = "12.0"
+		23 |   administrator_login          = "4dm1n157r470r"
+		24 |   administrator_login_password = "4-v3ry-53cr37-p455w0rd"
+		25 | }
+
+
+Check: CKV_AZURE_23: "Ensure that 'Auditing' is set to 'On' for SQL servers"
+	FAILED for resource: azurerm_mssql_server.sql
+	File: /main.tf:18-25
+	Guide: https://docs.bridgecrew.io/docs/bc_azr_logging_2
+
+		18 | resource "azurerm_mssql_server" "sql" {
+		19 |   name                         = "${local.resource_prefix}-sqlserver"
+		20 |   resource_group_name          = azurerm_resource_group.rg.name
+		21 |   location                     = azurerm_resource_group.rg.location
+		22 |   version                      = "12.0"
+		23 |   administrator_login          = "4dm1n157r470r"
+		24 |   administrator_login_password = "4-v3ry-53cr37-p455w0rd"
+		25 | }
+
+
+Check: CKV_AZURE_24: "Ensure that 'Auditing' Retention is 'greater than 90 days' for SQL servers"
+	FAILED for resource: azurerm_mssql_server.sql
+	File: /main.tf:18-25
+	Guide: https://docs.bridgecrew.io/docs/bc_azr_logging_3
+
+		18 | resource "azurerm_mssql_server" "sql" {
+		19 |   name                         = "${local.resource_prefix}-sqlserver"
+		20 |   resource_group_name          = azurerm_resource_group.rg.name
+		21 |   location                     = azurerm_resource_group.rg.location
+		22 |   version                      = "12.0"
+		23 |   administrator_login          = "4dm1n157r470r"
+		24 |   administrator_login_password = "4-v3ry-53cr37-p455w0rd"
+		25 | }
+
+
+Check: CKV_AZURE_113: "Ensure that SQL server disables public network access"
+	FAILED for resource: azurerm_mssql_server.sql
+	File: /main.tf:18-25
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-sql-server-disables-public-network-access
+
+		18 | resource "azurerm_mssql_server" "sql" {
+		19 |   name                         = "${local.resource_prefix}-sqlserver"
+		20 |   resource_group_name          = azurerm_resource_group.rg.name
+		21 |   location                     = azurerm_resource_group.rg.location
+		22 |   version                      = "12.0"
+		23 |   administrator_login          = "4dm1n157r470r"
+		24 |   administrator_login_password = "4-v3ry-53cr37-p455w0rd"
+		25 | }
+
+

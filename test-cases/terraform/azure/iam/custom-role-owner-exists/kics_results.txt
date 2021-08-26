@@ -1,0 +1,49 @@
+
+                   .0MO.                                    
+                   OMMMx                                    
+                   ;NMX;                                    
+                    ...           ...              ....     
+WMMMd     cWMMM0.  KMMMO      ;xKWMMMMNOc.     ,xXMMMMMWXkc.
+WMMMd   .0MMMN:    KMMMO    :XMMMMMMMMMMMWl   xMMMMMWMMMMMMl
+WMMMd  lWMMMO.     KMMMO   xMMMMKc...'lXMk   ,MMMMx   .;dXx 
+WMMMd.0MMMX;       KMMMO  cMMMMd        '    'MMMMNl'       
+WMMMNWMMMMl        KMMMO  0MMMN               oMMMMMMMXkl.  
+WMMMMMMMMMMo       KMMMO  0MMMX                .ckKWMMMMMM0.
+WMMMMWokMMMMk      KMMMO  oMMMMc              .     .:OMMMM0
+WMMMK.  dMMMM0.    KMMMO   KMMMMx'    ,kNc   :WOc.    .NMMMX
+WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
+WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
+xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
+
+
+Scanning with Keeping Infrastructure as Code Secure v1.4.1
+
+
+
+Files scanned: 1
+Parsed files: 1
+Queries loaded: 778
+Queries failed to execute: 0
+
+------------------------------------
+
+Role Definition Allows Custom Role Creation, Severity: MEDIUM, Results: 1
+Description: Role Definition should not allow custom role creation
+Platform: Terraform
+
+	[1]: ../../src/main.tf:25
+
+		024:   permissions {
+		025:     actions     = ["*"]
+		026:     not_actions = []
+
+
+
+Results Summary:
+HIGH: 0
+MEDIUM: 1
+LOW: 0
+INFO: 0
+TOTAL: 1
+
+Scan duration: 22.319907965s

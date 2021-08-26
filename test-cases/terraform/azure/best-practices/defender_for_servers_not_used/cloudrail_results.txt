@@ -1,0 +1,16 @@
+
+WARNINGs found:
+Rule: Ensure Azure Defender for Servers is enabled
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [azurerm_security_center_subscription_pricing.example] (main.tf:10)
+     Violating Resource: [azurerm_security_center_subscription_pricing.example]  (main.tf:10)
+
+     Evidence:
+             | Azure Defender is not enabled for Servers in the subscription 00000000-0000-0000-0000-000000000000.
+
+
+-----------------------------------------------
+
+Cloudrail ran this assessment without any policies and so all rule violations show as warnings.
+You can increase a rule's enforcement level by creating a Policy in the Web UI and adding the rule to it.

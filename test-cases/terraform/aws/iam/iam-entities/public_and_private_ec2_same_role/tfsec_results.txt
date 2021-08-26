@@ -1,0 +1,114 @@
+
+  Result 1
+
+  [aws-ec2-enforce-http-token-imds][[0m[31mHIGH[39m[0m] Resource 'aws_instance.pub_ins' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
+  /src/main.tf:98-104
+
+
+      95 | }
+      96 | 
+      97 | 
+      98 | resource "aws_instance" "pub_ins" {
+      99 |   ami           = "${data.aws_ami.ubuntu.id}"
+     100 |   instance_type = "t2.micro"
+     101 |   subnet_id = module.vpc.public_subnets[0]
+     102 |   iam_instance_profile = aws_iam_instance_profile.test_profile.name
+     103 | 
+     104 | }
+     105 | 
+     106 | resource "aws_instance" "priv_ins" {
+     107 |   ami           = "${data.aws_ami.ubuntu.id}"
+
+  Legacy ID:  AWS079
+  Impact:     Instance metadata service can be interacted with freely
+  Resolution: Enable HTTP token requirement for IMDS
+
+  More Info:
+  - https://tfsec.dev/docs/aws/ec2/enforce-http-token-imds#aws/ec2 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#metadata-options 
+  - https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service 
+
+  Result 2
+
+  [aws-ec2-enforce-http-token-imds][[0m[31mHIGH[39m[0m] Resource 'aws_instance.priv_ins' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
+  /src/main.tf:106-111
+
+
+     103 | 
+     104 | }
+     105 | 
+     106 | resource "aws_instance" "priv_ins" {
+     107 |   ami           = "${data.aws_ami.ubuntu.id}"
+     108 |   instance_type = "t2.micro"
+     109 |   subnet_id = module.vpc.private_subnets[0]
+     110 |   iam_instance_profile = aws_iam_instance_profile.test_profile.name
+     111 | }
+
+  Legacy ID:  AWS079
+  Impact:     Instance metadata service can be interacted with freely
+  Resolution: Enable HTTP token requirement for IMDS
+
+  More Info:
+  - https://tfsec.dev/docs/aws/ec2/enforce-http-token-imds#aws/ec2 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#metadata-options 
+  - https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service 
+
+  Result 3
+
+  [aws-iam-no-policy-wildcards][[0m[31mHIGH[39m[0m] Resource 'aws_iam_role_policy.test_policy' defines a policy with wildcarded resources.
+  /src/main.tf:81-94
+
+
+      78 |   name = "test_policy"
+      79 |   role = "${aws_iam_role.test_role.id}"
+      80 | 
+      81 |   policy = <<EOF    string: "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Action\": [\n        \"s3:*\"\n      ],\n      \"Effect\": \"Allow\",\n      \"Resource\": \"*\"\n    }\n  ]\n}\n"
+      82 | {
+      83 |   "Version": "2012-10-17",
+      84 |   "Statement": [
+      85 |     {
+      86 |       "Action": [
+      87 |         "s3:*"
+      88 |       ],
+      89 |       "Effect": "Allow",
+      90 |       "Resource": "*"
+      91 |     }
+      92 |   ]
+      93 | }
+      94 | EOF
+      95 | }
+      96 | 
+      97 | 
+
+  Legacy ID:  AWS099
+  Impact:     Overly permissive policies may grant access to sensitive resources
+  Resolution: Specify the exact permissions required, and to which resources they should apply instead of using wildcards.
+
+  More Info:
+  - https://tfsec.dev/docs/aws/iam/no-policy-wildcards#aws/iam 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document 
+  - https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html 
+
+  times
+  ------------------------------------------
+  disk i/o             40.619497ms
+  parsing HCL          121.064µs
+  evaluating values    94.268314ms
+  running checks       17.337631ms
+
+  counts
+  ------------------------------------------
+  files loaded         6
+  blocks               9
+  modules              1
+
+  results
+  ------------------------------------------
+  critical             0
+  high                 3
+  medium               0
+  low                  0
+  ignored              0
+
+  3 potential problems detected.
+

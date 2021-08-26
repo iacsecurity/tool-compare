@@ -1,0 +1,26 @@
+
+
+Violation Details -
+    
+	Description    :	Ensure that Azure Resource Group has resource lock enabled
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	13
+	Severity       :	LOW
+	
+	-----------------------------------------------------------------------
+	
+
+Scan Summary -
+
+	File/Folder         :	/iac
+	IaC Type            :	all
+	Scanned At          :	2021-08-20 05:08:06.576867557 +0000 UTC
+	Policies Validated  :	1
+	Violated Policies   :	1
+	Low                 :	1
+	Medium              :	0
+	High                :	0
+	
+

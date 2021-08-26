@@ -1,0 +1,102 @@
+
+  Result 1
+
+  [azure-keyvault-specify-network-acl][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'azurerm_key_vault.kv' specifies does not specify a network acl block with default action.
+  /src/main.tf:30-53
+
+
+      27 |   }
+      28 | }
+      29 | 
+      30 | resource "azurerm_key_vault" "kv" {
+      31 |   name                        = "${local.resource_prefix}-keyvault"
+      32 |   location                    = azurerm_resource_group.rg.location
+      33 |   resource_group_name         = azurerm_resource_group.rg.name
+      34 |   #enabled_for_disk_encryption = true
+      35 |   tenant_id                   = data.azurerm_client_config.current.tenant_id
+      36 |   soft_delete_retention_days  = 7
+      37 |   purge_protection_enabled    = true
+      38 |   sku_name = "standard"
+      39 | 
+      40 |   access_policy {
+      41 |     tenant_id = data.azurerm_client_config.current.tenant_id
+      42 |     object_id = data.azurerm_client_config.current.object_id
+      43 |     key_permissions = [
+      44 |       "Get", "List", "create", "delete", "recover",
+      45 |     ]
+      46 |     secret_permissions = [
+      47 |       "Get", "List", "set",
+      48 |     ]
+      49 |     storage_permissions = [
+      50 |       "Get",
+      51 |     ]
+      52 |   }
+      53 | }
+      54 | 
+      55 | 
+      56 | resource "azurerm_monitor_diagnostic_setting" "example" {
+
+  Legacy ID:  AZU020
+  Impact:     Without a network ACL the key vault is freely accessible
+  Resolution: Set a network ACL for the key vault
+
+  More Info:
+  - https://tfsec.dev/docs/azure/keyvault/specify-network-acl#azure/keyvault 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/key_vault#network_acls 
+  - https://docs.microsoft.com/en-us/azure/key-vault/general/network-security 
+
+  Result 2
+
+  [azure-storage-use-secure-tls-policy][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'azurerm_storage_account.storacc' should have the min tls version set to TLS1_2 .
+  /src/main.tf:19-28
+
+
+      16 |   location = "West Europe"
+      17 | }
+      18 | 
+      19 | resource "azurerm_storage_account" "storacc" {
+      20 |   name                     = "${local.resource_prefix}tststacc"
+      21 |   resource_group_name      = azurerm_resource_group.rg.name
+      22 |   location                 = azurerm_resource_group.rg.location
+      23 |   account_tier             = "Standard"
+      24 |   account_replication_type = "LRS"
+      25 |   identity {
+      26 |     type = "SystemAssigned"
+      27 |   }
+      28 | }
+      29 | 
+      30 | resource "azurerm_key_vault" "kv" {
+      31 |   name                        = "${local.resource_prefix}-keyvault"
+
+  Legacy ID:  AZU015
+  Impact:     The TLS version being outdated and has known vulnerabilities
+  Resolution: Use a more recent TLS/SSL policy for the load balancer
+
+  More Info:
+  - https://tfsec.dev/docs/azure/storage/use-secure-tls-policy#azure/storage 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account#min_tls_version 
+  - https://docs.microsoft.com/en-us/azure/storage/common/transport-layer-security-configure-minimum-version 
+
+  times
+  ------------------------------------------
+  disk i/o             732.418µs
+  parsing HCL          7.884µs
+  evaluating values    346.156µs
+  running checks       2.116165ms
+
+  counts
+  ------------------------------------------
+  files loaded         1
+  blocks               7
+  modules              0
+
+  results
+  ------------------------------------------
+  critical             2
+  high                 0
+  medium               0
+  low                  0
+  ignored              0
+
+  2 potential problems detected.
+

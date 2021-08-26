@@ -1,0 +1,60 @@
+
+                   .0MO.                                    
+                   OMMMx                                    
+                   ;NMX;                                    
+                    ...           ...              ....     
+WMMMd     cWMMM0.  KMMMO      ;xKWMMMMNOc.     ,xXMMMMMWXkc.
+WMMMd   .0MMMN:    KMMMO    :XMMMMMMMMMMMWl   xMMMMMWMMMMMMl
+WMMMd  lWMMMO.     KMMMO   xMMMMKc...'lXMk   ,MMMMx   .;dXx 
+WMMMd.0MMMX;       KMMMO  cMMMMd        '    'MMMMNl'       
+WMMMNWMMMMl        KMMMO  0MMMN               oMMMMMMMXkl.  
+WMMMMMMMMMMo       KMMMO  0MMMX                .ckKWMMMMMM0.
+WMMMMWokMMMMk      KMMMO  oMMMMc              .     .:OMMMM0
+WMMMK.  dMMMM0.    KMMMO   KMMMMx'    ,kNc   :WOc.    .NMMMX
+WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
+WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
+xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
+
+
+Scanning with Keeping Infrastructure as Code Secure v1.4.1
+
+
+
+Files scanned: 1
+Parsed files: 1
+Queries loaded: 778
+Queries failed to execute: 0
+
+------------------------------------
+
+Passwords And Secrets In Infrastructure Code, Severity: HIGH, Results: 1
+Description: Query to find passwords and secrets in infrastructure code.
+Platform: Common
+
+	[1]: ../../src/main.tf:22
+
+		021:   administrator_login          = "mysqladminun"
+		022:   administrator_login_password = "H@Sh1CoR3!"
+		023: 
+
+
+MySQL SSL Connection Disabled, Severity: HIGH, Results: 1
+Description: Make sure that for MySQL Database Server, 'Enforce SSL connection' is enabled
+Platform: Terraform
+
+	[1]: ../../src/main.tf:32
+
+		031:   infrastructure_encryption_enabled = false
+		032:   ssl_enforcement_enabled           = false
+		033:   ssl_minimal_tls_version_enforced  = "TLS1_2"
+
+
+
+Results Summary:
+HIGH: 2
+MEDIUM: 0
+LOW: 0
+INFO: 0
+TOTAL: 2
+
+Scan duration: 22.862014533s

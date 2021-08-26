@@ -1,0 +1,60 @@
+
+WARNINGs found:
+Rule: Ensure that MySQL server enables Threat detection policy
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [azurerm_mysql_server.example] (main.tf:15)
+     Violating Resource: [azurerm_mysql_server.example]  (main.tf:15)
+
+     Evidence:
+             | This rule evaluated asdf-mysqlserver's configuration
+
+
+-----------------------------------------------
+Rule: Ensure that MySQL server enables geo-redundant backups
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [azurerm_mysql_server.example] (main.tf:15)
+     Violating Resource: [azurerm_mysql_server.example]  (main.tf:15)
+
+     Evidence:
+             | This rule evaluated asdf-mysqlserver's configuration
+
+
+-----------------------------------------------
+Rule: Ensure MySQL servers have Public Network Access Enabled disabled
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [azurerm_mysql_server.example] (main.tf:15)
+     Violating Resource: [azurerm_mysql_server.example]  (main.tf:15)
+
+     Evidence:
+             | This rule evaluated asdf-mysqlserver's configuration
+
+
+-----------------------------------------------
+Rule: Ensure MySQL servers have Enforce SSL Connection enabled
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [azurerm_mysql_server.example] (main.tf:15)
+     Violating Resource: [azurerm_mysql_server.example]  (main.tf:15)
+
+     Evidence:
+             | This rule evaluated asdf-mysqlserver's configuration
+
+
+-----------------------------------------------
+Rule: Ensure MySQL Servers are enforcing SSL
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [azurerm_mysql_server.example] (main.tf:15)
+     Violating Resource: [azurerm_mysql_server.example]  (main.tf:15)
+
+     Evidence:
+             | The MySQL Server asdf-mysqlserver is not enforcing SSL connections.
+
+
+-----------------------------------------------
+
+Cloudrail ran this assessment without any policies and so all rule violations show as warnings.
+You can increase a rule's enforcement level by creating a Policy in the Web UI and adding the rule to it.

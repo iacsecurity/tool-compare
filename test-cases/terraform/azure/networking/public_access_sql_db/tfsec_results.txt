@@ -1,0 +1,133 @@
+
+  Result 1
+
+  [azure-database-enable-audit][[0m[33mMEDIUM[39m[0m] Resource 'azurerm_mssql_server.my-sql-server' does not have an extended audit policy configured.
+  /src/main.tf:21-33
+
+
+      18 |   location = "West Europe"
+      19 | }
+      20 | 
+      21 | resource "azurerm_mssql_server" "my-sql-server" {
+      22 |   name                          = "${local.resource_prefix}sqlserver"
+      23 |   resource_group_name           = azurerm_resource_group.tests-resource-group.name
+      24 |   location                      = azurerm_resource_group.tests-resource-group.location
+      25 |   version                       = "12.0"
+      26 |   administrator_login           = "4dm1n157r470r"
+      27 |   administrator_login_password  = "4-v3ry-53cr37-p455w0rd"
+      28 |   public_network_access_enabled = true
+      29 | 
+      30 |   tags = {
+      31 |     ResScope = local.test_description
+      32 |   }
+      33 | }
+      34 | 
+      35 | resource "azurerm_storage_account" "my-storage-account" {
+      36 |   name                     = "${local.resource_prefix}storageaccount"
+
+  Legacy ID:  AZU018
+  Impact:     Auditing provides valuable information about access and usage
+  Resolution: Enable auditing on Azure SQL databases
+
+  More Info:
+  - https://tfsec.dev/docs/azure/database/enable-audit#azure/database 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/sql_server#extended_auditing_policy 
+  - https://docs.microsoft.com/en-us/azure/azure-sql/database/auditing-overview 
+
+  Result 2
+
+  [azure-database-no-public-access][[0m[33mMEDIUM[39m[0m] Resource 'azurerm_mssql_server.my-sql-server' has public access explicitly enabled
+  /src/main.tf:28
+
+
+      25 |   version                       = "12.0"
+      26 |   administrator_login           = "4dm1n157r470r"
+      27 |   administrator_login_password  = "4-v3ry-53cr37-p455w0rd"
+      28 |   public_network_access_enabled = true    bool: true
+      29 | 
+      30 |   tags = {
+      31 |     ResScope = local.test_description
+
+  Impact:     Publicly accessible database could lead to compromised data
+  Resolution: Disable public access to database when not required
+
+  More Info:
+  - https://tfsec.dev/docs/azure/database/no-public-access#azure/database 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_server#public_network_access_enabled 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mysql_server#public_network_access_enabled 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mariadb_server#public_network_access_enabled 
+
+  Result 3
+
+  [azure-storage-use-secure-tls-policy][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'azurerm_storage_account.my-storage-account' should have the min tls version set to TLS1_2 .
+  /src/main.tf:35-41
+
+
+      32 |   }
+      33 | }
+      34 | 
+      35 | resource "azurerm_storage_account" "my-storage-account" {
+      36 |   name                     = "${local.resource_prefix}storageaccount"
+      37 |   resource_group_name      = azurerm_resource_group.tests-resource-group.name
+      38 |   location                 = azurerm_resource_group.tests-resource-group.location
+      39 |   account_tier             = "Standard"
+      40 |   account_replication_type = "LRS"
+      41 | }
+      42 | 
+      43 | resource "azurerm_sql_database" "my-sql-database" {
+      44 |   name                = "${local.resource_prefix}sqldatabase"
+
+  Legacy ID:  AZU015
+  Impact:     The TLS version being outdated and has known vulnerabilities
+  Resolution: Use a more recent TLS/SSL policy for the load balancer
+
+  More Info:
+  - https://tfsec.dev/docs/azure/storage/use-secure-tls-policy#azure/storage 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account#min_tls_version 
+  - https://docs.microsoft.com/en-us/azure/storage/common/transport-layer-security-configure-minimum-version 
+
+  Result 4
+
+  [general-secrets-sensitive-in-attribute][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Block 'azurerm_mssql_server.my-sql-server' includes a potentially sensitive attribute which is defined within the project.
+  /src/main.tf:27
+
+
+      24 |   location                      = azurerm_resource_group.tests-resource-group.location
+      25 |   version                       = "12.0"
+      26 |   administrator_login           = "4dm1n157r470r"
+      27 |   administrator_login_password  = "4-v3ry-53cr37-p455w0rd"    string: "4-v3ry-53cr37-p455w0rd"
+      28 |   public_network_access_enabled = true
+      29 | 
+      30 |   tags = {
+
+  Legacy ID:  GEN003
+  Impact:     Block attribute could be leaking secrets
+  Resolution: Don't include sensitive data in blocks
+
+  More Info:
+  - https://tfsec.dev/docs/general/secrets/sensitive-in-attribute#general/secrets 
+  - https://www.terraform.io/docs/state/sensitive-data.html 
+
+  times
+  ------------------------------------------
+  disk i/o             754.796µs
+  parsing HCL          8.579µs
+  evaluating values    502.39µs
+  running checks       3.299906ms
+
+  counts
+  ------------------------------------------
+  files loaded         1
+  blocks               8
+  modules              0
+
+  results
+  ------------------------------------------
+  critical             2
+  high                 0
+  medium               2
+  low                  0
+  ignored              0
+
+  4 potential problems detected.
+

@@ -1,0 +1,53 @@
+
+  Result 1
+
+  [azure-storage-use-secure-tls-policy][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'azurerm_storage_account.storacc' should have the min tls version set to TLS1_2 .
+  /src/main.tf:42-48
+
+
+      39 |   }
+      40 | }
+      41 | 
+      42 | resource "azurerm_storage_account" "storacc" {
+      43 |   name                     = "${local.resource_prefix}tstsa"
+      44 |   resource_group_name      = azurerm_resource_group.rg.name
+      45 |   location                 = azurerm_resource_group.rg.location
+      46 |   account_tier             = "Standard"
+      47 |   account_replication_type = "LRS"
+      48 | }
+      49 | 
+      50 | resource "azurerm_storage_container" "container" {
+      51 |   name                  = "vhds"
+
+  Legacy ID:  AZU015
+  Impact:     The TLS version being outdated and has known vulnerabilities
+  Resolution: Use a more recent TLS/SSL policy for the load balancer
+
+  More Info:
+  - https://tfsec.dev/docs/azure/storage/use-secure-tls-policy#azure/storage 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account#min_tls_version 
+  - https://docs.microsoft.com/en-us/azure/storage/common/transport-layer-security-configure-minimum-version 
+
+  times
+  ------------------------------------------
+  disk i/o             1.191452ms
+  parsing HCL          10.418µs
+  evaluating values    544.453µs
+  running checks       3.32147ms
+
+  counts
+  ------------------------------------------
+  files loaded         1
+  blocks               10
+  modules              0
+
+  results
+  ------------------------------------------
+  critical             1
+  high                 0
+  medium               0
+  low                  0
+  ignored              0
+
+  1 potential problems detected.
+

@@ -1,0 +1,193 @@
+Failed to run the process ...
+{
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "ignoreSettings": null,
+    "org": "yi2020",
+    "projectId": "",
+    "policy": ""
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "main.tf",
+  "projectName": "project",
+  "org": "yi2020",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
+  "ok": false,
+  "infrastructureAsCodeIssues": [
+    {
+      "severity": "low",
+      "resolve": "Set `identity` attribute",
+      "id": "SNYK-CC-TF-161",
+      "impact": "Authentication and authorization will not be possible via Microsoft Identity platform",
+      "msg": "resource.azurerm_app_service[webapp].identity",
+      "subType": "App Service (Web Apps)",
+      "issue": "Azure App Service identity is not configured",
+      "publicId": "SNYK-CC-TF-161",
+      "title": "App Service identity missing",
+      "references": [
+        "https://docs.microsoft.com/en-us/azure/app-service/overview-authentication-authorization",
+        "https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Azure App Service identity is not configured",
+        "impact": "Authentication and authorization will not be possible via Microsoft Identity platform",
+        "resolve": "Set `identity` attribute"
+      },
+      "lineNumber": 29,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-161",
+      "path": [
+        "resource",
+        "azurerm_app_service[webapp]",
+        "identity"
+      ]
+    },
+    {
+      "severity": "medium",
+      "resolve": "Set `https_only` attribute to `true`",
+      "id": "SNYK-CC-TF-144",
+      "impact": "The content could be intercepted and manipulated in transit",
+      "msg": "resource.azurerm_app_service[webapp].https_only",
+      "subType": "App Service (Web Apps)",
+      "issue": "Azure App Service does not enforce HTTPS traffic only",
+      "publicId": "SNYK-CC-TF-144",
+      "title": "Azure App Service allows HTTP traffic",
+      "references": [
+        "https://docs.microsoft.com/en-us/azure/app-service/security-recommendations"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Azure App Service does not enforce HTTPS traffic only",
+        "impact": "The content could be intercepted and manipulated in transit",
+        "resolve": "Set `https_only` attribute to `true`"
+      },
+      "lineNumber": 29,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-144",
+      "path": [
+        "resource",
+        "azurerm_app_service[webapp]",
+        "https_only"
+      ]
+    },
+    {
+      "severity": "low",
+      "resolve": "Set `site_config.java_version` attribute to `11`",
+      "id": "SNYK-CC-TF-248",
+      "impact": "Application cannot benefit from latest security improvements to runtime engine",
+      "msg": "resource.azurerm_app_service[webapp].site_config.java_version",
+      "subType": "App Service (Web Apps)",
+      "issue": "Azure App Service is not running latest available Java version",
+      "publicId": "SNYK-CC-TF-248",
+      "title": "App Service not running latest Java version",
+      "references": [
+        "https://docs.microsoft.com/en-us/azure/app-service/configure-language-java?pivots=platform-linux"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Azure App Service is not running latest available Java version",
+        "impact": "Application cannot benefit from latest security improvements to runtime engine",
+        "resolve": "Set `site_config.java_version` attribute to `11`"
+      },
+      "lineNumber": 41,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-248",
+      "path": [
+        "resource",
+        "azurerm_app_service[webapp]",
+        "site_config",
+        "java_version"
+      ]
+    },
+    {
+      "severity": "low",
+      "resolve": "Set `client_cert_enabled` attribute to `true`",
+      "id": "SNYK-CC-TF-162",
+      "impact": "Clients without authorized certificate may be allowed to connect to the application",
+      "msg": "resource.azurerm_app_service[webapp].client_cert_enabled",
+      "subType": "App Service (Web Apps)",
+      "issue": "Azure App Service does not enforce client side certificates",
+      "publicId": "SNYK-CC-TF-162",
+      "title": "App Service mutual TLS disabled",
+      "references": [
+        "https://docs.microsoft.com/en-us/azure/app-service/app-service-web-configure-tls-mutual-auth"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Azure App Service does not enforce client side certificates",
+        "impact": "Clients without authorized certificate may be allowed to connect to the application",
+        "resolve": "Set `client_cert_enabled` attribute to `true`"
+      },
+      "lineNumber": 29,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-162",
+      "path": [
+        "resource",
+        "azurerm_app_service[webapp]",
+        "client_cert_enabled"
+      ]
+    },
+    {
+      "severity": "low",
+      "resolve": "Set `auth_settings.enabled` attribute to `true`",
+      "id": "SNYK-CC-TF-160",
+      "impact": "Service may be accessible without authorization",
+      "msg": "resource.azurerm_app_service[webapp].auth_settings",
+      "subType": "App Service (Web Apps)",
+      "issue": "Azure App Service authentication is not enabled",
+      "publicId": "SNYK-CC-TF-160",
+      "title": "App Service authentication disabled",
+      "references": [
+        "https://docs.microsoft.com/en-us/azure/app-service/overview-authentication-authorization"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Azure App Service authentication is not enabled",
+        "impact": "Service may be accessible without authorization",
+        "resolve": "Set `auth_settings.enabled` attribute to `true`"
+      },
+      "lineNumber": 29,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-160",
+      "path": [
+        "resource",
+        "azurerm_app_service[webapp]",
+        "auth_settings"
+      ]
+    },
+    {
+      "severity": "low",
+      "resolve": "Set `site_config.http2_enabled` attribute to `true`",
+      "id": "SNYK-CC-TF-163",
+      "impact": "No security impact. Provides performance improvement.",
+      "msg": "resource.azurerm_app_service[webapp].site_config.http2_enabled",
+      "subType": "App Service (Web Apps)",
+      "issue": "HTTP/2 is not enabled on the App Service",
+      "publicId": "SNYK-CC-TF-163",
+      "title": "App Service HTTP/2 disabled",
+      "references": [
+        "https://azure.microsoft.com/en-gb/blog/announcing-http-2-support-in-azure-app-service/"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "HTTP/2 is not enabled on the App Service",
+        "impact": "No security impact. Provides performance improvement.",
+        "resolve": "Set `site_config.http2_enabled` attribute to `true`"
+      },
+      "lineNumber": 39,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-163",
+      "path": [
+        "resource",
+        "azurerm_app_service[webapp]",
+        "site_config",
+        "http2_enabled"
+      ]
+    }
+  ]
+}

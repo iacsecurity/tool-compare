@@ -1,0 +1,81 @@
+Failed to run the process ...
+{
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "ignoreSettings": null,
+    "org": "yi2020",
+    "projectId": "",
+    "policy": ""
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "main.tf",
+  "projectName": "project",
+  "org": "yi2020",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
+  "ok": false,
+  "infrastructureAsCodeIssues": [
+    {
+      "severity": "low",
+      "resolve": "Set `phone` attribute to point of contact phone number",
+      "id": "SNYK-CC-TF-165",
+      "impact": "Increases security management overhead",
+      "msg": "resource.azurerm_security_center_contact[example]",
+      "subType": "Security Center",
+      "issue": "Azure Security Center contact phone number is not set",
+      "publicId": "SNYK-CC-TF-165",
+      "title": "Security Center missing phone number",
+      "references": [
+        "https://docs.microsoft.com/en-us/azure/security-center/security-center-introduction"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Azure Security Center contact phone number is not set",
+        "impact": "Increases security management overhead",
+        "resolve": "Set `phone` attribute to point of contact phone number"
+      },
+      "lineNumber": 18,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-165",
+      "path": [
+        "resource",
+        "azurerm_security_center_contact[example]"
+      ]
+    },
+    {
+      "severity": "low",
+      "resolve": "Set `alert_notifications` attribute to `true`",
+      "id": "SNYK-CC-TF-166",
+      "impact": "Point of contact will not be notified about critical security issues",
+      "msg": "resource.azurerm_security_center_contact[example]",
+      "subType": "Security Center",
+      "issue": "Azure Security Center alert notifications are not enabled for the contact",
+      "publicId": "SNYK-CC-TF-166",
+      "title": "Security Center alert notification disabled",
+      "references": [
+        "https://docs.microsoft.com/en-us/azure/security-center/security-center-introduction",
+        "https://docs.microsoft.com/en-us/azure/security-center/security-center-managing-and-responding-alerts"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Azure Security Center alert notifications are not enabled for the contact",
+        "impact": "Point of contact will not be notified about critical security issues",
+        "resolve": "Set `alert_notifications` attribute to `true`"
+      },
+      "lineNumber": 18,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-166",
+      "path": [
+        "resource",
+        "azurerm_security_center_contact[example]"
+      ]
+    }
+  ]
+}

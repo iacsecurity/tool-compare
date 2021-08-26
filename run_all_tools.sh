@@ -92,7 +92,7 @@ function run_cloudrail {
     echo $test_case
     ORG_PATH=$PWD
     cd $test_case
-    if [ ! -f cloudrail_results.txt ]; then docker run --rm $IT_FLAG -u 0:0 -v $PWD:/data -v cloudrail:/indeni indeni/cloudrail-cli run --tf-plan plan.out --output-file cloudrail_results.txt --no-cloud-account --auto-approve -v; fi
+    if [ ! -f cloudrail_results.txt ]; then docker run --rm $IT_FLAG -u 0:0 -v $PWD:/data -e CLOUDRAIL_API_KEY indeni/cloudrail-cli run --tf-plan plan.out --output-file cloudrail_results.txt --no-cloud-account --auto-approve -v; fi
     cd $ORG_PATH
   done
 }
@@ -106,12 +106,19 @@ function run_all {
   run_tfsec
 }
 
-# Set up AWS access for plan
+# Verify AWS access for plan
 if [ -z "$AWS_ACCESS_KEY_ID" -a -z "$AWS_DEFAULT_PROFILE" ]; then
   echo "To run this script, you'll need AWS credentials (for use with terraform plan)."
   exit 1
 fi
 export AWS_REGION=us-west-1
+
+# Verify Azure access for plan
+az account list > /dev/null
+if [ $? -ne 0 ]; then
+  echo "To run this script, you'll need working Azure credentials (for use with terraform plan). Make sure you use 'az login'."
+  exit 1
+fi
 
 # Generate all plan files
 echo Generating plan files, where they do not exist yet

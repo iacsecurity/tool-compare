@@ -1,0 +1,191 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.363 
+
+terraform scan results:
+
+Passed checks: 5, Failed checks: 11, Skipped checks: 0
+
+Check: CKV_AZURE_52: "Ensure MSSQL is using the latest version of TLS encryption"
+	FAILED for resource: azurerm_mssql_server.my-sql-server
+	File: /main.tf:21-33
+	Guide: https://docs.bridgecrew.io/docs/ensure-mssql-is-using-the-latest-version-of-tls-encryption
+
+		21 | resource "azurerm_mssql_server" "my-sql-server" {
+		22 |   name                          = "${local.resource_prefix}sqlserver"
+		23 |   resource_group_name           = azurerm_resource_group.tests-resource-group.name
+		24 |   location                      = azurerm_resource_group.tests-resource-group.location
+		25 |   version                       = "12.0"
+		26 |   administrator_login           = "4dm1n157r470r"
+		27 |   administrator_login_password  = "4-v3ry-53cr37-p455w0rd"
+		28 |   public_network_access_enabled = true
+		29 | 
+		30 |   tags = {
+		31 |     ResScope = local.test_description
+		32 |   }
+		33 | }
+
+
+Check: CKV_AZURE_23: "Ensure that 'Auditing' is set to 'On' for SQL servers"
+	FAILED for resource: azurerm_mssql_server.my-sql-server
+	File: /main.tf:21-33
+	Guide: https://docs.bridgecrew.io/docs/bc_azr_logging_2
+
+		21 | resource "azurerm_mssql_server" "my-sql-server" {
+		22 |   name                          = "${local.resource_prefix}sqlserver"
+		23 |   resource_group_name           = azurerm_resource_group.tests-resource-group.name
+		24 |   location                      = azurerm_resource_group.tests-resource-group.location
+		25 |   version                       = "12.0"
+		26 |   administrator_login           = "4dm1n157r470r"
+		27 |   administrator_login_password  = "4-v3ry-53cr37-p455w0rd"
+		28 |   public_network_access_enabled = true
+		29 | 
+		30 |   tags = {
+		31 |     ResScope = local.test_description
+		32 |   }
+		33 | }
+
+
+Check: CKV_AZURE_24: "Ensure that 'Auditing' Retention is 'greater than 90 days' for SQL servers"
+	FAILED for resource: azurerm_mssql_server.my-sql-server
+	File: /main.tf:21-33
+	Guide: https://docs.bridgecrew.io/docs/bc_azr_logging_3
+
+		21 | resource "azurerm_mssql_server" "my-sql-server" {
+		22 |   name                          = "${local.resource_prefix}sqlserver"
+		23 |   resource_group_name           = azurerm_resource_group.tests-resource-group.name
+		24 |   location                      = azurerm_resource_group.tests-resource-group.location
+		25 |   version                       = "12.0"
+		26 |   administrator_login           = "4dm1n157r470r"
+		27 |   administrator_login_password  = "4-v3ry-53cr37-p455w0rd"
+		28 |   public_network_access_enabled = true
+		29 | 
+		30 |   tags = {
+		31 |     ResScope = local.test_description
+		32 |   }
+		33 | }
+
+
+Check: CKV_AZURE_113: "Ensure that SQL server disables public network access"
+	FAILED for resource: azurerm_mssql_server.my-sql-server
+	File: /main.tf:21-33
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-sql-server-disables-public-network-access
+
+		21 | resource "azurerm_mssql_server" "my-sql-server" {
+		22 |   name                          = "${local.resource_prefix}sqlserver"
+		23 |   resource_group_name           = azurerm_resource_group.tests-resource-group.name
+		24 |   location                      = azurerm_resource_group.tests-resource-group.location
+		25 |   version                       = "12.0"
+		26 |   administrator_login           = "4dm1n157r470r"
+		27 |   administrator_login_password  = "4-v3ry-53cr37-p455w0rd"
+		28 |   public_network_access_enabled = true
+		29 | 
+		30 |   tags = {
+		31 |     ResScope = local.test_description
+		32 |   }
+		33 | }
+
+
+Check: CKV_AZURE_35: "Ensure default network access rule for Storage Accounts is set to deny"
+	FAILED for resource: azurerm_storage_account.my-storage-account
+	File: /main.tf:35-41
+	Guide: https://docs.bridgecrew.io/docs/set-default-network-access-rule-for-storage-accounts-to-deny
+
+		35 | resource "azurerm_storage_account" "my-storage-account" {
+		36 |   name                     = "${local.resource_prefix}storageaccount"
+		37 |   resource_group_name      = azurerm_resource_group.tests-resource-group.name
+		38 |   location                 = azurerm_resource_group.tests-resource-group.location
+		39 |   account_tier             = "Standard"
+		40 |   account_replication_type = "LRS"
+		41 | }
+
+
+Check: CKV_AZURE_33: "Ensure Storage logging is enabled for Queue service for read, write and delete requests"
+	FAILED for resource: azurerm_storage_account.my-storage-account
+	File: /main.tf:35-41
+	Guide: https://docs.bridgecrew.io/docs/enable-requests-on-storage-logging-for-queue-service
+
+		35 | resource "azurerm_storage_account" "my-storage-account" {
+		36 |   name                     = "${local.resource_prefix}storageaccount"
+		37 |   resource_group_name      = azurerm_resource_group.tests-resource-group.name
+		38 |   location                 = azurerm_resource_group.tests-resource-group.location
+		39 |   account_tier             = "Standard"
+		40 |   account_replication_type = "LRS"
+		41 | }
+
+
+Check: CKV_AZURE_44: "Ensure Storage Account is using the latest version of TLS encryption"
+	FAILED for resource: azurerm_storage_account.my-storage-account
+	File: /main.tf:35-41
+	Guide: https://docs.bridgecrew.io/docs/bc_azr_storage_2
+
+		35 | resource "azurerm_storage_account" "my-storage-account" {
+		36 |   name                     = "${local.resource_prefix}storageaccount"
+		37 |   resource_group_name      = azurerm_resource_group.tests-resource-group.name
+		38 |   location                 = azurerm_resource_group.tests-resource-group.location
+		39 |   account_tier             = "Standard"
+		40 |   account_replication_type = "LRS"
+		41 | }
+
+
+Check: CKV_AZURE_3: "Ensure that 'Secure transfer required' is set to 'Enabled'"
+	FAILED for resource: azurerm_storage_account.my-storage-account
+	File: /main.tf:35-41
+	Guide: https://docs.bridgecrew.io/docs/ensure-secure-transfer-required-is-enabled
+
+		35 | resource "azurerm_storage_account" "my-storage-account" {
+		36 |   name                     = "${local.resource_prefix}storageaccount"
+		37 |   resource_group_name      = azurerm_resource_group.tests-resource-group.name
+		38 |   location                 = azurerm_resource_group.tests-resource-group.location
+		39 |   account_tier             = "Standard"
+		40 |   account_replication_type = "LRS"
+		41 | }
+
+
+Check: CKV2_AZURE_18: "Ensure that Storage Accounts use customer-managed key for encryption"
+	FAILED for resource: azurerm_storage_account.my-storage-account
+	File: /main.tf:35-41
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-storage-accounts-use-customer-managed-key-for-encryption
+
+		35 | resource "azurerm_storage_account" "my-storage-account" {
+		36 |   name                     = "${local.resource_prefix}storageaccount"
+		37 |   resource_group_name      = azurerm_resource_group.tests-resource-group.name
+		38 |   location                 = azurerm_resource_group.tests-resource-group.location
+		39 |   account_tier             = "Standard"
+		40 |   account_replication_type = "LRS"
+		41 | }
+
+
+Check: CKV2_AZURE_8: "Ensure the storage container storing the activity logs is not publicly accessible"
+	FAILED for resource: azurerm_storage_account.my-storage-account
+	File: /main.tf:35-41
+	Guide: https://docs.bridgecrew.io/docs/ensure-the-storage-container-storing-the-activity-logs-is-not-publicly-accessible
+
+		35 | resource "azurerm_storage_account" "my-storage-account" {
+		36 |   name                     = "${local.resource_prefix}storageaccount"
+		37 |   resource_group_name      = azurerm_resource_group.tests-resource-group.name
+		38 |   location                 = azurerm_resource_group.tests-resource-group.location
+		39 |   account_tier             = "Standard"
+		40 |   account_replication_type = "LRS"
+		41 | }
+
+
+Check: CKV2_AZURE_1: "Ensure storage for critical data are encrypted with Customer Managed Key"
+	FAILED for resource: azurerm_storage_account.my-storage-account
+	File: /main.tf:35-41
+	Guide: https://docs.bridgecrew.io/docs/ensure-storage-for-critical-data-are-encrypted-with-customer-managed-key
+
+		35 | resource "azurerm_storage_account" "my-storage-account" {
+		36 |   name                     = "${local.resource_prefix}storageaccount"
+		37 |   resource_group_name      = azurerm_resource_group.tests-resource-group.name
+		38 |   location                 = azurerm_resource_group.tests-resource-group.location
+		39 |   account_tier             = "Standard"
+		40 |   account_replication_type = "LRS"
+		41 | }
+
+

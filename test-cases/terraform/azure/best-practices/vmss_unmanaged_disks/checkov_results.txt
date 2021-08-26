@@ -1,0 +1,223 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.363 
+
+terraform scan results:
+
+Passed checks: 7, Failed checks: 10, Skipped checks: 0
+
+Check: CKV_AZURE_35: "Ensure default network access rule for Storage Accounts is set to deny"
+	FAILED for resource: azurerm_storage_account.storacc
+	File: /main.tf:42-48
+	Guide: https://docs.bridgecrew.io/docs/set-default-network-access-rule-for-storage-accounts-to-deny
+
+		42 | resource "azurerm_storage_account" "storacc" {
+		43 |   name                     = "${local.resource_prefix}tstsa"
+		44 |   resource_group_name      = azurerm_resource_group.rg.name
+		45 |   location                 = azurerm_resource_group.rg.location
+		46 |   account_tier             = "Standard"
+		47 |   account_replication_type = "LRS"
+		48 | }
+
+
+Check: CKV_AZURE_33: "Ensure Storage logging is enabled for Queue service for read, write and delete requests"
+	FAILED for resource: azurerm_storage_account.storacc
+	File: /main.tf:42-48
+	Guide: https://docs.bridgecrew.io/docs/enable-requests-on-storage-logging-for-queue-service
+
+		42 | resource "azurerm_storage_account" "storacc" {
+		43 |   name                     = "${local.resource_prefix}tstsa"
+		44 |   resource_group_name      = azurerm_resource_group.rg.name
+		45 |   location                 = azurerm_resource_group.rg.location
+		46 |   account_tier             = "Standard"
+		47 |   account_replication_type = "LRS"
+		48 | }
+
+
+Check: CKV_AZURE_44: "Ensure Storage Account is using the latest version of TLS encryption"
+	FAILED for resource: azurerm_storage_account.storacc
+	File: /main.tf:42-48
+	Guide: https://docs.bridgecrew.io/docs/bc_azr_storage_2
+
+		42 | resource "azurerm_storage_account" "storacc" {
+		43 |   name                     = "${local.resource_prefix}tstsa"
+		44 |   resource_group_name      = azurerm_resource_group.rg.name
+		45 |   location                 = azurerm_resource_group.rg.location
+		46 |   account_tier             = "Standard"
+		47 |   account_replication_type = "LRS"
+		48 | }
+
+
+Check: CKV_AZURE_3: "Ensure that 'Secure transfer required' is set to 'Enabled'"
+	FAILED for resource: azurerm_storage_account.storacc
+	File: /main.tf:42-48
+	Guide: https://docs.bridgecrew.io/docs/ensure-secure-transfer-required-is-enabled
+
+		42 | resource "azurerm_storage_account" "storacc" {
+		43 |   name                     = "${local.resource_prefix}tstsa"
+		44 |   resource_group_name      = azurerm_resource_group.rg.name
+		45 |   location                 = azurerm_resource_group.rg.location
+		46 |   account_tier             = "Standard"
+		47 |   account_replication_type = "LRS"
+		48 | }
+
+
+Check: CKV_AZURE_95: "Ensure that automatic OS image patching is enabled for Virtual Machine Scale Sets"
+	FAILED for resource: azurerm_virtual_machine_scale_set.vmss1
+	File: /main.tf:56-101
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-automatic-os-image-patching-is-enabled-for-virtual-machine-scale-sets
+
+		56  | resource "azurerm_virtual_machine_scale_set" "vmss1" {
+		57  |   name                = "${local.resource_prefix}-vmss1"
+		58  |   location            = azurerm_resource_group.rg.location
+		59  |   resource_group_name = azurerm_resource_group.rg.name
+		60  |   upgrade_policy_mode = "Manual"
+		61  | 
+		62  |   sku {
+		63  |     name     = "Standard_B2s"
+		64  |     capacity = 1
+		65  |   }
+		66  | 
+		67  |   storage_profile_image_reference {
+		68  |     publisher = "Canonical"
+		69  |     offer     = "UbuntuServer"
+		70  |     sku       = "16.04-LTS"
+		71  |     version   = "latest"
+		72  |   }
+		73  | 
+		74  |   storage_profile_os_disk {
+		75  |     name              = "myosdisk1"
+		76  |     vhd_containers    = ["${azurerm_storage_account.storacc.primary_blob_endpoint}${azurerm_storage_container.container.name}/myosdisk1.vhd"]
+		77  |     caching           = "ReadWrite"
+		78  |     create_option     = "FromImage"    
+		79  |   }
+		80  | 
+		81  |   os_profile {
+		82  |     computer_name_prefix = "testvm"
+		83  |     admin_username = "testadmin"
+		84  |     admin_password = "Pas1sword1234!"
+		85  |   }
+		86  | 
+		87  |   os_profile_linux_config {
+		88  |     disable_password_authentication = false
+		89  |   }
+		90  | 
+		91  |   network_profile {
+		92  |     name    = "networkprofile"
+		93  |     primary = true
+		94  | 
+		95  |     ip_configuration {
+		96  |       name        = "TestIPConfiguration"
+		97  |       primary     = true
+		98  |       subnet_id    = azurerm_subnet.snet.id
+		99  |     }
+		100 |   }
+		101 | }
+
+
+Check: CKV_AZURE_95: "Ensure that automatic OS image patching is enabled for Virtual Machine Scale Sets"
+	FAILED for resource: azurerm_virtual_machine_scale_set.vmss2
+	File: /main.tf:103-142
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-automatic-os-image-patching-is-enabled-for-virtual-machine-scale-sets
+
+		103 | resource "azurerm_virtual_machine_scale_set" "vmss2" {
+		104 |   name                = "${local.resource_prefix}-vmss2"
+		105 |   location            = azurerm_resource_group.rg.location
+		106 |   resource_group_name = azurerm_resource_group.rg.name
+		107 |   upgrade_policy_mode = "Manual"
+		108 | 
+		109 |   sku {
+		110 |     name     = "Standard_B2s"
+		111 |     capacity = 1
+		112 |   }
+		113 | 
+		114 |   storage_profile_os_disk {
+		115 |     name              = "myosdisk1"
+		116 |     image             = "https://donotdeletestoracc.blob.core.windows.net/vhds/myosdisk1.vhd"
+		117 |     caching           = "ReadWrite"
+		118 |     create_option     = "FromImage"
+		119 |     os_type           = "linux"    
+		120 |   }
+		121 | 
+		122 |   os_profile {
+		123 |     computer_name_prefix = "testvm"
+		124 |     admin_username = "testadmin"
+		125 |     admin_password = "Pas1sword1234!"
+		126 |   }
+		127 | 
+		128 |   os_profile_linux_config {
+		129 |     disable_password_authentication = false
+		130 |   }
+		131 | 
+		132 |   network_profile {
+		133 |     name    = "networkprofile"
+		134 |     primary = true
+		135 | 
+		136 |     ip_configuration {
+		137 |       name         = "TestIPConfiguration"
+		138 |       primary     = true
+		139 |       subnet_id   = azurerm_subnet.snet.id
+		140 |     }
+		141 |   }
+		142 | }
+
+
+Check: CKV2_AZURE_18: "Ensure that Storage Accounts use customer-managed key for encryption"
+	FAILED for resource: azurerm_storage_account.storacc
+	File: /main.tf:42-48
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-storage-accounts-use-customer-managed-key-for-encryption
+
+		42 | resource "azurerm_storage_account" "storacc" {
+		43 |   name                     = "${local.resource_prefix}tstsa"
+		44 |   resource_group_name      = azurerm_resource_group.rg.name
+		45 |   location                 = azurerm_resource_group.rg.location
+		46 |   account_tier             = "Standard"
+		47 |   account_replication_type = "LRS"
+		48 | }
+
+
+Check: CKV2_AZURE_8: "Ensure the storage container storing the activity logs is not publicly accessible"
+	FAILED for resource: azurerm_storage_account.storacc
+	File: /main.tf:42-48
+	Guide: https://docs.bridgecrew.io/docs/ensure-the-storage-container-storing-the-activity-logs-is-not-publicly-accessible
+
+		42 | resource "azurerm_storage_account" "storacc" {
+		43 |   name                     = "${local.resource_prefix}tstsa"
+		44 |   resource_group_name      = azurerm_resource_group.rg.name
+		45 |   location                 = azurerm_resource_group.rg.location
+		46 |   account_tier             = "Standard"
+		47 |   account_replication_type = "LRS"
+		48 | }
+
+
+Check: CKV2_AZURE_1: "Ensure storage for critical data are encrypted with Customer Managed Key"
+	FAILED for resource: azurerm_storage_account.storacc
+	File: /main.tf:42-48
+	Guide: https://docs.bridgecrew.io/docs/ensure-storage-for-critical-data-are-encrypted-with-customer-managed-key
+
+		42 | resource "azurerm_storage_account" "storacc" {
+		43 |   name                     = "${local.resource_prefix}tstsa"
+		44 |   resource_group_name      = azurerm_resource_group.rg.name
+		45 |   location                 = azurerm_resource_group.rg.location
+		46 |   account_tier             = "Standard"
+		47 |   account_replication_type = "LRS"
+		48 | }
+
+
+Check: CKV2_AZURE_21: "Ensure Storage logging is enabled for Blob service for read requests"
+	FAILED for resource: azurerm_storage_container.container
+	File: /main.tf:50-54
+	Guide: https://docs.bridgecrew.io/docs/ensure-storage-logging-is-enabled-for-blob-service-for-read-requests
+
+		50 | resource "azurerm_storage_container" "container" {
+		51 |   name                  = "vhds"
+		52 |   storage_account_name  = azurerm_storage_account.storacc.name
+		53 |   container_access_type = "private"
+		54 | }
+
+

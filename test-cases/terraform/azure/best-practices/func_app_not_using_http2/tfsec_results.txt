@@ -1,0 +1,86 @@
+
+  Result 1
+
+  [azure-appservice-enforce-https][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'azurerm_function_app.functionapp' should have https_only set to true, the default is false.
+  /src/main.tf:36-47
+
+
+      33 |   }
+      34 | }
+      35 | 
+      36 | resource "azurerm_function_app" "functionapp" {
+      37 |   name = "${local.resource_prefix}-functionapp"
+      38 |   location                   = azurerm_resource_group.rg.location
+      39 |   resource_group_name        = azurerm_resource_group.rg.name
+      40 |   app_service_plan_id        = azurerm_app_service_plan.svcplanconsumption.id
+      41 |   storage_account_name       = azurerm_storage_account.storacc.name
+      42 |   storage_account_access_key = azurerm_storage_account.storacc.primary_access_key
+      43 | 
+      44 |   site_config {
+      45 |     http2_enabled = false
+      46 |   }
+      47 | }
+      48 | 
+
+  Legacy ID:  AZU028
+  Impact:     Anyone can access the Function App using HTTP.
+  Resolution: You can redirect all HTTP requests to the HTTPS port.
+
+  More Info:
+  - https://tfsec.dev/docs/azure/appservice/enforce-https#azure/appservice 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/function_app#https_only 
+  - https://docs.microsoft.com/en-us/azure/app-service/configure-ssl-bindings#enforce-https 
+  - https://docs.microsoft.com/en-us/azure/azure-functions/security-concepts 
+
+  Result 2
+
+  [azure-storage-use-secure-tls-policy][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'azurerm_storage_account.storacc' should have the min tls version set to TLS1_2 .
+  /src/main.tf:16-22
+
+
+      13 |   location = "West Europe"
+      14 | }
+      15 | 
+      16 | resource "azurerm_storage_account" "storacc" {
+      17 |   name                     = "${local.resource_prefix}functionapptstsa"
+      18 |   resource_group_name      = azurerm_resource_group.rg.name
+      19 |   location                 = azurerm_resource_group.rg.location
+      20 |   account_tier             = "Standard"
+      21 |   account_replication_type = "LRS"
+      22 | }
+      23 | 
+      24 | resource "azurerm_app_service_plan" "svcplanconsumption" {
+      25 |   name                = "${local.resource_prefix}-service-plan"
+
+  Legacy ID:  AZU015
+  Impact:     The TLS version being outdated and has known vulnerabilities
+  Resolution: Use a more recent TLS/SSL policy for the load balancer
+
+  More Info:
+  - https://tfsec.dev/docs/azure/storage/use-secure-tls-policy#azure/storage 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account#min_tls_version 
+  - https://docs.microsoft.com/en-us/azure/storage/common/transport-layer-security-configure-minimum-version 
+
+  times
+  ------------------------------------------
+  disk i/o             558.155µs
+  parsing HCL          7.655µs
+  evaluating values    340.652µs
+  running checks       2.130856ms
+
+  counts
+  ------------------------------------------
+  files loaded         1
+  blocks               6
+  modules              0
+
+  results
+  ------------------------------------------
+  critical             2
+  high                 0
+  medium               0
+  low                  0
+  ignored              0
+
+  2 potential problems detected.
+

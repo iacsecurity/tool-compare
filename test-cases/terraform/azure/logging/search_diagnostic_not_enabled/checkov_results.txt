@@ -1,0 +1,26 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.363 
+
+terraform scan results:
+
+Passed checks: 0, Failed checks: 1, Skipped checks: 0
+
+Check: CKV_AZURE_124: "Ensure that Azure Cognitive Search disables public network access"
+	FAILED for resource: azurerm_search_service.search
+	File: /main.tf:16-21
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-azure-cognitive-search-disables-public-network-access
+
+		16 | resource "azurerm_search_service" "search" {
+		17 |   name                = "${local.resource_prefix}-search-service"
+		18 |   resource_group_name = azurerm_resource_group.rg.name
+		19 |   location            = azurerm_resource_group.rg.location
+		20 |   sku                 = "basic"
+		21 | }
+
+

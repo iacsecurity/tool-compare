@@ -1,0 +1,144 @@
+Failed to run the process ...
+{
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "ignoreSettings": null,
+    "org": "yi2020",
+    "projectId": "",
+    "policy": ""
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "main.tf",
+  "projectName": "project",
+  "org": "yi2020",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
+  "ok": false,
+  "infrastructureAsCodeIssues": [
+    {
+      "severity": "medium",
+      "resolve": "Set `min_tls_version` attribute to `TLS1_2`",
+      "id": "SNYK-CC-TF-149",
+      "impact": "Older cipher suites could be vulnerable to hijacking and information disclosure",
+      "msg": "resource.azurerm_storage_account[storacc].min_tls_version",
+      "subType": "Storage",
+      "issue": "Azure Storage Account does not enforce latest TLS version",
+      "publicId": "SNYK-CC-TF-149",
+      "title": "Storage Account does not enforce latest TLS",
+      "references": [
+        "https://docs.microsoft.com/en-us/azure/storage/common/transport-layer-security-configure-minimum-version?tabs=portal"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Azure Storage Account does not enforce latest TLS version",
+        "impact": "Older cipher suites could be vulnerable to hijacking and information disclosure",
+        "resolve": "Set `min_tls_version` attribute to `TLS1_2`"
+      },
+      "lineNumber": 42,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-149",
+      "path": [
+        "resource",
+        "azurerm_storage_account[storacc]",
+        "min_tls_version"
+      ]
+    },
+    {
+      "severity": "medium",
+      "resolve": "Set `encryption_at_host_enabled` attribute to `true`",
+      "id": "SNYK-CC-AZURE-478",
+      "impact": "Storage devices attached to the VM will not be encrypted at rest",
+      "msg": "resource.azurerm_windows_virtual_machine_scale_set[vmss].encryption_at_host_enabled",
+      "remediation": {
+        "terraform": "Set `encryption_at_host_enabled` attribute to `true`"
+      },
+      "subType": "Compute",
+      "issue": "Windows VM scale set encryption at host disabled",
+      "publicId": "SNYK-CC-AZURE-478",
+      "title": "Windows VM scale set encryption at host disabled",
+      "references": [
+        "https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/windows_virtual_machine_scale_set",
+        "https://docs.microsoft.com/en-us/azure/virtual-machines/linux/disks-enable-host-based-encryption-cli"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Windows VM scale set encryption at host disabled",
+        "impact": "Storage devices attached to the VM will not be encrypted at rest",
+        "resolve": "Set `encryption_at_host_enabled` attribute to `true`"
+      },
+      "lineNumber": 50,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AZURE-478",
+      "path": [
+        "resource",
+        "azurerm_windows_virtual_machine_scale_set[vmss]",
+        "encryption_at_host_enabled"
+      ]
+    },
+    {
+      "severity": "low",
+      "resolve": "Set `ddos_protection_plan.enable` attribute to `true`",
+      "id": "SNYK-CC-AZURE-516",
+      "impact": "Services deployed in the network will not benefit from advanced DDoS protection features such as attack alerting and analytics",
+      "msg": "resource.azurerm_virtual_network[vnet].ddos_protection_plan",
+      "remediation": {
+        "terraform": "Set `ddos_protection_plan.enable` attribute to `true`"
+      },
+      "subType": "Network",
+      "issue": "Virtual Network DDoS protection plan disabled",
+      "publicId": "SNYK-CC-AZURE-516",
+      "title": "Virtual Network DDoS protection plan disabled",
+      "references": [
+        "https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network#ddos_protection_plan",
+        "https://docs.microsoft.com/en-us/azure/ddos-protection/ddos-protection-overview"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Virtual Network DDoS protection plan disabled",
+        "impact": "Services deployed in the network will not benefit from advanced DDoS protection features such as attack alerting and analytics",
+        "resolve": "Set `ddos_protection_plan.enable` attribute to `true`"
+      },
+      "lineNumber": 16,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AZURE-516",
+      "path": [
+        "resource",
+        "azurerm_virtual_network[vnet]",
+        "ddos_protection_plan"
+      ]
+    },
+    {
+      "severity": "low",
+      "resolve": "Set `network_rules.bypass` attribute to `['Azure Services']`",
+      "id": "SNYK-CC-TF-172",
+      "impact": "Services will not be able to access the storage account over network",
+      "msg": "resource.azurerm_storage_account[storacc].network_rules",
+      "subType": "Storage",
+      "issue": "Network access bypass for Trusted Microsoft Services is not enabled on the storage account",
+      "publicId": "SNYK-CC-TF-172",
+      "title": "Trusted Microsoft Service access to storage account is disabled",
+      "references": [
+        "https://docs.microsoft.com/en-gb/azure/storage/common/storage-network-security#trusted-microsoft-services"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Network access bypass for Trusted Microsoft Services is not enabled on the storage account",
+        "impact": "Services will not be able to access the storage account over network",
+        "resolve": "Set `network_rules.bypass` attribute to `['Azure Services']`"
+      },
+      "lineNumber": 42,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-172",
+      "path": [
+        "resource",
+        "azurerm_storage_account[storacc]",
+        "network_rules"
+      ]
+    }
+  ]
+}

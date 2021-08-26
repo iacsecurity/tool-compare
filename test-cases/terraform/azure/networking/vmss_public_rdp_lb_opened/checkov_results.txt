@@ -1,0 +1,54 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.363 
+
+terraform scan results:
+
+Passed checks: 0, Failed checks: 1, Skipped checks: 0
+
+Check: CKV_AZURE_97: "Ensure that Virtual machine scale sets have encryption at host enabled"
+	FAILED for resource: azurerm_windows_virtual_machine_scale_set.example
+	File: /main.tf:74-107
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-virtual-machine-scale-sets-have-encryption-at-host-enabled
+
+		74  | resource "azurerm_windows_virtual_machine_scale_set" "example" {
+		75  |   name                = "${local.resource_prefix}-vmss"
+		76  |   resource_group_name = azurerm_resource_group.rg.name
+		77  |   location            = azurerm_resource_group.rg.location
+		78  |   sku                 = "Standard_B2s"
+		79  |   instances           = 3
+		80  |   admin_password      = "P@55w0rd1234!"
+		81  |   admin_username      = "adminuser"
+		82  |   computer_name_prefix = "pc"
+		83  | 
+		84  |   source_image_reference {
+		85  |     publisher = "MicrosoftWindowsServer"
+		86  |     offer     = "WindowsServer"
+		87  |     sku       = "2019-Datacenter"
+		88  |     version   = "latest"
+		89  |   }
+		90  | 
+		91  |   os_disk {
+		92  |     storage_account_type = "Standard_LRS"
+		93  |     caching              = "ReadWrite"
+		94  |   }
+		95  | 
+		96  |   network_interface {
+		97  |     name    = "example"
+		98  |     primary = true
+		99  | 
+		100 |     ip_configuration {
+		101 |       name      = "internal"
+		102 |       primary   = true
+		103 |       subnet_id = azurerm_subnet.snet.id
+		104 |       load_balancer_backend_address_pool_ids = [azurerm_lb_backend_address_pool.bck.id]
+		105 |     }
+		106 |   }
+		107 | }
+
+

@@ -1,0 +1,101 @@
+
+  Result 1
+
+  [azure-database-enable-audit][[0m[33mMEDIUM[39m[0m] Resource 'azurerm_mssql_server.sql' does not have an extended audit policy configured.
+  /src/main.tf:18-25
+
+
+      15 |   location = "West Europe"
+      16 | }
+      17 | 
+      18 | resource "azurerm_mssql_server" "sql" {
+      19 |   name                         = "${local.resource_prefix}-sqlserver"
+      20 |   resource_group_name          = azurerm_resource_group.rg.name
+      21 |   location                     = azurerm_resource_group.rg.location
+      22 |   version                      = "12.0"
+      23 |   administrator_login          = "4dm1n157r470r"
+      24 |   administrator_login_password = "4-v3ry-53cr37-p455w0rd"
+      25 | }
+      26 | 
+
+  Legacy ID:  AZU018
+  Impact:     Auditing provides valuable information about access and usage
+  Resolution: Enable auditing on Azure SQL databases
+
+  More Info:
+  - https://tfsec.dev/docs/azure/database/enable-audit#azure/database 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/sql_server#extended_auditing_policy 
+  - https://docs.microsoft.com/en-us/azure/azure-sql/database/auditing-overview 
+
+  Result 2
+
+  [azure-database-no-public-access][[0m[33mMEDIUM[39m[0m] Resource 'azurerm_mssql_server.sql' has default public network access of enabled
+  /src/main.tf:18-25
+
+
+      15 |   location = "West Europe"
+      16 | }
+      17 | 
+      18 | resource "azurerm_mssql_server" "sql" {
+      19 |   name                         = "${local.resource_prefix}-sqlserver"
+      20 |   resource_group_name          = azurerm_resource_group.rg.name
+      21 |   location                     = azurerm_resource_group.rg.location
+      22 |   version                      = "12.0"
+      23 |   administrator_login          = "4dm1n157r470r"
+      24 |   administrator_login_password = "4-v3ry-53cr37-p455w0rd"
+      25 | }
+      26 | 
+
+  Impact:     Publicly accessible database could lead to compromised data
+  Resolution: Disable public access to database when not required
+
+  More Info:
+  - https://tfsec.dev/docs/azure/database/no-public-access#azure/database 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_server#public_network_access_enabled 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mysql_server#public_network_access_enabled 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mariadb_server#public_network_access_enabled 
+
+  Result 3
+
+  [general-secrets-sensitive-in-attribute][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Block 'azurerm_mssql_server.sql' includes a potentially sensitive attribute which is defined within the project.
+  /src/main.tf:24
+
+
+      21 |   location                     = azurerm_resource_group.rg.location
+      22 |   version                      = "12.0"
+      23 |   administrator_login          = "4dm1n157r470r"
+      24 |   administrator_login_password = "4-v3ry-53cr37-p455w0rd"    string: "4-v3ry-53cr37-p455w0rd"
+      25 | }
+      26 | 
+
+  Legacy ID:  GEN003
+  Impact:     Block attribute could be leaking secrets
+  Resolution: Don't include sensitive data in blocks
+
+  More Info:
+  - https://tfsec.dev/docs/general/secrets/sensitive-in-attribute#general/secrets 
+  - https://www.terraform.io/docs/state/sensitive-data.html 
+
+  times
+  ------------------------------------------
+  disk i/o             455.997µs
+  parsing HCL          7.325µs
+  evaluating values    232.187µs
+  running checks       1.907022ms
+
+  counts
+  ------------------------------------------
+  files loaded         1
+  blocks               5
+  modules              0
+
+  results
+  ------------------------------------------
+  critical             1
+  high                 0
+  medium               2
+  low                  0
+  ignored              0
+
+  3 potential problems detected.
+

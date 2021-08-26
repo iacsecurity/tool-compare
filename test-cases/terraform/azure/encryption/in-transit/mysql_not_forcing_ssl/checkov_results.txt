@@ -1,0 +1,202 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+By bridgecrew.io | version: 2.0.363 
+
+terraform scan results:
+
+Passed checks: 1, Failed checks: 7, Skipped checks: 0
+
+Check: CKV_AZURE_96: "Ensure that MySQL server enables infrastructure encryption"
+	FAILED for resource: azurerm_mysql_server.example
+	File: /main.tf:16-35
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-postgresql-server-enables-infrastructure-encryption-1
+
+		16 | resource "azurerm_mysql_server" "example" {
+		17 |   name                = "${local.resource_prefix}-mysqlserver"
+		18 |   location            = azurerm_resource_group.rg.location
+		19 |   resource_group_name = azurerm_resource_group.rg.name
+		20 | 
+		21 |   administrator_login          = "mysqladminun"
+		22 |   administrator_login_password = "H@Sh1CoR3!"
+		23 | 
+		24 |   sku_name   = "B_Gen5_2"
+		25 |   storage_mb = 5120
+		26 |   version    = "8.0"
+		27 | 
+		28 |   auto_grow_enabled                 = true
+		29 |   backup_retention_days             = 7
+		30 |   geo_redundant_backup_enabled      = false
+		31 |   infrastructure_encryption_enabled = false
+		32 |   ssl_enforcement_enabled           = false
+		33 |   ssl_minimal_tls_version_enforced  = "TLS1_2"
+		34 |   public_network_access_enabled     = true
+		35 | }
+
+
+Check: CKV_AZURE_94: "Ensure that My SQL server enables geo-redundant backups"
+	FAILED for resource: azurerm_mysql_server.example
+	File: /main.tf:16-35
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-my-sql-server-enables-geo-redundant-backups
+
+		16 | resource "azurerm_mysql_server" "example" {
+		17 |   name                = "${local.resource_prefix}-mysqlserver"
+		18 |   location            = azurerm_resource_group.rg.location
+		19 |   resource_group_name = azurerm_resource_group.rg.name
+		20 | 
+		21 |   administrator_login          = "mysqladminun"
+		22 |   administrator_login_password = "H@Sh1CoR3!"
+		23 | 
+		24 |   sku_name   = "B_Gen5_2"
+		25 |   storage_mb = 5120
+		26 |   version    = "8.0"
+		27 | 
+		28 |   auto_grow_enabled                 = true
+		29 |   backup_retention_days             = 7
+		30 |   geo_redundant_backup_enabled      = false
+		31 |   infrastructure_encryption_enabled = false
+		32 |   ssl_enforcement_enabled           = false
+		33 |   ssl_minimal_tls_version_enforced  = "TLS1_2"
+		34 |   public_network_access_enabled     = true
+		35 | }
+
+
+Check: CKV_AZURE_53: "Ensure 'public network access enabled' is set to 'False' for mySQL servers"
+	FAILED for resource: azurerm_mysql_server.example
+	File: /main.tf:16-35
+	Guide: https://docs.bridgecrew.io/docs/ensure-public-network-access-enabled-is-set-to-false-for-mysql-servers
+
+		16 | resource "azurerm_mysql_server" "example" {
+		17 |   name                = "${local.resource_prefix}-mysqlserver"
+		18 |   location            = azurerm_resource_group.rg.location
+		19 |   resource_group_name = azurerm_resource_group.rg.name
+		20 | 
+		21 |   administrator_login          = "mysqladminun"
+		22 |   administrator_login_password = "H@Sh1CoR3!"
+		23 | 
+		24 |   sku_name   = "B_Gen5_2"
+		25 |   storage_mb = 5120
+		26 |   version    = "8.0"
+		27 | 
+		28 |   auto_grow_enabled                 = true
+		29 |   backup_retention_days             = 7
+		30 |   geo_redundant_backup_enabled      = false
+		31 |   infrastructure_encryption_enabled = false
+		32 |   ssl_enforcement_enabled           = false
+		33 |   ssl_minimal_tls_version_enforced  = "TLS1_2"
+		34 |   public_network_access_enabled     = true
+		35 | }
+
+
+Check: CKV_AZURE_90: "Ensure that MySQL server disables public network access"
+	FAILED for resource: azurerm_mysql_server.example
+	File: /main.tf:16-35
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-mysql-server-disables-public-network-access
+
+		16 | resource "azurerm_mysql_server" "example" {
+		17 |   name                = "${local.resource_prefix}-mysqlserver"
+		18 |   location            = azurerm_resource_group.rg.location
+		19 |   resource_group_name = azurerm_resource_group.rg.name
+		20 | 
+		21 |   administrator_login          = "mysqladminun"
+		22 |   administrator_login_password = "H@Sh1CoR3!"
+		23 | 
+		24 |   sku_name   = "B_Gen5_2"
+		25 |   storage_mb = 5120
+		26 |   version    = "8.0"
+		27 | 
+		28 |   auto_grow_enabled                 = true
+		29 |   backup_retention_days             = 7
+		30 |   geo_redundant_backup_enabled      = false
+		31 |   infrastructure_encryption_enabled = false
+		32 |   ssl_enforcement_enabled           = false
+		33 |   ssl_minimal_tls_version_enforced  = "TLS1_2"
+		34 |   public_network_access_enabled     = true
+		35 | }
+
+
+Check: CKV_AZURE_28: "Ensure 'Enforce SSL connection' is set to 'ENABLED' for MySQL Database Server"
+	FAILED for resource: azurerm_mysql_server.example
+	File: /main.tf:16-35
+	Guide: https://docs.bridgecrew.io/docs/bc_azr_networking_9
+
+		16 | resource "azurerm_mysql_server" "example" {
+		17 |   name                = "${local.resource_prefix}-mysqlserver"
+		18 |   location            = azurerm_resource_group.rg.location
+		19 |   resource_group_name = azurerm_resource_group.rg.name
+		20 | 
+		21 |   administrator_login          = "mysqladminun"
+		22 |   administrator_login_password = "H@Sh1CoR3!"
+		23 | 
+		24 |   sku_name   = "B_Gen5_2"
+		25 |   storage_mb = 5120
+		26 |   version    = "8.0"
+		27 | 
+		28 |   auto_grow_enabled                 = true
+		29 |   backup_retention_days             = 7
+		30 |   geo_redundant_backup_enabled      = false
+		31 |   infrastructure_encryption_enabled = false
+		32 |   ssl_enforcement_enabled           = false
+		33 |   ssl_minimal_tls_version_enforced  = "TLS1_2"
+		34 |   public_network_access_enabled     = true
+		35 | }
+
+
+Check: CKV_AZURE_127: "Ensure that My SQL server enables Threat detection policy"
+	FAILED for resource: azurerm_mysql_server.example
+	File: /main.tf:16-35
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-my-sql-server-enables-threat-detection-policy
+
+		16 | resource "azurerm_mysql_server" "example" {
+		17 |   name                = "${local.resource_prefix}-mysqlserver"
+		18 |   location            = azurerm_resource_group.rg.location
+		19 |   resource_group_name = azurerm_resource_group.rg.name
+		20 | 
+		21 |   administrator_login          = "mysqladminun"
+		22 |   administrator_login_password = "H@Sh1CoR3!"
+		23 | 
+		24 |   sku_name   = "B_Gen5_2"
+		25 |   storage_mb = 5120
+		26 |   version    = "8.0"
+		27 | 
+		28 |   auto_grow_enabled                 = true
+		29 |   backup_retention_days             = 7
+		30 |   geo_redundant_backup_enabled      = false
+		31 |   infrastructure_encryption_enabled = false
+		32 |   ssl_enforcement_enabled           = false
+		33 |   ssl_minimal_tls_version_enforced  = "TLS1_2"
+		34 |   public_network_access_enabled     = true
+		35 | }
+
+
+Check: CKV2_AZURE_16: "Ensure that MySQL server enables customer-managed key for encryption"
+	FAILED for resource: azurerm_mysql_server.example
+	File: /main.tf:16-35
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-mysql-server-enables-customer-managed-key-for-encryption
+
+		16 | resource "azurerm_mysql_server" "example" {
+		17 |   name                = "${local.resource_prefix}-mysqlserver"
+		18 |   location            = azurerm_resource_group.rg.location
+		19 |   resource_group_name = azurerm_resource_group.rg.name
+		20 | 
+		21 |   administrator_login          = "mysqladminun"
+		22 |   administrator_login_password = "H@Sh1CoR3!"
+		23 | 
+		24 |   sku_name   = "B_Gen5_2"
+		25 |   storage_mb = 5120
+		26 |   version    = "8.0"
+		27 | 
+		28 |   auto_grow_enabled                 = true
+		29 |   backup_retention_days             = 7
+		30 |   geo_redundant_backup_enabled      = false
+		31 |   infrastructure_encryption_enabled = false
+		32 |   ssl_enforcement_enabled           = false
+		33 |   ssl_minimal_tls_version_enforced  = "TLS1_2"
+		34 |   public_network_access_enabled     = true
+		35 | }
+
+
