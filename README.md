@@ -37,7 +37,7 @@ Last update: 2021-08-27
 
 |     | Checkov | Indeni Cloudrail | Kics | Snyk | Terrascan | Tfsec |
 |----|----|----|----|----|----|----|
-|Tested Version|2.0.363||1.4.1|1.683.0||0.58.4|
+|Tested Version|2.0.363|1.3.385|1.4.1|1.683.0|1.9.0|0.58.4|
 |Terraform - AWS|69%|93%|94%|62%|73%|61%|
 |Terraform - Azure|47%|35%|23%|30%|8%|18%|
 |Terraform - Advanced Language Expressions|20%|100%|20%|0%|0%|0%|
