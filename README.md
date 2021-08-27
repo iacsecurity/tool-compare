@@ -7,11 +7,20 @@ The goal of this repository is to help compare the different options so that use
 choose the tool that best fits their own needs.
 
 ## What tools are there?
-|     | [Checkov](https://github.com/bridgecrewio/checkov) | [Indeni Cloudrail](https://www.indeni.com/cloudrail) | [Kics](https://github.com/Checkmarx/kics) | [Snyk](https://snyk.io/) | [Terrascan](https://github.com/accurics/terrascan) | [Tfsec](https://github.com/tfsec/tfsec) |
+|     | [Checkov](https://github.com/bridgecrewio/checkov) | [Cloudrail](https://www.indeni.com/cloudrail) | [Kics](https://github.com/Checkmarx/kics) | [Snyk](https://snyk.io/) | [Terrascan](https://github.com/accurics/terrascan) | [Tfsec](https://github.com/tfsec/tfsec) |
 |----|----|----|----|----|----|----|
+|Vendor|Bridgecrew|Indeni|Checkmarx|Snyk|Accurics|Aqua Security|
 |License|OSS|Freemium|OSS|Freemium|OSS|OSS|
+|Written in|Python|Python|Rego|Unknown|Rego|Go|
+|Custom Rule Support|Yes|Yes|Yes|No|Yes|Yes|
+|CI/CD-specific Integrations|[CircleCI](https://circleci.com/developer/orbs/orb/bridgecrew/bridgecrew), [GitLab](https://gitlab.com/guided-explorations/ci-cd-plugin-extensions/checkov-iac-sast), [GitHub](https://github.com/bridgecrewio/checkov-action)|[CircleCI](https://circleci.com/developer/orbs/orb/indeni/cloudrail), [GitLab](https://gitlab.com/gitlab-org/gitlab/-/blob/41762757f1729b6c56c81d8654e874f7d7c4fad7/lib/gitlab/ci/templates/Indeni.Cloudrail.gitlab-ci-.yml), [GitHub](https://github.com/indeni/cloudrail-run-ga)|[GitHub](https://github.com/Checkmarx/kics-github-action)|None|[CircleCI](https://circleci.com/developer/orbs/orb/accurics/accurics-cli), [GitHub](https://github.com/accurics/terrascan-action)|[CircleCI](https://circleci.com/developer/orbs/orb/mycodeself/tfsec), [GitHub](https://github.com/aquasecurity/tfsec-sarif-action)|
+|Output Formats (for generic CI/CD support)|Text, JSON, JUnit, SARIF|Text, JSON, JUnit, SARIF, GitLab-SAST|Text, JSON, SARIF, HTML|Text, JSON, SARIF, HTML|Text, JSON, JUnit|Text, JSON, JUnit, SARIF|
+|Coverage for live environment|Not in OSS, use paid product|Yes, integrated into scans|No|No|Not in OSS, use paid product|Yes via differnet product|
 
 (there are others, anyone can add to this list, sorted A-Z)
+
+For a list of IaC languages supported and the coverage provided by each tool for different CSPs, scroll down to the
+test case tables.
 
 ## How does this repo work?
 This repository has a set of test-cases and a main script, called [run_all_tools.sh](/run_all_tools.sh) 
@@ -20,14 +29,15 @@ to see what the tool can do, and how it compares, before even installing it.
 
 ## Test case catch rate
 The tables below list test cases included in this repository. For each case, it shows which tools
-are able to catch it specifically, and which don't.
+are able to catch it specifically, and which don't. Most test cases originate from the cloud service provider's (CSP's)
+own recommendations and best practices, as well as the CIS benchmark for that specific CSP.
 
 ### Summary
-Last update: 2021-08-20
+Last update: 2021-08-27
 
 |     | Checkov | Indeni Cloudrail | Kics | Snyk | Terrascan | Tfsec |
 |----|----|----|----|----|----|----|
-|Tested Version|2.0.363||1.4.1|1.683.0||0.58.4|
+|Tested Version|2.0.363|1.3.385|1.4.1|1.683.0|1.9.0|0.58.4|
 |Terraform - AWS|69%|93%|94%|62%|73%|61%|
 |Terraform - Azure|47%|35%|23%|30%|8%|18%|
 |Terraform - Advanced Language Expressions|20%|100%|20%|0%|0%|0%|
