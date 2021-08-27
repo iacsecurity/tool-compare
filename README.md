@@ -14,7 +14,7 @@ choose the tool that best fits their own needs.
 |Written in|Python|Python|Rego|Unknown|Rego|Go|
 |Custom Rule Support|Yes|Yes|Yes|No|Yes|Yes|
 |CI/CD-specific Integrations|[CircleCI](https://circleci.com/developer/orbs/orb/bridgecrew/bridgecrew), [GitLab](https://gitlab.com/guided-explorations/ci-cd-plugin-extensions/checkov-iac-sast), [GitHub](https://github.com/bridgecrewio/checkov-action)|[CircleCI](https://circleci.com/developer/orbs/orb/indeni/cloudrail), [GitLab](https://gitlab.com/gitlab-org/gitlab/-/blob/41762757f1729b6c56c81d8654e874f7d7c4fad7/lib/gitlab/ci/templates/Indeni.Cloudrail.gitlab-ci-.yml), [GitHub](https://github.com/indeni/cloudrail-run-ga)|[GitHub](https://github.com/Checkmarx/kics-github-action)|None|[CircleCI](https://circleci.com/developer/orbs/orb/accurics/accurics-cli), [GitHub](https://github.com/accurics/terrascan-action)|[CircleCI](https://circleci.com/developer/orbs/orb/mycodeself/tfsec), [GitHub](https://github.com/aquasecurity/tfsec-sarif-action)|
-|Output Formats (for generic CI/CD support)|Text, JSON, JUnit, SARIF|Text, JSON, JUnit, SARIF, GitLab-SAST|Text, JSON, SARIF, HTML|Text, JSON, SARIF, HTML|Text, JSON, JUnit|Text,JSON,JUnit,SARIF|
+|Output Formats (for generic CI/CD support)|Text, JSON, JUnit, SARIF|Text, JSON, JUnit, SARIF, GitLab-SAST|Text, JSON, SARIF, HTML|Text, JSON, SARIF, HTML|Text, JSON, JUnit|Text, JSON, JUnit, SARIF|
 |Coverage for live environment|Not in OSS, use paid product|Yes, integrated into scans|No|No|Not in OSS, use paid product|Yes via differnet product|
 
 (there are others, anyone can add to this list, sorted A-Z)
@@ -37,7 +37,7 @@ Last update: 2021-08-27
 
 |     | Checkov | Indeni Cloudrail | Kics | Snyk | Terrascan | Tfsec |
 |----|----|----|----|----|----|----|
-|Tested Version|2.0.363|1.3.385|1.4.1|1.683.0|1.9.0|0.58.4|
+|Tested Version|2.0.363||1.4.1|1.683.0||0.58.4|
 |Terraform - AWS|69%|93%|94%|62%|73%|61%|
 |Terraform - Azure|47%|35%|23%|30%|8%|18%|
 |Terraform - Advanced Language Expressions|20%|100%|20%|0%|0%|0%|
