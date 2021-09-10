@@ -1,0 +1,73 @@
+metadata:
+  name: Regula
+  license: OSS (Apache-2.0)
+  requiresRegistration: false
+  maintainer: Fugue
+  links:
+    website: https://regula.dev
+    github: https://github.com/fugue/regula
+    builtinRules: https://github.com/fugue/regula/tree/master/rego/rules/tf
+capabilities:
+  languageSupport: [terraform, terraform-plan, cloudformation]
+  providerSupport: [aws, azure, gcp]
+  customRules:
+    language: rego
+    supportsMultiResourceCorrelation: true
+    supportsRuntimeIacCorrelation: false
+    supportsUnitTests: true
+  output:
+    formats: [json, junit, tap, human-readable]
+    showsFilenames: false
+    showsLineNumbers: true
+  suppression:
+    fromCode: true
+    byRule: true
+    byResource: true
+
+illustration:
+  output:
+  - description: Sample output when failing a check
+    output: >
+      +----------------------+---------------+----------------+----------+---------------+--------------------------+---------+--------+
+      |       Resource       |     Type      |    Filepath    | Severity |    Rule ID    |        Rule Name         | Message | Result |
+      +----------------------+---------------+----------------+----------+---------------+--------------------------+---------+--------+
+      | aws_s3_bucket.bucket | aws_s3_bucket | unencrypted-s3 | Unknown  | S3_ENCRYPTION | aws_s3_bucket_encryption |         | FAIL   |
+      +----------------------+---------------+----------------+----------+---------------+--------------------------+---------+--------+
+      |                      |               |                |          |               |                          | Overall |   FAIL |
+      +----------------------+---------------+----------------+----------+---------------+--------------------------+---------+--------+
+
+  custom-rules:
+  - description: Simple custom rules ensuring a S3 bucket is encrypted
+    definition: >
+      package rules.aws_s3_bucket_encryption
+
+      __rego__metadoc__ := {
+        "id": "S3_ENCRYPTION",
+      }
+
+      resource_type = "aws_s3_bucket"
+      default allow = false
+
+      allow {
+        count(input.server_side_encryption_configuration) > 0
+      }
+
+  usage:
+  - description: Running Regula with a set of custom rules
+    cli: >
+      regula run . --include /path/to/rules --user-only -f table
+
+  suppression:
+  - description: Using a waivers file to suppress rules for specific resources
+    definition: >
+      package fugue.regula.config
+
+      waivers[waiver] {
+        waiver := {
+          "reason": "Something",
+          "rule_id": "S3_ENCRYPTED",
+          "resource_id": "aws_s3_bucket.bucket"
+        }
+      }
+    cli: >
+      regula run /path/to/code --include /path/to/rules --include waivers.rego --user-only --format-table
