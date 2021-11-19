@@ -1,24 +1,136 @@
 
-  times
+[0m[31m[1m  [1m[4mResult 1[0m[31m[1m
+[0m[0m
+  [34m[[39maws-s3-specify-public-access-block[34m][39m[34m[[39m[0m[33mMEDIUM[39m[0m[34m][39m Resource aws_s3_bucket.for_web["c"] has no associated aws_s3_bucket_public_access_block.
+  [34m/home/owen/code/github/owenrumney/tool-compare/test-cases/terraform/hcl_language_complexity/using_for_each/main.tf:31-45[39m
+
+
+[0m[0m  [34m    28[39m | [0m[0m[33m}[39m[0m
+[0m  [34m    29[39m | [0m[0m[33m[39m[0m
+[0m  [34m    30[39m | [0m[0m[33m# tfsec:ignore:AWS002 tfsec:ignore:AWS017 tfsec:ignore:AWS077[39m[0m
+[0m  [34m    31[39m | [0m[0m[1m[31mresource "aws_s3_bucket" "for_web" {[39m[0m[39m[0m
+[0m  [34m    32[39m | [0m[0m[1m[31m  for_each = var.targets[39m[0m[39m[0m
+[0m  [34m    33[39m | [0m[0m[1m[31m[39m[0m[39m[0m
+[0m  [34m    34[39m | [0m[0m[1m[31m  bucket = "${local.prefix}-${lookup(each.value, "name")}-web"[39m[0m[39m[0m
+[0m  [34m    35[39m | [0m[0m[1m[31m  acl    = "private"[39m[0m[39m[0m
+[0m  [34m    36[39m | [0m[0m[1m[31m[39m[0m[39m[0m
+[0m  [34m    37[39m | [0m[0m[1m[31m  versioning {[39m[0m[39m[0m
+[0m  [34m    38[39m | [0m[0m[1m[31m    enabled    = false[39m[0m[39m[0m
+[0m  [34m    39[39m | [0m[0m[1m[31m    mfa_delete = false[39m[0m[39m[0m
+[0m  [34m    40[39m | [0m[0m[1m[31m  }[39m[0m[39m[0m
+[0m  [34m    41[39m | [0m[0m[1m[31m[39m[0m[39m[0m
+[0m  [34m    42[39m | [0m[0m[1m[31m  tags = {[39m[0m[39m[0m
+[0m  [34m    43[39m | [0m[0m[1m[31m    Name = "${local.prefix}-${lookup(each.value, "name")}-web"[39m[0m[39m[0m
+[0m  [34m    44[39m | [0m[0m[1m[31m  }[39m[0m[39m[0m
+[0m  [34m    45[39m | [0m[0m[1m[31m}[39m[0m[39m[0m
+[0m  [34m    46[39m | [0m[0m[33m[39m[0m
+[0m  [34m    47[39m | [0m[0m[33mvariable "targets" {[39m[0m
+[0m  [34m    48[39m | [0m[0m[33m  default={[39m[0m
+
+[0m  [97mLegacy ID:  [39m[34mAWS098[39m
+[0m[0m  [97mImpact:     [39m[34mPublic access policies may be applied to sensitive data buckets[39m
+[0m[0m  [97mResolution: [39m[34mDefine a aws_s3_bucket_public_access_block for the given bucket to control public access policies[39m
+[0m[0m
+  [97mMore Info:[39m[0m[0m
+  [34m- https://tfsec.dev/docs/aws/s3/specify-public-access-block#aws/s3 [39m[0m[0m
+  [34m- https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#bucket [39m[0m[0m
+  [34m- https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html [39m[0m
+
+[0m[31m[1m  [1m[4mResult 2[0m[31m[1m
+[0m[0m
+  [34m[[39maws-s3-specify-public-access-block[34m][39m[34m[[39m[0m[33mMEDIUM[39m[0m[34m][39m Resource aws_s3_bucket.for_web["b"] has no associated aws_s3_bucket_public_access_block.
+  [34m/home/owen/code/github/owenrumney/tool-compare/test-cases/terraform/hcl_language_complexity/using_for_each/main.tf:31-45[39m
+
+
+[0m[0m  [34m    28[39m | [0m[0m[33m}[39m[0m
+[0m  [34m    29[39m | [0m[0m[33m[39m[0m
+[0m  [34m    30[39m | [0m[0m[33m# tfsec:ignore:AWS002 tfsec:ignore:AWS017 tfsec:ignore:AWS077[39m[0m
+[0m  [34m    31[39m | [0m[0m[1m[31mresource "aws_s3_bucket" "for_web" {[39m[0m[39m[0m
+[0m  [34m    32[39m | [0m[0m[1m[31m  for_each = var.targets[39m[0m[39m[0m
+[0m  [34m    33[39m | [0m[0m[1m[31m[39m[0m[39m[0m
+[0m  [34m    34[39m | [0m[0m[1m[31m  bucket = "${local.prefix}-${lookup(each.value, "name")}-web"[39m[0m[39m[0m
+[0m  [34m    35[39m | [0m[0m[1m[31m  acl    = "private"[39m[0m[39m[0m
+[0m  [34m    36[39m | [0m[0m[1m[31m[39m[0m[39m[0m
+[0m  [34m    37[39m | [0m[0m[1m[31m  versioning {[39m[0m[39m[0m
+[0m  [34m    38[39m | [0m[0m[1m[31m    enabled    = false[39m[0m[39m[0m
+[0m  [34m    39[39m | [0m[0m[1m[31m    mfa_delete = false[39m[0m[39m[0m
+[0m  [34m    40[39m | [0m[0m[1m[31m  }[39m[0m[39m[0m
+[0m  [34m    41[39m | [0m[0m[1m[31m[39m[0m[39m[0m
+[0m  [34m    42[39m | [0m[0m[1m[31m  tags = {[39m[0m[39m[0m
+[0m  [34m    43[39m | [0m[0m[1m[31m    Name = "${local.prefix}-${lookup(each.value, "name")}-web"[39m[0m[39m[0m
+[0m  [34m    44[39m | [0m[0m[1m[31m  }[39m[0m[39m[0m
+[0m  [34m    45[39m | [0m[0m[1m[31m}[39m[0m[39m[0m
+[0m  [34m    46[39m | [0m[0m[33m[39m[0m
+[0m  [34m    47[39m | [0m[0m[33mvariable "targets" {[39m[0m
+[0m  [34m    48[39m | [0m[0m[33m  default={[39m[0m
+
+[0m  [97mLegacy ID:  [39m[34mAWS098[39m
+[0m[0m  [97mImpact:     [39m[34mPublic access policies may be applied to sensitive data buckets[39m
+[0m[0m  [97mResolution: [39m[34mDefine a aws_s3_bucket_public_access_block for the given bucket to control public access policies[39m
+[0m[0m
+  [97mMore Info:[39m[0m[0m
+  [34m- https://tfsec.dev/docs/aws/s3/specify-public-access-block#aws/s3 [39m[0m[0m
+  [34m- https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#bucket [39m[0m[0m
+  [34m- https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html [39m[0m
+
+[0m[31m[1m  [1m[4mResult 3[0m[31m[1m
+[0m[0m
+  [34m[[39maws-s3-specify-public-access-block[34m][39m[34m[[39m[0m[33mMEDIUM[39m[0m[34m][39m Resource aws_s3_bucket.for_web["a"] has no associated aws_s3_bucket_public_access_block.
+  [34m/home/owen/code/github/owenrumney/tool-compare/test-cases/terraform/hcl_language_complexity/using_for_each/main.tf:31-45[39m
+
+
+[0m[0m  [34m    28[39m | [0m[0m[33m}[39m[0m
+[0m  [34m    29[39m | [0m[0m[33m[39m[0m
+[0m  [34m    30[39m | [0m[0m[33m# tfsec:ignore:AWS002 tfsec:ignore:AWS017 tfsec:ignore:AWS077[39m[0m
+[0m  [34m    31[39m | [0m[0m[1m[31mresource "aws_s3_bucket" "for_web" {[39m[0m[39m[0m
+[0m  [34m    32[39m | [0m[0m[1m[31m  for_each = var.targets[39m[0m[39m[0m
+[0m  [34m    33[39m | [0m[0m[1m[31m[39m[0m[39m[0m
+[0m  [34m    34[39m | [0m[0m[1m[31m  bucket = "${local.prefix}-${lookup(each.value, "name")}-web"[39m[0m[39m[0m
+[0m  [34m    35[39m | [0m[0m[1m[31m  acl    = "private"[39m[0m[39m[0m
+[0m  [34m    36[39m | [0m[0m[1m[31m[39m[0m[39m[0m
+[0m  [34m    37[39m | [0m[0m[1m[31m  versioning {[39m[0m[39m[0m
+[0m  [34m    38[39m | [0m[0m[1m[31m    enabled    = false[39m[0m[39m[0m
+[0m  [34m    39[39m | [0m[0m[1m[31m    mfa_delete = false[39m[0m[39m[0m
+[0m  [34m    40[39m | [0m[0m[1m[31m  }[39m[0m[39m[0m
+[0m  [34m    41[39m | [0m[0m[1m[31m[39m[0m[39m[0m
+[0m  [34m    42[39m | [0m[0m[1m[31m  tags = {[39m[0m[39m[0m
+[0m  [34m    43[39m | [0m[0m[1m[31m    Name = "${local.prefix}-${lookup(each.value, "name")}-web"[39m[0m[39m[0m
+[0m  [34m    44[39m | [0m[0m[1m[31m  }[39m[0m[39m[0m
+[0m  [34m    45[39m | [0m[0m[1m[31m}[39m[0m[39m[0m
+[0m  [34m    46[39m | [0m[0m[33m[39m[0m
+[0m  [34m    47[39m | [0m[0m[33mvariable "targets" {[39m[0m
+[0m  [34m    48[39m | [0m[0m[33m  default={[39m[0m
+
+[0m  [97mLegacy ID:  [39m[34mAWS098[39m
+[0m[0m  [97mImpact:     [39m[34mPublic access policies may be applied to sensitive data buckets[39m
+[0m[0m  [97mResolution: [39m[34mDefine a aws_s3_bucket_public_access_block for the given bucket to control public access policies[39m
+[0m[0m
+  [97mMore Info:[39m[0m[0m
+  [34m- https://tfsec.dev/docs/aws/s3/specify-public-access-block#aws/s3 [39m[0m[0m
+  [34m- https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#bucket [39m[0m[0m
+  [34m- https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html [39m[0m
+
+[0m  [34mtimes[39m
   ------------------------------------------
-  disk i/o             59.513166ms
-  parsing HCL          491µs
-  evaluating values    3.915875ms
-  running checks       13.011125ms
-
-  counts
+[0m[0m  [34mdisk i/o            [39m 491.467µs
+[0m[0m  [34mparsing HCL         [39m 8.524µs
+[0m[0m  [34mevaluating values   [39m 606.073µs
+[0m[0m  [34mrunning checks      [39m 3.237787ms
+[0m[0m
+  [34mcounts[39m
   ------------------------------------------
-  files loaded         1
-  blocks               2
-  modules              0
-
-  results
+[0m[0m  [34mfiles loaded        [39m 1
+[0m[0m  [34mblocks              [39m 5
+[0m[0m  [34mmodules             [39m 0
+[0m[0m
+  [34mresults[39m
   ------------------------------------------
-  critical             0
-  high                 0
-  medium               0
-  low                  0
-  ignored              0
+[0m[0m  [34mcritical            [39m 0
+[0m[0m  [34mhigh                [39m 0
+[0m[0m  [34mmedium              [39m 3
+[0m[0m  [34mlow                 [39m 0
+[0m[0m  [34mignored             [39m 9
+[0m[0m[31m[1m
+  3 potential problems detected.
 
-No problems detected!
-
+[0m

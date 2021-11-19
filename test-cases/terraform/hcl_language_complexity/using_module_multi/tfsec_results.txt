@@ -1,24 +1,193 @@
 
-  times
+[0m[31m[1m  [1m[4mResult 1[0m[31m[1m
+[0m[0m
+  [34m[[39maws-s3-specify-public-access-block[34m][39m[34m[[39m[0m[33mMEDIUM[39m[0m[34m][39m Resource module.jill:aws_s3_bucket.cloudtrail_logs has no associated aws_s3_bucket_public_access_block.
+  [34m/home/owen/code/github/owenrumney/tool-compare/test-cases/terraform/hcl_language_complexity/using_module_multi/mymodule/bucket.tf:1-5[39m
+
+
+[0m[0m  [34m     1[39m | [0m[0m[1m[31mresource "aws_s3_bucket" "cloudtrail_logs" {[39m[0m[39m[0m
+[0m  [34m     2[39m | [0m[0m[1m[31m  bucket = "cloudtrail-access-logs"[39m[0m[39m[0m
+[0m  [34m     3[39m | [0m[0m[1m[31m  acl    = "private"[39m[0m[39m[0m
+[0m  [34m     4[39m | [0m[0m[1m[31m  force_destroy = true[39m[0m[39m[0m
+[0m  [34m     5[39m | [0m[0m[1m[31m}[39m[0m[39m[0m
+
+[0m  [97mLegacy ID:  [39m[34mAWS098[39m
+[0m[0m  [97mImpact:     [39m[34mPublic access policies may be applied to sensitive data buckets[39m
+[0m[0m  [97mResolution: [39m[34mDefine a aws_s3_bucket_public_access_block for the given bucket to control public access policies[39m
+[0m[0m
+  [97mMore Info:[39m[0m[0m
+  [34m- https://tfsec.dev/docs/aws/s3/specify-public-access-block#aws/s3 [39m[0m[0m
+  [34m- https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#bucket [39m[0m[0m
+  [34m- https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html [39m[0m
+
+[0m[31m[1m  [4m[1mResult 2[0m[31m[1m
+[0m[0m
+  [34m[[39maws-s3-specify-public-access-block[34m][39m[34m[[39m[0m[33mMEDIUM[39m[0m[34m][39m Resource module.jack:aws_s3_bucket.cloudtrail_logs has no associated aws_s3_bucket_public_access_block.
+  [34m/home/owen/code/github/owenrumney/tool-compare/test-cases/terraform/hcl_language_complexity/using_module_multi/mymodule/bucket.tf:1-5[39m
+
+
+[0m[0m  [34m     1[39m | [0m[0m[1m[31mresource "aws_s3_bucket" "cloudtrail_logs" {[39m[0m[39m[0m
+[0m  [34m     2[39m | [0m[0m[1m[31m  bucket = "cloudtrail-access-logs"[39m[0m[39m[0m
+[0m  [34m     3[39m | [0m[0m[1m[31m  acl    = "private"[39m[0m[39m[0m
+[0m  [34m     4[39m | [0m[0m[1m[31m  force_destroy = true[39m[0m[39m[0m
+[0m  [34m     5[39m | [0m[0m[1m[31m}[39m[0m[39m[0m
+
+[0m  [97mLegacy ID:  [39m[34mAWS098[39m
+[0m[0m  [97mImpact:     [39m[34mPublic access policies may be applied to sensitive data buckets[39m
+[0m[0m  [97mResolution: [39m[34mDefine a aws_s3_bucket_public_access_block for the given bucket to control public access policies[39m
+[0m[0m
+  [97mMore Info:[39m[0m[0m
+  [34m- https://tfsec.dev/docs/aws/s3/specify-public-access-block#aws/s3 [39m[0m[0m
+  [34m- https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#bucket [39m[0m[0m
+  [34m- https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html [39m[0m
+
+[0m[31m[1m  [1m[4mResult 3[0m[31m[1m
+[0m[0m
+  [34m[[39maws-s3-enable-bucket-encryption[34m][39m[34m[[39m[0m[31mHIGH[39m[0m[34m][39m Resource 'module.jill:aws_s3_bucket.cloudtrail_logs' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
+  [34m/home/owen/code/github/owenrumney/tool-compare/test-cases/terraform/hcl_language_complexity/using_module_multi/mymodule/bucket.tf:1-5[39m
+
+
+[0m[0m  [34m     1[39m | [0m[0m[1m[31mresource "aws_s3_bucket" "cloudtrail_logs" {[39m[0m[39m[0m
+[0m  [34m     2[39m | [0m[0m[1m[31m  bucket = "cloudtrail-access-logs"[39m[0m[39m[0m
+[0m  [34m     3[39m | [0m[0m[1m[31m  acl    = "private"[39m[0m[39m[0m
+[0m  [34m     4[39m | [0m[0m[1m[31m  force_destroy = true[39m[0m[39m[0m
+[0m  [34m     5[39m | [0m[0m[1m[31m}[39m[0m[39m[0m
+
+[0m  [97mLegacy ID:  [39m[34mAWS017[39m
+[0m[0m  [97mImpact:     [39m[34mThe bucket objects could be read if compromised[39m
+[0m[0m  [97mResolution: [39m[34mConfigure bucket encryption[39m
+[0m[0m
+  [97mMore Info:[39m[0m[0m
+  [34m- https://tfsec.dev/docs/aws/s3/enable-bucket-encryption#aws/s3 [39m[0m[0m
+  [34m- https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#enable-default-server-side-encryption [39m[0m[0m
+  [34m- https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-encryption.html [39m[0m
+
+[0m[31m[1m  [1m[4mResult 4[0m[31m[1m
+[0m[0m
+  [34m[[39maws-s3-enable-bucket-encryption[34m][39m[34m[[39m[0m[31mHIGH[39m[0m[34m][39m Resource 'module.jack:aws_s3_bucket.cloudtrail_logs' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
+  [34m/home/owen/code/github/owenrumney/tool-compare/test-cases/terraform/hcl_language_complexity/using_module_multi/mymodule/bucket.tf:1-5[39m
+
+
+[0m[0m  [34m     1[39m | [0m[0m[1m[31mresource "aws_s3_bucket" "cloudtrail_logs" {[39m[0m[39m[0m
+[0m  [34m     2[39m | [0m[0m[1m[31m  bucket = "cloudtrail-access-logs"[39m[0m[39m[0m
+[0m  [34m     3[39m | [0m[0m[1m[31m  acl    = "private"[39m[0m[39m[0m
+[0m  [34m     4[39m | [0m[0m[1m[31m  force_destroy = true[39m[0m[39m[0m
+[0m  [34m     5[39m | [0m[0m[1m[31m}[39m[0m[39m[0m
+
+[0m  [97mLegacy ID:  [39m[34mAWS017[39m
+[0m[0m  [97mImpact:     [39m[34mThe bucket objects could be read if compromised[39m
+[0m[0m  [97mResolution: [39m[34mConfigure bucket encryption[39m
+[0m[0m
+  [97mMore Info:[39m[0m[0m
+  [34m- https://tfsec.dev/docs/aws/s3/enable-bucket-encryption#aws/s3 [39m[0m[0m
+  [34m- https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#enable-default-server-side-encryption [39m[0m[0m
+  [34m- https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-encryption.html [39m[0m
+
+[0m[31m[1m  [1m[4mResult 5[0m[31m[1m
+[0m[0m
+  [34m[[39maws-s3-enable-bucket-logging[34m][39m[34m[[39m[0m[33mMEDIUM[39m[0m[34m][39m Resource 'module.jill:aws_s3_bucket.cloudtrail_logs' does not have logging enabled.
+  [34m/home/owen/code/github/owenrumney/tool-compare/test-cases/terraform/hcl_language_complexity/using_module_multi/mymodule/bucket.tf:1-5[39m
+
+
+[0m[0m  [34m     1[39m | [0m[0m[1m[31mresource "aws_s3_bucket" "cloudtrail_logs" {[39m[0m[39m[0m
+[0m  [34m     2[39m | [0m[0m[1m[31m  bucket = "cloudtrail-access-logs"[39m[0m[39m[0m
+[0m  [34m     3[39m | [0m[0m[1m[31m  acl    = "private"[39m[0m[39m[0m
+[0m  [34m     4[39m | [0m[0m[1m[31m  force_destroy = true[39m[0m[39m[0m
+[0m  [34m     5[39m | [0m[0m[1m[31m}[39m[0m[39m[0m
+
+[0m  [97mLegacy ID:  [39m[34mAWS002[39m
+[0m[0m  [97mImpact:     [39m[34mThere is no way to determine the access to this bucket[39m
+[0m[0m  [97mResolution: [39m[34mAdd a logging block to the resource to enable access logging[39m
+[0m[0m
+  [97mMore Info:[39m[0m[0m
+  [34m- https://tfsec.dev/docs/aws/s3/enable-bucket-logging#aws/s3 [39m[0m[0m
+  [34m- https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket [39m[0m[0m
+  [34m- https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerLogs.html [39m[0m
+
+[0m[31m[1m  [4m[1mResult 6[0m[31m[1m
+[0m[0m
+  [34m[[39maws-s3-enable-bucket-logging[34m][39m[34m[[39m[0m[33mMEDIUM[39m[0m[34m][39m Resource 'module.jack:aws_s3_bucket.cloudtrail_logs' does not have logging enabled.
+  [34m/home/owen/code/github/owenrumney/tool-compare/test-cases/terraform/hcl_language_complexity/using_module_multi/mymodule/bucket.tf:1-5[39m
+
+
+[0m[0m  [34m     1[39m | [0m[0m[1m[31mresource "aws_s3_bucket" "cloudtrail_logs" {[39m[0m[39m[0m
+[0m  [34m     2[39m | [0m[0m[1m[31m  bucket = "cloudtrail-access-logs"[39m[0m[39m[0m
+[0m  [34m     3[39m | [0m[0m[1m[31m  acl    = "private"[39m[0m[39m[0m
+[0m  [34m     4[39m | [0m[0m[1m[31m  force_destroy = true[39m[0m[39m[0m
+[0m  [34m     5[39m | [0m[0m[1m[31m}[39m[0m[39m[0m
+
+[0m  [97mLegacy ID:  [39m[34mAWS002[39m
+[0m[0m  [97mImpact:     [39m[34mThere is no way to determine the access to this bucket[39m
+[0m[0m  [97mResolution: [39m[34mAdd a logging block to the resource to enable access logging[39m
+[0m[0m
+  [97mMore Info:[39m[0m[0m
+  [34m- https://tfsec.dev/docs/aws/s3/enable-bucket-logging#aws/s3 [39m[0m[0m
+  [34m- https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket [39m[0m[0m
+  [34m- https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerLogs.html [39m[0m
+
+[0m[31m[1m  [1m[4mResult 7[0m[31m[1m
+[0m[0m
+  [34m[[39maws-s3-enable-versioning[34m][39m[34m[[39m[0m[33mMEDIUM[39m[0m[34m][39m Resource 'module.jill:aws_s3_bucket.cloudtrail_logs' does not have versioning enabled
+  [34m/home/owen/code/github/owenrumney/tool-compare/test-cases/terraform/hcl_language_complexity/using_module_multi/mymodule/bucket.tf:1-5[39m
+
+
+[0m[0m  [34m     1[39m | [0m[0m[1m[31mresource "aws_s3_bucket" "cloudtrail_logs" {[39m[0m[39m[0m
+[0m  [34m     2[39m | [0m[0m[1m[31m  bucket = "cloudtrail-access-logs"[39m[0m[39m[0m
+[0m  [34m     3[39m | [0m[0m[1m[31m  acl    = "private"[39m[0m[39m[0m
+[0m  [34m     4[39m | [0m[0m[1m[31m  force_destroy = true[39m[0m[39m[0m
+[0m  [34m     5[39m | [0m[0m[1m[31m}[39m[0m[39m[0m
+
+[0m  [97mLegacy ID:  [39m[34mAWS077[39m
+[0m[0m  [97mImpact:     [39m[34mDeleted or modified data would not be recoverable[39m
+[0m[0m  [97mResolution: [39m[34mEnable versioning to protect against accidental/malicious removal or modification[39m
+[0m[0m
+  [97mMore Info:[39m[0m[0m
+  [34m- https://tfsec.dev/docs/aws/s3/enable-versioning#aws/s3 [39m[0m[0m
+  [34m- https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#versioning [39m[0m[0m
+  [34m- https://docs.aws.amazon.com/AmazonS3/latest/userguide/Versioning.html [39m[0m
+
+[0m[31m[1m  [1m[4mResult 8[0m[31m[1m
+[0m[0m
+  [34m[[39maws-s3-enable-versioning[34m][39m[34m[[39m[0m[33mMEDIUM[39m[0m[34m][39m Resource 'module.jack:aws_s3_bucket.cloudtrail_logs' does not have versioning enabled
+  [34m/home/owen/code/github/owenrumney/tool-compare/test-cases/terraform/hcl_language_complexity/using_module_multi/mymodule/bucket.tf:1-5[39m
+
+
+[0m[0m  [34m     1[39m | [0m[0m[1m[31mresource "aws_s3_bucket" "cloudtrail_logs" {[39m[0m[39m[0m
+[0m  [34m     2[39m | [0m[0m[1m[31m  bucket = "cloudtrail-access-logs"[39m[0m[39m[0m
+[0m  [34m     3[39m | [0m[0m[1m[31m  acl    = "private"[39m[0m[39m[0m
+[0m  [34m     4[39m | [0m[0m[1m[31m  force_destroy = true[39m[0m[39m[0m
+[0m  [34m     5[39m | [0m[0m[1m[31m}[39m[0m[39m[0m
+
+[0m  [97mLegacy ID:  [39m[34mAWS077[39m
+[0m[0m  [97mImpact:     [39m[34mDeleted or modified data would not be recoverable[39m
+[0m[0m  [97mResolution: [39m[34mEnable versioning to protect against accidental/malicious removal or modification[39m
+[0m[0m
+  [97mMore Info:[39m[0m[0m
+  [34m- https://tfsec.dev/docs/aws/s3/enable-versioning#aws/s3 [39m[0m[0m
+  [34m- https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#versioning [39m[0m[0m
+  [34m- https://docs.aws.amazon.com/AmazonS3/latest/userguide/Versioning.html [39m[0m
+
+[0m  [34mtimes[39m
   ------------------------------------------
-  disk i/o             109.378625ms
-  parsing HCL          591.251µs
-  evaluating values    13.784083ms
-  running checks       18.988834ms
-
-  counts
+[0m[0m  [34mdisk i/o            [39m 709.187µs
+[0m[0m  [34mparsing HCL         [39m 16.881µs
+[0m[0m  [34mevaluating values   [39m 1.697762ms
+[0m[0m  [34mrunning checks      [39m 3.809602ms
+[0m[0m
+  [34mcounts[39m
   ------------------------------------------
-  files loaded         2
-  blocks               2
-  modules              2
-
-  results
+[0m[0m  [34mfiles loaded        [39m 3
+[0m[0m  [34mblocks              [39m 2
+[0m[0m  [34mmodules             [39m 2
+[0m[0m
+  [34mresults[39m
   ------------------------------------------
-  critical             0
-  high                 0
-  medium               0
-  low                  0
-  ignored              0
+[0m[0m  [34mcritical            [39m 0
+[0m[0m  [34mhigh                [39m 2
+[0m[0m  [34mmedium              [39m 6
+[0m[0m  [34mlow                 [39m 0
+[0m[0m  [34mignored             [39m 0
+[0m[0m[31m[1m
+  8 potential problems detected.
 
-No problems detected!
-
+[0m

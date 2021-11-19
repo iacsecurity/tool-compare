@@ -40,7 +40,7 @@ Last update: 2021-08-27
 |Tested Version|2.0.363|1.3.385|1.4.1|1.683.0|1.9.0|0.58.4|
 |Terraform - AWS|69%|93%|94%|62%|73%|61%|
 |Terraform - Azure|47%|35%|23%|30%|8%|18%|
-|Terraform - Advanced Language Expressions|20%|100%|20%|0%|0%|0%|
+|Terraform - Advanced Language Expressions|20%|100%|20%|0%|0%|100%|
 |Total Catch Rate|59%|72%|65%|48%|47%|43%|
 
 
@@ -317,11 +317,11 @@ Last update: 2021-08-27
 
 | Test Case | Checkov | Indeni Cloudrail | Kics | Snyk | Terrascan | Tfsec |
 |----|----|----|----|----|----|----|
-|[using_count_and_ternary_expr](test-cases/terraform/hcl_language_complexity/using_count_and_ternary_expr)|:x:|:white_check_mark:|:x:|:x:|:x:|:x:|
-|[using_for_each](test-cases/terraform/hcl_language_complexity/using_for_each)|:x:|:white_check_mark:|:x:|:x:|:x:|:x:|
-|[using_locals](test-cases/terraform/hcl_language_complexity/using_locals)|:x:|:white_check_mark:|:white_check_mark:|:x:|:x:|:x:|
-|[using_module_multi](test-cases/terraform/hcl_language_complexity/using_module_multi)|:white_check_mark:|:white_check_mark:|:x:|:x:|:x:|:x:|
-|[using_module_simple](test-cases/terraform/hcl_language_complexity/using_module_simple)|:x:|:white_check_mark:|:x:|:x:|:x:|:x:|
+|[using_count_and_ternary_expr](test-cases/terraform/hcl_language_complexity/using_count_and_ternary_expr)|:x:|:white_check_mark:|:x:|:x:|:x:|:white_check_mark:|
+|[using_for_each](test-cases/terraform/hcl_language_complexity/using_for_each)|:x:|:white_check_mark:|:x:|:x:|:x:|:white_check_mark:|
+|[using_locals](test-cases/terraform/hcl_language_complexity/using_locals)|:x:|:white_check_mark:|:white_check_mark:|:x:|:x:|:white_check_mark:|
+|[using_module_multi](test-cases/terraform/hcl_language_complexity/using_module_multi)|:white_check_mark:|:white_check_mark:|:x:|:x:|:x:|:white_check_mark:|
+|[using_module_simple](test-cases/terraform/hcl_language_complexity/using_module_simple)|:x:|:white_check_mark:|:x:|:x:|:x:|:white_check_mark:|
 |Sub-category Catch Rate|20%|100%|20%|0%|0%|0%|
 
 </details>

@@ -1,24 +1,70 @@
 
-  times
+[0m[31m[1m  [1m[4mResult 1[0m[31m[1m
+[0m[0m
+  [34m[[39maws-rds-encrypt-instance-storage-data[34m][39m[34m[[39m[0m[31mHIGH[39m[0m[34m][39m Resource 'module.db:module.db_instance:aws_db_instance.this[0]' has storage encrypted set to false
+  [34m/home/owen/code/github/owenrumney/tool-compare/test-cases/terraform/hcl_language_complexity/using_module_simple/.terraform/modules/db/modules/db_instance/main.tf:30[39m
+
+
+[0m[0m  [34m    27[39m | [0m[0m[33m  instance_class    = var.instance_class[39m[0m
+[0m  [34m    28[39m | [0m[0m[33m  allocated_storage = var.allocated_storage[39m[0m
+[0m  [34m    29[39m | [0m[0m[33m  storage_type      = var.storage_type[39m[0m
+[0m  [34m    30[39m | [0m[0m[1m[31m  storage_encrypted = var.storage_encrypted[39m    [34mbool: false[39m[0m[39m[0m
+[0m  [34m    31[39m | [0m[0m[33m  kms_key_id        = var.kms_key_id[39m[0m
+[0m  [34m    32[39m | [0m[0m[33m  license_model     = var.license_model[39m[0m
+[0m  [34m    33[39m | [0m[0m[33m[39m[0m
+
+[0m  [97mLegacy ID:  [39m[34mAWS052[39m
+[0m[0m  [97mImpact:     [39m[34mData can be read from RDS instances if compromised[39m
+[0m[0m  [97mResolution: [39m[34mEnable encryption for RDS instances[39m
+[0m[0m
+  [97mMore Info:[39m[0m[0m
+  [34m- https://tfsec.dev/docs/aws/rds/encrypt-instance-storage-data#aws/rds [39m[0m[0m
+  [34m- https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_instance [39m[0m[0m
+  [34m- https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html [39m[0m
+
+[0m[31m[1m  [4m[1mResult 2[0m[31m[1m
+[0m[0m
+  [34m[[39mgeneral-secrets-sensitive-in-variable[34m][39m[34m[[39m[0m[1m[31mCRITICAL[39m[0m[39m[0m[34m][39m Variable 'module.db:variable.password' includes a potentially sensitive default value.
+  [34m/home/owen/code/github/owenrumney/tool-compare/test-cases/terraform/hcl_language_complexity/using_module_simple/.terraform/modules/db/variables.tf:118[39m
+
+
+[0m[0m  [34m   115[39m | [0m[0m[33mvariable "password" {[39m[0m
+[0m  [34m   116[39m | [0m[0m[33m  description = "Password for the master DB user. Note that this may show up in logs, and it will be stored in the state file"[39m[0m
+[0m  [34m   117[39m | [0m[0m[33m  type        = string[39m[0m
+[0m  [34m   118[39m | [0m[0m[1m[31m  default     = ""[39m    [34mstring: ""[39m[0m[39m[0m
+[0m  [34m   119[39m | [0m[0m[33m}[39m[0m
+[0m  [34m   120[39m | [0m[0m[33m[39m[0m
+[0m  [34m   121[39m | [0m[0m[33mvariable "port" {[39m[0m
+
+[0m  [97mLegacy ID:  [39m[34mGEN001[39m
+[0m[0m  [97mImpact:     [39m[34mDefault values could be exposing sensitive data[39m
+[0m[0m  [97mResolution: [39m[34mDon't include sensitive data in variable defaults[39m
+[0m[0m
+  [97mMore Info:[39m[0m[0m
+  [34m- https://tfsec.dev/docs/general/secrets/sensitive-in-variable#general/secrets [39m[0m[0m
+  [34m- https://www.terraform.io/docs/state/sensitive-data.html [39m[0m
+
+[0m  [34mtimes[39m
   ------------------------------------------
-  disk i/o             13.118098ms
-  parsing HCL          59.094µs
-  evaluating values    43.269647ms
-  running checks       6.381818ms
-
-  counts
+[0m[0m  [34mdisk i/o            [39m 23.446566ms
+[0m[0m  [34mparsing HCL         [39m 216.267µs
+[0m[0m  [34mevaluating values   [39m 94.085368ms
+[0m[0m  [34mrunning checks      [39m 22.496198ms
+[0m[0m
+  [34mcounts[39m
   ------------------------------------------
-  files loaded         10
-  blocks               1
-  modules              2
-
-  results
+[0m[0m  [34mfiles loaded        [39m 30
+[0m[0m  [34mblocks              [39m 2
+[0m[0m  [34mmodules             [39m 7
+[0m[0m
+  [34mresults[39m
   ------------------------------------------
-  critical             0
-  high                 0
-  medium               0
-  low                  0
-  ignored              0
+[0m[0m  [34mcritical            [39m 1
+[0m[0m  [34mhigh                [39m 1
+[0m[0m  [34mmedium              [39m 0
+[0m[0m  [34mlow                 [39m 0
+[0m[0m  [34mignored             [39m 0
+[0m[0m[31m[1m
+  2 potential problems detected.
 
-No problems detected!
-
+[0m

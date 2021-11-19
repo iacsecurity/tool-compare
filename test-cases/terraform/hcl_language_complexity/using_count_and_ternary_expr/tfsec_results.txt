@@ -1,24 +1,73 @@
 
-  times
+[0m[31m[1m  [1m[4mResult 1[0m[31m[1m
+[0m[0m
+  [34m[[39maws-vpc-add-description-to-security-group[34m][39m[34m[[39m[0m[97mLOW[39m[0m[34m][39m Resource 'aws_security_group_rule.trust-rules-dev[3]' should include a non-empty description for auditing purposes.
+  [34m/home/owen/code/github/owenrumney/tool-compare/test-cases/terraform/hcl_language_complexity/using_count_and_ternary_expr/main.tf:36[39m
+
+
+[0m[0m  [34m    33[39m | [0m[0m[33m[39m[0m
+[0m  [34m    34[39m | [0m[0m[33mresource "aws_security_group_rule" "trust-rules-dev" {[39m[0m
+[0m  [34m    35[39m | [0m[0m[33m	count = 4[39m[0m
+[0m  [34m    36[39m | [0m[0m[1m[31m	description = var.trust-sg-rules[count.index]["description"][39m    [34munknown: ???[39m[0m[39m[0m
+[0m  [34m    37[39m | [0m[0m[33m	type = "ingress"[39m[0m
+[0m  [34m    38[39m | [0m[0m[33m	protocol = "tcp"[39m[0m
+[0m  [34m    39[39m | [0m[0m[33m	cidr_blocks = ["0.0.0.0/2"][39m[0m
+
+[0m  [97mLegacy ID:  [39m[34mAWS018[39m
+[0m[0m  [97mImpact:     [39m[34mDescriptions provide context for the firewall rule reasons[39m
+[0m[0m  [97mResolution: [39m[34mAdd descriptions for all security groups and rules[39m
+[0m[0m
+  [97mMore Info:[39m[0m[0m
+  [34m- https://tfsec.dev/docs/aws/vpc/add-description-to-security-group#aws/vpc [39m[0m[0m
+  [34m- https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group [39m[0m[0m
+  [34m- https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule [39m[0m[0m
+  [34m- https://www.cloudconformity.com/knowledge-base/aws/EC2/security-group-rules-description.html [39m[0m
+
+[0m[31m[1m  [4m[1mResult 2[0m[31m[1m
+[0m[0m
+  [34m[[39maws-vpc-add-description-to-security-group[34m][39m[34m[[39m[0m[97mLOW[39m[0m[34m][39m Resource 'aws_security_group_rule.trust-rules-dev[2]' should include a non-empty description for auditing purposes.
+  [34m/home/owen/code/github/owenrumney/tool-compare/test-cases/terraform/hcl_language_complexity/using_count_and_ternary_expr/main.tf:36[39m
+
+
+[0m[0m  [34m    33[39m | [0m[0m[33m[39m[0m
+[0m  [34m    34[39m | [0m[0m[33mresource "aws_security_group_rule" "trust-rules-dev" {[39m[0m
+[0m  [34m    35[39m | [0m[0m[33m	count = 4[39m[0m
+[0m  [34m    36[39m | [0m[0m[1m[31m	description = var.trust-sg-rules[count.index]["description"][39m    [34munknown: ???[39m[0m[39m[0m
+[0m  [34m    37[39m | [0m[0m[33m	type = "ingress"[39m[0m
+[0m  [34m    38[39m | [0m[0m[33m	protocol = "tcp"[39m[0m
+[0m  [34m    39[39m | [0m[0m[33m	cidr_blocks = ["0.0.0.0/2"][39m[0m
+
+[0m  [97mLegacy ID:  [39m[34mAWS018[39m
+[0m[0m  [97mImpact:     [39m[34mDescriptions provide context for the firewall rule reasons[39m
+[0m[0m  [97mResolution: [39m[34mAdd descriptions for all security groups and rules[39m
+[0m[0m
+  [97mMore Info:[39m[0m[0m
+  [34m- https://tfsec.dev/docs/aws/vpc/add-description-to-security-group#aws/vpc [39m[0m[0m
+  [34m- https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group [39m[0m[0m
+  [34m- https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule [39m[0m[0m
+  [34m- https://www.cloudconformity.com/knowledge-base/aws/EC2/security-group-rules-description.html [39m[0m
+
+[0m  [34mtimes[39m
   ------------------------------------------
-  disk i/o             51.157832ms
-  parsing HCL          806.083µs
-  evaluating values    4.794334ms
-  running checks       11.739791ms
-
-  counts
+[0m[0m  [34mdisk i/o            [39m 995.944µs
+[0m[0m  [34mparsing HCL         [39m 19.928µs
+[0m[0m  [34mevaluating values   [39m 618.741µs
+[0m[0m  [34mrunning checks      [39m 3.608517ms
+[0m[0m
+  [34mcounts[39m
   ------------------------------------------
-  files loaded         1
-  blocks               5
-  modules              0
-
-  results
+[0m[0m  [34mfiles loaded        [39m 1
+[0m[0m  [34mblocks              [39m 8
+[0m[0m  [34mmodules             [39m 0
+[0m[0m
+  [34mresults[39m
   ------------------------------------------
-  critical             0
-  high                 0
-  medium               0
-  low                  0
-  ignored              0
+[0m[0m  [34mcritical            [39m 0
+[0m[0m  [34mhigh                [39m 0
+[0m[0m  [34mmedium              [39m 0
+[0m[0m  [34mlow                 [39m 2
+[0m[0m  [34mignored             [39m 0
+[0m[0m[31m[1m
+  2 potential problems detected.
 
-No problems detected!
-
+[0m

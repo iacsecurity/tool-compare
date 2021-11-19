@@ -21,3 +21,39 @@ resource "aws_iam_user_login_profile" "example" {
   user    = each.value
   pgp_key = "keybase:some_person_that_exists"
 }
+
+
+locals{
+  prefix = "blah"
+}
+
+# tfsec:ignore:AWS002 tfsec:ignore:AWS017 tfsec:ignore:AWS077
+resource "aws_s3_bucket" "for_web" {
+  for_each = var.targets
+
+  bucket = "${local.prefix}-${lookup(each.value, "name")}-web"
+  acl    = "private"
+
+  versioning {
+    enabled    = false
+    mfa_delete = false
+  }
+
+  tags = {
+    Name = "${local.prefix}-${lookup(each.value, "name")}-web"
+  }
+}
+
+variable "targets" {
+  default={
+    "a" = {
+      name = "test"
+    },
+    "b" = {
+      name = "test"
+    },
+    "c" = {
+      name = "test"
+    }
+  }
+}
