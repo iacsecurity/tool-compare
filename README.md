@@ -33,11 +33,11 @@ are able to catch it specifically, and which don't. Most test cases originate fr
 own recommendations and best practices, as well as the CIS benchmark for that specific CSP.
 
 ### Summary
-Last update: 2021-08-27
+Last update: 2021-12-28
 
 |     | Checkov | Indeni Cloudrail | Kics | Snyk | Terrascan | Tfsec |
 |----|----|----|----|----|----|----|
-|Tested Version|2.0.363|1.3.385|1.4.1|1.683.0|1.9.0|0.58.4|
+|Tested Version|2.0.694|1.3.836|1.4.9|1.810.0|1.12.0|0.63.1|
 |Terraform - AWS|69%|93%|94%|62%|73%|61%|
 |Terraform - Azure|47%|35%|23%|30%|8%|18%|
 |Terraform - Advanced Language Expressions|20%|100%|20%|0%|0%|0%|

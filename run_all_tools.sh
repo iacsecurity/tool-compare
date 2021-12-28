@@ -1,8 +1,13 @@
 #!/usr/bin/env bash
 
+function check_checkov {
+  echo "Checking checkov";
+}
+
 # Checkov
 function run_checkov {
   echo Now running Checkov on all cases
+  check_checkov;
   docker pull bridgecrew/checkov:latest
   docker run -t -v $PWD:/tf bridgecrew/checkov --version >version_checkov.txt
   find . -name "main.tf" -exec dirname {} \; | grep -v "\.terraform" | while read -r test_case; do
@@ -14,9 +19,14 @@ function run_checkov {
   done
 }
 
+function check_tfsec {
+  echo "Checking tfsec";
+}
+
 # tfsec
 function run_tfsec {
   echo Now running tfsec on all cases
+  check_tfsec;
   docker pull aquasec/tfsec:latest
   docker run -t -v $PWD:/tf aquasec/tfsec --version >version_tfsec.txt
   find . -name "main.tf" -exec dirname {} \; | grep -v "\.terraform" | while read -r test_case; do
@@ -28,9 +38,14 @@ function run_tfsec {
   done
 }
 
+function check_kics {
+  echo "Checking kics";
+}
+
 # KICS
 function run_kics {
   echo Now running KICS on all cases
+  check_kics;
   docker pull checkmarx/kics:latest
   docker run -t -v $PWD:/tf checkmarx/kics version | awk '{print $NF}' >version_kics.txt
   find . -name "main.tf" -exec dirname {} \; | grep -v "\.terraform" | while read -r test_case; do
@@ -42,10 +57,14 @@ function run_kics {
   done
 }
 
+function check_terrascan {
+  echo "Checking terrascan";
+}
+
 # Terrascan
 function run_terrascan {
   echo Now running Terrascan on all cases
-
+  check_terrascan;
   docker pull accurics/terrascan:latest
   docker run --rm accurics/terrascan version | awk '{print $NF}' >version_terrascan.txt
   find . -name "main.tf" -exec dirname {} \; | grep -v "\.terraform" | while read -r test_case; do
@@ -57,15 +76,18 @@ function run_terrascan {
   done
 }
 
-# Snyk
-function run_snyk {
-  echo Now running Snyk on all cases
-
+function check_snyk {
+  echo "Checking snyk";
   if [ -z "$SNYK_TOKEN" ]; then
     echo "To run this script, you'll need to provide the SNYK_TOKEN environment variable."
     exit 1
   fi
+}
 
+# Snyk
+function run_snyk {
+  echo Now running Snyk on all cases
+  check_snyk;
   docker pull snyk/snyk-cli:docker
   docker run -t -v empty:/project -e SNYK_TOKEN snyk/snyk-cli:docker --version | tail -n 1 >version_snyk.txt
   find . -name "main.tf" -exec dirname {} \; | grep -v "\.terraform" | while read -r test_case; do
@@ -78,14 +100,18 @@ function run_snyk {
 }
 
 # Cloudrail
-function run_cloudrail {
-  echo Now running Cloudrail on all cases
 
+function check_cloudrail {
+  echo "Checking cloudrail";
   if [ -z "$CLOUDRAIL_API_KEY" ]; then
     echo "To run this script, you'll need to provide the CLOUDRAIL_API_KEY environment variable."
     exit 1
   fi
+}
 
+function run_cloudrail {
+  echo Now running Cloudrail on all cases
+  check_cloudrail;
   docker pull indeni/cloudrail-cli:latest
   docker run -t -v $PWD:/tf indeni/cloudrail-cli --version | awk '{print $NF}' | head -n 1 >version_cloudrail.txt
   find . -name "main.tf" -exec dirname {} \; | grep -v "\.terraform" | while read -r test_case; do
@@ -98,6 +124,14 @@ function run_cloudrail {
 }
 
 function run_all {
+  echo "Checking for required environment variables";
+  check_checkov
+  check_cloudrail
+  check_kics
+  check_snyk
+  check_terrascan
+  check_tfsec
+
   run_checkov
   run_cloudrail
   run_kics
@@ -109,6 +143,7 @@ function run_all {
 # Verify AWS access for plan
 if [ -z "$AWS_ACCESS_KEY_ID" -a -z "$AWS_DEFAULT_PROFILE" ]; then
   echo "To run this script, you'll need AWS credentials (for use with terraform plan)."
+  echo "If the AWS CLI is installed locally, please set AWS_DEFAULT_PROFILE";
   exit 1
 fi
 export AWS_REGION=us-west-1
