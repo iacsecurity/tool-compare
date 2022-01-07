@@ -11,21 +11,21 @@ Violation Details -
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	Ensure VPC flow logging is enabled in all VPCs
-	File           :	main.tf
-	Module Name    :	root
-	Plan Root      :	./
-	Line           :	12
-	Severity       :	LOW
-	
-	-----------------------------------------------------------------------
-	
 	Description    :	Ensure that detailed monitoring is enabled for EC2 instances.
 	File           :	main.tf
 	Module Name    :	root
 	Plan Root      :	./
 	Line           :	87
 	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure VPC flow logging is enabled in all VPCs
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	12
+	Severity       :	LOW
 	
 	-----------------------------------------------------------------------
 	
@@ -43,7 +43,7 @@ Scan Summary -
 
 	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-08-18 17:40:26.610705835 +0000 UTC
+	Scanned At          :	2022-01-05 16:24:22.690053417 +0000 UTC
 	Policies Validated  :	146
 	Violated Policies   :	4
 	Low                 :	1

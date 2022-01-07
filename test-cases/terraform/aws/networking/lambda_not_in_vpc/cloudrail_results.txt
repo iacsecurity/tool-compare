@@ -1,17 +1,58 @@
 
 WARNINGs found:
-Rule: Ensure Lambda function has X-Ray tracing enabled
+Rule: Ensure use of Lambda function policy, and no action wildcards are being used
+Description: Using wildcard actions may inadvertently allow users to take actions you do not want to allow them to do. It is a best practice to give specific permissions only.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/lambda/latest/dg/access-control-resource-based.html to modify Lambda function policy in order to avoid using wildcard actions.
+Remediation Steps - Terraform: For the aws_lambda_permission resource, modify policy argument in order to avoid using wildcard actions.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_lambda_function.test_lambda] (main.tf:21)
      Violating Resource: [aws_lambda_function.test_lambda]  (main.tf:21)
 
      Evidence:
-             | The Lambda Function aws_lambda_function.test_lambda does not have X-Ray tracing enabled
+             | There is no resource policy or no statements attached to aws_lambda_function.test_lambda
+
+
+-----------------------------------------------
+Rule: Ensure each Lambda function has a non-infinite log retention
+Description: By default, Lambda functions have log groups created for them (either explicitly by the user, or by AWS). It’s important to set a retention period on logs, and not use the default of AWS.
+Remediation Steps - Cloud Console: Find the specific log group for the Lambda function, and change its retention by following https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/Working-with-log-groups-and-streams.html#SettingLogRetention.
+Remediation Steps - Terraform: Update the retention_in_days field in the aws_cloudwatch_log_group resource. If you haven't specified one explicitly, create an aws_cloudwatch_log_group resource for the Lambda function as part of the Terraform code.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_lambda_function.test_lambda] (main.tf:21)
+     Violating Resource: [aws_lambda_function.test_lambda]  (main.tf:21)
+
+     Evidence:
+             | Upon creation, Lambda Function aws_lambda_function.test_lambda will have a log group generated automatically with its retention set to Never Expire
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+Description: Some organizations require that all resources have at least one tag set. This rule will review the resources that can be tagged, and make sure each one has a tag that is not the Name tag. Resources that are not tagged will be flagged.
+Remediation Steps - Cloud Console: Access the specific resource in the AWS console and add tags.
+Remediation Steps - Terraform: Add a tags section to the resource with at least one tag beyond the Name tag.
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_iam_role.iam_for_lambda] (main.tf:1)
+     Violating Resource: [aws_iam_role.iam_for_lambda]  (main.tf:1)
+
+     Evidence:
+             | Resource IAM Role aws_iam_role.iam_for_lambda does not have any tags set
+
+
+   - Exposed Resource: [aws_lambda_function.test_lambda] (main.tf:21)
+     Violating Resource: [aws_lambda_function.test_lambda]  (main.tf:21)
+
+     Evidence:
+             | Resource Lambda Function aws_lambda_function.test_lambda does not have any tags set
 
 
 -----------------------------------------------
 Rule: Ensure IAM policies pass Access Analyzer policy validation without WARNING and SUGGESTION issues
+Description: Cloudrail will send all of your IAM policies to the AWS Access Analyzer for Policy Validation. Any issues found by Access Analyzer at the WARNING and SUGGESTION severities will be highlighted as issues by Cloudrail under this rule.
+Remediation Steps - Cloud Console: Review the findings and correct them within the policy.
+Remediation Steps - Terraform: Review the findings and correct them within the policy.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_iam_role.iam_for_lambda] (main.tf:1)
@@ -24,43 +65,17 @@ Rule: Ensure IAM policies pass Access Analyzer policy validation without WARNING
 
 
 -----------------------------------------------
-Rule: Ensure all resources that can be tagged have at least one tag
- - 2 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_lambda_function.test_lambda] (main.tf:21)
-     Violating Resource: [aws_lambda_function.test_lambda]  (main.tf:21)
-
-     Evidence:
-             | Resource Lambda Function aws_lambda_function.test_lambda does not have any tags set
-
-
-   - Exposed Resource: [aws_iam_role.iam_for_lambda] (main.tf:1)
-     Violating Resource: [aws_iam_role.iam_for_lambda]  (main.tf:1)
-
-     Evidence:
-             | Resource IAM Role aws_iam_role.iam_for_lambda does not have any tags set
-
-
------------------------------------------------
-Rule: Ensure each Lambda function has a non-infinite log retention
+Rule: Ensure Lambda function has X-Ray tracing enabled
+Description: Cloudrail will review the Lambda functions configuration in your environment. If a function does not have tracing in Active mode, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/xray/latest/devguide/xray-services-lambda.html in order to enable X-Ray tracing for a Lambda function.
+Remediation Steps - Terraform: For the aws_lambda_function resource, set the tracing_config block with mode argument set to “Active”.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_lambda_function.test_lambda] (main.tf:21)
      Violating Resource: [aws_lambda_function.test_lambda]  (main.tf:21)
 
      Evidence:
-             | Upon creation, Lambda Function aws_lambda_function.test_lambda will have a log group generated automatically with its retention set to Never Expire
-
-
------------------------------------------------
-Rule: Ensure use of Lambda function policy, and no action wildcards are being used
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_lambda_function.test_lambda] (main.tf:21)
-     Violating Resource: [aws_lambda_function.test_lambda]  (main.tf:21)
-
-     Evidence:
-             | There is no resource policy or no statements attached to aws_lambda_function.test_lambda
+             | The Lambda Function aws_lambda_function.test_lambda does not have X-Ray tracing enabled
 
 
 -----------------------------------------------

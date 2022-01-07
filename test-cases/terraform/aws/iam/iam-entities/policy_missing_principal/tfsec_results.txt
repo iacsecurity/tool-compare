@@ -1,7 +1,7 @@
 
   Result 1
 
-  [aws-kms-auto-rotate-keys][[0m[33mMEDIUM[39m[0m] Resource 'aws_kms_key.secure_policy' does not have KMS Key auto-rotation enabled.
+  [aws-kms-auto-rotate-keys][MEDIUM] Resource 'aws_kms_key.secure_policy' does not have KMS Key auto-rotation enabled.
   /src/main.tf:5-37
 
 
@@ -47,16 +47,16 @@
   Resolution: Configure KMS key to auto rotate
 
   More Info:
-  - https://tfsec.dev/docs/aws/kms/auto-rotate-keys#aws/kms 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/kms/auto-rotate-keys 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kms_key#enable_key_rotation 
   - https://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html 
 
   times
   ------------------------------------------
-  disk i/o             82.125251ms
-  parsing HCL          557.5µs
-  evaluating values    1.758958ms
-  running checks       17.162916ms
+  disk i/o             23.469001ms
+  parsing HCL          850.833µs
+  evaluating values    2.003417ms
+  running checks       16.890125ms
 
   counts
   ------------------------------------------

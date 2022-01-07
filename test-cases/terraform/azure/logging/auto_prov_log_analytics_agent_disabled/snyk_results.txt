@@ -1,9 +1,10 @@
+Failed to run the process ...
 {
   "meta": {
     "isPrivate": true,
     "isLicensesEnabled": false,
     "ignoreSettings": null,
-    "org": "yi2020",
+    "org": "ryder.d",
     "projectId": "",
     "policy": ""
   },
@@ -14,13 +15,47 @@
   "ignoreSettings": null,
   "targetFile": "main.tf",
   "projectName": "project",
-  "org": "yi2020",
+  "org": "ryder.d",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
   "packageManager": "terraformconfig",
   "path": "/project",
   "projectType": "terraformconfig",
-  "ok": true,
-  "infrastructureAsCodeIssues": []
+  "ok": false,
+  "infrastructureAsCodeIssues": [
+    {
+      "severity": "low",
+      "resolve": "Set `auto_provision` to `On`",
+      "impact": "Security Center will not automatically provision Monitoring Agent on all compatible virtual machines, you will not automatically be provided with alerts on security misconfigurations, updates, and vulnerabilities",
+      "msg": "resource.azurerm_security_center_auto_provisioning[example].auto_provision",
+      "remediation": {
+        "terraform": "Set `auto_provision` to `On`",
+        "arm": "Set `autoProvision` to `On`"
+      },
+      "subType": "Security Center",
+      "issue": "Automatic provisioning of monitoring agent is disabled",
+      "publicId": "SNYK-CC-AZURE-529",
+      "title": "Automatic provisioning of monitoring agent is disabled",
+      "references": [
+        "https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/security_center_auto_provisioning",
+        "https://docs.microsoft.com/en-us/azure/security-center/security-center-enable-data-collection"
+      ],
+      "id": "SNYK-CC-AZURE-529",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Automatic provisioning of monitoring agent is disabled",
+        "impact": "Security Center will not automatically provision Monitoring Agent on all compatible virtual machines, you will not automatically be provided with alerts on security misconfigurations, updates, and vulnerabilities",
+        "resolve": "Set `auto_provision` to `On`"
+      },
+      "lineNumber": 19,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AZURE-529",
+      "isGeneratedByCustomRule": false,
+      "path": [
+        "resource",
+        "azurerm_security_center_auto_provisioning[example]",
+        "auto_provision"
+      ]
+    }
+  ]
 }

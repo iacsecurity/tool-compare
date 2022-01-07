@@ -1,217 +1,366 @@
 
 WARNINGs found:
-Rule: Ensure all data stored in the Launch configuration EBS is securely encrypted
+Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 22 (SSH)
+Description: Exposing resources to the Internet is generally inadvisable, especially on a known port like 22 (SSH).
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/working-with-security-groups.html#updating-security-group-rules to update the security group inbound rule. Set the Source parameter to a value other than 0.0.0.0/0 or ::/0 for the SSH port.
+Remediation Steps - Terraform: For the resource aws_security_group, update in-line ingress rules or resource aws_security_group_rule to set cidr_blocks argument to a value other than 0.0.0.0/0 or ::/0 for the SSH port.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_instance.public_ins] (main.tf:146)
-     Violating Resource: [aws_instance.public_ins]  (main.tf:146)
-
-     Evidence:
-             | This rule evaluated aws_instance.public_ins's configuration
-
-
------------------------------------------------
-Rule: Ensure RDS instances and clusters have logging enabled
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_db_instance.test] (main.tf:113)
-     Violating Resource: [aws_db_instance.test]  (main.tf:113)
-
-     Evidence:
-             | The RDS Instance aws_db_instance.test does not have Cloudwatch log export enabled
-
-
------------------------------------------------
-Rule: Ensure EC2 instance has detailed monitoring enabled
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.public_ins] (main.tf:146)
-     Violating Resource: [aws_instance.public_ins]  (main.tf:146)
-
-     Evidence:
-             | The EC2 Instance aws_instance.public_ins has detailed monitoring disabled
-
-
------------------------------------------------
-Rule: Ensure RDS database has IAM authentication enabled
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_db_instance.test] (main.tf:113)
-     Violating Resource: [aws_db_instance.test]  (main.tf:113)
-
-     Evidence:
-             | The RDS Instance aws_db_instance.test has IAM database authentication disabled
-
-
------------------------------------------------
-Rule: Ensure RDS instances and clusters have a backup retention policy
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_db_instance.test] (main.tf:113)
-     Violating Resource: [aws_db_instance.test]  (main.tf:113)
-
-     Evidence:
-             | The RDS Instance aws_db_instance.test does not have a backup retention policy configured
-
-
------------------------------------------------
-Rule: Ensure EC2 instance is EBS optimized
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.public_ins] (main.tf:146)
-     Violating Resource: [aws_instance.public_ins]  (main.tf:146)
-
-     Evidence:
-             | The EC2 Instance aws_instance.public_ins is not EBS optimized
-
-
------------------------------------------------
-Rule: Ensure all resources that can be tagged have at least one tag
- - 11 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_network_acl.redshift_eni2_nacl] (main.tf:41)
-     Violating Resource: [aws_network_acl.redshift_eni2_nacl]  (main.tf:41)
-
-     Evidence:
-             | Resource Network ACL's aws_network_acl.redshift_eni2_nacl does not have any tags set other than "Name"
-
-
-   - Exposed Resource: [aws_subnet.nondefault_1] (main.tf:68)
-     Violating Resource: [aws_subnet.nondefault_1]  (main.tf:68)
-
-     Evidence:
-             | Resource Subnet aws_subnet.nondefault_1 does not have any tags set
-
-
-   - Exposed Resource: [aws_instance.public_ins] (main.tf:146)
-     Violating Resource: [aws_instance.public_ins]  (main.tf:146)
-
-     Evidence:
-             | Resource EC2 Instance aws_instance.public_ins does not have any tags set
-
-
-   - Exposed Resource: [aws_vpc.nondefault] (main.tf:10)
-     Violating Resource: [aws_vpc.nondefault]  (main.tf:10)
-
-     Evidence:
-             | Resource VPC aws_vpc.nondefault does not have any tags set
-
-
-   - Exposed Resource: [aws_db_subnet_group.db] (main.tf:97)
-     Violating Resource: [aws_db_subnet_group.db]  (main.tf:97)
-
-     Evidence:
-             | Resource DB subnet group aws_db_subnet_group.db does not have any tags set
-
-
-   - Exposed Resource: [aws_security_group.publicly_accessible_sg] (main.tf:129)
      Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:129)
 
      Evidence:
-             | Resource Security group aws_security_group.publicly_accessible_sg does not have any tags set
-
-
-   - Exposed Resource: [aws_security_group.db] (main.tf:103)
-     Violating Resource: [aws_security_group.db]  (main.tf:103)
-
-     Evidence:
-             | Resource Security group aws_security_group.db does not have any tags set
-
-
-   - Exposed Resource: [aws_route_table.nondefault_1] (main.tf:84)
-     Violating Resource: [aws_route_table.nondefault_1]  (main.tf:84)
-
-     Evidence:
-             | Resource Route table aws_route_table.nondefault_1 does not have any tags set
-
-
-   - Exposed Resource: [aws_network_acl.ec2_nacl] (main.tf:14)
-     Violating Resource: [aws_network_acl.ec2_nacl]  (main.tf:14)
-
-     Evidence:
-             | Resource Network ACL's aws_network_acl.ec2_nacl does not have any tags set other than "Name"
-
-
-   - Exposed Resource: [aws_subnet.nondefault_2] (main.tf:74)
-     Violating Resource: [aws_subnet.nondefault_2]  (main.tf:74)
-
-     Evidence:
-             | Resource Subnet aws_subnet.nondefault_2 does not have any tags set
-
-
-   - Exposed Resource: [aws_db_instance.test] (main.tf:113)
-     Violating Resource: [aws_db_instance.test]  (main.tf:113)
-
-     Evidence:
-             | Resource RDS Instance aws_db_instance.test does not have any tags set
+         Internet
+             | Subnet aws_subnet.nondefault_1 has internet gateway
+             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
+             | Subnet routes traffic from instance to internet gateway
+             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 22
+             | Instance uses security group aws_security_group.publicly_accessible_sg
+             | aws_security_group.publicly_accessible_sg allows port 22
+         Instance
 
 
 -----------------------------------------------
-Rule: Ensure VPC Endpoint for EC2 is enabled in all VPCs in use
+Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 3389 (RDP)
+Description: Exposing resources to the Internet is generally inadvisable, especially on a known port like 3389 (RDP).
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/working-with-security-groups.html#updating-security-group-rules to update the security group inbound rule. Set the Source parameter to a value other than 0.0.0.0/0 or ::/0 for the RDP port.
+Remediation Steps - Terraform: For the resource aws_security_group, update in-line ingress rules or resource aws_security_group_rule to set cidr_blocks argument to a value other than 0.0.0.0/0 or ::/0 for the RDP port.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_instance.public_ins] (main.tf:146)
-     Violating Resource: [aws_vpc.nondefault]  (main.tf:10)
-
-     Evidence:
-             | The service EC2 is in use in region eu-central-1, but VPC aws_vpc.nondefault
-             | is not configured to use a VPC Endpoint for EC2
-
-
------------------------------------------------
-Rule: Ensure all security groups and rules have a description detailing the rule
- - 2 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_security_group.db] (main.tf:103)
-     Violating Resource: [aws_security_group.db]  (main.tf:103)
-
-     Evidence:
-             | The Security group aws_security_group.db does not have a description for the ingress rule of 10.1.1.128/25 for ports 3306:3306 using protocol TCP
-
-
-   - Exposed Resource: [aws_security_group.publicly_accessible_sg] (main.tf:129)
      Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:129)
 
      Evidence:
-             | The Security group aws_security_group.publicly_accessible_sg does not have a description for the ingress rule of 0.0.0.0/0 for ports 0:65000 using protocol TCP
+         Internet
+             | Subnet aws_subnet.nondefault_1 has internet gateway
+             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
+             | Subnet routes traffic from instance to internet gateway
+             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 3389
+             | Instance uses security group aws_security_group.publicly_accessible_sg
+             | aws_security_group.publicly_accessible_sg allows port 3389
+         Instance
 
 
 -----------------------------------------------
-Rule: Allow only private AMIs to be used
+Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 1521 (ORACLE DB DEFAULT)
+Description: Exposing resources to the Internet is generally inadvisable, especially on a known port like 1521 (ORACLE DB DEFAULT).
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/working-with-security-groups.html#updating-security-group-rules to update the security group inbound rule. Set the Source parameter to a value other than 0.0.0.0/0 or ::/0 for the ORACLE DB DEFAULT port.
+Remediation Steps - Terraform: For the resource aws_security_group, update in-line ingress rules or resource aws_security_group_rule to set cidr_blocks argument to a value other than 0.0.0.0/0 or ::/0 for the ORACLE DB DEFAULT port.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_instance.public_ins] (main.tf:146)
-     Violating Resource: [ami-0130bec6e5047f596]  (Not found in TF)
+     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:129)
 
      Evidence:
-             | The EC2 Instance aws_instance.public_ins uses AMI ami-0130bec6e5047f596, which is public
+         Internet
+             | Subnet aws_subnet.nondefault_1 has internet gateway
+             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
+             | Subnet routes traffic from instance to internet gateway
+             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 1521
+             | Instance uses security group aws_security_group.publicly_accessible_sg
+             | aws_security_group.publicly_accessible_sg allows port 1521
+         Instance
 
 
 -----------------------------------------------
-Rule: Ensure RDS instances/clusters being created are set to be encrypted at rest
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_db_instance.test] (main.tf:113)
-     Violating Resource: [aws_db_instance.test]  (main.tf:113)
-
-     Evidence:
-         RDS Instance
-             | RDS Instance aws_db_instance.test is not set to use encrypt at rest
-
-
------------------------------------------------
-Rule: Ensure IMDSv2 is used and IMDSv1 is disabled
+Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 2483 (ORACLE DB)
+Description: Exposing resources to the Internet is generally inadvisable, especially on a known port like 2483 (ORACLE DB).
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/working-with-security-groups.html#updating-security-group-rules to update the security group inbound rule. Set the Source parameter to a value other than 0.0.0.0/0 or ::/0 for the ORACLE DB port.
+Remediation Steps - Terraform: For the resource aws_security_group, update in-line ingress rules or resource aws_security_group_rule to set cidr_blocks argument to a value other than 0.0.0.0/0 or ::/0 for the ORACLE DB port.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_instance.public_ins] (main.tf:146)
-     Violating Resource: [aws_instance.public_ins]  (main.tf:146)
+     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:129)
 
      Evidence:
-             | The EC2 Instance aws_instance.public_ins is allowing IMDSv1
+         Internet
+             | Subnet aws_subnet.nondefault_1 has internet gateway
+             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
+             | Subnet routes traffic from instance to internet gateway
+             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 2483
+             | Instance uses security group aws_security_group.publicly_accessible_sg
+             | aws_security_group.publicly_accessible_sg allows port 2483
+         Instance
+
+
+-----------------------------------------------
+Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 2484 (ORACLE DB SSL)
+Description: Exposing resources to the Internet is generally inadvisable, especially on a known port like 2484 (ORACLE DB SSL).
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/working-with-security-groups.html#updating-security-group-rules to update the security group inbound rule. Set the Source parameter to a value other than 0.0.0.0/0 or ::/0 for the ORACLE DB SSL port.
+Remediation Steps - Terraform: For the resource aws_security_group, update in-line ingress rules or resource aws_security_group_rule to set cidr_blocks argument to a value other than 0.0.0.0/0 or ::/0 for the ORACLE DB SSL port.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.public_ins] (main.tf:146)
+     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:129)
+
+     Evidence:
+         Internet
+             | Subnet aws_subnet.nondefault_1 has internet gateway
+             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
+             | Subnet routes traffic from instance to internet gateway
+             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 2484
+             | Instance uses security group aws_security_group.publicly_accessible_sg
+             | aws_security_group.publicly_accessible_sg allows port 2484
+         Instance
+
+
+-----------------------------------------------
+Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 3306 (MYSQL)
+Description: Exposing resources to the Internet is generally inadvisable, especially on a known port like 3306 (MYSQL).
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/working-with-security-groups.html#updating-security-group-rules to update the security group inbound rule. Set the Source parameter to a value other than 0.0.0.0/0 or ::/0 for the MYSQL port.
+Remediation Steps - Terraform: For the resource aws_security_group, update in-line ingress rules or resource aws_security_group_rule to set cidr_blocks argument to a value other than 0.0.0.0/0 or ::/0 for the MYSQL port.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.public_ins] (main.tf:146)
+     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:129)
+
+     Evidence:
+         Internet
+             | Subnet aws_subnet.nondefault_1 has internet gateway
+             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
+             | Subnet routes traffic from instance to internet gateway
+             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 3306
+             | Instance uses security group aws_security_group.publicly_accessible_sg
+             | aws_security_group.publicly_accessible_sg allows port 3306
+         Instance
+
+
+-----------------------------------------------
+Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 5432 (POSTGRES)
+Description: Exposing resources to the Internet is generally inadvisable, especially on a known port like 5432 (POSTGRES).
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/working-with-security-groups.html#updating-security-group-rules to update the security group inbound rule. Set the Source parameter to a value other than 0.0.0.0/0 or ::/0 for the POSTGRES port.
+Remediation Steps - Terraform: For the resource aws_security_group, update in-line ingress rules or resource aws_security_group_rule to set cidr_blocks argument to a value other than 0.0.0.0/0 or ::/0 for the POSTGRES port.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.public_ins] (main.tf:146)
+     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:129)
+
+     Evidence:
+         Internet
+             | Subnet aws_subnet.nondefault_1 has internet gateway
+             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
+             | Subnet routes traffic from instance to internet gateway
+             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 5432
+             | Instance uses security group aws_security_group.publicly_accessible_sg
+             | aws_security_group.publicly_accessible_sg allows port 5432
+         Instance
+
+
+-----------------------------------------------
+Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 6379 (REDIS)
+Description: Exposing resources to the Internet is generally inadvisable, especially on a known port like 6379 (REDIS).
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/working-with-security-groups.html#updating-security-group-rules to update the security group inbound rule. Set the Source parameter to a value other than 0.0.0.0/0 or ::/0 for the REDIS port.
+Remediation Steps - Terraform: For the resource aws_security_group, update in-line ingress rules or resource aws_security_group_rule to set cidr_blocks argument to a value other than 0.0.0.0/0 or ::/0 for the REDIS port.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.public_ins] (main.tf:146)
+     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:129)
+
+     Evidence:
+         Internet
+             | Subnet aws_subnet.nondefault_1 has internet gateway
+             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
+             | Subnet routes traffic from instance to internet gateway
+             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 6379
+             | Instance uses security group aws_security_group.publicly_accessible_sg
+             | aws_security_group.publicly_accessible_sg allows port 6379
+         Instance
+
+
+-----------------------------------------------
+Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 27017 (MONGODB)
+Description: Exposing resources to the Internet is generally inadvisable, especially on a known port like 27017 (MONGODB).
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/working-with-security-groups.html#updating-security-group-rules to update the security group inbound rule. Set the Source parameter to a value other than 0.0.0.0/0 or ::/0 for the MONGODB port.
+Remediation Steps - Terraform: For the resource aws_security_group, update in-line ingress rules or resource aws_security_group_rule to set cidr_blocks argument to a value other than 0.0.0.0/0 or ::/0 for the MONGODB port.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.public_ins] (main.tf:146)
+     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:129)
+
+     Evidence:
+         Internet
+             | Subnet aws_subnet.nondefault_1 has internet gateway
+             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
+             | Subnet routes traffic from instance to internet gateway
+             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 27017
+             | Instance uses security group aws_security_group.publicly_accessible_sg
+             | aws_security_group.publicly_accessible_sg allows port 27017
+         Instance
+
+
+-----------------------------------------------
+Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 27018 (MONGODB SHARD CLUSTER)
+Description: Exposing resources to the Internet is generally inadvisable, especially on a known port like 27018 (MONGODB SHARD CLUSTER).
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/working-with-security-groups.html#updating-security-group-rules to update the security group inbound rule. Set the Source parameter to a value other than 0.0.0.0/0 or ::/0 for the MONGODB SHARD CLUSTER port.
+Remediation Steps - Terraform: For the resource aws_security_group, update in-line ingress rules or resource aws_security_group_rule to set cidr_blocks argument to a value other than 0.0.0.0/0 or ::/0 for the MONGODB SHARD CLUSTER port.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.public_ins] (main.tf:146)
+     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:129)
+
+     Evidence:
+         Internet
+             | Subnet aws_subnet.nondefault_1 has internet gateway
+             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
+             | Subnet routes traffic from instance to internet gateway
+             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 27018
+             | Instance uses security group aws_security_group.publicly_accessible_sg
+             | aws_security_group.publicly_accessible_sg allows port 27018
+         Instance
+
+
+-----------------------------------------------
+Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 7199 (CASSANDRA)
+Description: Exposing resources to the Internet is generally inadvisable, especially on a known port like 7199 (CASSANDRA).
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/working-with-security-groups.html#updating-security-group-rules to update the security group inbound rule. Set the Source parameter to a value other than 0.0.0.0/0 or ::/0 for the CASSANDRA port.
+Remediation Steps - Terraform: For the resource aws_security_group, update in-line ingress rules or resource aws_security_group_rule to set cidr_blocks argument to a value other than 0.0.0.0/0 or ::/0 for the CASSANDRA port.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.public_ins] (main.tf:146)
+     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:129)
+
+     Evidence:
+         Internet
+             | Subnet aws_subnet.nondefault_1 has internet gateway
+             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
+             | Subnet routes traffic from instance to internet gateway
+             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 7199
+             | Instance uses security group aws_security_group.publicly_accessible_sg
+             | aws_security_group.publicly_accessible_sg allows port 7199
+         Instance
+
+
+-----------------------------------------------
+Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 9160 (CASSANDRA THRIFT)
+Description: Exposing resources to the Internet is generally inadvisable, especially on a known port like 9160 (CASSANDRA THRIFT).
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/working-with-security-groups.html#updating-security-group-rules to update the security group inbound rule. Set the Source parameter to a value other than 0.0.0.0/0 or ::/0 for the CASSANDRA THRIFT port.
+Remediation Steps - Terraform: For the resource aws_security_group, update in-line ingress rules or resource aws_security_group_rule to set cidr_blocks argument to a value other than 0.0.0.0/0 or ::/0 for the CASSANDRA THRIFT port.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.public_ins] (main.tf:146)
+     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:129)
+
+     Evidence:
+         Internet
+             | Subnet aws_subnet.nondefault_1 has internet gateway
+             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
+             | Subnet routes traffic from instance to internet gateway
+             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 9160
+             | Instance uses security group aws_security_group.publicly_accessible_sg
+             | aws_security_group.publicly_accessible_sg allows port 9160
+         Instance
+
+
+-----------------------------------------------
+Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 8888 (CASSANDRA MNG)
+Description: Exposing resources to the Internet is generally inadvisable, especially on a known port like 8888 (CASSANDRA MNG).
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/working-with-security-groups.html#updating-security-group-rules to update the security group inbound rule. Set the Source parameter to a value other than 0.0.0.0/0 or ::/0 for the CASSANDRA MNG port.
+Remediation Steps - Terraform: For the resource aws_security_group, update in-line ingress rules or resource aws_security_group_rule to set cidr_blocks argument to a value other than 0.0.0.0/0 or ::/0 for the CASSANDRA MNG port.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.public_ins] (main.tf:146)
+     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:129)
+
+     Evidence:
+         Internet
+             | Subnet aws_subnet.nondefault_1 has internet gateway
+             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
+             | Subnet routes traffic from instance to internet gateway
+             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 8888
+             | Instance uses security group aws_security_group.publicly_accessible_sg
+             | aws_security_group.publicly_accessible_sg allows port 8888
+         Instance
+
+
+-----------------------------------------------
+Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 11211 (MEMCACHED)
+Description: Exposing resources to the Internet is generally inadvisable, especially on a known port like 11211 (MEMCACHED).
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/working-with-security-groups.html#updating-security-group-rules to update the security group inbound rule. Set the Source parameter to a value other than 0.0.0.0/0 or ::/0 for the MEMCACHED port.
+Remediation Steps - Terraform: For the resource aws_security_group, update in-line ingress rules or resource aws_security_group_rule to set cidr_blocks argument to a value other than 0.0.0.0/0 or ::/0 for the MEMCACHED port.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.public_ins] (main.tf:146)
+     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:129)
+
+     Evidence:
+         Internet
+             | Subnet aws_subnet.nondefault_1 has internet gateway
+             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
+             | Subnet routes traffic from instance to internet gateway
+             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 11211
+             | Instance uses security group aws_security_group.publicly_accessible_sg
+             | aws_security_group.publicly_accessible_sg allows port 11211
+         Instance
+
+
+-----------------------------------------------
+Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 9300 (ELASTICSEARCH NODES)
+Description: Exposing resources to the Internet is generally inadvisable, especially on a known port like 9300 (ELASTICSEARCH NODES).
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/working-with-security-groups.html#updating-security-group-rules to update the security group inbound rule. Set the Source parameter to a value other than 0.0.0.0/0 or ::/0 for the ELASTICSEARCH NODES port.
+Remediation Steps - Terraform: For the resource aws_security_group, update in-line ingress rules or resource aws_security_group_rule to set cidr_blocks argument to a value other than 0.0.0.0/0 or ::/0 for the ELASTICSEARCH NODES port.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.public_ins] (main.tf:146)
+     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:129)
+
+     Evidence:
+         Internet
+             | Subnet aws_subnet.nondefault_1 has internet gateway
+             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
+             | Subnet routes traffic from instance to internet gateway
+             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 9300
+             | Instance uses security group aws_security_group.publicly_accessible_sg
+             | aws_security_group.publicly_accessible_sg allows port 9300
+         Instance
+
+
+-----------------------------------------------
+Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 9200 (ELASTICSEARCH)
+Description: Exposing resources to the Internet is generally inadvisable, especially on a known port like 9200 (ELASTICSEARCH).
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/working-with-security-groups.html#updating-security-group-rules to update the security group inbound rule. Set the Source parameter to a value other than 0.0.0.0/0 or ::/0 for the ELASTICSEARCH port.
+Remediation Steps - Terraform: For the resource aws_security_group, update in-line ingress rules or resource aws_security_group_rule to set cidr_blocks argument to a value other than 0.0.0.0/0 or ::/0 for the ELASTICSEARCH port.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.public_ins] (main.tf:146)
+     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:129)
+
+     Evidence:
+         Internet
+             | Subnet aws_subnet.nondefault_1 has internet gateway
+             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
+             | Subnet routes traffic from instance to internet gateway
+             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 9200
+             | Instance uses security group aws_security_group.publicly_accessible_sg
+             | aws_security_group.publicly_accessible_sg allows port 9200
+         Instance
+
+
+-----------------------------------------------
+Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 5601 (KIBANA)
+Description: Exposing resources to the Internet is generally inadvisable, especially on a known port like 5601 (KIBANA).
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/working-with-security-groups.html#updating-security-group-rules to update the security group inbound rule. Set the Source parameter to a value other than 0.0.0.0/0 or ::/0 for the KIBANA port.
+Remediation Steps - Terraform: For the resource aws_security_group, update in-line ingress rules or resource aws_security_group_rule to set cidr_blocks argument to a value other than 0.0.0.0/0 or ::/0 for the KIBANA port.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.public_ins] (main.tf:146)
+     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:129)
+
+     Evidence:
+         Internet
+             | Subnet aws_subnet.nondefault_1 has internet gateway
+             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
+             | Subnet routes traffic from instance to internet gateway
+             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 5601
+             | Instance uses security group aws_security_group.publicly_accessible_sg
+             | aws_security_group.publicly_accessible_sg allows port 5601
+         Instance
 
 
 -----------------------------------------------
 Rule: Ensure RDS database is not accessible indirectly via a publicly accessible resource
+Description: Many organizations would like to protect their databases by multiple layers. For instance, they would want to avoid a situation where a publicly-accessible EC2 instance can directly access a database. The reason behind this is to avoid having “two hops” into the database from the Internet.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.RDSSecurityGroups.html to reference a Security Group that blocks access from publicly-accessible EC2 instances.
+Remediation Steps - Terraform: For the aws_db_instance resource, set vpc_security_group_ids argument to reference a Security Group that blocks access from publicly-accessible EC2 instances.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_db_instance.test] (main.tf:113)
@@ -233,309 +382,243 @@ Rule: Ensure RDS database is not accessible indirectly via a publicly accessible
 
 
 -----------------------------------------------
-Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 5601 (KIBANA)
+Rule: Ensure IMDSv2 is used and IMDSv1 is disabled
+Description: There have been hacks in the past caused by the use of IMDSv1. It is now best practice to disable IMDSv1 and use IMDSv2. It’s important to test the disablement of IMDSv1 carefully, as it may cause issues in an application’s execution (if it using an old SDK, for example).
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html to change the instance metadata for existing instances. Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html to configure instance metadata for new instances.
+Remediation Steps - Terraform: For the aws_instance resource, in metadata_options block, set http_tokens argument to required.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_instance.public_ins] (main.tf:146)
-     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:129)
+     Violating Resource: [aws_instance.public_ins]  (main.tf:146)
 
      Evidence:
-         Internet
-             | Subnet aws_subnet.nondefault_1 has internet gateway
-             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
-             | Subnet routes traffic from instance to internet gateway
-             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 5601
-             | Instance uses security group aws_security_group.publicly_accessible_sg
-             | aws_security_group.publicly_accessible_sg allows port 5601
-         Instance
+             | The EC2 Instance aws_instance.public_ins is allowing IMDSv1
 
 
 -----------------------------------------------
-Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 9200 (ELASTICSEARCH)
+Rule: Ensure RDS instances/clusters being created are set to be encrypted at rest
+Description: Cloudrail will review the RDS instances, clusters and global clusters being created in your environment. If an instance, cluster or global cluster is not set to be encrypted at rest, Cloudrail will highlight it as a violation. This rule will only flag a violation for resources that are not yet created.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html to enable encryption for RDS instances. Follow the guide at https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.CreateInstance.html to enable encryption for RDS clusters. Follow the guide at https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database-getting-started.html to enable encryption for RDS global clusters.
+Remediation Steps - Terraform: For the aws_db_instance, aws_rds_global_cluster, and aws_rds_cluster resources, set the storage_encrypted argument to true.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_db_instance.test] (main.tf:113)
+     Violating Resource: [aws_db_instance.test]  (main.tf:113)
+
+     Evidence:
+         RDS Instance
+             | RDS Instance aws_db_instance.test is not set to use encrypt at rest
+
+
+-----------------------------------------------
+Rule: Allow only private AMIs to be used
+Description: Some organizations may only allow the use of private AMIs. If this rule is enabled, any EC2 instance attempting to use a public AMI will be flagged.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instances-and-amis.html in order to terminate flagged EC2 instances and create new EC2 instance with an approved AMI.
+Remediation Steps - Terraform: For the aws_instance resource, update the ami argument to set an approved AMI. Terraform will destroy and create new resources.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_instance.public_ins] (main.tf:146)
-     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:129)
+     Violating Resource: [ami-0130bec6e5047f596]  (Not found in TF)
 
      Evidence:
-         Internet
-             | Subnet aws_subnet.nondefault_1 has internet gateway
-             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
-             | Subnet routes traffic from instance to internet gateway
-             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 9200
-             | Instance uses security group aws_security_group.publicly_accessible_sg
-             | aws_security_group.publicly_accessible_sg allows port 9200
-         Instance
+             | The EC2 Instance aws_instance.public_ins uses AMI ami-0130bec6e5047f596, which is public
 
 
 -----------------------------------------------
-Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 9300 (ELASTICSEARCH NODES)
+Rule: Ensure all security groups and rules have a description detailing the rule
+Description: Cloudrail will review your security groups. If a security group is using a default description, or has a rule which does not include a description, this rule will trigger.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html to update the security group or security group rules description field.
+Remediation Steps - Terraform: For the aws_security_group and aws_security_group_rule resources, set description argument with a proper value. Note, this will force the re-creation of the security group and all resources that depend on it. This is an AWS limitation.
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_security_group.publicly_accessible_sg] (main.tf:129)
+     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:129)
+
+     Evidence:
+             | The Security group aws_security_group.publicly_accessible_sg does not have a description for the ingress rule of 0.0.0.0/0 for ports 0:65000 using protocol TCP
+
+
+   - Exposed Resource: [aws_security_group.db] (main.tf:103)
+     Violating Resource: [aws_security_group.db]  (main.tf:103)
+
+     Evidence:
+             | The Security group aws_security_group.db does not have a description for the ingress rule of 10.1.1.128/25 for ports 3306:3306 using protocol TCP
+
+
+-----------------------------------------------
+Rule: Ensure VPC Endpoint for EC2 is enabled in all VPCs in use
+Description: A best practice is to enforce the use of VPC Endpoints to avoid sending data destined to EC2 through the internet. Cloudrail will identify misconfigurations by checking if VPC Endpoint Interfaces are in use or not, by reviewing that an endpoint exists in the VPC. VPC Interface Endpoints might not be available in all regions, so the rule checks that if the service is running it's configured in all possible VPCs. This rule has potential false positives given that not all VPCs require communication with EC2.
+Remediation Steps - Cloud Console: Create a VPC Endpoint for EC2, follow the guide at https://docs.aws.amazon.com/vpc/latest/userguide/vpce-interface.html#create-interface-endpoint.
+Remediation Steps - Terraform: Create a resource aws_vpc_endpoint for EC2 interface, and associate it to the VPC.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_instance.public_ins] (main.tf:146)
-     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:129)
+     Violating Resource: [aws_vpc.nondefault]  (main.tf:10)
 
      Evidence:
-         Internet
-             | Subnet aws_subnet.nondefault_1 has internet gateway
-             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
-             | Subnet routes traffic from instance to internet gateway
-             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 9300
-             | Instance uses security group aws_security_group.publicly_accessible_sg
-             | aws_security_group.publicly_accessible_sg allows port 9300
-         Instance
+             | The service EC2 is in use in region eu-central-1, but VPC aws_vpc.nondefault
+             | is not configured to use a VPC Endpoint for EC2
 
 
 -----------------------------------------------
-Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 11211 (MEMCACHED)
+Rule: Ensure all resources that can be tagged have at least one tag
+Description: Some organizations require that all resources have at least one tag set. This rule will review the resources that can be tagged, and make sure each one has a tag that is not the Name tag. Resources that are not tagged will be flagged.
+Remediation Steps - Cloud Console: Access the specific resource in the AWS console and add tags.
+Remediation Steps - Terraform: Add a tags section to the resource with at least one tag beyond the Name tag.
+ - 12 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_route_table.nondefault_1] (main.tf:84)
+     Violating Resource: [aws_route_table.nondefault_1]  (main.tf:84)
+
+     Evidence:
+             | Resource Route table aws_route_table.nondefault_1 does not have any tags set
+
+
+   - Exposed Resource: [aws_db_instance.test] (main.tf:113)
+     Violating Resource: [aws_db_instance.test]  (main.tf:113)
+
+     Evidence:
+             | Resource RDS Instance aws_db_instance.test does not have any tags set
+
+
+   - Exposed Resource: [aws_security_group.publicly_accessible_sg] (main.tf:129)
+     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:129)
+
+     Evidence:
+             | Resource Security group aws_security_group.publicly_accessible_sg does not have any tags set
+
+
+   - Exposed Resource: [aws_vpc.nondefault] (main.tf:10)
+     Violating Resource: [aws_vpc.nondefault]  (main.tf:10)
+
+     Evidence:
+             | Resource VPC aws_vpc.nondefault does not have any tags set
+
+
+   - Exposed Resource: [aws_subnet.nondefault_1] (main.tf:68)
+     Violating Resource: [aws_subnet.nondefault_1]  (main.tf:68)
+
+     Evidence:
+             | Resource Subnet aws_subnet.nondefault_1 does not have any tags set
+
+
+   - Exposed Resource: [aws_network_acl.redshift_eni2_nacl] (main.tf:41)
+     Violating Resource: [aws_network_acl.redshift_eni2_nacl]  (main.tf:41)
+
+     Evidence:
+             | Resource Network ACL's aws_network_acl.redshift_eni2_nacl does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [aws_instance.public_ins] (main.tf:146)
+     Violating Resource: [aws_instance.public_ins]  (main.tf:146)
+
+     Evidence:
+             | Resource EC2 Instance aws_instance.public_ins does not have any tags set
+
+
+   - Exposed Resource: [aws_internet_gateway.igw] (main.tf:80)
+     Violating Resource: [aws_internet_gateway.igw]  (main.tf:80)
+
+     Evidence:
+             | Resource Internet gateway aws_internet_gateway.igw does not have any tags set
+
+
+   - Exposed Resource: [aws_security_group.db] (main.tf:103)
+     Violating Resource: [aws_security_group.db]  (main.tf:103)
+
+     Evidence:
+             | Resource Security group aws_security_group.db does not have any tags set
+
+
+   - Exposed Resource: [aws_network_acl.ec2_nacl] (main.tf:14)
+     Violating Resource: [aws_network_acl.ec2_nacl]  (main.tf:14)
+
+     Evidence:
+             | Resource Network ACL's aws_network_acl.ec2_nacl does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [aws_db_subnet_group.db] (main.tf:97)
+     Violating Resource: [aws_db_subnet_group.db]  (main.tf:97)
+
+     Evidence:
+             | Resource DB subnet group aws_db_subnet_group.db does not have any tags set
+
+
+   - Exposed Resource: [aws_subnet.nondefault_2] (main.tf:74)
+     Violating Resource: [aws_subnet.nondefault_2]  (main.tf:74)
+
+     Evidence:
+             | Resource Subnet aws_subnet.nondefault_2 does not have any tags set
+
+
+-----------------------------------------------
+Rule: Ensure EC2 instance is EBS optimized
+Description: Cloudrail will review the EC2 instances configuration in your environment. If it is not configured to be EBS-optimized, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-optimized.html to enable EBS optimization for an EC2 instance.
+Remediation Steps - Terraform: For the aws_instance resource, set the ebs_optimized parameter to true.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_instance.public_ins] (main.tf:146)
-     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:129)
+     Violating Resource: [aws_instance.public_ins]  (main.tf:146)
 
      Evidence:
-         Internet
-             | Subnet aws_subnet.nondefault_1 has internet gateway
-             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
-             | Subnet routes traffic from instance to internet gateway
-             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 11211
-             | Instance uses security group aws_security_group.publicly_accessible_sg
-             | aws_security_group.publicly_accessible_sg allows port 11211
-         Instance
+             | The EC2 Instance aws_instance.public_ins is not EBS optimized
 
 
 -----------------------------------------------
-Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 8888 (CASSANDRA MNG)
+Rule: Ensure RDS instances and clusters have a backup retention policy
+Description: Cloudrail will review the RDS instances and clusters configuration in your environment. If an instance or cluster is not configured with a backup retention policy, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupRetention in order to set the backup retention period to a positive nonzero value for RDS instances. Follow the guide at https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Managing.Backups.html in order to set the backup retention period to a positive nonzero value for RDS clusters.
+Remediation Steps - Terraform: For the aws_db_instance or aws_rds_cluster resource, set the backup_retention_period argument to a value higher than 0.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_db_instance.test] (main.tf:113)
+     Violating Resource: [aws_db_instance.test]  (main.tf:113)
+
+     Evidence:
+             | The RDS Instance aws_db_instance.test does not have a backup retention policy configured
+
+
+-----------------------------------------------
+Rule: Ensure RDS database has IAM authentication enabled
+Description: Cloudrail will review RDS instances and clusters configuration in your environment. If IAM authentication is not enabled, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.Enabling.html in order to enable IAM database authentication for the RDS instance or cluster.
+Remediation Steps - Terraform: For the aws_db_instance or aws_rds_cluster resources, set the iam_database_authentication_enabled argument to true.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_db_instance.test] (main.tf:113)
+     Violating Resource: [aws_db_instance.test]  (main.tf:113)
+
+     Evidence:
+             | The RDS Instance aws_db_instance.test has IAM database authentication disabled
+
+
+-----------------------------------------------
+Rule: Ensure EC2 instance has detailed monitoring enabled
+Description: Cloudrail will review the EC2 instances configuration in your environment. If an instance does not have detailed monitoring configured, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-cloudwatch-new.html in order to enable detailed monitoring for an EC2 instance.
+Remediation Steps - Terraform: For the aws_instance resource, set the monitoring argument to true.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_instance.public_ins] (main.tf:146)
-     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:129)
+     Violating Resource: [aws_instance.public_ins]  (main.tf:146)
 
      Evidence:
-         Internet
-             | Subnet aws_subnet.nondefault_1 has internet gateway
-             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
-             | Subnet routes traffic from instance to internet gateway
-             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 8888
-             | Instance uses security group aws_security_group.publicly_accessible_sg
-             | aws_security_group.publicly_accessible_sg allows port 8888
-         Instance
+             | The EC2 Instance aws_instance.public_ins has detailed monitoring disabled
 
 
 -----------------------------------------------
-Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 9160 (CASSANDRA THRIFT)
+Rule: Ensure RDS instances and clusters have logging enabled
+Description: Cloudrail will review the RDS instances and clusters configuration in your environment. If an instance or cluster is not configured to export logs to Cloudwatch, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_LogAccess.html#USER_LogAccess.Procedural.UploadtoCloudWatch in order to enable log export to Cloudwatch for RDS instances and clusters.
+Remediation Steps - Terraform: For the aws_db_instance or aws_rds_cluster resource, set enabled_cloudwatch_logs_exports argument to a list containing at least one of the supported log types.
  - 1 Resources Exposed:
 -----------------------------------------------
-   - Exposed Resource: [aws_instance.public_ins] (main.tf:146)
-     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:129)
+   - Exposed Resource: [aws_db_instance.test] (main.tf:113)
+     Violating Resource: [aws_db_instance.test]  (main.tf:113)
 
      Evidence:
-         Internet
-             | Subnet aws_subnet.nondefault_1 has internet gateway
-             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
-             | Subnet routes traffic from instance to internet gateway
-             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 9160
-             | Instance uses security group aws_security_group.publicly_accessible_sg
-             | aws_security_group.publicly_accessible_sg allows port 9160
-         Instance
-
-
------------------------------------------------
-Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 7199 (CASSANDRA)
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.public_ins] (main.tf:146)
-     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:129)
-
-     Evidence:
-         Internet
-             | Subnet aws_subnet.nondefault_1 has internet gateway
-             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
-             | Subnet routes traffic from instance to internet gateway
-             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 7199
-             | Instance uses security group aws_security_group.publicly_accessible_sg
-             | aws_security_group.publicly_accessible_sg allows port 7199
-         Instance
-
-
------------------------------------------------
-Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 27018 (MONGODB SHARD CLUSTER)
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.public_ins] (main.tf:146)
-     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:129)
-
-     Evidence:
-         Internet
-             | Subnet aws_subnet.nondefault_1 has internet gateway
-             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
-             | Subnet routes traffic from instance to internet gateway
-             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 27018
-             | Instance uses security group aws_security_group.publicly_accessible_sg
-             | aws_security_group.publicly_accessible_sg allows port 27018
-         Instance
-
-
------------------------------------------------
-Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 27017 (MONGODB)
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.public_ins] (main.tf:146)
-     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:129)
-
-     Evidence:
-         Internet
-             | Subnet aws_subnet.nondefault_1 has internet gateway
-             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
-             | Subnet routes traffic from instance to internet gateway
-             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 27017
-             | Instance uses security group aws_security_group.publicly_accessible_sg
-             | aws_security_group.publicly_accessible_sg allows port 27017
-         Instance
-
-
------------------------------------------------
-Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 6379 (REDIS)
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.public_ins] (main.tf:146)
-     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:129)
-
-     Evidence:
-         Internet
-             | Subnet aws_subnet.nondefault_1 has internet gateway
-             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
-             | Subnet routes traffic from instance to internet gateway
-             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 6379
-             | Instance uses security group aws_security_group.publicly_accessible_sg
-             | aws_security_group.publicly_accessible_sg allows port 6379
-         Instance
-
-
------------------------------------------------
-Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 5432 (POSTGRES)
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.public_ins] (main.tf:146)
-     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:129)
-
-     Evidence:
-         Internet
-             | Subnet aws_subnet.nondefault_1 has internet gateway
-             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
-             | Subnet routes traffic from instance to internet gateway
-             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 5432
-             | Instance uses security group aws_security_group.publicly_accessible_sg
-             | aws_security_group.publicly_accessible_sg allows port 5432
-         Instance
-
-
------------------------------------------------
-Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 3306 (MYSQL)
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.public_ins] (main.tf:146)
-     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:129)
-
-     Evidence:
-         Internet
-             | Subnet aws_subnet.nondefault_1 has internet gateway
-             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
-             | Subnet routes traffic from instance to internet gateway
-             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 3306
-             | Instance uses security group aws_security_group.publicly_accessible_sg
-             | aws_security_group.publicly_accessible_sg allows port 3306
-         Instance
-
-
------------------------------------------------
-Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 2484 (ORACLE DB SSL)
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.public_ins] (main.tf:146)
-     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:129)
-
-     Evidence:
-         Internet
-             | Subnet aws_subnet.nondefault_1 has internet gateway
-             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
-             | Subnet routes traffic from instance to internet gateway
-             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 2484
-             | Instance uses security group aws_security_group.publicly_accessible_sg
-             | aws_security_group.publicly_accessible_sg allows port 2484
-         Instance
-
-
------------------------------------------------
-Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 2483 (ORACLE DB)
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.public_ins] (main.tf:146)
-     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:129)
-
-     Evidence:
-         Internet
-             | Subnet aws_subnet.nondefault_1 has internet gateway
-             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
-             | Subnet routes traffic from instance to internet gateway
-             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 2483
-             | Instance uses security group aws_security_group.publicly_accessible_sg
-             | aws_security_group.publicly_accessible_sg allows port 2483
-         Instance
-
-
------------------------------------------------
-Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 1521 (ORACLE DB DEFAULT)
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.public_ins] (main.tf:146)
-     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:129)
-
-     Evidence:
-         Internet
-             | Subnet aws_subnet.nondefault_1 has internet gateway
-             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
-             | Subnet routes traffic from instance to internet gateway
-             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 1521
-             | Instance uses security group aws_security_group.publicly_accessible_sg
-             | aws_security_group.publicly_accessible_sg allows port 1521
-         Instance
-
-
------------------------------------------------
-Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 3389 (RDP)
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.public_ins] (main.tf:146)
-     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:129)
-
-     Evidence:
-         Internet
-             | Subnet aws_subnet.nondefault_1 has internet gateway
-             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
-             | Subnet routes traffic from instance to internet gateway
-             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 3389
-             | Instance uses security group aws_security_group.publicly_accessible_sg
-             | aws_security_group.publicly_accessible_sg allows port 3389
-         Instance
-
-
------------------------------------------------
-Rule: Ensure no used security groups allow ingress from 0.0.0.0/0 or ::/0 to port 22 (SSH)
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.public_ins] (main.tf:146)
-     Violating Resource: [aws_security_group.publicly_accessible_sg]  (main.tf:129)
-
-     Evidence:
-         Internet
-             | Subnet aws_subnet.nondefault_1 has internet gateway
-             | Instance aws_instance.public_ins is on aws_subnet.nondefault_1
-             | Subnet routes traffic from instance to internet gateway
-             | Subnet uses Network ACL's aws_network_acl.ec2_nacl which allows port 22
-             | Instance uses security group aws_security_group.publicly_accessible_sg
-             | aws_security_group.publicly_accessible_sg allows port 22
-         Instance
+             | The RDS Instance aws_db_instance.test does not have Cloudwatch log export enabled
 
 
 -----------------------------------------------

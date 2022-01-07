@@ -2,15 +2,6 @@
 
 Violation Details -
     
-	Description    :	Ensure that detailed monitoring is enabled for EC2 instances.
-	File           :	main.tf
-	Module Name    :	root
-	Plan Root      :	./
-	Line           :	136
-	Severity       :	HIGH
-	
-	-----------------------------------------------------------------------
-	
 	Description    :	Ensure DynamoDb is encrypted at rest
 	File           :	main.tf
 	Module Name    :	root
@@ -20,12 +11,12 @@ Violation Details -
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
+	Description    :	Ensure that detailed monitoring is enabled for EC2 instances.
 	File           :	main.tf
 	Module Name    :	root
 	Plan Root      :	./
 	Line           :	136
-	Severity       :	MEDIUM
+	Severity       :	HIGH
 	
 	-----------------------------------------------------------------------
 	
@@ -47,12 +38,21 @@ Violation Details -
 	
 	-----------------------------------------------------------------------
 	
+	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	136
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
 
 Scan Summary -
 
 	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-08-18 16:15:23.078421126 +0000 UTC
+	Scanned At          :	2022-01-05 16:12:05.408571923 +0000 UTC
 	Policies Validated  :	146
 	Violated Policies   :	5
 	Low                 :	1

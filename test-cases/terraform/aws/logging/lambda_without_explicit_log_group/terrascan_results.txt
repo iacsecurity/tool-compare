@@ -2,7 +2,7 @@
 
 Violation Details -
     
-	Description    :	Lambda function doesn't not include a VPC configuration.
+	Description    :	Lambda function does not include a VPC configuration.
 	File           :	main.tf
 	Module Name    :	root
 	Plan Root      :	./
@@ -25,7 +25,7 @@ Scan Summary -
 
 	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-08-18 17:53:49.138155512 +0000 UTC
+	Scanned At          :	2022-01-05 16:38:32.396654797 +0000 UTC
 	Policies Validated  :	4
 	Violated Policies   :	2
 	Low                 :	2

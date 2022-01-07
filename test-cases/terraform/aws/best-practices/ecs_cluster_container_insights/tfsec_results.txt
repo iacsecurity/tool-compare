@@ -1,7 +1,7 @@
 
   Result 1
 
-  [aws-ecs-enable-container-insight][[0m[97mLOW[39m[0m] Resource 'aws_ecs_cluster.foo' does not have containerInsights enabled
+  [aws-ecs-enable-container-insight][LOW] Resource 'aws_ecs_cluster.foo' does not have containerInsights enabled
   /src/main.tf:1-8
 
 
@@ -20,16 +20,16 @@
   Resolution: Enable Container Insights
 
   More Info:
-  - https://tfsec.dev/docs/aws/ecs/enable-container-insight#aws/ecs 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/ecs/enable-container-insight 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecs_cluster#setting 
   - https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/ContainerInsights.html 
 
   times
   ------------------------------------------
-  disk i/o             54.015042ms
-  parsing HCL          618.833µs
-  evaluating values    1.825084ms
-  running checks       16.891041ms
+  disk i/o             29.121458ms
+  parsing HCL          654.584µs
+  evaluating values    1.596166ms
+  running checks       16.058708ms
 
   counts
   ------------------------------------------

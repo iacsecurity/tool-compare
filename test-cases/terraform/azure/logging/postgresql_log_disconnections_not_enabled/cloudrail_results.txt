@@ -1,6 +1,9 @@
 
 WARNINGs found:
-Rule: Ensure that PostgreSQL server enables Threat detection policy
+Rule: Ensure PostgreSQL servers have Public Network Access disabled
+Description: PostgreSQL servers should only be accesible through private endpoints instead of public IPs in order to avoid its exposure to unauthorized parties.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.microsoft.com/en-us/azure/postgresql/howto-deny-public-network-access in order to deny public network access to PostgreSQL servers.
+Remediation Steps - Terraform: For the azurerm_postgresql_server resource, set the public_network_access_enabled argument to false.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [azurerm_postgresql_server.example] (main.tf:15)
@@ -12,6 +15,9 @@ Rule: Ensure that PostgreSQL server enables Threat detection policy
 
 -----------------------------------------------
 Rule: Ensure that PostgreSQL server enables geo-redundant backups
+Description: Having PostgreSQL database geo-redundant backups will allow you to restore your data to a different Azure region in case of a regional outage.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.microsoft.com/en-us/azure/postgresql/howto-restore-server-portal#set-backup-configuration in order to enable the Geo-Redundant flag in Backup Redundancy Options.
+Remediation Steps - Terraform: For the azurerm_postgresql_server resource, set the geo_redundant_backup_enabled argument to true.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [azurerm_postgresql_server.example] (main.tf:15)
@@ -22,7 +28,10 @@ Rule: Ensure that PostgreSQL server enables geo-redundant backups
 
 
 -----------------------------------------------
-Rule: Ensure PostgreSQL servers have Public Network Access disabled
+Rule: Ensure that PostgreSQL server enables Threat detection policy
+Description: Enabling Threat detection for PostgreSQL will allow to detect anomalous activities indicating unusual and potentially harmful attempts to access or exploit databases.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.microsoft.com/en-us/azure/postgresql/howto-database-threat-protection-portal in order to enable Threat protection.
+Remediation Steps - Terraform: For the azurerm_postgresql_server resource, in threat_detection_policy block, set enabled argument to true.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [azurerm_postgresql_server.example] (main.tf:15)

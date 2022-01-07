@@ -7,12 +7,12 @@ Remediation Steps - Terraform: For the resource aws_default_security_group, upda
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_instance.t2-instance] (main.tf:49)
-     Violating Resource: [sg-pseudo-ba0cfb9d-c554-4b52-8ae9-0c96a9953a73]  (Not found in TF)
+     Violating Resource: [sg-pseudo-d77fd69b-da99-4822-95dc-fe235f0703b7]  (Not found in TF)
 
      Evidence:
          VPC aws_default_vpc.default
-             | aws_instance.t2-instance uses ENI eni-pseudo-7153c0d1-4207-49bb-8387-db4cec5cdb52
-             | The ENI is secured by default Security group sg-pseudo-ba0cfb9d-c554-4b52-8ae9-0c96a9953a73 and allows all traffic
+             | aws_instance.t2-instance uses ENI eni-pseudo-ed8ac48a-da68-494b-a95c-8e21247a2ca5
+             | The ENI is secured by default Security group sg-pseudo-d77fd69b-da99-4822-95dc-fe235f0703b7 and allows all traffic
 
 
 -----------------------------------------------
@@ -65,18 +65,18 @@ Remediation Steps - Cloud Console: Access the specific resource in the AWS conso
 Remediation Steps - Terraform: Add a tags section to the resource with at least one tag beyond the Name tag.
  - 4 Resources Exposed:
 -----------------------------------------------
-   - Exposed Resource: [aws_instance.t2-instance] (main.tf:49)
-     Violating Resource: [aws_instance.t2-instance]  (main.tf:49)
-
-     Evidence:
-             | Resource EC2 Instance aws_instance.t2-instance does not have any tags set
-
-
    - Exposed Resource: [aws_subnet.default-subnet] (main.tf:18)
      Violating Resource: [aws_subnet.default-subnet]  (main.tf:18)
 
      Evidence:
              | Resource Subnet aws_subnet.default-subnet does not have any tags set
+
+
+   - Exposed Resource: [aws_default_vpc.default] (main.tf:12)
+     Violating Resource: [aws_default_vpc.default]  (main.tf:12)
+
+     Evidence:
+             | Resource VPC aws_default_vpc.default does not have any tags set other than "Name"
 
 
    - Exposed Resource: [aws_route_table.default-route-table] (main.tf:24)
@@ -86,11 +86,11 @@ Remediation Steps - Terraform: Add a tags section to the resource with at least 
              | Resource Route table aws_route_table.default-route-table does not have any tags set
 
 
-   - Exposed Resource: [aws_default_vpc.default] (main.tf:12)
-     Violating Resource: [aws_default_vpc.default]  (main.tf:12)
+   - Exposed Resource: [aws_instance.t2-instance] (main.tf:49)
+     Violating Resource: [aws_instance.t2-instance]  (main.tf:49)
 
      Evidence:
-             | Resource VPC aws_default_vpc.default does not have any tags set other than "Name"
+             | Resource EC2 Instance aws_instance.t2-instance does not have any tags set
 
 
 -----------------------------------------------

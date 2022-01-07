@@ -1,77 +1,115 @@
 
   Result 1
 
-  [azure-database-enable-ssl-enforcement][[0m[33mMEDIUM[39m[0m] Resource 'azurerm_mysql_server.example' has ssl_enforcement_enabled disabled
-  /src/main.tf:32
+  [azure-database-mysql-threat-detection-enabled][LOW] Mysql server 'azurerm_mysql_server.example' does not have threat detection policy configured. By default it is disabled.
+  /src/main.tf:15-34
 
 
-      29 |   backup_retention_days             = 7
-      30 |   geo_redundant_backup_enabled      = false
-      31 |   infrastructure_encryption_enabled = false
-      32 |   ssl_enforcement_enabled           = false    bool: false
-      33 |   ssl_minimal_tls_version_enforced  = "TLS1_2"
-      34 |   public_network_access_enabled     = true
-      35 | }
+      12 |   location = "West Europe"
+      13 | }
+      14 | 
+      15 | resource "azurerm_mysql_server" "example" {
+      16 |   name                = "${local.resource_prefix}-mysqlserver"
+      17 |   location            = azurerm_resource_group.rg.location
+      18 |   resource_group_name = azurerm_resource_group.rg.name
+      19 | 
+      20 |   administrator_login          = "mysqladminun"
+      21 |   administrator_login_password = "H@Sh1CoR3!"
+      22 | 
+      23 |   sku_name   = "B_Gen5_2"
+      24 |   storage_mb = 5120
+      25 |   version    = "8.0"
+      26 | 
+      27 |   auto_grow_enabled                 = true
+      28 |   backup_retention_days             = 7
+      29 |   geo_redundant_backup_enabled      = false
+      30 |   infrastructure_encryption_enabled = false
+      31 |   ssl_enforcement_enabled           = false
+      32 |   ssl_minimal_tls_version_enforced  = "TLS1_2"
+      33 |   public_network_access_enabled     = true
+      34 | }
+      35 | 
 
-  Impact:     Insecure connections could lead to data loss and other vulnerabilities
-  Resolution: Enable SSL enforcement
+  Impact:     Threat detection helps prevent compromise by alerting on threat detections
+  Resolution: Enable threat detection on Mysql database
 
   More Info:
-  - https://tfsec.dev/docs/azure/database/enable-ssl-enforcement#azure/database 
-  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_server#ssl_enforcement_enabled 
-  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mysql_server#ssl_enforcement_enabled 
-  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mariadb_server#ssl_enforcement_enabled 
+  - https://aquasecurity.github.io/tfsec/latest/checks/azure/database/mysql-threat-detection-enabled 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/mysql_server#threat_detection_policy 
 
   Result 2
 
-  [azure-database-no-public-access][[0m[33mMEDIUM[39m[0m] Resource 'azurerm_mysql_server.example' has public access explicitly enabled
-  /src/main.tf:34
+  [azure-database-no-public-access][MEDIUM] Resource 'azurerm_mysql_server.example' has public access explicitly enabled
+  /src/main.tf:33
 
 
-      31 |   infrastructure_encryption_enabled = false
-      32 |   ssl_enforcement_enabled           = false
-      33 |   ssl_minimal_tls_version_enforced  = "TLS1_2"
-      34 |   public_network_access_enabled     = true    bool: true
-      35 | }
-      36 | 
+      30 |   infrastructure_encryption_enabled = false
+      31 |   ssl_enforcement_enabled           = false
+      32 |   ssl_minimal_tls_version_enforced  = "TLS1_2"
+      33 |   public_network_access_enabled     = true    bool: true
+      34 | }
+      35 | 
 
   Impact:     Publicly accessible database could lead to compromised data
   Resolution: Disable public access to database when not required
 
   More Info:
-  - https://tfsec.dev/docs/azure/database/no-public-access#azure/database 
+  - https://aquasecurity.github.io/tfsec/latest/checks/azure/database/no-public-access 
   - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_server#public_network_access_enabled 
   - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mysql_server#public_network_access_enabled 
   - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mariadb_server#public_network_access_enabled 
 
   Result 3
 
-  [general-secrets-sensitive-in-attribute][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Block 'azurerm_mysql_server.example' includes a potentially sensitive attribute which is defined within the project.
-  /src/main.tf:22
+  [general-secrets-sensitive-in-attribute][CRITICAL] Block 'azurerm_mysql_server.example' includes a potentially sensitive attribute which is defined within the project.
+  /src/main.tf:21
 
 
-      19 |   resource_group_name = azurerm_resource_group.rg.name
-      20 | 
-      21 |   administrator_login          = "mysqladminun"
-      22 |   administrator_login_password = "H@Sh1CoR3!"    string: "H@Sh1CoR3!"
-      23 | 
-      24 |   sku_name   = "B_Gen5_2"
-      25 |   storage_mb = 5120
+      18 |   resource_group_name = azurerm_resource_group.rg.name
+      19 | 
+      20 |   administrator_login          = "mysqladminun"
+      21 |   administrator_login_password = "H@Sh1CoR3!"    string: "H@Sh1CoR3!"
+      22 | 
+      23 |   sku_name   = "B_Gen5_2"
+      24 |   storage_mb = 5120
 
   Legacy ID:  GEN003
   Impact:     Block attribute could be leaking secrets
   Resolution: Don't include sensitive data in blocks
 
   More Info:
-  - https://tfsec.dev/docs/general/secrets/sensitive-in-attribute#general/secrets 
+  - https://aquasecurity.github.io/tfsec/latest/checks/general/secrets/sensitive-in-attribute 
   - https://www.terraform.io/docs/state/sensitive-data.html 
+
+  Result 4
+
+  [azure-database-enable-ssl-enforcement][MEDIUM] Resource 'azurerm_mysql_server.example' has ssl_enforcement_enabled disabled
+  /src/main.tf:31
+
+
+      28 |   backup_retention_days             = 7
+      29 |   geo_redundant_backup_enabled      = false
+      30 |   infrastructure_encryption_enabled = false
+      31 |   ssl_enforcement_enabled           = false    bool: false
+      32 |   ssl_minimal_tls_version_enforced  = "TLS1_2"
+      33 |   public_network_access_enabled     = true
+      34 | }
+
+  Impact:     Insecure connections could lead to data loss and other vulnerabilities
+  Resolution: Enable SSL enforcement
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/azure/database/enable-ssl-enforcement 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_server#ssl_enforcement_enabled 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mysql_server#ssl_enforcement_enabled 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mariadb_server#ssl_enforcement_enabled 
 
   times
   ------------------------------------------
-  disk i/o             842.599µs
-  parsing HCL          7.42µs
-  evaluating values    343.517µs
-  running checks       2.069717ms
+  disk i/o             26.190501ms
+  parsing HCL          555.375µs
+  evaluating values    3.349916ms
+  running checks       24.816542ms
 
   counts
   ------------------------------------------
@@ -84,8 +122,8 @@
   critical             1
   high                 0
   medium               2
-  low                  0
+  low                  1
   ignored              0
 
-  3 potential problems detected.
+  4 potential problems detected.
 

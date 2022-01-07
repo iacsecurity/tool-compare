@@ -1,17 +1,9 @@
 
 WARNINGs found:
-Rule: Ensure CloudWatch log groups have a retention policy
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_cloudwatch_log_group.yada] (main.tf:5)
-     Violating Resource: [aws_cloudwatch_log_group.yada]  (main.tf:5)
-
-     Evidence:
-             | The CloudWatch Logs Group aws_cloudwatch_log_group.yada does not have a retention policy set
-
-
------------------------------------------------
 Rule: Ensure Cloudwatch Log Groups being created are set to be encrypted at rest using KMS CMK
+Description: Cloudrail will review the Cloudwatch Log Groups being created in your environment. If a Log Group is not set to encrypt at rest using KMS CMK, Cloudrail will highlight it as a violation. This rule will only flag a violation for resources that are not yet created.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/encrypt-log-data-kms.html to set encryption at rest using a customer-managed CMK.
+Remediation Steps - Terraform: For the aws_cloudwatch_log_group resource, set kms_key_id argument to use a customer-managed CMK.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_cloudwatch_log_group.yada] (main.tf:5)
@@ -19,6 +11,20 @@ Rule: Ensure Cloudwatch Log Groups being created are set to be encrypted at rest
 
      Evidence:
              | The CloudWatch Logs Group aws_cloudwatch_log_group.yada is set to use encrypt at rest but it is not using CMKs
+
+
+-----------------------------------------------
+Rule: Ensure CloudWatch log groups have a retention policy
+Description: Having a retention policy on CloudWatch groups is advisable to make sure logs are kept for as long as needed, but not longer. Cloudrail will identify if a retention policy is not set.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/Working-with-log-groups-and-streams.html to set a log data retention policy.
+Remediation Steps - Terraform: For the aws_cloudwatch_log_group resource, set the retention_in_days argument to the number of days you want to retain log events.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_cloudwatch_log_group.yada] (main.tf:5)
+     Violating Resource: [aws_cloudwatch_log_group.yada]  (main.tf:5)
+
+     Evidence:
+             | The CloudWatch Logs Group aws_cloudwatch_log_group.yada does not have a retention policy set
 
 
 -----------------------------------------------

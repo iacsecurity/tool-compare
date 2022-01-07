@@ -1,7 +1,7 @@
 
   Result 1
 
-  [aws-elastic-search-encrypt-replication-group][[0m[31mHIGH[39m[0m] Resource 'aws_elasticache_replication_group.example' defines an unencrypted Elasticache Replication Group (missing at_rest_encryption_enabled attribute).
+  [aws-elastic-search-encrypt-replication-group][HIGH] Resource 'aws_elasticache_replication_group.example' defines an unencrypted Elasticache Replication Group (missing at_rest_encryption_enabled attribute).
   /src/main.tf:1-10
 
 
@@ -22,13 +22,13 @@
   Resolution: Enable encryption for replication group
 
   More Info:
-  - https://tfsec.dev/docs/aws/elastic-search/encrypt-replication-group#aws/elastic-search 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/elastic-search/encrypt-replication-group 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticache_replication_group#at_rest_encryption_enabled 
   - https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/at-rest-encryption.html 
 
   Result 2
 
-  [aws-elasticache-enable-in-transit-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_elasticache_replication_group.example' defines an unencrypted Elasticache Replication Group (missing transit_encryption_enabled attribute).
+  [aws-elasticache-enable-in-transit-encryption][HIGH] Resource 'aws_elasticache_replication_group.example' defines an unencrypted Elasticache Replication Group (missing transit_encryption_enabled attribute).
   /src/main.tf:1-10
 
 
@@ -49,16 +49,16 @@
   Resolution: Enable in transit encryption for replication group
 
   More Info:
-  - https://tfsec.dev/docs/aws/elasticache/enable-in-transit-encryption#aws/elasticache 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/elasticache/enable-in-transit-encryption 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticache_replication_group#transit_encryption_enabled 
   - https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/in-transit-encryption.html 
 
   times
   ------------------------------------------
-  disk i/o             51.278792ms
-  parsing HCL          603.458µs
-  evaluating values    2.237999ms
-  running checks       18.739666ms
+  disk i/o             23.343709ms
+  parsing HCL          575.917µs
+  evaluating values    1.82925ms
+  running checks       16.942125ms
 
   counts
   ------------------------------------------

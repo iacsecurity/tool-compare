@@ -1,7 +1,7 @@
 
   Result 1
 
-  [aws-rds-no-public-db-access][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'aws_dms_replication_instance.test' is exposed publicly.
+  [aws-rds-no-public-db-access][CRITICAL] Resource 'aws_dms_replication_instance.test' is exposed publicly.
   /src/main.tf:62
 
 
@@ -18,15 +18,15 @@
   Resolution: Set the database to not be publicly accessible
 
   More Info:
-  - https://tfsec.dev/docs/aws/rds/no-public-db-access#aws/rds 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/rds/no-public-db-access 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_instance 
 
   times
   ------------------------------------------
-  disk i/o             52.546125ms
-  parsing HCL          599.584µs
-  evaluating values    4.642458ms
-  running checks       27.477542ms
+  disk i/o             29.106ms
+  parsing HCL          612.875µs
+  evaluating values    4.508668ms
+  running checks       20.2ms
 
   counts
   ------------------------------------------

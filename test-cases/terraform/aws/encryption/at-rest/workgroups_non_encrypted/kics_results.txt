@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+Scanning with Keeping Infrastructure as Code Secure v1.4.9
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 851
 Queries failed to execute: 0
 
 ------------------------------------
@@ -31,64 +31,46 @@ Resource Not Using Tags, Severity: INFO, Results: 4
 Description: AWS services resource tags are an essential part of managing components
 Platform: Terraform
 
-	[1]: /src/main.tf:18
-
-		017: 
-		018: resource "aws_athena_workgroup" "cloudrail_wg" {
-		019:   name = "cloudrail-wg-encrypted-sse-s3"
-
-
-	[2]: /src/main.tf:45
+	[1]: ../../src/main.tf:45
 
 		044: 
 		045: resource "aws_athena_workgroup" "cloudrail_wg_2" {
 		046:   name = "cloudrail-wg-encrypted-sse-s3-2"
 
 
-	[3]: /src/main.tf:5
+	[2]: ../../src/main.tf:5
 
 		004: 
 		005: resource "aws_s3_bucket" "cloudrail_anthena_bucket" {
 		006:   bucket = "cloudrail-wg-encrypted-sse-s3"
 
 
-	[4]: /src/main.tf:32
+	[3]: ../../src/main.tf:18
+
+		017: 
+		018: resource "aws_athena_workgroup" "cloudrail_wg" {
+		019:   name = "cloudrail-wg-encrypted-sse-s3"
+
+
+	[4]: ../../src/main.tf:32
 
 		031: 
 		032: resource "aws_s3_bucket" "cloudrail_anthena_bucket_2" {
 		033:   bucket = "cloudrail-wg-encrypted-sse-s3-2"
 
 
-S3 Bucket With Ignore Public ACL, Severity: LOW, Results: 2
-Description: S3 bucket with ignore public ACL
-Platform: Terraform
-
-	[1]: /src/main.tf:14
-
-		013:   block_public_policy     = true
-		014:   ignore_public_acls      = true
-		015:   restrict_public_buckets = true
-
-
-	[2]: /src/main.tf:41
-
-		040:   block_public_policy     = true
-		041:   ignore_public_acls      = true
-		042:   restrict_public_buckets = true
-
-
 S3 Bucket Logging Disabled, Severity: LOW, Results: 2
 Description: S3 bucket without logging
 Platform: Terraform
 
-	[1]: /src/main.tf:5
+	[1]: ../../src/main.tf:5
 
 		004: 
 		005: resource "aws_s3_bucket" "cloudrail_anthena_bucket" {
 		006:   bucket = "cloudrail-wg-encrypted-sse-s3"
 
 
-	[2]: /src/main.tf:32
+	[2]: ../../src/main.tf:32
 
 		031: 
 		032: resource "aws_s3_bucket" "cloudrail_anthena_bucket_2" {
@@ -99,32 +81,53 @@ S3 Bucket Without Versioning, Severity: MEDIUM, Results: 2
 Description: S3 bucket without versioning
 Platform: Terraform
 
-	[1]: /src/main.tf:5
-
-		004: 
-		005: resource "aws_s3_bucket" "cloudrail_anthena_bucket" {
-		006:   bucket = "cloudrail-wg-encrypted-sse-s3"
-
-
-	[2]: /src/main.tf:32
+	[1]: ../../src/main.tf:32
 
 		031: 
 		032: resource "aws_s3_bucket" "cloudrail_anthena_bucket_2" {
 		033:   bucket = "cloudrail-wg-encrypted-sse-s3-2"
 
 
-S3 Bucket Without Server-side-encryption, Severity: HIGH, Results: 2
-Description: S3 bucket should have encryption defined
-Platform: Terraform
-
-	[1]: /src/main.tf:5
+	[2]: ../../src/main.tf:5
 
 		004: 
 		005: resource "aws_s3_bucket" "cloudrail_anthena_bucket" {
 		006:   bucket = "cloudrail-wg-encrypted-sse-s3"
 
 
-	[2]: /src/main.tf:32
+S3 Bucket Without Enabled MFA Delete, Severity: HIGH, Results: 2
+CIS ID: CIS Security - CIS Amazon Web Services Foundations Benchmark v1.4.0 - Rule 2.1.3
+Title: Ensure MFA Delete is enable on S3 buckets
+Description: Once MFA Delete is enabled on your sensitive and classified S3 bucket it requires the user to have two forms of authentication.
+
+Platform: Terraform
+
+	[1]: ../../src/main.tf:5
+
+		004: 
+		005: resource "aws_s3_bucket" "cloudrail_anthena_bucket" {
+		006:   bucket = "cloudrail-wg-encrypted-sse-s3"
+
+
+	[2]: ../../src/main.tf:32
+
+		031: 
+		032: resource "aws_s3_bucket" "cloudrail_anthena_bucket_2" {
+		033:   bucket = "cloudrail-wg-encrypted-sse-s3-2"
+
+
+S3 Bucket SSE Disabled, Severity: HIGH, Results: 2
+Description: If algorithm is AES256 then the master key is null, empty or undefined, otherwise the master key is required
+Platform: Terraform
+
+	[1]: ../../src/main.tf:5
+
+		004: 
+		005: resource "aws_s3_bucket" "cloudrail_anthena_bucket" {
+		006:   bucket = "cloudrail-wg-encrypted-sse-s3"
+
+
+	[2]: ../../src/main.tf:32
 
 		031: 
 		032: resource "aws_s3_bucket" "cloudrail_anthena_bucket_2" {
@@ -135,14 +138,14 @@ Athena Workgroup Not Encrypted, Severity: HIGH, Results: 2
 Description: Athena Workgroup query results should be encrypted, for all queries that run in the workgroup
 Platform: Terraform
 
-	[1]: /src/main.tf:25
+	[1]: ../../src/main.tf:25
 
 		024: 
 		025:     result_configuration {
 		026:       output_location = "s3://{aws_s3_bucket.cloudrail_anthena_bucket.bucket}/output/"
 
 
-	[2]: /src/main.tf:52
+	[2]: ../../src/main.tf:52
 
 		051: 
 		052:     result_configuration {
@@ -151,10 +154,10 @@ Platform: Terraform
 
 
 Results Summary:
-HIGH: 4
+HIGH: 6
 MEDIUM: 2
-LOW: 4
+LOW: 2
 INFO: 4
 TOTAL: 14
 
-Scan duration: 4.404171733s
+Scan duration: 8.956637962s

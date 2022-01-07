@@ -1,7 +1,7 @@
 
   Result 1
 
-  [aws-elasticache-enable-backup-retention][[0m[33mMEDIUM[39m[0m] Resource 'aws_elasticache_cluster.disabled' has snapshot retention set to 0
+  [aws-elasticache-enable-backup-retention][MEDIUM] Resource 'aws_elasticache_cluster.disabled' has snapshot retention set to 0
   /src/main.tf:16
 
 
@@ -17,13 +17,13 @@
   Resolution: Configure snapshot retention for redis cluster
 
   More Info:
-  - https://tfsec.dev/docs/aws/elasticache/enable-backup-retention#aws/elasticache 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/elasticache/enable-backup-retention 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticache_cluster#snapshot_retention_limit 
   - https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/backups-automatic.html 
 
   Result 2
 
-  [aws-elasticache-enable-backup-retention][[0m[33mMEDIUM[39m[0m] Resource 'aws_elasticache_cluster.default' should have snapshot retention specified
+  [aws-elasticache-enable-backup-retention][MEDIUM] Resource 'aws_elasticache_cluster.default' should have snapshot retention specified
   /src/main.tf:1-7
 
 
@@ -43,16 +43,16 @@
   Resolution: Configure snapshot retention for redis cluster
 
   More Info:
-  - https://tfsec.dev/docs/aws/elasticache/enable-backup-retention#aws/elasticache 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/elasticache/enable-backup-retention 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticache_cluster#snapshot_retention_limit 
   - https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/backups-automatic.html 
 
   times
   ------------------------------------------
-  disk i/o             47.115458ms
-  parsing HCL          525.417µs
-  evaluating values    1.922207ms
-  running checks       27.678334ms
+  disk i/o             24.432458ms
+  parsing HCL          631.084µs
+  evaluating values    1.872708ms
+  running checks       22.687875ms
 
   counts
   ------------------------------------------

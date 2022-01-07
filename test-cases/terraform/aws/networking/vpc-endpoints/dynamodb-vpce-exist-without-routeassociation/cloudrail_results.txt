@@ -1,68 +1,87 @@
 
 WARNINGs found:
-Rule: Ensure DynamoDB Point-in-Time recovery (backup) is enabled
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_dynamodb_table.basic-dynamodb-table] (main.tf:90)
-     Violating Resource: [aws_dynamodb_table.basic-dynamodb-table]  (main.tf:90)
-
-     Evidence:
-             | This rule evaluated aws_dynamodb_table.basic-dynamodb-table's configuration
-
-
------------------------------------------------
-Rule: Ensure all data stored in the Launch configuration EBS is securely encrypted
+Rule: Ensure IMDSv2 is used and IMDSv1 is disabled
+Description: There have been hacks in the past caused by the use of IMDSv1. It is now best practice to disable IMDSv1 and use IMDSv2. It’s important to test the disablement of IMDSv1 carefully, as it may cause issues in an application’s execution (if it using an old SDK, for example).
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html to change the instance metadata for existing instances. Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html to configure instance metadata for new instances.
+Remediation Steps - Terraform: For the aws_instance resource, in metadata_options block, set http_tokens argument to required.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_instance.test] (main.tf:83)
      Violating Resource: [aws_instance.test]  (main.tf:83)
 
      Evidence:
-             | This rule evaluated aws_instance.test's configuration
+             | The EC2 Instance aws_instance.test is allowing IMDSv1
 
 
 -----------------------------------------------
-Rule: Ensure EC2 instance has detailed monitoring enabled
+Rule: Ensure VPC Endpoint for DynamoDB is enabled in all route tables in use in a VPC
+Description: A best practice is to enforce the use of VPC Endpoints to avoid the need of sending data destined to DynamoDB through the internet. Cloudrail will identify misconfigurations and exposure by checking if VPC Endpoint Gateways are in use or not, by reviewing VPC Endpoint and route tables in all regions.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/vpc/latest/userguide/vpce-gateway.html#vpc-endpoints-routing to configure the route tables to route DynamoDB service traffic via the endpoint.
+Remediation Steps - Terraform: For the aws_vpc_endpoint_route_table_association resource, set the route_table_id and vpc_endpoint_id arguments for the DynamoDB service.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_vpc.main] (main.tf:8)
+     Violating Resource: [rt-pseudo-4dca599e-8e73-4e1b-8cc3-e3bb9d5c105f]  (Not found in TF)
+
+     Evidence:
+         The VPC
+             | aws_vpc.main has a DYNAMODB Endpoint gateway but aws_subnet.private-subnet uses rt-pseudo-4dca599e-8e73-4e1b-8cc3-e3bb9d5c105f, which does not have a route to the Endpoint gateway.
+
+
+-----------------------------------------------
+Rule: Allow only private AMIs to be used
+Description: Some organizations may only allow the use of private AMIs. If this rule is enabled, any EC2 instance attempting to use a public AMI will be flagged.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instances-and-amis.html in order to terminate flagged EC2 instances and create new EC2 instance with an approved AMI.
+Remediation Steps - Terraform: For the aws_instance resource, update the ami argument to set an approved AMI. Terraform will destroy and create new resources.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_instance.test] (main.tf:83)
-     Violating Resource: [aws_instance.test]  (main.tf:83)
+     Violating Resource: [ami-0b0ea68c435eb488d]  (Not found in TF)
 
      Evidence:
-             | The EC2 Instance aws_instance.test has detailed monitoring disabled
+             | The EC2 Instance aws_instance.test uses AMI ami-0b0ea68c435eb488d, which is public
 
 
 -----------------------------------------------
-Rule: Ensure EC2 instance is EBS optimized
+Rule: Ensure all security groups and rules have a description detailing the rule
+Description: Cloudrail will review your security groups. If a security group is using a default description, or has a rule which does not include a description, this rule will trigger.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html to update the security group or security group rules description field.
+Remediation Steps - Terraform: For the aws_security_group and aws_security_group_rule resources, set description argument with a proper value. Note, this will force the re-creation of the security group and all resources that depend on it. This is an AWS limitation.
  - 1 Resources Exposed:
 -----------------------------------------------
-   - Exposed Resource: [aws_instance.test] (main.tf:83)
-     Violating Resource: [aws_instance.test]  (main.tf:83)
+   - Exposed Resource: [aws_security_group.allow-public-outbound-sg] (main.tf:53)
+     Violating Resource: [aws_security_group.allow-public-outbound-sg]  (main.tf:53)
 
      Evidence:
-             | The EC2 Instance aws_instance.test is not EBS optimized
-
-
------------------------------------------------
-Rule: Ensure DynamoDB tables are encrypted at rest with customer-managed CMK
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_dynamodb_table.basic-dynamodb-table] (main.tf:90)
-     Violating Resource: [aws_dynamodb_table.basic-dynamodb-table]  (main.tf:90)
-
-     Evidence:
-             | The DynamoDB table aws_dynamodb_table.basic-dynamodb-table is not set to be encrypted at rest using customer-managed CMK
+             | The Security group aws_security_group.allow-public-outbound-sg does not have a description for the egress rule of 3.218.183.128/25 for ports 443:443 using protocol TCP
 
 
 -----------------------------------------------
 Rule: Ensure all resources that can be tagged have at least one tag
+Description: Some organizations require that all resources have at least one tag set. This rule will review the resources that can be tagged, and make sure each one has a tag that is not the Name tag. Resources that are not tagged will be flagged.
+Remediation Steps - Cloud Console: Access the specific resource in the AWS console and add tags.
+Remediation Steps - Terraform: Add a tags section to the resource with at least one tag beyond the Name tag.
  - 8 Resources Exposed:
 -----------------------------------------------
-   - Exposed Resource: [aws_instance.test] (main.tf:83)
-     Violating Resource: [aws_instance.test]  (main.tf:83)
+   - Exposed Resource: [aws_network_acl.allow-public-outbound-nacl] (main.tf:35)
+     Violating Resource: [aws_network_acl.allow-public-outbound-nacl]  (main.tf:35)
 
      Evidence:
-             | Resource EC2 Instance aws_instance.test does not have any tags set
+             | Resource Network ACL's aws_network_acl.allow-public-outbound-nacl does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [aws_security_group.allow-public-outbound-sg] (main.tf:53)
+     Violating Resource: [aws_security_group.allow-public-outbound-sg]  (main.tf:53)
+
+     Evidence:
+             | Resource Security group aws_security_group.allow-public-outbound-sg does not have any tags set
+
+
+   - Exposed Resource: [aws_subnet.private-subnet] (main.tf:13)
+     Violating Resource: [aws_subnet.private-subnet]  (main.tf:13)
+
+     Evidence:
+             | Resource Subnet aws_subnet.private-subnet does not have any tags set other than "Name"
 
 
    - Exposed Resource: [aws_vpc.main] (main.tf:8)
@@ -72,11 +91,18 @@ Rule: Ensure all resources that can be tagged have at least one tag
              | Resource VPC aws_vpc.main does not have any tags set
 
 
-   - Exposed Resource: [aws_subnet.private-subnet] (main.tf:13)
-     Violating Resource: [aws_subnet.private-subnet]  (main.tf:13)
+   - Exposed Resource: [aws_route_table.private-rtb] (main.tf:22)
+     Violating Resource: [aws_route_table.private-rtb]  (main.tf:22)
 
      Evidence:
-             | Resource Subnet aws_subnet.private-subnet does not have any tags set other than "Name"
+             | Resource Route table aws_route_table.private-rtb does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [aws_instance.test] (main.tf:83)
+     Violating Resource: [aws_instance.test]  (main.tf:83)
+
+     Evidence:
+             | Resource EC2 Instance aws_instance.test does not have any tags set
 
 
    - Exposed Resource: [aws_dynamodb_table.basic-dynamodb-table] (main.tf:90)
@@ -93,70 +119,46 @@ Rule: Ensure all resources that can be tagged have at least one tag
              | Resource VPC Endpoint Gateway aws_vpc_endpoint.dynamodb-vpce-gw does not have any tags set
 
 
-   - Exposed Resource: [aws_security_group.allow-public-outbound-sg] (main.tf:53)
-     Violating Resource: [aws_security_group.allow-public-outbound-sg]  (main.tf:53)
-
-     Evidence:
-             | Resource Security group aws_security_group.allow-public-outbound-sg does not have any tags set
-
-
-   - Exposed Resource: [aws_route_table.private-rtb] (main.tf:22)
-     Violating Resource: [aws_route_table.private-rtb]  (main.tf:22)
-
-     Evidence:
-             | Resource Route table aws_route_table.private-rtb does not have any tags set other than "Name"
-
-
-   - Exposed Resource: [aws_network_acl.allow-public-outbound-nacl] (main.tf:35)
-     Violating Resource: [aws_network_acl.allow-public-outbound-nacl]  (main.tf:35)
-
-     Evidence:
-             | Resource Network ACL's aws_network_acl.allow-public-outbound-nacl does not have any tags set other than "Name"
-
-
 -----------------------------------------------
-Rule: Ensure all security groups and rules have a description detailing the rule
+Rule: Ensure DynamoDB tables are encrypted at rest with customer-managed CMK
+Description: Cloudrail will review the DynamoDB tables in your environment. If a table is not set to be encrypted at rest using a customer-managed CMK, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/encryption.tutorial.html to set DynamoDB table encryption using a customer-managed CMK.
+Remediation Steps - Terraform: For the aws_dynamodb_table resource, set kms_key_arn argument, in server_side_encryption block, to use a customer-managed CMK.
  - 1 Resources Exposed:
 -----------------------------------------------
-   - Exposed Resource: [aws_security_group.allow-public-outbound-sg] (main.tf:53)
-     Violating Resource: [aws_security_group.allow-public-outbound-sg]  (main.tf:53)
+   - Exposed Resource: [aws_dynamodb_table.basic-dynamodb-table] (main.tf:90)
+     Violating Resource: [aws_dynamodb_table.basic-dynamodb-table]  (main.tf:90)
 
      Evidence:
-             | The Security group aws_security_group.allow-public-outbound-sg does not have a description for the egress rule of 3.218.183.128/25 for ports 443:443 using protocol TCP
+             | The DynamoDB table aws_dynamodb_table.basic-dynamodb-table is not set to be encrypted at rest using customer-managed CMK
 
 
 -----------------------------------------------
-Rule: Allow only private AMIs to be used
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.test] (main.tf:83)
-     Violating Resource: [ami-0ee02acd56a52998e]  (Not found in TF)
-
-     Evidence:
-             | The EC2 Instance aws_instance.test uses AMI ami-0ee02acd56a52998e, which is public
-
-
------------------------------------------------
-Rule: Ensure VPC Endpoint for DynamoDB is enabled in all route tables in use in a VPC
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_vpc.main] (main.tf:8)
-     Violating Resource: [rt-pseudo-ea3c8385-44c1-4136-8047-6b1503cbb97e]  (Not found in TF)
-
-     Evidence:
-         The VPC
-             | aws_vpc.main has a DYNAMODB Endpoint gateway but aws_subnet.private-subnet uses rt-pseudo-ea3c8385-44c1-4136-8047-6b1503cbb97e, which does not have a route to the Endpoint gateway.
-
-
------------------------------------------------
-Rule: Ensure IMDSv2 is used and IMDSv1 is disabled
+Rule: Ensure EC2 instance is EBS optimized
+Description: Cloudrail will review the EC2 instances configuration in your environment. If it is not configured to be EBS-optimized, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-optimized.html to enable EBS optimization for an EC2 instance.
+Remediation Steps - Terraform: For the aws_instance resource, set the ebs_optimized parameter to true.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_instance.test] (main.tf:83)
      Violating Resource: [aws_instance.test]  (main.tf:83)
 
      Evidence:
-             | The EC2 Instance aws_instance.test is allowing IMDSv1
+             | The EC2 Instance aws_instance.test is not EBS optimized
+
+
+-----------------------------------------------
+Rule: Ensure EC2 instance has detailed monitoring enabled
+Description: Cloudrail will review the EC2 instances configuration in your environment. If an instance does not have detailed monitoring configured, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-cloudwatch-new.html in order to enable detailed monitoring for an EC2 instance.
+Remediation Steps - Terraform: For the aws_instance resource, set the monitoring argument to true.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.test] (main.tf:83)
+     Violating Resource: [aws_instance.test]  (main.tf:83)
+
+     Evidence:
+             | The EC2 Instance aws_instance.test has detailed monitoring disabled
 
 
 -----------------------------------------------

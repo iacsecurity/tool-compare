@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+Scanning with Keeping Infrastructure as Code Secure v1.4.9
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 851
 Queries failed to execute: 0
 
 ------------------------------------
@@ -31,7 +31,18 @@ Resource Not Using Tags, Severity: INFO, Results: 1
 Description: AWS services resource tags are an essential part of managing components
 Platform: Terraform
 
-	[1]: /src/main.tf:5
+	[1]: ../../src/main.tf:5
+
+		004: 
+		005: resource "aws_s3_bucket" "public-bucket" {
+		006:   bucket = "bucket-with-public-acl-2"
+
+
+Name Is Not Snake Case, Severity: INFO, Results: 1
+Description: All names should follow snake case pattern.
+Platform: Terraform
+
+	[1]: ../../src/main.tf:5
 
 		004: 
 		005: resource "aws_s3_bucket" "public-bucket" {
@@ -42,7 +53,7 @@ S3 Bucket Logging Disabled, Severity: LOW, Results: 1
 Description: S3 bucket without logging
 Platform: Terraform
 
-	[1]: /src/main.tf:5
+	[1]: ../../src/main.tf:5
 
 		004: 
 		005: resource "aws_s3_bucket" "public-bucket" {
@@ -53,18 +64,32 @@ S3 Bucket Without Versioning, Severity: MEDIUM, Results: 1
 Description: S3 bucket without versioning
 Platform: Terraform
 
-	[1]: /src/main.tf:5
+	[1]: ../../src/main.tf:5
 
 		004: 
 		005: resource "aws_s3_bucket" "public-bucket" {
 		006:   bucket = "bucket-with-public-acl-2"
 
 
-S3 Bucket Without Server-side-encryption, Severity: HIGH, Results: 1
-Description: S3 bucket should have encryption defined
+S3 Bucket Without Enabled MFA Delete, Severity: HIGH, Results: 1
+CIS ID: CIS Security - CIS Amazon Web Services Foundations Benchmark v1.4.0 - Rule 2.1.3
+Title: Ensure MFA Delete is enable on S3 buckets
+Description: Once MFA Delete is enabled on your sensitive and classified S3 bucket it requires the user to have two forms of authentication.
+
 Platform: Terraform
 
-	[1]: /src/main.tf:5
+	[1]: ../../src/main.tf:5
+
+		004: 
+		005: resource "aws_s3_bucket" "public-bucket" {
+		006:   bucket = "bucket-with-public-acl-2"
+
+
+S3 Bucket SSE Disabled, Severity: HIGH, Results: 1
+Description: If algorithm is AES256 then the master key is null, empty or undefined, otherwise the master key is required
+Platform: Terraform
+
+	[1]: ../../src/main.tf:5
 
 		004: 
 		005: resource "aws_s3_bucket" "public-bucket" {
@@ -75,7 +100,7 @@ S3 Bucket ACL Allows Read to Any Authenticated User, Severity: HIGH, Results: 1
 Description: Misconfigured S3 buckets can leak private information to the entire internet or allow unauthorized data tampering / deletion
 Platform: Terraform
 
-	[1]: /src/main.tf:7
+	[1]: ../../src/main.tf:7
 
 		006:   bucket = "bucket-with-public-acl-2"
 		007:   acl = "authenticated-read"
@@ -84,10 +109,10 @@ Platform: Terraform
 
 
 Results Summary:
-HIGH: 2
+HIGH: 3
 MEDIUM: 1
 LOW: 1
-INFO: 1
-TOTAL: 5
+INFO: 2
+TOTAL: 7
 
-Scan duration: 4.409779748s
+Scan duration: 8.954865671s

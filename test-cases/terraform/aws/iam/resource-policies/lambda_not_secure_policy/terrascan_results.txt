@@ -2,24 +2,6 @@
 
 Violation Details -
     
-	Description    :	Ensure AWS Lambda function has policy attached.
-	File           :	main.tf
-	Module Name    :	root
-	Plan Root      :	./
-	Line           :	5
-	Severity       :	MEDIUM
-	
-	-----------------------------------------------------------------------
-	
-	Description    :	Lambda function doesn't not include a VPC configuration.
-	File           :	main.tf
-	Module Name    :	root
-	Plan Root      :	./
-	Line           :	5
-	Severity       :	Low
-	
-	-----------------------------------------------------------------------
-	
 	Description    :	Lambda tracing is not enabled.
 	File           :	main.tf
 	Module Name    :	root
@@ -29,12 +11,30 @@ Violation Details -
 	
 	-----------------------------------------------------------------------
 	
+	Description    :	Lambda function does not include a VPC configuration.
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	5
+	Severity       :	Low
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure AWS Lambda function has policy attached.
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	5
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
 
 Scan Summary -
 
 	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-08-18 17:47:44.053938968 +0000 UTC
+	Scanned At          :	2022-01-05 16:31:22.127882875 +0000 UTC
 	Policies Validated  :	4
 	Violated Policies   :	3
 	Low                 :	2

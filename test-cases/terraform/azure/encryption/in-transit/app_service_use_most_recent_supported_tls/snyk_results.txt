@@ -4,7 +4,7 @@ Failed to run the process ...
     "isPrivate": true,
     "isLicensesEnabled": false,
     "ignoreSettings": null,
-    "org": "yi2020",
+    "org": "ryder.d",
     "projectId": "",
     "policy": ""
   },
@@ -15,7 +15,7 @@ Failed to run the process ...
   "ignoreSettings": null,
   "targetFile": "main.tf",
   "projectName": "project",
-  "org": "yi2020",
+  "org": "ryder.d",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
@@ -26,38 +26,14 @@ Failed to run the process ...
   "infrastructureAsCodeIssues": [
     {
       "severity": "low",
-      "resolve": "Set `identity` attribute",
-      "id": "SNYK-CC-TF-161",
-      "impact": "Authentication and authorization will not be possible via Microsoft Identity platform",
-      "msg": "resource.azurerm_app_service[webapp].identity",
-      "subType": "App Service (Web Apps)",
-      "issue": "Azure App Service identity is not configured",
-      "publicId": "SNYK-CC-TF-161",
-      "title": "App Service identity missing",
-      "references": [
-        "https://docs.microsoft.com/en-us/azure/app-service/overview-authentication-authorization",
-        "https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app"
-      ],
-      "isIgnored": false,
-      "iacDescription": {
-        "issue": "Azure App Service identity is not configured",
-        "impact": "Authentication and authorization will not be possible via Microsoft Identity platform",
-        "resolve": "Set `identity` attribute"
-      },
-      "lineNumber": 28,
-      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-161",
-      "path": [
-        "resource",
-        "azurerm_app_service[webapp]",
-        "identity"
-      ]
-    },
-    {
-      "severity": "low",
-      "resolve": "Set `site_config.min_tls_version` attribute to `true`",
+      "resolve": "Set   `site_config.min_tls_version` attribute to `1.2`",
       "id": "SNYK-CC-TF-145",
       "impact": "Older cipher suites could be vulnerable to hijacking and information disclosure",
       "msg": "resource.azurerm_app_service[webapp].site_config.min_tls_version",
+      "remediation": {
+        "terraform": "Set   `site_config.min_tls_version` attribute to `1.2`",
+        "arm": "Set `siteConfig.minTlsVersion`  attribute to  `1.2`"
+      },
       "subType": "App Service (Web Apps)",
       "issue": "Azure App Service does not enforce latest TLS cipher suites",
       "publicId": "SNYK-CC-TF-145",
@@ -69,10 +45,11 @@ Failed to run the process ...
       "iacDescription": {
         "issue": "Azure App Service does not enforce latest TLS cipher suites",
         "impact": "Older cipher suites could be vulnerable to hijacking and information disclosure",
-        "resolve": "Set `site_config.min_tls_version` attribute to `true`"
+        "resolve": "Set   `site_config.min_tls_version` attribute to `1.2`"
       },
       "lineNumber": 37,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-145",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "azurerm_app_service[webapp]",
@@ -83,24 +60,30 @@ Failed to run the process ...
     {
       "severity": "medium",
       "resolve": "Set `https_only` attribute to `true`",
-      "id": "SNYK-CC-TF-144",
-      "impact": "The content could be intercepted and manipulated in transit",
+      "impact": "The HTTP content could be intercepted and manipulated in transit",
       "msg": "resource.azurerm_app_service[webapp].https_only",
+      "remediation": {
+        "terraform": "Set `https_only` attribute to `true`",
+        "arm": "Set `properties.httpsOnly` attribute to `true`"
+      },
       "subType": "App Service (Web Apps)",
-      "issue": "Azure App Service does not enforce HTTPS traffic only",
+      "issue": "Azure App Service allows HTTP traffic",
       "publicId": "SNYK-CC-TF-144",
       "title": "Azure App Service allows HTTP traffic",
       "references": [
-        "https://docs.microsoft.com/en-us/azure/app-service/security-recommendations"
+        "https://docs.microsoft.com/en-us/azure/app-service/security-recommendations",
+        "CIS Microsoft Azure Foundations Benchmark v1.3.1 - 9.2 Ensure web app redirects all HTTP traffic to HTTPS in Azure App Service"
       ],
+      "id": "SNYK-CC-TF-144",
       "isIgnored": false,
       "iacDescription": {
-        "issue": "Azure App Service does not enforce HTTPS traffic only",
-        "impact": "The content could be intercepted and manipulated in transit",
+        "issue": "Azure App Service allows HTTP traffic",
+        "impact": "The HTTP content could be intercepted and manipulated in transit",
         "resolve": "Set `https_only` attribute to `true`"
       },
       "lineNumber": 28,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-144",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "azurerm_app_service[webapp]",
@@ -108,38 +91,49 @@ Failed to run the process ...
       ]
     },
     {
-      "severity": "low",
-      "resolve": "Set `client_cert_enabled` attribute to `true`",
-      "id": "SNYK-CC-TF-162",
-      "impact": "Clients without authorized certificate may be allowed to connect to the application",
-      "msg": "resource.azurerm_app_service[webapp].client_cert_enabled",
+      "severity": "high",
+      "resolve": "Set `ftps_state` to `FtpsOnly` or `Disabled`",
+      "impact": "FTP is a plain-text protocol that is vulnerable to manipulation and eavesdropping",
+      "msg": "resource.azurerm_app_service[webapp].site_config.ftps_state",
+      "remediation": {
+        "terraform": "Set `ftps_state` to `FtpsOnly` or `Disabled`",
+        "arm": "Set `ftpsState` to `FtpsOnly` or `Disabled` if not needed"
+      },
       "subType": "App Service (Web Apps)",
-      "issue": "Azure App Service does not enforce client side certificates",
-      "publicId": "SNYK-CC-TF-162",
-      "title": "App Service mutual TLS disabled",
+      "issue": "App Service allows FTP deployments",
+      "publicId": "SNYK-CC-AZURE-533",
+      "title": "App Service allows FTP deployments",
       "references": [
-        "https://docs.microsoft.com/en-us/azure/app-service/app-service-web-configure-tls-mutual-auth"
+        "https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/app_service#ftps_state",
+        "https://docs.microsoft.com/en-us/azure/app-service/deploy-ftp?tabs=portal#enforce-ftps",
+        "CIS Microsoft Azure Foundations Benchmark v1.3.1 - 9.10 Ensure FTP deployments are disabled"
       ],
+      "id": "SNYK-CC-AZURE-533",
       "isIgnored": false,
       "iacDescription": {
-        "issue": "Azure App Service does not enforce client side certificates",
-        "impact": "Clients without authorized certificate may be allowed to connect to the application",
-        "resolve": "Set `client_cert_enabled` attribute to `true`"
+        "issue": "App Service allows FTP deployments",
+        "impact": "FTP is a plain-text protocol that is vulnerable to manipulation and eavesdropping",
+        "resolve": "Set `ftps_state` to `FtpsOnly` or `Disabled`"
       },
-      "lineNumber": 28,
-      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-162",
+      "lineNumber": 36,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AZURE-533",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "azurerm_app_service[webapp]",
-        "client_cert_enabled"
+        "site_config",
+        "ftps_state"
       ]
     },
     {
       "severity": "low",
       "resolve": "Set `auth_settings.enabled` attribute to `true`",
-      "id": "SNYK-CC-TF-160",
       "impact": "Service may be accessible without authorization",
       "msg": "resource.azurerm_app_service[webapp].auth_settings",
+      "remediation": {
+        "terraform": "Set `auth_settings.enabled` attribute to `true`",
+        "arm": "Set `properties.enabled` attribute to `true` in config resource"
+      },
       "subType": "App Service (Web Apps)",
       "issue": "Azure App Service authentication is not enabled",
       "publicId": "SNYK-CC-TF-160",
@@ -147,6 +141,7 @@ Failed to run the process ...
       "references": [
         "https://docs.microsoft.com/en-us/azure/app-service/overview-authentication-authorization"
       ],
+      "id": "SNYK-CC-TF-160",
       "isIgnored": false,
       "iacDescription": {
         "issue": "Azure App Service authentication is not enabled",
@@ -155,6 +150,7 @@ Failed to run the process ...
       },
       "lineNumber": 28,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-160",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "azurerm_app_service[webapp]",
@@ -162,11 +158,115 @@ Failed to run the process ...
       ]
     },
     {
+      "severity": "medium",
+      "resolve": "Set `sku.capacity` to `2` or more",
+      "impact": "A single App Service Plan instance increases the risk of application unavailability",
+      "msg": "resource.azurerm_app_service_plan[plan].sku.capacity",
+      "remediation": {
+        "terraform": "Set `sku.capacity` to `2` or more",
+        "arm": "Set `sku.capacity` to `2` or more"
+      },
+      "subType": "App Service (Web Apps)",
+      "issue": "Use two or more App Service Plan instances",
+      "publicId": "SNYK-CC-AZURE-618",
+      "title": "Use two or more App Service Plan instances",
+      "references": [
+        "https://docs.microsoft.com/en-us/azure/app-service/overview-hosting-plans",
+        "https://docs.microsoft.com/en-us/azure/templates/microsoft.web/serverfarms?tabs=json"
+      ],
+      "id": "SNYK-CC-AZURE-618",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Use two or more App Service Plan instances",
+        "impact": "A single App Service Plan instance increases the risk of application unavailability",
+        "resolve": "Set `sku.capacity` to `2` or more"
+      },
+      "lineNumber": 22,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AZURE-618",
+      "isGeneratedByCustomRule": false,
+      "path": [
+        "resource",
+        "azurerm_app_service_plan[plan]",
+        "sku",
+        "capacity"
+      ]
+    },
+    {
+      "severity": "low",
+      "resolve": "Set `client_cert_enabled` attribute to `true`",
+      "impact": "Clients without authorized certificate may be allowed to connect to the application",
+      "msg": "resource.azurerm_app_service[webapp].client_cert_enabled",
+      "remediation": {
+        "terraform": "Set `client_cert_enabled` attribute to `true`",
+        "arm": "Set `properties.clientCertEnabled` attribute to `true`"
+      },
+      "subType": "App Service (Web Apps)",
+      "issue": "App Service mutual TLS disabled",
+      "publicId": "SNYK-CC-TF-162",
+      "title": "App Service mutual TLS disabled",
+      "references": [
+        "https://docs.microsoft.com/en-us/azure/app-service/app-service-web-configure-tls-mutual-auth",
+        "CIS Microsoft Azure Foundations Benchmark v1.3.1 - 9.4 Ensure the web app has 'Client Certificates (Incoming client certificates)' set to 'On'"
+      ],
+      "id": "SNYK-CC-TF-162",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "App Service mutual TLS disabled",
+        "impact": "Clients without authorized certificate may be allowed to connect to the application",
+        "resolve": "Set `client_cert_enabled` attribute to `true`"
+      },
+      "lineNumber": 28,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-162",
+      "isGeneratedByCustomRule": false,
+      "path": [
+        "resource",
+        "azurerm_app_service[webapp]",
+        "client_cert_enabled"
+      ]
+    },
+    {
+      "severity": "low",
+      "resolve": "Set `identity` attribute",
+      "impact": "Authentication and authorization will not be possible via Microsoft Identity platform",
+      "msg": "resource.azurerm_app_service[webapp].identity",
+      "remediation": {
+        "terraform": "Set `identity` attribute",
+        "arm": "Set `identity` attribute"
+      },
+      "subType": "App Service (Web Apps)",
+      "issue": "App Service identity missing",
+      "publicId": "SNYK-CC-TF-161",
+      "title": "App Service identity missing",
+      "references": [
+        "https://docs.microsoft.com/en-us/azure/app-service/overview-authentication-authorization",
+        "https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app",
+        "CIS Microsoft Azure Foundations Benchmark v1.3.1 - 9.5 Ensure that Register with Azure Active Directory is enabled on App Service"
+      ],
+      "id": "SNYK-CC-TF-161",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "App Service identity missing",
+        "impact": "Authentication and authorization will not be possible via Microsoft Identity platform",
+        "resolve": "Set `identity` attribute"
+      },
+      "lineNumber": 28,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-161",
+      "isGeneratedByCustomRule": false,
+      "path": [
+        "resource",
+        "azurerm_app_service[webapp]",
+        "identity"
+      ]
+    },
+    {
       "severity": "low",
       "resolve": "Set `site_config.http2_enabled` attribute to `true`",
-      "id": "SNYK-CC-TF-163",
       "impact": "No security impact. Provides performance improvement.",
       "msg": "resource.azurerm_app_service[webapp].site_config.http2_enabled",
+      "remediation": {
+        "terraform": "Set `site_config.http2_enabled` attribute to `true`",
+        "arm": "Set `properties.siteConfig.http20Enabled` attribute to `true`"
+      },
       "subType": "App Service (Web Apps)",
       "issue": "HTTP/2 is not enabled on the App Service",
       "publicId": "SNYK-CC-TF-163",
@@ -174,6 +274,7 @@ Failed to run the process ...
       "references": [
         "https://azure.microsoft.com/en-gb/blog/announcing-http-2-support-in-azure-app-service/"
       ],
+      "id": "SNYK-CC-TF-163",
       "isIgnored": false,
       "iacDescription": {
         "issue": "HTTP/2 is not enabled on the App Service",
@@ -182,6 +283,7 @@ Failed to run the process ...
       },
       "lineNumber": 34,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-163",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "azurerm_app_service[webapp]",

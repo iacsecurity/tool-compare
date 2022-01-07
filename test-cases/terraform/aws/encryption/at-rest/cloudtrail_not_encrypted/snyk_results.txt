@@ -4,7 +4,7 @@ Failed to run the process ...
     "isPrivate": true,
     "isLicensesEnabled": false,
     "ignoreSettings": null,
-    "org": "yi2020",
+    "org": "ryder.d",
     "projectId": "",
     "policy": ""
   },
@@ -15,7 +15,7 @@ Failed to run the process ...
   "ignoreSettings": null,
   "targetFile": "main.tf",
   "projectName": "project",
-  "org": "yi2020",
+  "org": "ryder.d",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
@@ -47,11 +47,76 @@ Failed to run the process ...
       },
       "lineNumber": 11,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-16",
+      "isGeneratedByCustomRule": false,
       "path": [
         "input",
         "resource",
         "aws_cloudtrail[foobar]",
         "enable_log_file_validation"
+      ]
+    },
+    {
+      "severity": "medium",
+      "resolve": "Set `server_side_encryption_configuration` block attribute",
+      "impact": "A non-encrypted S3 bucket increases the likelihood of unintentional data exposure",
+      "msg": "input.resource.aws_s3_bucket[foo]",
+      "remediation": {
+        "cloudformation": "Set `BucketEncryption` attribute",
+        "terraform": "Set `server_side_encryption_configuration` block attribute"
+      },
+      "subType": "S3",
+      "issue": "Non-encrypted S3 Bucket",
+      "publicId": "SNYK-CC-TF-4",
+      "title": "Non-encrypted S3 Bucket",
+      "references": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/default-bucket-encryption.html",
+        "CIS Amazon Web Services Foundations Benchmark v1.4.0 - 2.1.1 Ensure all S3 buckets employ encryption-at-rest"
+      ],
+      "id": "SNYK-CC-TF-4",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Non-encrypted S3 Bucket",
+        "impact": "A non-encrypted S3 bucket increases the likelihood of unintentional data exposure",
+        "resolve": "Set `server_side_encryption_configuration` block attribute"
+      },
+      "lineNumber": 18,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-4",
+      "isGeneratedByCustomRule": false,
+      "path": [
+        "input",
+        "resource",
+        "aws_s3_bucket[foo]"
+      ]
+    },
+    {
+      "severity": "low",
+      "resolve": "Follow instructions in `https://docs.aws.amazon.com/AmazonS3/latest/userguide/MultiFactorAuthenticationDelete.html` to manually configure the MFA setting. Set `versioning.mfa_delete` attribute to `true` in terraform configuration file. The terraform change is required to reflect the setting in the state file",
+      "impact": "Object could be deleted without stronger MFA authorization",
+      "msg": "resource.aws_s3_bucket[foo].versioning.mfa_delete",
+      "subType": "S3",
+      "issue": "S3 bucket will not enforce MFA login on delete requests",
+      "publicId": "SNYK-CC-TF-127",
+      "title": "S3 bucket MFA delete control disabled",
+      "references": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/MultiFactorAuthenticationDelete.html",
+        "https://docs.aws.amazon.com/AmazonS3/latest/dev/Versioning.html",
+        "https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingMFADelete.html"
+      ],
+      "id": "SNYK-CC-TF-127",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "S3 bucket will not enforce MFA login on delete requests",
+        "impact": "Object could be deleted without stronger MFA authorization",
+        "resolve": "Follow instructions in `https://docs.aws.amazon.com/AmazonS3/latest/userguide/MultiFactorAuthenticationDelete.html` to manually configure the MFA setting. Set `versioning.mfa_delete` attribute to `true` in terraform configuration file. The terraform change is required to reflect the setting in the state file"
+      },
+      "lineNumber": 18,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-127",
+      "isGeneratedByCustomRule": false,
+      "path": [
+        "resource",
+        "aws_s3_bucket[foo]",
+        "versioning",
+        "mfa_delete"
       ]
     },
     {
@@ -79,6 +144,7 @@ Failed to run the process ...
       },
       "lineNumber": 18,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-124",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_s3_bucket[foo]",
@@ -111,6 +177,7 @@ Failed to run the process ...
       },
       "lineNumber": 11,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-256",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_cloudtrail[foobar]",
@@ -119,31 +186,35 @@ Failed to run the process ...
     },
     {
       "severity": "low",
-      "resolve": "Set `versioning.mfa_delete` attribute to `true`",
-      "id": "SNYK-CC-TF-127",
-      "impact": "Object could be deleted without stronger MFA authorization",
-      "msg": "resource.aws_s3_bucket[foo].versioning.mfa_delete",
+      "resolve": "Add `logging` block attribute",
+      "impact": "There will be no audit trail of access to s3 objects",
+      "msg": "input.resource.aws_s3_bucket[foo].logging",
+      "remediation": {
+        "cloudformation": "Set `Properties.LoggingConfiguration` attribute",
+        "terraform": "Add `logging` block attribute"
+      },
       "subType": "S3",
-      "issue": "S3 bucket will not enforce MFA login on delete requests",
-      "publicId": "SNYK-CC-TF-127",
-      "title": "S3 bucket MFA delete control disabled",
+      "issue": "The s3 access logs will not be collected",
+      "publicId": "SNYK-CC-TF-45",
+      "title": "S3 server access logging is disabled",
       "references": [
-        "https://docs.aws.amazon.com/AmazonS3/latest/dev/Versioning.html",
-        "https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingMFADelete.html"
+        "https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerLogs.html"
       ],
+      "id": "SNYK-CC-TF-45",
       "isIgnored": false,
       "iacDescription": {
-        "issue": "S3 bucket will not enforce MFA login on delete requests",
-        "impact": "Object could be deleted without stronger MFA authorization",
-        "resolve": "Set `versioning.mfa_delete` attribute to `true`"
+        "issue": "The s3 access logs will not be collected",
+        "impact": "There will be no audit trail of access to s3 objects",
+        "resolve": "Add `logging` block attribute"
       },
       "lineNumber": 18,
-      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-127",
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-45",
+      "isGeneratedByCustomRule": false,
       "path": [
+        "input",
         "resource",
         "aws_s3_bucket[foo]",
-        "versioning",
-        "mfa_delete"
+        "logging"
       ]
     },
     {
@@ -171,39 +242,11 @@ Failed to run the process ...
       },
       "lineNumber": 11,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-135",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_cloudtrail[foobar]",
         "is_multi_region_trail"
-      ]
-    },
-    {
-      "severity": "medium",
-      "resolve": "Set `server_side_encryption_configuration` block attribute",
-      "id": "SNYK-CC-TF-4",
-      "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
-      "msg": "input.resource.aws_s3_bucket[foo]",
-      "remediation": {
-        "cloudformation": "Set `BucketEncryption` attribute",
-        "terraform": "Set `server_side_encryption_configuration` block attribute"
-      },
-      "subType": "S3",
-      "issue": "That by default S3 buckets do not encrypt the objects that are stored.",
-      "publicId": "SNYK-CC-TF-4",
-      "title": "Non-encrypted S3 Bucket",
-      "references": [],
-      "isIgnored": false,
-      "iacDescription": {
-        "issue": "That by default S3 buckets do not encrypt the objects that are stored.",
-        "impact": "That should someone gain unauthorized access to the data they would be able to read the contents.",
-        "resolve": "Set `server_side_encryption_configuration` block attribute"
-      },
-      "lineNumber": 18,
-      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-4",
-      "path": [
-        "input",
-        "resource",
-        "aws_s3_bucket[foo]"
       ]
     },
     {
@@ -231,43 +274,12 @@ Failed to run the process ...
       },
       "lineNumber": 11,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-17",
+      "isGeneratedByCustomRule": false,
       "path": [
         "input",
         "resource",
         "aws_cloudtrail[foobar]",
         "kms_key_id"
-      ]
-    },
-    {
-      "severity": "low",
-      "resolve": "Add `logging` block attribute",
-      "id": "SNYK-CC-TF-45",
-      "impact": "There will be no audit trail of access to s3 objects",
-      "msg": "input.resource.aws_s3_bucket[foo].logging",
-      "remediation": {
-        "cloudformation": "Set `Properties.LoggingConfiguration` attribute",
-        "terraform": "Add `logging` block attribute"
-      },
-      "subType": "S3",
-      "issue": "The s3 access logs will not be collected",
-      "publicId": "SNYK-CC-TF-45",
-      "title": "S3 server access logging is disabled",
-      "references": [
-        "https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerLogs.html"
-      ],
-      "isIgnored": false,
-      "iacDescription": {
-        "issue": "The s3 access logs will not be collected",
-        "impact": "There will be no audit trail of access to s3 objects",
-        "resolve": "Add `logging` block attribute"
-      },
-      "lineNumber": 18,
-      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-45",
-      "path": [
-        "input",
-        "resource",
-        "aws_s3_bucket[foo]",
-        "logging"
       ]
     }
   ]

@@ -4,7 +4,7 @@ Failed to run the process ...
     "isPrivate": true,
     "isLicensesEnabled": false,
     "ignoreSettings": null,
-    "org": "yi2020",
+    "org": "ryder.d",
     "projectId": "",
     "policy": ""
   },
@@ -15,7 +15,7 @@ Failed to run the process ...
   "ignoreSettings": null,
   "targetFile": "main.tf",
   "projectName": "project",
-  "org": "yi2020",
+  "org": "ryder.d",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
@@ -26,10 +26,45 @@ Failed to run the process ...
   "infrastructureAsCodeIssues": [
     {
       "severity": "low",
+      "resolve": "Set `alert_notifications` attribute to `true`",
+      "impact": "Point of contact will not be notified about critical security issues",
+      "msg": "resource.azurerm_security_center_contact[example]",
+      "remediation": {
+        "terraform": "Set `alert_notifications` attribute to `true`",
+        "arm": "Set `properties.alertNotifications.state` attribute to `On`"
+      },
+      "subType": "Security Center",
+      "issue": "Security Center alert notification disabled",
+      "publicId": "SNYK-CC-TF-166",
+      "title": "Security Center alert notification disabled",
+      "references": [
+        "https://docs.microsoft.com/en-us/azure/security-center/security-center-introduction",
+        "https://docs.microsoft.com/en-us/azure/security-center/security-center-managing-and-responding-alerts"
+      ],
+      "id": "SNYK-CC-TF-166",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Security Center alert notification disabled",
+        "impact": "Point of contact will not be notified about critical security issues",
+        "resolve": "Set `alert_notifications` attribute to `true`"
+      },
+      "lineNumber": 18,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-166",
+      "isGeneratedByCustomRule": false,
+      "path": [
+        "resource",
+        "azurerm_security_center_contact[example]"
+      ]
+    },
+    {
+      "severity": "low",
       "resolve": "Set `phone` attribute to point of contact phone number",
-      "id": "SNYK-CC-TF-165",
       "impact": "Increases security management overhead",
       "msg": "resource.azurerm_security_center_contact[example]",
+      "remediation": {
+        "terraform": "Set `phone` attribute to point of contact phone number",
+        "arm": "Set `properties.phone` attribute to point of contact phone number"
+      },
       "subType": "Security Center",
       "issue": "Azure Security Center contact phone number is not set",
       "publicId": "SNYK-CC-TF-165",
@@ -37,6 +72,7 @@ Failed to run the process ...
       "references": [
         "https://docs.microsoft.com/en-us/azure/security-center/security-center-introduction"
       ],
+      "id": "SNYK-CC-TF-165",
       "isIgnored": false,
       "iacDescription": {
         "issue": "Azure Security Center contact phone number is not set",
@@ -45,33 +81,7 @@ Failed to run the process ...
       },
       "lineNumber": 18,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-165",
-      "path": [
-        "resource",
-        "azurerm_security_center_contact[example]"
-      ]
-    },
-    {
-      "severity": "low",
-      "resolve": "Set `alert_notifications` attribute to `true`",
-      "id": "SNYK-CC-TF-166",
-      "impact": "Point of contact will not be notified about critical security issues",
-      "msg": "resource.azurerm_security_center_contact[example]",
-      "subType": "Security Center",
-      "issue": "Azure Security Center alert notifications are not enabled for the contact",
-      "publicId": "SNYK-CC-TF-166",
-      "title": "Security Center alert notification disabled",
-      "references": [
-        "https://docs.microsoft.com/en-us/azure/security-center/security-center-introduction",
-        "https://docs.microsoft.com/en-us/azure/security-center/security-center-managing-and-responding-alerts"
-      ],
-      "isIgnored": false,
-      "iacDescription": {
-        "issue": "Azure Security Center alert notifications are not enabled for the contact",
-        "impact": "Point of contact will not be notified about critical security issues",
-        "resolve": "Set `alert_notifications` attribute to `true`"
-      },
-      "lineNumber": 18,
-      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-166",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "azurerm_security_center_contact[example]"

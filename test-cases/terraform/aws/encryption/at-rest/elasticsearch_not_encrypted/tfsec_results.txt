@@ -1,7 +1,7 @@
 
   Result 1
 
-  [aws-elastic-search-enable-domain-logging][[0m[33mMEDIUM[39m[0m] Resource 'aws_elasticsearch_domain.example' does not configure logging at rest on the domain.
+  [aws-elastic-search-enable-domain-logging][MEDIUM] Resource 'aws_elasticsearch_domain.example' does not configure logging at rest on the domain.
   /src/main.tf:1-16
 
 
@@ -28,13 +28,13 @@
   Resolution: Enable logging for ElasticSearch domains
 
   More Info:
-  - https://tfsec.dev/docs/aws/elastic-search/enable-domain-logging#aws/elastic-search 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/elastic-search/enable-domain-logging 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticsearch_domain#log_type 
   - https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-createdomain-configure-slow-logs.html 
 
   Result 2
 
-  [aws-elastic-search-enable-in-transit-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_elasticsearch_domain.example' defines an Elasticsearch domain with plaintext traffic (missing node_to_node_encryption block).
+  [aws-elastic-search-enable-in-transit-encryption][HIGH] Resource 'aws_elasticsearch_domain.example' defines an Elasticsearch domain with plaintext traffic (missing node_to_node_encryption block).
   /src/main.tf:1-16
 
 
@@ -61,13 +61,13 @@
   Resolution: Enable encrypted node to node communication
 
   More Info:
-  - https://tfsec.dev/docs/aws/elastic-search/enable-in-transit-encryption#aws/elastic-search 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/elastic-search/enable-in-transit-encryption 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticsearch_domain#encrypt_at_rest 
   - https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/ntn.html 
 
   Result 3
 
-  [aws-elastic-search-enable-logging][[0m[33mMEDIUM[39m[0m] Resource 'aws_elasticsearch_domain.example' is missing 'AUDIT_LOGS` in one of the `log_publishing_options`-`log_type` attributes so audit log is not enabled
+  [aws-elastic-search-enable-logging][MEDIUM] Resource 'aws_elasticsearch_domain.example' is missing 'AUDIT_LOGS` in one of the `log_publishing_options`-`log_type` attributes so audit log is not enabled
   /src/main.tf:1-16
 
 
@@ -94,12 +94,12 @@
   Resolution: Enable logging for ElasticSearch domains
 
   More Info:
-  - https://tfsec.dev/docs/aws/elastic-search/enable-logging#aws/elastic-search 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/elastic-search/enable-logging 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticsearch_domain#log_publishing_options 
 
   Result 4
 
-  [aws-elastic-search-enforce-https][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'aws_elasticsearch_domain.example' defines an Elasticsearch domain with plaintext traffic (missing domain_endpoint_options block).
+  [aws-elastic-search-enforce-https][CRITICAL] Resource 'aws_elasticsearch_domain.example' defines an Elasticsearch domain with plaintext traffic (missing domain_endpoint_options block).
   /src/main.tf:1-16
 
 
@@ -126,13 +126,13 @@
   Resolution: Enforce the use of HTTPS for ElasticSearch
 
   More Info:
-  - https://tfsec.dev/docs/aws/elastic-search/enforce-https#aws/elastic-search 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/elastic-search/enforce-https 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticsearch_domain#enforce_https 
   - https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-data-protection.html 
 
   Result 5
 
-  [aws-elastic-service-enable-domain-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_elasticsearch_domain.example' defines an unencrypted Elasticsearch domain (missing encrypt_at_rest block).
+  [aws-elastic-service-enable-domain-encryption][HIGH] Resource 'aws_elasticsearch_domain.example' defines an unencrypted Elasticsearch domain (missing encrypt_at_rest block).
   /src/main.tf:1-16
 
 
@@ -159,16 +159,16 @@
   Resolution: Enable ElasticSearch domain encryption
 
   More Info:
-  - https://tfsec.dev/docs/aws/elastic-service/enable-domain-encryption#aws/elastic-service 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/elastic-service/enable-domain-encryption 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticsearch_domain#encrypt_at_rest 
   - https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/encryption-at-rest.html 
 
   times
   ------------------------------------------
-  disk i/o             49.501041ms
-  parsing HCL          500.125µs
-  evaluating values    2.252166ms
-  running checks       68.682875ms
+  disk i/o             25.181334ms
+  parsing HCL          570.25µs
+  evaluating values    1.84425ms
+  running checks       22.935333ms
 
   counts
   ------------------------------------------

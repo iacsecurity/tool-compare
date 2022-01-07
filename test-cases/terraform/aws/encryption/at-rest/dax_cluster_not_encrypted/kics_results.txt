@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+Scanning with Keeping Infrastructure as Code Secure v1.4.9
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 851
 Queries failed to execute: 0
 
 ------------------------------------
@@ -31,14 +31,25 @@ Resource Not Using Tags, Severity: INFO, Results: 2
 Description: AWS services resource tags are an essential part of managing components
 Platform: Terraform
 
-	[1]: /src/main.tf:6
+	[1]: ../../src/main.tf:25
+
+		024: 
+		025: resource "aws_dax_cluster" "cloudrail-test" {
+		026:   cluster_name       = "non-encrypt"
+
+
+	[2]: ../../src/main.tf:6
 
 		005: # No policy attached to this role because it is for testing purposes
 		006: resource "aws_iam_role" "dax" {
 		007:   name = "dynamodb-dax-cloudrail-test"
 
 
-	[2]: /src/main.tf:25
+Name Is Not Snake Case, Severity: INFO, Results: 1
+Description: All names should follow snake case pattern.
+Platform: Terraform
+
+	[1]: ../../src/main.tf:25
 
 		024: 
 		025: resource "aws_dax_cluster" "cloudrail-test" {
@@ -49,7 +60,7 @@ DAX Cluster Not Encrypted, Severity: HIGH, Results: 1
 Description: AWS DAX Cluster should have server-side encryption at rest
 Platform: Terraform
 
-	[1]: /src/main.tf:25
+	[1]: ../../src/main.tf:25
 
 		024: 
 		025: resource "aws_dax_cluster" "cloudrail-test" {
@@ -61,7 +72,7 @@ Results Summary:
 HIGH: 1
 MEDIUM: 0
 LOW: 0
-INFO: 2
-TOTAL: 3
+INFO: 3
+TOTAL: 4
 
-Scan duration: 4.525168694s
+Scan duration: 8.769393961s

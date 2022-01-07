@@ -1,16 +1,3 @@
-
-
-       _               _              
-   ___| |__   ___  ___| | _______   __
-  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
- | (__| | | |  __/ (__|   < (_) \ V / 
-  \___|_| |_|\___|\___|_|\_\___/ \_/  
-                                      
-By bridgecrew.io | version: 2.0.358 
-Update available 2.0.358 -> 2.0.359
-Run pip3 install -U checkov to update 
-
-
 terraform scan results:
 
 Passed checks: 1, Failed checks: 2, Skipped checks: 0

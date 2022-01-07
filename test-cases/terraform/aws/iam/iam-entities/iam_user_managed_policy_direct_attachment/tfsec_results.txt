@@ -1,7 +1,7 @@
 
   Result 1
 
-  [aws-iam-no-policy-wildcards][[0m[31mHIGH[39m[0m] Resource 'aws_iam_policy.managed-policy' defines a policy with wildcarded resources.
+  [aws-iam-no-policy-wildcards][HIGH] Resource 'aws_iam_policy.managed-policy' defines a policy with wildcarded resources.
   /src/main.tf:12-25
 
 
@@ -31,16 +31,16 @@
   Resolution: Specify the exact permissions required, and to which resources they should apply instead of using wildcards.
 
   More Info:
-  - https://tfsec.dev/docs/aws/iam/no-policy-wildcards#aws/iam 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/iam/no-policy-wildcards 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document 
   - https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html 
 
   times
   ------------------------------------------
-  disk i/o             52.666626ms
-  parsing HCL          612.5µs
-  evaluating values    3.668667ms
-  running checks       45.452291ms
+  disk i/o             26.965791ms
+  parsing HCL          581.791µs
+  evaluating values    3.154125ms
+  running checks       26.829917ms
 
   counts
   ------------------------------------------

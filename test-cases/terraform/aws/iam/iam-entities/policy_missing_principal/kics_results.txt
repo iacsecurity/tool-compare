@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+Scanning with Keeping Infrastructure as Code Secure v1.4.9
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 851
 Queries failed to execute: 0
 
 ------------------------------------
@@ -31,7 +31,7 @@ Resource Not Using Tags, Severity: INFO, Results: 1
 Description: AWS services resource tags are an essential part of managing components
 Platform: Terraform
 
-	[1]: /src/main.tf:5
+	[1]: ../../src/main.tf:5
 
 		004: 
 		005: resource "aws_kms_key" "secure_policy" {
@@ -42,18 +42,21 @@ Policy Without Principal, Severity: MEDIUM, Results: 1
 Description: All policies, except IAM identity-based policies, should have the 'Principal' element defined
 Platform: Terraform
 
-	[1]: /src/main.tf:12
+	[1]: ../../src/main.tf:9
 
-		011:     "Version": "2008-10-17",
-		012:     "Statement": [
-		013:         {
+		008: 
+		009:   policy = <<EOF
+		010: {
 
 
 CMK Rotation Disabled, Severity: HIGH, Results: 1
-Description: Customer Master Keys (CMK) must have rotation enabled, which means the attribute 'enable_key_rotation' must be set to 'true' when the key is enabled.
+CIS ID: CIS Security - CIS Amazon Web Services Foundations Benchmark v1.4.0 - Rule 3.8
+Title: Ensure rotation for customer created CMKs is enabled
+Description: AWS Key Management Service (KMS) allows customers to rotate the backing key which is key material stored within the KMS which is tied to the key ID of the Customer Created customer master key (CMK). It is the backing key that is used to perform cryptographic operations such as encryption and decryption. Automated key rotation currently retains all prior backing keys so that decryption of encrypted data can take place transparently. It is recommended that CMK key rotation be enabled.
+
 Platform: Terraform
 
-	[1]: /src/main.tf:5
+	[1]: ../../src/main.tf:5
 
 		004: 
 		005: resource "aws_kms_key" "secure_policy" {
@@ -68,4 +71,4 @@ LOW: 0
 INFO: 1
 TOTAL: 3
 
-Scan duration: 4.792620396s
+Scan duration: 9.147232337s

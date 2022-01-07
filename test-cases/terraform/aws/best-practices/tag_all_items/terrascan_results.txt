@@ -2,15 +2,6 @@
 
 Violation Details -
     
-	Description    :	Ensure that your Amazon Simple Queue Service (SQS) queues are protecting the contents of their messages using Server-Side Encryption (SSE). The SQS service uses an AWS KMS Customer Master Key (CMK) to generate data keys required for the encryption/decryption process of SQS messages. There is no additional charge for using SQS Server-Side Encryption, however, there is a charge for using AWS KMS
-	File           :	main.tf
-	Module Name    :	root
-	Plan Root      :	./
-	Line           :	12
-	Severity       :	HIGH
-	
-	-----------------------------------------------------------------------
-	
 	Description    :	Ensure SNS topic is Encrypted using KMS master key
 	File           :	main.tf
 	Module Name    :	root
@@ -20,12 +11,21 @@ Violation Details -
 	
 	-----------------------------------------------------------------------
 	
+	Description    :	Ensure that your Amazon Simple Queue Service (SQS) queues are protecting the contents of their messages using Server-Side Encryption (SSE). The SQS service uses an AWS KMS Customer Master Key (CMK) to generate data keys required for the encryption/decryption process of SQS messages. There is no additional charge for using SQS Server-Side Encryption, however, there is a charge for using AWS KMS
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	12
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
 
 Scan Summary -
 
 	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-08-18 18:02:38.407311299 +0000 UTC
+	Scanned At          :	2022-01-05 16:49:00.242638004 +0000 UTC
 	Policies Validated  :	4
 	Violated Policies   :	2
 	Low                 :	0

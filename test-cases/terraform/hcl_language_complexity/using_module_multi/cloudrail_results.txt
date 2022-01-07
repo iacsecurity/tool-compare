@@ -1,6 +1,23 @@
 
 WARNINGs found:
+Rule: Ensure no human IAM users defined
+Description: Best practices recommend the use of SSO instead of defining specific users at the account-level.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_manage.html#id_users_deleting to remove identified IAM users.
+Remediation Steps - Terraform: Remove the aws_iam_user resource for those identified IAM users.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [module.jack.aws_iam_user.user] (mymodule/user.tf:13)
+     Violating Resource: [module.jack.aws_iam_user.user]  (mymodule/user.tf:13)
+
+     Evidence:
+             | The IAM user module.jack.aws_iam_user.user has console access, and so is considered human
+
+
+-----------------------------------------------
 Rule: Ensure all resources that can be tagged have at least one tag
+Description: Some organizations require that all resources have at least one tag set. This rule will review the resources that can be tagged, and make sure each one has a tag that is not the Name tag. Resources that are not tagged will be flagged.
+Remediation Steps - Cloud Console: Access the specific resource in the AWS console and add tags.
+Remediation Steps - Terraform: Add a tags section to the resource with at least one tag beyond the Name tag.
  - 2 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [module.jack.aws_iam_user.user] (mymodule/user.tf:13)
@@ -10,22 +27,11 @@ Rule: Ensure all resources that can be tagged have at least one tag
              | Resource IAM user module.jack.aws_iam_user.user does not have any tags set
 
 
-   - Exposed Resource: [module.jull.aws_iam_user.user] (mymodule/user.tf:13)
-     Violating Resource: [module.jull.aws_iam_user.user]  (mymodule/user.tf:13)
+   - Exposed Resource: [module.jill.aws_iam_user.user] (mymodule/user.tf:13)
+     Violating Resource: [module.jill.aws_iam_user.user]  (mymodule/user.tf:13)
 
      Evidence:
-             | Resource IAM user module.jull.aws_iam_user.user does not have any tags set
-
-
------------------------------------------------
-Rule: Ensure no human IAM users defined
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [module.jack.aws_iam_user.user] (mymodule/user.tf:13)
-     Violating Resource: [module.jack.aws_iam_user.user]  (mymodule/user.tf:13)
-
-     Evidence:
-             | The IAM user module.jack.aws_iam_user.user has console access, and so is considered human
+             | Resource IAM user module.jill.aws_iam_user.user does not have any tags set
 
 
 -----------------------------------------------

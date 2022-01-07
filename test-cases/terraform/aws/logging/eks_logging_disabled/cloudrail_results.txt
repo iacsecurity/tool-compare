@@ -1,26 +1,11 @@
 
 WARNINGs found:
-Rule: Ensure Amazon EKS control plane logging enabled for all log types
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_eks_cluster.test] (main.tf:19)
-     Violating Resource: [aws_eks_cluster.test]  (main.tf:19)
-
-     Evidence:
-             | This rule evaluated aws_eks_cluster.test's configuration
-
-
------------------------------------------------
 Rule: Ensure all resources that can be tagged have at least one tag
+Description: Some organizations require that all resources have at least one tag set. This rule will review the resources that can be tagged, and make sure each one has a tag that is not the Name tag. Resources that are not tagged will be flagged.
+Remediation Steps - Cloud Console: Access the specific resource in the AWS console and add tags.
+Remediation Steps - Terraform: Add a tags section to the resource with at least one tag beyond the Name tag.
  - 4 Resources Exposed:
 -----------------------------------------------
-   - Exposed Resource: [aws_vpc.vpc] (main.tf:10)
-     Violating Resource: [aws_vpc.vpc]  (main.tf:10)
-
-     Evidence:
-             | Resource VPC aws_vpc.vpc does not have any tags set
-
-
    - Exposed Resource: [aws_iam_role.eksrole] (main.tf:6)
      Violating Resource: [aws_iam_role.eksrole]  (main.tf:6)
 
@@ -28,11 +13,11 @@ Rule: Ensure all resources that can be tagged have at least one tag
              | Resource IAM Role aws_iam_role.eksrole does not have any tags set
 
 
-   - Exposed Resource: [aws_eks_cluster.test] (main.tf:19)
-     Violating Resource: [aws_eks_cluster.test]  (main.tf:19)
+   - Exposed Resource: [aws_vpc.vpc] (main.tf:10)
+     Violating Resource: [aws_vpc.vpc]  (main.tf:10)
 
      Evidence:
-             | Resource EKS cluster aws_eks_cluster.test does not have any tags set
+             | Resource VPC aws_vpc.vpc does not have any tags set
 
 
    - Exposed Resource: [aws_subnet.subnet1] (main.tf:14)
@@ -42,26 +27,11 @@ Rule: Ensure all resources that can be tagged have at least one tag
              | Resource Subnet aws_subnet.subnet1 does not have any tags set
 
 
------------------------------------------------
-Rule: Disallow IAM permissions which can lead to privilege escalation
- - 2 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_iam_role_policy.allow-policy-1] (main.tf:25)
-     Violating Resource: [aws_iam_role_policy.allow-policy-1]  (main.tf:25)
+   - Exposed Resource: [aws_eks_cluster.test] (main.tf:19)
+     Violating Resource: [aws_eks_cluster.test]  (main.tf:19)
 
      Evidence:
-         aws_iam_role_policy.allow-policy-1
-             | is applied to arn:aws:iam::000000000000:role/role
-             | in conjunction with aws_iam_role_policy.allow-policy-1, aws_iam_role_policy.allow-policy-2 {'iam:passrole', 'lambda:invokefunc*', 'lambda:createfunction'} allows a hacker to trigger a Lambda function with a role they choose
-
-
-   - Exposed Resource: [aws_iam_role_policy.policy] (main.tf:25)
-     Violating Resource: [aws_iam_role_policy.policy]  (main.tf:25)
-
-     Evidence:
-         aws_iam_role_policy.policy
-             | is applied to arn:aws:iam::000000000000:role/role
-             | granting the problematic permissions {'iam:*', 'iam: AttachUser*'} which can allow for privilege escalation
+             | Resource EKS cluster aws_eks_cluster.test does not have any tags set
 
 
 -----------------------------------------------

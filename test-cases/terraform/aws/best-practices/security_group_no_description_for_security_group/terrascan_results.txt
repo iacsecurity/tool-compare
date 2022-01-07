@@ -2,12 +2,12 @@
 
 Violation Details -
     
-	Description    :	Ensure that detailed monitoring is enabled for EC2 instances.
+	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
 	File           :	main.tf
 	Module Name    :	root
 	Plan Root      :	./
 	Line           :	63
-	Severity       :	HIGH
+	Severity       :	MEDIUM
 	
 	-----------------------------------------------------------------------
 	
@@ -20,6 +20,15 @@ Violation Details -
 	
 	-----------------------------------------------------------------------
 	
+	Description    :	Ensure that detailed monitoring is enabled for EC2 instances.
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	63
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
 	Description    :	Ensure Security Groups Unrestricted Specific Ports https (TCP,443) is not exposed to private hosts more than 32
 	File           :	main.tf
 	Module Name    :	root
@@ -29,21 +38,12 @@ Violation Details -
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
-	File           :	main.tf
-	Module Name    :	root
-	Plan Root      :	./
-	Line           :	63
-	Severity       :	MEDIUM
-	
-	-----------------------------------------------------------------------
-	
 
 Scan Summary -
 
 	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-08-18 18:06:39.499752133 +0000 UTC
+	Scanned At          :	2022-01-05 16:52:32.19313363 +0000 UTC
 	Policies Validated  :	144
 	Violated Policies   :	4
 	Low                 :	2

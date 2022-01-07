@@ -1,28 +1,24 @@
 
 WARNINGs found:
-Rule: Ensure MSSQL servers have Public Network Access disabled
+Rule: Ensure Azure database server is not set to be public
+Description: Cloudrail will review settings of all of the database servers configured in Azure through the "Azure Database for …" functionality. If a database server is set to be public, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guides at https://docs.microsoft.com/en-us/azure/azure-sql/database/connectivity-settings, https://docs.microsoft.com/en-us/azure/postgresql/howto-deny-public-network-access, https://docs.microsoft.com/en-us/azure/mysql/howto-deny-public-network-access, https://docs.microsoft.com/en-us/azure/mariadb/howto-deny-public-network-access, in order to disable public network access for the database.
+Remediation Steps - Terraform: In the database server resource (such as azurerm_postgresql_server, azurerm_mssql_server, etc.), set public_network_access_enabled to false.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [azurerm_mssql_server.sql] (main.tf:15)
      Violating Resource: [azurerm_mssql_server.sql]  (main.tf:15)
 
      Evidence:
-             | This rule evaluated asdf-sqlserver's configuration
-
-
------------------------------------------------
-Rule: Ensure MSSQL is using the latest version of TLS encryption
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [azurerm_mssql_server.sql] (main.tf:15)
-     Violating Resource: [azurerm_mssql_server.sql]  (main.tf:15)
-
-     Evidence:
-             | This rule evaluated asdf-sqlserver's configuration
+         Azure Sql Server
+             | Azure Sql Server with database name asdf-sqlserver is exposed to the internet
 
 
 -----------------------------------------------
 Rule: Ensure SQL servers have auditing enabled
+Description: Having ‘auditing’ enabled on SQL servers would help to track database activities. Cloudrail will review the MS SQL servers configuration in your environment and if a server does not have an auditing policy configured, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.microsoft.com/en-us/azure/azure-sql/database/auditing-overview in order to configure auditing for SQL servers.
+Remediation Steps - Terraform: For the azurerm_mssql_server resource, add the extended_auditing_policy block and set the retention_in_days argument to 0 (unlimited) or a value greater than 90 and set the log_monitoring_enabled argument to true if you wish to send audit logs to Azure Monitor. If using the azurerm_mssql_server_extended_auditing_policy resource, create it with the same previous arguments.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [azurerm_mssql_server.sql] (main.tf:15)
@@ -33,15 +29,31 @@ Rule: Ensure SQL servers have auditing enabled
 
 
 -----------------------------------------------
-Rule: Ensure Azure database server is not set to be public
+Rule: Ensure MSSQL is using the latest version of TLS encryption
+Description: Azure MSSQL should use the latest version of TLS (1.2) in order to be compliant with industry standards.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.microsoft.com/en-us/azure/azure-sql/managed-instance/minimal-tls-version-configure in order to set the minimum TLS version to 1.2.
+Remediation Steps - Terraform: For the azurerm_mssql_server resource, set the minimum_tls_version argument to "1.2".
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [azurerm_mssql_server.sql] (main.tf:15)
      Violating Resource: [azurerm_mssql_server.sql]  (main.tf:15)
 
      Evidence:
-         Azure Sql Server
-             | Azure Sql Server with database name asdf-sqlserver is exposed to the internet
+             | This rule evaluated asdf-sqlserver's configuration
+
+
+-----------------------------------------------
+Rule: Ensure MSSQL servers have Public Network Access disabled
+Description: MSSQL servers should only be accesible through private endpoints instead of public IPs in order to reduce its exposure to unauthorized parties. This rule will only review Terraform content and not any resources in your cloud environment.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.microsoft.com/en-us/azure/azure-sql/database/connectivity-settings in order to disable public network access.
+Remediation Steps - Terraform: For the azurerm_mssql_server resource, set public_network_access_enabled argument to false.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [azurerm_mssql_server.sql] (main.tf:15)
+     Violating Resource: [azurerm_mssql_server.sql]  (main.tf:15)
+
+     Evidence:
+             | This rule evaluated asdf-sqlserver's configuration
 
 
 -----------------------------------------------

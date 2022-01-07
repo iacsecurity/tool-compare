@@ -2,15 +2,6 @@
 
 Violation Details -
     
-	Description    :	Cloud Trail Multi Region not enabled
-	File           :	main.tf
-	Module Name    :	root
-	Plan Root      :	./
-	Line           :	3
-	Severity       :	MEDIUM
-	
-	-----------------------------------------------------------------------
-	
 	Description    :	Ensure S3 buckets have access logging enabled.
 	File           :	main.tf
 	Module Name    :	root
@@ -26,6 +17,24 @@ Violation Details -
 	Plan Root      :	./
 	Line           :	10
 	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure CloudTrail has log file validation enabled.
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	3
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Cloud Trail Multi Region not enabled
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	3
+	Severity       :	MEDIUM
 	
 	-----------------------------------------------------------------------
 	
@@ -47,21 +56,12 @@ Violation Details -
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	Ensure CloudTrail has log file validation enabled.
-	File           :	main.tf
-	Module Name    :	root
-	Plan Root      :	./
-	Line           :	3
-	Severity       :	MEDIUM
-	
-	-----------------------------------------------------------------------
-	
 
 Scan Summary -
 
 	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-08-18 18:04:31.668910962 +0000 UTC
+	Scanned At          :	2022-01-05 16:50:36.33292934 +0000 UTC
 	Policies Validated  :	18
 	Violated Policies   :	6
 	Low                 :	0

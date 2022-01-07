@@ -1,19 +1,22 @@
-
-
-       _               _              
-   ___| |__   ___  ___| | _______   __
-  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
- | (__| | | |  __/ (__|   < (_) \ V / 
-  \___|_| |_|\___|\___|_|\_\___/ \_/  
-                                      
-By bridgecrew.io | version: 2.0.358 
-Update available 2.0.358 -> 2.0.359
-Run pip3 install -U checkov to update 
-
-
 terraform scan results:
 
-Passed checks: 12, Failed checks: 1, Skipped checks: 0
+Passed checks: 12, Failed checks: 2, Skipped checks: 0
+
+Check: CKV_AWS_185: "Ensure Kinesis Stream is encrypted by KMS using a customer managed Key (CMK)"
+	FAILED for resource: aws_kinesis_stream.kinesis_for_cloudwatch
+	File: /main.tf:49-58
+
+		49 | resource "aws_kinesis_stream" "kinesis_for_cloudwatch" {
+		50 |   name             = "kinesis_for_cloudwatch"
+		51 |   shard_count      = 1
+		52 |   retention_period = 48
+		53 | 
+		54 |   shard_level_metrics = [
+		55 |     "IncomingBytes",
+		56 |     "OutgoingBytes",
+		57 |   ]
+		58 | }
+
 
 Check: CKV_AWS_43: "Ensure Kinesis Stream is securely encrypted"
 	FAILED for resource: aws_kinesis_stream.kinesis_for_cloudwatch

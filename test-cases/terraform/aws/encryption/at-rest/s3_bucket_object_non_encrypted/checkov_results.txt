@@ -1,35 +1,11 @@
-
-
-       _               _              
-   ___| |__   ___  ___| | _______   __
-  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
- | (__| | | |  __/ (__|   < (_) \ V / 
-  \___|_| |_|\___|\___|_|\_\___/ \_/  
-                                      
-By bridgecrew.io | version: 2.0.358 
-Update available 2.0.358 -> 2.0.359
-Run pip3 install -U checkov to update 
-
-
 terraform scan results:
 
-Passed checks: 10, Failed checks: 5, Skipped checks: 0
+Passed checks: 10, Failed checks: 6, Skipped checks: 0
 
 Check: CKV_AWS_21: "Ensure all data stored in the S3 bucket have versioning enabled"
 	FAILED for resource: aws_s3_bucket.cloudrail
 	File: /main.tf:5-8
 	Guide: https://docs.bridgecrew.io/docs/s3_16-enable-versioning
-
-		5 | resource "aws_s3_bucket" "cloudrail" {
-		6 |   bucket = "cloudrail-non-encrypted-czx7zxchs"
-		7 |   acl    = "private"
-		8 | }
-
-
-Check: CKV_AWS_144: "Ensure that S3 bucket has cross-region replication enabled"
-	FAILED for resource: aws_s3_bucket.cloudrail
-	File: /main.tf:5-8
-	Guide: https://docs.bridgecrew.io/docs/ensure-that-s3-bucket-has-cross-region-replication-enabled
 
 		5 | resource "aws_s3_bucket" "cloudrail" {
 		6 |   bucket = "cloudrail-non-encrypted-czx7zxchs"
@@ -48,10 +24,10 @@ Check: CKV_AWS_18: "Ensure the S3 bucket has access logging enabled"
 		8 | }
 
 
-Check: CKV_AWS_145: "Ensure that S3 buckets are encrypted with KMS by default"
+Check: CKV_AWS_144: "Ensure that S3 bucket has cross-region replication enabled"
 	FAILED for resource: aws_s3_bucket.cloudrail
 	File: /main.tf:5-8
-	Guide: https://docs.bridgecrew.io/docs/ensure-that-s3-buckets-are-encrypted-with-kms-by-default
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-s3-bucket-has-cross-region-replication-enabled
 
 		5 | resource "aws_s3_bucket" "cloudrail" {
 		6 |   bucket = "cloudrail-non-encrypted-czx7zxchs"
@@ -68,5 +44,27 @@ Check: CKV_AWS_19: "Ensure all data stored in the S3 bucket is securely encrypte
 		6 |   bucket = "cloudrail-non-encrypted-czx7zxchs"
 		7 |   acl    = "private"
 		8 | }
+
+
+Check: CKV_AWS_145: "Ensure that S3 buckets are encrypted with KMS by default"
+	FAILED for resource: aws_s3_bucket.cloudrail
+	File: /main.tf:5-8
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-s3-buckets-are-encrypted-with-kms-by-default
+
+		5 | resource "aws_s3_bucket" "cloudrail" {
+		6 |   bucket = "cloudrail-non-encrypted-czx7zxchs"
+		7 |   acl    = "private"
+		8 | }
+
+
+Check: CKV_AWS_186: "Ensure S3 bucket Object is encrypted by KMS using a customer managed Key (CMK)"
+	FAILED for resource: aws_s3_bucket_object.object
+	File: /main.tf:18-22
+
+		18 | resource "aws_s3_bucket_object" "object" {
+		19 |   bucket  = aws_s3_bucket.cloudrail.id
+		20 |   key     = "example_file_non_encrypted"
+		21 |   content = "Cloudrail example"
+		22 | }
 
 

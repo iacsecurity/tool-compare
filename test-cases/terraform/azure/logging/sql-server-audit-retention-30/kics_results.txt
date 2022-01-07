@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.4.1
+Scanning with Keeping Infrastructure as Code Secure v1.4.9
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 778
+Queries loaded: 851
 Queries failed to execute: 0
 
 ------------------------------------
@@ -31,63 +31,74 @@ Storage Account Not Using Latest TLS Encryption Version, Severity: MEDIUM, Resul
 Description: Ensure Storage Account is using the latest version of TLS encryption
 Platform: Terraform
 
-	[1]: ../../src/main.tf:18
+	[1]: ../../src/main.tf:17
 
-		017: 
-		018: resource "azurerm_storage_account" "example" {
-		019:   name                     = "${local.resource_prefix}tststacc"
+		016: 
+		017: resource "azurerm_storage_account" "example" {
+		018:   name                     = "${local.resource_prefix}tststacc"
 
 
 MSSQL Server Auditing Disabled, Severity: MEDIUM, Results: 1
 Description: Make sure that for MSSQL Servers, that 'Auditing' is set to 'On'
 Platform: Terraform
 
-	[1]: ../../src/main.tf:26
+	[1]: ../../src/main.tf:25
 
-		025: 
-		026: resource "azurerm_mssql_server" "sql" {
-		027:   name                         = "${local.resource_prefix}-sqlserver"
+		024: 
+		025: resource "azurerm_mssql_server" "sql" {
+		026:   name                         = "${local.resource_prefix}-sqlserver"
 
 
 Trusted Microsoft Services Not Enabled, Severity: HIGH, Results: 1
 Description: Trusted MIcrosoft Services are not enabled for Storage Account access
 Platform: Terraform
 
-	[1]: ../../src/main.tf:18
+	[1]: ../../src/main.tf:17
 
-		017: 
-		018: resource "azurerm_storage_account" "example" {
-		019:   name                     = "${local.resource_prefix}tststacc"
+		016: 
+		017: resource "azurerm_storage_account" "example" {
+		018:   name                     = "${local.resource_prefix}tststacc"
 
 
 Storage Account Not Forcing HTTPS, Severity: HIGH, Results: 1
 Description: See that Storage Accounts forces the use of HTTPS
 Platform: Terraform
 
-	[1]: ../../src/main.tf:18
+	[1]: ../../src/main.tf:17
 
-		017: 
-		018: resource "azurerm_storage_account" "example" {
-		019:   name                     = "${local.resource_prefix}tststacc"
+		016: 
+		017: resource "azurerm_storage_account" "example" {
+		018:   name                     = "${local.resource_prefix}tststacc"
 
 
-Passwords And Secrets In Infrastructure Code, Severity: HIGH, Results: 1
+Passwords And Secrets - Generic Password, Severity: HIGH, Results: 1
 Description: Query to find passwords and secrets in infrastructure code.
 Platform: Common
 
-	[1]: ../../src/main.tf:32
+	[1]: ../../src/main.tf:31
 
-		031:   administrator_login          = "4dm1n157r470r"
-		032:   administrator_login_password = "4-v3ry-53cr37-p455w0rd"
-		033: }
+		030:   administrator_login          = "4dm1n157r470r"
+		031:   administrator_login_password = "4-v3ry-53cr37-p455w0rd"
+		032: }
+
+
+MSSQL Server Public Network Access Enabled, Severity: HIGH, Results: 1
+Description: MSSQL Server public network access should be disabled
+Platform: Terraform
+
+	[1]: ../../src/main.tf:25
+
+		024: 
+		025: resource "azurerm_mssql_server" "sql" {
+		026:   name                         = "${local.resource_prefix}-sqlserver"
 
 
 
 Results Summary:
-HIGH: 3
+HIGH: 4
 MEDIUM: 2
 LOW: 0
 INFO: 0
-TOTAL: 5
+TOTAL: 6
 
-Scan duration: 14.693055341s
+Scan duration: 9.093503087s

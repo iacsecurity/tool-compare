@@ -1,10 +1,55 @@
 
 WARNINGs found:
-Rule: Ensure IAM policies pass Access Analyzer policy validation without WARNING and SUGGESTION issues
+Rule: Ensure all resources that can be tagged have at least one tag
+Description: Some organizations require that all resources have at least one tag set. This rule will review the resources that can be tagged, and make sure each one has a tag that is not the Name tag. Resources that are not tagged will be flagged.
+Remediation Steps - Cloud Console: Access the specific resource in the AWS console and add tags.
+Remediation Steps - Terraform: Add a tags section to the resource with at least one tag beyond the Name tag.
  - 2 Resources Exposed:
 -----------------------------------------------
-   - Exposed Resource: [aws_iam_role.over-privilege-role2] (main.tf:21)
-     Violating Resource: [aws_iam_role.over-privilege-role2]  (main.tf:21)
+   - Exposed Resource: [aws_iam_role.over-privilege-role2] (main.tf:22)
+     Violating Resource: [aws_iam_role.over-privilege-role2]  (main.tf:22)
+
+     Evidence:
+             | Resource IAM Role aws_iam_role.over-privilege-role2 does not have any tags set
+
+
+   - Exposed Resource: [aws_iam_role.over-privilege-role1] (main.tf:4)
+     Violating Resource: [aws_iam_role.over-privilege-role1]  (main.tf:4)
+
+     Evidence:
+             | Resource IAM Role aws_iam_role.over-privilege-role1 does not have any tags set
+
+
+-----------------------------------------------
+Rule: Ensure no role uses an overly wide principal for assume role policy
+Description: When a role is created, a "trust policy" is used to declare who can assume the role. The principal of the trust policy must be specific, and not use the "*" value.
+Remediation Steps - Cloud Console: Follow AWS's guidance on how to write secure IAM role trust policies: https://aws.amazon.com/blogs/security/how-to-use-trust-policies-with-iam-roles/ iac_remediation_steps: For the aws_sagemaker_endpoint_configuration resource, set kms_key_id argument to a Key ARN.
+Remediation Steps - Terraform: Edit the assume_role_policy under the aws_iam_role, and either make the Principal more specific or add the use of a condition in the policy.
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_iam_role.over-privilege-role1] (main.tf:4)
+     Violating Resource: [aws_iam_role.over-privilege-role1]  (main.tf:4)
+
+     Evidence:
+             | The IAM role aws_iam_role.over-privilege-role1 has a trust policy that allows '*' principal to assume it
+
+
+   - Exposed Resource: [aws_iam_role.over-privilege-role2] (main.tf:22)
+     Violating Resource: [aws_iam_role.over-privilege-role2]  (main.tf:22)
+
+     Evidence:
+             | The IAM role aws_iam_role.over-privilege-role2 has a trust policy that allows '*' principal to assume it
+
+
+-----------------------------------------------
+Rule: Ensure IAM policies pass Access Analyzer policy validation without WARNING and SUGGESTION issues
+Description: Cloudrail will send all of your IAM policies to the AWS Access Analyzer for Policy Validation. Any issues found by Access Analyzer at the WARNING and SUGGESTION severities will be highlighted as issues by Cloudrail under this rule.
+Remediation Steps - Cloud Console: Review the findings and correct them within the policy.
+Remediation Steps - Terraform: Review the findings and correct them within the policy.
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_iam_role.over-privilege-role2] (main.tf:22)
+     Violating Resource: [aws_iam_role.over-privilege-role2]  (main.tf:22)
 
      Evidence:
          Line 10, Col 17:
@@ -12,49 +57,13 @@ Rule: Ensure IAM policies pass Access Analyzer policy validation without WARNING
              | See https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-reference-policy-checks.html#access-analyzer-reference-policy-checks-suggestion-empty-sid-value
 
 
-   - Exposed Resource: [aws_iam_role.over-privilege-role1] (main.tf:3)
-     Violating Resource: [aws_iam_role.over-privilege-role1]  (main.tf:3)
+   - Exposed Resource: [aws_iam_role.over-privilege-role1] (main.tf:4)
+     Violating Resource: [aws_iam_role.over-privilege-role1]  (main.tf:4)
 
      Evidence:
          Line 8, Col 17:
              | Add a value to the empty string in the Sid element
              | See https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-reference-policy-checks.html#access-analyzer-reference-policy-checks-suggestion-empty-sid-value
-
-
------------------------------------------------
-Rule: Ensure no role uses an overly wide principal for assume role policy
- - 2 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_iam_role.over-privilege-role2] (main.tf:21)
-     Violating Resource: [aws_iam_role.over-privilege-role2]  (main.tf:21)
-
-     Evidence:
-             | The IAM role aws_iam_role.over-privilege-role2 has a trust policy that allows '*' principal to assume it
-
-
-   - Exposed Resource: [aws_iam_role.over-privilege-role1] (main.tf:3)
-     Violating Resource: [aws_iam_role.over-privilege-role1]  (main.tf:3)
-
-     Evidence:
-             | The IAM role aws_iam_role.over-privilege-role1 has a trust policy that allows '*' principal to assume it
-
-
------------------------------------------------
-Rule: Ensure all resources that can be tagged have at least one tag
- - 2 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_iam_role.over-privilege-role1] (main.tf:3)
-     Violating Resource: [aws_iam_role.over-privilege-role1]  (main.tf:3)
-
-     Evidence:
-             | Resource IAM Role aws_iam_role.over-privilege-role1 does not have any tags set
-
-
-   - Exposed Resource: [aws_iam_role.over-privilege-role2] (main.tf:21)
-     Violating Resource: [aws_iam_role.over-privilege-role2]  (main.tf:21)
-
-     Evidence:
-             | Resource IAM Role aws_iam_role.over-privilege-role2 does not have any tags set
 
 
 -----------------------------------------------

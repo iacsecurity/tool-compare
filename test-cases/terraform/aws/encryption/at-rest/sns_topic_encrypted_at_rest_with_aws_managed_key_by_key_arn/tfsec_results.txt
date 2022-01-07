@@ -1,7 +1,7 @@
 
   Result 1
 
-  [aws-sns-enable-topic-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_sns_topic.test' explicitly uses the default CMK
+  [aws-sns-enable-topic-encryption][HIGH] Resource 'aws_sns_topic.test' explicitly uses the default CMK
   /src/main.tf:11
 
 
@@ -17,16 +17,16 @@
   Resolution: Turn on SNS Topic encryption
 
   More Info:
-  - https://tfsec.dev/docs/aws/sns/enable-topic-encryption#aws/sns 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/sns/enable-topic-encryption 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sns_topic#example-with-server-side-encryption-sse 
   - https://docs.aws.amazon.com/sns/latest/dg/sns-server-side-encryption.html 
 
   times
   ------------------------------------------
-  disk i/o             44.757792ms
-  parsing HCL          537.792µs
-  evaluating values    3.0815ms
-  running checks       19.800291ms
+  disk i/o             27.901417ms
+  parsing HCL          545.167µs
+  evaluating values    2.871876ms
+  running checks       18.226625ms
 
   counts
   ------------------------------------------

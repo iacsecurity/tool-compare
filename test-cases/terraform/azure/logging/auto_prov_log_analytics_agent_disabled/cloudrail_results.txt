@@ -1,6 +1,9 @@
 
 WARNINGs found:
 Rule: Ensure Auto provisioning of the Log Analytics agent is enabled on your subscription
+Description: Cloudrail will review the Security Center Auto Provisioning configuration in your environment. If the auto provision of the Log Analytics agent is not set to On, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.microsoft.com/en-us/azure/security-center/security-center-enable-data-collection#enable-auto-provisioning-of-the-log-analytics-agent-and-extensions- in order to enable the automatic provision of the Log Analytics agent.
+Remediation Steps - Terraform: For the azurerm_security_center_auto_provisioning resource, set the auto_provision argument to “On”.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [azurerm_security_center_auto_provisioning.example] (main.tf:18)

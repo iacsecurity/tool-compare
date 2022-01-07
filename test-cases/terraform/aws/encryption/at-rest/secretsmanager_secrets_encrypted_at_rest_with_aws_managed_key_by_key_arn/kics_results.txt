@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+Scanning with Keeping Infrastructure as Code Secure v1.4.9
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 851
 Queries failed to execute: 0
 
 ------------------------------------
@@ -31,7 +31,7 @@ Resource Not Using Tags, Severity: INFO, Results: 1
 Description: AWS services resource tags are an essential part of managing components
 Platform: Terraform
 
-	[1]: /src/main.tf:9
+	[1]: ../../src/main.tf:9
 
 		008: 
 		009: resource "aws_secretsmanager_secret" "test" {
@@ -42,7 +42,7 @@ Secretsmanager Secret Encrypted With AWS Managed Key, Severity: MEDIUM, Results:
 Description: Secrets Manager secret should be encrypted with customer-managed KMS keys instead of AWS managed keys
 Platform: Terraform
 
-	[1]: /src/main.tf:11
+	[1]: ../../src/main.tf:11
 
 		010:   name       = "test-cloudrail-1"
 		011:   kms_key_id = data.aws_kms_key.by_alias.arn
@@ -57,4 +57,4 @@ LOW: 0
 INFO: 1
 TOTAL: 2
 
-Scan duration: 4.652640668s
+Scan duration: 8.745585046s

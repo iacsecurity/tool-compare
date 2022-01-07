@@ -4,7 +4,7 @@ Failed to run the process ...
     "isPrivate": true,
     "isLicensesEnabled": false,
     "ignoreSettings": null,
-    "org": "yi2020",
+    "org": "ryder.d",
     "projectId": "",
     "policy": ""
   },
@@ -15,7 +15,7 @@ Failed to run the process ...
   "ignoreSettings": null,
   "targetFile": "main.tf",
   "projectName": "project",
-  "org": "yi2020",
+  "org": "ryder.d",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
@@ -49,10 +49,44 @@ Failed to run the process ...
       },
       "lineNumber": 5,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-55",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_sns_topic[aws_sns_topic]",
         "kms_master_key_id"
+      ]
+    },
+    {
+      "severity": "medium",
+      "resolve": "Set `Principal` attribute in the policy to specific entities for example `arn:aws:iam::123456789012:user/JohnDoe`",
+      "impact": "Using wild card will grant unnecessary access to any user in the account",
+      "msg": "resource.aws_glacier_vault[not_secure_archive].access_policy",
+      "remediation": {
+        "terraform": "Set `Principal` attribute in the policy to specific entities for example `arn:aws:iam::123456789012:user/JohnDoe`"
+      },
+      "subType": "Glacier",
+      "issue": "Wildcard principal has been specified in access policy",
+      "publicId": "SNYK-CC-AWS-700",
+      "title": "Wildcard principal in Glacier Vault access policy",
+      "references": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#grant-least-privilege",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/secretsmanager_secret_policy",
+        "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-secretsmanager-resourcepolicy.html"
+      ],
+      "id": "SNYK-CC-AWS-700",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Wildcard principal has been specified in access policy",
+        "impact": "Using wild card will grant unnecessary access to any user in the account",
+        "resolve": "Set `Principal` attribute in the policy to specific entities for example `arn:aws:iam::123456789012:user/JohnDoe`"
+      },
+      "lineNumber": 17,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-700",
+      "isGeneratedByCustomRule": false,
+      "path": [
+        "resource",
+        "aws_glacier_vault[not_secure_archive]",
+        "access_policy"
       ]
     },
     {
@@ -81,6 +115,7 @@ Failed to run the process ...
       },
       "lineNumber": 5,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-422",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_sns_topic[aws_sns_topic]",

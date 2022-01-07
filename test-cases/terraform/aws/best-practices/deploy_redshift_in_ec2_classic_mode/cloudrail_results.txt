@@ -1,28 +1,25 @@
 
 WARNINGs found:
-Rule: Ensure Redshift clusters have logging enabled
+Rule: Ensure EC2-Classic mode is not used
+Description: AWS accounts created until late 2013 supported EC2 Classic mode. This allowed for an easier configuration of some resources, while having less control over their VPC placement and security. It is not a good practice to continue using EC2 Classic mode.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-migrate.html to migrate from EC2 Classic mode to VPC mode.
+Remediation Steps - Terraform: Modify those resources using specific arguments for EC2 Classic only and use VPC mode arguments.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_redshift_cluster.test] (main.tf:5)
      Violating Resource: [aws_redshift_cluster.test]  (main.tf:5)
 
      Evidence:
-             | The Redshift cluster aws_redshift_cluster.test does not have logging enabled
-
-
------------------------------------------------
-Rule: Ensure all resources that can be tagged have at least one tag
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_redshift_cluster.test] (main.tf:5)
-     Violating Resource: [aws_redshift_cluster.test]  (main.tf:5)
-
-     Evidence:
-             | Resource Redshift cluster aws_redshift_cluster.test does not have any tags set
+         Redshift cluster
+             | Redshift cluster with database name aws_redshift_cluster.test is using EC2-Classic mode
+             | It should use EC2-VPC mode instead
 
 
 -----------------------------------------------
 Rule: Ensure Redshift clusters being created are set to be encrypted at rest
+Description: Cloudrail will review the Redshift clusters being created in your environment. If a cluster is not set to encrypt at rest, Cloudrail will highlight it as a violation. This rule will only flag a violation for resources that are not yet created.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/redshift/latest/mgmt/changing-cluster-encryption.html to enable encryption at rest.
+Remediation Steps - Terraform: For the aws_redshift_cluster resource, set encrypted argument to true.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_redshift_cluster.test] (main.tf:5)
@@ -33,16 +30,31 @@ Rule: Ensure Redshift clusters being created are set to be encrypted at rest
 
 
 -----------------------------------------------
-Rule: Ensure EC2-Classic mode is not used
+Rule: Ensure all resources that can be tagged have at least one tag
+Description: Some organizations require that all resources have at least one tag set. This rule will review the resources that can be tagged, and make sure each one has a tag that is not the Name tag. Resources that are not tagged will be flagged.
+Remediation Steps - Cloud Console: Access the specific resource in the AWS console and add tags.
+Remediation Steps - Terraform: Add a tags section to the resource with at least one tag beyond the Name tag.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_redshift_cluster.test] (main.tf:5)
      Violating Resource: [aws_redshift_cluster.test]  (main.tf:5)
 
      Evidence:
-         Redshift cluster
-             | Redshift cluster with database name aws_redshift_cluster.test is using EC2-Classic mode
-             | It should use EC2-VPC mode instead
+             | Resource Redshift cluster aws_redshift_cluster.test does not have any tags set
+
+
+-----------------------------------------------
+Rule: Ensure Redshift clusters have logging enabled
+Description: Cloudrail will review the Redshift clusters configuration in your environment. If a cluster does not have logging enabled, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/redshift/latest/mgmt/db-auditing.html in order to enable logging to an S3 bucket.
+Remediation Steps - Terraform: For the aws_redshift_cluster resource, set the logging block with enable argument set to true and bucket_name argument to the S3 bucket name to store the logs.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_redshift_cluster.test] (main.tf:5)
+     Violating Resource: [aws_redshift_cluster.test]  (main.tf:5)
+
+     Evidence:
+             | The Redshift cluster aws_redshift_cluster.test does not have logging enabled
 
 
 -----------------------------------------------

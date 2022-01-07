@@ -1,46 +1,122 @@
 
 WARNINGs found:
-Rule: Ensure S3 bucket has access logging enabled
+Rule: Ensure S3 buckets are not made widely accessible through ACLs and bucket policies
+Description: Generally, all S3 buckets, with specific exceptions, should not be publicly accessible. Access should be permitted only to specific entities and services, through tightly controlled policies.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AmazonS3/latest/user-guide/set-bucket-permissions.html to modify the S3 bucket ACL, and https://docs.aws.amazon.com/AmazonS3/latest/user-guide/add-bucket-policy.html to modify the S3 bucket policy.
+Remediation Steps - Terraform: For the aws_s3_bucket resource, set the acl or grant arguments to restrict public access using an ACL, and set the policy argument to use a bucket policy that restricts public access. Additionally, if aws_s3_bucket_policy resource is being used, set policy argument to use a policy that restricts public access.
  - 1 Resources Exposed:
 -----------------------------------------------
-   - Exposed Resource: [aws_s3_bucket.logging] (main.tf:5)
-     Violating Resource: [aws_s3_bucket.logging]  (main.tf:5)
+   - Exposed Resource: [aws_s3_bucket.dist] (main.tf:14)
+     Violating Resource: [aws_s3_bucket.dist]  (main.tf:14)
 
      Evidence:
-             | The S3 Bucket aws_s3_bucket.logging does not have access logging enabled
+         The S3 Bucket
+             | aws_s3_bucket.dist is publicly exposed through the S3 ACL with identifier aws_s3_bucket.dist.
 
 
 -----------------------------------------------
-Rule: Ensure CloudFront distribution is using WAF
+Rule: Ensure CloudFront protocol version is a good one
+Description: The CloudFront protocol used is an important piece of securing the content flowing between your users and your infrastructure. It's important to use protocol versions that are considered more secure.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/distribution-web-values-specify.html#DownloadDistValues-security-policy to configure the Security Policy to use a secure protocol version.
+Remediation Steps - Terraform: For the aws_cloudfront_distribution resource, in viewer_certificate block, set minimum_protocol_version argument to use a secure protocol version.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_cloudfront_distribution.s3_distribution] (main.tf:32)
      Violating Resource: [aws_cloudfront_distribution.s3_distribution]  (main.tf:32)
 
      Evidence:
-             | The CloudFront Distribution aws_cloudfront_distribution.s3_distribution is not using a WAF Web ACL
+             | The CloudFront Distribution aws_cloudfront_distribution.s3_distribution is set to use a minimum protocol version of TLSv1 whereas TLSv1.2_2019 is the recommended minimum
 
 
 -----------------------------------------------
-Rule: Ensure all resources that can be tagged have at least one tag
+Rule: Ensure CloudFront Distribution being created are set to encrypt in transit
+Description: Cloudrail will review the CloudFront Distributions in your environment. If it is not using HTTPS, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-https-viewers-to-cloudfront.html to enable HTTPS Protocol.
+Remediation Steps - Terraform: For the aws_cloudfront_distribution resource, in default_cache_behavior/ordered_cache_behavior blocks, set the viewer_protocol_policy argument to https-only or redirect-to-https.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_cloudfront_distribution.s3_distribution] (main.tf:32)
+     Violating Resource: [aws_cloudfront_distribution.s3_distribution]  (main.tf:32)
+
+     Evidence:
+             | The CloudFront Distribution aws_cloudfront_distribution.s3_distribution is not set to use HTTPS to protect data in transit in default_cache_behavior
+
+
+-----------------------------------------------
+Rule: Ensure S3 buckets are set to be encrypted at rest
+Description: Cloudrail will review the S3 buckets in your environment. If an S3 bucket is not set to be encrypted at rest, and the bucket is not public, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AmazonS3/latest/userguide/serv-side-encryption.html to enable S3 bucket encryption at rest.
+Remediation Steps - Terraform: For the aws_s3_bucket resource, in server_side_encryption_configuration, rule, apply_server_side_encryption_by_default block, set sse_algorithm argument to an allowed value.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.logging] (main.tf:5)
+     Violating Resource: [aws_s3_bucket.logging]  (main.tf:5)
+
+     Evidence:
+             | The S3 Bucket aws_s3_bucket.logging is not set to be encrypted at rest
+
+
+-----------------------------------------------
+Rule: Ensure S3 buckets have versioning enabled
+Description: Using versioning is a good practice to deal with accidental deletion or modifications. Cloudrail will review your buckets to ensure versioning is enabled. This rule is not context aware
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AmazonS3/latest/userguide/manage-versioning-examples.html to enable S3 bucket versioning.
+Remediation Steps - Terraform: For the aws_s3_bucket resource, in versioning block, set enabled argument to true.
  - 2 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_s3_bucket.dist] (main.tf:14)
      Violating Resource: [aws_s3_bucket.dist]  (main.tf:14)
 
      Evidence:
-             | Resource S3 Bucket aws_s3_bucket.dist does not have any tags set other than "Name"
+             | The S3 Bucket aws_s3_bucket.dist does not have versioning enabled
 
 
    - Exposed Resource: [aws_s3_bucket.logging] (main.tf:5)
      Violating Resource: [aws_s3_bucket.logging]  (main.tf:5)
 
      Evidence:
-             | Resource S3 Bucket aws_s3_bucket.logging does not have any tags set other than "Name"
+             | The S3 Bucket aws_s3_bucket.logging does not have versioning enabled
+
+
+-----------------------------------------------
+Rule: Ensure use of S3 bucket policy, and no action wildcards are being used
+Description: Using wildcard actions may inadvertently allow users to take actions you do not want to allow them to do. In addition, using a resource policy will provide an additional layer of security. It is a best practice to use a resource policy and give specific permissions only.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-policy-language-overview.html to modify S3 bucket policy in order to avoid using wildcard actions.
+Remediation Steps - Terraform: For the aws_s3_bucket_policy resource, modify policy argument in order to avoid using wildcard actions.
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.dist] (main.tf:14)
+     Violating Resource: [aws_s3_bucket.dist]  (main.tf:14)
+
+     Evidence:
+             | There is no resource policy or no statements attached to aws_s3_bucket.dist
+
+
+   - Exposed Resource: [aws_s3_bucket.logging] (main.tf:5)
+     Violating Resource: [aws_s3_bucket.logging]  (main.tf:5)
+
+     Evidence:
+             | There is no resource policy or no statements attached to aws_s3_bucket.logging
+
+
+-----------------------------------------------
+Rule: Ensure CloudFront Distribution being created are set to perform field-level encryption
+Description: Cloudrail will review the CloudFront Distribution being created in your environment. If it is not using Field Level Encryption, Cloudrail will highlight it as a violation. This rule will only flag a violation for resources that are not yet created.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/field-level-encryption.html to enable field-level encryption.
+Remediation Steps - Terraform: For the aws_cloudfront_distribution resource, in default_cache_behavior (and/or ordered_cache_behavior) block, set the field_level_encryption_id argument to the Field Level encryption configuration ID.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_cloudfront_distribution.s3_distribution] (main.tf:32)
+     Violating Resource: [aws_cloudfront_distribution.s3_distribution]  (main.tf:32)
+
+     Evidence:
+             | The CloudFront Distribution aws_cloudfront_distribution.s3_distribution is not set to use Field Level Encryption to protect data in transit in default_cache_behavior and in ['ordered_cache_behavior #1', 'ordered_cache_behavior #2']
 
 
 -----------------------------------------------
 Rule: Enforce use of HTTPS in S3 bucket policy
+Description: Access to objects in S3 should only be done via HTTPS. Blocking HTTP can be done by including a SecureTransport condition in the S3 bucket’s policy.
+Remediation Steps - Cloud Console: Follow the guide at https://aws.amazon.com/premiumsupport/knowledge-center/s3-bucket-policy-for-config-rule/ to create an S3 bucket policy that enforces the use of HTTPS.
+Remediation Steps - Terraform: For the aws_s3_bucket_policy resource, ensure the policy denies all actions on the bucket and objects when the request meets the condition (aws:SecureTransport == false).
  - 2 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_s3_bucket.dist] (main.tf:14)
@@ -58,95 +134,38 @@ Rule: Enforce use of HTTPS in S3 bucket policy
 
 
 -----------------------------------------------
-Rule: Ensure CloudFront Distribution being created are set to perform field-level encryption
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_cloudfront_distribution.s3_distribution] (main.tf:32)
-     Violating Resource: [aws_cloudfront_distribution.s3_distribution]  (main.tf:32)
-
-     Evidence:
-             | The CloudFront Distribution aws_cloudfront_distribution.s3_distribution is not set to use Field Level Encryption to protect data in transit in default_cache_behavior and in ['ordered_cache_behavior #1', 'ordered_cache_behavior #2']
-
-
------------------------------------------------
-Rule: Ensure use of S3 bucket policy, and no action wildcards are being used
+Rule: Ensure all resources that can be tagged have at least one tag
+Description: Some organizations require that all resources have at least one tag set. This rule will review the resources that can be tagged, and make sure each one has a tag that is not the Name tag. Resources that are not tagged will be flagged.
+Remediation Steps - Cloud Console: Access the specific resource in the AWS console and add tags.
+Remediation Steps - Terraform: Add a tags section to the resource with at least one tag beyond the Name tag.
  - 2 Resources Exposed:
 -----------------------------------------------
-   - Exposed Resource: [aws_s3_bucket.logging] (main.tf:5)
-     Violating Resource: [aws_s3_bucket.logging]  (main.tf:5)
-
-     Evidence:
-             | There is no resource policy or no statements attached to aws_s3_bucket.logging
-
-
    - Exposed Resource: [aws_s3_bucket.dist] (main.tf:14)
      Violating Resource: [aws_s3_bucket.dist]  (main.tf:14)
 
      Evidence:
-             | There is no resource policy or no statements attached to aws_s3_bucket.dist
+             | Resource S3 Bucket aws_s3_bucket.dist does not have any tags set other than "Name"
 
 
------------------------------------------------
-Rule: Ensure S3 buckets have versioning enabled
- - 2 Resources Exposed:
------------------------------------------------
    - Exposed Resource: [aws_s3_bucket.logging] (main.tf:5)
      Violating Resource: [aws_s3_bucket.logging]  (main.tf:5)
 
      Evidence:
-             | The S3 Bucket aws_s3_bucket.logging does not have versioning enabled
-
-
-   - Exposed Resource: [aws_s3_bucket.dist] (main.tf:14)
-     Violating Resource: [aws_s3_bucket.dist]  (main.tf:14)
-
-     Evidence:
-             | The S3 Bucket aws_s3_bucket.dist does not have versioning enabled
+             | Resource S3 Bucket aws_s3_bucket.logging does not have any tags set other than "Name"
 
 
 -----------------------------------------------
-Rule: Ensure S3 buckets are set to be encrypted at rest
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_s3_bucket.logging] (main.tf:5)
-     Violating Resource: [aws_s3_bucket.logging]  (main.tf:5)
-
-     Evidence:
-             | The S3 Bucket aws_s3_bucket.logging is not set to be encrypted at rest
-
-
------------------------------------------------
-Rule: Ensure CloudFront Distribution being created are set to encrypt in transit
+Rule: Ensure CloudFront distribution is using WAF
+Description: Cloudrail will review the CloudFront distributions in your environment. If a distribution is not using AWS WAF, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/distribution-web-awswaf.html in order to assign an AWS WAF Web ACL to the CloudFront distribution.
+Remediation Steps - Terraform: For the aws_cloudfront_distribution resource, set the web_acl_id parameter to a WAF Web ACL ARN value.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_cloudfront_distribution.s3_distribution] (main.tf:32)
      Violating Resource: [aws_cloudfront_distribution.s3_distribution]  (main.tf:32)
 
      Evidence:
-             | The CloudFront Distribution aws_cloudfront_distribution.s3_distribution is not set to use HTTPS to protect data in transit in default_cache_behavior
-
-
------------------------------------------------
-Rule: Ensure CloudFront protocol version is a good one
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_cloudfront_distribution.s3_distribution] (main.tf:32)
-     Violating Resource: [aws_cloudfront_distribution.s3_distribution]  (main.tf:32)
-
-     Evidence:
-             | The CloudFront Distribution aws_cloudfront_distribution.s3_distribution is set to use a minimum protocol version of TLSv1 whereas TLSv1.2_2019 is the recommended minimum
-
-
------------------------------------------------
-Rule: Ensure S3 buckets are not made widely accessible through ACLs and bucket policies
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_s3_bucket.dist] (main.tf:14)
-     Violating Resource: [aws_s3_bucket.dist]  (main.tf:14)
-
-     Evidence:
-         The S3 Bucket
-             | aws_s3_bucket.dist is publicly exposed through the S3 ACL with identifier aws_s3_bucket.dist.
+             | The CloudFront Distribution aws_cloudfront_distribution.s3_distribution is not using a WAF Web ACL
 
 
 -----------------------------------------------

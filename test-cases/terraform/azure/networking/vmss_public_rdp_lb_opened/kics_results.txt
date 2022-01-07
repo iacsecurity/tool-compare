@@ -16,34 +16,45 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.4.1
+Scanning with Keeping Infrastructure as Code Secure v1.4.9
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 778
+Queries loaded: 851
 Queries failed to execute: 0
 
 ------------------------------------
 
-Passwords And Secrets In Infrastructure Code, Severity: HIGH, Results: 1
+Virtual Network with DDoS Protection Plan disabled, Severity: MEDIUM, Results: 1
+Description: Virtual Network should have DDoS Protection Plan enabled
+Platform: Terraform
+
+	[1]: ../../src/main.tf:17
+
+		016: 
+		017: resource "azurerm_virtual_network" "vnet" {
+		018:   name                = "${local.resource_prefix}-vnet"
+
+
+Passwords And Secrets - Generic Password, Severity: HIGH, Results: 1
 Description: Query to find passwords and secrets in infrastructure code.
 Platform: Common
 
-	[1]: ../../src/main.tf:80
+	[1]: ../../src/main.tf:79
 
-		079:   instances           = 3
-		080:   admin_password      = "P@55w0rd1234!"
-		081:   admin_username      = "adminuser"
+		078:   instances           = 3
+		079:   admin_password      = "P@55w0rd1234!"
+		080:   admin_username      = "adminuser"
 
 
 
 Results Summary:
 HIGH: 1
-MEDIUM: 0
+MEDIUM: 1
 LOW: 0
 INFO: 0
-TOTAL: 1
+TOTAL: 2
 
-Scan duration: 15.259375803s
+Scan duration: 8.760828087s

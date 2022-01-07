@@ -1,42 +1,7 @@
 
   Result 1
 
-  [aws-elastic-search-enforce-https][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'aws_elasticsearch_domain.test' defines an Elasticsearch domain with plaintext traffic (missing domain_endpoint_options block).
-  /src/main.tf:107-119
-
-
-     104 |   description      = "Allows Amazon ES to manage AWS resources for a domain on your behalf."
-     105 | }
-     106 | 
-     107 | resource "aws_elasticsearch_domain" "test" {
-     108 |   domain_name = "test"
-     109 |   vpc_options {
-     110 |     subnet_ids = [aws_subnet.nondefault_1.id]
-     111 |     security_group_ids = [aws_security_group.esdomain.id]
-     112 |   }
-     113 | 
-     114 |   ebs_options {
-     115 |     ebs_enabled = true
-     116 |     volume_size = 10
-     117 |     volume_type = "gp2"
-     118 |   }
-     119 | }
-     120 | 
-     121 | resource "aws_security_group" "publicly_accessible_sg" {
-     122 |   vpc_id = aws_vpc.nondefault.id
-
-  Legacy ID:  AWS033
-  Impact:     HTTP traffic can be intercepted and the contents read
-  Resolution: Enforce the use of HTTPS for ElasticSearch
-
-  More Info:
-  - https://tfsec.dev/docs/aws/elastic-search/enforce-https#aws/elastic-search 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticsearch_domain#enforce_https 
-  - https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-data-protection.html 
-
-  Result 2
-
-  [aws-elastic-service-enable-domain-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_elasticsearch_domain.test' defines an unencrypted Elasticsearch domain (missing encrypt_at_rest block).
+  [aws-elastic-service-enable-domain-encryption][HIGH] Resource 'aws_elasticsearch_domain.test' defines an unencrypted Elasticsearch domain (missing encrypt_at_rest block).
   /src/main.tf:107-119
 
 
@@ -65,13 +30,102 @@
   Resolution: Enable ElasticSearch domain encryption
 
   More Info:
-  - https://tfsec.dev/docs/aws/elastic-service/enable-domain-encryption#aws/elastic-service 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/elastic-service/enable-domain-encryption 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticsearch_domain#encrypt_at_rest 
   - https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/encryption-at-rest.html 
 
+  Result 2
+
+  [aws-vpc-add-description-to-security-group][LOW] Resource 'aws_security_group.esdomain' should include a description for auditing purposes.
+  /src/main.tf:92-100
+
+
+      89 |   subnet_id = aws_subnet.nondefault_1.id
+      90 | }
+      91 | 
+      92 | resource "aws_security_group" "esdomain" {
+      93 |   vpc_id = aws_vpc.nondefault.id
+      94 |   ingress {
+      95 |     from_port = 443
+      96 |     protocol = "tcp"
+      97 |     to_port = 443
+      98 |     cidr_blocks = [aws_subnet.nondefault_1.cidr_block]
+      99 |   }
+     100 | }
+     101 | 
+     102 | resource "aws_iam_service_linked_role" "es" {
+     103 |   aws_service_name = "es.amazonaws.com"
+
+  Legacy ID:  AWS018
+  Impact:     Descriptions provide context for the firewall rule reasons
+  Resolution: Add descriptions for all security groups and rules
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/vpc/add-description-to-security-group 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule 
+  - https://www.cloudconformity.com/knowledge-base/aws/EC2/security-group-rules-description.html 
+
   Result 3
 
-  [aws-vpc-add-decription-to-security-group][[0m[97mLOW[39m[0m] Resource 'aws_security_group.publicly_accessible_sg' should include a description for auditing purposes.
+  [aws-vpc-no-public-egress-sg][CRITICAL] Resource 'aws_security_group.publicly_accessible_sg' defines a fully open egress security group.
+  /src/main.tf:133
+
+
+     130 |     from_port = 0
+     131 |     protocol = "tcp"
+     132 |     to_port = 65000
+     133 |     cidr_blocks = ["0.0.0.0/0"]    list: ["0.0.0.0/0"]
+     134 |   }
+     135 | }
+     136 | 
+
+  Legacy ID:  AWS009
+  Impact:     The port is exposed for egressing data to the internet
+  Resolution: Set a more restrictive cidr range
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/vpc/no-public-egress-sg 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
+
+  Result 4
+
+  [aws-elastic-search-enforce-https][CRITICAL] Resource 'aws_elasticsearch_domain.test' defines an Elasticsearch domain with plaintext traffic (missing domain_endpoint_options block).
+  /src/main.tf:107-119
+
+
+     104 |   description      = "Allows Amazon ES to manage AWS resources for a domain on your behalf."
+     105 | }
+     106 | 
+     107 | resource "aws_elasticsearch_domain" "test" {
+     108 |   domain_name = "test"
+     109 |   vpc_options {
+     110 |     subnet_ids = [aws_subnet.nondefault_1.id]
+     111 |     security_group_ids = [aws_security_group.esdomain.id]
+     112 |   }
+     113 | 
+     114 |   ebs_options {
+     115 |     ebs_enabled = true
+     116 |     volume_size = 10
+     117 |     volume_type = "gp2"
+     118 |   }
+     119 | }
+     120 | 
+     121 | resource "aws_security_group" "publicly_accessible_sg" {
+     122 |   vpc_id = aws_vpc.nondefault.id
+
+  Legacy ID:  AWS033
+  Impact:     HTTP traffic can be intercepted and the contents read
+  Resolution: Enforce the use of HTTPS for ElasticSearch
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/elastic-search/enforce-https 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticsearch_domain#enforce_https 
+  - https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-data-protection.html 
+
+  Result 5
+
+  [aws-vpc-add-description-to-security-group][LOW] Resource 'aws_security_group.publicly_accessible_sg' should include a description for auditing purposes.
   /src/main.tf:121-135
 
 
@@ -102,14 +156,36 @@
   Resolution: Add descriptions for all security groups and rules
 
   More Info:
-  - https://tfsec.dev/docs/aws/vpc/add-decription-to-security-group#aws/vpc 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/vpc/add-description-to-security-group 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule 
   - https://www.cloudconformity.com/knowledge-base/aws/EC2/security-group-rules-description.html 
 
-  Result 4
+  Result 6
 
-  [aws-autoscaling-no-public-ip][[0m[31mHIGH[39m[0m] Resource 'aws_instance.public_ins' has a public IP address associated.
+  [aws-vpc-no-public-ingress-sg][CRITICAL] Resource 'aws_security_group.publicly_accessible_sg' defines a fully open ingress security group.
+  /src/main.tf:127
+
+
+     124 |     from_port = 0
+     125 |     protocol = "tcp"
+     126 |     to_port = 65000
+     127 |     cidr_blocks = ["0.0.0.0/0"]    list: ["0.0.0.0/0"]
+     128 |   }
+     129 |   egress {
+     130 |     from_port = 0
+
+  Legacy ID:  AWS008
+  Impact:     The port is exposed for ingress from the internet
+  Resolution: Set a more restrictive cidr range
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/vpc/no-public-ingress-sg 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
+
+  Result 7
+
+  [aws-autoscaling-no-public-ip][HIGH] Resource 'aws_instance.public_ins' has a public IP address associated.
   /src/main.tf:141
 
 
@@ -126,14 +202,14 @@
   Resolution: Set the instance to not be publicly accessible
 
   More Info:
-  - https://tfsec.dev/docs/aws/autoscaling/no-public-ip#aws/autoscaling 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/autoscaling/no-public-ip 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/launch_configuration#associate_public_ip_address 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#associate_public_ip_address 
   - https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html 
 
-  Result 5
+  Result 8
 
-  [aws-ec2-enforce-http-token-imds][[0m[31mHIGH[39m[0m] Resource 'aws_instance.public_ins' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
+  [aws-ec2-enforce-http-token-imds][HIGH] Resource 'aws_instance.public_ins' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
   /src/main.tf:138-144
 
 
@@ -153,13 +229,13 @@
   Resolution: Enable HTTP token requirement for IMDS
 
   More Info:
-  - https://tfsec.dev/docs/aws/ec2/enforce-http-token-imds#aws/ec2 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/ec2/enforce-http-token-imds 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#metadata-options 
   - https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service 
 
-  Result 6
+  Result 9
 
-  [aws-elastic-search-enable-domain-logging][[0m[33mMEDIUM[39m[0m] Resource 'aws_elasticsearch_domain.test' does not configure logging at rest on the domain.
+  [aws-elastic-search-enable-domain-logging][MEDIUM] Resource 'aws_elasticsearch_domain.test' does not configure logging at rest on the domain.
   /src/main.tf:107-119
 
 
@@ -188,57 +264,13 @@
   Resolution: Enable logging for ElasticSearch domains
 
   More Info:
-  - https://tfsec.dev/docs/aws/elastic-search/enable-domain-logging#aws/elastic-search 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/elastic-search/enable-domain-logging 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticsearch_domain#log_type 
   - https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-createdomain-configure-slow-logs.html 
 
-  Result 7
+  Result 10
 
-  [aws-vpc-no-public-egress-sg][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'aws_security_group.publicly_accessible_sg' defines a fully open egress security group.
-  /src/main.tf:133
-
-
-     130 |     from_port = 0
-     131 |     protocol = "tcp"
-     132 |     to_port = 65000
-     133 |     cidr_blocks = ["0.0.0.0/0"]    list: ["0.0.0.0/0"]
-     134 |   }
-     135 | }
-     136 | 
-
-  Legacy ID:  AWS009
-  Impact:     The port is exposed for egressing data to the internet
-  Resolution: Set a more restrictive cidr range
-
-  More Info:
-  - https://tfsec.dev/docs/aws/vpc/no-public-egress-sg#aws/vpc 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
-
-  Result 8
-
-  [aws-vpc-no-public-ingress-sg][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'aws_security_group.publicly_accessible_sg' defines a fully open ingress security group.
-  /src/main.tf:127
-
-
-     124 |     from_port = 0
-     125 |     protocol = "tcp"
-     126 |     to_port = 65000
-     127 |     cidr_blocks = ["0.0.0.0/0"]    list: ["0.0.0.0/0"]
-     128 |   }
-     129 |   egress {
-     130 |     from_port = 0
-
-  Legacy ID:  AWS008
-  Impact:     The port is exposed for ingress from the internet
-  Resolution: Set a more restrictive cidr range
-
-  More Info:
-  - https://tfsec.dev/docs/aws/vpc/no-public-ingress-sg#aws/vpc 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
-
-  Result 9
-
-  [aws-elastic-search-enable-in-transit-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_elasticsearch_domain.test' defines an Elasticsearch domain with plaintext traffic (missing node_to_node_encryption block).
+  [aws-elastic-search-enable-in-transit-encryption][HIGH] Resource 'aws_elasticsearch_domain.test' defines an Elasticsearch domain with plaintext traffic (missing node_to_node_encryption block).
   /src/main.tf:107-119
 
 
@@ -267,13 +299,13 @@
   Resolution: Enable encrypted node to node communication
 
   More Info:
-  - https://tfsec.dev/docs/aws/elastic-search/enable-in-transit-encryption#aws/elastic-search 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/elastic-search/enable-in-transit-encryption 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticsearch_domain#encrypt_at_rest 
   - https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/ntn.html 
 
-  Result 10
+  Result 11
 
-  [aws-elastic-search-enable-logging][[0m[33mMEDIUM[39m[0m] Resource 'aws_elasticsearch_domain.test' is missing 'AUDIT_LOGS` in one of the `log_publishing_options`-`log_type` attributes so audit log is not enabled
+  [aws-elastic-search-enable-logging][MEDIUM] Resource 'aws_elasticsearch_domain.test' is missing 'AUDIT_LOGS` in one of the `log_publishing_options`-`log_type` attributes so audit log is not enabled
   /src/main.tf:107-119
 
 
@@ -302,47 +334,15 @@
   Resolution: Enable logging for ElasticSearch domains
 
   More Info:
-  - https://tfsec.dev/docs/aws/elastic-search/enable-logging#aws/elastic-search 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/elastic-search/enable-logging 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticsearch_domain#log_publishing_options 
-
-  Result 11
-
-  [aws-vpc-add-decription-to-security-group][[0m[97mLOW[39m[0m] Resource 'aws_security_group.esdomain' should include a description for auditing purposes.
-  /src/main.tf:92-100
-
-
-      89 |   subnet_id = aws_subnet.nondefault_1.id
-      90 | }
-      91 | 
-      92 | resource "aws_security_group" "esdomain" {
-      93 |   vpc_id = aws_vpc.nondefault.id
-      94 |   ingress {
-      95 |     from_port = 443
-      96 |     protocol = "tcp"
-      97 |     to_port = 443
-      98 |     cidr_blocks = [aws_subnet.nondefault_1.cidr_block]
-      99 |   }
-     100 | }
-     101 | 
-     102 | resource "aws_iam_service_linked_role" "es" {
-     103 |   aws_service_name = "es.amazonaws.com"
-
-  Legacy ID:  AWS018
-  Impact:     Descriptions provide context for the firewall rule reasons
-  Resolution: Add descriptions for all security groups and rules
-
-  More Info:
-  - https://tfsec.dev/docs/aws/vpc/add-decription-to-security-group#aws/vpc 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule 
-  - https://www.cloudconformity.com/knowledge-base/aws/EC2/security-group-rules-description.html 
 
   times
   ------------------------------------------
-  disk i/o             57.091043ms
-  parsing HCL          602.667µs
-  evaluating values    6.708875ms
-  running checks       71.722583ms
+  disk i/o             32.789416ms
+  parsing HCL          580.5µs
+  evaluating values    4.943541ms
+  running checks       40.5705ms
 
   counts
   ------------------------------------------

@@ -16,67 +16,111 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.4.1
+Scanning with Keeping Infrastructure as Code Secure v1.4.9
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 778
+Queries loaded: 851
 Queries failed to execute: 0
 
 ------------------------------------
 
-Name Is Not Snake Case, Severity: INFO, Results: 1
-Description: All names should follow snake case pattern.
+Function App HTTP2 Disabled, Severity: LOW, Results: 1
+Description: Function App should have 'http2_enabled' enabled
 Platform: Terraform
 
-	[1]: ../../src/main.tf:49
+	[1]: ../../src/main.tf:51
 
-		048:   app_settings = {
-		049:     FUNCTIONS_WORKER_RUNTIME = "python"
-		050:   }
+		050: 
+		051:   site_config {
+		052:     linux_fx_version = "Python|3.8"
 
 
 Storage Account Not Using Latest TLS Encryption Version, Severity: MEDIUM, Results: 1
 Description: Ensure Storage Account is using the latest version of TLS encryption
 Platform: Terraform
 
-	[1]: ../../src/main.tf:16
+	[1]: ../../src/main.tf:15
 
-		015: 
-		016: resource "azurerm_storage_account" "storacc" {
-		017:   name                     = "${local.resource_prefix}funappsa"
+		014: 
+		015: resource "azurerm_storage_account" "storacc" {
+		016:   name                     = "${local.resource_prefix}funappsa"
+
+
+Function App Managed Identity Disabled, Severity: MEDIUM, Results: 1
+Description: Azure Function App should have managed identity enabled
+Platform: Terraform
+
+	[1]: ../../src/main.tf:37
+
+		036: 
+		037: resource "azurerm_function_app" "functionapp" {
+		038:   name = "${local.resource_prefix}-functionapp"
+
+
+Function App Client Certificates Unrequired, Severity: MEDIUM, Results: 1
+Description: Azure Function App should have 'client_cert_mode' set to required
+Platform: Terraform
+
+	[1]: ../../src/main.tf:37
+
+		036: 
+		037: resource "azurerm_function_app" "functionapp" {
+		038:   name = "${local.resource_prefix}-functionapp"
 
 
 Trusted Microsoft Services Not Enabled, Severity: HIGH, Results: 1
 Description: Trusted MIcrosoft Services are not enabled for Storage Account access
 Platform: Terraform
 
-	[1]: ../../src/main.tf:16
+	[1]: ../../src/main.tf:15
 
-		015: 
-		016: resource "azurerm_storage_account" "storacc" {
-		017:   name                     = "${local.resource_prefix}funappsa"
+		014: 
+		015: resource "azurerm_storage_account" "storacc" {
+		016:   name                     = "${local.resource_prefix}funappsa"
 
 
 Storage Account Not Forcing HTTPS, Severity: HIGH, Results: 1
 Description: See that Storage Accounts forces the use of HTTPS
 Platform: Terraform
 
-	[1]: ../../src/main.tf:16
+	[1]: ../../src/main.tf:15
 
-		015: 
-		016: resource "azurerm_storage_account" "storacc" {
-		017:   name                     = "${local.resource_prefix}funappsa"
+		014: 
+		015: resource "azurerm_storage_account" "storacc" {
+		016:   name                     = "${local.resource_prefix}funappsa"
+
+
+Function App FTPS Enforce Disabled, Severity: HIGH, Results: 1
+Description: Azure Function App should only enforce FTPS when 'ftps_state' is enabled
+Platform: Terraform
+
+	[1]: ../../src/main.tf:51
+
+		050: 
+		051:   site_config {
+		052:     linux_fx_version = "Python|3.8"
+
+
+Function App Authentication Disabled, Severity: HIGH, Results: 1
+Description: Azure Function App authentication settings should be enabled
+Platform: Terraform
+
+	[1]: ../../src/main.tf:37
+
+		036: 
+		037: resource "azurerm_function_app" "functionapp" {
+		038:   name = "${local.resource_prefix}-functionapp"
 
 
 
 Results Summary:
-HIGH: 2
-MEDIUM: 1
-LOW: 0
-INFO: 1
-TOTAL: 4
+HIGH: 4
+MEDIUM: 3
+LOW: 1
+INFO: 0
+TOTAL: 8
 
-Scan duration: 21.864998537s
+Scan duration: 8.75499088s

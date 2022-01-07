@@ -4,7 +4,7 @@ Failed to run the process ...
     "isPrivate": true,
     "isLicensesEnabled": false,
     "ignoreSettings": null,
-    "org": "yi2020",
+    "org": "ryder.d",
     "projectId": "",
     "policy": ""
   },
@@ -15,7 +15,7 @@ Failed to run the process ...
   "ignoreSettings": null,
   "targetFile": "main.tf",
   "projectName": "project",
-  "org": "yi2020",
+  "org": "ryder.d",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
@@ -51,6 +51,7 @@ Failed to run the process ...
       },
       "lineNumber": 18,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-431",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_elasticsearch_domain_policy[main]",
@@ -82,6 +83,7 @@ Failed to run the process ...
       },
       "lineNumber": 5,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-140",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_elasticsearch_domain[es-not-secure-policy]"
@@ -112,6 +114,7 @@ Failed to run the process ...
       },
       "lineNumber": 5,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-66",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_elasticsearch_domain[es-not-secure-policy]",
@@ -143,6 +146,7 @@ Failed to run the process ...
       },
       "lineNumber": 5,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-67",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_elasticsearch_domain[es-not-secure-policy]",
@@ -176,6 +180,7 @@ Failed to run the process ...
       },
       "lineNumber": 5,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-65",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_elasticsearch_domain[es-not-secure-policy]",
@@ -210,6 +215,7 @@ Failed to run the process ...
       },
       "lineNumber": 5,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-68",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_elasticsearch_domain[es-not-secure-policy]",
@@ -244,6 +250,7 @@ Failed to run the process ...
       },
       "lineNumber": 18,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-432",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_elasticsearch_domain_policy[main]",

@@ -4,7 +4,7 @@ Failed to run the process ...
     "isPrivate": true,
     "isLicensesEnabled": false,
     "ignoreSettings": null,
-    "org": "yi2020",
+    "org": "ryder.d",
     "projectId": "",
     "policy": ""
   },
@@ -15,7 +15,7 @@ Failed to run the process ...
   "ignoreSettings": null,
   "targetFile": "main.tf",
   "projectName": "project",
-  "org": "yi2020",
+  "org": "ryder.d",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
@@ -51,6 +51,7 @@ Failed to run the process ...
       },
       "lineNumber": 60,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-408",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_db_instance[test]",
@@ -80,6 +81,7 @@ Failed to run the process ...
       },
       "lineNumber": 62,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-50",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_db_instance[test]",
@@ -111,6 +113,7 @@ Failed to run the process ...
       },
       "lineNumber": 60,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-414",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_db_instance[test]",
@@ -138,6 +141,7 @@ Failed to run the process ...
       },
       "lineNumber": 9,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-56",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_security_group[nondefault]",
@@ -169,6 +173,7 @@ Failed to run the process ...
       },
       "lineNumber": 60,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-201",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_db_instance[test]",
@@ -200,6 +205,7 @@ Failed to run the process ...
       },
       "lineNumber": 12,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-1",
+      "isGeneratedByCustomRule": false,
       "path": [
         "input",
         "resource",

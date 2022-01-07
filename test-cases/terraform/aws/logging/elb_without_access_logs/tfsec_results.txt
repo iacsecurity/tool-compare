@@ -1,7 +1,7 @@
 
   Result 1
 
-  [aws-elbv2-alb-not-public][[0m[31mHIGH[39m[0m] Resource 'aws_elb.test' is exposed publicly.
+  [aws-elbv2-alb-not-public][HIGH] Resource 'aws_elb.test' is exposed publicly.
   /src/main.tf:1-10
 
 
@@ -22,15 +22,15 @@
   Resolution: Switch to an internal load balancer or add a tfsec ignore
 
   More Info:
-  - https://tfsec.dev/docs/aws/elbv2/alb-not-public#aws/elbv2 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/elbv2/alb-not-public 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb 
 
   times
   ------------------------------------------
-  disk i/o             47.672917ms
-  parsing HCL          489.458µs
-  evaluating values    1.901667ms
-  running checks       15.275583ms
+  disk i/o             25.937042ms
+  parsing HCL          527.459µs
+  evaluating values    1.824625ms
+  running checks       16.141209ms
 
   counts
   ------------------------------------------

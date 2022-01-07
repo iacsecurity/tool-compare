@@ -5,7 +5,7 @@ Failed to run the process ...
       "isPrivate": true,
       "isLicensesEnabled": false,
       "ignoreSettings": null,
-      "org": "yi2020",
+      "org": "ryder.d",
       "projectId": "",
       "policy": ""
     },
@@ -16,7 +16,7 @@ Failed to run the process ...
     "ignoreSettings": null,
     "targetFile": "main.tf",
     "projectName": "project",
-    "org": "yi2020",
+    "org": "ryder.d",
     "policy": "",
     "isPrivate": true,
     "targetFilePath": "/project/main.tf",
@@ -50,6 +50,7 @@ Failed to run the process ...
         },
         "lineNumber": 12,
         "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-54",
+        "isGeneratedByCustomRule": false,
         "path": [
           "resource",
           "aws_sqs_queue[cloudrail]",
@@ -81,6 +82,7 @@ Failed to run the process ...
         },
         "lineNumber": 5,
         "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-55",
+        "isGeneratedByCustomRule": false,
         "path": [
           "resource",
           "aws_sns_topic[cloudrail_1]",
@@ -113,6 +115,7 @@ Failed to run the process ...
         },
         "lineNumber": 5,
         "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-422",
+        "isGeneratedByCustomRule": false,
         "path": [
           "resource",
           "aws_sns_topic[cloudrail_1]",
@@ -126,7 +129,7 @@ Failed to run the process ...
       "isPrivate": true,
       "isLicensesEnabled": false,
       "ignoreSettings": null,
-      "org": "yi2020",
+      "org": "ryder.d",
       "projectId": "",
       "policy": ""
     },
@@ -137,7 +140,7 @@ Failed to run the process ...
     "ignoreSettings": null,
     "targetFile": "plan.json",
     "projectName": "project",
-    "org": "yi2020",
+    "org": "ryder.d",
     "policy": "",
     "isPrivate": true,
     "targetFilePath": "/project/plan.json",

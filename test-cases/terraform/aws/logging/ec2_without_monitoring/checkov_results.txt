@@ -1,33 +1,6 @@
-
-
-       _               _              
-   ___| |__   ___  ___| | _______   __
-  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
- | (__| | | |  __/ (__|   < (_) \ V / 
-  \___|_| |_|\___|\___|_|\_\___/ \_/  
-                                      
-By bridgecrew.io | version: 2.0.358 
-Update available 2.0.358 -> 2.0.359
-Run pip3 install -U checkov to update 
-
-
 terraform scan results:
 
 Passed checks: 2, Failed checks: 4, Skipped checks: 0
-
-Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration EBS is securely encrypted"
-	FAILED for resource: aws_instance.web
-	File: /main.tf:17-24
-	Guide: https://docs.bridgecrew.io/docs/general_13
-
-		17 | resource "aws_instance" "web" {
-		18 |   ami           = data.aws_ami.ubuntu.id
-		19 |   instance_type = "t3.micro"
-		20 | 
-		21 |   tags = {
-		22 |     Name = "HelloWorld"
-		23 |   }
-		24 | }
 
 Check: CKV_AWS_79: "Ensure Instance Metadata Service Version 1 is not enabled"
 	FAILED for resource: aws_instance.web
@@ -47,6 +20,20 @@ Check: CKV_AWS_135: "Ensure that EC2 is EBS optimized"
 	FAILED for resource: aws_instance.web
 	File: /main.tf:17-24
 	Guide: https://docs.bridgecrew.io/docs/ensure-that-ec2-is-ebs-optimized
+
+		17 | resource "aws_instance" "web" {
+		18 |   ami           = data.aws_ami.ubuntu.id
+		19 |   instance_type = "t3.micro"
+		20 | 
+		21 |   tags = {
+		22 |     Name = "HelloWorld"
+		23 |   }
+		24 | }
+
+Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration EBS is securely encrypted"
+	FAILED for resource: aws_instance.web
+	File: /main.tf:17-24
+	Guide: https://docs.bridgecrew.io/docs/general_13
 
 		17 | resource "aws_instance" "web" {
 		18 |   ami           = data.aws_ami.ubuntu.id

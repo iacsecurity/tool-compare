@@ -1,51 +1,7 @@
 
   Result 1
 
-  [aws-vpc-no-public-egress-sg][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'aws_security_group.allow_tls' defines a fully open egress security group.
-  /src/main.tf:25
-
-
-      22 |     to_port          = 0
-      23 |     protocol         = "-1"
-      24 |     cidr_blocks      = ["0.0.0.0/0"]
-      25 |     ipv6_cidr_blocks = ["::/0"]    list: ["::/0"]
-      26 |   }
-      27 | 
-      28 |   tags = {
-
-  Legacy ID:  AWS009
-  Impact:     The port is exposed for egressing data to the internet
-  Resolution: Set a more restrictive cidr range
-
-  More Info:
-  - https://tfsec.dev/docs/aws/vpc/no-public-egress-sg#aws/vpc 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
-
-  Result 2
-
-  [aws-vpc-no-public-egress-sg][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'aws_security_group.allow_tls' defines a fully open egress security group.
-  /src/main.tf:24
-
-
-      21 |     from_port        = 0
-      22 |     to_port          = 0
-      23 |     protocol         = "-1"
-      24 |     cidr_blocks      = ["0.0.0.0/0"]    list: ["0.0.0.0/0"]
-      25 |     ipv6_cidr_blocks = ["::/0"]
-      26 |   }
-      27 | 
-
-  Legacy ID:  AWS009
-  Impact:     The port is exposed for egressing data to the internet
-  Resolution: Set a more restrictive cidr range
-
-  More Info:
-  - https://tfsec.dev/docs/aws/vpc/no-public-egress-sg#aws/vpc 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
-
-  Result 3
-
-  [aws-vpc-no-public-ingress-sg][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'aws_security_group.allow_tls' defines a fully open ingress security group.
+  [aws-vpc-no-public-ingress-sg][CRITICAL] Resource 'aws_security_group.allow_tls' defines a fully open ingress security group.
   /src/main.tf:17
 
 
@@ -62,15 +18,89 @@
   Resolution: Set a more restrictive cidr range
 
   More Info:
-  - https://tfsec.dev/docs/aws/vpc/no-public-ingress-sg#aws/vpc 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/vpc/no-public-ingress-sg 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
+
+  Result 2
+
+  [aws-vpc-add-description-to-security-group][LOW] Resource 'aws_security_group.allow_tls' has egress without description.
+  /src/main.tf:20-26
+
+
+      17 |     cidr_blocks      = ["0.0.0.0/0"]
+      18 |   }
+      19 | 
+      20 |   egress {
+      21 |     from_port        = 0
+      22 |     to_port          = 0
+      23 |     protocol         = "-1"
+      24 |     cidr_blocks      = ["0.0.0.0/0"]
+      25 |     ipv6_cidr_blocks = ["::/0"]
+      26 |   }
+      27 | 
+      28 |   tags = {
+      29 |     Name = "allow_tls"
+
+  Legacy ID:  AWS018
+  Impact:     Descriptions provide context for the firewall rule reasons
+  Resolution: Add descriptions for all security groups and rules
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/vpc/add-description-to-security-group 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule 
+  - https://www.cloudconformity.com/knowledge-base/aws/EC2/security-group-rules-description.html 
+
+  Result 3
+
+  [aws-vpc-no-public-egress-sg][CRITICAL] Resource 'aws_security_group.allow_tls' defines a fully open egress security group.
+  /src/main.tf:25
+
+
+      22 |     to_port          = 0
+      23 |     protocol         = "-1"
+      24 |     cidr_blocks      = ["0.0.0.0/0"]
+      25 |     ipv6_cidr_blocks = ["::/0"]    list: ["::/0"]
+      26 |   }
+      27 | 
+      28 |   tags = {
+
+  Legacy ID:  AWS009
+  Impact:     The port is exposed for egressing data to the internet
+  Resolution: Set a more restrictive cidr range
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/vpc/no-public-egress-sg 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
+
+  Result 4
+
+  [aws-vpc-no-public-egress-sg][CRITICAL] Resource 'aws_security_group.allow_tls' defines a fully open egress security group.
+  /src/main.tf:24
+
+
+      21 |     from_port        = 0
+      22 |     to_port          = 0
+      23 |     protocol         = "-1"
+      24 |     cidr_blocks      = ["0.0.0.0/0"]    list: ["0.0.0.0/0"]
+      25 |     ipv6_cidr_blocks = ["::/0"]
+      26 |   }
+      27 | 
+
+  Legacy ID:  AWS009
+  Impact:     The port is exposed for egressing data to the internet
+  Resolution: Set a more restrictive cidr range
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/vpc/no-public-egress-sg 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
 
   times
   ------------------------------------------
-  disk i/o             52.157542ms
-  parsing HCL          608.333µs
-  evaluating values    3.145125ms
-  running checks       37.859333ms
+  disk i/o             24.919415ms
+  parsing HCL          591.916µs
+  evaluating values    3.154708ms
+  running checks       28.4225ms
 
   counts
   ------------------------------------------
@@ -83,8 +113,8 @@
   critical             3
   high                 0
   medium               0
-  low                  0
+  low                  1
   ignored              0
 
-  3 potential problems detected.
+  4 potential problems detected.
 

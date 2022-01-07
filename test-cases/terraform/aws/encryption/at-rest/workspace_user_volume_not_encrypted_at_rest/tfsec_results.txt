@@ -1,7 +1,7 @@
 
   Result 1
 
-  [aws-workspace-enable-disk-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_workspaces_workspace.test' should have user volume encryption enabled
+  [aws-workspace-enable-disk-encryption][HIGH] Resource 'aws_workspaces_workspace.test' should have user volume encryption enabled
   /src/main.tf:76-88
 
 
@@ -28,13 +28,13 @@
   Resolution: Root and user volume encryption should be enabled
 
   More Info:
-  - https://tfsec.dev/docs/aws/workspace/enable-disk-encryption#aws/workspace 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/workspace/enable-disk-encryption 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/workspaces_workspace#root_volume_encryption_enabled 
   - https://docs.aws.amazon.com/workspaces/latest/adminguide/encrypt-workspaces.html 
 
   Result 2
 
-  [general-secrets-sensitive-in-attribute][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Block 'aws_directory_service_directory.test' includes a potentially sensitive attribute which is defined within the project.
+  [general-secrets-sensitive-in-attribute][CRITICAL] Block 'aws_directory_service_directory.test' includes a potentially sensitive attribute which is defined within the project.
   /src/main.tf:34
 
 
@@ -51,15 +51,15 @@
   Resolution: Don't include sensitive data in blocks
 
   More Info:
-  - https://tfsec.dev/docs/general/secrets/sensitive-in-attribute#general/secrets 
+  - https://aquasecurity.github.io/tfsec/latest/checks/general/secrets/sensitive-in-attribute 
   - https://www.terraform.io/docs/state/sensitive-data.html 
 
   times
   ------------------------------------------
-  disk i/o             45.802334ms
-  parsing HCL          571.833µs
-  evaluating values    5.164876ms
-  running checks       43.649292ms
+  disk i/o             27.842166ms
+  parsing HCL          644.208µs
+  evaluating values    4.994793ms
+  running checks       24.872875ms
 
   counts
   ------------------------------------------

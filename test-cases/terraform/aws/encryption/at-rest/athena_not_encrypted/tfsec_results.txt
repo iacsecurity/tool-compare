@@ -1,73 +1,7 @@
 
   Result 1
 
-  [aws-s3-enable-bucket-logging][[0m[33mMEDIUM[39m[0m] Resource 'aws_s3_bucket.hoge' does not have logging enabled.
-  /src/main.tf:1-3
-
-
-       1 | resource "aws_s3_bucket" "hoge" {
-       2 |   bucket = "hoge"
-       3 | }
-       4 | 
-       5 | resource "aws_athena_database" "hoge" {
-       6 |   name   = "database_name"
-
-  Legacy ID:  AWS002
-  Impact:     There is no way to determine the access to this bucket
-  Resolution: Add a logging block to the resource to enable access logging
-
-  More Info:
-  - https://tfsec.dev/docs/aws/s3/enable-bucket-logging#aws/s3 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket 
-  - https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerLogs.html 
-
-  Result 2
-
-  [aws-s3-enable-versioning][[0m[33mMEDIUM[39m[0m] Resource 'aws_s3_bucket.hoge' does not have versioning enabled
-  /src/main.tf:1-3
-
-
-       1 | resource "aws_s3_bucket" "hoge" {
-       2 |   bucket = "hoge"
-       3 | }
-       4 | 
-       5 | resource "aws_athena_database" "hoge" {
-       6 |   name   = "database_name"
-
-  Legacy ID:  AWS077
-  Impact:     Deleted or modified data would not be recoverable
-  Resolution: Enable versioning to protect against accidental/malicious removal or modification
-
-  More Info:
-  - https://tfsec.dev/docs/aws/s3/enable-versioning#aws/s3 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#versioning 
-  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/Versioning.html 
-
-  Result 3
-
-  [aws-s3-specify-public-access-block][[0m[33mMEDIUM[39m[0m] Resource aws_s3_bucket.hoge has no associated aws_s3_bucket_public_access_block.
-  /src/main.tf:1-3
-
-
-       1 | resource "aws_s3_bucket" "hoge" {
-       2 |   bucket = "hoge"
-       3 | }
-       4 | 
-       5 | resource "aws_athena_database" "hoge" {
-       6 |   name   = "database_name"
-
-  Legacy ID:  AWS098
-  Impact:     Public access policies may be applied to sensitive data buckets
-  Resolution: Define a aws_s3_bucket_public_access_block for the given bucket to control public access policies
-
-  More Info:
-  - https://tfsec.dev/docs/aws/s3/specify-public-access-block#aws/s3 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#bucket 
-  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html 
-
-  Result 4
-
-  [aws-athena-enable-at-rest-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_athena_database.hoge' missing encryption configuration block.
+  [aws-athena-enable-at-rest-encryption][HIGH] Resource 'aws_athena_database.hoge' missing encryption configuration block.
   /src/main.tf:5-8
 
 
@@ -84,14 +18,14 @@
   Resolution: Enable encryption at rest for Athena databases and workgroup configurations
 
   More Info:
-  - https://tfsec.dev/docs/aws/athena/enable-at-rest-encryption#aws/athena 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/athena/enable-at-rest-encryption 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/athena_workgroup#encryption_configuration 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/athena_database#encryption_configuration 
   - https://docs.aws.amazon.com/athena/latest/ug/encryption.html 
 
-  Result 5
+  Result 2
 
-  [aws-s3-enable-bucket-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_s3_bucket.hoge' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
+  [aws-s3-enable-bucket-encryption][HIGH] Resource 'aws_s3_bucket.hoge' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
   /src/main.tf:1-3
 
 
@@ -107,16 +41,82 @@
   Resolution: Configure bucket encryption
 
   More Info:
-  - https://tfsec.dev/docs/aws/s3/enable-bucket-encryption#aws/s3 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/s3/enable-bucket-encryption 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#enable-default-server-side-encryption 
   - https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-encryption.html 
 
+  Result 3
+
+  [aws-s3-enable-bucket-logging][MEDIUM] Resource 'aws_s3_bucket.hoge' does not have logging enabled.
+  /src/main.tf:1-3
+
+
+       1 | resource "aws_s3_bucket" "hoge" {
+       2 |   bucket = "hoge"
+       3 | }
+       4 | 
+       5 | resource "aws_athena_database" "hoge" {
+       6 |   name   = "database_name"
+
+  Legacy ID:  AWS002
+  Impact:     There is no way to determine the access to this bucket
+  Resolution: Add a logging block to the resource to enable access logging
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/s3/enable-bucket-logging 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket 
+  - https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerLogs.html 
+
+  Result 4
+
+  [aws-s3-enable-versioning][MEDIUM] Resource 'aws_s3_bucket.hoge' does not have versioning enabled
+  /src/main.tf:1-3
+
+
+       1 | resource "aws_s3_bucket" "hoge" {
+       2 |   bucket = "hoge"
+       3 | }
+       4 | 
+       5 | resource "aws_athena_database" "hoge" {
+       6 |   name   = "database_name"
+
+  Legacy ID:  AWS077
+  Impact:     Deleted or modified data would not be recoverable
+  Resolution: Enable versioning to protect against accidental/malicious removal or modification
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/s3/enable-versioning 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#versioning 
+  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/Versioning.html 
+
+  Result 5
+
+  [aws-s3-specify-public-access-block][MEDIUM] Resource aws_s3_bucket.hoge has no associated aws_s3_bucket_public_access_block.
+  /src/main.tf:1-3
+
+
+       1 | resource "aws_s3_bucket" "hoge" {
+       2 |   bucket = "hoge"
+       3 | }
+       4 | 
+       5 | resource "aws_athena_database" "hoge" {
+       6 |   name   = "database_name"
+
+  Legacy ID:  AWS098
+  Impact:     Public access policies may be applied to sensitive data buckets
+  Resolution: Define a aws_s3_bucket_public_access_block for the given bucket to control public access policies
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/s3/specify-public-access-block 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#bucket 
+  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html 
+
   times
   ------------------------------------------
-  disk i/o             48.891707ms
-  parsing HCL          548.833µs
-  evaluating values    3.312249ms
-  running checks       31.436666ms
+  disk i/o             23.533584ms
+  parsing HCL          523.625µs
+  evaluating values    2.604125ms
+  running checks       20.898625ms
 
   counts
   ------------------------------------------

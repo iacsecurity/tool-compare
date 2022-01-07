@@ -1,7 +1,29 @@
 
   Result 1
 
-  [aws-documentdb-enable-log-export][[0m[33mMEDIUM[39m[0m] Resource 'aws_docdb_cluster.test2' uses default value for enabled_cloudwatch_logs_exports
+  [general-secrets-sensitive-in-attribute][CRITICAL] Block 'aws_docdb_cluster.test2' includes a potentially sensitive attribute which is defined within the project.
+  /src/main.tf:13
+
+
+      10 |   cluster_identifier  = "my-docdb-cluster-test2"
+      11 |   engine              = "docdb"
+      12 |   master_username     = "foo"
+      13 |   master_password     = "mustbeeightchars"    string: "mustbeeightchars"
+      14 |   skip_final_snapshot = true
+      15 |   storage_encrypted   = true
+      16 |   kms_key_id          = data.aws_kms_key.test.arn
+
+  Legacy ID:  GEN003
+  Impact:     Block attribute could be leaking secrets
+  Resolution: Don't include sensitive data in blocks
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/general/secrets/sensitive-in-attribute 
+  - https://www.terraform.io/docs/state/sensitive-data.html 
+
+  Result 2
+
+  [aws-documentdb-enable-log-export][MEDIUM] Resource 'aws_docdb_cluster.test2' uses default value for enabled_cloudwatch_logs_exports
   /src/main.tf:9-17
 
 
@@ -23,12 +45,12 @@
   Resolution: Enable export logs
 
   More Info:
-  - https://tfsec.dev/docs/aws/documentdb/enable-log-export#aws/documentdb 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/documentdb/enable-log-export 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/docdb_cluster#enabled_cloudwatch_logs_exports 
 
-  Result 2
+  Result 3
 
-  [aws-documentdb-encryption-customer-key][[0m[97mLOW[39m[0m] Resource 'aws_docdb_cluster.test2' explicitly uses the default CMK
+  [aws-documentdb-encryption-customer-key][LOW] Resource 'aws_docdb_cluster.test2' explicitly uses the default CMK
   /src/main.tf:16
 
 
@@ -43,37 +65,15 @@
   Resolution: Enable encryption using customer managed keys
 
   More Info:
-  - https://tfsec.dev/docs/aws/documentdb/encryption-customer-key#aws/documentdb 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/documentdb/encryption-customer-key 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/docdb_cluster#kms_key_id 
-
-  Result 3
-
-  [general-secrets-sensitive-in-attribute][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Block 'aws_docdb_cluster.test2' includes a potentially sensitive attribute which is defined within the project.
-  /src/main.tf:13
-
-
-      10 |   cluster_identifier  = "my-docdb-cluster-test2"
-      11 |   engine              = "docdb"
-      12 |   master_username     = "foo"
-      13 |   master_password     = "mustbeeightchars"    string: "mustbeeightchars"
-      14 |   skip_final_snapshot = true
-      15 |   storage_encrypted   = true
-      16 |   kms_key_id          = data.aws_kms_key.test.arn
-
-  Legacy ID:  GEN003
-  Impact:     Block attribute could be leaking secrets
-  Resolution: Don't include sensitive data in blocks
-
-  More Info:
-  - https://tfsec.dev/docs/general/secrets/sensitive-in-attribute#general/secrets 
-  - https://www.terraform.io/docs/state/sensitive-data.html 
 
   times
   ------------------------------------------
-  disk i/o             50.965875ms
-  parsing HCL          606.75µs
-  evaluating values    3.043124ms
-  running checks       34.245167ms
+  disk i/o             26.22575ms
+  parsing HCL          569.209µs
+  evaluating values    2.920043ms
+  running checks       24.133583ms
 
   counts
   ------------------------------------------

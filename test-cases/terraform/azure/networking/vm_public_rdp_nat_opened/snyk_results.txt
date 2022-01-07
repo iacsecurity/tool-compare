@@ -4,7 +4,7 @@ Failed to run the process ...
     "isPrivate": true,
     "isLicensesEnabled": false,
     "ignoreSettings": null,
-    "org": "yi2020",
+    "org": "ryder.d",
     "projectId": "",
     "policy": ""
   },
@@ -15,7 +15,7 @@ Failed to run the process ...
   "ignoreSettings": null,
   "targetFile": "main.tf",
   "projectName": "project",
-  "org": "yi2020",
+  "org": "ryder.d",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
@@ -25,41 +25,13 @@ Failed to run the process ...
   "ok": false,
   "infrastructureAsCodeIssues": [
     {
-      "severity": "high",
-      "resolve": "Set `admin_ssh_key` attribute instead of password authentication",
-      "id": "SNYK-CC-TF-263",
-      "impact": "The secret value will be readable to anyone with access to VCS, which can lead to unauthorized data disclosure or privilege escalation",
-      "msg": "resource.azurerm_virtual_machine[main].os_profile.admin_password",
-      "subType": "Compute",
-      "issue": "Administrative password has been set in terraform configuration file",
-      "publicId": "SNYK-CC-TF-263",
-      "title": "Hardcoded admin password in VM configuration",
-      "references": [
-        "https://docs.microsoft.com/en-us/azure/virtual-machines/linux/mac-create-ssh-keys"
-      ],
-      "isIgnored": false,
-      "iacDescription": {
-        "issue": "Administrative password has been set in terraform configuration file",
-        "impact": "The secret value will be readable to anyone with access to VCS, which can lead to unauthorized data disclosure or privilege escalation",
-        "resolve": "Set `admin_ssh_key` attribute instead of password authentication"
-      },
-      "lineNumber": 111,
-      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-263",
-      "path": [
-        "resource",
-        "azurerm_virtual_machine[main]",
-        "os_profile",
-        "admin_password"
-      ]
-    },
-    {
       "severity": "low",
       "resolve": "Set `ddos_protection_plan.enable` attribute to `true`",
-      "id": "SNYK-CC-AZURE-516",
       "impact": "Services deployed in the network will not benefit from advanced DDoS protection features such as attack alerting and analytics",
       "msg": "resource.azurerm_virtual_network[vnet].ddos_protection_plan",
       "remediation": {
-        "terraform": "Set `ddos_protection_plan.enable` attribute to `true`"
+        "terraform": "Set `ddos_protection_plan.enable` attribute to `true`",
+        "arm": "Set `properties.enableDdosProtection` to `true`"
       },
       "subType": "Network",
       "issue": "Virtual Network DDoS protection plan disabled",
@@ -69,18 +41,51 @@ Failed to run the process ...
         "https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network#ddos_protection_plan",
         "https://docs.microsoft.com/en-us/azure/ddos-protection/ddos-protection-overview"
       ],
+      "id": "SNYK-CC-AZURE-516",
       "isIgnored": false,
       "iacDescription": {
         "issue": "Virtual Network DDoS protection plan disabled",
         "impact": "Services deployed in the network will not benefit from advanced DDoS protection features such as attack alerting and analytics",
         "resolve": "Set `ddos_protection_plan.enable` attribute to `true`"
       },
-      "lineNumber": 18,
+      "lineNumber": 17,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-AZURE-516",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "azurerm_virtual_network[vnet]",
         "ddos_protection_plan"
+      ]
+    },
+    {
+      "severity": "high",
+      "impact": "The secret value will be readable to anyone with access to VCS, which can lead to unauthorized data disclosure or privilege escalation",
+      "msg": "resource.azurerm_virtual_machine[main].os_profile.admin_password",
+      "remediation": {
+        "terraform": "Set `admin_ssh_key` attribute instead of password authentication",
+        "arm": "Set `properties.osProfile.linuxConfiguration.ssh` attribute instead of password authentication"
+      },
+      "subType": "Compute",
+      "issue": "Administrative password has been set in configuration file",
+      "publicId": "SNYK-CC-TF-263",
+      "title": "Hardcoded admin password in VM configuration",
+      "references": [
+        "https://docs.microsoft.com/en-us/azure/virtual-machines/linux/mac-create-ssh-keys"
+      ],
+      "id": "SNYK-CC-TF-263",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Administrative password has been set in configuration file",
+        "impact": "The secret value will be readable to anyone with access to VCS, which can lead to unauthorized data disclosure or privilege escalation"
+      },
+      "lineNumber": 110,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-263",
+      "isGeneratedByCustomRule": false,
+      "path": [
+        "resource",
+        "azurerm_virtual_machine[main]",
+        "os_profile",
+        "admin_password"
       ]
     }
   ]

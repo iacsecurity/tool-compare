@@ -1,66 +1,9 @@
 
 WARNINGs found:
-Rule: Ensure all resources that can be tagged have at least one tag
- - 8 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_vpc.vpc2] (main.tf:35)
-     Violating Resource: [aws_vpc.vpc2]  (main.tf:35)
-
-     Evidence:
-             | Resource VPC aws_vpc.vpc2 does not have any tags set
-
-
-   - Exposed Resource: [aws_subnet.subnet2_2] (main.tf:45)
-     Violating Resource: [aws_subnet.subnet2_2]  (main.tf:45)
-
-     Evidence:
-             | Resource Subnet aws_subnet.subnet2_2 does not have any tags set
-
-
-   - Exposed Resource: [aws_subnet.subnet1_2] (main.tf:30)
-     Violating Resource: [aws_subnet.subnet1_2]  (main.tf:30)
-
-     Evidence:
-             | Resource Subnet aws_subnet.subnet1_2 does not have any tags set
-
-
-   - Exposed Resource: [aws_subnet.subnet2_1] (main.tf:40)
-     Violating Resource: [aws_subnet.subnet2_1]  (main.tf:40)
-
-     Evidence:
-             | Resource Subnet aws_subnet.subnet2_1 does not have any tags set
-
-
-   - Exposed Resource: [aws_subnet.subnet1_1] (main.tf:25)
-     Violating Resource: [aws_subnet.subnet1_1]  (main.tf:25)
-
-     Evidence:
-             | Resource Subnet aws_subnet.subnet1_1 does not have any tags set
-
-
-   - Exposed Resource: [aws_vpc.vpc1] (main.tf:20)
-     Violating Resource: [aws_vpc.vpc1]  (main.tf:20)
-
-     Evidence:
-             | Resource VPC aws_vpc.vpc1 does not have any tags set
-
-
-   - Exposed Resource: [aws_vpc_peering_connection.this] (main.tf:92)
-     Violating Resource: [aws_vpc_peering_connection.this]  (main.tf:92)
-
-     Evidence:
-             | Resource VPC peering connection aws_vpc_peering_connection.this does not have any tags set
-
-
-   - Exposed Resource: [aws_route_table.subnet2_1] (main.tf:162)
-     Violating Resource: [aws_route_table.subnet2_1]  (main.tf:162)
-
-     Evidence:
-             | Resource Route table aws_route_table.subnet2_1 does not have any tags set
-
-
------------------------------------------------
 Rule: Ensure used routing tables for VPC peering are "least access"
+Description: It's important to ensure that only specific networks are exposed through a VPC peering connection. Exposing an entire VPC through the connection may create the risk of exposing resources that were not intended.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/vpc/latest/peering/peering-configurations-partial-access.html to configure specific routes for VPC peering.
+Remediation Steps - Terraform: For the aws_route resource, set destination_cidr_block argument to use specific routes for VPC peering.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_vpc.vpc2] (main.tf:35)
@@ -72,6 +15,69 @@ Rule: Ensure used routing tables for VPC peering are "least access"
              | Local VPC's routing table aws_route_table.subnet2_1 has a route matching CIDR block
              | Local VPC is potentially overexposing resources peering VPC
          Local VPC aws_vpc.vpc2.id
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+Description: Some organizations require that all resources have at least one tag set. This rule will review the resources that can be tagged, and make sure each one has a tag that is not the Name tag. Resources that are not tagged will be flagged.
+Remediation Steps - Cloud Console: Access the specific resource in the AWS console and add tags.
+Remediation Steps - Terraform: Add a tags section to the resource with at least one tag beyond the Name tag.
+ - 8 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_subnet.subnet2_1] (main.tf:40)
+     Violating Resource: [aws_subnet.subnet2_1]  (main.tf:40)
+
+     Evidence:
+             | Resource Subnet aws_subnet.subnet2_1 does not have any tags set
+
+
+   - Exposed Resource: [aws_vpc.vpc1] (main.tf:20)
+     Violating Resource: [aws_vpc.vpc1]  (main.tf:20)
+
+     Evidence:
+             | Resource VPC aws_vpc.vpc1 does not have any tags set
+
+
+   - Exposed Resource: [aws_vpc.vpc2] (main.tf:35)
+     Violating Resource: [aws_vpc.vpc2]  (main.tf:35)
+
+     Evidence:
+             | Resource VPC aws_vpc.vpc2 does not have any tags set
+
+
+   - Exposed Resource: [aws_vpc_peering_connection.this] (main.tf:92)
+     Violating Resource: [aws_vpc_peering_connection.this]  (main.tf:92)
+
+     Evidence:
+             | Resource VPC peering connection aws_vpc_peering_connection.this does not have any tags set
+
+
+   - Exposed Resource: [aws_subnet.subnet2_2] (main.tf:45)
+     Violating Resource: [aws_subnet.subnet2_2]  (main.tf:45)
+
+     Evidence:
+             | Resource Subnet aws_subnet.subnet2_2 does not have any tags set
+
+
+   - Exposed Resource: [aws_subnet.subnet1_1] (main.tf:25)
+     Violating Resource: [aws_subnet.subnet1_1]  (main.tf:25)
+
+     Evidence:
+             | Resource Subnet aws_subnet.subnet1_1 does not have any tags set
+
+
+   - Exposed Resource: [aws_route_table.subnet2_1] (main.tf:162)
+     Violating Resource: [aws_route_table.subnet2_1]  (main.tf:162)
+
+     Evidence:
+             | Resource Route table aws_route_table.subnet2_1 does not have any tags set
+
+
+   - Exposed Resource: [aws_subnet.subnet1_2] (main.tf:30)
+     Violating Resource: [aws_subnet.subnet1_2]  (main.tf:30)
+
+     Evidence:
+             | Resource Subnet aws_subnet.subnet1_2 does not have any tags set
 
 
 -----------------------------------------------

@@ -1,7 +1,7 @@
 
   Result 1
 
-  [aws-elbv2-alb-not-public][[0m[31mHIGH[39m[0m] Resource 'aws_alb.default' is exposed publicly.
+  [aws-elbv2-alb-not-public][HIGH] Resource 'aws_alb.default' is exposed publicly.
   /src/main.tf:33
 
 
@@ -18,12 +18,12 @@
   Resolution: Switch to an internal load balancer or add a tfsec ignore
 
   More Info:
-  - https://tfsec.dev/docs/aws/elbv2/alb-not-public#aws/elbv2 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/elbv2/alb-not-public 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb 
 
   Result 2
 
-  [aws-elb-drop-invalid-headers][[0m[31mHIGH[39m[0m] Resource 'aws_lb.disabled' sets the drop_invalid_header_fields to false
+  [aws-elb-drop-invalid-headers][HIGH] Resource 'aws_lb.disabled' sets the drop_invalid_header_fields to false
   /src/main.tf:45
 
 
@@ -40,13 +40,13 @@
   Resolution: Set drop_invalid_header_fields to true
 
   More Info:
-  - https://tfsec.dev/docs/aws/elb/drop-invalid-headers#aws/elb 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/elb/drop-invalid-headers 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb#drop_invalid_header_fields 
   - https://docs.aws.amazon.com/elasticloadbalancing/latest/application/application-load-balancers.html 
 
   Result 3
 
-  [aws-elb-drop-invalid-headers][[0m[31mHIGH[39m[0m] Resource 'aws_lb.default' does not drop invalid header fields
+  [aws-elb-drop-invalid-headers][HIGH] Resource 'aws_lb.default' does not drop invalid header fields
   /src/main.tf:25-30
 
 
@@ -68,13 +68,13 @@
   Resolution: Set drop_invalid_header_fields to true
 
   More Info:
-  - https://tfsec.dev/docs/aws/elb/drop-invalid-headers#aws/elb 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/elb/drop-invalid-headers 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb#drop_invalid_header_fields 
   - https://docs.aws.amazon.com/elasticloadbalancing/latest/application/application-load-balancers.html 
 
   Result 4
 
-  [aws-elb-drop-invalid-headers][[0m[31mHIGH[39m[0m] Resource 'aws_alb.disabled' sets the drop_invalid_header_fields to false
+  [aws-elb-drop-invalid-headers][HIGH] Resource 'aws_alb.disabled' sets the drop_invalid_header_fields to false
   /src/main.tf:54
 
 
@@ -90,13 +90,13 @@
   Resolution: Set drop_invalid_header_fields to true
 
   More Info:
-  - https://tfsec.dev/docs/aws/elb/drop-invalid-headers#aws/elb 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/elb/drop-invalid-headers 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb#drop_invalid_header_fields 
   - https://docs.aws.amazon.com/elasticloadbalancing/latest/application/application-load-balancers.html 
 
   Result 5
 
-  [aws-elb-drop-invalid-headers][[0m[31mHIGH[39m[0m] Resource 'aws_alb.default' does not drop invalid header fields
+  [aws-elb-drop-invalid-headers][HIGH] Resource 'aws_alb.default' does not drop invalid header fields
   /src/main.tf:32-37
 
 
@@ -118,13 +118,13 @@
   Resolution: Set drop_invalid_header_fields to true
 
   More Info:
-  - https://tfsec.dev/docs/aws/elb/drop-invalid-headers#aws/elb 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/elb/drop-invalid-headers 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb#drop_invalid_header_fields 
   - https://docs.aws.amazon.com/elasticloadbalancing/latest/application/application-load-balancers.html 
 
   Result 6
 
-  [aws-elbv2-alb-not-public][[0m[31mHIGH[39m[0m] Resource 'aws_lb.disabled' is exposed publicly.
+  [aws-elbv2-alb-not-public][HIGH] Resource 'aws_lb.disabled' is exposed publicly.
   /src/main.tf:40
 
 
@@ -141,12 +141,12 @@
   Resolution: Switch to an internal load balancer or add a tfsec ignore
 
   More Info:
-  - https://tfsec.dev/docs/aws/elbv2/alb-not-public#aws/elbv2 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/elbv2/alb-not-public 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb 
 
   Result 7
 
-  [aws-elbv2-alb-not-public][[0m[31mHIGH[39m[0m] Resource 'aws_lb.default' is exposed publicly.
+  [aws-elbv2-alb-not-public][HIGH] Resource 'aws_lb.default' is exposed publicly.
   /src/main.tf:26
 
 
@@ -163,12 +163,12 @@
   Resolution: Switch to an internal load balancer or add a tfsec ignore
 
   More Info:
-  - https://tfsec.dev/docs/aws/elbv2/alb-not-public#aws/elbv2 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/elbv2/alb-not-public 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb 
 
   Result 8
 
-  [aws-elbv2-alb-not-public][[0m[31mHIGH[39m[0m] Resource 'aws_alb.disabled' is exposed publicly.
+  [aws-elbv2-alb-not-public][HIGH] Resource 'aws_alb.disabled' is exposed publicly.
   /src/main.tf:49
 
 
@@ -185,15 +185,15 @@
   Resolution: Switch to an internal load balancer or add a tfsec ignore
 
   More Info:
-  - https://tfsec.dev/docs/aws/elbv2/alb-not-public#aws/elbv2 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/elbv2/alb-not-public 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb 
 
   times
   ------------------------------------------
-  disk i/o             41.411645ms
-  parsing HCL          141.456µs
-  evaluating values    98.540203ms
-  running checks       16.298252ms
+  disk i/o             222.647375ms
+  parsing HCL          995.208µs
+  evaluating values    438.289624ms
+  running checks       222.520791ms
 
   counts
   ------------------------------------------

@@ -1,7 +1,58 @@
 
   Result 1
 
-  [azure-database-enable-audit][[0m[33mMEDIUM[39m[0m] Resource 'azurerm_mssql_server.my-sql-server' does not have an extended audit policy configured.
+  [azure-storage-use-secure-tls-policy][CRITICAL] Resource 'azurerm_storage_account.my-storage-account' should have the min tls version set to TLS1_2 .
+  /src/main.tf:35-41
+
+
+      32 |   }
+      33 | }
+      34 | 
+      35 | resource "azurerm_storage_account" "my-storage-account" {
+      36 |   name                     = "${local.resource_prefix}storageaccount"
+      37 |   resource_group_name      = azurerm_resource_group.tests-resource-group.name
+      38 |   location                 = azurerm_resource_group.tests-resource-group.location
+      39 |   account_tier             = "Standard"
+      40 |   account_replication_type = "LRS"
+      41 | }
+      42 | 
+      43 | resource "azurerm_sql_database" "my-sql-database" {
+      44 |   name                = "${local.resource_prefix}sqldatabase"
+
+  Legacy ID:  AZU015
+  Impact:     The TLS version being outdated and has known vulnerabilities
+  Resolution: Use a more recent TLS/SSL policy for the load balancer
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/azure/storage/use-secure-tls-policy 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account#min_tls_version 
+  - https://docs.microsoft.com/en-us/azure/storage/common/transport-layer-security-configure-minimum-version 
+
+  Result 2
+
+  [general-secrets-sensitive-in-attribute][CRITICAL] Block 'azurerm_mssql_server.my-sql-server' includes a potentially sensitive attribute which is defined within the project.
+  /src/main.tf:27
+
+
+      24 |   location                      = azurerm_resource_group.tests-resource-group.location
+      25 |   version                       = "12.0"
+      26 |   administrator_login           = "4dm1n157r470r"
+      27 |   administrator_login_password  = "4-v3ry-53cr37-p455w0rd"    string: "4-v3ry-53cr37-p455w0rd"
+      28 |   public_network_access_enabled = true
+      29 | 
+      30 |   tags = {
+
+  Legacy ID:  GEN003
+  Impact:     Block attribute could be leaking secrets
+  Resolution: Don't include sensitive data in blocks
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/general/secrets/sensitive-in-attribute 
+  - https://www.terraform.io/docs/state/sensitive-data.html 
+
+  Result 3
+
+  [azure-database-enable-audit][MEDIUM] Resource 'azurerm_mssql_server.my-sql-server' does not have an extended audit policy configured.
   /src/main.tf:21-33
 
 
@@ -30,13 +81,13 @@
   Resolution: Enable auditing on Azure SQL databases
 
   More Info:
-  - https://tfsec.dev/docs/azure/database/enable-audit#azure/database 
+  - https://aquasecurity.github.io/tfsec/latest/checks/azure/database/enable-audit 
   - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/sql_server#extended_auditing_policy 
   - https://docs.microsoft.com/en-us/azure/azure-sql/database/auditing-overview 
 
-  Result 2
+  Result 4
 
-  [azure-database-no-public-access][[0m[33mMEDIUM[39m[0m] Resource 'azurerm_mssql_server.my-sql-server' has public access explicitly enabled
+  [azure-database-no-public-access][MEDIUM] Resource 'azurerm_mssql_server.my-sql-server' has public access explicitly enabled
   /src/main.tf:28
 
 
@@ -52,14 +103,14 @@
   Resolution: Disable public access to database when not required
 
   More Info:
-  - https://tfsec.dev/docs/azure/database/no-public-access#azure/database 
+  - https://aquasecurity.github.io/tfsec/latest/checks/azure/database/no-public-access 
   - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_server#public_network_access_enabled 
   - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mysql_server#public_network_access_enabled 
   - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mariadb_server#public_network_access_enabled 
 
-  Result 3
+  Result 5
 
-  [azure-storage-use-secure-tls-policy][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'azurerm_storage_account.my-storage-account' should have the min tls version set to TLS1_2 .
+  [azure-storage-default-action-deny][CRITICAL] Resource 'azurerm_storage_account.my-storage-account' does not have network_rules and there isn't a configured `azurerm_storage_account_network_rules.
   /src/main.tf:35-41
 
 
@@ -77,43 +128,21 @@
       43 | resource "azurerm_sql_database" "my-sql-database" {
       44 |   name                = "${local.resource_prefix}sqldatabase"
 
-  Legacy ID:  AZU015
-  Impact:     The TLS version being outdated and has known vulnerabilities
-  Resolution: Use a more recent TLS/SSL policy for the load balancer
+  Legacy ID:  AZU012
+  Impact:     Network rules that allow could cause data to be exposed publicly
+  Resolution: Set network rules to deny
 
   More Info:
-  - https://tfsec.dev/docs/azure/storage/use-secure-tls-policy#azure/storage 
-  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account#min_tls_version 
-  - https://docs.microsoft.com/en-us/azure/storage/common/transport-layer-security-configure-minimum-version 
-
-  Result 4
-
-  [general-secrets-sensitive-in-attribute][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Block 'azurerm_mssql_server.my-sql-server' includes a potentially sensitive attribute which is defined within the project.
-  /src/main.tf:27
-
-
-      24 |   location                      = azurerm_resource_group.tests-resource-group.location
-      25 |   version                       = "12.0"
-      26 |   administrator_login           = "4dm1n157r470r"
-      27 |   administrator_login_password  = "4-v3ry-53cr37-p455w0rd"    string: "4-v3ry-53cr37-p455w0rd"
-      28 |   public_network_access_enabled = true
-      29 | 
-      30 |   tags = {
-
-  Legacy ID:  GEN003
-  Impact:     Block attribute could be leaking secrets
-  Resolution: Don't include sensitive data in blocks
-
-  More Info:
-  - https://tfsec.dev/docs/general/secrets/sensitive-in-attribute#general/secrets 
-  - https://www.terraform.io/docs/state/sensitive-data.html 
+  - https://aquasecurity.github.io/tfsec/latest/checks/azure/storage/default-action-deny 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account_network_rules#default_action 
+  - https://docs.microsoft.com/en-us/azure/firewall/rule-processing 
 
   times
   ------------------------------------------
-  disk i/o             754.796µs
-  parsing HCL          8.579µs
-  evaluating values    502.39µs
-  running checks       3.299906ms
+  disk i/o             28.616334ms
+  parsing HCL          595.125µs
+  evaluating values    4.350084ms
+  running checks       28.197708ms
 
   counts
   ------------------------------------------
@@ -123,11 +152,11 @@
 
   results
   ------------------------------------------
-  critical             2
+  critical             3
   high                 0
   medium               2
   low                  0
   ignored              0
 
-  4 potential problems detected.
+  5 potential problems detected.
 

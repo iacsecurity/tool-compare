@@ -4,7 +4,7 @@ Failed to run the process ...
     "isPrivate": true,
     "isLicensesEnabled": false,
     "ignoreSettings": null,
-    "org": "yi2020",
+    "org": "ryder.d",
     "projectId": "",
     "policy": ""
   },
@@ -15,7 +15,7 @@ Failed to run the process ...
   "ignoreSettings": null,
   "targetFile": "main.tf",
   "projectName": "project",
-  "org": "yi2020",
+  "org": "ryder.d",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
@@ -52,6 +52,7 @@ Failed to run the process ...
       },
       "lineNumber": 49,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-53",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_instance[t2-instance]",
@@ -85,6 +86,7 @@ Failed to run the process ...
       },
       "lineNumber": 12,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-423",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_default_vpc[default]"
@@ -114,6 +116,7 @@ Failed to run the process ...
       },
       "lineNumber": 49,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-130",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_instance[t2-instance]",
@@ -145,6 +148,7 @@ Failed to run the process ...
       },
       "lineNumber": 49,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-426",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_instance[t2-instance]",

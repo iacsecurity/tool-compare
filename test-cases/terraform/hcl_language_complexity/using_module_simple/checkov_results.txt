@@ -1,13 +1,2 @@
-
-
-       _               _              
-   ___| |__   ___  ___| | _______   __
-  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
- | (__| | | |  __/ (__|   < (_) \ V / 
-  \___|_| |_|\___|\___|_|\_\___/ \_/  
-                                      
-By bridgecrew.io | version: 2.0.358 
-Update available 2.0.358 -> 2.0.359
-Run pip3 install -U checkov to update 
-
-
+2022-01-05 04:12:21,239 [MainThread  ] [WARNI]  Failed to download module cloudposse/iam-user/aws:0.8.0 (for external modules, the --download-external-modules flag is required)
+2022-01-05 04:12:21,243 [MainThread  ] [WARNI]  Failed to download module cloudposse/label/null:0.24.1 (for external modules, the --download-external-modules flag is required)

@@ -1,6 +1,9 @@
 
 WARNINGs found:
 Rule: Ensure Azure VPN gateways don't use the basic SKU
+Description: The Azure VPN Gateway has different SKUs to choose from, each with different capabilities. The "basic" one is lacking many features and will generally not support anything beyond the smallest load.
+Remediation Steps - Cloud Console: Change the SKU of the VPN gateway by deleting the old one and creating a new one with a different SKU.
+Remediation Steps - Terraform: Change the 'sku' in the azurerm_virtual_network_gateway to a value that is not "Basic".
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [azurerm_virtual_network_gateway.vnetgw] (main.tf:45)

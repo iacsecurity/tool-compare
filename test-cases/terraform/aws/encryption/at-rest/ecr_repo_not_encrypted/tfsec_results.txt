@@ -1,7 +1,7 @@
 
   Result 1
 
-  [aws-ecr-repository-customer-key][[0m[97mLOW[39m[0m] Resource 'aws_ecr_repository.foo' does not have CMK encryption configured
+  [aws-ecr-repository-customer-key][LOW] Resource 'aws_ecr_repository.foo' does not have CMK encryption configured
   /src/main.tf:1-8
 
 
@@ -19,16 +19,16 @@
   Resolution: Use customer managed keys
 
   More Info:
-  - https://tfsec.dev/docs/aws/ecr/repository-customer-key#aws/ecr 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/ecr/repository-customer-key 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecr_repository#encryption_configuration 
   - https://docs.aws.amazon.com/AmazonECR/latest/userguide/encryption-at-rest.html 
 
   times
   ------------------------------------------
-  disk i/o             49.468584ms
-  parsing HCL          538.083µs
-  evaluating values    1.78675ms
-  running checks       18.413875ms
+  disk i/o             22.120584ms
+  parsing HCL          521.667µs
+  evaluating values    1.524207ms
+  running checks       16.153583ms
 
   counts
   ------------------------------------------

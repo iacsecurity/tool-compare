@@ -1,54 +1,7 @@
 
   Result 1
 
-  [aws-redshift-non-default-vpc-deployment][[0m[31mHIGH[39m[0m] Resource 'aws_redshift_cluster.default' is being deployed outside of a VPC
-  /src/main.tf:1-8
-
-
-       1 | resource "aws_redshift_cluster" "default" {
-       2 |   cluster_identifier = "tf-redshift-cluster"
-       3 |   database_name      = "mydb"
-       4 |   master_username    = "foo"
-       5 |   master_password    = "Mustbe8characters"
-       6 |   node_type          = "dc1.large"
-       7 |   cluster_type       = "single-node"
-       8 | }
-       9 | 
-
-  Legacy ID:  AWS087
-  Impact:     Redshift cluster does not benefit from VPC security if it is deployed in EC2 classic mode
-  Resolution: Deploy Redshift cluster into a non default VPC
-
-  More Info:
-  - https://tfsec.dev/docs/aws/redshift/non-default-vpc-deployment#aws/redshift 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/redshift_cluster#cluster_subnet_group_name 
-  - https://docs.aws.amazon.com/redshift/latest/mgmt/managing-clusters-vpc.html 
-
-  Result 2
-
-  [general-secrets-sensitive-in-attribute][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Block 'aws_redshift_cluster.default' includes a potentially sensitive attribute which is defined within the project.
-  /src/main.tf:5
-
-
-       2 |   cluster_identifier = "tf-redshift-cluster"
-       3 |   database_name      = "mydb"
-       4 |   master_username    = "foo"
-       5 |   master_password    = "Mustbe8characters"    string: "Mustbe8characters"
-       6 |   node_type          = "dc1.large"
-       7 |   cluster_type       = "single-node"
-       8 | }
-
-  Legacy ID:  GEN003
-  Impact:     Block attribute could be leaking secrets
-  Resolution: Don't include sensitive data in blocks
-
-  More Info:
-  - https://tfsec.dev/docs/general/secrets/sensitive-in-attribute#general/secrets 
-  - https://www.terraform.io/docs/state/sensitive-data.html 
-
-  Result 3
-
-  [aws-redshift-encryption-customer-key][[0m[31mHIGH[39m[0m] Resource 'aws_redshift_cluster.default' does not have encryption enabled
+  [aws-redshift-encryption-customer-key][HIGH] Resource 'aws_redshift_cluster.default' does not have encryption enabled
   /src/main.tf:1-8
 
 
@@ -67,16 +20,63 @@
   Resolution: Enable encryption using CMK
 
   More Info:
-  - https://tfsec.dev/docs/aws/redshift/encryption-customer-key#aws/redshift 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/redshift/encryption-customer-key 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/redshift_cluster#encrypted 
   - https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-db-encryption.html 
 
+  Result 2
+
+  [aws-redshift-non-default-vpc-deployment][HIGH] Resource 'aws_redshift_cluster.default' is being deployed outside of a VPC
+  /src/main.tf:1-8
+
+
+       1 | resource "aws_redshift_cluster" "default" {
+       2 |   cluster_identifier = "tf-redshift-cluster"
+       3 |   database_name      = "mydb"
+       4 |   master_username    = "foo"
+       5 |   master_password    = "Mustbe8characters"
+       6 |   node_type          = "dc1.large"
+       7 |   cluster_type       = "single-node"
+       8 | }
+       9 | 
+
+  Legacy ID:  AWS087
+  Impact:     Redshift cluster does not benefit from VPC security if it is deployed in EC2 classic mode
+  Resolution: Deploy Redshift cluster into a non default VPC
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/redshift/non-default-vpc-deployment 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/redshift_cluster#cluster_subnet_group_name 
+  - https://docs.aws.amazon.com/redshift/latest/mgmt/managing-clusters-vpc.html 
+
+  Result 3
+
+  [general-secrets-sensitive-in-attribute][CRITICAL] Block 'aws_redshift_cluster.default' includes a potentially sensitive attribute which is defined within the project.
+  /src/main.tf:5
+
+
+       2 |   cluster_identifier = "tf-redshift-cluster"
+       3 |   database_name      = "mydb"
+       4 |   master_username    = "foo"
+       5 |   master_password    = "Mustbe8characters"    string: "Mustbe8characters"
+       6 |   node_type          = "dc1.large"
+       7 |   cluster_type       = "single-node"
+       8 | }
+
+  Legacy ID:  GEN003
+  Impact:     Block attribute could be leaking secrets
+  Resolution: Don't include sensitive data in blocks
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/general/secrets/sensitive-in-attribute 
+  - https://www.terraform.io/docs/state/sensitive-data.html 
+
   times
   ------------------------------------------
-  disk i/o             47.720707ms
-  parsing HCL          506.75µs
-  evaluating values    1.710083ms
-  running checks       31.234125ms
+  disk i/o             25.021418ms
+  parsing HCL          689.833µs
+  evaluating values    1.579668ms
+  running checks       20.054584ms
 
   counts
   ------------------------------------------

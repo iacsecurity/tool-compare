@@ -4,7 +4,7 @@ Failed to run the process ...
     "isPrivate": true,
     "isLicensesEnabled": false,
     "ignoreSettings": null,
-    "org": "yi2020",
+    "org": "ryder.d",
     "projectId": "",
     "policy": ""
   },
@@ -15,7 +15,7 @@ Failed to run the process ...
   "ignoreSettings": null,
   "targetFile": "main.tf",
   "projectName": "project",
-  "org": "yi2020",
+  "org": "ryder.d",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
@@ -24,36 +24,6 @@ Failed to run the process ...
   "projectType": "terraformconfig",
   "ok": false,
   "infrastructureAsCodeIssues": [
-    {
-      "severity": "low",
-      "resolve": "Set `drop_invalid_header_fields` to `true`",
-      "id": "SNYK-CC-AWS-405",
-      "impact": "Maliciously crafted headers may be accepted by the load balancer",
-      "msg": "resource.aws_lb[test]",
-      "remediation": {
-        "cloudformation": "Set `Properties.LoadBalancerAttributes.Key` to `routing.http.drop_invalid_header_fields.enabled` and `Properties.LoadBalancerAttributes.Value` to `true`",
-        "terraform": "Set `drop_invalid_header_fields` to `true`"
-      },
-      "subType": "Elastic Load Balancing v2 (ALB/NLB)",
-      "issue": "The application load balancer is not set to drop invalid headers.",
-      "publicId": "SNYK-CC-AWS-405",
-      "title": "ALB does not drop invalid headers",
-      "references": [
-        "https://docs.aws.amazon.com/config/latest/developerguide/alb-http-drop-invalid-header-enabled.html"
-      ],
-      "isIgnored": false,
-      "iacDescription": {
-        "issue": "The application load balancer is not set to drop invalid headers.",
-        "impact": "Maliciously crafted headers may be accepted by the load balancer",
-        "resolve": "Set `drop_invalid_header_fields` to `true`"
-      },
-      "lineNumber": 49,
-      "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-405",
-      "path": [
-        "resource",
-        "aws_lb[test]"
-      ]
-    },
     {
       "severity": "low",
       "resolve": "Set `disable_api_termination` attribute  with value `true`",
@@ -79,10 +49,42 @@ Failed to run the process ...
       },
       "lineNumber": 82,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-426",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_instance[inst1]",
         "disable_api_termination"
+      ]
+    },
+    {
+      "severity": "low",
+      "resolve": "Set `drop_invalid_header_fields` to `true`",
+      "id": "SNYK-CC-AWS-405",
+      "impact": "Maliciously crafted headers may be accepted by the load balancer",
+      "msg": "resource.aws_lb[test]",
+      "remediation": {
+        "cloudformation": "Set `Properties.LoadBalancerAttributes.Key` to `routing.http.drop_invalid_header_fields.enabled` and `Properties.LoadBalancerAttributes.Value` to `true`",
+        "terraform": "Set `drop_invalid_header_fields` to `true`"
+      },
+      "subType": "Elastic Load Balancing",
+      "issue": "The application load balancer is not set to drop invalid headers.",
+      "publicId": "SNYK-CC-AWS-405",
+      "title": "ALB does not drop invalid headers",
+      "references": [
+        "https://docs.aws.amazon.com/config/latest/developerguide/alb-http-drop-invalid-header-enabled.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "The application load balancer is not set to drop invalid headers.",
+        "impact": "Maliciously crafted headers may be accepted by the load balancer",
+        "resolve": "Set `drop_invalid_header_fields` to `true`"
+      },
+      "lineNumber": 49,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-405",
+      "isGeneratedByCustomRule": false,
+      "path": [
+        "resource",
+        "aws_lb[test]"
       ]
     },
     {
@@ -109,6 +111,7 @@ Failed to run the process ...
       },
       "lineNumber": 95,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-130",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_instance[inst2]",
@@ -140,6 +143,7 @@ Failed to run the process ...
       },
       "lineNumber": 95,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-426",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_instance[inst2]",
@@ -170,6 +174,7 @@ Failed to run the process ...
       },
       "lineNumber": 108,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-130",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_instance[inst3]",
@@ -204,6 +209,7 @@ Failed to run the process ...
       },
       "lineNumber": 82,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-53",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_instance[inst1]",
@@ -239,6 +245,7 @@ Failed to run the process ...
       },
       "lineNumber": 95,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-53",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_instance[inst2]",
@@ -270,6 +277,7 @@ Failed to run the process ...
       },
       "lineNumber": 82,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-130",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_instance[inst1]",
@@ -301,6 +309,7 @@ Failed to run the process ...
       },
       "lineNumber": 108,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-426",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_instance[inst3]",
@@ -335,6 +344,7 @@ Failed to run the process ...
       },
       "lineNumber": 108,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-53",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_instance[inst3]",

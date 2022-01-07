@@ -4,7 +4,7 @@ Failed to run the process ...
     "isPrivate": true,
     "isLicensesEnabled": false,
     "ignoreSettings": null,
-    "org": "yi2020",
+    "org": "ryder.d",
     "projectId": "",
     "policy": ""
   },
@@ -15,7 +15,7 @@ Failed to run the process ...
   "ignoreSettings": null,
   "targetFile": "main.tf",
   "projectName": "project",
-  "org": "yi2020",
+  "org": "ryder.d",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
@@ -30,6 +30,10 @@ Failed to run the process ...
       "id": "SNYK-CC-TF-149",
       "impact": "Older cipher suites could be vulnerable to hijacking and information disclosure",
       "msg": "resource.azurerm_storage_account[storacc].min_tls_version",
+      "remediation": {
+        "terraform": "Set `min_tls_version` attribute to `TLS1_2`",
+        "arm": "Set `properties.minimumTlsVersion`  attribute to `TLS1_2`"
+      },
       "subType": "Storage",
       "issue": "Azure Storage Account does not enforce latest TLS version",
       "publicId": "SNYK-CC-TF-149",
@@ -43,8 +47,9 @@ Failed to run the process ...
         "impact": "Older cipher suites could be vulnerable to hijacking and information disclosure",
         "resolve": "Set `min_tls_version` attribute to `TLS1_2`"
       },
-      "lineNumber": 19,
+      "lineNumber": 18,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-149",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "azurerm_storage_account[storacc]",
@@ -53,36 +58,46 @@ Failed to run the process ...
     },
     {
       "severity": "low",
-      "resolve": "Set `purge_protection_enabled` attribute to `true`, and `soft_delete_enabled` attribute to `true`",
-      "id": "SNYK-CC-TF-175",
-      "impact": "Accidentally deleted key material will not recoverable",
-      "msg": "resource.azurerm_key_vault[kv]",
-      "subType": "Key Vault",
-      "issue": "Azure Key Vault soft-delete feature is not enabled",
-      "publicId": "SNYK-CC-TF-175",
-      "title": "Vault accidental key deletion prevention disabled",
+      "resolve": "Set log blocks for the categories `Administrative`,`Alert`,`Policy`,`Security` with `enabled` set to `true` for each",
+      "impact": "Not capturing the diagnostic setting categories for appropriate management activities leads to missing important alerts",
+      "msg": "resource.azurerm_monitor_diagnostic_setting[example].log",
+      "remediation": {
+        "terraform": "Set log blocks for the categories `Administrative`,`Alert`,`Policy`,`Security` with `enabled` set to `true` for each"
+      },
+      "subType": "Monitor",
+      "issue": "Ensure Diagnostic Setting captures appropriate categories",
+      "publicId": "SNYK-CC-AZURE-552",
+      "title": "Ensure Diagnostic Setting captures appropriate categories",
       "references": [
-        "https://docs.microsoft.com/en-us/azure/key-vault/general/soft-delete-overview"
+        "https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/monitor_diagnostic_setting#category",
+        "https://docs.microsoft.com/en-us/azure/azure-monitor/essentials/resource-manager-diagnostic-settings ",
+        "CIS Benchmark v1.3.1 - 5.1.2 Ensure Diagnostic Setting captures appropriate categories"
       ],
+      "id": "SNYK-CC-AZURE-552",
       "isIgnored": false,
       "iacDescription": {
-        "issue": "Azure Key Vault soft-delete feature is not enabled",
-        "impact": "Accidentally deleted key material will not recoverable",
-        "resolve": "Set `purge_protection_enabled` attribute to `true`, and `soft_delete_enabled` attribute to `true`"
+        "issue": "Ensure Diagnostic Setting captures appropriate categories",
+        "impact": "Not capturing the diagnostic setting categories for appropriate management activities leads to missing important alerts",
+        "resolve": "Set log blocks for the categories `Administrative`,`Alert`,`Policy`,`Security` with `enabled` set to `true` for each"
       },
-      "lineNumber": 30,
-      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-175",
+      "lineNumber": 60,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AZURE-552",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
-        "azurerm_key_vault[kv]"
+        "azurerm_monitor_diagnostic_setting[example]",
+        "log"
       ]
     },
     {
       "severity": "low",
-      "resolve": "Set `network_rules.bypass` attribute to `['Azure Services']`",
-      "id": "SNYK-CC-TF-172",
-      "impact": "Services will not be able to access the storage account over network",
+      "resolve": "Set `network_rules.bypass` attribute to `['Azure Services']. Ensure to add appropriate rules for your application alongside the proposed remediation step. Setting this remediation without any other rules will block all network access to the storage account except for Microsoft Trusted Services.`",
+      "impact": "Trusted network services cannot be whitelisted via network rules. When any network rule is configured, the trusted services will not be able to access the storage account. Note, by default there is no network rule configured.",
       "msg": "resource.azurerm_storage_account[storacc].network_rules",
+      "remediation": {
+        "terraform": "Set `network_rules.bypass` attribute to `['Azure Services']. Ensure to add appropriate rules for your application alongside the proposed remediation step. Setting this remediation without any other rules will block all network access to the storage account except for Microsoft Trusted Services.`",
+        "arm": "Set `properties.networkAcls.bypass` attribute to `'Azure Services'. Ensure to add appropriate rules for your application alongside the proposed remediation step. Setting this remediation without any other rules will block all network access to the storage account except for Microsoft Trusted Services.`"
+      },
       "subType": "Storage",
       "issue": "Network access bypass for Trusted Microsoft Services is not enabled on the storage account",
       "publicId": "SNYK-CC-TF-172",
@@ -90,18 +105,85 @@ Failed to run the process ...
       "references": [
         "https://docs.microsoft.com/en-gb/azure/storage/common/storage-network-security#trusted-microsoft-services"
       ],
+      "id": "SNYK-CC-TF-172",
       "isIgnored": false,
       "iacDescription": {
         "issue": "Network access bypass for Trusted Microsoft Services is not enabled on the storage account",
-        "impact": "Services will not be able to access the storage account over network",
-        "resolve": "Set `network_rules.bypass` attribute to `['Azure Services']`"
+        "impact": "Trusted network services cannot be whitelisted via network rules. When any network rule is configured, the trusted services will not be able to access the storage account. Note, by default there is no network rule configured.",
+        "resolve": "Set `network_rules.bypass` attribute to `['Azure Services']. Ensure to add appropriate rules for your application alongside the proposed remediation step. Setting this remediation without any other rules will block all network access to the storage account except for Microsoft Trusted Services.`"
       },
-      "lineNumber": 19,
+      "lineNumber": 18,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-172",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "azurerm_storage_account[storacc]",
         "network_rules"
+      ]
+    },
+    {
+      "severity": "low",
+      "resolve": "Set `purge_protection_enabled` attribute to `true`, and `soft_delete_enabled` attribute to `true`",
+      "impact": "Accidentally deleted key material will not recoverable",
+      "msg": "resource.azurerm_key_vault[kv]",
+      "remediation": {
+        "terraform": "Set `purge_protection_enabled` attribute to `true`, and `soft_delete_enabled` attribute to `true`",
+        "arm": "Set `properties.enablePurgeProtection` attribute to `true`, and `properties.enableSoftDelete` attribute to `true`"
+      },
+      "subType": "Key Vault",
+      "issue": "Vault accidental key deletion prevention disabled",
+      "publicId": "SNYK-CC-TF-175",
+      "title": "Vault accidental key deletion prevention disabled",
+      "references": [
+        "https://docs.microsoft.com/en-us/azure/key-vault/general/soft-delete-overview",
+        "CIS Microsoft Azure Foundations Benchmark v1.3.1 - 8.4 Ensure the key vault is recoverable"
+      ],
+      "id": "SNYK-CC-TF-175",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Vault accidental key deletion prevention disabled",
+        "impact": "Accidentally deleted key material will not recoverable",
+        "resolve": "Set `purge_protection_enabled` attribute to `true`, and `soft_delete_enabled` attribute to `true`"
+      },
+      "lineNumber": 29,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-175",
+      "isGeneratedByCustomRule": false,
+      "path": [
+        "resource",
+        "azurerm_key_vault[kv]"
+      ]
+    },
+    {
+      "severity": "medium",
+      "resolve": "Set `soft_delete_retention_days` to `90`",
+      "impact": "Accidentally deleted vaults and vault items are not recoverable and might lead to data loss",
+      "msg": "resource.azurerm_key_vault[kv]",
+      "remediation": {
+        "terraform": "Set `soft_delete_retention_days` to `90`",
+        "arm": "Set `properties.enableSoftDelete` to `true`"
+      },
+      "subType": "Key Vault",
+      "issue": "Key Vault has soft deletion disabled",
+      "publicId": "SNYK-CC-AZURE-625",
+      "title": "Key Vault has soft deletion disabled",
+      "references": [
+        "https://docs.microsoft.com/en-us/azure/key-vault/general/soft-delete-overview",
+        "https://docs.microsoft.com/en-us/azure/templates/microsoft.keyvault/vaults?tabs=bicep",
+        "CIS Microsoft Azure Foundations Benchmark v1.3.1 - 8.4 Ensure the key vault is recoverable"
+      ],
+      "id": "SNYK-CC-AZURE-625",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Key Vault has soft deletion disabled",
+        "impact": "Accidentally deleted vaults and vault items are not recoverable and might lead to data loss",
+        "resolve": "Set `soft_delete_retention_days` to `90`"
+      },
+      "lineNumber": 29,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AZURE-625",
+      "isGeneratedByCustomRule": false,
+      "path": [
+        "resource",
+        "azurerm_key_vault[kv]"
       ]
     }
   ]

@@ -4,7 +4,7 @@ Failed to run the process ...
     "isPrivate": true,
     "isLicensesEnabled": false,
     "ignoreSettings": null,
-    "org": "yi2020",
+    "org": "ryder.d",
     "projectId": "",
     "policy": ""
   },
@@ -15,7 +15,7 @@ Failed to run the process ...
   "ignoreSettings": null,
   "targetFile": "main.tf",
   "projectName": "project",
-  "org": "yi2020",
+  "org": "ryder.d",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
@@ -30,6 +30,10 @@ Failed to run the process ...
       "id": "SNYK-CC-TF-146",
       "impact": "The content could be intercepted and manipulated in transit",
       "msg": "resource.azurerm_mysql_server[example].ssl_enforcement_enabled",
+      "remediation": {
+        "terraform": "Set `ssl_enforcement_enabled` attribute to `true`",
+        "arm": "Set `properties.sslEnforcement` attribute to `Enabled`"
+      },
       "subType": "Database",
       "issue": "Azure MySQL Server does not enforce SSL traffic only",
       "publicId": "SNYK-CC-TF-146",
@@ -43,12 +47,46 @@ Failed to run the process ...
         "impact": "The content could be intercepted and manipulated in transit",
         "resolve": "Set `ssl_enforcement_enabled` attribute to `true`"
       },
-      "lineNumber": 32,
+      "lineNumber": 31,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-146",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "azurerm_mysql_server[example]",
         "ssl_enforcement_enabled"
+      ]
+    },
+    {
+      "severity": "medium",
+      "resolve": "Set `ssl_enforcement_enabled` to `true`",
+      "impact": "Unencrypted connections are vulnerable to information disclosure or manipulation",
+      "msg": "resource.azurerm_mysql_server[example]",
+      "remediation": {
+        "terraform": "Set `ssl_enforcement_enabled` to `true`",
+        "arm": "Set `sslEnforcement` to `Enabled`"
+      },
+      "subType": "Database",
+      "issue": "MySQL connections not TLS enforced",
+      "publicId": "SNYK-CC-AZURE-628",
+      "title": "MySQL connections not TLS enforced",
+      "references": [
+        "https://docs.microsoft.com/en-us/azure/mysql/concepts-ssl-connection-security",
+        "https://docs.microsoft.com/en-us/azure/templates/microsoft.dbformysql/servers?tabs=json",
+        "https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mysql_server"
+      ],
+      "id": "SNYK-CC-AZURE-628",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "MySQL connections not TLS enforced",
+        "impact": "Unencrypted connections are vulnerable to information disclosure or manipulation",
+        "resolve": "Set `ssl_enforcement_enabled` to `true`"
+      },
+      "lineNumber": 15,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AZURE-628",
+      "isGeneratedByCustomRule": false,
+      "path": [
+        "resource",
+        "azurerm_mysql_server[example]"
       ]
     }
   ]

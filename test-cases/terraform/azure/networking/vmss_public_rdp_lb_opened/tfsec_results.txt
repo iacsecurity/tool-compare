@@ -1,32 +1,32 @@
 
   Result 1
 
-  [general-secrets-sensitive-in-attribute][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Block 'azurerm_windows_virtual_machine_scale_set.example' includes a potentially sensitive attribute which is defined within the project.
-  /src/main.tf:80
+  [general-secrets-sensitive-in-attribute][CRITICAL] Block 'azurerm_windows_virtual_machine_scale_set.example' includes a potentially sensitive attribute which is defined within the project.
+  /src/main.tf:79
 
 
-      77 |   location            = azurerm_resource_group.rg.location
-      78 |   sku                 = "Standard_B2s"
-      79 |   instances           = 3
-      80 |   admin_password      = "P@55w0rd1234!"    string: "P@55w0rd1234!"
-      81 |   admin_username      = "adminuser"
-      82 |   computer_name_prefix = "pc"
-      83 | 
+      76 |   location            = azurerm_resource_group.rg.location
+      77 |   sku                 = "Standard_B2s"
+      78 |   instances           = 3
+      79 |   admin_password      = "P@55w0rd1234!"    string: "P@55w0rd1234!"
+      80 |   admin_username      = "adminuser"
+      81 |   computer_name_prefix = "pc"
+      82 | 
 
   Legacy ID:  GEN003
   Impact:     Block attribute could be leaking secrets
   Resolution: Don't include sensitive data in blocks
 
   More Info:
-  - https://tfsec.dev/docs/general/secrets/sensitive-in-attribute#general/secrets 
+  - https://aquasecurity.github.io/tfsec/latest/checks/general/secrets/sensitive-in-attribute 
   - https://www.terraform.io/docs/state/sensitive-data.html 
 
   times
   ------------------------------------------
-  disk i/o             1.090693ms
-  parsing HCL          12.2µs
-  evaluating values    651.731µs
-  running checks       3.440487ms
+  disk i/o             28.789751ms
+  parsing HCL          650.25µs
+  evaluating values    5.041583ms
+  running checks       20.003959ms
 
   counts
   ------------------------------------------

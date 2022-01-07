@@ -1,6 +1,58 @@
 
 WARNINGs found:
+Rule: Ensure use of CloudWatch Logs destination policy, and no action wildcards are being used
+Description: Using wildcard actions may inadvertently allow users to take actions you do not want to allow them to do. In addition, using a resource policy will provide an additional layer of security. It is a best practice to use a resource policy and give specific permissions only.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/iam-access-control-overview-cwl.html#resource-based-policies-cwl to modify CloudWatch Logs destination policy in order to avoid using wildcard actions.
+Remediation Steps - Terraform: For the aws_cloudwatch_log_destination_policy resource, modify policy argument in order to avoid using wildcard actions.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_cloudwatch_log_destination.test_destination] (main.tf:60)
+     Violating Resource: [aws_cloudwatch_log_destination_policy.test_destination_policy]  (main.tf:85)
+
+     Evidence:
+             | The policy attached to the CloudWatch Logs Destination aws_cloudwatch_log_destination.test_destination is using wildcard action logs:*, without any condition
+
+
+-----------------------------------------------
+Rule: Ensure Kinesis streams are set to be encrypted at rest
+Description: Cloudrail will review the Kinesis streams in your environment. If a stream is not set to encrypt at rest, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/streams/latest/dev/getting-started-with-sse.html to enable encryption for Kinesis streams.
+Remediation Steps - Terraform: For the aws_kinesis_stream resource, set the encryption_type argument to "KMS" and set kms_key_id argument.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_kinesis_stream.kinesis_for_cloudwatch] (main.tf:49)
+     Violating Resource: [aws_kinesis_stream.kinesis_for_cloudwatch]  (main.tf:49)
+
+     Evidence:
+             | The Kinesis Data Stream aws_kinesis_stream.kinesis_for_cloudwatch is not set to use encryption at rest
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+Description: Some organizations require that all resources have at least one tag set. This rule will review the resources that can be tagged, and make sure each one has a tag that is not the Name tag. Resources that are not tagged will be flagged.
+Remediation Steps - Cloud Console: Access the specific resource in the AWS console and add tags.
+Remediation Steps - Terraform: Add a tags section to the resource with at least one tag beyond the Name tag.
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_iam_role.iam_for_cloudwatch] (main.tf:29)
+     Violating Resource: [aws_iam_role.iam_for_cloudwatch]  (main.tf:29)
+
+     Evidence:
+             | Resource IAM Role aws_iam_role.iam_for_cloudwatch does not have any tags set
+
+
+   - Exposed Resource: [aws_kinesis_stream.kinesis_for_cloudwatch] (main.tf:49)
+     Violating Resource: [aws_kinesis_stream.kinesis_for_cloudwatch]  (main.tf:49)
+
+     Evidence:
+             | Resource Kinesis Data Stream aws_kinesis_stream.kinesis_for_cloudwatch does not have any tags set
+
+
+-----------------------------------------------
 Rule: Ensure IAM policies pass Access Analyzer policy validation without WARNING and SUGGESTION issues
+Description: Cloudrail will send all of your IAM policies to the AWS Access Analyzer for Policy Validation. Any issues found by Access Analyzer at the WARNING and SUGGESTION severities will be highlighted as issues by Cloudrail under this rule.
+Remediation Steps - Cloud Console: Review the findings and correct them within the policy.
+Remediation Steps - Terraform: Review the findings and correct them within the policy.
  - 2 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_iam_role.iam_for_cloudwatch] (main.tf:29)
@@ -19,46 +71,6 @@ Rule: Ensure IAM policies pass Access Analyzer policy validation without WARNING
          Line 5, Col 13:
              | Add a value to the empty string in the Sid element
              | See https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-reference-policy-checks.html#access-analyzer-reference-policy-checks-suggestion-empty-sid-value
-
-
------------------------------------------------
-Rule: Ensure all resources that can be tagged have at least one tag
- - 2 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_kinesis_stream.kinesis_for_cloudwatch] (main.tf:49)
-     Violating Resource: [aws_kinesis_stream.kinesis_for_cloudwatch]  (main.tf:49)
-
-     Evidence:
-             | Resource Kinesis Data Stream aws_kinesis_stream.kinesis_for_cloudwatch does not have any tags set
-
-
-   - Exposed Resource: [aws_iam_role.iam_for_cloudwatch] (main.tf:29)
-     Violating Resource: [aws_iam_role.iam_for_cloudwatch]  (main.tf:29)
-
-     Evidence:
-             | Resource IAM Role aws_iam_role.iam_for_cloudwatch does not have any tags set
-
-
------------------------------------------------
-Rule: Ensure Kinesis streams are set to be encrypted at rest
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_kinesis_stream.kinesis_for_cloudwatch] (main.tf:49)
-     Violating Resource: [aws_kinesis_stream.kinesis_for_cloudwatch]  (main.tf:49)
-
-     Evidence:
-             | The Kinesis Data Stream aws_kinesis_stream.kinesis_for_cloudwatch is not set to use encryption at rest
-
-
------------------------------------------------
-Rule: Ensure use of CloudWatch Logs destination policy, and no action wildcards are being used
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_cloudwatch_log_destination.test_destination] (main.tf:60)
-     Violating Resource: [aws_cloudwatch_log_destination_policy.test_destination_policy]  (main.tf:85)
-
-     Evidence:
-             | The policy attached to the CloudWatch Logs Destination aws_cloudwatch_log_destination.test_destination is using wildcard action logs:*, without any condition
 
 
 -----------------------------------------------

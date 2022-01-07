@@ -1,6 +1,9 @@
 
 WARNINGs found:
 Rule: Ensure Kinesis streams are set to be encrypted at rest
+Description: Cloudrail will review the Kinesis streams in your environment. If a stream is not set to encrypt at rest, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/streams/latest/dev/getting-started-with-sse.html to enable encryption for Kinesis streams.
+Remediation Steps - Terraform: For the aws_kinesis_stream resource, set the encryption_type argument to "KMS" and set kms_key_id argument.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_kinesis_stream.test_stream] (main.tf:1)

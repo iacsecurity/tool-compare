@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+Scanning with Keeping Infrastructure as Code Secure v1.4.9
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 851
 Queries failed to execute: 0
 
 ------------------------------------
@@ -31,7 +31,18 @@ Resource Not Using Tags, Severity: INFO, Results: 1
 Description: AWS services resource tags are an essential part of managing components
 Platform: Terraform
 
-	[1]: /src/main.tf:1
+	[1]: ../../src/main.tf:1
+
+		001: resource "aws_globalaccelerator_accelerator" "example" {
+		002:   name            = "Example"
+		003:   ip_address_type = "IPV4"
+
+
+Shield Advanced Not In Use, Severity: LOW, Results: 1
+Description: AWS Shield Advanced should be used for Amazon Route 53 hosted zone, AWS Global Accelerator accelerator, Elastic IP Address, Elastic Load Balancing, and Amazon CloudFront Distribution to protect these resources against robust DDoS attacks
+Platform: Terraform
+
+	[1]: ../../src/main.tf:1
 
 		001: resource "aws_globalaccelerator_accelerator" "example" {
 		002:   name            = "Example"
@@ -42,7 +53,7 @@ Global Accelerator Flow Logs Disabled, Severity: LOW, Results: 1
 Description: Global Accelerator should have flow logs enabled
 Platform: Terraform
 
-	[1]: /src/main.tf:6
+	[1]: ../../src/main.tf:6
 
 		005: 
 		006:   attributes {
@@ -53,8 +64,8 @@ Platform: Terraform
 Results Summary:
 HIGH: 0
 MEDIUM: 0
-LOW: 1
+LOW: 2
 INFO: 1
-TOTAL: 2
+TOTAL: 3
 
-Scan duration: 4.498851107s
+Scan duration: 9.238538629s

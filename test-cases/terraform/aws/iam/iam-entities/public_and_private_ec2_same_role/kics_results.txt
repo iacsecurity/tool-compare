@@ -16,90 +16,497 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+Scanning with Keeping Infrastructure as Code Secure v1.4.9
 
 
 
-Files scanned: 1
-Parsed files: 1
-Queries loaded: 575
+Files scanned: 53
+Parsed files: 53
+Queries loaded: 1127
 Queries failed to execute: 0
 
 ------------------------------------
 
-Resource Not Using Tags, Severity: INFO, Results: 4
+Resource Not Using Tags, Severity: INFO, Results: 46
 Description: AWS services resource tags are an essential part of managing components
 Platform: Terraform
 
-	[1]: /src/main.tf:50
+	[1]: ../../src/.terraform/modules/vpc/main.tf:804
+
+		803: 
+		804:   tags = merge(
+		805:     {
+
+
+	[2]: ../../src/.terraform/modules/vpc/main.tf:493
+
+		492: 
+		493:   tags = merge(
+		494:     {
+
+
+	[3]: ../../src/.terraform/modules/vpc/main.tf:388
+
+		387: 
+		388:   tags = merge(
+		389:     {
+
+
+	[4]: ../../src/main.tf:50
 
 		049: 
 		050: resource "aws_iam_role" "test_role" {
 		051:   name = "test_role"
 
 
-	[2]: /src/main.tf:71
+	[5]: ../../src/.terraform/modules/vpc/main.tf:1236
+
+		1235: 
+		1236:   tags = merge(
+		1237:     {
+
+
+	[6]: ../../src/.terraform/modules/vpc/main.tf:581
+
+		580: 
+		581:   tags = merge(
+		582:     {
+
+
+	[7]: ../../src/.terraform/modules/vpc/main.tf:363
+
+		362: 
+		363:   tags = merge(
+		364:     {
+
+
+	[8]: ../../src/.terraform/modules/vpc/main.tf:561
+
+		560: 
+		561:   tags = merge(
+		562:     {
+
+
+	[9]: ../../src/.terraform/modules/vpc/vpc-flow-logs.tf:51
+
+		050: 
+		051:   tags = merge(var.tags, var.vpc_flow_log_tags)
+		052: }
+
+
+	[10]: ../../src/.terraform/modules/vpc/examples/vpc-flow-logs/main.tf:149
+
+		148: 
+		149: resource "aws_iam_role" "vpc_flow_log_cloudwatch" {
+		150:   name_prefix        = "vpc-flow-log-role-"
+
+
+	[11]: ../../src/.terraform/modules/vpc/main.tf:963
+
+		962: 
+		963:   tags = merge(
+		964:     {
+
+
+	[12]: ../../src/.terraform/modules/vpc/main.tf:247
+
+		246: 
+		247:   tags = merge(
+		248:     {
+
+
+	[13]: ../../src/.terraform/modules/vpc/main.tf:192
+
+		191: 
+		192:   tags = merge(
+		193:     { "Name" = var.name },
+
+
+	[14]: ../../src/.terraform/modules/vpc/main.tf:1108
+
+		1107: 
+		1108:   tags = merge(
+		1109:     {
+
+
+	[15]: ../../src/.terraform/modules/vpc/vpc-flow-logs.tf:61
+
+		060: 
+		061:   tags = merge(var.tags, var.vpc_flow_log_tags)
+		062: }
+
+
+	[16]: ../../src/.terraform/modules/vpc/main.tf:910
+
+		909: 
+		910:   tags = merge(
+		911:     {
+
+
+	[17]: ../../src/.terraform/modules/vpc/main.tf:36
+
+		035: 
+		036:   tags = merge(
+		037:     {
+
+
+	[18]: ../../src/.terraform/modules/vpc/main.tf:1016
+
+		1015: 
+		1016:   tags = merge(
+		1017:     {
+
+
+	[19]: ../../src/.terraform/modules/vpc/main.tf:698
+
+		697: 
+		698:   tags = merge(
+		699:     {
+
+
+	[20]: ../../src/.terraform/modules/vpc/main.tf:88
+
+		087: 
+		088:   tags = merge(
+		089:     {
+
+
+	[21]: ../../src/.terraform/modules/vpc/modules/vpc-endpoints/main.tf:35
+
+		034: 
+		035:   tags = merge(var.tags, lookup(each.value, "tags", {}))
+		036: 
+
+
+	[22]: ../../src/.terraform/modules/vpc/main.tf:416
+
+		415: 
+		416:   tags = merge(
+		417:     {
+
+
+	[23]: ../../src/.terraform/modules/vpc/main.tf:517
+
+		516: 
+		517:   tags = merge(
+		518:     {
+
+
+	[24]: ../../src/.terraform/modules/vpc/vpc-flow-logs.tf:37
+
+		036: 
+		037:   tags = merge(var.tags, var.vpc_flow_log_tags)
+		038: }
+
+
+	[25]: ../../src/.terraform/modules/vpc/vpc-flow-logs.tf:93
+
+		092:   policy      = data.aws_iam_policy_document.vpc_flow_log_cloudwatch[0].json
+		093:   tags        = merge(var.tags, var.vpc_flow_log_tags)
+		094: }
+
+
+	[26]: ../../src/.terraform/modules/vpc/main.tf:605
+
+		604: 
+		605:   tags = merge(
+		606:     {
+
+
+	[27]: ../../src/.terraform/modules/vpc/main.tf:1256
+
+		1255: 
+		1256:   tags = merge(
+		1257:     {
+
+
+	[28]: ../../src/.terraform/modules/vpc/main.tf:445
+
+		444: 
+		445:   tags = merge(
+		446:     {
+
+
+	[29]: ../../src/.terraform/modules/vpc/main.tf:110
+
+		109: 
+		110:   tags = merge(
+		111:     {
+
+
+	[30]: ../../src/.terraform/modules/vpc/main.tf:149
+
+		148: 
+		149:   tags = merge(
+		150:     {
+
+
+	[31]: ../../src/.terraform/modules/vpc/main.tf:857
+
+		856: 
+		857:   tags = merge(
+		858:     {
+
+
+	[32]: ../../src/.terraform/modules/vpc/main.tf:269
+
+		268: 
+		269:   tags = merge(
+		270:     {
+
+
+	[33]: ../../src/.terraform/modules/vpc/main.tf:473
+
+		472: 
+		473:   tags = merge(
+		474:     {
+
+
+	[34]: ../../src/.terraform/modules/vpc/main.tf:679
+
+		678: 
+		679:   tags = merge(
+		680:     {
+
+
+	[35]: ../../src/.terraform/modules/vpc/main.tf:537
+
+		536: 
+		537:   tags = merge(
+		538:     {
+
+
+	[36]: ../../src/main.tf:71
 
 		070: 
 		071: resource "aws_iam_instance_profile" "test_profile" {
 		072:   name = "test_profile"
 
 
-	[3]: /src/main.tf:98
+	[37]: ../../src/main.tf:98
 
 		097: 
 		098: resource "aws_instance" "pub_ins" {
 		099:   ami           = "${data.aws_ami.ubuntu.id}"
 
 
-	[4]: /src/main.tf:106
+	[38]: ../../src/.terraform/modules/vpc/main.tf:751
+
+		750: 
+		751:   tags = merge(
+		752:     {
+
+
+	[39]: ../../src/.terraform/modules/vpc/main.tf:327
+
+		326: 
+		327:   tags = merge(
+		328:     {
+
+
+	[40]: ../../src/.terraform/modules/vpc/main.tf:208
+
+		207: 
+		208:   tags = merge(
+		209:     {
+
+
+	[41]: ../../src/.terraform/modules/vpc/examples/vpc-flow-logs/main.tf:145
+
+		144: # Cloudwatch logs
+		145: resource "aws_cloudwatch_log_group" "flow_log" {
+		146:   name = local.cloudwatch_log_group_name
+
+
+	[42]: ../../src/main.tf:106
 
 		105: 
 		106: resource "aws_instance" "priv_ins" {
 		107:   ami           = "${data.aws_ami.ubuntu.id}"
+
+
+	[43]: ../../src/.terraform/modules/vpc/main.tf:1083
+
+		1082: 
+		1083:   tags = merge(
+		1084:     {
+
+
+	[44]: ../../src/.terraform/modules/vpc/main.tf:345
+
+		344: 
+		345:   tags = merge(
+		346:     {
+
+
+	[45]: ../../src/.terraform/modules/vpc/examples/vpc-flow-logs/main.tf:170
+
+		169: 
+		170: resource "aws_iam_policy" "vpc_flow_log_cloudwatch" {
+		171:   name_prefix = "vpc-flow-log-cloudwatch-"
+
+
+	[46]: ../../src/.terraform/modules/vpc/main.tf:135
+
+		134: 
+		135:   tags = merge(
+		136:     {
 
 
 EC2 Not EBS Optimized, Severity: INFO, Results: 2
 Description: It's considered a best practice for an EC2 instance to use an EBS optimized instance. This provides the best performance for your EBS volumes by minimizing contention between Amazon EBS I/O and other traffic from your instance
 Platform: Terraform
 
-	[1]: /src/main.tf:98
-
-		097: 
-		098: resource "aws_instance" "pub_ins" {
-		099:   ami           = "${data.aws_ami.ubuntu.id}"
-
-
-	[2]: /src/main.tf:106
+	[1]: ../../src/main.tf:106
 
 		105: 
 		106: resource "aws_instance" "priv_ins" {
 		107:   ami           = "${data.aws_ami.ubuntu.id}"
+
+
+	[2]: ../../src/main.tf:98
+
+		097: 
+		098: resource "aws_instance" "pub_ins" {
+		099:   ami           = "${data.aws_ami.ubuntu.id}"
 
 
 EC2 Instance Monitoring Disabled, Severity: INFO, Results: 2
 Description: EC2 Instance should have detailed monitoring enabled. With detailed monitoring enabled data is available in 1-minute periods
 Platform: Terraform
 
-	[1]: /src/main.tf:98
-
-		097: 
-		098: resource "aws_instance" "pub_ins" {
-		099:   ami           = "${data.aws_ami.ubuntu.id}"
-
-
-	[2]: /src/main.tf:106
+	[1]: ../../src/main.tf:106
 
 		105: 
 		106: resource "aws_instance" "priv_ins" {
 		107:   ami           = "${data.aws_ami.ubuntu.id}"
 
 
+	[2]: ../../src/main.tf:98
+
+		097: 
+		098: resource "aws_instance" "pub_ins" {
+		099:   ami           = "${data.aws_ami.ubuntu.id}"
+
+
+Shield Advanced Not In Use, Severity: LOW, Results: 1
+Description: AWS Shield Advanced should be used for Amazon Route 53 hosted zone, AWS Global Accelerator accelerator, Elastic IP Address, Elastic Load Balancing, and Amazon CloudFront Distribution to protect these resources against robust DDoS attacks
+Platform: Terraform
+
+	[1]: ../../src/.terraform/modules/vpc/main.tf:1078
+
+		1077: 
+		1078: resource "aws_eip" "nat" {
+		1079:   count = var.create_vpc && var.enable_nat_gateway && false == var.reuse_nat_ips ? local.nat_gateway_count : 0
+
+
+S3 Bucket Without Ignore Public ACL, Severity: LOW, Results: 1
+Description: S3 bucket without ignore public ACL
+Platform: Terraform
+
+	[1]: ../../src/.terraform/modules/vpc/examples/vpc-flow-logs/main.tf:103
+
+		102: # S3 Bucket
+		103: module "s3_bucket" {
+		104:   source  = "terraform-aws-modules/s3-bucket/aws"
+
+
+S3 Bucket Logging Disabled, Severity: LOW, Results: 1
+Description: S3 bucket without logging
+Platform: Terraform
+
+	[1]: ../../src/.terraform/modules/vpc/examples/vpc-flow-logs/main.tf:103
+
+		102: # S3 Bucket
+		103: module "s3_bucket" {
+		104:   source  = "terraform-aws-modules/s3-bucket/aws"
+
+
+VPC Without Network Firewall, Severity: MEDIUM, Results: 1
+Description: VPC should have a Network Firewall associated
+Platform: Terraform
+
+	[1]: ../../src/.terraform/modules/vpc/main.tf:25
+
+		024: 
+		025: resource "aws_vpc" "this" {
+		026:   count = var.create_vpc ? 1 : 0
+
+
+VPC Subnet Assigns Public IP, Severity: MEDIUM, Results: 2
+Description: VPC Subnet should not assign public IP
+Platform: Terraform
+
+	[1]: ../../src/main.tf:10
+
+		009: 
+		010: module "vpc" {
+		011:   source  = "terraform-aws-modules/vpc/aws"
+
+
+	[2]: ../../src/.terraform/modules/vpc/main.tf:383
+
+		382:   availability_zone_id            = length(regexall("^[a-z]{2}-", element(var.azs, count.index))) == 0 ? element(var.azs, count.index) : null
+		383:   map_public_ip_on_launch         = var.map_public_ip_on_launch
+		384:   assign_ipv6_address_on_creation = var.public_subnet_assign_ipv6_address_on_creation == null ? var.assign_ipv6_address_on_creation : var.public_subnet_assign_ipv6_address_on_creation
+
+
+VPC FlowLogs Disabled, Severity: MEDIUM, Results: 2
+Description: VPC hasn't got any FlowLog associated
+Platform: Terraform
+
+	[1]: ../../src/.terraform/modules/vpc/main.tf:25
+
+		024: 
+		025: resource "aws_vpc" "this" {
+		026:   count = var.create_vpc ? 1 : 0
+
+
+	[2]: ../../src/main.tf:10
+
+		009: 
+		010: module "vpc" {
+		011:   source  = "terraform-aws-modules/vpc/aws"
+
+
+S3 Bucket Without Versioning, Severity: MEDIUM, Results: 1
+Description: S3 bucket without versioning
+Platform: Terraform
+
+	[1]: ../../src/.terraform/modules/vpc/examples/vpc-flow-logs/main.tf:103
+
+		102: # S3 Bucket
+		103: module "s3_bucket" {
+		104:   source  = "terraform-aws-modules/s3-bucket/aws"
+
+
+S3 Bucket Policy Accepts HTTP Requests, Severity: MEDIUM, Results: 1
+Description: S3 Bucket policy should not accept HTTP Requests
+Platform: Terraform
+
+	[1]: ../../src/.terraform/modules/vpc/examples/vpc-flow-logs/main.tf:108
+
+		107:   bucket        = local.s3_bucket_name
+		108:   policy        = data.aws_iam_policy_document.flow_log_s3.json
+		109:   force_destroy = true
+
+
+S3 Bucket Allows Public ACL, Severity: MEDIUM, Results: 1
+Description: S3 bucket allows public ACL
+Platform: Terraform
+
+	[1]: ../../src/.terraform/modules/vpc/examples/vpc-flow-logs/main.tf:103
+
+		102: # S3 Bucket
+		103: module "s3_bucket" {
+		104:   source  = "terraform-aws-modules/s3-bucket/aws"
+
+
 Public and Private EC2 Share Role, Severity: MEDIUM, Results: 1
 Description: Public and private EC2 istances should not share the same role.
 Platform: Terraform
 
-	[1]: /src/main.tf:102
+	[1]: ../../src/main.tf:102
 
 		101:   subnet_id = module.vpc.public_subnets[0]
 		102:   iam_instance_profile = aws_iam_instance_profile.test_profile.name
@@ -110,55 +517,142 @@ Instance With No VPC, Severity: MEDIUM, Results: 2
 Description: Instance should be configured in VPC (Virtual Private Cloud)
 Platform: Terraform
 
-	[1]: /src/main.tf:98
-
-		097: 
-		098: resource "aws_instance" "pub_ins" {
-		099:   ami           = "${data.aws_ami.ubuntu.id}"
-
-
-	[2]: /src/main.tf:106
+	[1]: ../../src/main.tf:106
 
 		105: 
 		106: resource "aws_instance" "priv_ins" {
 		107:   ami           = "${data.aws_ami.ubuntu.id}"
+
+
+	[2]: ../../src/main.tf:98
+
+		097: 
+		098: resource "aws_instance" "pub_ins" {
+		099:   ami           = "${data.aws_ami.ubuntu.id}"
 
 
 IAM Policy Grants Full Permissions, Severity: MEDIUM, Results: 1
 Description: IAM policies allow all ('*') in a statement action
 Platform: Terraform
 
-	[1]: /src/main.tf:90
+	[1]: ../../src/main.tf:81
 
-		089:       "Effect": "Allow",
-		090:       "Resource": "*"
-		091:     }
+		080: 
+		081:   policy = <<EOF
+		082: {
+
+
+Default VPC Exists, Severity: MEDIUM, Results: 1
+Description: It isn't recommended to use resources in default VPC
+Platform: Terraform
+
+	[1]: ../../src/.terraform/modules/vpc/main.tf:1315
+
+		1314: 
+		1315: resource "aws_default_vpc" "this" {
+		1316:   count = var.manage_default_vpc ? 1 : 0
+
+
+CloudWatch Without Retention Period Specified, Severity: MEDIUM, Results: 2
+Description: AWS CloudWatch Log groups should have retention days specified
+Platform: Terraform
+
+	[1]: ../../src/.terraform/modules/vpc/examples/vpc-flow-logs/main.tf:145
+
+		144: # Cloudwatch logs
+		145: resource "aws_cloudwatch_log_group" "flow_log" {
+		146:   name = local.cloudwatch_log_group_name
+
+
+	[2]: ../../src/.terraform/modules/vpc/vpc-flow-logs.tf:48
+
+		047:   name              = "${var.flow_log_cloudwatch_log_group_name_prefix}${local.vpc_id}"
+		048:   retention_in_days = var.flow_log_cloudwatch_log_group_retention_in_days
+		049:   kms_key_id        = var.flow_log_cloudwatch_log_group_kms_key_id
+
+
+S3 Bucket Without Restriction Of Public Bucket, Severity: HIGH, Results: 1
+Description: S3 bucket without restriction of public bucket
+Platform: Terraform
+
+	[1]: ../../src/.terraform/modules/vpc/examples/vpc-flow-logs/main.tf:103
+
+		102: # S3 Bucket
+		103: module "s3_bucket" {
+		104:   source  = "terraform-aws-modules/s3-bucket/aws"
+
+
+S3 Bucket Without Enabled MFA Delete, Severity: HIGH, Results: 1
+CIS ID: CIS Security - CIS Amazon Web Services Foundations Benchmark v1.4.0 - Rule 2.1.3
+Title: Ensure MFA Delete is enable on S3 buckets
+Description: Once MFA Delete is enabled on your sensitive and classified S3 bucket it requires the user to have two forms of authentication.
+
+Platform: Terraform
+
+	[1]: ../../src/.terraform/modules/vpc/examples/vpc-flow-logs/main.tf:103
+
+		102: # S3 Bucket
+		103: module "s3_bucket" {
+		104:   source  = "terraform-aws-modules/s3-bucket/aws"
+
+
+S3 Bucket SSE Disabled, Severity: HIGH, Results: 1
+Description: If algorithm is AES256 then the master key is null, empty or undefined, otherwise the master key is required
+Platform: Terraform
+
+	[1]: ../../src/.terraform/modules/vpc/examples/vpc-flow-logs/main.tf:103
+
+		102: # S3 Bucket
+		103: module "s3_bucket" {
+		104:   source  = "terraform-aws-modules/s3-bucket/aws"
+
+
+S3 Bucket Allows Public Policy, Severity: HIGH, Results: 1
+Description: S3 bucket allows public policy
+Platform: Terraform
+
+	[1]: ../../src/.terraform/modules/vpc/examples/vpc-flow-logs/main.tf:103
+
+		102: # S3 Bucket
+		103: module "s3_bucket" {
+		104:   source  = "terraform-aws-modules/s3-bucket/aws"
 
 
 EC2 Instance Has Public IP, Severity: HIGH, Results: 2
 Description: EC2 Instance should not have a public IP address.
 Platform: Terraform
 
-	[1]: /src/main.tf:98
-
-		097: 
-		098: resource "aws_instance" "pub_ins" {
-		099:   ami           = "${data.aws_ami.ubuntu.id}"
-
-
-	[2]: /src/main.tf:106
+	[1]: ../../src/main.tf:106
 
 		105: 
 		106: resource "aws_instance" "priv_ins" {
 		107:   ami           = "${data.aws_ami.ubuntu.id}"
 
 
+	[2]: ../../src/main.tf:98
+
+		097: 
+		098: resource "aws_instance" "pub_ins" {
+		099:   ami           = "${data.aws_ami.ubuntu.id}"
+
+
+CloudWatch Log Group Not Encrypted, Severity: HIGH, Results: 1
+Description: AWS CloudWatch Log groups should be encrypted using KMS
+Platform: Terraform
+
+	[1]: ../../src/.terraform/modules/vpc/examples/vpc-flow-logs/main.tf:145
+
+		144: # Cloudwatch logs
+		145: resource "aws_cloudwatch_log_group" "flow_log" {
+		146:   name = local.cloudwatch_log_group_name
+
+
 
 Results Summary:
-HIGH: 2
-MEDIUM: 4
-LOW: 0
-INFO: 8
-TOTAL: 14
+HIGH: 7
+MEDIUM: 15
+LOW: 3
+INFO: 50
+TOTAL: 75
 
-Scan duration: 4.78881555s
+Scan duration: 19.035297134s

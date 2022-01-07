@@ -2,15 +2,6 @@
 
 Violation Details -
     
-	Description    :	Ensure Elasticsearch domains being created are set to be encrypted node-to-node
-	File           :	main.tf
-	Module Name    :	root
-	Plan Root      :	./
-	Line           :	1
-	Severity       :	MEDIUM
-	
-	-----------------------------------------------------------------------
-	
 	Description    :	Enable AWS ElasticSearch Encryption At Rest
 	File           :	main.tf
 	Module Name    :	root
@@ -29,12 +20,21 @@ Violation Details -
 	
 	-----------------------------------------------------------------------
 	
+	Description    :	Ensure Elasticsearch domains being created are set to be encrypted node-to-node
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	1
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
 
 Scan Summary -
 
 	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-08-18 17:35:51.997894125 +0000 UTC
+	Scanned At          :	2022-01-05 16:20:23.758873834 +0000 UTC
 	Policies Validated  :	4
 	Violated Policies   :	3
 	Low                 :	0

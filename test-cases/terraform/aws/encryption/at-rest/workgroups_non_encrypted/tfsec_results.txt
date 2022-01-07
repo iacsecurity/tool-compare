@@ -1,7 +1,59 @@
 
   Result 1
 
-  [aws-s3-enable-versioning][[0m[33mMEDIUM[39m[0m] Resource 'aws_s3_bucket.cloudrail_anthena_bucket_2' does not have versioning enabled
+  [aws-s3-enable-bucket-logging][MEDIUM] Resource 'aws_s3_bucket.cloudrail_anthena_bucket_2' does not have logging enabled.
+  /src/main.tf:32-35
+
+
+      29 |   }
+      30 | }
+      31 | 
+      32 | resource "aws_s3_bucket" "cloudrail_anthena_bucket_2" {
+      33 |   bucket = "cloudrail-wg-encrypted-sse-s3-2"
+      34 |   acl    = "private"
+      35 | }
+      36 | 
+      37 | resource "aws_s3_bucket_public_access_block" "cloudrail_anthena_bucket_2" {
+      38 |   bucket                  = aws_s3_bucket.cloudrail_anthena_bucket_2.id
+
+  Legacy ID:  AWS002
+  Impact:     There is no way to determine the access to this bucket
+  Resolution: Add a logging block to the resource to enable access logging
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/s3/enable-bucket-logging 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket 
+  - https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerLogs.html 
+
+  Result 2
+
+  [aws-s3-enable-bucket-logging][MEDIUM] Resource 'aws_s3_bucket.cloudrail_anthena_bucket' does not have logging enabled.
+  /src/main.tf:5-8
+
+
+       2 |   region = "us-east-1"
+       3 | }
+       4 | 
+       5 | resource "aws_s3_bucket" "cloudrail_anthena_bucket" {
+       6 |   bucket = "cloudrail-wg-encrypted-sse-s3"
+       7 |   acl    = "private"
+       8 | }
+       9 | 
+      10 | resource "aws_s3_bucket_public_access_block" "cloudrail_anthena_bucket" {
+      11 |   bucket                  = aws_s3_bucket.cloudrail_anthena_bucket.id
+
+  Legacy ID:  AWS002
+  Impact:     There is no way to determine the access to this bucket
+  Resolution: Add a logging block to the resource to enable access logging
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/s3/enable-bucket-logging 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket 
+  - https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerLogs.html 
+
+  Result 3
+
+  [aws-s3-enable-versioning][MEDIUM] Resource 'aws_s3_bucket.cloudrail_anthena_bucket_2' does not have versioning enabled
   /src/main.tf:32-35
 
 
@@ -21,13 +73,13 @@
   Resolution: Enable versioning to protect against accidental/malicious removal or modification
 
   More Info:
-  - https://tfsec.dev/docs/aws/s3/enable-versioning#aws/s3 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/s3/enable-versioning 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#versioning 
   - https://docs.aws.amazon.com/AmazonS3/latest/userguide/Versioning.html 
 
-  Result 2
+  Result 4
 
-  [aws-s3-enable-versioning][[0m[33mMEDIUM[39m[0m] Resource 'aws_s3_bucket.cloudrail_anthena_bucket' does not have versioning enabled
+  [aws-s3-enable-versioning][MEDIUM] Resource 'aws_s3_bucket.cloudrail_anthena_bucket' does not have versioning enabled
   /src/main.tf:5-8
 
 
@@ -47,13 +99,13 @@
   Resolution: Enable versioning to protect against accidental/malicious removal or modification
 
   More Info:
-  - https://tfsec.dev/docs/aws/s3/enable-versioning#aws/s3 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/s3/enable-versioning 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#versioning 
   - https://docs.aws.amazon.com/AmazonS3/latest/userguide/Versioning.html 
 
-  Result 3
+  Result 5
 
-  [aws-athena-enable-at-rest-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_athena_workgroup.cloudrail_wg_2' missing encryption configuration block.
+  [aws-athena-enable-at-rest-encryption][HIGH] Resource 'aws_athena_workgroup.cloudrail_wg_2' missing encryption configuration block.
   /src/main.tf:45-57
 
 
@@ -79,14 +131,14 @@
   Resolution: Enable encryption at rest for Athena databases and workgroup configurations
 
   More Info:
-  - https://tfsec.dev/docs/aws/athena/enable-at-rest-encryption#aws/athena 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/athena/enable-at-rest-encryption 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/athena_workgroup#encryption_configuration 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/athena_database#encryption_configuration 
   - https://docs.aws.amazon.com/athena/latest/ug/encryption.html 
 
-  Result 4
+  Result 6
 
-  [aws-athena-enable-at-rest-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_athena_workgroup.cloudrail_wg' missing encryption configuration block.
+  [aws-athena-enable-at-rest-encryption][HIGH] Resource 'aws_athena_workgroup.cloudrail_wg' missing encryption configuration block.
   /src/main.tf:18-30
 
 
@@ -115,66 +167,14 @@
   Resolution: Enable encryption at rest for Athena databases and workgroup configurations
 
   More Info:
-  - https://tfsec.dev/docs/aws/athena/enable-at-rest-encryption#aws/athena 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/athena/enable-at-rest-encryption 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/athena_workgroup#encryption_configuration 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/athena_database#encryption_configuration 
   - https://docs.aws.amazon.com/athena/latest/ug/encryption.html 
 
-  Result 5
-
-  [aws-s3-enable-bucket-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_s3_bucket.cloudrail_anthena_bucket_2' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
-  /src/main.tf:32-35
-
-
-      29 |   }
-      30 | }
-      31 | 
-      32 | resource "aws_s3_bucket" "cloudrail_anthena_bucket_2" {
-      33 |   bucket = "cloudrail-wg-encrypted-sse-s3-2"
-      34 |   acl    = "private"
-      35 | }
-      36 | 
-      37 | resource "aws_s3_bucket_public_access_block" "cloudrail_anthena_bucket_2" {
-      38 |   bucket                  = aws_s3_bucket.cloudrail_anthena_bucket_2.id
-
-  Legacy ID:  AWS017
-  Impact:     The bucket objects could be read if compromised
-  Resolution: Configure bucket encryption
-
-  More Info:
-  - https://tfsec.dev/docs/aws/s3/enable-bucket-encryption#aws/s3 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#enable-default-server-side-encryption 
-  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-encryption.html 
-
-  Result 6
-
-  [aws-s3-enable-bucket-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_s3_bucket.cloudrail_anthena_bucket' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
-  /src/main.tf:5-8
-
-
-       2 |   region = "us-east-1"
-       3 | }
-       4 | 
-       5 | resource "aws_s3_bucket" "cloudrail_anthena_bucket" {
-       6 |   bucket = "cloudrail-wg-encrypted-sse-s3"
-       7 |   acl    = "private"
-       8 | }
-       9 | 
-      10 | resource "aws_s3_bucket_public_access_block" "cloudrail_anthena_bucket" {
-      11 |   bucket                  = aws_s3_bucket.cloudrail_anthena_bucket.id
-
-  Legacy ID:  AWS017
-  Impact:     The bucket objects could be read if compromised
-  Resolution: Configure bucket encryption
-
-  More Info:
-  - https://tfsec.dev/docs/aws/s3/enable-bucket-encryption#aws/s3 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#enable-default-server-side-encryption 
-  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-encryption.html 
-
   Result 7
 
-  [aws-s3-enable-bucket-logging][[0m[33mMEDIUM[39m[0m] Resource 'aws_s3_bucket.cloudrail_anthena_bucket_2' does not have logging enabled.
+  [aws-s3-enable-bucket-encryption][HIGH] Resource 'aws_s3_bucket.cloudrail_anthena_bucket_2' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
   /src/main.tf:32-35
 
 
@@ -189,18 +189,18 @@
       37 | resource "aws_s3_bucket_public_access_block" "cloudrail_anthena_bucket_2" {
       38 |   bucket                  = aws_s3_bucket.cloudrail_anthena_bucket_2.id
 
-  Legacy ID:  AWS002
-  Impact:     There is no way to determine the access to this bucket
-  Resolution: Add a logging block to the resource to enable access logging
+  Legacy ID:  AWS017
+  Impact:     The bucket objects could be read if compromised
+  Resolution: Configure bucket encryption
 
   More Info:
-  - https://tfsec.dev/docs/aws/s3/enable-bucket-logging#aws/s3 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket 
-  - https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerLogs.html 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/s3/enable-bucket-encryption 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#enable-default-server-side-encryption 
+  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-encryption.html 
 
   Result 8
 
-  [aws-s3-enable-bucket-logging][[0m[33mMEDIUM[39m[0m] Resource 'aws_s3_bucket.cloudrail_anthena_bucket' does not have logging enabled.
+  [aws-s3-enable-bucket-encryption][HIGH] Resource 'aws_s3_bucket.cloudrail_anthena_bucket' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
   /src/main.tf:5-8
 
 
@@ -215,21 +215,21 @@
       10 | resource "aws_s3_bucket_public_access_block" "cloudrail_anthena_bucket" {
       11 |   bucket                  = aws_s3_bucket.cloudrail_anthena_bucket.id
 
-  Legacy ID:  AWS002
-  Impact:     There is no way to determine the access to this bucket
-  Resolution: Add a logging block to the resource to enable access logging
+  Legacy ID:  AWS017
+  Impact:     The bucket objects could be read if compromised
+  Resolution: Configure bucket encryption
 
   More Info:
-  - https://tfsec.dev/docs/aws/s3/enable-bucket-logging#aws/s3 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket 
-  - https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerLogs.html 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/s3/enable-bucket-encryption 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#enable-default-server-side-encryption 
+  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-encryption.html 
 
   times
   ------------------------------------------
-  disk i/o             53.307333ms
-  parsing HCL          742.042µs
-  evaluating values    3.66725ms
-  running checks       87.499959ms
+  disk i/o             24.957833ms
+  parsing HCL          530.458µs
+  evaluating values    3.348208ms
+  running checks       28.98775ms
 
   counts
   ------------------------------------------

@@ -1,7 +1,7 @@
 
   Result 1
 
-  [aws-ecr-enforce-immutable-repository][[0m[31mHIGH[39m[0m] Resource 'aws_ecr_repository.foo' has `image_tag_mutability` attribute  not set to `IMMUTABLE`
+  [aws-ecr-enforce-immutable-repository][HIGH] Resource 'aws_ecr_repository.foo' has `image_tag_mutability` attribute  not set to `IMMUTABLE`
   /src/main.tf:3
 
 
@@ -17,13 +17,13 @@
   Resolution: Only use immutable images in ECR
 
   More Info:
-  - https://tfsec.dev/docs/aws/ecr/enforce-immutable-repository#aws/ecr 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/ecr/enforce-immutable-repository 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecr_repository 
   - https://sysdig.com/blog/toctou-tag-mutability/ 
 
   Result 2
 
-  [aws-ecr-repository-customer-key][[0m[97mLOW[39m[0m] Resource 'aws_ecr_repository.foo' does not have CMK encryption configured
+  [aws-ecr-repository-customer-key][LOW] Resource 'aws_ecr_repository.foo' does not have CMK encryption configured
   /src/main.tf:1-8
 
 
@@ -41,16 +41,16 @@
   Resolution: Use customer managed keys
 
   More Info:
-  - https://tfsec.dev/docs/aws/ecr/repository-customer-key#aws/ecr 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/ecr/repository-customer-key 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecr_repository#encryption_configuration 
   - https://docs.aws.amazon.com/AmazonECR/latest/userguide/encryption-at-rest.html 
 
   times
   ------------------------------------------
-  disk i/o             51.889208ms
-  parsing HCL          501.334µs
-  evaluating values    1.594124ms
-  running checks       23.840209ms
+  disk i/o             22.5915ms
+  parsing HCL          543.458µs
+  evaluating values    1.500541ms
+  running checks       18.405208ms
 
   counts
   ------------------------------------------

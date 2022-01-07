@@ -1,104 +1,94 @@
 
 WARNINGs found:
-Rule: Ensure all data stored in the Launch configuration EBS is securely encrypted
+Rule: Ensure IMDSv2 is used and IMDSv1 is disabled
+Description: There have been hacks in the past caused by the use of IMDSv1. It is now best practice to disable IMDSv1 and use IMDSv2. It’s important to test the disablement of IMDSv1 carefully, as it may cause issues in an application’s execution (if it using an old SDK, for example).
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html to change the instance metadata for existing instances. Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html to configure instance metadata for new instances.
+Remediation Steps - Terraform: For the aws_instance resource, in metadata_options block, set http_tokens argument to required.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_instance.test-ec2-instance] (main.tf:87)
      Violating Resource: [aws_instance.test-ec2-instance]  (main.tf:87)
 
      Evidence:
-             | This rule evaluated aws_instance.test-ec2-instance's configuration
+             | The EC2 Instance aws_instance.test-ec2-instance is allowing IMDSv1
 
 
 -----------------------------------------------
-Rule: Ensure EC2 instance has detailed monitoring enabled
+Rule: Allow only private AMIs to be used
+Description: Some organizations may only allow the use of private AMIs. If this rule is enabled, any EC2 instance attempting to use a public AMI will be flagged.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instances-and-amis.html in order to terminate flagged EC2 instances and create new EC2 instance with an approved AMI.
+Remediation Steps - Terraform: For the aws_instance resource, update the ami argument to set an approved AMI. Terraform will destroy and create new resources.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_instance.test-ec2-instance] (main.tf:87)
-     Violating Resource: [aws_instance.test-ec2-instance]  (main.tf:87)
+     Violating Resource: [ami-0b0ea68c435eb488d]  (Not found in TF)
 
      Evidence:
-             | The EC2 Instance aws_instance.test-ec2-instance has detailed monitoring disabled
+             | The EC2 Instance aws_instance.test-ec2-instance uses AMI ami-0b0ea68c435eb488d, which is public
 
 
 -----------------------------------------------
-Rule: Ensure EC2 instance is EBS optimized
+Rule: Ensure SQS queues are set to be encrypted at rest
+Description: Cloudrail will review the SQS queues in your environment. If a queue is not set to encrypt at rest, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-configure-sse-existing-queue.html to enable encryption at rest for SQS queue.
+Remediation Steps - Terraform: For the resource aws_sqs_queue, set kms_master_key_id argument to specify a key ID.
  - 1 Resources Exposed:
 -----------------------------------------------
-   - Exposed Resource: [aws_instance.test-ec2-instance] (main.tf:87)
-     Violating Resource: [aws_instance.test-ec2-instance]  (main.tf:87)
-
-     Evidence:
-             | The EC2 Instance aws_instance.test-ec2-instance is not EBS optimized
-
-
------------------------------------------------
-Rule: Ensure all resources that can be tagged have at least one tag
- - 7 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_vpc_endpoint.sqs-vpc-endpoint] (main.tf:94)
-     Violating Resource: [aws_vpc_endpoint.sqs-vpc-endpoint]  (main.tf:94)
-
-     Evidence:
-             | Resource VPC Endpoint Interface aws_vpc_endpoint.sqs-vpc-endpoint does not have any tags set
-
-
    - Exposed Resource: [aws_sqs_queue.test-queue] (main.tf:103)
      Violating Resource: [aws_sqs_queue.test-queue]  (main.tf:103)
 
      Evidence:
-             | Resource SQS queue aws_sqs_queue.test-queue does not have any tags set
+             | The SQS queue aws_sqs_queue.test-queue                             is not set to use encryption at rest
 
 
-   - Exposed Resource: [aws_subnet.public-subnet] (main.tf:18)
-     Violating Resource: [aws_subnet.public-subnet]  (main.tf:18)
+-----------------------------------------------
+Rule: Ensure use of SQS queue policy, and no action wildcards are being used
+Description: Using wildcard actions may inadvertently allow users to take actions you do not want to allow them to do. In addition, using a resource policy will provide an additional layer of security. It is a best practice to use a resource policy and give specific permissions only.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-overview-of-managing-access.html to modify SQS queue policy in order to avoid using wildcard actions.
+Remediation Steps - Terraform: For the aws_sqs_queue_policy resource, modify policy argument in order to avoid using wildcard actions.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_sqs_queue.test-queue] (main.tf:103)
+     Violating Resource: [aws_sqs_queue.test-queue]  (main.tf:103)
 
      Evidence:
-             | Resource Subnet aws_subnet.public-subnet does not have any tags set other than "Name"
+             | There is no resource policy or no statements attached to aws_sqs_queue.test-queue
 
 
-   - Exposed Resource: [aws_route_table.public-rtb] (main.tf:27)
-     Violating Resource: [aws_route_table.public-rtb]  (main.tf:27)
-
-     Evidence:
-             | Resource Route table aws_route_table.public-rtb does not have any tags set other than "Name"
-
-
+-----------------------------------------------
+Rule: Ensure all security groups and rules have a description detailing the rule
+Description: Cloudrail will review your security groups. If a security group is using a default description, or has a rule which does not include a description, this rule will trigger.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html to update the security group or security group rules description field.
+Remediation Steps - Terraform: For the aws_security_group and aws_security_group_rule resources, set description argument with a proper value. Note, this will force the re-creation of the security group and all resources that depend on it. This is an AWS limitation.
+ - 1 Resources Exposed:
+-----------------------------------------------
    - Exposed Resource: [aws_security_group.public-internet-sg] (main.tf:50)
      Violating Resource: [aws_security_group.public-internet-sg]  (main.tf:50)
 
      Evidence:
-             | Resource Security group aws_security_group.public-internet-sg does not have any tags set
-
-
-   - Exposed Resource: [aws_instance.test-ec2-instance] (main.tf:87)
-     Violating Resource: [aws_instance.test-ec2-instance]  (main.tf:87)
-
-     Evidence:
-             | Resource EC2 Instance aws_instance.test-ec2-instance does not have any tags set
-
-
-   - Exposed Resource: [aws_vpc.main] (main.tf:12)
-     Violating Resource: [aws_vpc.main]  (main.tf:12)
-
-     Evidence:
-             | Resource VPC aws_vpc.main does not have any tags set
+             | The Security group aws_security_group.public-internet-sg does not have a description for the ingress rule of 172.16.0.0/16 for ports 0:65535 using protocol ALL
 
 
 -----------------------------------------------
-Rule: Ensure VPC Endpoint for EC2 is enabled in all VPCs in use
+Rule: Ensure VPC Endpoint for SQS is enabled in all VPCs in use
+Description: A best practice is to enforce the use of VPC Endpoints to avoid sending data destined to SQS through the internet. Cloudrail will identify misconfigurations by checking if VPC Endpoint Interfaces are in use or not, by reviewing that an endpoint exists in the VPC. VPC Interface Endpoints might not be available in all regions, so the rule checks that if the service is running it's configured in all possible VPCs. This rule has potential false positives given that not all VPCs require communication with SQS.
+Remediation Steps - Cloud Console: Create a VPC Endpoint for SQS, follow the guide at https://docs.aws.amazon.com/vpc/latest/userguide/vpce-interface.html#create-interface-endpoint.
+Remediation Steps - Terraform: Create a resource aws_vpc_endpoint for SQS interface, and associate it to the VPC.
  - 1 Resources Exposed:
 -----------------------------------------------
-   - Exposed Resource: [aws_instance.test-ec2-instance] (main.tf:87)
+   - Exposed Resource: [aws_sqs_queue.test-queue] (main.tf:103)
      Violating Resource: [aws_vpc.main]  (main.tf:12)
 
      Evidence:
-             | The service EC2 is in use in region us-east-1, but VPC aws_vpc.main
-             | is not configured to use a VPC Endpoint for EC2
+             | The service SQS is in use in region us-east-1, but VPC aws_vpc.main
+             | is not configured to use a VPC Endpoint for SQS
 
 
 -----------------------------------------------
 Rule: Ensure VPC Endpoint for SQS is enabled in all Availability Zones in use a VPC
+Description: A best practice is to enforce the use of VPC Endpoints to avoid sending data destined to SQS through the internet. Cloudrail will identify misconfigurations by checking if VPC Endpoint Interfaces are in use or not, by reviewing that an endpoint exists in the VPC. VPC Interface Endpoints are not available in all availability zones, also they can be configured in just one subnet per availability zone, so the rule checks that if the service is running it's configured in at least two availability zones in use and leaves the traffic architecture decision to the customer. Additionally, make sure that if the application is using the custom hostnames for the service, and if it's using default hostnames (I.e. sqs.us-east-2.amazonaws.com) that the application is using Amazon DNS and not an internal DNS.
+Remediation Steps - Cloud Console: For each VPC that is currently using VPC endpoints for SQS, make sure it’s enabled in one subnet for each Availability Zone in use. Follow the guide at https://docs.aws.amazon.com/vpc/latest/userguide/vpce-interface.html#create-interface-endpoint. Interface endpoints do have their costs, so if that’s an issue, consider using at least two interface endpoints in different availability zones, and not just one.
+Remediation Steps - Terraform: Locate resource aws_vpc_endpoint for SQS interface, and make sure that argument subnet_ids contains at least one subnet in each Availability Zone in use. Interface endpoints do have their costs, so if that’s an issue, consider using at least two interface endpoints in different availability zones, and not just one.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_sqs_queue.test-queue] (main.tf:103)
@@ -113,70 +103,109 @@ Rule: Ensure VPC Endpoint for SQS is enabled in all Availability Zones in use a 
 
 
 -----------------------------------------------
-Rule: Ensure VPC Endpoint for SQS is enabled in all VPCs in use
+Rule: Ensure VPC Endpoint for EC2 is enabled in all VPCs in use
+Description: A best practice is to enforce the use of VPC Endpoints to avoid sending data destined to EC2 through the internet. Cloudrail will identify misconfigurations by checking if VPC Endpoint Interfaces are in use or not, by reviewing that an endpoint exists in the VPC. VPC Interface Endpoints might not be available in all regions, so the rule checks that if the service is running it's configured in all possible VPCs. This rule has potential false positives given that not all VPCs require communication with EC2.
+Remediation Steps - Cloud Console: Create a VPC Endpoint for EC2, follow the guide at https://docs.aws.amazon.com/vpc/latest/userguide/vpce-interface.html#create-interface-endpoint.
+Remediation Steps - Terraform: Create a resource aws_vpc_endpoint for EC2 interface, and associate it to the VPC.
  - 1 Resources Exposed:
 -----------------------------------------------
-   - Exposed Resource: [aws_sqs_queue.test-queue] (main.tf:103)
+   - Exposed Resource: [aws_instance.test-ec2-instance] (main.tf:87)
      Violating Resource: [aws_vpc.main]  (main.tf:12)
 
      Evidence:
-             | The service SQS is in use in region us-east-1, but VPC aws_vpc.main
-             | is not configured to use a VPC Endpoint for SQS
+             | The service EC2 is in use in region us-east-1, but VPC aws_vpc.main
+             | is not configured to use a VPC Endpoint for EC2
 
 
 -----------------------------------------------
-Rule: Ensure all security groups and rules have a description detailing the rule
- - 1 Resources Exposed:
+Rule: Ensure all resources that can be tagged have at least one tag
+Description: Some organizations require that all resources have at least one tag set. This rule will review the resources that can be tagged, and make sure each one has a tag that is not the Name tag. Resources that are not tagged will be flagged.
+Remediation Steps - Cloud Console: Access the specific resource in the AWS console and add tags.
+Remediation Steps - Terraform: Add a tags section to the resource with at least one tag beyond the Name tag.
+ - 8 Resources Exposed:
 -----------------------------------------------
+   - Exposed Resource: [aws_vpc.main] (main.tf:12)
+     Violating Resource: [aws_vpc.main]  (main.tf:12)
+
+     Evidence:
+             | Resource VPC aws_vpc.main does not have any tags set
+
+
+   - Exposed Resource: [aws_sqs_queue.test-queue] (main.tf:103)
+     Violating Resource: [aws_sqs_queue.test-queue]  (main.tf:103)
+
+     Evidence:
+             | Resource SQS queue aws_sqs_queue.test-queue does not have any tags set
+
+
+   - Exposed Resource: [aws_instance.test-ec2-instance] (main.tf:87)
+     Violating Resource: [aws_instance.test-ec2-instance]  (main.tf:87)
+
+     Evidence:
+             | Resource EC2 Instance aws_instance.test-ec2-instance does not have any tags set
+
+
+   - Exposed Resource: [aws_subnet.public-subnet] (main.tf:18)
+     Violating Resource: [aws_subnet.public-subnet]  (main.tf:18)
+
+     Evidence:
+             | Resource Subnet aws_subnet.public-subnet does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [aws_internet_gateway.igw] (main.tf:107)
+     Violating Resource: [aws_internet_gateway.igw]  (main.tf:107)
+
+     Evidence:
+             | Resource Internet gateway aws_internet_gateway.igw does not have any tags set
+
+
+   - Exposed Resource: [aws_vpc_endpoint.sqs-vpc-endpoint] (main.tf:94)
+     Violating Resource: [aws_vpc_endpoint.sqs-vpc-endpoint]  (main.tf:94)
+
+     Evidence:
+             | Resource VPC Endpoint Interface aws_vpc_endpoint.sqs-vpc-endpoint does not have any tags set
+
+
    - Exposed Resource: [aws_security_group.public-internet-sg] (main.tf:50)
      Violating Resource: [aws_security_group.public-internet-sg]  (main.tf:50)
 
      Evidence:
-             | The Security group aws_security_group.public-internet-sg does not have a description for the ingress rule of 172.16.0.0/16 for ports 0:65535 using protocol ALL
+             | Resource Security group aws_security_group.public-internet-sg does not have any tags set
 
 
------------------------------------------------
-Rule: Ensure use of SQS queue policy, and no action wildcards are being used
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_sqs_queue.test-queue] (main.tf:103)
-     Violating Resource: [aws_sqs_queue.test-queue]  (main.tf:103)
+   - Exposed Resource: [aws_route_table.public-rtb] (main.tf:27)
+     Violating Resource: [aws_route_table.public-rtb]  (main.tf:27)
 
      Evidence:
-             | There is no resource policy or no statements attached to aws_sqs_queue.test-queue
+             | Resource Route table aws_route_table.public-rtb does not have any tags set other than "Name"
 
 
 -----------------------------------------------
-Rule: Ensure SQS queues are set to be encrypted at rest
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_sqs_queue.test-queue] (main.tf:103)
-     Violating Resource: [aws_sqs_queue.test-queue]  (main.tf:103)
-
-     Evidence:
-             | The SQS queue aws_sqs_queue.test-queue                             is not set to use encryption at rest
-
-
------------------------------------------------
-Rule: Allow only private AMIs to be used
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.test-ec2-instance] (main.tf:87)
-     Violating Resource: [ami-0ee02acd56a52998e]  (Not found in TF)
-
-     Evidence:
-             | The EC2 Instance aws_instance.test-ec2-instance uses AMI ami-0ee02acd56a52998e, which is public
-
-
------------------------------------------------
-Rule: Ensure IMDSv2 is used and IMDSv1 is disabled
+Rule: Ensure EC2 instance is EBS optimized
+Description: Cloudrail will review the EC2 instances configuration in your environment. If it is not configured to be EBS-optimized, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-optimized.html to enable EBS optimization for an EC2 instance.
+Remediation Steps - Terraform: For the aws_instance resource, set the ebs_optimized parameter to true.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_instance.test-ec2-instance] (main.tf:87)
      Violating Resource: [aws_instance.test-ec2-instance]  (main.tf:87)
 
      Evidence:
-             | The EC2 Instance aws_instance.test-ec2-instance is allowing IMDSv1
+             | The EC2 Instance aws_instance.test-ec2-instance is not EBS optimized
+
+
+-----------------------------------------------
+Rule: Ensure EC2 instance has detailed monitoring enabled
+Description: Cloudrail will review the EC2 instances configuration in your environment. If an instance does not have detailed monitoring configured, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-cloudwatch-new.html in order to enable detailed monitoring for an EC2 instance.
+Remediation Steps - Terraform: For the aws_instance resource, set the monitoring argument to true.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.test-ec2-instance] (main.tf:87)
+     Violating Resource: [aws_instance.test-ec2-instance]  (main.tf:87)
+
+     Evidence:
+             | The EC2 Instance aws_instance.test-ec2-instance has detailed monitoring disabled
 
 
 -----------------------------------------------

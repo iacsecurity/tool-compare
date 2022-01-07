@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+Scanning with Keeping Infrastructure as Code Secure v1.4.9
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 851
 Queries failed to execute: 0
 
 ------------------------------------
@@ -31,14 +31,14 @@ Resource Not Using Tags, Severity: INFO, Results: 2
 Description: AWS services resource tags are an essential part of managing components
 Platform: Terraform
 
-	[1]: /src/main.tf:29
+	[1]: ../../src/main.tf:29
 
 		028: 
 		029: resource "aws_iam_role" "iam_for_cloudwatch" {
 		030:   name = "iam_for_cloudwatch"
 
 
-	[2]: /src/main.tf:49
+	[2]: ../../src/main.tf:49
 
 		048: 
 		049: resource "aws_kinesis_stream" "kinesis_for_cloudwatch" {
@@ -49,7 +49,7 @@ CloudWatch Logs Destination With Vulnerable Policy, Severity: MEDIUM, Results: 1
 Description: CloudWatch Logs destination policy should avoid wildcard in 'principals' and 'actions'
 Platform: Terraform
 
-	[1]: /src/main.tf:87
+	[1]: ../../src/main.tf:87
 
 		086:   destination_name = aws_cloudwatch_log_destination.test_destination.name
 		087:   access_policy    = data.aws_iam_policy_document.test_destination_policy.json
@@ -60,7 +60,7 @@ Kinesis Not Encrypted With KMS, Severity: HIGH, Results: 1
 Description: AWS Kinesis Streams and metadata should be protected with KMS
 Platform: Terraform
 
-	[1]: /src/main.tf:49
+	[1]: ../../src/main.tf:49
 
 		048: 
 		049: resource "aws_kinesis_stream" "kinesis_for_cloudwatch" {
@@ -75,4 +75,4 @@ LOW: 0
 INFO: 2
 TOTAL: 4
 
-Scan duration: 4.620773476s
+Scan duration: 9.053967504s

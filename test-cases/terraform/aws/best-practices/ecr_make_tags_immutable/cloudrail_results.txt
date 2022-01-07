@@ -1,28 +1,23 @@
 
 WARNINGs found:
-Rule: Ensure ECR repositories being created are set to be encrypted at rest using customer-managed CMK
+Rule: Ensure use of ECR repository policy, and no action wildcards are being used
+Description: Using wildcard actions may inadvertently allow users to take actions you do not want to allow them to do. In addition, using a resource policy will provide an additional layer of security. It is a best practice to use a resource policy and give specific permissions only.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AmazonECR/latest/userguide/repository-policies.html to modify ECR repository policy in order to avoid using wildcard actions.
+Remediation Steps - Terraform: For the aws_ecr_repository_policy resource, modify policy argument in order to avoid using wildcard actions.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_ecr_repository.foo] (main.tf:1)
      Violating Resource: [aws_ecr_repository.foo]  (main.tf:1)
 
      Evidence:
-             | The ECR repository aws_ecr_repository.foo is not set to be encrypted at rest using customer-managed CMK
-
-
------------------------------------------------
-Rule: Ensure ECR repository image tags are immutable
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_ecr_repository.foo] (main.tf:1)
-     Violating Resource: [aws_ecr_repository.foo]  (main.tf:1)
-
-     Evidence:
-             | The ECR repository aws_ecr_repository.foo is not configured for image tag immutability
+             | There is no resource policy or no statements attached to aws_ecr_repository.foo
 
 
 -----------------------------------------------
 Rule: Ensure all resources that can be tagged have at least one tag
+Description: Some organizations require that all resources have at least one tag set. This rule will review the resources that can be tagged, and make sure each one has a tag that is not the Name tag. Resources that are not tagged will be flagged.
+Remediation Steps - Cloud Console: Access the specific resource in the AWS console and add tags.
+Remediation Steps - Terraform: Add a tags section to the resource with at least one tag beyond the Name tag.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_ecr_repository.foo] (main.tf:1)
@@ -33,14 +28,31 @@ Rule: Ensure all resources that can be tagged have at least one tag
 
 
 -----------------------------------------------
-Rule: Ensure use of ECR repository policy, and no action wildcards are being used
+Rule: Ensure ECR repository image tags are immutable
+Description: Cloudrail will review the ECR repositories configuration in your environment. If a repository is not configured with immutable tags, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AmazonECR/latest/userguide/repository-create.html in order to configure Tag immutability for an ECR repository.
+Remediation Steps - Terraform: For the aws_ecr_repository resource, set the image_tag_mutability parameter to "IMMUTABLE".
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_ecr_repository.foo] (main.tf:1)
      Violating Resource: [aws_ecr_repository.foo]  (main.tf:1)
 
      Evidence:
-             | There is no resource policy or no statements attached to aws_ecr_repository.foo
+             | The ECR repository aws_ecr_repository.foo is not configured for image tag immutability
+
+
+-----------------------------------------------
+Rule: Ensure ECR repositories being created are set to be encrypted at rest using customer-managed CMK
+Description: Cloudrail will review the ECR repositories being created in your environment. If a repository is not set to be encrypted at rest using a customer-managed CMK, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AmazonECR/latest/userguide/encryption-at-rest.html to create an ECR repository with encryption at rest using a customer-managed CMK.
+Remediation Steps - Terraform: For the aws_ecr_repository resource, set kms_key argument, in encryption_configuration block, to use a customer-managed CMK.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_ecr_repository.foo] (main.tf:1)
+     Violating Resource: [aws_ecr_repository.foo]  (main.tf:1)
+
+     Evidence:
+             | The ECR repository aws_ecr_repository.foo is not set to be encrypted at rest using customer-managed CMK
 
 
 -----------------------------------------------

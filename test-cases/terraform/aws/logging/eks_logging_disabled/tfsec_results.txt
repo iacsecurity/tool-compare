@@ -1,30 +1,7 @@
 
   Result 1
 
-  [aws-eks-no-public-cluster-access-to-cidr][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'aws_eks_cluster.test' uses the default public access cidr of 0.0.0.0/0
-  /src/main.tf:22-24
-
-
-      19 | resource "aws_eks_cluster" "test" {
-      20 |   name = "test"
-      21 |   role_arn = aws_iam_role.eksrole.arn
-      22 |   vpc_config {
-      23 |     subnet_ids = [aws_subnet.subnet1.id]
-      24 |   }
-      25 | }
-
-  Legacy ID:  AWS068
-  Impact:     EKS can be access from the internet
-  Resolution: Don't enable public access to EKS Clusters
-
-  More Info:
-  - https://tfsec.dev/docs/aws/eks/no-public-cluster-access-to-cidr#aws/eks 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eks_cluster#vpc_config 
-  - https://docs.aws.amazon.com/eks/latest/userguide/create-public-private-vpc.html 
-
-  Result 2
-
-  [aws-eks-enable-control-plane-logging][[0m[33mMEDIUM[39m[0m] Resource 'aws_eks_cluster.test' missing the enabled_cluster_log_types attribute to enable control plane logging
+  [aws-eks-enable-control-plane-logging][MEDIUM] Resource 'aws_eks_cluster.test' missing the enabled_cluster_log_types attribute to enable control plane logging
   /src/main.tf:19-25
 
 
@@ -44,13 +21,13 @@
   Resolution: Enable logging for the EKS control plane
 
   More Info:
-  - https://tfsec.dev/docs/aws/eks/enable-control-plane-logging#aws/eks 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/eks/enable-control-plane-logging 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eks_cluster#enabled_cluster_log_types 
   - https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html 
 
-  Result 3
+  Result 2
 
-  [aws-eks-encrypt-secrets][[0m[31mHIGH[39m[0m] Resource 'aws_eks_cluster.test' has no encryptionConfigBlock block
+  [aws-eks-encrypt-secrets][HIGH] Resource 'aws_eks_cluster.test' has no encryptionConfigBlock block
   /src/main.tf:19-25
 
 
@@ -70,13 +47,13 @@
   Resolution: Enable encryption of EKS secrets
 
   More Info:
-  - https://tfsec.dev/docs/aws/eks/encrypt-secrets#aws/eks 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/eks/encrypt-secrets 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eks_cluster#encryption_config 
   - https://aws.amazon.com/about-aws/whats-new/2020/03/amazon-eks-adds-envelope-encryption-for-secrets-with-aws-kms/ 
 
-  Result 4
+  Result 3
 
-  [aws-eks-no-public-cluster-access][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'aws_eks_cluster.test' is using default public access in the vpc config
+  [aws-eks-no-public-cluster-access][CRITICAL] Resource 'aws_eks_cluster.test' is using default public access in the vpc config
   /src/main.tf:22-24
 
 
@@ -93,16 +70,39 @@
   Resolution: Don't enable public access to EKS Clusters
 
   More Info:
-  - https://tfsec.dev/docs/aws/eks/no-public-cluster-access#aws/eks 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/eks/no-public-cluster-access 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eks_cluster#endpoint_public_access 
   - https://docs.aws.amazon.com/eks/latest/userguide/cluster-endpoint.html 
 
+  Result 4
+
+  [aws-eks-no-public-cluster-access-to-cidr][CRITICAL] Resource 'aws_eks_cluster.test' uses the default public access cidr of 0.0.0.0/0
+  /src/main.tf:22-24
+
+
+      19 | resource "aws_eks_cluster" "test" {
+      20 |   name = "test"
+      21 |   role_arn = aws_iam_role.eksrole.arn
+      22 |   vpc_config {
+      23 |     subnet_ids = [aws_subnet.subnet1.id]
+      24 |   }
+      25 | }
+
+  Legacy ID:  AWS068
+  Impact:     EKS can be access from the internet
+  Resolution: Don't enable public access to EKS Clusters
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/eks/no-public-cluster-access-to-cidr 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eks_cluster#vpc_config 
+  - https://docs.aws.amazon.com/eks/latest/userguide/create-public-private-vpc.html 
+
   times
   ------------------------------------------
-  disk i/o             45.273918ms
-  parsing HCL          588.833µs
-  evaluating values    3.127001ms
-  running checks       36.190333ms
+  disk i/o             26.503041ms
+  parsing HCL          859.625µs
+  evaluating values    3.240625ms
+  running checks       24.619292ms
 
   counts
   ------------------------------------------

@@ -1,6 +1,37 @@
 
 WARNINGs found:
+Rule: Ensure SNS topics are set to be encrypted at rest
+Description: Cloudrail will review the SNS topics in your environment. If a topic is not set to encrypt at rest, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/sns/latest/dg/sns-create-topic.html to enable encryption at rest for SNS topic.
+Remediation Steps - Terraform: For the resource aws_sns_topic, set kms_master_key_id argument to specify a key ID.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_sns_topic.aws_sns_topic] (main.tf:5)
+     Violating Resource: [aws_sns_topic.aws_sns_topic]  (main.tf:5)
+
+     Evidence:
+             | The SNS topic aws_sns_topic.aws_sns_topic is not set to use encryption at rest
+
+
+-----------------------------------------------
+Rule: Ensure use of S3 Glacier vault policy, and no action wildcards are being used
+Description: Using wildcard actions may inadvertently allow users to take actions you do not want to allow them to do. In addition, using a resource policy will provide an additional layer of security. It is a best practice to use a resource policy and give specific permissions only.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/amazonglacier/latest/dev/vault-access-policy.html to modify S3 Glacier vault policy in order to avoid using wildcard actions.
+Remediation Steps - Terraform: For the aws_glacier_vault resource, modify policy argument in order to avoid using wildcard actions.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_glacier_vault.not_secure_archive] (main.tf:9)
+     Violating Resource: [aws_glacier_vault.not_secure_archive]  (main.tf:9)
+
+     Evidence:
+             | The policy attached to the S3 Glacier Vault aws_glacier_vault.not_secure_archive is using wildcard action glacier:*, and principal AWS: *, without any condition
+
+
+-----------------------------------------------
 Rule: Ensure all resources that can be tagged have at least one tag
+Description: Some organizations require that all resources have at least one tag set. This rule will review the resources that can be tagged, and make sure each one has a tag that is not the Name tag. Resources that are not tagged will be flagged.
+Remediation Steps - Cloud Console: Access the specific resource in the AWS console and add tags.
+Remediation Steps - Terraform: Add a tags section to the resource with at least one tag beyond the Name tag.
  - 2 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_glacier_vault.not_secure_archive] (main.tf:9)
@@ -15,28 +46,6 @@ Rule: Ensure all resources that can be tagged have at least one tag
 
      Evidence:
              | Resource SNS topic aws_sns_topic.aws_sns_topic does not have any tags set
-
-
------------------------------------------------
-Rule: Ensure use of S3 Glacier vault policy, and no action wildcards are being used
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_glacier_vault.not_secure_archive] (main.tf:9)
-     Violating Resource: [aws_glacier_vault.not_secure_archive]  (main.tf:9)
-
-     Evidence:
-             | The policy attached to the S3 Glacier Vault aws_glacier_vault.not_secure_archive is using wildcard action glacier:*, and principal AWS: *, without any condition
-
-
------------------------------------------------
-Rule: Ensure SNS topics are set to be encrypted at rest
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_sns_topic.aws_sns_topic] (main.tf:5)
-     Violating Resource: [aws_sns_topic.aws_sns_topic]  (main.tf:5)
-
-     Evidence:
-             | The SNS topic aws_sns_topic.aws_sns_topic is not set to use encryption at rest
 
 
 -----------------------------------------------

@@ -4,7 +4,7 @@ Failed to run the process ...
     "isPrivate": true,
     "isLicensesEnabled": false,
     "ignoreSettings": null,
-    "org": "yi2020",
+    "org": "ryder.d",
     "projectId": "",
     "policy": ""
   },
@@ -15,7 +15,7 @@ Failed to run the process ...
   "ignoreSettings": null,
   "targetFile": "main.tf",
   "projectName": "project",
-  "org": "yi2020",
+  "org": "ryder.d",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
@@ -26,10 +26,82 @@ Failed to run the process ...
   "infrastructureAsCodeIssues": [
     {
       "severity": "medium",
+      "resolve": "Set `sku.capacity` to `2` or more",
+      "impact": "A single App Service Plan instance increases the risk of application unavailability",
+      "msg": "resource.azurerm_app_service_plan[svcplanconsumption].sku.capacity",
+      "remediation": {
+        "terraform": "Set `sku.capacity` to `2` or more",
+        "arm": "Set `sku.capacity` to `2` or more"
+      },
+      "subType": "App Service (Web Apps)",
+      "issue": "Use two or more App Service Plan instances",
+      "publicId": "SNYK-CC-AZURE-618",
+      "title": "Use two or more App Service Plan instances",
+      "references": [
+        "https://docs.microsoft.com/en-us/azure/app-service/overview-hosting-plans",
+        "https://docs.microsoft.com/en-us/azure/templates/microsoft.web/serverfarms?tabs=json"
+      ],
+      "id": "SNYK-CC-AZURE-618",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Use two or more App Service Plan instances",
+        "impact": "A single App Service Plan instance increases the risk of application unavailability",
+        "resolve": "Set `sku.capacity` to `2` or more"
+      },
+      "lineNumber": 36,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AZURE-618",
+      "isGeneratedByCustomRule": false,
+      "path": [
+        "resource",
+        "azurerm_app_service_plan[svcplanconsumption]",
+        "sku",
+        "capacity"
+      ]
+    },
+    {
+      "severity": "medium",
+      "resolve": "Set `auth_settings.enabled` attribute to `true`",
+      "impact": "Users will not be able to use Azure Active Directory for authentication in their Function App",
+      "msg": "resource.azurerm_function_app[functionapp].auth_settings.enabled",
+      "remediation": {
+        "terraform": "Set `auth_settings.enabled` attribute to `true`",
+        "arm": "Set `properties.enabled` to `true`"
+      },
+      "subType": "App Service (Web Apps)",
+      "issue": "Function App built-in authentication disabled",
+      "publicId": "SNYK-CC-AZURE-501",
+      "title": "Function App built-in authentication disabled",
+      "references": [
+        "https://docs.microsoft.com/en-us/azure/azure-functions/security-concepts#authenticationauthorization",
+        "https://docs.microsoft.com/en-us/azure/app-service/overview-authentication-authorization"
+      ],
+      "id": "SNYK-CC-AZURE-501",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Function App built-in authentication disabled",
+        "impact": "Users will not be able to use Azure Active Directory for authentication in their Function App",
+        "resolve": "Set `auth_settings.enabled` attribute to `true`"
+      },
+      "lineNumber": 51,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AZURE-501",
+      "isGeneratedByCustomRule": false,
+      "path": [
+        "resource",
+        "azurerm_function_app[functionapp]",
+        "auth_settings",
+        "enabled"
+      ]
+    },
+    {
+      "severity": "medium",
       "resolve": "Set `min_tls_version` attribute to `TLS1_2`",
       "id": "SNYK-CC-TF-149",
       "impact": "Older cipher suites could be vulnerable to hijacking and information disclosure",
       "msg": "resource.azurerm_storage_account[storacc].min_tls_version",
+      "remediation": {
+        "terraform": "Set `min_tls_version` attribute to `TLS1_2`",
+        "arm": "Set `properties.minimumTlsVersion`  attribute to `TLS1_2`"
+      },
       "subType": "Storage",
       "issue": "Azure Storage Account does not enforce latest TLS version",
       "publicId": "SNYK-CC-TF-149",
@@ -45,6 +117,7 @@ Failed to run the process ...
       },
       "lineNumber": 22,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-149",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "azurerm_storage_account[storacc]",
@@ -54,11 +127,11 @@ Failed to run the process ...
     {
       "severity": "medium",
       "resolve": "Set `https_only` attribute to `true`",
-      "id": "SNYK-CC-AZURE-500",
       "impact": "The connection and transmitted data could be intercepted and manipulated",
       "msg": "resource.azurerm_function_app[functionapp].https_only",
       "remediation": {
-        "terraform": "Set `https_only` attribute to `true`"
+        "terraform": "Set `https_only` attribute to `true`",
+        "arm": "Set `httpsOnly` attribute to `true`"
       },
       "subType": "App Service (Web Apps)",
       "issue": "Function App does not enforce use of HTTPS connections, users can access via HTTP",
@@ -68,6 +141,7 @@ Failed to run the process ...
         "https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/function_app#https_only",
         "https://docs.microsoft.com/en-us/azure/azure-functions/security-concepts#require-https"
       ],
+      "id": "SNYK-CC-AZURE-500",
       "isIgnored": false,
       "iacDescription": {
         "issue": "Function App does not enforce use of HTTPS connections, users can access via HTTP",
@@ -76,6 +150,7 @@ Failed to run the process ...
       },
       "lineNumber": 42,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-AZURE-500",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "azurerm_function_app[functionapp]",
@@ -84,10 +159,13 @@ Failed to run the process ...
     },
     {
       "severity": "low",
-      "resolve": "Set `network_rules.bypass` attribute to `['Azure Services']`",
-      "id": "SNYK-CC-TF-172",
-      "impact": "Services will not be able to access the storage account over network",
+      "resolve": "Set `network_rules.bypass` attribute to `['Azure Services']. Ensure to add appropriate rules for your application alongside the proposed remediation step. Setting this remediation without any other rules will block all network access to the storage account except for Microsoft Trusted Services.`",
+      "impact": "Trusted network services cannot be whitelisted via network rules. When any network rule is configured, the trusted services will not be able to access the storage account. Note, by default there is no network rule configured.",
       "msg": "resource.azurerm_storage_account[storacc].network_rules",
+      "remediation": {
+        "terraform": "Set `network_rules.bypass` attribute to `['Azure Services']. Ensure to add appropriate rules for your application alongside the proposed remediation step. Setting this remediation without any other rules will block all network access to the storage account except for Microsoft Trusted Services.`",
+        "arm": "Set `properties.networkAcls.bypass` attribute to `'Azure Services'. Ensure to add appropriate rules for your application alongside the proposed remediation step. Setting this remediation without any other rules will block all network access to the storage account except for Microsoft Trusted Services.`"
+      },
       "subType": "Storage",
       "issue": "Network access bypass for Trusted Microsoft Services is not enabled on the storage account",
       "publicId": "SNYK-CC-TF-172",
@@ -95,14 +173,16 @@ Failed to run the process ...
       "references": [
         "https://docs.microsoft.com/en-gb/azure/storage/common/storage-network-security#trusted-microsoft-services"
       ],
+      "id": "SNYK-CC-TF-172",
       "isIgnored": false,
       "iacDescription": {
         "issue": "Network access bypass for Trusted Microsoft Services is not enabled on the storage account",
-        "impact": "Services will not be able to access the storage account over network",
-        "resolve": "Set `network_rules.bypass` attribute to `['Azure Services']`"
+        "impact": "Trusted network services cannot be whitelisted via network rules. When any network rule is configured, the trusted services will not be able to access the storage account. Note, by default there is no network rule configured.",
+        "resolve": "Set `network_rules.bypass` attribute to `['Azure Services']. Ensure to add appropriate rules for your application alongside the proposed remediation step. Setting this remediation without any other rules will block all network access to the storage account except for Microsoft Trusted Services.`"
       },
       "lineNumber": 22,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-172",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "azurerm_storage_account[storacc]",

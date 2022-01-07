@@ -1,7 +1,7 @@
 
   Result 1
 
-  [aws-cloudwatch-log-group-customer-key][[0m[97mLOW[39m[0m] Resource 'aws_cloudwatch_log_group.cloudrail-test' is only using default encryption
+  [aws-cloudwatch-log-group-customer-key][LOW] Resource 'aws_cloudwatch_log_group.cloudrail-test' is only using default encryption
   /src/main.tf:5-7
 
 
@@ -18,16 +18,16 @@
   Resolution: Enable CMK encryption of CloudWatch Log Groups
 
   More Info:
-  - https://tfsec.dev/docs/aws/cloudwatch/log-group-customer-key#aws/cloudwatch 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/cloudwatch/log-group-customer-key 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_log_group#kms_key_id 
   - https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/encrypt-log-data-kms.html 
 
   times
   ------------------------------------------
-  disk i/o             55.901417ms
-  parsing HCL          595.292µs
-  evaluating values    2.165708ms
-  running checks       18.474708ms
+  disk i/o             26.625125ms
+  parsing HCL          600.542µs
+  evaluating values    1.690501ms
+  running checks       15.761625ms
 
   counts
   ------------------------------------------

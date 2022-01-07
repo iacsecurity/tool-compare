@@ -1,57 +1,23 @@
 
 WARNINGs found:
-Rule: Ensure REST API Gateway has access logging enabled
+Rule: Ensure API Gateway with caching enabled is set to be encrypted
+Description: Cloudrail will review the API Gateways in your environment. If it has caching enabled but not encrypted in any stage and in any method, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-caching.html to encrypt cache data.
+Remediation Steps - Terraform: For the aws_api_gateway_method_settings resource with caching enabled, in settings block, set cache_data_encrypted argument to true.
  - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_api_gateway_rest_api.api_gw] (main.tf:5)
-     Violating Resource: [aws_api_gateway_stage.api_gw_stage]  (main.tf:44)
-
-     Evidence:
-             | The API Gateway aws_api_gateway_rest_api.api_gw does not have access logging enabled for stage aws_api_gateway_stage.api_gw_stage
-
-
------------------------------------------------
-Rule: Ensure API Gateway has X-Ray tracing enabled
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_api_gateway_rest_api.api_gw] (main.tf:5)
-     Violating Resource: [aws_api_gateway_stage.api_gw_stage]  (main.tf:44)
-
-     Evidence:
-             | The API Gateway aws_api_gateway_rest_api.api_gw has X-Ray tracing disabled for stage aws_api_gateway_stage.api_gw_stage
-
-
------------------------------------------------
-Rule: Ensure API Gateway methods use authentication
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_api_gateway_rest_api.api_gw] (main.tf:5)
-     Violating Resource: [aws_api_gateway_method.api_gw_method]  (main.tf:22)
-
-     Evidence:
-             | The API Gateway aws_api_gateway_rest_api.api_gw is not requiring authorization for the method aws_api_gateway_method.api_gw_method
-
-
------------------------------------------------
-Rule: Ensure all resources that can be tagged have at least one tag
- - 2 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_api_gateway_rest_api.api_gw] (main.tf:5)
      Violating Resource: [aws_api_gateway_rest_api.api_gw]  (main.tf:5)
 
      Evidence:
-             | Resource API Gateway aws_api_gateway_rest_api.api_gw does not have any tags set
-
-
-   - Exposed Resource: [aws_api_gateway_stage.api_gw_stage] (main.tf:44)
-     Violating Resource: [aws_api_gateway_stage.api_gw_stage]  (main.tf:44)
-
-     Evidence:
-             | Resource API stage aws_api_gateway_stage.api_gw_stage does not have any tags set
+             | The API Gateway aws_api_gateway_rest_api.api_gw.id has caching enabled and not encrypted for method GET in the stage prod
 
 
 -----------------------------------------------
 Rule: Ensure use of API Gateway endpoint policy, and no action wildcards are being used
+Description: Using wildcard actions may inadvertently allow users to take actions you do not want to allow them to do. In addition, using a resource policy will provide an additional layer of security. It is a best practice to use a resource policy and give specific permissions only.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-resource-policies-examples.html to modify API Gateway policy in order to avoid using wildcard actions.
+Remediation Steps - Terraform: For the aws_api_gateway_rest_api_policy resource, modify policy argument in order to avoid using wildcard actions.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_api_gateway_rest_api.api_gw] (main.tf:5)
@@ -62,14 +28,66 @@ Rule: Ensure use of API Gateway endpoint policy, and no action wildcards are bei
 
 
 -----------------------------------------------
-Rule: Ensure API Gateway with caching enabled is set to be encrypted
- - 1 Resources Exposed:
+Rule: Ensure all resources that can be tagged have at least one tag
+Description: Some organizations require that all resources have at least one tag set. This rule will review the resources that can be tagged, and make sure each one has a tag that is not the Name tag. Resources that are not tagged will be flagged.
+Remediation Steps - Cloud Console: Access the specific resource in the AWS console and add tags.
+Remediation Steps - Terraform: Add a tags section to the resource with at least one tag beyond the Name tag.
+ - 2 Resources Exposed:
 -----------------------------------------------
+   - Exposed Resource: [aws_api_gateway_stage.api_gw_stage] (main.tf:44)
+     Violating Resource: [aws_api_gateway_stage.api_gw_stage]  (main.tf:44)
+
+     Evidence:
+             | Resource API stage aws_api_gateway_stage.api_gw_stage does not have any tags set
+
+
    - Exposed Resource: [aws_api_gateway_rest_api.api_gw] (main.tf:5)
      Violating Resource: [aws_api_gateway_rest_api.api_gw]  (main.tf:5)
 
      Evidence:
-             | The API Gateway aws_api_gateway_rest_api.api_gw.id has caching enabled and not encrypted for method GET in the stage prod
+             | Resource API Gateway aws_api_gateway_rest_api.api_gw does not have any tags set
+
+
+-----------------------------------------------
+Rule: Ensure API Gateway methods use authentication
+Description: Cloudrail will review the API Gateway methods configuration in your environment. If a method is not configured to require authorization, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-method-settings-method-request.html#setup-method-request-authorization in order to configure the authorization type on the REST API methods.
+Remediation Steps - Terraform: For the aws_api_gateway_method resource, set the authorization argument to a value other than “NONE”.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_api_gateway_rest_api.api_gw] (main.tf:5)
+     Violating Resource: [aws_api_gateway_method.api_gw_method]  (main.tf:22)
+
+     Evidence:
+             | The API Gateway aws_api_gateway_rest_api.api_gw is not requiring authorization for the method aws_api_gateway_method.api_gw_method
+
+
+-----------------------------------------------
+Rule: Ensure API Gateway has X-Ray tracing enabled
+Description: Cloudrail will review API Gateway stages configuration in your environment. If a stage is not configured to have X-Ray tracing enabled, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-enabling-xray.html in order to enable X-Ray tracing for the API Gateway.
+Remediation Steps - Terraform: For the aws_api_gateway_stage resource, set the xray_tracing_enabled argument to true.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_api_gateway_rest_api.api_gw] (main.tf:5)
+     Violating Resource: [aws_api_gateway_stage.api_gw_stage]  (main.tf:44)
+
+     Evidence:
+             | The API Gateway aws_api_gateway_rest_api.api_gw has X-Ray tracing disabled for stage aws_api_gateway_stage.api_gw_stage
+
+
+-----------------------------------------------
+Rule: Ensure REST API Gateway has access logging enabled
+Description: Cloudrail will review the REST API Gateways configuration in your environment. If a stage does not have access logging enabled, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-logging.html in order to enable logging for a REST API Gateway stage.
+Remediation Steps - Terraform: For the aws_api_gateway_stage resource, set the access_log_settings block with destination_arn argument set to the ARN of a CloudWatch Log Group and set the format argument to a valid log format.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_api_gateway_rest_api.api_gw] (main.tf:5)
+     Violating Resource: [aws_api_gateway_stage.api_gw_stage]  (main.tf:44)
+
+     Evidence:
+             | The API Gateway aws_api_gateway_rest_api.api_gw does not have access logging enabled for stage aws_api_gateway_stage.api_gw_stage
 
 
 -----------------------------------------------

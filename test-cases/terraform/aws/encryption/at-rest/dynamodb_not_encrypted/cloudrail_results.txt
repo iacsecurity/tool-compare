@@ -1,17 +1,9 @@
 
 WARNINGs found:
-Rule: Ensure DynamoDB Point-in-Time recovery (backup) is enabled
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_dynamodb_table.basic-dynamodb-table] (main.tf:1)
-     Violating Resource: [aws_dynamodb_table.basic-dynamodb-table]  (main.tf:1)
-
-     Evidence:
-             | This rule evaluated aws_dynamodb_table.basic-dynamodb-table's configuration
-
-
------------------------------------------------
 Rule: Ensure DynamoDB tables are encrypted at rest with customer-managed CMK
+Description: Cloudrail will review the DynamoDB tables in your environment. If a table is not set to be encrypted at rest using a customer-managed CMK, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/encryption.tutorial.html to set DynamoDB table encryption using a customer-managed CMK.
+Remediation Steps - Terraform: For the aws_dynamodb_table resource, set kms_key_arn argument, in server_side_encryption block, to use a customer-managed CMK.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_dynamodb_table.basic-dynamodb-table] (main.tf:1)

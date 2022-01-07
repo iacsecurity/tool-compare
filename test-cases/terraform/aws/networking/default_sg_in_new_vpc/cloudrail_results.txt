@@ -1,75 +1,25 @@
 
 WARNINGs found:
-Rule: Ensure all data stored in the Launch configuration EBS is securely encrypted
+Rule: Ensure all used default security groups of every VPC restrict all traffic
+Description: Using default security groups in general is inadvisable. By locking security groups down, you are validating that if anyone uses them by accident, they will realize before any security issues occur.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/working-with-security-groups.html#deleting-security-group-rule to update the security group rules.
+Remediation Steps - Terraform: For the resource aws_default_security_group, update the inline ingress and egress rules.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_instance.ec2] (main.tf:31)
-     Violating Resource: [aws_instance.ec2]  (main.tf:31)
+     Violating Resource: [sg-pseudo-3e9105ab-7e75-40c3-983e-7499a95425f7]  (Not found in TF)
 
      Evidence:
-             | This rule evaluated aws_instance.ec2's configuration
-
-
------------------------------------------------
-Rule: Ensure EC2 instance has detailed monitoring enabled
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.ec2] (main.tf:31)
-     Violating Resource: [aws_instance.ec2]  (main.tf:31)
-
-     Evidence:
-             | The EC2 Instance aws_instance.ec2 has detailed monitoring disabled
-
-
------------------------------------------------
-Rule: Ensure EC2 instance is EBS optimized
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.ec2] (main.tf:31)
-     Violating Resource: [aws_instance.ec2]  (main.tf:31)
-
-     Evidence:
-             | The EC2 Instance aws_instance.ec2 is not EBS optimized
-
-
------------------------------------------------
-Rule: Ensure all resources that can be tagged have at least one tag
- - 3 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.ec2] (main.tf:31)
-     Violating Resource: [aws_instance.ec2]  (main.tf:31)
-
-     Evidence:
-             | Resource EC2 Instance aws_instance.ec2 does not have any tags set other than "Name"
-
-
-   - Exposed Resource: [aws_subnet.subnet] (main.tf:22)
-     Violating Resource: [aws_subnet.subnet]  (main.tf:22)
-
-     Evidence:
-             | Resource Subnet aws_subnet.subnet does not have any tags set other than "Name"
-
-
-   - Exposed Resource: [aws_vpc.vpc] (main.tf:14)
-     Violating Resource: [aws_vpc.vpc]  (main.tf:14)
-
-     Evidence:
-             | Resource VPC aws_vpc.vpc does not have any tags set other than "Name"
-
-
------------------------------------------------
-Rule: Allow only private AMIs to be used
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.ec2] (main.tf:31)
-     Violating Resource: [ami-07cda0db070313c52]  (Not found in TF)
-
-     Evidence:
-             | The EC2 Instance aws_instance.ec2 uses AMI ami-07cda0db070313c52, which is public
+         VPC aws_vpc.vpc
+             | aws_instance.ec2 uses ENI eni-pseudo-170227fb-89b7-460e-a042-027f07fb2bc2
+             | The ENI is secured by default Security group sg-pseudo-3e9105ab-7e75-40c3-983e-7499a95425f7 and allows all traffic
 
 
 -----------------------------------------------
 Rule: Ensure IMDSv2 is used and IMDSv1 is disabled
+Description: There have been hacks in the past caused by the use of IMDSv1. It is now best practice to disable IMDSv1 and use IMDSv2. It’s important to test the disablement of IMDSv1 carefully, as it may cause issues in an application’s execution (if it using an old SDK, for example).
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html to change the instance metadata for existing instances. Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html to configure instance metadata for new instances.
+Remediation Steps - Terraform: For the aws_instance resource, in metadata_options block, set http_tokens argument to required.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_instance.ec2] (main.tf:31)
@@ -80,16 +30,73 @@ Rule: Ensure IMDSv2 is used and IMDSv1 is disabled
 
 
 -----------------------------------------------
-Rule: Ensure all used default security groups of every VPC restrict all traffic
+Rule: Allow only private AMIs to be used
+Description: Some organizations may only allow the use of private AMIs. If this rule is enabled, any EC2 instance attempting to use a public AMI will be flagged.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instances-and-amis.html in order to terminate flagged EC2 instances and create new EC2 instance with an approved AMI.
+Remediation Steps - Terraform: For the aws_instance resource, update the ami argument to set an approved AMI. Terraform will destroy and create new resources.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_instance.ec2] (main.tf:31)
-     Violating Resource: [sg-pseudo-ef3ecc0c-3dbf-4ad7-bdec-bc52c5f242c7]  (Not found in TF)
+     Violating Resource: [ami-07cda0db070313c52]  (Not found in TF)
 
      Evidence:
-         VPC aws_vpc.vpc
-             | aws_instance.ec2 uses ENI eni-pseudo-f58fd964-842a-49d8-97e6-88d0db754591
-             | The ENI is secured by default Security group sg-pseudo-ef3ecc0c-3dbf-4ad7-bdec-bc52c5f242c7 and allows all traffic
+             | The EC2 Instance aws_instance.ec2 uses AMI ami-07cda0db070313c52, which is public
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+Description: Some organizations require that all resources have at least one tag set. This rule will review the resources that can be tagged, and make sure each one has a tag that is not the Name tag. Resources that are not tagged will be flagged.
+Remediation Steps - Cloud Console: Access the specific resource in the AWS console and add tags.
+Remediation Steps - Terraform: Add a tags section to the resource with at least one tag beyond the Name tag.
+ - 3 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_vpc.vpc] (main.tf:14)
+     Violating Resource: [aws_vpc.vpc]  (main.tf:14)
+
+     Evidence:
+             | Resource VPC aws_vpc.vpc does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [aws_subnet.subnet] (main.tf:22)
+     Violating Resource: [aws_subnet.subnet]  (main.tf:22)
+
+     Evidence:
+             | Resource Subnet aws_subnet.subnet does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [aws_instance.ec2] (main.tf:31)
+     Violating Resource: [aws_instance.ec2]  (main.tf:31)
+
+     Evidence:
+             | Resource EC2 Instance aws_instance.ec2 does not have any tags set other than "Name"
+
+
+-----------------------------------------------
+Rule: Ensure EC2 instance is EBS optimized
+Description: Cloudrail will review the EC2 instances configuration in your environment. If it is not configured to be EBS-optimized, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-optimized.html to enable EBS optimization for an EC2 instance.
+Remediation Steps - Terraform: For the aws_instance resource, set the ebs_optimized parameter to true.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.ec2] (main.tf:31)
+     Violating Resource: [aws_instance.ec2]  (main.tf:31)
+
+     Evidence:
+             | The EC2 Instance aws_instance.ec2 is not EBS optimized
+
+
+-----------------------------------------------
+Rule: Ensure EC2 instance has detailed monitoring enabled
+Description: Cloudrail will review the EC2 instances configuration in your environment. If an instance does not have detailed monitoring configured, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-cloudwatch-new.html in order to enable detailed monitoring for an EC2 instance.
+Remediation Steps - Terraform: For the aws_instance resource, set the monitoring argument to true.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.ec2] (main.tf:31)
+     Violating Resource: [aws_instance.ec2]  (main.tf:31)
+
+     Evidence:
+             | The EC2 Instance aws_instance.ec2 has detailed monitoring disabled
 
 
 -----------------------------------------------

@@ -1,33 +1,7 @@
 
   Result 1
 
-  [aws-documentdb-enable-log-export][[0m[33mMEDIUM[39m[0m] Resource 'aws_docdb_cluster.test1' uses default value for enabled_cloudwatch_logs_exports
-  /src/main.tf:5-12
-
-
-       2 |   region = "us-east-1"
-       3 | }
-       4 | 
-       5 | resource "aws_docdb_cluster" "test1" {
-       6 |   cluster_identifier  = "my-docdb-cluster-test1"
-       7 |   engine              = "docdb"
-       8 |   master_username     = "foo"
-       9 |   master_password     = "mustbeeightchars"
-      10 |   skip_final_snapshot = true
-      11 |   storage_encrypted   = true
-      12 | }
-      13 | 
-
-  Impact:     Limited visibility of audit trail for changes to the DocumentDB
-  Resolution: Enable export logs
-
-  More Info:
-  - https://tfsec.dev/docs/aws/documentdb/enable-log-export#aws/documentdb 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/docdb_cluster#enabled_cloudwatch_logs_exports 
-
-  Result 2
-
-  [aws-documentdb-encryption-customer-key][[0m[97mLOW[39m[0m] Resource 'aws_docdb_cluster.test1' does not use CMK
+  [aws-documentdb-encryption-customer-key][LOW] Resource 'aws_docdb_cluster.test1' does not use CMK
   /src/main.tf:5-12
 
 
@@ -48,12 +22,12 @@
   Resolution: Enable encryption using customer managed keys
 
   More Info:
-  - https://tfsec.dev/docs/aws/documentdb/encryption-customer-key#aws/documentdb 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/documentdb/encryption-customer-key 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/docdb_cluster#kms_key_id 
 
-  Result 3
+  Result 2
 
-  [general-secrets-sensitive-in-attribute][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Block 'aws_docdb_cluster.test1' includes a potentially sensitive attribute which is defined within the project.
+  [general-secrets-sensitive-in-attribute][CRITICAL] Block 'aws_docdb_cluster.test1' includes a potentially sensitive attribute which is defined within the project.
   /src/main.tf:9
 
 
@@ -70,15 +44,41 @@
   Resolution: Don't include sensitive data in blocks
 
   More Info:
-  - https://tfsec.dev/docs/general/secrets/sensitive-in-attribute#general/secrets 
+  - https://aquasecurity.github.io/tfsec/latest/checks/general/secrets/sensitive-in-attribute 
   - https://www.terraform.io/docs/state/sensitive-data.html 
+
+  Result 3
+
+  [aws-documentdb-enable-log-export][MEDIUM] Resource 'aws_docdb_cluster.test1' uses default value for enabled_cloudwatch_logs_exports
+  /src/main.tf:5-12
+
+
+       2 |   region = "us-east-1"
+       3 | }
+       4 | 
+       5 | resource "aws_docdb_cluster" "test1" {
+       6 |   cluster_identifier  = "my-docdb-cluster-test1"
+       7 |   engine              = "docdb"
+       8 |   master_username     = "foo"
+       9 |   master_password     = "mustbeeightchars"
+      10 |   skip_final_snapshot = true
+      11 |   storage_encrypted   = true
+      12 | }
+      13 | 
+
+  Impact:     Limited visibility of audit trail for changes to the DocumentDB
+  Resolution: Enable export logs
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/documentdb/enable-log-export 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/docdb_cluster#enabled_cloudwatch_logs_exports 
 
   times
   ------------------------------------------
-  disk i/o             45.171083ms
-  parsing HCL          557.709µs
-  evaluating values    2.049208ms
-  running checks       39.077375ms
+  disk i/o             23.886874ms
+  parsing HCL          514.208µs
+  evaluating values    1.72775ms
+  running checks       20.98225ms
 
   counts
   ------------------------------------------

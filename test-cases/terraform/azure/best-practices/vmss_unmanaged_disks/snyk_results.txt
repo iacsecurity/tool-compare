@@ -4,7 +4,7 @@ Failed to run the process ...
     "isPrivate": true,
     "isLicensesEnabled": false,
     "ignoreSettings": null,
-    "org": "yi2020",
+    "org": "ryder.d",
     "projectId": "",
     "policy": ""
   },
@@ -15,7 +15,7 @@ Failed to run the process ...
   "ignoreSettings": null,
   "targetFile": "main.tf",
   "projectName": "project",
-  "org": "yi2020",
+  "org": "ryder.d",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
@@ -25,11 +25,48 @@ Failed to run the process ...
   "ok": false,
   "infrastructureAsCodeIssues": [
     {
+      "severity": "low",
+      "resolve": "Set `ddos_protection_plan.enable` attribute to `true`",
+      "impact": "Services deployed in the network will not benefit from advanced DDoS protection features such as attack alerting and analytics",
+      "msg": "resource.azurerm_virtual_network[vnet].ddos_protection_plan",
+      "remediation": {
+        "terraform": "Set `ddos_protection_plan.enable` attribute to `true`",
+        "arm": "Set `properties.enableDdosProtection` to `true`"
+      },
+      "subType": "Network",
+      "issue": "Virtual Network DDoS protection plan disabled",
+      "publicId": "SNYK-CC-AZURE-516",
+      "title": "Virtual Network DDoS protection plan disabled",
+      "references": [
+        "https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network#ddos_protection_plan",
+        "https://docs.microsoft.com/en-us/azure/ddos-protection/ddos-protection-overview"
+      ],
+      "id": "SNYK-CC-AZURE-516",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Virtual Network DDoS protection plan disabled",
+        "impact": "Services deployed in the network will not benefit from advanced DDoS protection features such as attack alerting and analytics",
+        "resolve": "Set `ddos_protection_plan.enable` attribute to `true`"
+      },
+      "lineNumber": 15,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AZURE-516",
+      "isGeneratedByCustomRule": false,
+      "path": [
+        "resource",
+        "azurerm_virtual_network[vnet]",
+        "ddos_protection_plan"
+      ]
+    },
+    {
       "severity": "medium",
       "resolve": "Set `min_tls_version` attribute to `TLS1_2`",
       "id": "SNYK-CC-TF-149",
       "impact": "Older cipher suites could be vulnerable to hijacking and information disclosure",
       "msg": "resource.azurerm_storage_account[storacc].min_tls_version",
+      "remediation": {
+        "terraform": "Set `min_tls_version` attribute to `TLS1_2`",
+        "arm": "Set `properties.minimumTlsVersion`  attribute to `TLS1_2`"
+      },
       "subType": "Storage",
       "issue": "Azure Storage Account does not enforce latest TLS version",
       "publicId": "SNYK-CC-TF-149",
@@ -43,8 +80,9 @@ Failed to run the process ...
         "impact": "Older cipher suites could be vulnerable to hijacking and information disclosure",
         "resolve": "Set `min_tls_version` attribute to `TLS1_2`"
       },
-      "lineNumber": 42,
+      "lineNumber": 41,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-149",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "azurerm_storage_account[storacc]",
@@ -53,41 +91,13 @@ Failed to run the process ...
     },
     {
       "severity": "low",
-      "resolve": "Set `ddos_protection_plan.enable` attribute to `true`",
-      "id": "SNYK-CC-AZURE-516",
-      "impact": "Services deployed in the network will not benefit from advanced DDoS protection features such as attack alerting and analytics",
-      "msg": "resource.azurerm_virtual_network[vnet].ddos_protection_plan",
-      "remediation": {
-        "terraform": "Set `ddos_protection_plan.enable` attribute to `true`"
-      },
-      "subType": "Network",
-      "issue": "Virtual Network DDoS protection plan disabled",
-      "publicId": "SNYK-CC-AZURE-516",
-      "title": "Virtual Network DDoS protection plan disabled",
-      "references": [
-        "https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network#ddos_protection_plan",
-        "https://docs.microsoft.com/en-us/azure/ddos-protection/ddos-protection-overview"
-      ],
-      "isIgnored": false,
-      "iacDescription": {
-        "issue": "Virtual Network DDoS protection plan disabled",
-        "impact": "Services deployed in the network will not benefit from advanced DDoS protection features such as attack alerting and analytics",
-        "resolve": "Set `ddos_protection_plan.enable` attribute to `true`"
-      },
-      "lineNumber": 16,
-      "documentation": "https://snyk.io/security-rules/SNYK-CC-AZURE-516",
-      "path": [
-        "resource",
-        "azurerm_virtual_network[vnet]",
-        "ddos_protection_plan"
-      ]
-    },
-    {
-      "severity": "low",
-      "resolve": "Set `network_rules.bypass` attribute to `['Azure Services']`",
-      "id": "SNYK-CC-TF-172",
-      "impact": "Services will not be able to access the storage account over network",
+      "resolve": "Set `network_rules.bypass` attribute to `['Azure Services']. Ensure to add appropriate rules for your application alongside the proposed remediation step. Setting this remediation without any other rules will block all network access to the storage account except for Microsoft Trusted Services.`",
+      "impact": "Trusted network services cannot be whitelisted via network rules. When any network rule is configured, the trusted services will not be able to access the storage account. Note, by default there is no network rule configured.",
       "msg": "resource.azurerm_storage_account[storacc].network_rules",
+      "remediation": {
+        "terraform": "Set `network_rules.bypass` attribute to `['Azure Services']. Ensure to add appropriate rules for your application alongside the proposed remediation step. Setting this remediation without any other rules will block all network access to the storage account except for Microsoft Trusted Services.`",
+        "arm": "Set `properties.networkAcls.bypass` attribute to `'Azure Services'. Ensure to add appropriate rules for your application alongside the proposed remediation step. Setting this remediation without any other rules will block all network access to the storage account except for Microsoft Trusted Services.`"
+      },
       "subType": "Storage",
       "issue": "Network access bypass for Trusted Microsoft Services is not enabled on the storage account",
       "publicId": "SNYK-CC-TF-172",
@@ -95,14 +105,16 @@ Failed to run the process ...
       "references": [
         "https://docs.microsoft.com/en-gb/azure/storage/common/storage-network-security#trusted-microsoft-services"
       ],
+      "id": "SNYK-CC-TF-172",
       "isIgnored": false,
       "iacDescription": {
         "issue": "Network access bypass for Trusted Microsoft Services is not enabled on the storage account",
-        "impact": "Services will not be able to access the storage account over network",
-        "resolve": "Set `network_rules.bypass` attribute to `['Azure Services']`"
+        "impact": "Trusted network services cannot be whitelisted via network rules. When any network rule is configured, the trusted services will not be able to access the storage account. Note, by default there is no network rule configured.",
+        "resolve": "Set `network_rules.bypass` attribute to `['Azure Services']. Ensure to add appropriate rules for your application alongside the proposed remediation step. Setting this remediation without any other rules will block all network access to the storage account except for Microsoft Trusted Services.`"
       },
-      "lineNumber": 42,
+      "lineNumber": 41,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-172",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "azurerm_storage_account[storacc]",

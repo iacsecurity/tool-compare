@@ -1,7 +1,36 @@
 
   Result 1
 
-  [azure-storage-use-secure-tls-policy][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'azurerm_storage_account.storacc' should have the min tls version set to TLS1_2 .
+  [azure-storage-default-action-deny][CRITICAL] Resource 'azurerm_storage_account.storacc' does not have network_rules and there isn't a configured `azurerm_storage_account_network_rules.
+  /src/main.tf:22-28
+
+
+      19 |   location = "West Europe"
+      20 | }
+      21 | 
+      22 | resource "azurerm_storage_account" "storacc" {
+      23 |   name                     = "myfuncappstorageaccount"
+      24 |   resource_group_name      = azurerm_resource_group.rg.name
+      25 |   location                 = azurerm_resource_group.rg.location
+      26 |   account_tier             = "Standard"
+      27 |   account_replication_type = "LRS"
+      28 | }
+      29 | 
+      30 | resource "azurerm_app_service_plan" "svcplanconsumption" {
+      31 |   name                = "${local.resource_prefix}-service-plan"
+
+  Legacy ID:  AZU012
+  Impact:     Network rules that allow could cause data to be exposed publicly
+  Resolution: Set network rules to deny
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/azure/storage/default-action-deny 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account_network_rules#default_action 
+  - https://docs.microsoft.com/en-us/azure/firewall/rule-processing 
+
+  Result 2
+
+  [azure-storage-use-secure-tls-policy][CRITICAL] Resource 'azurerm_storage_account.storacc' should have the min tls version set to TLS1_2 .
   /src/main.tf:22-28
 
 
@@ -24,13 +53,34 @@
   Resolution: Use a more recent TLS/SSL policy for the load balancer
 
   More Info:
-  - https://tfsec.dev/docs/azure/storage/use-secure-tls-policy#azure/storage 
+  - https://aquasecurity.github.io/tfsec/latest/checks/azure/storage/use-secure-tls-policy 
   - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account#min_tls_version 
   - https://docs.microsoft.com/en-us/azure/storage/common/transport-layer-security-configure-minimum-version 
 
-  Result 2
+  Result 3
 
-  [azure-appservice-enforce-https][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'azurerm_function_app.functionapp' should have https_only set to true, the default is false.
+  [azure-functionapp-authentication-enabled][LOW] Resource 'azurerm_function_app.functionapp' has attribute auth_settings.enabled that is false
+  /src/main.tf:51
+
+
+      48 |   storage_account_access_key = azurerm_storage_account.storacc.primary_access_key
+      49 | 
+      50 |   auth_settings {
+      51 |     enabled = false    bool: false
+      52 |   }
+      53 | }
+      54 | 
+
+  Impact:     Anonymous HTTP requests will be accepted
+  Resolution: Enable authentication to prevent anonymous request being accepted
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/azure/functionapp/authentication-enabled 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/function_app#enabled 
+
+  Result 4
+
+  [azure-functionapp-enable-http2][LOW] Resource 'azurerm_function_app.functionapp' uses default value for site_config.http2_enabled
   /src/main.tf:42-53
 
 
@@ -51,22 +101,19 @@
       53 | }
       54 | 
 
-  Legacy ID:  AZU028
-  Impact:     Anyone can access the Function App using HTTP.
-  Resolution: You can redirect all HTTP requests to the HTTPS port.
+  Impact:     Outdated versions of HTTP has security vulnerabilities
+  Resolution: Use the latest version of HTTP
 
   More Info:
-  - https://tfsec.dev/docs/azure/appservice/enforce-https#azure/appservice 
-  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/function_app#https_only 
-  - https://docs.microsoft.com/en-us/azure/app-service/configure-ssl-bindings#enforce-https 
-  - https://docs.microsoft.com/en-us/azure/azure-functions/security-concepts 
+  - https://aquasecurity.github.io/tfsec/latest/checks/azure/functionapp/enable-http2 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/function_app#http2_enabled 
 
   times
   ------------------------------------------
-  disk i/o             622.959µs
-  parsing HCL          8.675µs
-  evaluating values    334.69µs
-  running checks       2.039081ms
+  disk i/o             27.561ms
+  parsing HCL          645.875µs
+  evaluating values    3.415208ms
+  running checks       23.053708ms
 
   counts
   ------------------------------------------
@@ -79,8 +126,8 @@
   critical             2
   high                 0
   medium               0
-  low                  0
+  low                  2
   ignored              0
 
-  2 potential problems detected.
+  4 potential problems detected.
 

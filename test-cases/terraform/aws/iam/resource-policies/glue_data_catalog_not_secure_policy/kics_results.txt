@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+Scanning with Keeping Infrastructure as Code Secure v1.4.9
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 851
 Queries failed to execute: 0
 
 ------------------------------------
@@ -31,32 +31,32 @@ Resource Not Using Tags, Severity: INFO, Results: 3
 Description: AWS services resource tags are an essential part of managing components
 Platform: Terraform
 
-	[1]: /src/main.tf:33
-
-		032: 
-		033: resource "aws_s3_bucket" "cloudrail" {
-		034:   bucket = "cloudrail-glue"
-
-
-	[2]: /src/main.tf:38
+	[1]: ../../src/main.tf:38
 
 		037: 
 		038: resource "aws_glue_crawler" "cloudrail_table_crawler" {
 		039:   database_name = aws_glue_catalog_database.cloudrail_table_database.name
 
 
-	[3]: /src/main.tf:14
+	[2]: ../../src/main.tf:14
 
 		013: 
 		014: resource "aws_iam_role" "cloudrail_glue_iam" {
 		015:   name = "cloudrail_glue_iam"
 
 
+	[3]: ../../src/main.tf:33
+
+		032: 
+		033: resource "aws_s3_bucket" "cloudrail" {
+		034:   bucket = "cloudrail-glue"
+
+
 S3 Bucket Logging Disabled, Severity: LOW, Results: 1
 Description: S3 bucket without logging
 Platform: Terraform
 
-	[1]: /src/main.tf:33
+	[1]: ../../src/main.tf:33
 
 		032: 
 		033: resource "aws_s3_bucket" "cloudrail" {
@@ -67,29 +67,54 @@ S3 Bucket Without Versioning, Severity: MEDIUM, Results: 1
 Description: S3 bucket without versioning
 Platform: Terraform
 
-	[1]: /src/main.tf:33
+	[1]: ../../src/main.tf:33
 
 		032: 
 		033: resource "aws_s3_bucket" "cloudrail" {
 		034:   bucket = "cloudrail-glue"
 
 
-Glue With Vulnerable Policy, Severity: MEDIUM, Results: 1
-Description: Glue policy should avoid wildcard in 'principals' and 'actions'
+Policy Without Principal, Severity: MEDIUM, Results: 1
+Description: All policies, except IAM identity-based policies, should have the 'Principal' element defined
 Platform: Terraform
 
-	[1]: /src/main.tf:68
+	[1]: ../../src/main.tf:68
 
 		067: resource "aws_glue_resource_policy" "example" {
 		068:   policy = data.aws_iam_policy_document.glue-example-policy.json
 		069: }
 
 
-S3 Bucket Without Server-side-encryption, Severity: HIGH, Results: 1
-Description: S3 bucket should have encryption defined
+Glue With Vulnerable Policy, Severity: MEDIUM, Results: 1
+Description: Glue policy should avoid wildcard in 'principals' and 'actions'
 Platform: Terraform
 
-	[1]: /src/main.tf:33
+	[1]: ../../src/main.tf:68
+
+		067: resource "aws_glue_resource_policy" "example" {
+		068:   policy = data.aws_iam_policy_document.glue-example-policy.json
+		069: }
+
+
+S3 Bucket Without Enabled MFA Delete, Severity: HIGH, Results: 1
+CIS ID: CIS Security - CIS Amazon Web Services Foundations Benchmark v1.4.0 - Rule 2.1.3
+Title: Ensure MFA Delete is enable on S3 buckets
+Description: Once MFA Delete is enabled on your sensitive and classified S3 bucket it requires the user to have two forms of authentication.
+
+Platform: Terraform
+
+	[1]: ../../src/main.tf:33
+
+		032: 
+		033: resource "aws_s3_bucket" "cloudrail" {
+		034:   bucket = "cloudrail-glue"
+
+
+S3 Bucket SSE Disabled, Severity: HIGH, Results: 1
+Description: If algorithm is AES256 then the master key is null, empty or undefined, otherwise the master key is required
+Platform: Terraform
+
+	[1]: ../../src/main.tf:33
 
 		032: 
 		033: resource "aws_s3_bucket" "cloudrail" {
@@ -98,10 +123,10 @@ Platform: Terraform
 
 
 Results Summary:
-HIGH: 1
-MEDIUM: 2
+HIGH: 2
+MEDIUM: 3
 LOW: 1
 INFO: 3
-TOTAL: 7
+TOTAL: 9
 
-Scan duration: 4.897984778s
+Scan duration: 9.112371838s

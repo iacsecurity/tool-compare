@@ -1,10 +1,412 @@
 
+  Result 1
+
+  [azure-appservice-require-client-cert][LOW] Resource 'azurerm_app_service.webapp' uses default value for client_cert_enabled
+  /src/main.tf:28-42
+
+
+      25 |   }
+      26 | }
+      27 | 
+      28 | resource "azurerm_app_service" "webapp" {
+      29 |   name = "${local.resource_prefix}-webapp"
+      30 |   location                   = azurerm_resource_group.rg.location
+      31 |   resource_group_name        = azurerm_resource_group.rg.name
+      32 |   app_service_plan_id        = azurerm_app_service_plan.plan.id
+      33 |   
+      34 |   app_settings = {
+      35 |     FUNCTIONS_WORKER_RUNTIME = "java"
+      36 |   }
+      37 | 
+      38 |   site_config {
+      39 |     use_32_bit_worker_process = true
+      40 |     linux_fx_version = "TOMCAT|9.0-jre8"
+      41 |   }
+      42 | }
+      43 | 
+
+  Impact:     Mutual TLS is not being used
+  Resolution: Enable incoming certificates for clients
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/azure/appservice/require-client-cert 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/app_service#client_cert_enabled 
+
+  Result 2
+
+  [azure-appservice-detailed-error-messages-enabled][LOW] Resource 'azurerm_app_service.webapp' does not have logs enabled
+  /src/main.tf:28-42
+
+
+      25 |   }
+      26 | }
+      27 | 
+      28 | resource "azurerm_app_service" "webapp" {
+      29 |   name = "${local.resource_prefix}-webapp"
+      30 |   location                   = azurerm_resource_group.rg.location
+      31 |   resource_group_name        = azurerm_resource_group.rg.name
+      32 |   app_service_plan_id        = azurerm_app_service_plan.plan.id
+      33 |   
+      34 |   app_settings = {
+      35 |     FUNCTIONS_WORKER_RUNTIME = "java"
+      36 |   }
+      37 | 
+      38 |   site_config {
+      39 |     use_32_bit_worker_process = true
+      40 |     linux_fx_version = "TOMCAT|9.0-jre8"
+      41 |   }
+      42 | }
+      43 | 
+
+  Impact:     Missing crucial details in the error messages
+  Resolution: Enable detailed_error_messages_enabled
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/azure/appservice/detailed-error-messages-enabled 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/app_service#detailed_error_messages_enabled 
+  - https://docs.microsoft.com/en-us/azure/app-service/troubleshoot-diagnostic-logs 
+
+  Result 3
+
+  [azure-appservice-enable-http2][LOW] Resource 'azurerm_app_service.webapp' uses default value for site_config.http2_enabled
+  /src/main.tf:28-42
+
+
+      25 |   }
+      26 | }
+      27 | 
+      28 | resource "azurerm_app_service" "webapp" {
+      29 |   name = "${local.resource_prefix}-webapp"
+      30 |   location                   = azurerm_resource_group.rg.location
+      31 |   resource_group_name        = azurerm_resource_group.rg.name
+      32 |   app_service_plan_id        = azurerm_app_service_plan.plan.id
+      33 |   
+      34 |   app_settings = {
+      35 |     FUNCTIONS_WORKER_RUNTIME = "java"
+      36 |   }
+      37 | 
+      38 |   site_config {
+      39 |     use_32_bit_worker_process = true
+      40 |     linux_fx_version = "TOMCAT|9.0-jre8"
+      41 |   }
+      42 | }
+      43 | 
+
+  Impact:     Outdated versions of HTTP has security vulnerabilities
+  Resolution: Use the latest version of HTTP
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/azure/appservice/enable-http2 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/app_service#http2_enabled 
+
+  Result 4
+
+  [azure-appservice-enable-https-only][CRITICAL] Resource 'azurerm_app_service.webapp' uses default value (true) for https_only
+  /src/main.tf:28-42
+
+
+      25 |   }
+      26 | }
+      27 | 
+      28 | resource "azurerm_app_service" "webapp" {
+      29 |   name = "${local.resource_prefix}-webapp"
+      30 |   location                   = azurerm_resource_group.rg.location
+      31 |   resource_group_name        = azurerm_resource_group.rg.name
+      32 |   app_service_plan_id        = azurerm_app_service_plan.plan.id
+      33 |   
+      34 |   app_settings = {
+      35 |     FUNCTIONS_WORKER_RUNTIME = "java"
+      36 |   }
+      37 | 
+      38 |   site_config {
+      39 |     use_32_bit_worker_process = true
+      40 |     linux_fx_version = "TOMCAT|9.0-jre8"
+      41 |   }
+      42 | }
+      43 | 
+
+  Impact:     Anyone can access App Service using HTTP.
+  Resolution: Enable HTTPS only
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/azure/appservice/enable-https-only 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/app_service#https_only 
+  - https://docs.microsoft.com/en-us/azure/app-service/configure-ssl-bindings#enforce-https 
+
+  Result 5
+
+  [azure-appservice-failed-request-tracing-enabled][LOW] Resource 'azurerm_app_service.webapp' does not have logs enabled
+  /src/main.tf:28-42
+
+
+      25 |   }
+      26 | }
+      27 | 
+      28 | resource "azurerm_app_service" "webapp" {
+      29 |   name = "${local.resource_prefix}-webapp"
+      30 |   location                   = azurerm_resource_group.rg.location
+      31 |   resource_group_name        = azurerm_resource_group.rg.name
+      32 |   app_service_plan_id        = azurerm_app_service_plan.plan.id
+      33 |   
+      34 |   app_settings = {
+      35 |     FUNCTIONS_WORKER_RUNTIME = "java"
+      36 |   }
+      37 | 
+      38 |   site_config {
+      39 |     use_32_bit_worker_process = true
+      40 |     linux_fx_version = "TOMCAT|9.0-jre8"
+      41 |   }
+      42 | }
+      43 | 
+
+  Impact:     Logging of failed request tracing will not be logged
+  Resolution: Enable failed_request_tracing_enabled
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/azure/appservice/failed-request-tracing-enabled 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/app_service#failed_request_tracing_enabled 
+  - https://docs.microsoft.com/en-us/azure/app-service/troubleshoot-diagnostic-logs 
+
+  Result 6
+
+  [azure-appservice-ftp-deployments-disabled][MEDIUM] Resource 'azurerm_app_service.webapp' is configured with ftps enabled
+  /src/main.tf:28-42
+
+
+      25 |   }
+      26 | }
+      27 | 
+      28 | resource "azurerm_app_service" "webapp" {
+      29 |   name = "${local.resource_prefix}-webapp"
+      30 |   location                   = azurerm_resource_group.rg.location
+      31 |   resource_group_name        = azurerm_resource_group.rg.name
+      32 |   app_service_plan_id        = azurerm_app_service_plan.plan.id
+      33 |   
+      34 |   app_settings = {
+      35 |     FUNCTIONS_WORKER_RUNTIME = "java"
+      36 |   }
+      37 | 
+      38 |   site_config {
+      39 |     use_32_bit_worker_process = true
+      40 |     linux_fx_version = "TOMCAT|9.0-jre8"
+      41 |   }
+      42 | }
+      43 | 
+
+  Impact:     FTP is insecure and can lead to loss of data
+  Resolution: Disable FTP
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/azure/appservice/ftp-deployments-disabled 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/app_service#ftps_state 
+  - https://docs.microsoft.com/en-us/azure/app-service/deploy-ftp 
+
+  Result 7
+
+  [azure-appservice-http-logs-enabled][LOW] Resource 'azurerm_app_service.webapp' does not have logs enabled
+  /src/main.tf:28-42
+
+
+      25 |   }
+      26 | }
+      27 | 
+      28 | resource "azurerm_app_service" "webapp" {
+      29 |   name = "${local.resource_prefix}-webapp"
+      30 |   location                   = azurerm_resource_group.rg.location
+      31 |   resource_group_name        = azurerm_resource_group.rg.name
+      32 |   app_service_plan_id        = azurerm_app_service_plan.plan.id
+      33 |   
+      34 |   app_settings = {
+      35 |     FUNCTIONS_WORKER_RUNTIME = "java"
+      36 |   }
+      37 | 
+      38 |   site_config {
+      39 |     use_32_bit_worker_process = true
+      40 |     linux_fx_version = "TOMCAT|9.0-jre8"
+      41 |   }
+      42 | }
+      43 | 
+
+  Impact:     Missed logs related to HTTP requests
+  Resolution: Enable http_logs
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/azure/appservice/http-logs-enabled 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/app_service#http_logs 
+  - https://docs.microsoft.com/en-us/azure/app-service/troubleshoot-diagnostic-logs 
+
+  Result 8
+
+  [azure-appservice-python-version][LOW] Resource 'azurerm_app_service.webapp' does not have site_config.python_version set to 3.4 which is the latest version
+  /src/main.tf:28-42
+
+
+      25 |   }
+      26 | }
+      27 | 
+      28 | resource "azurerm_app_service" "webapp" {
+      29 |   name = "${local.resource_prefix}-webapp"
+      30 |   location                   = azurerm_resource_group.rg.location
+      31 |   resource_group_name        = azurerm_resource_group.rg.name
+      32 |   app_service_plan_id        = azurerm_app_service_plan.plan.id
+      33 |   
+      34 |   app_settings = {
+      35 |     FUNCTIONS_WORKER_RUNTIME = "java"
+      36 |   }
+      37 | 
+      38 |   site_config {
+      39 |     use_32_bit_worker_process = true
+      40 |     linux_fx_version = "TOMCAT|9.0-jre8"
+      41 |   }
+      42 | }
+      43 | 
+
+  Impact:     Old Python Versions can contain vulnerabilities which lead to compromised Web Applications
+  Resolution: Ensure Latest Python Version is being used
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/azure/appservice/python-version 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/app_service#python_version 
+
+  Result 9
+
+  [azure-appservice-account-identity-registered][LOW] Resource 'azurerm_app_service.webapp' does not set identity
+  /src/main.tf:28-42
+
+
+      25 |   }
+      26 | }
+      27 | 
+      28 | resource "azurerm_app_service" "webapp" {
+      29 |   name = "${local.resource_prefix}-webapp"
+      30 |   location                   = azurerm_resource_group.rg.location
+      31 |   resource_group_name        = azurerm_resource_group.rg.name
+      32 |   app_service_plan_id        = azurerm_app_service_plan.plan.id
+      33 |   
+      34 |   app_settings = {
+      35 |     FUNCTIONS_WORKER_RUNTIME = "java"
+      36 |   }
+      37 | 
+      38 |   site_config {
+      39 |     use_32_bit_worker_process = true
+      40 |     linux_fx_version = "TOMCAT|9.0-jre8"
+      41 |   }
+      42 | }
+      43 | 
+
+  Impact:     Interaction between services can't easily be achieved without username/password
+  Resolution: Register the app identity with AD
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/azure/appservice/account-identity-registered 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/app_service#identity 
+
+  Result 10
+
+  [azure-appservice-authentication-enabled][MEDIUM] Resource 'azurerm_app_service.webapp' uses default value for auth_settings.enabled
+  /src/main.tf:28-42
+
+
+      25 |   }
+      26 | }
+      27 | 
+      28 | resource "azurerm_app_service" "webapp" {
+      29 |   name = "${local.resource_prefix}-webapp"
+      30 |   location                   = azurerm_resource_group.rg.location
+      31 |   resource_group_name        = azurerm_resource_group.rg.name
+      32 |   app_service_plan_id        = azurerm_app_service_plan.plan.id
+      33 |   
+      34 |   app_settings = {
+      35 |     FUNCTIONS_WORKER_RUNTIME = "java"
+      36 |   }
+      37 | 
+      38 |   site_config {
+      39 |     use_32_bit_worker_process = true
+      40 |     linux_fx_version = "TOMCAT|9.0-jre8"
+      41 |   }
+      42 | }
+      43 | 
+
+  Impact:     Anonymous HTTP requests will be accepted
+  Resolution: Enable authentication to prevent anonymous request being accepted
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/azure/appservice/authentication-enabled 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/app_service#enabled 
+
+  Result 11
+
+  [azure-appservice-dotnet-framework-version][LOW] Resource 'azurerm_app_service.webapp' is configured with incorrect values
+  /src/main.tf:28-42
+
+
+      25 |   }
+      26 | }
+      27 | 
+      28 | resource "azurerm_app_service" "webapp" {
+      29 |   name = "${local.resource_prefix}-webapp"
+      30 |   location                   = azurerm_resource_group.rg.location
+      31 |   resource_group_name        = azurerm_resource_group.rg.name
+      32 |   app_service_plan_id        = azurerm_app_service_plan.plan.id
+      33 |   
+      34 |   app_settings = {
+      35 |     FUNCTIONS_WORKER_RUNTIME = "java"
+      36 |   }
+      37 | 
+      38 |   site_config {
+      39 |     use_32_bit_worker_process = true
+      40 |     linux_fx_version = "TOMCAT|9.0-jre8"
+      41 |   }
+      42 | }
+      43 | 
+
+  Impact:     Outdated .NET could contain open vulnerabilities
+  Resolution: Use the latest version of the .NET framework
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/azure/appservice/dotnet-framework-version 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/app_service#dotnet_framework_version 
+  - https://docs.microsoft.com/en-us/azure/app-service/configure-language-dotnetcore 
+
+  Result 12
+
+  [azure-appservice-php-version][LOW] Resource 'azurerm_app_service.webapp' does not have site_config.php_version set to 7.4 which is the latest version
+  /src/main.tf:28-42
+
+
+      25 |   }
+      26 | }
+      27 | 
+      28 | resource "azurerm_app_service" "webapp" {
+      29 |   name = "${local.resource_prefix}-webapp"
+      30 |   location                   = azurerm_resource_group.rg.location
+      31 |   resource_group_name        = azurerm_resource_group.rg.name
+      32 |   app_service_plan_id        = azurerm_app_service_plan.plan.id
+      33 |   
+      34 |   app_settings = {
+      35 |     FUNCTIONS_WORKER_RUNTIME = "java"
+      36 |   }
+      37 | 
+      38 |   site_config {
+      39 |     use_32_bit_worker_process = true
+      40 |     linux_fx_version = "TOMCAT|9.0-jre8"
+      41 |   }
+      42 | }
+      43 | 
+
+  Impact:     Old PHP Versions can contain vulnerabilities which lead to compromised Web Applications
+  Resolution: Ensure Latest PHP Version is being used
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/azure/appservice/php-version 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/app_service#php_version 
+
   times
   ------------------------------------------
-  disk i/o             522.907µs
-  parsing HCL          7.213µs
-  evaluating values    329.268µs
-  running checks       1.89205ms
+  disk i/o             25.831417ms
+  parsing HCL          539.667µs
+  evaluating values    3.893668ms
+  running checks       35.933666ms
 
   counts
   ------------------------------------------
@@ -14,11 +416,11 @@
 
   results
   ------------------------------------------
-  critical             0
+  critical             1
   high                 0
-  medium               0
-  low                  0
+  medium               2
+  low                  9
   ignored              0
 
-No problems detected!
+  12 potential problems detected.
 

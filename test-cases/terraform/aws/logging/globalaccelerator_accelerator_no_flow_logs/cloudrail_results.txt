@@ -1,17 +1,9 @@
 
 WARNINGs found:
-Rule: Ensure Global Accelerator accelerator has flow logs enabled
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_globalaccelerator_accelerator.example] (main.tf:1)
-     Violating Resource: [aws_globalaccelerator_accelerator.example]  (main.tf:1)
-
-     Evidence:
-             | The Global Accelerator aws_globalaccelerator_accelerator.example does not have flow logs enabled
-
-
------------------------------------------------
 Rule: Ensure all resources that can be tagged have at least one tag
+Description: Some organizations require that all resources have at least one tag set. This rule will review the resources that can be tagged, and make sure each one has a tag that is not the Name tag. Resources that are not tagged will be flagged.
+Remediation Steps - Cloud Console: Access the specific resource in the AWS console and add tags.
+Remediation Steps - Terraform: Add a tags section to the resource with at least one tag beyond the Name tag.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_globalaccelerator_accelerator.example] (main.tf:1)
@@ -19,6 +11,20 @@ Rule: Ensure all resources that can be tagged have at least one tag
 
      Evidence:
              | Resource Global Accelerator aws_globalaccelerator_accelerator.example does not have any tags set
+
+
+-----------------------------------------------
+Rule: Ensure Global Accelerator accelerator has flow logs enabled
+Description: Cloudrail will review Global Accelerator accelerators configuration in your environment. If an accelerator does not have flow logs enabled, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/global-accelerator/latest/dg/monitoring-global-accelerator.flow-logs.html in order to enable flow logs for an accelerator.
+Remediation Steps - Terraform: For the aws_globalaccelerator_accelerator resource, set the attributes block with flow_logs_enabled argument set to true, flow_logs_s3_bucket argument set to the S3 bucket name, and flow_logs_s3_prefix argument to the prefix used for flow logs.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_globalaccelerator_accelerator.example] (main.tf:1)
+     Violating Resource: [aws_globalaccelerator_accelerator.example]  (main.tf:1)
+
+     Evidence:
+             | The Global Accelerator aws_globalaccelerator_accelerator.example does not have flow logs enabled
 
 
 -----------------------------------------------

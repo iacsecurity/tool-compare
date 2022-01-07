@@ -1,84 +1,113 @@
 
   Result 1
 
-  [azure-compute-disable-password-authentication][[0m[31mHIGH[39m[0m] Resource 'azurerm_virtual_machine.main' has password authentication enabled.
-  /src/main.tf:85
+  [azure-compute-disable-password-authentication][HIGH] Resource 'azurerm_virtual_machine.main' has password authentication enabled.
+  /src/main.tf:84
 
 
-      82 |     admin_password = "Password1234!"
-      83 |   }
-      84 |   os_profile_linux_config {
-      85 |     disable_password_authentication = false    bool: false
-      86 |   }
-      87 | }
-      88 | 
+      81 |     admin_password = "Password1234!"
+      82 |   }
+      83 |   os_profile_linux_config {
+      84 |     disable_password_authentication = false    bool: false
+      85 |   }
+      86 | }
+      87 | 
 
   Impact:     Using password authentication is less secure that ssh keys may result in compromised servers
   Resolution: Use ssh authentication for virtual machines
 
   More Info:
-  - https://tfsec.dev/docs/azure/compute/disable-password-authentication#azure/compute 
+  - https://aquasecurity.github.io/tfsec/latest/checks/azure/compute/disable-password-authentication 
   - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_virtual_machine#disable_password_authentication 
   - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_machine#disable_password_authentication 
 
   Result 2
 
-  [azure-compute-ssh-authentication][[0m[31mHIGH[39m[0m] Resource 'azurerm_virtual_machine.main' has password authentication enabled. Use SSH keys instead.
-  /src/main.tf:85
+  [azure-compute-ssh-authentication][HIGH] Resource 'azurerm_virtual_machine.main' has password authentication enabled. Use SSH keys instead.
+  /src/main.tf:84
 
 
-      82 |     admin_password = "Password1234!"
-      83 |   }
-      84 |   os_profile_linux_config {
-      85 |     disable_password_authentication = false    bool: false
-      86 |   }
-      87 | }
-      88 | 
+      81 |     admin_password = "Password1234!"
+      82 |   }
+      83 |   os_profile_linux_config {
+      84 |     disable_password_authentication = false    bool: false
+      85 |   }
+      86 | }
+      87 | 
 
   Legacy ID:  AZU005
   Impact:     Passwords are potentially easier to compromise than SSH Keys
   Resolution: Use SSH keys for authentication
 
   More Info:
-  - https://tfsec.dev/docs/azure/compute/ssh-authentication#azure/compute 
+  - https://aquasecurity.github.io/tfsec/latest/checks/azure/compute/ssh-authentication 
   - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_machine 
   - https://docs.microsoft.com/en-us/azure/virtual-machines/linux/create-ssh-keys-detailed 
 
   Result 3
 
-  [azure-storage-use-secure-tls-policy][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'azurerm_storage_account.storacc' should have the min tls version set to TLS1_2 .
-  /src/main.tf:43-49
+  [azure-storage-default-action-deny][CRITICAL] Resource 'azurerm_storage_account.storacc' does not have network_rules and there isn't a configured `azurerm_storage_account_network_rules.
+  /src/main.tf:42-48
 
 
-      40 |   }
-      41 | }
-      42 | 
-      43 | resource "azurerm_storage_account" "storacc" {
-      44 |   name                     = "${local.resource_prefix}tstsa"
-      45 |   resource_group_name      = azurerm_resource_group.rg.name
-      46 |   location                 = azurerm_resource_group.rg.location
-      47 |   account_tier             = "Standard"
-      48 |   account_replication_type = "LRS"
-      49 | }
-      50 | 
-      51 | resource "azurerm_storage_container" "container" {
-      52 |   name                  = "vhds"
+      39 |   }
+      40 | }
+      41 | 
+      42 | resource "azurerm_storage_account" "storacc" {
+      43 |   name                     = "${local.resource_prefix}tstsa"
+      44 |   resource_group_name      = azurerm_resource_group.rg.name
+      45 |   location                 = azurerm_resource_group.rg.location
+      46 |   account_tier             = "Standard"
+      47 |   account_replication_type = "LRS"
+      48 | }
+      49 | 
+      50 | resource "azurerm_storage_container" "container" {
+      51 |   name                  = "vhds"
+
+  Legacy ID:  AZU012
+  Impact:     Network rules that allow could cause data to be exposed publicly
+  Resolution: Set network rules to deny
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/azure/storage/default-action-deny 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account_network_rules#default_action 
+  - https://docs.microsoft.com/en-us/azure/firewall/rule-processing 
+
+  Result 4
+
+  [azure-storage-use-secure-tls-policy][CRITICAL] Resource 'azurerm_storage_account.storacc' should have the min tls version set to TLS1_2 .
+  /src/main.tf:42-48
+
+
+      39 |   }
+      40 | }
+      41 | 
+      42 | resource "azurerm_storage_account" "storacc" {
+      43 |   name                     = "${local.resource_prefix}tstsa"
+      44 |   resource_group_name      = azurerm_resource_group.rg.name
+      45 |   location                 = azurerm_resource_group.rg.location
+      46 |   account_tier             = "Standard"
+      47 |   account_replication_type = "LRS"
+      48 | }
+      49 | 
+      50 | resource "azurerm_storage_container" "container" {
+      51 |   name                  = "vhds"
 
   Legacy ID:  AZU015
   Impact:     The TLS version being outdated and has known vulnerabilities
   Resolution: Use a more recent TLS/SSL policy for the load balancer
 
   More Info:
-  - https://tfsec.dev/docs/azure/storage/use-secure-tls-policy#azure/storage 
+  - https://aquasecurity.github.io/tfsec/latest/checks/azure/storage/use-secure-tls-policy 
   - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account#min_tls_version 
   - https://docs.microsoft.com/en-us/azure/storage/common/transport-layer-security-configure-minimum-version 
 
   times
   ------------------------------------------
-  disk i/o             948.332µs
-  parsing HCL          7.762µs
-  evaluating values    527.038µs
-  running checks       3.206982ms
+  disk i/o             26.866417ms
+  parsing HCL          668.875µs
+  evaluating values    4.789375ms
+  running checks       27.024ms
 
   counts
   ------------------------------------------
@@ -88,11 +117,11 @@
 
   results
   ------------------------------------------
-  critical             1
+  critical             2
   high                 2
   medium               0
   low                  0
   ignored              0
 
-  3 potential problems detected.
+  4 potential problems detected.
 

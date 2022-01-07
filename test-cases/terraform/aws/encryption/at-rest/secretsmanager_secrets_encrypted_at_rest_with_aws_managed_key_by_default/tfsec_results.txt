@@ -1,7 +1,7 @@
 
   Result 1
 
-  [aws-ssm-secret-use-customer-key][[0m[97mLOW[39m[0m] Resource 'aws_secretsmanager_secret.test' does not use CMK
+  [aws-ssm-secret-use-customer-key][LOW] Resource 'aws_secretsmanager_secret.test' does not use CMK
   /src/main.tf:5-7
 
 
@@ -18,16 +18,16 @@
   Resolution: Use customer managed keys
 
   More Info:
-  - https://tfsec.dev/docs/aws/ssm/secret-use-customer-key#aws/ssm 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/ssm/secret-use-customer-key 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/secretsmanager_secret#kms_key_id 
   - https://docs.aws.amazon.com/kms/latest/developerguide/services-secrets-manager.html#asm-encrypt 
 
   times
   ------------------------------------------
-  disk i/o             46.968667ms
-  parsing HCL          557.792µs
-  evaluating values    1.894585ms
-  running checks       15.108833ms
+  disk i/o             22.378375ms
+  parsing HCL          532.958µs
+  evaluating values    1.66725ms
+  running checks       16.806375ms
 
   counts
   ------------------------------------------

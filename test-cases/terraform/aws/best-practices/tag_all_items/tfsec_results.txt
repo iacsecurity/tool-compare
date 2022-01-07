@@ -1,7 +1,33 @@
 
   Result 1
 
-  [aws-sns-enable-topic-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_sns_topic.cloudrail_1' defines an unencrypted SNS topic.
+  [aws-sqs-enable-queue-encryption][HIGH] Resource 'aws_sqs_queue.cloudrail' defines an unencrypted SQS queue.
+  /src/main.tf:12-17
+
+
+       9 |   }
+      10 | }
+      11 | 
+      12 | resource "aws_sqs_queue" "cloudrail" {
+      13 |   name = "sqs_non_encrypted"
+      14 |   tags = {
+      15 |     Name = "Sqs Cloudrail Test"
+      16 |   }
+      17 | }
+      18 | 
+
+  Legacy ID:  AWS015
+  Impact:     The SQS queue messages could be read if compromised
+  Resolution: Turn on SQS Queue encryption
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/sqs/enable-queue-encryption 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sqs_queue#server-side-encryption-sse 
+  - https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-server-side-encryption.html 
+
+  Result 2
+
+  [aws-sns-enable-topic-encryption][HIGH] Resource 'aws_sns_topic.cloudrail_1' defines an unencrypted SNS topic.
   /src/main.tf:5-10
 
 
@@ -23,42 +49,16 @@
   Resolution: Turn on SNS Topic encryption
 
   More Info:
-  - https://tfsec.dev/docs/aws/sns/enable-topic-encryption#aws/sns 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/sns/enable-topic-encryption 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sns_topic#example-with-server-side-encryption-sse 
   - https://docs.aws.amazon.com/sns/latest/dg/sns-server-side-encryption.html 
 
-  Result 2
-
-  [aws-sqs-enable-queue-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_sqs_queue.cloudrail' defines an unencrypted SQS queue.
-  /src/main.tf:12-17
-
-
-       9 |   }
-      10 | }
-      11 | 
-      12 | resource "aws_sqs_queue" "cloudrail" {
-      13 |   name = "sqs_non_encrypted"
-      14 |   tags = {
-      15 |     Name = "Sqs Cloudrail Test"
-      16 |   }
-      17 | }
-      18 | 
-
-  Legacy ID:  AWS015
-  Impact:     The SQS queue messages could be read if compromised
-  Resolution: Turn on SQS Queue encryption
-
-  More Info:
-  - https://tfsec.dev/docs/aws/sqs/enable-queue-encryption#aws/sqs 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sqs_queue#server-side-encryption-sse 
-  - https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-server-side-encryption.html 
-
   times
   ------------------------------------------
-  disk i/o             54.450375ms
-  parsing HCL          498.625µs
-  evaluating values    2.376875ms
-  running checks       19.330833ms
+  disk i/o             26.667917ms
+  parsing HCL          605.792µs
+  evaluating values    2.158791ms
+  running checks       18.944458ms
 
   counts
   ------------------------------------------

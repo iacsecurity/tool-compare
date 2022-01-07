@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+Scanning with Keeping Infrastructure as Code Secure v1.4.9
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 851
 Queries failed to execute: 0
 
 ------------------------------------
@@ -31,7 +31,7 @@ Security Group Without Description, Severity: INFO, Results: 1
 Description: It's considered a best practice for AWS Security Group to have a description
 Platform: Terraform
 
-	[1]: /src/main.tf:18
+	[1]: ../../src/main.tf:18
 
 		017: 
 		018: resource "aws_security_group" "free" {
@@ -42,7 +42,7 @@ Security Group Rules Without Description, Severity: INFO, Results: 1
 Description: It's considered a best practice for all rules in AWS Security Group to have a description
 Platform: Terraform
 
-	[1]: /src/main.tf:21
+	[1]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
@@ -53,96 +53,118 @@ Resource Not Using Tags, Severity: INFO, Results: 9
 Description: AWS services resource tags are an essential part of managing components
 Platform: Terraform
 
-	[1]: /src/main.tf:18
+	[1]: ../../src/main.tf:66
 
-		017: 
-		018: resource "aws_security_group" "free" {
-		019:   vpc_id = aws_vpc.external.id
-
-
-	[2]: /src/main.tf:29
-
-		028: 
-		029: resource "aws_route_table" "rt" {
-		030:   vpc_id = aws_vpc.external.id
+		065: 
+		066: resource "aws_neptune_cluster" "encrypted_neptune_cluster" {
+		067:   cluster_identifier  = "cloudrail-test-encrypted"
 
 
-	[3]: /src/main.tf:59
+	[2]: ../../src/main.tf:59
 
 		058: 
 		059: resource "aws_db_subnet_group" free {
 		060:   name = "free"
 
 
-	[4]: /src/main.tf:76
-
-		075: 
-		076: resource "aws_neptune_cluster_instance" "neptune_instance" {
-		077:   count              = 2
-
-
-	[5]: /src/main.tf:66
-
-		065: 
-		066: resource "aws_neptune_cluster" "encrypted_neptune_cluster" {
-		067:   cluster_identifier  = "cloudrail-test-encrypted"
-
-
-	[6]: /src/main.tf:14
+	[3]: ../../src/main.tf:14
 
 		013: 
 		014: resource "aws_internet_gateway" "igw" {
 		015:   vpc_id = aws_vpc.external.id
 
 
-	[7]: /src/main.tf:47
-
-		046: 
-		047: resource "aws_subnet" "free_1" {
-		048:   vpc_id = aws_vpc.external.id
-
-
-	[8]: /src/main.tf:53
+	[4]: ../../src/main.tf:53
 
 		052: 
 		053: resource "aws_subnet" "free_2" {
 		054:   vpc_id = aws_vpc.external.id
 
 
-	[9]: /src/main.tf:9
+	[5]: ../../src/main.tf:9
 
 		008:   enable_dns_hostnames = "true"
 		009:   tags = {
 		010:     Name = "external-vpc"
 
 
+	[6]: ../../src/main.tf:18
+
+		017: 
+		018: resource "aws_security_group" "free" {
+		019:   vpc_id = aws_vpc.external.id
+
+
+	[7]: ../../src/main.tf:47
+
+		046: 
+		047: resource "aws_subnet" "free_1" {
+		048:   vpc_id = aws_vpc.external.id
+
+
+	[8]: ../../src/main.tf:29
+
+		028: 
+		029: resource "aws_route_table" "rt" {
+		030:   vpc_id = aws_vpc.external.id
+
+
+	[9]: ../../src/main.tf:76
+
+		075: 
+		076: resource "aws_neptune_cluster_instance" "neptune_instance" {
+		077:   count              = 2
+
+
 Neptune Logging Is Disabled, Severity: INFO, Results: 1
 Description: Neptune logging should be enabled
 Platform: Terraform
 
-	[1]: /src/main.tf:66
+	[1]: ../../src/main.tf:66
 
 		065: 
 		066: resource "aws_neptune_cluster" "encrypted_neptune_cluster" {
 		067:   cluster_identifier  = "cloudrail-test-encrypted"
 
 
-VPC FlowLogs Disabled, Severity: MEDIUM, Results: 1
-Description: VPC hasn't got any FlowLog associated
+VPC Without Network Firewall, Severity: MEDIUM, Results: 1
+Description: VPC should have a Network Firewall associated
 Platform: Terraform
 
-	[1]: /src/main.tf:5
+	[1]: ../../src/main.tf:5
 
 		004: 
 		005: resource "aws_vpc" "external" {
 		006:   cidr_block = "10.1.1.0/24"
 
 
+VPC FlowLogs Disabled, Severity: MEDIUM, Results: 1
+Description: VPC hasn't got any FlowLog associated
+Platform: Terraform
+
+	[1]: ../../src/main.tf:5
+
+		004: 
+		005: resource "aws_vpc" "external" {
+		006:   cidr_block = "10.1.1.0/24"
+
+
+Neptune Cluster With IAM Database Authentication Disabled, Severity: MEDIUM, Results: 1
+Description: Neptune Cluster should have IAM Database Authentication enabled
+Platform: Terraform
+
+	[1]: ../../src/main.tf:66
+
+		065: 
+		066: resource "aws_neptune_cluster" "encrypted_neptune_cluster" {
+		067:   cluster_identifier  = "cloudrail-test-encrypted"
+
+
 Unrestricted Security Group Ingress, Severity: HIGH, Results: 1
 Description: Security groups allow ingress from 0.0.0.0:0
 Platform: Terraform
 
-	[1]: /src/main.tf:25
+	[1]: ../../src/main.tf:25
 
 		024:     to_port = 64000
 		025:     cidr_blocks = ["0.0.0.0/0"]
@@ -153,398 +175,468 @@ Unknown Port Exposed To Internet, Severity: HIGH, Results: 1
 Description: AWS Security Group should not have an unknown port exposed to the entire Internet
 Platform: Terraform
 
-	[1]: /src/main.tf:25
+	[1]: ../../src/main.tf:25
 
 		024:     to_port = 64000
 		025:     cidr_blocks = ["0.0.0.0/0"]
 		026:   }
 
 
-Sensitive Port Is Exposed To Entire Network, Severity: HIGH, Results: 52
+Sensitive Port Is Exposed To Entire Network, Severity: HIGH, Results: 62
 Description: A sensitive port, such as port 23 or port 110, is open for the whole network in either TCP or UDP protocol
 Platform: Terraform
 
-	[1]: /src/main.tf:21
+	[1]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[2]: /src/main.tf:21
+	[2]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[3]: /src/main.tf:21
+	[3]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[4]: /src/main.tf:21
+	[4]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[5]: /src/main.tf:21
+	[5]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[6]: /src/main.tf:21
+	[6]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[7]: /src/main.tf:21
+	[7]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[8]: /src/main.tf:21
+	[8]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[9]: /src/main.tf:21
+	[9]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[10]: /src/main.tf:21
+	[10]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[11]: /src/main.tf:21
+	[11]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[12]: /src/main.tf:21
+	[12]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[13]: /src/main.tf:21
+	[13]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[14]: /src/main.tf:21
+	[14]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[15]: /src/main.tf:21
+	[15]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[16]: /src/main.tf:21
+	[16]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[17]: /src/main.tf:21
+	[17]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[18]: /src/main.tf:21
+	[18]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[19]: /src/main.tf:21
+	[19]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[20]: /src/main.tf:21
+	[20]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[21]: /src/main.tf:21
+	[21]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[22]: /src/main.tf:21
+	[22]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[23]: /src/main.tf:21
+	[23]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[24]: /src/main.tf:21
+	[24]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[25]: /src/main.tf:21
+	[25]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[26]: /src/main.tf:21
+	[26]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[27]: /src/main.tf:21
+	[27]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[28]: /src/main.tf:21
+	[28]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[29]: /src/main.tf:21
+	[29]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[30]: /src/main.tf:21
+	[30]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[31]: /src/main.tf:21
+	[31]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[32]: /src/main.tf:21
+	[32]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[33]: /src/main.tf:21
+	[33]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[34]: /src/main.tf:21
+	[34]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[35]: /src/main.tf:21
+	[35]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[36]: /src/main.tf:21
+	[36]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[37]: /src/main.tf:21
+	[37]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[38]: /src/main.tf:21
+	[38]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[39]: /src/main.tf:21
+	[39]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[40]: /src/main.tf:21
+	[40]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[41]: /src/main.tf:21
+	[41]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[42]: /src/main.tf:21
+	[42]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[43]: /src/main.tf:21
+	[43]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[44]: /src/main.tf:21
+	[44]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[45]: /src/main.tf:21
+	[45]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[46]: /src/main.tf:21
+	[46]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[47]: /src/main.tf:21
+	[47]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[48]: /src/main.tf:21
+	[48]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[49]: /src/main.tf:21
+	[49]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[50]: /src/main.tf:21
+	[50]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[51]: /src/main.tf:21
+	[51]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-	[52]: /src/main.tf:21
+	[52]: ../../src/main.tf:21
 
 		020: 
 		021:   ingress {
 		022:     from_port = 0
 
 
-Security Group With Unrestricted Access To SSH, Severity: HIGH, Results: 1
-Description: SSH' (TCP:22) should not be public in AWS Security Group
+	[53]: ../../src/main.tf:21
+
+		020: 
+		021:   ingress {
+		022:     from_port = 0
+
+
+	[54]: ../../src/main.tf:21
+
+		020: 
+		021:   ingress {
+		022:     from_port = 0
+
+
+	[55]: ../../src/main.tf:21
+
+		020: 
+		021:   ingress {
+		022:     from_port = 0
+
+
+	[56]: ../../src/main.tf:21
+
+		020: 
+		021:   ingress {
+		022:     from_port = 0
+
+
+	[57]: ../../src/main.tf:21
+
+		020: 
+		021:   ingress {
+		022:     from_port = 0
+
+
+	[58]: ../../src/main.tf:21
+
+		020: 
+		021:   ingress {
+		022:     from_port = 0
+
+
+	[59]: ../../src/main.tf:21
+
+		020: 
+		021:   ingress {
+		022:     from_port = 0
+
+
+	[60]: ../../src/main.tf:21
+
+		020: 
+		021:   ingress {
+		022:     from_port = 0
+
+
+	[61]: ../../src/main.tf:21
+
+		020: 
+		021:   ingress {
+		022:     from_port = 0
+
+
+	[62]: ../../src/main.tf:21
+
+		020: 
+		021:   ingress {
+		022:     from_port = 0
+
+
+Neptune Cluster Instance is Publicly Accessible, Severity: HIGH, Results: 1
+Description: Neptune Cluster Instance should not be publicly accessible
 Platform: Terraform
 
-	[1]: /src/main.tf:25
+	[1]: ../../src/main.tf:82
 
-		024:     to_port = 64000
-		025:     cidr_blocks = ["0.0.0.0/0"]
-		026:   }
+		081:   apply_immediately  = true
+		082:   publicly_accessible = true
+		083: }
 
 
 
 Results Summary:
-HIGH: 55
-MEDIUM: 1
+HIGH: 65
+MEDIUM: 3
 LOW: 0
 INFO: 12
-TOTAL: 68
+TOTAL: 80
 
-Scan duration: 5.10516111s
+Scan duration: 9.013501546s

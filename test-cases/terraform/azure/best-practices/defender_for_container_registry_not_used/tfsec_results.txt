@@ -1,7 +1,91 @@
 
   Result 1
 
-  [azure-security-center-enable-standard-subscription][[0m[97mLOW[39m[0m] Resource 'azurerm_security_center_subscription_pricing.example' sets security center subscription type to free.
+  [azure-security-center-defender-on-servers][HIGH] Resource 'azurerm_security_center_subscription_pricing.example' does not contain VirtualMachines
+  /src/main.tf:20
+
+
+      17 | 
+      18 | resource "azurerm_security_center_subscription_pricing" "example" {
+      19 |   tier          = "Free"
+      20 |   resource_type = "ContainerRegistry"    string: "ContainerRegistry"
+      21 | }
+      22 | 
+
+  Impact:     Azure Defender for servers adds threat detection and advanced defenses for Windows and Linux machines.
+  Resolution: Enable VirtualMachines in Azure Defender
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/azure/security-center/defender-on-servers 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/security_center_subscription_pricing#resource_type 
+  - https://docs.microsoft.com/en-us/azure/security-center/defender-for-servers-introduction 
+
+  Result 2
+
+  [azure-security-center-defender-on-sql-servers][HIGH] Resource 'azurerm_security_center_subscription_pricing.example' does not contain SqlServers
+  /src/main.tf:20
+
+
+      17 | 
+      18 | resource "azurerm_security_center_subscription_pricing" "example" {
+      19 |   tier          = "Free"
+      20 |   resource_type = "ContainerRegistry"    string: "ContainerRegistry"
+      21 | }
+      22 | 
+
+  Impact:     Azure Defender for SQL servers on machines extends the protections for your Azure-native SQL Servers to fully support hybrid environments and protect SQL servers (all supported version) hosted in Azure
+  Resolution: Enable SqlServers in Azure Defender
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/azure/security-center/defender-on-sql-servers 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/security_center_subscription_pricing#resource_type 
+  - https://docs.microsoft.com/en-us/azure/security-center/defender-for-sql-introduction 
+
+  Result 3
+
+  [azure-security-center-defender-on-sql-servers-vms][HIGH] Resource 'azurerm_security_center_subscription_pricing.example' does not contain SqlServerVirtualMachines
+  /src/main.tf:20
+
+
+      17 | 
+      18 | resource "azurerm_security_center_subscription_pricing" "example" {
+      19 |   tier          = "Free"
+      20 |   resource_type = "ContainerRegistry"    string: "ContainerRegistry"
+      21 | }
+      22 | 
+
+  Impact:     Azure Defender for SQL servers on machines extends the protections for your Azure-native SQL Servers to fully support hybrid environments and protect SQL servers (all supported version) hosted in Azure.
+  Resolution: Enable ContainerRegistry in Azure Defender
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/azure/security-center/defender-on-sql-servers-vms 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/security_center_subscription_pricing#resource_type 
+  - https://docs.microsoft.com/en-us/azure/security-center/defender-for-sql-usage 
+
+  Result 4
+
+  [azure-security-center-defender-on-storage][HIGH] Resource 'azurerm_security_center_subscription_pricing.example' does not contain StorageAccounts
+  /src/main.tf:20
+
+
+      17 | 
+      18 | resource "azurerm_security_center_subscription_pricing" "example" {
+      19 |   tier          = "Free"
+      20 |   resource_type = "ContainerRegistry"    string: "ContainerRegistry"
+      21 | }
+      22 | 
+
+  Impact:     Azure Defender for Storage detects unusual and potentially harmful attempts to access or exploit storage accounts.
+  Resolution: Enable StorageAccounts in Azure Defender
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/azure/security-center/defender-on-storage 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/security_center_subscription_pricing#resource_type 
+  - https://docs.microsoft.com/en-us/azure/security-center/defender-for-storage-introduction 
+
+  Result 5
+
+  [azure-security-center-enable-standard-subscription][LOW] Resource 'azurerm_security_center_subscription_pricing.example' sets security center subscription type to free.
   /src/main.tf:19
 
 
@@ -17,16 +101,79 @@
   Resolution: Enable standard subscription tier to benefit from Azure Defender
 
   More Info:
-  - https://tfsec.dev/docs/azure/security-center/enable-standard-subscription#azure/security-center 
+  - https://aquasecurity.github.io/tfsec/latest/checks/azure/security-center/enable-standard-subscription 
   - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/security_center_subscription_pricing#tier 
   - https://docs.microsoft.com/en-us/azure/security-center/security-center-pricing 
 
+  Result 6
+
+  [azure-security-center-defender-on-appservices][HIGH] Resource 'azurerm_security_center_subscription_pricing.example' does not contain AppServices
+  /src/main.tf:20
+
+
+      17 | 
+      18 | resource "azurerm_security_center_subscription_pricing" "example" {
+      19 |   tier          = "Free"
+      20 |   resource_type = "ContainerRegistry"    string: "ContainerRegistry"
+      21 | }
+      22 | 
+
+  Impact:     Azure Defender for App Service detects attacks targeting applications running over App Service.
+  Resolution: Enable AppServices in Azure Defender
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/azure/security-center/defender-on-appservices 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/security_center_subscription_pricing#resource_type 
+  - https://docs.microsoft.com/en-us/azure/security-center/defender-for-app-service-introduction 
+
+  Result 7
+
+  [azure-security-center-defender-on-keyvault][HIGH] Resource 'azurerm_security_center_subscription_pricing.example' does not contain KeyVaults
+  /src/main.tf:20
+
+
+      17 | 
+      18 | resource "azurerm_security_center_subscription_pricing" "example" {
+      19 |   tier          = "Free"
+      20 |   resource_type = "ContainerRegistry"    string: "ContainerRegistry"
+      21 | }
+      22 | 
+
+  Impact:     Azure Defender detects unusual and potentially harmful attempts to access or exploit Key Vault accounts.
+  Resolution: Enable KeyVaults in Azure Defender
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/azure/security-center/defender-on-keyvault 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/security_center_subscription_pricing#resource_type 
+  - https://docs.microsoft.com/en-us/azure/security-center/defender-for-key-vault-introduction 
+
+  Result 8
+
+  [azure-security-center-defender-on-kubernetes][HIGH] Resource 'azurerm_security_center_subscription_pricing.example' does not contain KubernetesService
+  /src/main.tf:20
+
+
+      17 | 
+      18 | resource "azurerm_security_center_subscription_pricing" "example" {
+      19 |   tier          = "Free"
+      20 |   resource_type = "ContainerRegistry"    string: "ContainerRegistry"
+      21 | }
+      22 | 
+
+  Impact:     Not enabling defender for container registries could lead to compromised account
+  Resolution: Enable KubernetesService in Azure Defender
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/azure/security-center/defender-on-kubernetes 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/security_center_subscription_pricing#resource_type 
+  - https://docs.microsoft.com/en-us/azure/security-center/defender-for-kubernetes-introduction 
+
   times
   ------------------------------------------
-  disk i/o             337.605µs
-  parsing HCL          6.779µs
-  evaluating values    115.411µs
-  running checks       1.755966ms
+  disk i/o             23.585708ms
+  parsing HCL          618.541µs
+  evaluating values    1.71725ms
+  running checks       34.586833ms
 
   counts
   ------------------------------------------
@@ -37,10 +184,10 @@
   results
   ------------------------------------------
   critical             0
-  high                 0
+  high                 7
   medium               0
   low                  1
   ignored              0
 
-  1 potential problems detected.
+  8 potential problems detected.
 

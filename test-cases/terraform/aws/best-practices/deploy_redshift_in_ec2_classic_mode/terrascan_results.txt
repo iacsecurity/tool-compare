@@ -2,21 +2,21 @@
 
 Violation Details -
     
-	Description    :	Use customer-managed KMS keys instead of AWS-managed keys, to have granular control over encrypting and encrypting data. Encrypt Redshift clusters with a Customer-managed KMS key. This is a recommended best practice.
-	File           :	main.tf
-	Module Name    :	root
-	Plan Root      :	./
-	Line           :	5
-	Severity       :	MEDIUM
-	
-	-----------------------------------------------------------------------
-	
 	Description    :	Ensure Redshift clusters are not publicly accessible to minimize security risks.
 	File           :	main.tf
 	Module Name    :	root
 	Plan Root      :	./
 	Line           :	5
 	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Use customer-managed KMS keys instead of AWS-managed keys, to have granular control over encrypting and encrypting data. Encrypt Redshift clusters with a Customer-managed KMS key. This is a recommended best practice.
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	5
+	Severity       :	MEDIUM
 	
 	-----------------------------------------------------------------------
 	
@@ -34,7 +34,7 @@ Scan Summary -
 
 	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-08-18 18:02:16.115655511 +0000 UTC
+	Scanned At          :	2022-01-05 16:48:41.878745885 +0000 UTC
 	Policies Validated  :	3
 	Violated Policies   :	3
 	Low                 :	1

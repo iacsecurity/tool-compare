@@ -1,28 +1,79 @@
 
 WARNINGs found:
-Rule: Ensure S3 bucket has access logging enabled
+Rule: Ensure S3 buckets are set to be encrypted at rest
+Description: Cloudrail will review the S3 buckets in your environment. If an S3 bucket is not set to be encrypted at rest, and the bucket is not public, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AmazonS3/latest/userguide/serv-side-encryption.html to enable S3 bucket encryption at rest.
+Remediation Steps - Terraform: For the aws_s3_bucket resource, in server_side_encryption_configuration, rule, apply_server_side_encryption_by_default block, set sse_algorithm argument to an allowed value.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_s3_bucket.foo] (main.tf:18)
      Violating Resource: [aws_s3_bucket.foo]  (main.tf:18)
 
      Evidence:
-             | The S3 Bucket aws_s3_bucket.foo does not have access logging enabled
+             | The S3 Bucket aws_s3_bucket.foo is not set to be encrypted at rest
 
 
 -----------------------------------------------
-Rule: Ensure CloudTrail is enabled in all regions
+Rule: Ensure S3 buckets have versioning enabled
+Description: Using versioning is a good practice to deal with accidental deletion or modifications. Cloudrail will review your buckets to ensure versioning is enabled. This rule is not context aware
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AmazonS3/latest/userguide/manage-versioning-examples.html to enable S3 bucket versioning.
+Remediation Steps - Terraform: For the aws_s3_bucket resource, in versioning block, set enabled argument to true.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.foo] (main.tf:18)
+     Violating Resource: [aws_s3_bucket.foo]  (main.tf:18)
+
+     Evidence:
+             | The S3 Bucket aws_s3_bucket.foo does not have versioning enabled
+
+
+-----------------------------------------------
+Rule: Ensure CloudTrail trails are set to be encrypted at rest using SSE-KMS
+Description: Cloudrail will review the CloudTrail trails in your environment. If a trail is not set to encrypt at rest using SSE-KMS, Cloudrail will highlight it as a violation. This rule will only flag a violation for resources that are not yet created.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/awscloudtrail/latest/userguide/encrypting-cloudtrail-log-files-with-aws-kms.html to set encryption at rest using a customer-managed CMK.
+Remediation Steps - Terraform: For the aws_cloudtrail resource, set kms_key_id argument to use a customer-managed CMK.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_cloudtrail.foobar] (main.tf:11)
      Violating Resource: [aws_cloudtrail.foobar]  (main.tf:11)
 
      Evidence:
-             | The CloudTrail aws_cloudtrail.foobar is not enabled in all regions
+             | The CloudTrail trail aws_cloudtrail.foobar is not set to use encryption at rest with KMS CMK
+
+
+-----------------------------------------------
+Rule: Enforce use of HTTPS in S3 bucket policy
+Description: Access to objects in S3 should only be done via HTTPS. Blocking HTTP can be done by including a SecureTransport condition in the S3 bucket’s policy.
+Remediation Steps - Cloud Console: Follow the guide at https://aws.amazon.com/premiumsupport/knowledge-center/s3-bucket-policy-for-config-rule/ to create an S3 bucket policy that enforces the use of HTTPS.
+Remediation Steps - Terraform: For the aws_s3_bucket_policy resource, ensure the policy denies all actions on the bucket and objects when the request meets the condition (aws:SecureTransport == false).
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.foo] (main.tf:18)
+     Violating Resource: [aws_s3_bucket.foo]  (main.tf:18)
+
+     Evidence:
+             | The S3 Bucket aws_s3_bucket.foo does not have a policy with the aws:SecureTransport condition
+
+
+-----------------------------------------------
+Rule: Ensure CloudTrail trails have log validation enabled
+Description: Log validation is important for CloudTrail trails to make sure logs are not invalid nor tampered with. Cloudrail will identify if log validation is not set.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-log-file-validation-enabling.html to enable log file integrity validation.
+Remediation Steps - Terraform: For the aws_cloudtrail resource, set the enable_log_file_validation argument to true.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_cloudtrail.foobar] (main.tf:11)
+     Violating Resource: [aws_cloudtrail.foobar]  (main.tf:11)
+
+     Evidence:
+             | The CloudTrail trail aws_cloudtrail.foobar does not have log validation enabled
 
 
 -----------------------------------------------
 Rule: Ensure all resources that can be tagged have at least one tag
+Description: Some organizations require that all resources have at least one tag set. This rule will review the resources that can be tagged, and make sure each one has a tag that is not the Name tag. Resources that are not tagged will be flagged.
+Remediation Steps - Cloud Console: Access the specific resource in the AWS console and add tags.
+Remediation Steps - Terraform: Add a tags section to the resource with at least one tag beyond the Name tag.
  - 2 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_cloudtrail.foobar] (main.tf:11)
@@ -40,58 +91,31 @@ Rule: Ensure all resources that can be tagged have at least one tag
 
 
 -----------------------------------------------
-Rule: Ensure CloudTrail trails have log validation enabled
+Rule: Ensure CloudTrail is enabled in all regions
+Description: Cloudrail will review the CloudTrail configuration in your environment. If it is not enabled in all regions, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-create-a-trail-using-the-console-first-time.html to create a trail that logs events in all regions.
+Remediation Steps - Terraform: For the aws_cloudtrail resource, set is_multi_region_trail argument to true.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_cloudtrail.foobar] (main.tf:11)
      Violating Resource: [aws_cloudtrail.foobar]  (main.tf:11)
 
      Evidence:
-             | The CloudTrail trail aws_cloudtrail.foobar does not have log validation enabled
+             | The CloudTrail aws_cloudtrail.foobar is not enabled in all regions
 
 
 -----------------------------------------------
-Rule: Enforce use of HTTPS in S3 bucket policy
+Rule: Ensure S3 bucket has access logging enabled
+Description: Cloudrail will review the S3 buckets configuration in your environment. If a bucket does not have access logging enabled, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AmazonS3/latest/userguide/enable-server-access-logging.html in order to enable server access logging for an S3 bucket.
+Remediation Steps - Terraform: For the aws_s3_bucket resource, set the logging block with target_bucket argument set to the name of an S3 bucket that will receive the log objects.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_s3_bucket.foo] (main.tf:18)
      Violating Resource: [aws_s3_bucket.foo]  (main.tf:18)
 
      Evidence:
-             | The S3 Bucket aws_s3_bucket.foo does not have a policy with the aws:SecureTransport condition
-
-
------------------------------------------------
-Rule: Ensure CloudTrail trails are set to be encrypted at rest using SSE-KMS
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_cloudtrail.foobar] (main.tf:11)
-     Violating Resource: [aws_cloudtrail.foobar]  (main.tf:11)
-
-     Evidence:
-             | The CloudTrail trail aws_cloudtrail.foobar is not set to use encryption at rest with KMS CMK
-
-
------------------------------------------------
-Rule: Ensure S3 buckets have versioning enabled
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_s3_bucket.foo] (main.tf:18)
-     Violating Resource: [aws_s3_bucket.foo]  (main.tf:18)
-
-     Evidence:
-             | The S3 Bucket aws_s3_bucket.foo does not have versioning enabled
-
-
------------------------------------------------
-Rule: Ensure S3 buckets are set to be encrypted at rest
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_s3_bucket.foo] (main.tf:18)
-     Violating Resource: [aws_s3_bucket.foo]  (main.tf:18)
-
-     Evidence:
-             | The S3 Bucket aws_s3_bucket.foo is not set to be encrypted at rest
+             | The S3 Bucket aws_s3_bucket.foo does not have access logging enabled
 
 
 -----------------------------------------------

@@ -1,17 +1,23 @@
 
 WARNINGs found:
-Rule: Ensure that PostgreSQL server enables Threat detection policy
+Rule: Ensure PostgreSQL Servers are enforcing SSL
+Description: Cloudrail will review the PostgreSQL servers configuration in your environment. If a server is not enforcing SSL connections, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.microsoft.com/en-us/azure/postgresql/concepts-ssl-connection-security in order to enable “Enforce SSL connection” for the PostgreSQL server.
+Remediation Steps - Terraform: For the azurerm_postgresql_server resource, set the ssl_enforcement_enabled argument to true.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [azurerm_postgresql_server.example] (main.tf:15)
      Violating Resource: [azurerm_postgresql_server.example]  (main.tf:15)
 
      Evidence:
-             | This rule evaluated asdf-postgresql-server's configuration
+             | The PostgreSQL Server asdf-postgresql-server is not enforcing SSL connections.
 
 
 -----------------------------------------------
-Rule: Ensure that PostgreSQL server enables geo-redundant backups
+Rule: Ensure PostgreSQL servers have Enforce SSL Connection enabled
+Description: Data exchanged between clients and Azure PostgreSQL servers should be protected in transit to avoid man-in-the-middle attacks.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.microsoft.com/en-us/azure/postgresql/concepts-ssl-connection-security#configure-enforcement-of-tls in order to enable Enforce SSL connection.
+Remediation Steps - Terraform: For the azurerm_postgresql_server resource, set the ssl_enforcement_enabled argument to true.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [azurerm_postgresql_server.example] (main.tf:15)
@@ -23,6 +29,9 @@ Rule: Ensure that PostgreSQL server enables geo-redundant backups
 
 -----------------------------------------------
 Rule: Ensure PostgreSQL servers have Public Network Access disabled
+Description: PostgreSQL servers should only be accesible through private endpoints instead of public IPs in order to avoid its exposure to unauthorized parties.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.microsoft.com/en-us/azure/postgresql/howto-deny-public-network-access in order to deny public network access to PostgreSQL servers.
+Remediation Steps - Terraform: For the azurerm_postgresql_server resource, set the public_network_access_enabled argument to false.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [azurerm_postgresql_server.example] (main.tf:15)
@@ -33,7 +42,10 @@ Rule: Ensure PostgreSQL servers have Public Network Access disabled
 
 
 -----------------------------------------------
-Rule: Ensure PostgreSQL servers have Enforce SSL Connection enabled
+Rule: Ensure that PostgreSQL server enables geo-redundant backups
+Description: Having PostgreSQL database geo-redundant backups will allow you to restore your data to a different Azure region in case of a regional outage.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.microsoft.com/en-us/azure/postgresql/howto-restore-server-portal#set-backup-configuration in order to enable the Geo-Redundant flag in Backup Redundancy Options.
+Remediation Steps - Terraform: For the azurerm_postgresql_server resource, set the geo_redundant_backup_enabled argument to true.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [azurerm_postgresql_server.example] (main.tf:15)
@@ -44,14 +56,17 @@ Rule: Ensure PostgreSQL servers have Enforce SSL Connection enabled
 
 
 -----------------------------------------------
-Rule: Ensure PostgreSQL Servers are enforcing SSL
+Rule: Ensure that PostgreSQL server enables Threat detection policy
+Description: Enabling Threat detection for PostgreSQL will allow to detect anomalous activities indicating unusual and potentially harmful attempts to access or exploit databases.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.microsoft.com/en-us/azure/postgresql/howto-database-threat-protection-portal in order to enable Threat protection.
+Remediation Steps - Terraform: For the azurerm_postgresql_server resource, in threat_detection_policy block, set enabled argument to true.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [azurerm_postgresql_server.example] (main.tf:15)
      Violating Resource: [azurerm_postgresql_server.example]  (main.tf:15)
 
      Evidence:
-             | The PostgreSQL Server asdf-postgresql-server is not enforcing SSL connections.
+             | This rule evaluated asdf-postgresql-server's configuration
 
 
 -----------------------------------------------

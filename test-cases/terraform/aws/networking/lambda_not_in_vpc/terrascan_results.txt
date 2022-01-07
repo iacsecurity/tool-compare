@@ -2,12 +2,12 @@
 
 Violation Details -
     
-	Description    :	Lambda does not use KMS CMK key to protect environment variables.
+	Description    :	Ensure AWS Lambda function has policy attached.
 	File           :	main.tf
 	Module Name    :	root
 	Plan Root      :	./
 	Line           :	21
-	Severity       :	High
+	Severity       :	MEDIUM
 	
 	-----------------------------------------------------------------------
 	
@@ -20,7 +20,7 @@ Violation Details -
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	Lambda function doesn't not include a VPC configuration.
+	Description    :	Lambda function does not include a VPC configuration.
 	File           :	main.tf
 	Module Name    :	root
 	Plan Root      :	./
@@ -29,12 +29,12 @@ Violation Details -
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	Ensure AWS Lambda function has policy attached.
+	Description    :	Lambda does not use KMS CMK key to protect environment variables.
 	File           :	main.tf
 	Module Name    :	root
 	Plan Root      :	./
 	Line           :	21
-	Severity       :	MEDIUM
+	Severity       :	High
 	
 	-----------------------------------------------------------------------
 	
@@ -43,7 +43,7 @@ Scan Summary -
 
 	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-08-18 17:44:01.620535338 +0000 UTC
+	Scanned At          :	2022-01-05 16:27:41.222172926 +0000 UTC
 	Policies Validated  :	4
 	Violated Policies   :	4
 	Low                 :	2

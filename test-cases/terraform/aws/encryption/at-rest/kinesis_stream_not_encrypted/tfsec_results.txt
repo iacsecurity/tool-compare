@@ -1,7 +1,7 @@
 
   Result 1
 
-  [aws-kinesis-enable-in-transit-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_kinesis_stream.test_stream' defines an unencrypted Kinesis Stream.
+  [aws-kinesis-enable-in-transit-encryption][HIGH] Resource 'aws_kinesis_stream.test_stream' defines an unencrypted Kinesis Stream.
   /src/main.tf:1-14
 
 
@@ -25,16 +25,16 @@
   Resolution: Enable in transit encryption
 
   More Info:
-  - https://tfsec.dev/docs/aws/kinesis/enable-in-transit-encryption#aws/kinesis 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/kinesis/enable-in-transit-encryption 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kinesis_stream#encryption_type 
   - https://docs.aws.amazon.com/streams/latest/dev/server-side-encryption.html 
 
   times
   ------------------------------------------
-  disk i/o             69.817418ms
-  parsing HCL          510.958µs
-  evaluating values    2.321999ms
-  running checks       15.44825ms
+  disk i/o             23.736667ms
+  parsing HCL          556.375µs
+  evaluating values    2.24875ms
+  running checks       15.953583ms
 
   counts
   ------------------------------------------
