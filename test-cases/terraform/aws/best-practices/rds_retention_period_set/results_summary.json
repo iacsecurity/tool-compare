@@ -1,5 +1,6 @@
 {
-  "checkov": "yes",
+  "last_reviewed": "10/01/2022",
+  "checkov": "no",
   "cloudrail": "no",
   "kics": "yes",
   "snyk": "no",
