@@ -1,7 +1,7 @@
 
   Result 1
 
-  [aws-rds-backup-retention-specified][[0m[33mMEDIUM[39m[0m] Resource 'aws_db_instance.default' does not have backup retention explicitly set
+  [aws-rds-backup-retention-specified][MEDIUM] Resource 'aws_db_instance.default' does not have backup retention explicitly set
   /src/main.tf:1-11
 
 
@@ -22,14 +22,14 @@
   Resolution: Explicitly set the retention period to greater than the default
 
   More Info:
-  - https://tfsec.dev/docs/aws/rds/backup-retention-specified#aws/rds 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/rds/backup-retention-specified 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/rds_cluster#backup_retention_period 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_instance#backup_retention_period 
   - https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupRetention 
 
   Result 2
 
-  [aws-rds-encrypt-instance-storage-data][[0m[31mHIGH[39m[0m] Resource 'aws_db_instance.default' has no storage encryption defined.
+  [aws-rds-encrypt-instance-storage-data][HIGH] Resource 'aws_db_instance.default' has no storage encryption defined.
   /src/main.tf:1-11
 
 
@@ -50,13 +50,13 @@
   Resolution: Enable encryption for RDS instances
 
   More Info:
-  - https://tfsec.dev/docs/aws/rds/encrypt-instance-storage-data#aws/rds 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/rds/encrypt-instance-storage-data 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_instance 
   - https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html 
 
   Result 3
 
-  [general-secrets-sensitive-in-attribute][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Block 'aws_db_instance.default' includes a potentially sensitive attribute which is defined within the project.
+  [general-secrets-sensitive-in-attribute][CRITICAL] Block 'aws_db_instance.default' includes a potentially sensitive attribute which is defined within the project.
   /src/main.tf:8
 
 
@@ -73,15 +73,15 @@
   Resolution: Don't include sensitive data in blocks
 
   More Info:
-  - https://tfsec.dev/docs/general/secrets/sensitive-in-attribute#general/secrets 
+  - https://aquasecurity.github.io/tfsec/latest/checks/general/secrets/sensitive-in-attribute 
   - https://www.terraform.io/docs/state/sensitive-data.html 
 
   times
   ------------------------------------------
-  disk i/o             51.956001ms
-  parsing HCL          632.5µs
-  evaluating values    1.816125ms
-  running checks       27.751084ms
+  disk i/o             23.512667ms
+  parsing HCL          479.291µs
+  evaluating values    1.937251ms
+  running checks       20.423ms
 
   counts
   ------------------------------------------

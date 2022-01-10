@@ -1,33 +1,8 @@
-
-
-       _               _              
-   ___| |__   ___  ___| | _______   __
-  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
- | (__| | | |  __/ (__|   < (_) \ V / 
-  \___|_| |_|\___|\___|_|\_\___/ \_/  
-                                      
-By bridgecrew.io | version: 2.0.358 
-Update available 2.0.358 -> 2.0.359
-Run pip3 install -U checkov to update 
-
-
+2022-01-05 04:25:45,379 [MainThread  ] [WARNI]  Failed to download module terraform-aws-modules/vpc/aws:None (for external modules, the --download-external-modules flag is required)
+2022-01-05 04:25:45,383 [MainThread  ] [WARNI]  Failed to download module terraform-aws-modules/s3-bucket/aws:1.0 (for external modules, the --download-external-modules flag is required)
 terraform scan results:
 
 Passed checks: 9, Failed checks: 8, Skipped checks: 0
-
-Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration EBS is securely encrypted"
-	FAILED for resource: aws_instance.pub_ins
-	File: /main.tf:98-104
-	Guide: https://docs.bridgecrew.io/docs/general_13
-
-		98  | resource "aws_instance" "pub_ins" {
-		99  |   ami           = "${data.aws_ami.ubuntu.id}"
-		100 |   instance_type = "t2.micro"
-		101 |   subnet_id = module.vpc.public_subnets[0]
-		102 |   iam_instance_profile = aws_iam_instance_profile.test_profile.name
-		103 | 
-		104 | }
-
 
 Check: CKV_AWS_79: "Ensure Instance Metadata Service Version 1 is not enabled"
 	FAILED for resource: aws_instance.pub_ins
@@ -47,6 +22,20 @@ Check: CKV_AWS_135: "Ensure that EC2 is EBS optimized"
 	FAILED for resource: aws_instance.pub_ins
 	File: /main.tf:98-104
 	Guide: https://docs.bridgecrew.io/docs/ensure-that-ec2-is-ebs-optimized
+
+		98  | resource "aws_instance" "pub_ins" {
+		99  |   ami           = "${data.aws_ami.ubuntu.id}"
+		100 |   instance_type = "t2.micro"
+		101 |   subnet_id = module.vpc.public_subnets[0]
+		102 |   iam_instance_profile = aws_iam_instance_profile.test_profile.name
+		103 | 
+		104 | }
+
+
+Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration EBS is securely encrypted"
+	FAILED for resource: aws_instance.pub_ins
+	File: /main.tf:98-104
+	Guide: https://docs.bridgecrew.io/docs/general_13
 
 		98  | resource "aws_instance" "pub_ins" {
 		99  |   ami           = "${data.aws_ami.ubuntu.id}"
@@ -71,18 +60,6 @@ Check: CKV_AWS_126: "Ensure that detailed monitoring is enabled for EC2 instance
 		104 | }
 
 
-Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration EBS is securely encrypted"
-	FAILED for resource: aws_instance.priv_ins
-	File: /main.tf:106-111
-	Guide: https://docs.bridgecrew.io/docs/general_13
-
-		106 | resource "aws_instance" "priv_ins" {
-		107 |   ami           = "${data.aws_ami.ubuntu.id}"
-		108 |   instance_type = "t2.micro"
-		109 |   subnet_id = module.vpc.private_subnets[0]
-		110 |   iam_instance_profile = aws_iam_instance_profile.test_profile.name
-		111 | }
-
 Check: CKV_AWS_79: "Ensure Instance Metadata Service Version 1 is not enabled"
 	FAILED for resource: aws_instance.priv_ins
 	File: /main.tf:106-111
@@ -99,6 +76,18 @@ Check: CKV_AWS_135: "Ensure that EC2 is EBS optimized"
 	FAILED for resource: aws_instance.priv_ins
 	File: /main.tf:106-111
 	Guide: https://docs.bridgecrew.io/docs/ensure-that-ec2-is-ebs-optimized
+
+		106 | resource "aws_instance" "priv_ins" {
+		107 |   ami           = "${data.aws_ami.ubuntu.id}"
+		108 |   instance_type = "t2.micro"
+		109 |   subnet_id = module.vpc.private_subnets[0]
+		110 |   iam_instance_profile = aws_iam_instance_profile.test_profile.name
+		111 | }
+
+Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration EBS is securely encrypted"
+	FAILED for resource: aws_instance.priv_ins
+	File: /main.tf:106-111
+	Guide: https://docs.bridgecrew.io/docs/general_13
 
 		106 | resource "aws_instance" "priv_ins" {
 		107 |   ami           = "${data.aws_ami.ubuntu.id}"

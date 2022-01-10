@@ -1,7 +1,7 @@
 
   Result 1
 
-  [aws-dynamodb-enable-recovery][[0m[33mMEDIUM[39m[0m] Resource 'aws_dynamodb_table.basic-dynamodb-table' doesn't have point in time recovery
+  [aws-dynamodb-enable-recovery][MEDIUM] Resource 'aws_dynamodb_table.basic-dynamodb-table' doesn't have point in time recovery
   /src/main.tf:143-166
 
 
@@ -38,13 +38,13 @@
   Resolution: Enable point in time recovery
 
   More Info:
-  - https://tfsec.dev/docs/aws/dynamodb/enable-recovery#aws/dynamodb 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/dynamodb/enable-recovery 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table#point_in_time_recovery 
   - https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/PointInTimeRecovery.html 
 
   Result 2
 
-  [aws-dynamodb-table-customer-key][[0m[97mLOW[39m[0m] Resource 'aws_dynamodb_table.basic-dynamodb-table' is not using KMS CMK for encryption
+  [aws-dynamodb-table-customer-key][LOW] Resource 'aws_dynamodb_table.basic-dynamodb-table' is not using KMS CMK for encryption
   /src/main.tf:143-166
 
 
@@ -81,13 +81,13 @@
   Resolution: Enable server side encryption with a customer managed key
 
   More Info:
-  - https://tfsec.dev/docs/aws/dynamodb/table-customer-key#aws/dynamodb 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/dynamodb/table-customer-key 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table#server_side_encryption 
   - https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/EncryptionAtRest.html 
 
   Result 3
 
-  [aws-ec2-enforce-http-token-imds][[0m[31mHIGH[39m[0m] Resource 'aws_instance.test' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
+  [aws-ec2-enforce-http-token-imds][HIGH] Resource 'aws_instance.test' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
   /src/main.tf:136-141
 
 
@@ -109,13 +109,42 @@
   Resolution: Enable HTTP token requirement for IMDS
 
   More Info:
-  - https://tfsec.dev/docs/aws/ec2/enforce-http-token-imds#aws/ec2 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/ec2/enforce-http-token-imds 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#metadata-options 
   - https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service 
 
   Result 4
 
-  [aws-vpc-no-public-egress-sg][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'aws_security_group.allow-public-outbound-sg' defines a fully open egress security group.
+  [aws-vpc-add-description-to-security-group][LOW] Resource 'aws_security_group.allow-public-outbound-sg' has egress without description.
+  /src/main.tf:103-108
+
+
+     100 |   description = "Allow HTTPS outbound traffic"
+     101 |   vpc_id      = aws_vpc.main.id
+     102 | 
+     103 |   egress {
+     104 |     from_port   = 443
+     105 |     to_port     = 443
+     106 |     protocol    = "tcp"
+     107 |     cidr_blocks = ["0.0.0.0/0"]
+     108 |   }
+     109 | 
+     110 | }
+     111 | 
+
+  Legacy ID:  AWS018
+  Impact:     Descriptions provide context for the firewall rule reasons
+  Resolution: Add descriptions for all security groups and rules
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/vpc/add-description-to-security-group 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule 
+  - https://www.cloudconformity.com/knowledge-base/aws/EC2/security-group-rules-description.html 
+
+  Result 5
+
+  [aws-vpc-no-public-egress-sg][CRITICAL] Resource 'aws_security_group.allow-public-outbound-sg' defines a fully open egress security group.
   /src/main.tf:107
 
 
@@ -132,15 +161,15 @@
   Resolution: Set a more restrictive cidr range
 
   More Info:
-  - https://tfsec.dev/docs/aws/vpc/no-public-egress-sg#aws/vpc 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/vpc/no-public-egress-sg 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
 
   times
   ------------------------------------------
-  disk i/o             54.814584ms
-  parsing HCL          546.625µs
-  evaluating values    7.051543ms
-  running checks       38.009375ms
+  disk i/o             30.719042ms
+  parsing HCL          545.25µs
+  evaluating values    6.0465ms
+  running checks       30.045667ms
 
   counts
   ------------------------------------------
@@ -153,8 +182,8 @@
   critical             1
   high                 1
   medium               1
-  low                  1
+  low                  2
   ignored              0
 
-  4 potential problems detected.
+  5 potential problems detected.
 

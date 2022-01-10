@@ -1,73 +1,7 @@
 
   Result 1
 
-  [aws-dynamodb-table-customer-key][[0m[97mLOW[39m[0m] Resource 'aws_dynamodb_table.basic-dynamodb-table' is not using KMS CMK for encryption
-  /src/main.tf:90-107
-
-
-      87 |   subnet_id = aws_subnet.private-subnet.id
-      88 | }
-      89 | 
-      90 | resource "aws_dynamodb_table" "basic-dynamodb-table" {
-      91 |   name           = "GameScores"
-      92 |   billing_mode   = "PROVISIONED"
-      93 |   read_capacity  = 5
-      94 |   write_capacity = 5
-      95 |   hash_key       = "UserId"
-      96 |   range_key      = "GameTitle"
-      97 | 
-      98 |   attribute {
-      99 |     name = "UserId"
-     100 |     type = "S"
-     101 |   }
-     102 | 
-     103 |   attribute {
-     104 |     name = "GameTitle"
-     105 |     type = "S"
-     106 |   }
-     107 | }
-     108 | 
-
-  Legacy ID:  AWS092
-  Impact:     Using AWS managed keys does not allow for fine grained control
-  Resolution: Enable server side encryption with a customer managed key
-
-  More Info:
-  - https://tfsec.dev/docs/aws/dynamodb/table-customer-key#aws/dynamodb 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table#server_side_encryption 
-  - https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/EncryptionAtRest.html 
-
-  Result 2
-
-  [aws-ec2-enforce-http-token-imds][[0m[31mHIGH[39m[0m] Resource 'aws_instance.test' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
-  /src/main.tf:83-88
-
-
-      80 |   owners = ["099720109477"] # Canonical
-      81 | }
-      82 | 
-      83 | resource "aws_instance" "test" {
-      84 |   ami = data.aws_ami.ubuntu.id
-      85 |   instance_type = "t2.micro"
-      86 |   vpc_security_group_ids = [aws_security_group.allow-public-outbound-sg.id]
-      87 |   subnet_id = aws_subnet.private-subnet.id
-      88 | }
-      89 | 
-      90 | resource "aws_dynamodb_table" "basic-dynamodb-table" {
-      91 |   name           = "GameScores"
-
-  Legacy ID:  AWS079
-  Impact:     Instance metadata service can be interacted with freely
-  Resolution: Enable HTTP token requirement for IMDS
-
-  More Info:
-  - https://tfsec.dev/docs/aws/ec2/enforce-http-token-imds#aws/ec2 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#metadata-options 
-  - https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service 
-
-  Result 3
-
-  [aws-dynamodb-enable-recovery][[0m[33mMEDIUM[39m[0m] Resource 'aws_dynamodb_table.basic-dynamodb-table' doesn't have point in time recovery
+  [aws-dynamodb-enable-recovery][MEDIUM] Resource 'aws_dynamodb_table.basic-dynamodb-table' doesn't have point in time recovery
   /src/main.tf:90-107
 
 
@@ -99,16 +33,111 @@
   Resolution: Enable point in time recovery
 
   More Info:
-  - https://tfsec.dev/docs/aws/dynamodb/enable-recovery#aws/dynamodb 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/dynamodb/enable-recovery 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table#point_in_time_recovery 
   - https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/PointInTimeRecovery.html 
 
+  Result 2
+
+  [aws-dynamodb-table-customer-key][LOW] Resource 'aws_dynamodb_table.basic-dynamodb-table' is not using KMS CMK for encryption
+  /src/main.tf:90-107
+
+
+      87 |   subnet_id = aws_subnet.private-subnet.id
+      88 | }
+      89 | 
+      90 | resource "aws_dynamodb_table" "basic-dynamodb-table" {
+      91 |   name           = "GameScores"
+      92 |   billing_mode   = "PROVISIONED"
+      93 |   read_capacity  = 5
+      94 |   write_capacity = 5
+      95 |   hash_key       = "UserId"
+      96 |   range_key      = "GameTitle"
+      97 | 
+      98 |   attribute {
+      99 |     name = "UserId"
+     100 |     type = "S"
+     101 |   }
+     102 | 
+     103 |   attribute {
+     104 |     name = "GameTitle"
+     105 |     type = "S"
+     106 |   }
+     107 | }
+     108 | 
+
+  Legacy ID:  AWS092
+  Impact:     Using AWS managed keys does not allow for fine grained control
+  Resolution: Enable server side encryption with a customer managed key
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/dynamodb/table-customer-key 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table#server_side_encryption 
+  - https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/EncryptionAtRest.html 
+
+  Result 3
+
+  [aws-ec2-enforce-http-token-imds][HIGH] Resource 'aws_instance.test' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
+  /src/main.tf:83-88
+
+
+      80 |   owners = ["099720109477"] # Canonical
+      81 | }
+      82 | 
+      83 | resource "aws_instance" "test" {
+      84 |   ami = data.aws_ami.ubuntu.id
+      85 |   instance_type = "t2.micro"
+      86 |   vpc_security_group_ids = [aws_security_group.allow-public-outbound-sg.id]
+      87 |   subnet_id = aws_subnet.private-subnet.id
+      88 | }
+      89 | 
+      90 | resource "aws_dynamodb_table" "basic-dynamodb-table" {
+      91 |   name           = "GameScores"
+
+  Legacy ID:  AWS079
+  Impact:     Instance metadata service can be interacted with freely
+  Resolution: Enable HTTP token requirement for IMDS
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/ec2/enforce-http-token-imds 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#metadata-options 
+  - https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service 
+
+  Result 4
+
+  [aws-vpc-add-description-to-security-group][LOW] Resource 'aws_security_group.allow-public-outbound-sg' has egress without description.
+  /src/main.tf:58-63
+
+
+      55 |   description = "Allow HTTPS outbound traffic"
+      56 |   vpc_id      = aws_vpc.main.id
+      57 | 
+      58 |   egress {
+      59 |     from_port   = 443
+      60 |     to_port     = 443
+      61 |     protocol    = "tcp"
+      62 |     cidr_blocks = [local.s3_prefix_list_cidr_block]
+      63 |   }
+      64 | 
+      65 | }
+      66 | 
+
+  Legacy ID:  AWS018
+  Impact:     Descriptions provide context for the firewall rule reasons
+  Resolution: Add descriptions for all security groups and rules
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/vpc/add-description-to-security-group 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule 
+  - https://www.cloudconformity.com/knowledge-base/aws/EC2/security-group-rules-description.html 
+
   times
   ------------------------------------------
-  disk i/o             53.348374ms
-  parsing HCL          552.375µs
-  evaluating values    5.116375ms
-  running checks       33.23975ms
+  disk i/o             32.645376ms
+  parsing HCL          598.209µs
+  evaluating values    4.927042ms
+  running checks       25.145334ms
 
   counts
   ------------------------------------------
@@ -121,8 +150,8 @@
   critical             0
   high                 1
   medium               1
-  low                  1
+  low                  2
   ignored              0
 
-  3 potential problems detected.
+  4 potential problems detected.
 

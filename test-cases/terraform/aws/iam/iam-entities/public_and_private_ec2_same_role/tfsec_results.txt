@@ -1,7 +1,7 @@
 
   Result 1
 
-  [aws-ec2-enforce-http-token-imds][[0m[31mHIGH[39m[0m] Resource 'aws_instance.pub_ins' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
+  [aws-ec2-enforce-http-token-imds][HIGH] Resource 'aws_instance.pub_ins' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
   /src/main.tf:98-104
 
 
@@ -24,13 +24,13 @@
   Resolution: Enable HTTP token requirement for IMDS
 
   More Info:
-  - https://tfsec.dev/docs/aws/ec2/enforce-http-token-imds#aws/ec2 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/ec2/enforce-http-token-imds 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#metadata-options 
   - https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service 
 
   Result 2
 
-  [aws-ec2-enforce-http-token-imds][[0m[31mHIGH[39m[0m] Resource 'aws_instance.priv_ins' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
+  [aws-ec2-enforce-http-token-imds][HIGH] Resource 'aws_instance.priv_ins' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
   /src/main.tf:106-111
 
 
@@ -49,13 +49,13 @@
   Resolution: Enable HTTP token requirement for IMDS
 
   More Info:
-  - https://tfsec.dev/docs/aws/ec2/enforce-http-token-imds#aws/ec2 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/ec2/enforce-http-token-imds 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#metadata-options 
   - https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service 
 
   Result 3
 
-  [aws-iam-no-policy-wildcards][[0m[31mHIGH[39m[0m] Resource 'aws_iam_role_policy.test_policy' defines a policy with wildcarded resources.
+  [aws-iam-no-policy-wildcards][HIGH] Resource 'aws_iam_role_policy.test_policy' defines a policy with wildcarded resources.
   /src/main.tf:81-94
 
 
@@ -85,16 +85,16 @@
   Resolution: Specify the exact permissions required, and to which resources they should apply instead of using wildcards.
 
   More Info:
-  - https://tfsec.dev/docs/aws/iam/no-policy-wildcards#aws/iam 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/iam/no-policy-wildcards 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document 
   - https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html 
 
   times
   ------------------------------------------
-  disk i/o             40.619497ms
-  parsing HCL          121.064µs
-  evaluating values    94.268314ms
-  running checks       17.337631ms
+  disk i/o             224.572583ms
+  parsing HCL          902.794µs
+  evaluating values    412.905832ms
+  running checks       104.287125ms
 
   counts
   ------------------------------------------

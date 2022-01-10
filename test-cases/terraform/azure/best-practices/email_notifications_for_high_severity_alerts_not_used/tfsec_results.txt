@@ -1,7 +1,7 @@
 
   Result 1
 
-  [azure-security-center-alert-on-severe-notifications][[0m[33mMEDIUM[39m[0m] Resource 'azurerm_security_center_contact.example' has alert_notifications turned off
+  [azure-security-center-alert-on-severe-notifications][MEDIUM] Resource 'azurerm_security_center_contact.example' has alert_notifications turned off
   /src/main.tf:22
 
 
@@ -17,13 +17,13 @@
   Resolution:  Set alert notifications to be on
 
   More Info:
-  - https://tfsec.dev/docs/azure/security-center/alert-on-severe-notifications#azure/security-center 
+  - https://aquasecurity.github.io/tfsec/latest/checks/azure/security-center/alert-on-severe-notifications 
   - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/security_center_contact#alert_notifications 
   - https://azure.microsoft.com/en-us/services/security-center/ 
 
   Result 2
 
-  [azure-security-center-set-required-contact-details][[0m[97mLOW[39m[0m] Resource 'azurerm_security_center_contact.example' does not have a phone number set for the security contact
+  [azure-security-center-set-required-contact-details][LOW] Resource 'azurerm_security_center_contact.example' does not have a phone number set for the security contact
   /src/main.tf:18-24
 
 
@@ -43,16 +43,17 @@
   Resolution: Set a telephone number for security center contact
 
   More Info:
-  - https://tfsec.dev/docs/azure/security-center/set-required-contact-details#azure/security-center 
+  - https://aquasecurity.github.io/tfsec/latest/checks/azure/security-center/set-required-contact-details 
   - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/security_center_contact#phone 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/security_center_contact#email 
   - https://azure.microsoft.com/en-us/services/security-center/ 
 
   times
   ------------------------------------------
-  disk i/o             470.469µs
-  parsing HCL          7.572µs
-  evaluating values    125.8µs
-  running checks       1.817598ms
+  disk i/o             26.674ms
+  parsing HCL          671.375µs
+  evaluating values    1.685708ms
+  running checks       18.688584ms
 
   counts
   ------------------------------------------

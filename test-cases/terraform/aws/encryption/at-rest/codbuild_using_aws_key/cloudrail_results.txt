@@ -1,24 +1,9 @@
 
 WARNINGs found:
-Rule: Ensure all resources that can be tagged have at least one tag
- - 2 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_codebuild_project.project-cloudrail-test] (main.tf:29)
-     Violating Resource: [aws_codebuild_project.project-cloudrail-test]  (main.tf:29)
-
-     Evidence:
-             | Resource CodeBuild aws_codebuild_project.project-cloudrail-test does not have any tags set
-
-
-   - Exposed Resource: [aws_iam_role.codebuild] (main.tf:10)
-     Violating Resource: [aws_iam_role.codebuild]  (main.tf:10)
-
-     Evidence:
-             | Resource IAM Role aws_iam_role.codebuild does not have any tags set
-
-
------------------------------------------------
 Rule: Ensure CodeBuild projects are set to be encrypted at rest with customer-managed CMK
+Description: Cloudrail will review the CodeBuild projects in your environment. If a project is not set to encrypt at rest using customer-managed CMK, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/codebuild/latest/userguide/security-encryption.html to set encryption at rest using a customer-managed CMK.
+Remediation Steps - Terraform: For the aws_codebuild_project resource, set encryption_key argument to use a customer-managed CMK.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_codebuild_project.project-cloudrail-test] (main.tf:29)
@@ -26,6 +11,27 @@ Rule: Ensure CodeBuild projects are set to be encrypted at rest with customer-ma
 
      Evidence:
              | The CodeBuild project aws_codebuild_project.project-cloudrail-test is not set to use encryption at rest with customer-managed CMK
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+Description: Some organizations require that all resources have at least one tag set. This rule will review the resources that can be tagged, and make sure each one has a tag that is not the Name tag. Resources that are not tagged will be flagged.
+Remediation Steps - Cloud Console: Access the specific resource in the AWS console and add tags.
+Remediation Steps - Terraform: Add a tags section to the resource with at least one tag beyond the Name tag.
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_iam_role.codebuild] (main.tf:10)
+     Violating Resource: [aws_iam_role.codebuild]  (main.tf:10)
+
+     Evidence:
+             | Resource IAM Role aws_iam_role.codebuild does not have any tags set
+
+
+   - Exposed Resource: [aws_codebuild_project.project-cloudrail-test] (main.tf:29)
+     Violating Resource: [aws_codebuild_project.project-cloudrail-test]  (main.tf:29)
+
+     Evidence:
+             | Resource CodeBuild aws_codebuild_project.project-cloudrail-test does not have any tags set
 
 
 -----------------------------------------------

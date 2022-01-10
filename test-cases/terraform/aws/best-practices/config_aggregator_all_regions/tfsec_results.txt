@@ -1,7 +1,7 @@
 
   Result 1
 
-  [aws-config-aggregate-all-regions][[0m[31mHIGH[39m[0m] Resource 'aws_config_configuration_aggregator.organization' should have account aggregation sources to all regions
+  [aws-config-aggregate-all-regions][HIGH] Resource 'aws_config_configuration_aggregator.organization' should have account aggregation sources to all regions
   /src/main.tf:1-9
 
 
@@ -21,16 +21,16 @@
   Resolution: Set the aggregator to cover all regions
 
   More Info:
-  - https://tfsec.dev/docs/aws/config/aggregate-all-regions#aws/config 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/config/aggregate-all-regions 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/config_configuration_aggregator#all_regions 
   - https://docs.aws.amazon.com/config/latest/developerguide/aggregate-data.html 
 
   times
   ------------------------------------------
-  disk i/o             49.8705ms
-  parsing HCL          607.084µs
-  evaluating values    1.645125ms
-  running checks       14.917791ms
+  disk i/o             26.531667ms
+  parsing HCL          545.5µs
+  evaluating values    1.831625ms
+  running checks       15.662958ms
 
   counts
   ------------------------------------------

@@ -1,31 +1,25 @@
-
-
-       _               _              
-   ___| |__   ___  ___| | _______   __
-  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
- | (__| | | |  __/ (__|   < (_) \ V / 
-  \___|_| |_|\___|\___|_|\_\___/ \_/  
-                                      
-By bridgecrew.io | version: 2.0.358 
-Update available 2.0.358 -> 2.0.359
-Run pip3 install -U checkov to update 
-
-
 terraform scan results:
 
-Passed checks: 10, Failed checks: 9, Skipped checks: 0
+Passed checks: 8, Failed checks: 10, Skipped checks: 0
 
-Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration EBS is securely encrypted"
-	FAILED for resource: aws_instance.test
-	File: /main.tf:83-88
-	Guide: https://docs.bridgecrew.io/docs/general_13
+Check: CKV_AWS_23: "Ensure every security groups rule has a description"
+	FAILED for resource: aws_security_group.allow-public-outbound-sg
+	File: /main.tf:53-65
+	Guide: https://docs.bridgecrew.io/docs/networking_31
 
-		83 | resource "aws_instance" "test" {
-		84 |   ami = data.aws_ami.ubuntu.id
-		85 |   instance_type = "t2.micro"
-		86 |   vpc_security_group_ids = [aws_security_group.allow-public-outbound-sg.id]
-		87 |   subnet_id = aws_subnet.private-subnet.id
-		88 | }
+		53 | resource "aws_security_group" "allow-public-outbound-sg" {
+		54 |   name        = "allow-public-outbound-sg"
+		55 |   description = "Allow HTTPS outbound traffic"
+		56 |   vpc_id      = aws_vpc.main.id
+		57 | 
+		58 |   egress {
+		59 |     from_port   = 443
+		60 |     to_port     = 443
+		61 |     protocol    = "tcp"
+		62 |     cidr_blocks = [local.s3_prefix_list_cidr_block]
+		63 |   }
+		64 | 
+		65 | }
 
 
 Check: CKV_AWS_79: "Ensure Instance Metadata Service Version 1 is not enabled"
@@ -54,6 +48,19 @@ Check: CKV_AWS_135: "Ensure that EC2 is EBS optimized"
 		88 | }
 
 
+Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration EBS is securely encrypted"
+	FAILED for resource: aws_instance.test
+	File: /main.tf:83-88
+	Guide: https://docs.bridgecrew.io/docs/general_13
+
+		83 | resource "aws_instance" "test" {
+		84 |   ami = data.aws_ami.ubuntu.id
+		85 |   instance_type = "t2.micro"
+		86 |   vpc_security_group_ids = [aws_security_group.allow-public-outbound-sg.id]
+		87 |   subnet_id = aws_subnet.private-subnet.id
+		88 | }
+
+
 Check: CKV_AWS_126: "Ensure that detailed monitoring is enabled for EC2 instances"
 	FAILED for resource: aws_instance.test
 	File: /main.tf:83-88
@@ -67,10 +74,10 @@ Check: CKV_AWS_126: "Ensure that detailed monitoring is enabled for EC2 instance
 		88 | }
 
 
-Check: CKV_AWS_28: "Ensure Dynamodb point in time recovery (backup) is enabled"
+Check: CKV_AWS_119: "Ensure DynamoDB Tables are encrypted using a KMS Customer Managed CMK"
 	FAILED for resource: aws_dynamodb_table.basic-dynamodb-table
 	File: /main.tf:90-107
-	Guide: https://docs.bridgecrew.io/docs/general_6
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-dynamodb-tables-are-encrypted
 
 		90  | resource "aws_dynamodb_table" "basic-dynamodb-table" {
 		91  |   name           = "GameScores"
@@ -92,10 +99,10 @@ Check: CKV_AWS_28: "Ensure Dynamodb point in time recovery (backup) is enabled"
 		107 | }
 
 
-Check: CKV_AWS_119: "Ensure DynamoDB Tables are encrypted using KMS"
+Check: CKV_AWS_28: "Ensure Dynamodb point in time recovery (backup) is enabled"
 	FAILED for resource: aws_dynamodb_table.basic-dynamodb-table
 	File: /main.tf:90-107
-	Guide: https://docs.bridgecrew.io/docs/ensure-that-dynamodb-tables-are-encrypted
+	Guide: https://docs.bridgecrew.io/docs/general_6
 
 		90  | resource "aws_dynamodb_table" "basic-dynamodb-table" {
 		91  |   name           = "GameScores"

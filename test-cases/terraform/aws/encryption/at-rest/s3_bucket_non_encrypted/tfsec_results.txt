@@ -1,7 +1,7 @@
 
   Result 1
 
-  [aws-s3-enable-bucket-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_s3_bucket.cloudrail' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
+  [aws-s3-enable-bucket-encryption][HIGH] Resource 'aws_s3_bucket.cloudrail' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
   /src/main.tf:5-8
 
 
@@ -21,13 +21,13 @@
   Resolution: Configure bucket encryption
 
   More Info:
-  - https://tfsec.dev/docs/aws/s3/enable-bucket-encryption#aws/s3 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/s3/enable-bucket-encryption 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#enable-default-server-side-encryption 
   - https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-encryption.html 
 
   Result 2
 
-  [aws-s3-enable-bucket-logging][[0m[33mMEDIUM[39m[0m] Resource 'aws_s3_bucket.cloudrail' does not have logging enabled.
+  [aws-s3-enable-bucket-logging][MEDIUM] Resource 'aws_s3_bucket.cloudrail' does not have logging enabled.
   /src/main.tf:5-8
 
 
@@ -47,13 +47,13 @@
   Resolution: Add a logging block to the resource to enable access logging
 
   More Info:
-  - https://tfsec.dev/docs/aws/s3/enable-bucket-logging#aws/s3 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/s3/enable-bucket-logging 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket 
   - https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerLogs.html 
 
   Result 3
 
-  [aws-s3-enable-versioning][[0m[33mMEDIUM[39m[0m] Resource 'aws_s3_bucket.cloudrail' does not have versioning enabled
+  [aws-s3-enable-versioning][MEDIUM] Resource 'aws_s3_bucket.cloudrail' does not have versioning enabled
   /src/main.tf:5-8
 
 
@@ -73,16 +73,16 @@
   Resolution: Enable versioning to protect against accidental/malicious removal or modification
 
   More Info:
-  - https://tfsec.dev/docs/aws/s3/enable-versioning#aws/s3 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/s3/enable-versioning 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#versioning 
   - https://docs.aws.amazon.com/AmazonS3/latest/userguide/Versioning.html 
 
   times
   ------------------------------------------
-  disk i/o             52.1725ms
-  parsing HCL          603.375µs
-  evaluating values    3.072167ms
-  running checks       24.28275ms
+  disk i/o             24.575541ms
+  parsing HCL          574.667µs
+  evaluating values    3.186335ms
+  running checks       22.881ms
 
   counts
   ------------------------------------------

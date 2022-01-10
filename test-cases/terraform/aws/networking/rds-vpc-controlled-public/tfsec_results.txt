@@ -1,7 +1,80 @@
 
   Result 1
 
-  [aws-rds-no-public-db-access][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'aws_db_instance.test' is exposed publicly.
+  [aws-vpc-no-public-ingress-sg][CRITICAL] Resource 'aws_security_group.nondefault' defines a fully open ingress security group.
+  /src/main.tf:16
+
+
+      13 |     from_port = 0
+      14 |     protocol = "TCP"
+      15 |     to_port = 65000
+      16 |     cidr_blocks = ["0.0.0.0/0"]    list: ["0.0.0.0/0"]
+      17 |   }
+      18 | }
+      19 | 
+
+  Legacy ID:  AWS008
+  Impact:     The port is exposed for ingress from the internet
+  Resolution: Set a more restrictive cidr range
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/vpc/no-public-ingress-sg 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
+
+  Result 2
+
+  [aws-rds-backup-retention-specified][MEDIUM] Resource 'aws_db_instance.test' does not have backup retention explicitly set
+  /src/main.tf:60-65
+
+
+      57 |   subnet_id = aws_subnet.nondefault_2.id
+      58 | }
+      59 | 
+      60 | resource "aws_db_instance" "test" {
+      61 |   instance_class = "db.t3.micro"
+      62 |   publicly_accessible = true
+      63 |   db_subnet_group_name = aws_db_subnet_group.nondefault.name
+      64 |   vpc_security_group_ids = [aws_security_group.nondefault.id]
+      65 | }
+
+  Legacy ID:  AWS091
+  Impact:     Potential loss of data and short opportunity for recovery
+  Resolution: Explicitly set the retention period to greater than the default
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/rds/backup-retention-specified 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/rds_cluster#backup_retention_period 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_instance#backup_retention_period 
+  - https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupRetention 
+
+  Result 3
+
+  [aws-rds-encrypt-instance-storage-data][HIGH] Resource 'aws_db_instance.test' has no storage encryption defined.
+  /src/main.tf:60-65
+
+
+      57 |   subnet_id = aws_subnet.nondefault_2.id
+      58 | }
+      59 | 
+      60 | resource "aws_db_instance" "test" {
+      61 |   instance_class = "db.t3.micro"
+      62 |   publicly_accessible = true
+      63 |   db_subnet_group_name = aws_db_subnet_group.nondefault.name
+      64 |   vpc_security_group_ids = [aws_security_group.nondefault.id]
+      65 | }
+
+  Legacy ID:  AWS052
+  Impact:     Data can be read from RDS instances if compromised
+  Resolution: Enable encryption for RDS instances
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/rds/encrypt-instance-storage-data 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_instance 
+  - https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html 
+
+  Result 4
+
+  [aws-rds-no-public-db-access][CRITICAL] Resource 'aws_db_instance.test' is exposed publicly.
   /src/main.tf:62
 
 
@@ -18,12 +91,12 @@
   Resolution: Set the database to not be publicly accessible
 
   More Info:
-  - https://tfsec.dev/docs/aws/rds/no-public-db-access#aws/rds 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/rds/no-public-db-access 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_instance 
 
-  Result 2
+  Result 5
 
-  [aws-vpc-add-decription-to-security-group][[0m[97mLOW[39m[0m] Resource 'aws_security_group.nondefault' should include a description for auditing purposes.
+  [aws-vpc-add-description-to-security-group][LOW] Resource 'aws_security_group.nondefault' should include a description for auditing purposes.
   /src/main.tf:9-18
 
 
@@ -49,90 +122,17 @@
   Resolution: Add descriptions for all security groups and rules
 
   More Info:
-  - https://tfsec.dev/docs/aws/vpc/add-decription-to-security-group#aws/vpc 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/vpc/add-description-to-security-group 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule 
   - https://www.cloudconformity.com/knowledge-base/aws/EC2/security-group-rules-description.html 
 
-  Result 3
-
-  [aws-vpc-no-public-ingress-sg][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'aws_security_group.nondefault' defines a fully open ingress security group.
-  /src/main.tf:16
-
-
-      13 |     from_port = 0
-      14 |     protocol = "TCP"
-      15 |     to_port = 65000
-      16 |     cidr_blocks = ["0.0.0.0/0"]    list: ["0.0.0.0/0"]
-      17 |   }
-      18 | }
-      19 | 
-
-  Legacy ID:  AWS008
-  Impact:     The port is exposed for ingress from the internet
-  Resolution: Set a more restrictive cidr range
-
-  More Info:
-  - https://tfsec.dev/docs/aws/vpc/no-public-ingress-sg#aws/vpc 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
-
-  Result 4
-
-  [aws-rds-backup-retention-specified][[0m[33mMEDIUM[39m[0m] Resource 'aws_db_instance.test' does not have backup retention explicitly set
-  /src/main.tf:60-65
-
-
-      57 |   subnet_id = aws_subnet.nondefault_2.id
-      58 | }
-      59 | 
-      60 | resource "aws_db_instance" "test" {
-      61 |   instance_class = "db.t3.micro"
-      62 |   publicly_accessible = true
-      63 |   db_subnet_group_name = aws_db_subnet_group.nondefault.name
-      64 |   vpc_security_group_ids = [aws_security_group.nondefault.id]
-      65 | }
-
-  Legacy ID:  AWS091
-  Impact:     Potential loss of data and short opportunity for recovery
-  Resolution: Explicitly set the retention period to greater than the default
-
-  More Info:
-  - https://tfsec.dev/docs/aws/rds/backup-retention-specified#aws/rds 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/rds_cluster#backup_retention_period 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_instance#backup_retention_period 
-  - https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupRetention 
-
-  Result 5
-
-  [aws-rds-encrypt-instance-storage-data][[0m[31mHIGH[39m[0m] Resource 'aws_db_instance.test' has no storage encryption defined.
-  /src/main.tf:60-65
-
-
-      57 |   subnet_id = aws_subnet.nondefault_2.id
-      58 | }
-      59 | 
-      60 | resource "aws_db_instance" "test" {
-      61 |   instance_class = "db.t3.micro"
-      62 |   publicly_accessible = true
-      63 |   db_subnet_group_name = aws_db_subnet_group.nondefault.name
-      64 |   vpc_security_group_ids = [aws_security_group.nondefault.id]
-      65 | }
-
-  Legacy ID:  AWS052
-  Impact:     Data can be read from RDS instances if compromised
-  Resolution: Enable encryption for RDS instances
-
-  More Info:
-  - https://tfsec.dev/docs/aws/rds/encrypt-instance-storage-data#aws/rds 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_instance 
-  - https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html 
-
   times
   ------------------------------------------
-  disk i/o             68.220167ms
-  parsing HCL          518.292µs
-  evaluating values    4.569541ms
-  running checks       45.761917ms
+  disk i/o             31.277958ms
+  parsing HCL          676µs
+  evaluating values    4.201625ms
+  running checks       28.519208ms
 
   counts
   ------------------------------------------

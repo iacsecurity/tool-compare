@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+Scanning with Keeping Infrastructure as Code Secure v1.4.9
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 851
 Queries failed to execute: 0
 
 ------------------------------------
@@ -31,7 +31,18 @@ Resource Not Using Tags, Severity: INFO, Results: 1
 Description: AWS services resource tags are an essential part of managing components
 Platform: Terraform
 
-	[1]: /src/main.tf:5
+	[1]: ../../src/main.tf:5
+
+		004: 
+		005: resource "aws_iam_user" "user-1" {
+		006:   name = "user-1"
+
+
+Name Is Not Snake Case, Severity: INFO, Results: 1
+Description: All names should follow snake case pattern.
+Platform: Terraform
+
+	[1]: ../../src/main.tf:5
 
 		004: 
 		005: resource "aws_iam_user" "user-1" {
@@ -42,7 +53,7 @@ IAM Policies Attached To User, Severity: LOW, Results: 1
 Description: IAM policies should be attached only to groups or roles
 Platform: Terraform
 
-	[1]: /src/main.tf:11
+	[1]: ../../src/main.tf:11
 
 		010:   name = "inline-policy"
 		011:   user = aws_iam_user.user-1.name
@@ -53,19 +64,33 @@ IAM Policy Grants Full Permissions, Severity: MEDIUM, Results: 1
 Description: IAM policies allow all ('*') in a statement action
 Platform: Terraform
 
-	[1]: /src/main.tf:22
+	[1]: ../../src/main.tf:13
 
-		021:       "Effect": "Allow",
-		022:       "Resource": "*"
-		023:     }
+		012: 
+		013:   policy = <<EOF
+		014: {
+
+
+Authentication Without MFA, Severity: HIGH, Results: 1
+CIS ID: CIS Security - CIS Amazon Web Services Foundations Benchmark v1.4.0 - Rule 1.10
+Title: Ensure multi-factor authentication (MFA) is enabled for all IAM users that have a console password
+Description: Multi-Factor Authentication (MFA) adds an extra layer of authentication assurance beyond traditional credentials. With MFA enabled, when a user signs in to the AWS Console, they will be prompted for their user name and password as well as for an authentication code from their physical or virtual MFA token. It is recommended that MFA be enabled for all accounts that have a console password.
+
+Platform: Terraform
+
+	[1]: ../../src/main.tf:13
+
+		012: 
+		013:   policy = <<EOF
+		014: {
 
 
 
 Results Summary:
-HIGH: 0
+HIGH: 1
 MEDIUM: 1
 LOW: 1
-INFO: 1
-TOTAL: 3
+INFO: 2
+TOTAL: 5
 
-Scan duration: 4.780012905s
+Scan duration: 9.630039921s

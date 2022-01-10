@@ -1,17 +1,23 @@
 
 WARNINGs found:
-Rule: Ensure all resources that can be tagged have at least one tag
+Rule: Ensure Secrets Manager secrets are encrypted at rest with customer-managed CMK
+Description: Cloudrail will review the Secrets Manager secrets config in your environment. If secrets are not set to be encrypted at rest using a customer-managed CMK, Cloudrail will highlight it as a violation. Cloudrail does not access the contents of the secrets themselves.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/secretsmanager/latest/userguide/tutorials_basic.html to set encryption at rest using a customer-managed CMK.
+Remediation Steps - Terraform: For the aws_secretsmanager_secret resource, set kms_key_id argument to use a customer-managed CMK.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_secretsmanager_secret.test] (main.tf:9)
      Violating Resource: [aws_secretsmanager_secret.test]  (main.tf:9)
 
      Evidence:
-             | Resource Secrets Manager Secret aws_secretsmanager_secret.test does not have any tags set
+             | The Secrets Manager secret test-cloudrail-1 is not set to be encrypted at rest using customer-managed CMK
 
 
 -----------------------------------------------
 Rule: Ensure use of Secrets Manager secret policy, and no action wildcards are being used
+Description: Using wildcard actions may inadvertently allow users to take actions you do not want to allow them to do. In addition, using a resource policy will provide an additional layer of security. It is a best practice to use a resource policy and give specific permissions only.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access_policy-types.html to modify Secrets Manager secret policy in order to avoid using wildcard actions.
+Remediation Steps - Terraform: For the aws_secretsmanager_secret_policy resource, modify policy argument in order to avoid using wildcard actions.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_secretsmanager_secret.test] (main.tf:9)
@@ -22,14 +28,17 @@ Rule: Ensure use of Secrets Manager secret policy, and no action wildcards are b
 
 
 -----------------------------------------------
-Rule: Ensure Secrets Manager secrets are encrypted at rest with customer-managed CMK
+Rule: Ensure all resources that can be tagged have at least one tag
+Description: Some organizations require that all resources have at least one tag set. This rule will review the resources that can be tagged, and make sure each one has a tag that is not the Name tag. Resources that are not tagged will be flagged.
+Remediation Steps - Cloud Console: Access the specific resource in the AWS console and add tags.
+Remediation Steps - Terraform: Add a tags section to the resource with at least one tag beyond the Name tag.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_secretsmanager_secret.test] (main.tf:9)
      Violating Resource: [aws_secretsmanager_secret.test]  (main.tf:9)
 
      Evidence:
-             | The Secrets Manager secret test-cloudrail-1 is not set to be encrypted at rest using customer-managed CMK
+             | Resource Secrets Manager Secret aws_secretsmanager_secret.test does not have any tags set
 
 
 -----------------------------------------------

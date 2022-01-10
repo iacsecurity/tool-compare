@@ -2,30 +2,12 @@
 
 Violation Details -
     
-	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
-	File           :	main.tf
-	Module Name    :	root
-	Plan Root      :	./
-	Line           :	138
-	Severity       :	MEDIUM
-	
-	-----------------------------------------------------------------------
-	
 	Description    :	Ensure that detailed monitoring is enabled for EC2 instances.
 	File           :	main.tf
 	Module Name    :	root
 	Plan Root      :	./
 	Line           :	138
 	Severity       :	HIGH
-	
-	-----------------------------------------------------------------------
-	
-	Description    :	Ensure VPC flow logging is enabled in all VPCs
-	File           :	main.tf
-	Module Name    :	root
-	Plan Root      :	./
-	Line           :	5
-	Severity       :	LOW
 	
 	-----------------------------------------------------------------------
 	
@@ -38,21 +20,39 @@ Violation Details -
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	Ensure that your AWS Elasticsearch clusters have enabled the support for publishing slow logs to AWS CloudWatch Logs. This feature enables you to publish slow logs from the indexing and search operations performed on your ES clusters and gain full insight into the performance of these operations.
-	File           :	main.tf
-	Module Name    :	root
-	Plan Root      :	./
-	Line           :	107
-	Severity       :	MEDIUM
-	
-	-----------------------------------------------------------------------
-	
 	Description    :	Ensure no security groups is wide open to public, that is, allows traffic from 0.0.0.0/0 to ALL ports and protocols
 	File           :	main.tf
 	Module Name    :	root
 	Plan Root      :	./
 	Line           :	121
 	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	138
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure VPC flow logging is enabled in all VPCs
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	5
+	Severity       :	LOW
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that your AWS Elasticsearch clusters have enabled the support for publishing slow logs to AWS CloudWatch Logs. This feature enables you to publish slow logs from the indexing and search operations performed on your ES clusters and gain full insight into the performance of these operations.
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	107
+	Severity       :	MEDIUM
 	
 	-----------------------------------------------------------------------
 	
@@ -79,7 +79,7 @@ Scan Summary -
 
 	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-08-18 17:40:05.081100131 +0000 UTC
+	Scanned At          :	2022-01-05 16:24:02.015977297 +0000 UTC
 	Policies Validated  :	105
 	Violated Policies   :	8
 	Low                 :	1

@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+Scanning with Keeping Infrastructure as Code Secure v1.4.9
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 851
 Queries failed to execute: 0
 
 ------------------------------------
@@ -31,40 +31,58 @@ Resource Not Using Tags, Severity: INFO, Results: 1
 Description: AWS services resource tags are an essential part of managing components
 Platform: Terraform
 
-	[1]: /src/main.tf:5
+	[1]: ../../src/main.tf:5
 
 		004: 
 		005: resource "aws_iam_role" "role" {
 		006:   name = "role"
 
 
+Name Is Not Snake Case, Severity: INFO, Results: 2
+Description: All names should follow snake case pattern.
+Platform: Terraform
+
+	[1]: ../../src/main.tf:25
+
+		024: 
+		025: resource "aws_iam_role_policy" "allow-policy-1" {
+		026:   name = "allow-policy-1"
+
+
+	[2]: ../../src/main.tf:45
+
+		044: 
+		045: resource "aws_iam_role_policy" "allow-policy-2" {
+		046:   name = "allow-policy-2"
+
+
 IAM Role Policy passRole Allows All, Severity: MEDIUM, Results: 1
 Description: Using the iam:passrole action with wildcards (*) in the resource can be overly permissive because it allows iam:passrole permissions on multiple resources
 Platform: Terraform
 
-	[1]: /src/main.tf:35
+	[1]: ../../src/main.tf:29
 
-		034:         "Action": [
-		035:           "iam:passrole"
-		036:         ],
+		028: 
+		029:   policy = <<-EOF
+		030:   {
 
 
 IAM Policy Grants Full Permissions, Severity: MEDIUM, Results: 2
 Description: IAM policies allow all ('*') in a statement action
 Platform: Terraform
 
-	[1]: /src/main.tf:38
+	[1]: ../../src/main.tf:49
 
-		037:         "Effect": "Allow",
-		038:         "Resource": "*"
-		039:       }
+		048: 
+		049:   policy = <<-EOF
+		050:   {
 
 
-	[2]: /src/main.tf:58
+	[2]: ../../src/main.tf:29
 
-		057:         "Effect": "Allow",
-		058:         "Resource": "*"
-		059:       }
+		028: 
+		029:   policy = <<-EOF
+		030:   {
 
 
 
@@ -72,7 +90,7 @@ Results Summary:
 HIGH: 0
 MEDIUM: 3
 LOW: 0
-INFO: 1
-TOTAL: 4
+INFO: 3
+TOTAL: 6
 
-Scan duration: 4.727074023s
+Scan duration: 8.958412795s

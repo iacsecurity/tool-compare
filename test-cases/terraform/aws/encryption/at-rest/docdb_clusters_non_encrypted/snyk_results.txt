@@ -4,7 +4,7 @@ Failed to run the process ...
     "isPrivate": true,
     "isLicensesEnabled": false,
     "ignoreSettings": null,
-    "org": "yi2020",
+    "org": "ryder.d",
     "projectId": "",
     "policy": ""
   },
@@ -15,7 +15,7 @@ Failed to run the process ...
   "ignoreSettings": null,
   "targetFile": "main.tf",
   "projectName": "project",
-  "org": "yi2020",
+  "org": "ryder.d",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
@@ -50,6 +50,7 @@ Failed to run the process ...
       },
       "lineNumber": 5,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-416",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_docdb_cluster[docdb]"
@@ -81,6 +82,7 @@ Failed to run the process ...
       },
       "lineNumber": 5,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-109",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_docdb_cluster[docdb]",
@@ -112,6 +114,7 @@ Failed to run the process ...
       },
       "lineNumber": 5,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-141",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_docdb_cluster[docdb]",

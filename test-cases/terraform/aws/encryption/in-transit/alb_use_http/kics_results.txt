@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+Scanning with Keeping Infrastructure as Code Secure v1.4.9
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 851
 Queries failed to execute: 0
 
 ------------------------------------
@@ -31,63 +31,63 @@ Resource Not Using Tags, Severity: INFO, Results: 9
 Description: AWS services resource tags are an essential part of managing components
 Platform: Terraform
 
-	[1]: /src/main.tf:56
-
-		055: 
-		056: resource "aws_lb_target_group" "test" {
-		057:   port = 80
-
-
-	[2]: /src/main.tf:63
-
-		062: 
-		063: resource "aws_default_security_group" "dsg" {
-		064:   vpc_id = aws_vpc.vpc1.id
-
-
-	[3]: /src/main.tf:82
-
-		081: 
-		082: resource "aws_instance" "inst1" {
-		083:   vpc_security_group_ids = [aws_default_security_group.dsg.id]
-
-
-	[4]: /src/main.tf:95
-
-		094: 
-		095: resource "aws_instance" "inst2" {
-		096:   vpc_security_group_ids = [aws_default_security_group.dsg.id]
-
-
-	[5]: /src/main.tf:108
+	[1]: ../../src/main.tf:108
 
 		107: 
 		108: resource "aws_instance" "inst3" {
 		109:   vpc_security_group_ids = [aws_default_security_group.dsg.id]
 
 
-	[6]: /src/main.tf:26
+	[2]: ../../src/main.tf:63
+
+		062: 
+		063: resource "aws_default_security_group" "dsg" {
+		064:   vpc_id = aws_vpc.vpc1.id
+
+
+	[3]: ../../src/main.tf:56
+
+		055: 
+		056: resource "aws_lb_target_group" "test" {
+		057:   port = 80
+
+
+	[4]: ../../src/main.tf:26
 
 		025: 
 		026: resource "aws_vpc" "vpc1" {
 		027:   cidr_block = "10.10.0.0/16"
 
 
-	[7]: /src/main.tf:49
+	[5]: ../../src/main.tf:49
 
 		048: 
 		049: resource "aws_lb" "test" {
 		050:   name = "test123"
 
 
-	[8]: /src/main.tf:34
+	[6]: ../../src/main.tf:34
 
 		033:   availability_zone_id = data.aws_availability_zones.available.zone_ids[0]
 		034:   tags = {
 		035:     Name = "subnet1"
 
 
-	[9]: /src/main.tf:44
+	[7]: ../../src/main.tf:82
+
+		081: 
+		082: resource "aws_instance" "inst1" {
+		083:   vpc_security_group_ids = [aws_default_security_group.dsg.id]
+
+
+	[8]: ../../src/main.tf:95
+
+		094: 
+		095: resource "aws_instance" "inst2" {
+		096:   vpc_security_group_ids = [aws_default_security_group.dsg.id]
+
+
+	[9]: ../../src/main.tf:44
 
 		043: 
 		044:   tags = {
@@ -98,57 +98,115 @@ EC2 Not EBS Optimized, Severity: INFO, Results: 3
 Description: It's considered a best practice for an EC2 instance to use an EBS optimized instance. This provides the best performance for your EBS volumes by minimizing contention between Amazon EBS I/O and other traffic from your instance
 Platform: Terraform
 
-	[1]: /src/main.tf:108
+	[1]: ../../src/main.tf:95
 
-		107: 
-		108: resource "aws_instance" "inst3" {
-		109:   vpc_security_group_ids = [aws_default_security_group.dsg.id]
+		094: 
+		095: resource "aws_instance" "inst2" {
+		096:   vpc_security_group_ids = [aws_default_security_group.dsg.id]
 
 
-	[2]: /src/main.tf:82
+	[2]: ../../src/main.tf:82
 
 		081: 
 		082: resource "aws_instance" "inst1" {
 		083:   vpc_security_group_ids = [aws_default_security_group.dsg.id]
 
 
-	[3]: /src/main.tf:95
+	[3]: ../../src/main.tf:108
 
-		094: 
-		095: resource "aws_instance" "inst2" {
-		096:   vpc_security_group_ids = [aws_default_security_group.dsg.id]
+		107: 
+		108: resource "aws_instance" "inst3" {
+		109:   vpc_security_group_ids = [aws_default_security_group.dsg.id]
 
 
 EC2 Instance Monitoring Disabled, Severity: INFO, Results: 3
 Description: EC2 Instance should have detailed monitoring enabled. With detailed monitoring enabled data is available in 1-minute periods
 Platform: Terraform
 
-	[1]: /src/main.tf:82
-
-		081: 
-		082: resource "aws_instance" "inst1" {
-		083:   vpc_security_group_ids = [aws_default_security_group.dsg.id]
-
-
-	[2]: /src/main.tf:95
+	[1]: ../../src/main.tf:95
 
 		094: 
 		095: resource "aws_instance" "inst2" {
 		096:   vpc_security_group_ids = [aws_default_security_group.dsg.id]
 
 
-	[3]: /src/main.tf:108
+	[2]: ../../src/main.tf:108
 
 		107: 
 		108: resource "aws_instance" "inst3" {
 		109:   vpc_security_group_ids = [aws_default_security_group.dsg.id]
 
 
+	[3]: ../../src/main.tf:82
+
+		081: 
+		082: resource "aws_instance" "inst1" {
+		083:   vpc_security_group_ids = [aws_default_security_group.dsg.id]
+
+
+Shield Advanced Not In Use, Severity: LOW, Results: 1
+Description: AWS Shield Advanced should be used for Amazon Route 53 hosted zone, AWS Global Accelerator accelerator, Elastic IP Address, Elastic Load Balancing, and Amazon CloudFront Distribution to protect these resources against robust DDoS attacks
+Platform: Terraform
+
+	[1]: ../../src/main.tf:49
+
+		048: 
+		049: resource "aws_lb" "test" {
+		050:   name = "test123"
+
+
+EC2 Instance Using Default Security Group, Severity: LOW, Results: 3
+Description: EC2 instances should not use default security group(s)
+Platform: Terraform
+
+	[1]: ../../src/main.tf:96
+
+		095: resource "aws_instance" "inst2" {
+		096:   vpc_security_group_ids = [aws_default_security_group.dsg.id]
+		097:   subnet_id = aws_subnet.subnet1.id
+
+
+	[2]: ../../src/main.tf:83
+
+		082: resource "aws_instance" "inst1" {
+		083:   vpc_security_group_ids = [aws_default_security_group.dsg.id]
+		084:   subnet_id = aws_subnet.subnet1.id
+
+
+	[3]: ../../src/main.tf:109
+
+		108: resource "aws_instance" "inst3" {
+		109:   vpc_security_group_ids = [aws_default_security_group.dsg.id]
+		110:   subnet_id = aws_subnet.subnet1.id
+
+
+ALB Deletion Protection Disabled, Severity: LOW, Results: 1
+Description: Application Load Balancer should have deletion protection enabled
+Platform: Terraform
+
+	[1]: ../../src/main.tf:49
+
+		048: 
+		049: resource "aws_lb" "test" {
+		050:   name = "test123"
+
+
+VPC Without Network Firewall, Severity: MEDIUM, Results: 1
+Description: VPC should have a Network Firewall associated
+Platform: Terraform
+
+	[1]: ../../src/main.tf:26
+
+		025: 
+		026: resource "aws_vpc" "vpc1" {
+		027:   cidr_block = "10.10.0.0/16"
+
+
 VPC FlowLogs Disabled, Severity: MEDIUM, Results: 1
 Description: VPC hasn't got any FlowLog associated
 Platform: Terraform
 
-	[1]: /src/main.tf:26
+	[1]: ../../src/main.tf:26
 
 		025: 
 		026: resource "aws_vpc" "vpc1" {
@@ -159,7 +217,7 @@ ALB Not Dropping Invalid Headers, Severity: MEDIUM, Results: 1
 Description: It's considered a best practice when using Application Load Balancers to drop invalid header fields
 Platform: Terraform
 
-	[1]: /src/main.tf:49
+	[1]: ../../src/main.tf:49
 
 		048: 
 		049: resource "aws_lb" "test" {
@@ -170,32 +228,32 @@ EC2 Instance Has Public IP, Severity: HIGH, Results: 3
 Description: EC2 Instance should not have a public IP address.
 Platform: Terraform
 
-	[1]: /src/main.tf:82
-
-		081: 
-		082: resource "aws_instance" "inst1" {
-		083:   vpc_security_group_ids = [aws_default_security_group.dsg.id]
-
-
-	[2]: /src/main.tf:95
-
-		094: 
-		095: resource "aws_instance" "inst2" {
-		096:   vpc_security_group_ids = [aws_default_security_group.dsg.id]
-
-
-	[3]: /src/main.tf:108
+	[1]: ../../src/main.tf:108
 
 		107: 
 		108: resource "aws_instance" "inst3" {
 		109:   vpc_security_group_ids = [aws_default_security_group.dsg.id]
 
 
+	[2]: ../../src/main.tf:95
+
+		094: 
+		095: resource "aws_instance" "inst2" {
+		096:   vpc_security_group_ids = [aws_default_security_group.dsg.id]
+
+
+	[3]: ../../src/main.tf:82
+
+		081: 
+		082: resource "aws_instance" "inst1" {
+		083:   vpc_security_group_ids = [aws_default_security_group.dsg.id]
+
+
 ALB Listening on HTTP, Severity: HIGH, Results: 1
 Description: AWS Application Load Balancer (alb) should not listen on HTTP
 Platform: Terraform
 
-	[1]: /src/main.tf:70
+	[1]: ../../src/main.tf:70
 
 		069:   port = 80
 		070:   default_action {
@@ -205,9 +263,9 @@ Platform: Terraform
 
 Results Summary:
 HIGH: 4
-MEDIUM: 2
-LOW: 0
+MEDIUM: 3
+LOW: 5
 INFO: 15
-TOTAL: 21
+TOTAL: 27
 
-Scan duration: 4.907554689s
+Scan duration: 8.949927546s

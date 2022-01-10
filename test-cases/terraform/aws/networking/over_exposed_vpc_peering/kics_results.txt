@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+Scanning with Keeping Infrastructure as Code Secure v1.4.9
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 851
 Queries failed to execute: 0
 
 ------------------------------------
@@ -31,93 +31,122 @@ Resource Not Using Tags, Severity: INFO, Results: 9
 Description: AWS services resource tags are an essential part of managing components
 Platform: Terraform
 
-	[1]: /src/main.tf:20
-
-		019: 
-		020: resource "aws_vpc" "vpc1" {
-		021:   cidr_block = "10.5.0.0/16"
-
-
-	[2]: /src/main.tf:35
-
-		034: 
-		035: resource "aws_vpc" "vpc2" {
-		036:   cidr_block = "10.7.0.0/16"
-
-
-	[3]: /src/main.tf:30
-
-		029: 
-		030: resource "aws_subnet" "subnet1_2" {
-		031:   vpc_id = aws_vpc.vpc1.id
-
-
-	[4]: /src/main.tf:40
-
-		039: 
-		040: resource "aws_subnet" "subnet2_1" {
-		041:   vpc_id = aws_vpc.vpc2.id
-
-
-	[5]: /src/main.tf:45
-
-		044: 
-		045: resource "aws_subnet" "subnet2_2" {
-		046:   vpc_id = aws_vpc.vpc2.id
-
-
-	[6]: /src/main.tf:25
+	[1]: ../../src/main.tf:25
 
 		024: 
 		025: resource "aws_subnet" "subnet1_1" {
 		026:   vpc_id = aws_vpc.vpc1.id
 
 
-	[7]: /src/main.tf:92
+	[2]: ../../src/main.tf:30
+
+		029: 
+		030: resource "aws_subnet" "subnet1_2" {
+		031:   vpc_id = aws_vpc.vpc1.id
+
+
+	[3]: ../../src/main.tf:92
 
 		091: ##########################
 		092: resource "aws_vpc_peering_connection" "this" {
 		093:   provider      = aws.this
 
 
-	[8]: /src/main.tf:103
-
-		102: ######################################
-		103: resource "aws_vpc_peering_connection_accepter" "peer_accepter" {
-		104:   provider                  = aws.peer
-
-
-	[9]: /src/main.tf:162
+	[4]: ../../src/main.tf:162
 
 		161: 
 		162: resource "aws_route_table" "subnet2_1" {
 		163:   vpc_id = aws_vpc.vpc2.id
 
 
-VPC FlowLogs Disabled, Severity: MEDIUM, Results: 2
-Description: VPC hasn't got any FlowLog associated
-Platform: Terraform
+	[5]: ../../src/main.tf:40
 
-	[1]: /src/main.tf:20
+		039: 
+		040: resource "aws_subnet" "subnet2_1" {
+		041:   vpc_id = aws_vpc.vpc2.id
+
+
+	[6]: ../../src/main.tf:45
+
+		044: 
+		045: resource "aws_subnet" "subnet2_2" {
+		046:   vpc_id = aws_vpc.vpc2.id
+
+
+	[7]: ../../src/main.tf:20
 
 		019: 
 		020: resource "aws_vpc" "vpc1" {
 		021:   cidr_block = "10.5.0.0/16"
 
 
-	[2]: /src/main.tf:35
+	[8]: ../../src/main.tf:35
 
 		034: 
 		035: resource "aws_vpc" "vpc2" {
 		036:   cidr_block = "10.7.0.0/16"
 
 
+	[9]: ../../src/main.tf:103
+
+		102: ######################################
+		103: resource "aws_vpc_peering_connection_accepter" "peer_accepter" {
+		104:   provider                  = aws.peer
+
+
+VPC Without Network Firewall, Severity: MEDIUM, Results: 2
+Description: VPC should have a Network Firewall associated
+Platform: Terraform
+
+	[1]: ../../src/main.tf:20
+
+		019: 
+		020: resource "aws_vpc" "vpc1" {
+		021:   cidr_block = "10.5.0.0/16"
+
+
+	[2]: ../../src/main.tf:35
+
+		034: 
+		035: resource "aws_vpc" "vpc2" {
+		036:   cidr_block = "10.7.0.0/16"
+
+
+VPC FlowLogs Disabled, Severity: MEDIUM, Results: 2
+Description: VPC hasn't got any FlowLog associated
+Platform: Terraform
+
+	[1]: ../../src/main.tf:20
+
+		019: 
+		020: resource "aws_vpc" "vpc1" {
+		021:   cidr_block = "10.5.0.0/16"
+
+
+	[2]: ../../src/main.tf:35
+
+		034: 
+		035: resource "aws_vpc" "vpc2" {
+		036:   cidr_block = "10.7.0.0/16"
+
+
+VPC Peering Route Table with Unrestricted CIDR, Severity: HIGH, Results: 1
+Description: VPC Peering Route Table should restrict CIDR
+Platform: Terraform
+
+	[1]: ../../src/main.tf:164
+
+		163:   vpc_id = aws_vpc.vpc2.id
+		164:   route {
+		165:     cidr_block = "0.0.0.0/0"
+
+
 
 Results Summary:
-HIGH: 0
-MEDIUM: 2
+HIGH: 1
+MEDIUM: 4
 LOW: 0
 INFO: 9
-TOTAL: 11
+TOTAL: 14
 
-Scan duration: 7.313931904s
+Scan duration: 8.900364711s

@@ -4,7 +4,7 @@ Failed to run the process ...
     "isPrivate": true,
     "isLicensesEnabled": false,
     "ignoreSettings": null,
-    "org": "yi2020",
+    "org": "ryder.d",
     "projectId": "",
     "policy": ""
   },
@@ -15,7 +15,7 @@ Failed to run the process ...
   "ignoreSettings": null,
   "targetFile": "main.tf",
   "projectName": "project",
-  "org": "yi2020",
+  "org": "ryder.d",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
@@ -49,6 +49,7 @@ Failed to run the process ...
       },
       "lineNumber": 5,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-67",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_elasticsearch_domain[example]",
@@ -83,6 +84,7 @@ Failed to run the process ...
       },
       "lineNumber": 5,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-68",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_elasticsearch_domain[example]",
@@ -115,6 +117,7 @@ Failed to run the process ...
       },
       "lineNumber": 5,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-66",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_elasticsearch_domain[example]",
@@ -146,6 +149,7 @@ Failed to run the process ...
       },
       "lineNumber": 5,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-140",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_elasticsearch_domain[example]"
@@ -177,6 +181,7 @@ Failed to run the process ...
       },
       "lineNumber": 5,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-64",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_elasticsearch_domain[example]",

@@ -4,7 +4,7 @@ Failed to run the process ...
     "isPrivate": true,
     "isLicensesEnabled": false,
     "ignoreSettings": null,
-    "org": "yi2020",
+    "org": "ryder.d",
     "projectId": "",
     "policy": ""
   },
@@ -15,7 +15,7 @@ Failed to run the process ...
   "ignoreSettings": null,
   "targetFile": "main.tf",
   "projectName": "project",
-  "org": "yi2020",
+  "org": "ryder.d",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
@@ -50,10 +50,44 @@ Failed to run the process ...
       },
       "lineNumber": 23,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-420",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_sagemaker_notebook_instance[ni]",
         "kms_key_id"
+      ]
+    },
+    {
+      "severity": "medium",
+      "resolve": "Set `direct_internet_access` attribute to `Disabled`. Note you will have to configure required VPC configuration to establish any network connectivity to the Internet",
+      "impact": "The compromised instance will be able to exfiltrate data without any restrictions.",
+      "msg": "resource.aws_sagemaker_notebook_instance[ni].direct_internet_access",
+      "remediation": {
+        "cloudformation": "Set `Properties.DirectInternetAccess` attribute to `Disabled`. Note you will have to configure required VPC configuration to establish any network connectivity to the Internet",
+        "terraform": "Set `direct_internet_access` attribute to `Disabled`. Note you will have to configure required VPC configuration to establish any network connectivity to the Internet"
+      },
+      "subType": "Sagemaker",
+      "issue": "Direct internet access enabled for SageMaker Notebook Instance",
+      "publicId": "SNYK-CC-AWS-705",
+      "title": "Direct internet access enabled for SageMaker Notebook Instance",
+      "references": [
+        "https://docs.aws.amazon.com/sagemaker/latest/dg/infrastructure-connect-to-resources.html",
+        "https://aws.amazon.com/blogs/machine-learning/understanding-amazon-sagemaker-notebook-instance-networking-configurations-and-advanced-routing-options/"
+      ],
+      "id": "SNYK-CC-AWS-705",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Direct internet access enabled for SageMaker Notebook Instance",
+        "impact": "The compromised instance will be able to exfiltrate data without any restrictions.",
+        "resolve": "Set `direct_internet_access` attribute to `Disabled`. Note you will have to configure required VPC configuration to establish any network connectivity to the Internet"
+      },
+      "lineNumber": 23,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-705",
+      "isGeneratedByCustomRule": false,
+      "path": [
+        "resource",
+        "aws_sagemaker_notebook_instance[ni]",
+        "direct_internet_access"
       ]
     }
   ]

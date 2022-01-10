@@ -4,7 +4,7 @@ Failed to run the process ...
     "isPrivate": true,
     "isLicensesEnabled": false,
     "ignoreSettings": null,
-    "org": "yi2020",
+    "org": "ryder.d",
     "projectId": "",
     "policy": ""
   },
@@ -15,7 +15,7 @@ Failed to run the process ...
   "ignoreSettings": null,
   "targetFile": "main.tf",
   "projectName": "project",
-  "org": "yi2020",
+  "org": "ryder.d",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
@@ -51,6 +51,7 @@ Failed to run the process ...
       },
       "lineNumber": 44,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-129",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_api_gateway_stage[api_gw_stage]",
@@ -83,6 +84,7 @@ Failed to run the process ...
       },
       "lineNumber": 26,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-99",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_api_gateway_method[api_gw_method]",
@@ -114,6 +116,7 @@ Failed to run the process ...
       },
       "lineNumber": 44,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-138",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_api_gateway_stage[api_gw_stage]",
@@ -122,13 +125,13 @@ Failed to run the process ...
     },
     {
       "severity": "medium",
-      "resolve": "Set `stage_description.cache_data_encrypted` attribute to `true`",
+      "resolve": "Set `settings.cache_data_encrypted` attribute to `true`",
       "id": "SNYK-CC-AWS-419",
       "impact": "If someone gains unauthorized access to the cache storage location the contents will be readable which may disclose sensitive information",
       "msg": "resource.aws_api_gateway_method_settings[api_gw_method_sett].settings.cache_data_encrypted",
       "remediation": {
         "cloudformation": "Set `Properties.StageDescription.CacheDataEncrypted` attribute to `true`",
-        "terraform": "Set `stage_description.cache_data_encrypted` attribute to `true`"
+        "terraform": "Set `settings.cache_data_encrypted` attribute to `true`"
       },
       "subType": "API Gateway (REST APIs)",
       "issue": "API gateway cache is not encrypted",
@@ -142,10 +145,11 @@ Failed to run the process ...
       "iacDescription": {
         "issue": "API gateway cache is not encrypted",
         "impact": "If someone gains unauthorized access to the cache storage location the contents will be readable which may disclose sensitive information",
-        "resolve": "Set `stage_description.cache_data_encrypted` attribute to `true`"
+        "resolve": "Set `settings.cache_data_encrypted` attribute to `true`"
       },
       "lineNumber": 58,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-419",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_api_gateway_method_settings[api_gw_method_sett]",

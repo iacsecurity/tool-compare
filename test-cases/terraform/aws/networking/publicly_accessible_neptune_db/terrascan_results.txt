@@ -2,6 +2,15 @@
 
 Violation Details -
     
+	Description    :	Ensure no security groups is wide open to public, that is, allows traffic from 0.0.0.0/0 to ALL ports and protocols
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	18
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
 	Description    :	Ensure AWS Neptune clusters have logging enabled.
 	File           :	main.tf
 	Module Name    :	root
@@ -20,21 +29,12 @@ Violation Details -
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	Ensure no security groups is wide open to public, that is, allows traffic from 0.0.0.0/0 to ALL ports and protocols
-	File           :	main.tf
-	Module Name    :	root
-	Plan Root      :	./
-	Line           :	18
-	Severity       :	HIGH
-	
-	-----------------------------------------------------------------------
-	
 
 Scan Summary -
 
 	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-08-18 17:43:31.302166129 +0000 UTC
+	Scanned At          :	2022-01-05 16:27:20.98665525 +0000 UTC
 	Policies Validated  :	141
 	Violated Policies   :	3
 	Low                 :	1

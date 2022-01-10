@@ -1,6 +1,9 @@
 
 WARNINGs found:
 Rule: Ensure Azure Defender for Azure SQL Database servers is enabled
+Description: Cloudrail will review the Security Center subscription pricing configuration in your environment. If the tier is not set to “Standard” for Sql Servers resources, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.microsoft.com/en-us/azure/security-center/enable-azure-defender in order to enable Azure Defender for Sql Servers.
+Remediation Steps - Terraform: For the azurerm_security_center_subscription_pricing resource, set the tier argument to “Standard” and ensure the resource_type argument contains the value “SqlServers”.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [azurerm_security_center_subscription_pricing.example] (main.tf:10)

@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+Scanning with Keeping Infrastructure as Code Secure v1.4.9
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 851
 Queries failed to execute: 0
 
 ------------------------------------
@@ -31,32 +31,64 @@ Resource Not Using Tags, Severity: INFO, Results: 3
 Description: AWS services resource tags are an essential part of managing components
 Platform: Terraform
 
-	[1]: /src/main.tf:24
-
-		023: 
-		024: resource "aws_route_table" "default-route-table" {
-		025:   vpc_id = aws_default_vpc.default.id
-
-
-	[2]: /src/main.tf:49
+	[1]: ../../src/main.tf:49
 
 		048: 
 		049: resource "aws_instance" "t2-instance" {
 		050:   ami = data.aws_ami.ubuntu.id
 
 
-	[3]: /src/main.tf:18
+	[2]: ../../src/main.tf:18
 
 		017: 
 		018: resource "aws_subnet" "default-subnet" {
 		019:   vpc_id     = aws_default_vpc.default.id
 
 
+	[3]: ../../src/main.tf:24
+
+		023: 
+		024: resource "aws_route_table" "default-route-table" {
+		025:   vpc_id = aws_default_vpc.default.id
+
+
+Name Is Not Snake Case, Severity: INFO, Results: 4
+Description: All names should follow snake case pattern.
+Platform: Terraform
+
+	[1]: ../../src/main.tf:24
+
+		023: 
+		024: resource "aws_route_table" "default-route-table" {
+		025:   vpc_id = aws_default_vpc.default.id
+
+
+	[2]: ../../src/main.tf:18
+
+		017: 
+		018: resource "aws_subnet" "default-subnet" {
+		019:   vpc_id     = aws_default_vpc.default.id
+
+
+	[3]: ../../src/main.tf:49
+
+		048: 
+		049: resource "aws_instance" "t2-instance" {
+		050:   ami = data.aws_ami.ubuntu.id
+
+
+	[4]: ../../src/main.tf:28
+
+		027: 
+		028: resource "aws_route_table_association" "default-route-table-assoc" {
+		029:   subnet_id      = aws_subnet.default-subnet.id
+
+
 EC2 Not EBS Optimized, Severity: INFO, Results: 1
 Description: It's considered a best practice for an EC2 instance to use an EBS optimized instance. This provides the best performance for your EBS volumes by minimizing contention between Amazon EBS I/O and other traffic from your instance
 Platform: Terraform
 
-	[1]: /src/main.tf:49
+	[1]: ../../src/main.tf:49
 
 		048: 
 		049: resource "aws_instance" "t2-instance" {
@@ -67,7 +99,7 @@ EC2 Instance Monitoring Disabled, Severity: INFO, Results: 1
 Description: EC2 Instance should have detailed monitoring enabled. With detailed monitoring enabled data is available in 1-minute periods
 Platform: Terraform
 
-	[1]: /src/main.tf:49
+	[1]: ../../src/main.tf:49
 
 		048: 
 		049: resource "aws_instance" "t2-instance" {
@@ -78,7 +110,7 @@ Instance With No VPC, Severity: MEDIUM, Results: 1
 Description: Instance should be configured in VPC (Virtual Private Cloud)
 Platform: Terraform
 
-	[1]: /src/main.tf:49
+	[1]: ../../src/main.tf:49
 
 		048: 
 		049: resource "aws_instance" "t2-instance" {
@@ -89,7 +121,7 @@ Default VPC Exists, Severity: MEDIUM, Results: 1
 Description: It isn't recommended to use resources in default VPC
 Platform: Terraform
 
-	[1]: /src/main.tf:12
+	[1]: ../../src/main.tf:12
 
 		011: 
 		012: resource "aws_default_vpc" "default" {
@@ -100,7 +132,7 @@ EC2 Instance Has Public IP, Severity: HIGH, Results: 1
 Description: EC2 Instance should not have a public IP address.
 Platform: Terraform
 
-	[1]: /src/main.tf:49
+	[1]: ../../src/main.tf:49
 
 		048: 
 		049: resource "aws_instance" "t2-instance" {
@@ -112,7 +144,7 @@ Results Summary:
 HIGH: 1
 MEDIUM: 2
 LOW: 0
-INFO: 5
-TOTAL: 8
+INFO: 9
+TOTAL: 12
 
-Scan duration: 4.602470761s
+Scan duration: 10.110206172s

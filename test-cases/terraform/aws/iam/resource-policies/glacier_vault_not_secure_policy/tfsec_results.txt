@@ -1,7 +1,7 @@
 
   Result 1
 
-  [aws-sns-enable-topic-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_sns_topic.aws_sns_topic' defines an unencrypted SNS topic.
+  [aws-sns-enable-topic-encryption][HIGH] Resource 'aws_sns_topic.aws_sns_topic' defines an unencrypted SNS topic.
   /src/main.tf:5-7
 
 
@@ -20,16 +20,16 @@
   Resolution: Turn on SNS Topic encryption
 
   More Info:
-  - https://tfsec.dev/docs/aws/sns/enable-topic-encryption#aws/sns 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/sns/enable-topic-encryption 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sns_topic#example-with-server-side-encryption-sse 
   - https://docs.aws.amazon.com/sns/latest/dg/sns-server-side-encryption.html 
 
   times
   ------------------------------------------
-  disk i/o             62.4385ms
-  parsing HCL          496.583µs
-  evaluating values    2.055583ms
-  running checks       17.006291ms
+  disk i/o             24.984791ms
+  parsing HCL          613.916µs
+  evaluating values    2.0665ms
+  running checks       17.666833ms
 
   counts
   ------------------------------------------

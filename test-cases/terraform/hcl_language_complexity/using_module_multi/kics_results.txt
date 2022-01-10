@@ -16,23 +16,70 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+Scanning with Keeping Infrastructure as Code Secure v1.4.9
 
 
 
 Files scanned: 2
 Parsed files: 2
-Queries loaded: 575
+Queries loaded: 851
 Queries failed to execute: 0
 
 ------------------------------------
 
+Variable Without Description, Severity: INFO, Results: 3
+Description: All variables should contain a valid description.
+Platform: Terraform
+
+	[1]: ../../src/mymodule/user.tf:1
+
+		001: variable "allow_password" {
+		002:   type = bool
+		003: }
+
+
+	[2]: ../../src/mymodule/user.tf:9
+
+		008: 
+		009: variable "pgp_key" {
+		010:   type = string
+
+
+	[3]: ../../src/mymodule/user.tf:5
+
+		004: 
+		005: variable "user_name" {
+		006:   type = string
+
+
+Resource Not Using Tags, Severity: INFO, Results: 1
+Description: AWS services resource tags are an essential part of managing components
+Platform: Terraform
+
+	[1]: ../../src/mymodule/user.tf:13
+
+		012: 
+		013: resource "aws_iam_user" "user" {
+		014:   name          = var.user_name
+
+
+IAM User With Access To Console, Severity: MEDIUM, Results: 1
+Description: AWS IAM Users should not have access to console
+Platform: Terraform
+
+	[1]: ../../src/mymodule/user.tf:21
+
+		020:   count = var.allow_password ? 1 : 0
+		021:   user    = aws_iam_user.user.name
+		022:   pgp_key = var.pgp_key
+
+
 
 Results Summary:
 HIGH: 0
-MEDIUM: 0
+MEDIUM: 1
 LOW: 0
-INFO: 0
-TOTAL: 0
+INFO: 4
+TOTAL: 5
 
-Scan duration: 23.404010219s
+Scan duration: 9.326136379s

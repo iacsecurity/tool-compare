@@ -1,24 +1,11 @@
-
-
-       _               _              
-   ___| |__   ___  ___| | _______   __
-  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
- | (__| | | |  __/ (__|   < (_) \ V / 
-  \___|_| |_|\___|\___|_|\_\___/ \_/  
-                                      
-By bridgecrew.io | version: 2.0.358 
-Update available 2.0.358 -> 2.0.359
-Run pip3 install -U checkov to update 
-
-
 terraform scan results:
 
 Passed checks: 1, Failed checks: 2, Skipped checks: 0
 
-Check: CKV_AWS_51: "Ensure ECR Image Tags are immutable"
+Check: CKV_AWS_136: "Ensure that ECR repositories are encrypted using KMS"
 	FAILED for resource: aws_ecr_repository.foo
 	File: /main.tf:1-8
-	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_24
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-ecr-repositories-are-encrypted
 
 		1 | resource "aws_ecr_repository" "foo" {
 		2 |   name                 = "bar"
@@ -30,10 +17,10 @@ Check: CKV_AWS_51: "Ensure ECR Image Tags are immutable"
 		8 | }
 
 
-Check: CKV_AWS_136: "Ensure that ECR repositories are encrypted using KMS"
+Check: CKV_AWS_51: "Ensure ECR Image Tags are immutable"
 	FAILED for resource: aws_ecr_repository.foo
 	File: /main.tf:1-8
-	Guide: https://docs.bridgecrew.io/docs/ensure-that-ecr-repositories-are-encrypted
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_24
 
 		1 | resource "aws_ecr_repository" "foo" {
 		2 |   name                 = "bar"

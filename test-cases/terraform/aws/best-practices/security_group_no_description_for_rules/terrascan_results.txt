@@ -2,12 +2,12 @@
 
 Violation Details -
     
-	Description    :	Ensure that detailed monitoring is enabled for EC2 instances.
+	Description    :	Ensure Security Groups Unrestricted Specific Ports https (TCP,443) is not exposed to private hosts more than 32
 	File           :	main.tf
 	Module Name    :	root
 	Plan Root      :	./
-	Line           :	61
-	Severity       :	HIGH
+	Line           :	15
+	Severity       :	LOW
 	
 	-----------------------------------------------------------------------
 	
@@ -20,12 +20,12 @@ Violation Details -
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	Ensure Security Groups Unrestricted Specific Ports https (TCP,443) is not exposed to private hosts more than 32
+	Description    :	Ensure that detailed monitoring is enabled for EC2 instances.
 	File           :	main.tf
 	Module Name    :	root
 	Plan Root      :	./
-	Line           :	15
-	Severity       :	LOW
+	Line           :	61
+	Severity       :	HIGH
 	
 	-----------------------------------------------------------------------
 	
@@ -43,7 +43,7 @@ Scan Summary -
 
 	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-08-18 18:01:11.939803926 +0000 UTC
+	Scanned At          :	2022-01-05 16:47:34.918103256 +0000 UTC
 	Policies Validated  :	144
 	Violated Policies   :	4
 	Low                 :	2

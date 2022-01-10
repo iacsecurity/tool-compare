@@ -2,43 +2,7 @@
 
 Violation Details -
     
-	Description    :	Ensure that detailed monitoring is enabled for EC2 instances.
-	File           :	main.tf
-	Module Name    :	root
-	Plan Root      :	./
-	Line           :	45
-	Severity       :	HIGH
-	
-	-----------------------------------------------------------------------
-	
-	Description    :	Ensure that detailed monitoring is enabled for EC2 instances.
-	File           :	main.tf
-	Module Name    :	root
-	Plan Root      :	./
-	Line           :	80
-	Severity       :	HIGH
-	
-	-----------------------------------------------------------------------
-	
-	Description    :	Ensure that detailed monitoring is enabled for EC2 instances.
-	File           :	main.tf
-	Module Name    :	root
-	Plan Root      :	./
-	Line           :	93
-	Severity       :	HIGH
-	
-	-----------------------------------------------------------------------
-	
-	Description    :	Ensure that detailed monitoring is enabled for EC2 instances.
-	File           :	main.tf
-	Module Name    :	root
-	Plan Root      :	./
-	Line           :	98
-	Severity       :	HIGH
-	
-	-----------------------------------------------------------------------
-	
-	Description    :	Ensure that your AWS application is not deployed within the default Virtual Private Cloud in order to follow security best practices
+	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
 	File           :	main.tf
 	Module Name    :	root
 	Plan Root      :	./
@@ -47,11 +11,38 @@ Violation Details -
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	Ensure that your AWS application is not deployed within the default Virtual Private Cloud in order to follow security best practices
+	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	93
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	98
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
 	File           :	main.tf
 	Module Name    :	root
 	Plan Root      :	./
 	Line           :	80
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that your AWS application is not deployed within the default Virtual Private Cloud in order to follow security best practices
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	45
 	Severity       :	MEDIUM
 	
 	-----------------------------------------------------------------------
@@ -74,16 +65,7 @@ Violation Details -
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
-	File           :	main.tf
-	Module Name    :	root
-	Plan Root      :	./
-	Line           :	45
-	Severity       :	MEDIUM
-	
-	-----------------------------------------------------------------------
-	
-	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
+	Description    :	Ensure that your AWS application is not deployed within the default Virtual Private Cloud in order to follow security best practices
 	File           :	main.tf
 	Module Name    :	root
 	Plan Root      :	./
@@ -92,21 +74,39 @@ Violation Details -
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
+	Description    :	Ensure that detailed monitoring is enabled for EC2 instances.
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	45
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that detailed monitoring is enabled for EC2 instances.
 	File           :	main.tf
 	Module Name    :	root
 	Plan Root      :	./
 	Line           :	93
-	Severity       :	MEDIUM
+	Severity       :	HIGH
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
+	Description    :	Ensure that detailed monitoring is enabled for EC2 instances.
 	File           :	main.tf
 	Module Name    :	root
 	Plan Root      :	./
 	Line           :	98
-	Severity       :	MEDIUM
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that detailed monitoring is enabled for EC2 instances.
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	80
+	Severity       :	HIGH
 	
 	-----------------------------------------------------------------------
 	
@@ -124,7 +124,7 @@ Scan Summary -
 
 	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-08-18 18:07:00.934975337 +0000 UTC
+	Scanned At          :	2022-01-05 16:52:50.894315166 +0000 UTC
 	Policies Validated  :	7
 	Violated Policies   :	13
 	Low                 :	0

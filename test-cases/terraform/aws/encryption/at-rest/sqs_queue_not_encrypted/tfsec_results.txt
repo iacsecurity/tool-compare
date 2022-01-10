@@ -1,7 +1,7 @@
 
   Result 1
 
-  [aws-sqs-enable-queue-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_sqs_queue.cloudrail' defines an unencrypted SQS queue.
+  [aws-sqs-enable-queue-encryption][HIGH] Resource 'aws_sqs_queue.cloudrail' defines an unencrypted SQS queue.
   /src/main.tf:5-7
 
 
@@ -18,16 +18,16 @@
   Resolution: Turn on SQS Queue encryption
 
   More Info:
-  - https://tfsec.dev/docs/aws/sqs/enable-queue-encryption#aws/sqs 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/sqs/enable-queue-encryption 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sqs_queue#server-side-encryption-sse 
   - https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-server-side-encryption.html 
 
   times
   ------------------------------------------
-  disk i/o             48.687875ms
-  parsing HCL          503.875µs
-  evaluating values    1.863959ms
-  running checks       18.54925ms
+  disk i/o             25.524458ms
+  parsing HCL          519.958µs
+  evaluating values    1.677291ms
+  running checks       16.444416ms
 
   counts
   ------------------------------------------

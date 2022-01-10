@@ -2,25 +2,7 @@
 
 Violation Details -
     
-	Description    :	Ensure VPC flow logging is enabled in all VPCs
-	File           :	main.tf
-	Module Name    :	root
-	Plan Root      :	./
-	Line           :	14
-	Severity       :	LOW
-	
-	-----------------------------------------------------------------------
-	
 	Description    :	Ensure that your AWS application is not deployed within the default Virtual Private Cloud in order to follow security best practices
-	File           :	main.tf
-	Module Name    :	root
-	Plan Root      :	./
-	Line           :	31
-	Severity       :	MEDIUM
-	
-	-----------------------------------------------------------------------
-	
-	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
 	File           :	main.tf
 	Module Name    :	root
 	Plan Root      :	./
@@ -38,12 +20,30 @@ Violation Details -
 	
 	-----------------------------------------------------------------------
 	
+	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	31
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure VPC flow logging is enabled in all VPCs
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	14
+	Severity       :	LOW
+	
+	-----------------------------------------------------------------------
+	
 
 Scan Summary -
 
 	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-08-18 17:41:18.838704971 +0000 UTC
+	Scanned At          :	2022-01-05 16:24:59.257712879 +0000 UTC
 	Policies Validated  :	7
 	Violated Policies   :	4
 	Low                 :	1

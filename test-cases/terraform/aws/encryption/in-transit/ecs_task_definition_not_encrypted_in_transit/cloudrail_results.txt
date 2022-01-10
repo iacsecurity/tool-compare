@@ -1,6 +1,51 @@
 
 WARNINGs found:
+Rule: Ensure use of EFS file system policy, and no action wildcards are being used
+Description: Using wildcard actions may inadvertently allow users to take actions you do not want to allow them to do. In addition, using a resource policy will provide an additional layer of security. It is a best practice to use a resource policy and give specific permissions only.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/efs/latest/ug/access-control-overview.html#access-control-manage-access-intro-resource-policies to modify EFS file system policy in order to avoid using wildcard actions.
+Remediation Steps - Terraform: For the aws_efs_file_system_policy resource, modify policy argument in order to avoid using wildcard actions.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_efs_file_system.test] (main.tf:5)
+     Violating Resource: [aws_efs_file_system.test]  (main.tf:5)
+
+     Evidence:
+             | There is no resource policy or no statements attached to aws_efs_file_system.test
+
+
+-----------------------------------------------
+Rule: Ensure EFS filesystems being created are set to be encrypted at rest
+Description: Cloudrail will review the EFS filesystems being created in your environment. If a filesystem is not set to encrypt at rest, Cloudrail will highlight it as a violation. This rule will only flag a violation for resources that are not yet created.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/efs/latest/ug/encryption-at-rest.html to enable encryption at rest for EFS filesystems.
+Remediation Steps - Terraform: For the aws_efs_file_system resource, set encrypted argument to true.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_efs_file_system.test] (main.tf:5)
+     Violating Resource: [aws_efs_file_system.test]  (main.tf:5)
+
+     Evidence:
+             | The Elastic File System aws_efs_file_system.test is not set to use encryption at rest
+
+
+-----------------------------------------------
+Rule: Ensure ECS task definitions being created are set to encrypt in transit with EFS volumes
+Description: Cloudrail will review the ECS task definitions being created in your environment. If a task definition is not set to encrypt in transit with EFS volumes, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AmazonECS/latest/developerguide/efs-volumes.html to enable encryption for Amazon EFS data in transit between ECS host and EFS server.
+Remediation Steps - Terraform: For the aws_ecs_task_definition resource, in volume, efs_volume_configuration block, set transit_encryption argument to ENABLED.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_ecs_task_definition.service] (main.tf:9)
+     Violating Resource: [aws_ecs_task_definition.service]  (main.tf:9)
+
+     Evidence:
+             | The ECS task definition cloudrail-test-encryption is not set to use encryption in transit with EFS volumes: service-storage
+
+
+-----------------------------------------------
 Rule: Ensure all resources that can be tagged have at least one tag
+Description: Some organizations require that all resources have at least one tag set. This rule will review the resources that can be tagged, and make sure each one has a tag that is not the Name tag. Resources that are not tagged will be flagged.
+Remediation Steps - Cloud Console: Access the specific resource in the AWS console and add tags.
+Remediation Steps - Terraform: Add a tags section to the resource with at least one tag beyond the Name tag.
  - 2 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_ecs_task_definition.service] (main.tf:9)
@@ -15,39 +60,6 @@ Rule: Ensure all resources that can be tagged have at least one tag
 
      Evidence:
              | Resource Elastic File System aws_efs_file_system.test does not have any tags set
-
-
------------------------------------------------
-Rule: Ensure ECS task definitions being created are set to encrypt in transit with EFS volumes
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_ecs_task_definition.service] (main.tf:9)
-     Violating Resource: [aws_ecs_task_definition.service]  (main.tf:9)
-
-     Evidence:
-             | The ECS task definition cloudrail-test-encryption is not set to use encryption in transit with EFS volumes: service-storage
-
-
------------------------------------------------
-Rule: Ensure EFS filesystems being created are set to be encrypted at rest
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_efs_file_system.test] (main.tf:5)
-     Violating Resource: [aws_efs_file_system.test]  (main.tf:5)
-
-     Evidence:
-             | The Elastic File System aws_efs_file_system.test is not set to use encryption at rest
-
-
------------------------------------------------
-Rule: Ensure use of EFS file system policy, and no action wildcards are being used
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_efs_file_system.test] (main.tf:5)
-     Violating Resource: [aws_efs_file_system.test]  (main.tf:5)
-
-     Evidence:
-             | There is no resource policy or no statements attached to aws_efs_file_system.test
 
 
 -----------------------------------------------

@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+Scanning with Keeping Infrastructure as Code Secure v1.4.9
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 851
 Queries failed to execute: 0
 
 ------------------------------------
@@ -31,26 +31,37 @@ Resource Not Using Tags, Severity: INFO, Results: 2
 Description: AWS services resource tags are an essential part of managing components
 Platform: Terraform
 
-	[1]: /src/main.tf:5
-
-		004: 
-		005: resource "aws_sns_topic" "aws_sns_topic" {
-		006:   name = "glacier-sns-topic"
-
-
-	[2]: /src/main.tf:9
+	[1]: ../../src/main.tf:9
 
 		008: 
 		009: resource "aws_glacier_vault" "not_secure_archive" {
 		010:   name = "not_secure_archive"
 
 
+	[2]: ../../src/main.tf:5
+
+		004: 
+		005: resource "aws_sns_topic" "aws_sns_topic" {
+		006:   name = "glacier-sns-topic"
+
+
+SNS Topic Not Encrypted, Severity: MEDIUM, Results: 1
+Description: SNS (Simple Notification Service) Topic should be encrypted
+Platform: Terraform
+
+	[1]: ../../src/main.tf:5
+
+		004: 
+		005: resource "aws_sns_topic" "aws_sns_topic" {
+		006:   name = "glacier-sns-topic"
+
+
 
 Results Summary:
 HIGH: 0
-MEDIUM: 0
+MEDIUM: 1
 LOW: 0
 INFO: 2
-TOTAL: 2
+TOTAL: 3
 
-Scan duration: 4.830933413s
+Scan duration: 8.974621254s

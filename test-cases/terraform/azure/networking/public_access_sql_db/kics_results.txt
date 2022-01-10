@@ -16,57 +16,43 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.4.1
+Scanning with Keeping Infrastructure as Code Secure v1.4.9
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 778
+Queries loaded: 851
 Queries failed to execute: 0
 
 ------------------------------------
 
-Name Is Not Snake Case, Severity: INFO, Results: 6
+Name Is Not Snake Case, Severity: INFO, Results: 4
 Description: All names should follow snake case pattern.
 Platform: Terraform
 
-	[1]: ../../src/main.tf:43
-
-		042: 
-		043: resource "azurerm_sql_database" "my-sql-database" {
-		044:   name                = "${local.resource_prefix}sqldatabase"
-
-
-	[2]: ../../src/main.tf:57
-
-		056:   tags = {
-		057:     ResScope = local.test_description
-		058:   }
-
-
-	[3]: ../../src/main.tf:16
+	[1]: ../../src/main.tf:16
 
 		015: }
 		016: resource "azurerm_resource_group" "tests-resource-group" {
 		017:   name     = "${local.resource_prefix}resourcegroup"
 
 
-	[4]: ../../src/main.tf:21
+	[2]: ../../src/main.tf:43
+
+		042: 
+		043: resource "azurerm_sql_database" "my-sql-database" {
+		044:   name                = "${local.resource_prefix}sqldatabase"
+
+
+	[3]: ../../src/main.tf:21
 
 		020: 
 		021: resource "azurerm_mssql_server" "my-sql-server" {
 		022:   name                          = "${local.resource_prefix}sqlserver"
 
 
-	[5]: ../../src/main.tf:31
-
-		030:   tags = {
-		031:     ResScope = local.test_description
-		032:   }
-
-
-	[6]: ../../src/main.tf:35
+	[4]: ../../src/main.tf:35
 
 		034: 
 		035: resource "azurerm_storage_account" "my-storage-account" {
@@ -128,7 +114,7 @@ Platform: Terraform
 		044:   name                = "${local.resource_prefix}sqldatabase"
 
 
-Passwords And Secrets In Infrastructure Code, Severity: HIGH, Results: 1
+Passwords And Secrets - Generic Password, Severity: HIGH, Results: 1
 Description: Query to find passwords and secrets in infrastructure code.
 Platform: Common
 
@@ -139,12 +125,23 @@ Platform: Common
 		028:   public_network_access_enabled = true
 
 
+MSSQL Server Public Network Access Enabled, Severity: HIGH, Results: 1
+Description: MSSQL Server public network access should be disabled
+Platform: Terraform
+
+	[1]: ../../src/main.tf:28
+
+		027:   administrator_login_password  = "4-v3ry-53cr37-p455w0rd"
+		028:   public_network_access_enabled = true
+		029: 
+
+
 
 Results Summary:
-HIGH: 4
+HIGH: 5
 MEDIUM: 2
 LOW: 0
-INFO: 6
-TOTAL: 12
+INFO: 4
+TOTAL: 11
 
-Scan duration: 15.554111464s
+Scan duration: 9.181215588s

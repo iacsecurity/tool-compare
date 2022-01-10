@@ -1,7 +1,7 @@
 
   Result 1
 
-  [aws-elb-drop-invalid-headers][[0m[31mHIGH[39m[0m] Resource 'aws_lb.alb_test' does not drop invalid header fields
+  [aws-elb-drop-invalid-headers][HIGH] Resource 'aws_lb.alb_test' does not drop invalid header fields
   /src/main.tf:60-63
 
 
@@ -21,13 +21,13 @@
   Resolution: Set drop_invalid_header_fields to true
 
   More Info:
-  - https://tfsec.dev/docs/aws/elb/drop-invalid-headers#aws/elb 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/elb/drop-invalid-headers 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb#drop_invalid_header_fields 
   - https://docs.aws.amazon.com/elasticloadbalancing/latest/application/application-load-balancers.html 
 
   Result 2
 
-  [aws-elbv2-alb-not-public][[0m[31mHIGH[39m[0m] Resource 'aws_lb.alb_test' is exposed publicly.
+  [aws-elbv2-alb-not-public][HIGH] Resource 'aws_lb.alb_test' is exposed publicly.
   /src/main.tf:60-63
 
 
@@ -47,12 +47,12 @@
   Resolution: Switch to an internal load balancer or add a tfsec ignore
 
   More Info:
-  - https://tfsec.dev/docs/aws/elbv2/alb-not-public#aws/elbv2 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/elbv2/alb-not-public 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb 
 
   Result 3
 
-  [aws-elbv2-http-not-used][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'aws_lb_listener.lb_listener_test' uses plain HTTP instead of HTTPS.
+  [aws-elbv2-http-not-used][CRITICAL] Resource 'aws_lb_listener.lb_listener_test' uses plain HTTP instead of HTTPS.
   /src/main.tf:68
 
 
@@ -69,16 +69,16 @@
   Resolution: Switch to HTTPS to benefit from TLS security features
 
   More Info:
-  - https://tfsec.dev/docs/aws/elbv2/http-not-used#aws/elbv2 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/elbv2/http-not-used 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener 
   - https://www.cloudflare.com/en-gb/learning/ssl/why-is-http-not-secure/ 
 
   times
   ------------------------------------------
-  disk i/o             49.656458ms
-  parsing HCL          625.25µs
-  evaluating values    4.806667ms
-  running checks       39.894083ms
+  disk i/o             29.501459ms
+  parsing HCL          564.166µs
+  evaluating values    4.792376ms
+  running checks       27.342791ms
 
   counts
   ------------------------------------------

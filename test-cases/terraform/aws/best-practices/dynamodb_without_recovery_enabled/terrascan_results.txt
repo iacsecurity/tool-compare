@@ -2,7 +2,7 @@
 
 Violation Details -
     
-	Description    :	Ensure Point In Time Recovery is enabled for DynamoDB Tables
+	Description    :	Ensure DynamoDb is encrypted at rest
 	File           :	main.tf
 	Module Name    :	root
 	Plan Root      :	./
@@ -11,7 +11,7 @@ Violation Details -
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	Ensure DynamoDb is encrypted at rest
+	Description    :	Ensure Point In Time Recovery is enabled for DynamoDB Tables
 	File           :	main.tf
 	Module Name    :	root
 	Plan Root      :	./
@@ -25,7 +25,7 @@ Scan Summary -
 
 	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-08-18 18:05:55.940099376 +0000 UTC
+	Scanned At          :	2022-01-05 16:51:52.792114417 +0000 UTC
 	Policies Validated  :	2
 	Violated Policies   :	2
 	Low                 :	0

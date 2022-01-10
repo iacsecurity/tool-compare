@@ -1,7 +1,7 @@
 
   Result 1
 
-  [aws-rds-backup-retention-specified][[0m[33mMEDIUM[39m[0m] Resource 'aws_rds_cluster.default' does not have backup retention explicitly set
+  [aws-rds-backup-retention-specified][MEDIUM] Resource 'aws_rds_cluster.default' does not have backup retention explicitly set
   /src/main.tf:1-10
 
 
@@ -22,14 +22,14 @@
   Resolution: Explicitly set the retention period to greater than the default
 
   More Info:
-  - https://tfsec.dev/docs/aws/rds/backup-retention-specified#aws/rds 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/rds/backup-retention-specified 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/rds_cluster#backup_retention_period 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_instance#backup_retention_period 
   - https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupRetention 
 
   Result 2
 
-  [aws-rds-encrypt-cluster-storage-data][[0m[31mHIGH[39m[0m] Resource 'aws_rds_cluster.default' defines a enabled RDS Cluster encryption but not the required encrypted_storage.
+  [aws-rds-encrypt-cluster-storage-data][HIGH] Resource 'aws_rds_cluster.default' defines a enabled RDS Cluster encryption but not the required encrypted_storage.
   /src/main.tf:1-10
 
 
@@ -50,13 +50,13 @@
   Resolution: Enable encryption for RDS clusters
 
   More Info:
-  - https://tfsec.dev/docs/aws/rds/encrypt-cluster-storage-data#aws/rds 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/rds/encrypt-cluster-storage-data 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/rds_cluster 
   - https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html 
 
   Result 3
 
-  [general-secrets-sensitive-in-attribute][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Block 'aws_rds_cluster.default' includes a potentially sensitive attribute which is defined within the project.
+  [general-secrets-sensitive-in-attribute][CRITICAL] Block 'aws_rds_cluster.default' includes a potentially sensitive attribute which is defined within the project.
   /src/main.tf:8
 
 
@@ -73,15 +73,15 @@
   Resolution: Don't include sensitive data in blocks
 
   More Info:
-  - https://tfsec.dev/docs/general/secrets/sensitive-in-attribute#general/secrets 
+  - https://aquasecurity.github.io/tfsec/latest/checks/general/secrets/sensitive-in-attribute 
   - https://www.terraform.io/docs/state/sensitive-data.html 
 
   times
   ------------------------------------------
-  disk i/o             50.613335ms
-  parsing HCL          505.375µs
-  evaluating values    2.127292ms
-  running checks       27.472375ms
+  disk i/o             27.05425ms
+  parsing HCL          634.709µs
+  evaluating values    1.805499ms
+  running checks       19.921208ms
 
   counts
   ------------------------------------------

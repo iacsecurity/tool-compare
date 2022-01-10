@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+Scanning with Keeping Infrastructure as Code Secure v1.4.9
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 851
 Queries failed to execute: 0
 
 ------------------------------------
@@ -31,7 +31,7 @@ Resource Not Using Tags, Severity: INFO, Results: 1
 Description: AWS services resource tags are an essential part of managing components
 Platform: Terraform
 
-	[1]: /src/main.tf:28
+	[1]: ../../src/main.tf:28
 
 		027: 
 		028:   tags = {
@@ -42,7 +42,7 @@ Sagemaker Notebook Instance Without KMS, Severity: HIGH, Results: 1
 Description: AWS SageMaker should encrypt model artifacts at rest using Amazon S3 server-side encryption with an AWS KMS
 Platform: Terraform
 
-	[1]: /src/main.tf:23
+	[1]: ../../src/main.tf:23
 
 		022: 
 		023: resource "aws_sagemaker_notebook_instance" "ni" {
@@ -57,4 +57,4 @@ LOW: 0
 INFO: 1
 TOTAL: 2
 
-Scan duration: 4.846250045s
+Scan duration: 8.897390212s

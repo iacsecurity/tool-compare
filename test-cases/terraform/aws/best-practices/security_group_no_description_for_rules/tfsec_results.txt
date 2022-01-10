@@ -1,7 +1,7 @@
 
   Result 1
 
-  [aws-ec2-enforce-http-token-imds][[0m[31mHIGH[39m[0m] Resource 'aws_instance.ec2' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
+  [aws-ec2-enforce-http-token-imds][HIGH] Resource 'aws_instance.ec2' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
   /src/main.tf:61-67
 
 
@@ -22,13 +22,13 @@
   Resolution: Enable HTTP token requirement for IMDS
 
   More Info:
-  - https://tfsec.dev/docs/aws/ec2/enforce-http-token-imds#aws/ec2 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/ec2/enforce-http-token-imds 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#metadata-options 
   - https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service 
 
   Result 2
 
-  [aws-vpc-add-decription-to-security-group][[0m[97mLOW[39m[0m] Resource 'aws_security_group.default' should include a description for auditing purposes.
+  [aws-vpc-add-description-to-security-group][LOW] Resource 'aws_security_group.default' should include a description for auditing purposes.
   /src/main.tf:15-36
 
 
@@ -66,14 +66,14 @@
   Resolution: Add descriptions for all security groups and rules
 
   More Info:
-  - https://tfsec.dev/docs/aws/vpc/add-decription-to-security-group#aws/vpc 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/vpc/add-description-to-security-group 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule 
   - https://www.cloudconformity.com/knowledge-base/aws/EC2/security-group-rules-description.html 
 
   Result 3
 
-  [aws-vpc-no-public-egress-sg][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'aws_security_group.default' defines a fully open egress security group.
+  [aws-vpc-no-public-egress-sg][CRITICAL] Resource 'aws_security_group.default' defines a fully open egress security group.
   /src/main.tf:30
 
 
@@ -90,15 +90,15 @@
   Resolution: Set a more restrictive cidr range
 
   More Info:
-  - https://tfsec.dev/docs/aws/vpc/no-public-egress-sg#aws/vpc 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/vpc/no-public-egress-sg 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
 
   times
   ------------------------------------------
-  disk i/o             58.471126ms
-  parsing HCL          610.042µs
-  evaluating values    4.148709ms
-  running checks       32.518417ms
+  disk i/o             28.574792ms
+  parsing HCL          587.875µs
+  evaluating values    4.57525ms
+  running checks       22.030709ms
 
   counts
   ------------------------------------------

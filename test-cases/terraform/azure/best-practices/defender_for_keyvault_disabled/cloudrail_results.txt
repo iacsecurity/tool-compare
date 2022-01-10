@@ -1,0 +1,19 @@
+
+WARNINGs found:
+Rule: Ensure Azure Defender for Key Vault is enabled
+Description: Cloudrail will review the Security Center subscription pricing configuration in your environment. If the tier is not set to “Standard” for Key Vault resources, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.microsoft.com/en-us/azure/security-center/enable-azure-defender in order to enable Azure Defender for Key Vault.
+Remediation Steps - Terraform: For the azurerm_security_center_subscription_pricing resource, set the tier argument to “Standard” and ensure the resource_type argument contains the value “KeyVaults”.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [azurerm_security_center_subscription_pricing.example] (main.tf:10)
+     Violating Resource: [azurerm_security_center_subscription_pricing.example]  (main.tf:10)
+
+     Evidence:
+             | Azure Defender is not enabled for Key Vault in the subscription 00000000-0000-0000-0000-000000000000.
+
+
+-----------------------------------------------
+
+Cloudrail ran this assessment without any policies and so all rule violations show as warnings.
+You can increase a rule's enforcement level by creating a Policy in the Web UI and adding the rule to it.

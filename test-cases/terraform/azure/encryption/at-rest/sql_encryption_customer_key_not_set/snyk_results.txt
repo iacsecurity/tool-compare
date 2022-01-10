@@ -4,7 +4,7 @@ Failed to run the process ...
     "isPrivate": true,
     "isLicensesEnabled": false,
     "ignoreSettings": null,
-    "org": "yi2020",
+    "org": "ryder.d",
     "projectId": "",
     "policy": ""
   },
@@ -15,7 +15,7 @@ Failed to run the process ...
   "ignoreSettings": null,
   "targetFile": "main.tf",
   "projectName": "project",
-  "org": "yi2020",
+  "org": "ryder.d",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
@@ -27,9 +27,12 @@ Failed to run the process ...
     {
       "severity": "low",
       "resolve": "Set `extended_auditing_policy` attribute",
-      "id": "SNYK-CC-TF-167",
       "impact": "Audit records may not be available during investigation",
       "msg": "resource.azurerm_mssql_server[sql]",
+      "remediation": {
+        "terraform": "Set `extended_auditing_policy` attribute",
+        "arm": "Set `extendedAuditingSettings` sub resource"
+      },
       "subType": "Database",
       "issue": "Azure SQL Server Auditing is disabled",
       "publicId": "SNYK-CC-TF-167",
@@ -37,14 +40,16 @@ Failed to run the process ...
       "references": [
         "https://docs.microsoft.com/en-us/azure/azure-sql/database/auditing-overview"
       ],
+      "id": "SNYK-CC-TF-167",
       "isIgnored": false,
       "iacDescription": {
         "issue": "Azure SQL Server Auditing is disabled",
         "impact": "Audit records may not be available during investigation",
         "resolve": "Set `extended_auditing_policy` attribute"
       },
-      "lineNumber": 16,
+      "lineNumber": 15,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-167",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "azurerm_mssql_server[sql]"

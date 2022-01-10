@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+Scanning with Keeping Infrastructure as Code Secure v1.4.9
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 851
 Queries failed to execute: 0
 
 ------------------------------------
@@ -31,36 +31,54 @@ Resource Not Using Tags, Severity: INFO, Results: 2
 Description: AWS services resource tags are an essential part of managing components
 Platform: Terraform
 
-	[1]: /src/main.tf:44
+	[1]: ../../src/main.tf:44
 
 		043: 
 		044: resource "aws_cloudfront_distribution" "s3_distribution" {
 		045:   enabled             = true
 
 
-	[2]: /src/main.tf:10
+	[2]: ../../src/main.tf:10
 
 		009: 
 		010: resource "aws_s3_bucket" "cdn-content" {
 		011:   bucket = local.name
 
 
-S3 Bucket With Ignore Public ACL, Severity: LOW, Results: 1
-Description: S3 bucket with ignore public ACL
+Name Is Not Snake Case, Severity: INFO, Results: 2
+Description: All names should follow snake case pattern.
 Platform: Terraform
 
-	[1]: /src/main.tf:36
+	[1]: ../../src/main.tf:10
 
-		035:   block_public_policy     = true
-		036:   ignore_public_acls      = true
-		037:   restrict_public_buckets = true
+		009: 
+		010: resource "aws_s3_bucket" "cdn-content" {
+		011:   bucket = local.name
+
+
+	[2]: ../../src/main.tf:32
+
+		031: 
+		032: resource "aws_s3_bucket_public_access_block" "cdn-content" {
+		033:   bucket                  = aws_s3_bucket.cdn-content.id
+
+
+Shield Advanced Not In Use, Severity: LOW, Results: 1
+Description: AWS Shield Advanced should be used for Amazon Route 53 hosted zone, AWS Global Accelerator accelerator, Elastic IP Address, Elastic Load Balancing, and Amazon CloudFront Distribution to protect these resources against robust DDoS attacks
+Platform: Terraform
+
+	[1]: ../../src/main.tf:44
+
+		043: 
+		044: resource "aws_cloudfront_distribution" "s3_distribution" {
+		045:   enabled             = true
 
 
 S3 Bucket Logging Disabled, Severity: LOW, Results: 1
 Description: S3 bucket without logging
 Platform: Terraform
 
-	[1]: /src/main.tf:10
+	[1]: ../../src/main.tf:10
 
 		009: 
 		010: resource "aws_s3_bucket" "cdn-content" {
@@ -71,7 +89,7 @@ Cloudfront Without WAF, Severity: LOW, Results: 1
 Description: All AWS CloudFront distributions should be integrated with the Web Application Firewall (AWS WAF) service
 Platform: Terraform
 
-	[1]: /src/main.tf:44
+	[1]: ../../src/main.tf:44
 
 		043: 
 		044: resource "aws_cloudfront_distribution" "s3_distribution" {
@@ -82,18 +100,29 @@ S3 Bucket Without Versioning, Severity: MEDIUM, Results: 1
 Description: S3 bucket without versioning
 Platform: Terraform
 
-	[1]: /src/main.tf:10
+	[1]: ../../src/main.tf:10
 
 		009: 
 		010: resource "aws_s3_bucket" "cdn-content" {
 		011:   bucket = local.name
 
 
+S3 Bucket Policy Accepts HTTP Requests, Severity: MEDIUM, Results: 1
+Description: S3 Bucket policy should not accept HTTP Requests
+Platform: Terraform
+
+	[1]: ../../src/main.tf:13
+
+		012:   acl    = "private"
+		013:   policy = <<POLICY
+		014: {
+
+
 Cloudfront Logging Disabled, Severity: MEDIUM, Results: 1
 Description: AWS Cloudfront distributions must be have logging enabled, which means the attribute 'logging_config' must be defined
 Platform: Terraform
 
-	[1]: /src/main.tf:44
+	[1]: ../../src/main.tf:44
 
 		043: 
 		044: resource "aws_cloudfront_distribution" "s3_distribution" {
@@ -104,7 +133,7 @@ Vulnerable Default SSL Certificate, Severity: HIGH, Results: 1
 Description: CloudFront web distributions should use custom (and not default) SSL certificates. Custom SSL certificates allow only defined users to access content by using an alternate domain name instead of the default one.
 Platform: Terraform
 
-	[1]: /src/main.tf:75
+	[1]: ../../src/main.tf:75
 
 		074: 
 		075:   viewer_certificate {
@@ -115,54 +144,57 @@ Viewer Protocol Policy Allows HTTP, Severity: HIGH, Results: 3
 Description: Checks if the connection between the CloudFront and the origin server is encrypted
 Platform: Terraform
 
-	[1]: /src/main.tf:83
-
-		082:     target_origin_id       = local.s3_origin_id
-		083:     viewer_protocol_policy = "allow-all"
-		084: 
-
-
-	[2]: /src/main.tf:100
-
-		099:     target_origin_id       = local.s3_origin_id
-		100:     viewer_protocol_policy = "allow-all"
-		101: 
-
-
-	[3]: /src/main.tf:118
+	[1]: ../../src/main.tf:118
 
 		117:     target_origin_id       = local.s3_origin_id
 		118:     viewer_protocol_policy = "allow-all"
 		119: 
 
 
-S3 Bucket Without Server-side-encryption, Severity: HIGH, Results: 1
-Description: S3 bucket should have encryption defined
+	[2]: ../../src/main.tf:83
+
+		082:     target_origin_id       = local.s3_origin_id
+		083:     viewer_protocol_policy = "allow-all"
+		084: 
+
+
+	[3]: ../../src/main.tf:100
+
+		099:     target_origin_id       = local.s3_origin_id
+		100:     viewer_protocol_policy = "allow-all"
+		101: 
+
+
+S3 Bucket Without Enabled MFA Delete, Severity: HIGH, Results: 1
+CIS ID: CIS Security - CIS Amazon Web Services Foundations Benchmark v1.4.0 - Rule 2.1.3
+Title: Ensure MFA Delete is enable on S3 buckets
+Description: Once MFA Delete is enabled on your sensitive and classified S3 bucket it requires the user to have two forms of authentication.
+
 Platform: Terraform
 
-	[1]: /src/main.tf:10
+	[1]: ../../src/main.tf:10
 
 		009: 
 		010: resource "aws_s3_bucket" "cdn-content" {
 		011:   bucket = local.name
 
 
-Passwords And Secrets In Infrastructure Code, Severity: HIGH, Results: 1
-Description: Query to find passwords and secrets in infrastructure code.
-Platform: Common
+S3 Bucket SSE Disabled, Severity: HIGH, Results: 1
+Description: If algorithm is AES256 then the master key is null, empty or undefined, otherwise the master key is required
+Platform: Terraform
 
-	[1]: /src/main.tf:46
+	[1]: ../../src/main.tf:10
 
-		045:   enabled             = true
-		046:   price_class         = "PriceClass_200"
-		047:   default_root_object = "index.html"
+		009: 
+		010: resource "aws_s3_bucket" "cdn-content" {
+		011:   bucket = local.name
 
 
 CloudFront Without Minimum Protocol TLS 1.2, Severity: HIGH, Results: 1
 Description: CloudFront Minimum Protocol version should be at least TLS 1.2
 Platform: Terraform
 
-	[1]: /src/main.tf:76
+	[1]: ../../src/main.tf:76
 
 		075:   viewer_certificate {
 		076:     cloudfront_default_certificate = true
@@ -172,9 +204,9 @@ Platform: Terraform
 
 Results Summary:
 HIGH: 7
-MEDIUM: 2
+MEDIUM: 3
 LOW: 3
-INFO: 2
-TOTAL: 14
+INFO: 4
+TOTAL: 17
 
-Scan duration: 4.730791879s
+Scan duration: 8.927989754s

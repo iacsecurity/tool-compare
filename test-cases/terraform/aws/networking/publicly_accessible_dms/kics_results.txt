@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+Scanning with Keeping Infrastructure as Code Secure v1.4.9
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 851
 Queries failed to execute: 0
 
 ------------------------------------
@@ -31,39 +31,85 @@ Resource Not Using Tags, Severity: INFO, Results: 5
 Description: AWS services resource tags are an essential part of managing components
 Platform: Terraform
 
-	[1]: /src/main.tf:12
-
-		011: 
-		012: resource "aws_iam_role" "dms-access-for-endpoint" {
-		013:   assume_role_policy = data.aws_iam_policy_document.dms_assume_role.json
-
-
-	[2]: /src/main.tf:22
-
-		021: 
-		022: resource "aws_iam_role" "dms-cloudwatch-logs-role" {
-		023:   assume_role_policy = data.aws_iam_policy_document.dms_assume_role.json
-
-
-	[3]: /src/main.tf:32
+	[1]: ../../src/main.tf:32
 
 		031: 
 		032: resource "aws_iam_role" "dms-vpc-role" {
 		033:   assume_role_policy = data.aws_iam_policy_document.dms_assume_role.json
 
 
-	[4]: /src/main.tf:50
+	[2]: ../../src/main.tf:50
 
 		049: 
 		050:   tags = {
 		051:     Name = "test"
 
 
-	[5]: /src/main.tf:70
+	[3]: ../../src/main.tf:12
 
-		069: 
-		070:   tags = {
-		071:     Name = "test"
+		011: 
+		012: resource "aws_iam_role" "dms-access-for-endpoint" {
+		013:   assume_role_policy = data.aws_iam_policy_document.dms_assume_role.json
+
+
+	[4]: ../../src/main.tf:22
+
+		021: 
+		022: resource "aws_iam_role" "dms-cloudwatch-logs-role" {
+		023:   assume_role_policy = data.aws_iam_policy_document.dms_assume_role.json
+
+
+	[5]: ../../src/main.tf:67
+
+		066: 
+		067:   tags = {
+		068:     Name = "test"
+
+
+Name Is Not Snake Case, Severity: INFO, Results: 6
+Description: All names should follow snake case pattern.
+Platform: Terraform
+
+	[1]: ../../src/main.tf:22
+
+		021: 
+		022: resource "aws_iam_role" "dms-cloudwatch-logs-role" {
+		023:   assume_role_policy = data.aws_iam_policy_document.dms_assume_role.json
+
+
+	[2]: ../../src/main.tf:32
+
+		031: 
+		032: resource "aws_iam_role" "dms-vpc-role" {
+		033:   assume_role_policy = data.aws_iam_policy_document.dms_assume_role.json
+
+
+	[3]: ../../src/main.tf:17
+
+		016: 
+		017: resource "aws_iam_role_policy_attachment" "dms-access-for-endpoint-AmazonDMSRedshiftS3Role" {
+		018:   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonDMSRedshiftS3Role"
+
+
+	[4]: ../../src/main.tf:27
+
+		026: 
+		027: resource "aws_iam_role_policy_attachment" "dms-cloudwatch-logs-role-AmazonDMSCloudWatchLogsRole" {
+		028:   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonDMSCloudWatchLogsRole"
+
+
+	[5]: ../../src/main.tf:12
+
+		011: 
+		012: resource "aws_iam_role" "dms-access-for-endpoint" {
+		013:   assume_role_policy = data.aws_iam_policy_document.dms_assume_role.json
+
+
+	[6]: ../../src/main.tf:37
+
+		036: 
+		037: resource "aws_iam_role_policy_attachment" "dms-vpc-role-AmazonDMSVPCManagementRole" {
+		038:   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonDMSVPCManagementRole"
 
 
 
@@ -71,7 +117,7 @@ Results Summary:
 HIGH: 0
 MEDIUM: 0
 LOW: 0
-INFO: 5
-TOTAL: 5
+INFO: 11
+TOTAL: 11
 
-Scan duration: 7.238831788s
+Scan duration: 8.951410921s

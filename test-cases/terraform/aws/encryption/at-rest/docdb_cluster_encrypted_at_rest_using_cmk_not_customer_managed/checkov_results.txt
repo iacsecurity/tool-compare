@@ -1,19 +1,6 @@
-
-
-       _               _              
-   ___| |__   ___  ___| | _______   __
-  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
- | (__| | | |  __/ (__|   < (_) \ V / 
-  \___|_| |_|\___|\___|_|\_\___/ \_/  
-                                      
-By bridgecrew.io | version: 2.0.358 
-Update available 2.0.358 -> 2.0.359
-Run pip3 install -U checkov to update 
-
-
 terraform scan results:
 
-Passed checks: 2, Failed checks: 1, Skipped checks: 0
+Passed checks: 3, Failed checks: 1, Skipped checks: 0
 
 Check: CKV_AWS_85: "Ensure DocDB Logging is enabled"
 	FAILED for resource: aws_docdb_cluster.test2
@@ -29,5 +16,17 @@ Check: CKV_AWS_85: "Ensure DocDB Logging is enabled"
 		15 |   storage_encrypted   = true
 		16 |   kms_key_id          = data.aws_kms_key.test.arn
 		17 | }
+
+
+secrets scan results:
+
+Passed checks: 0, Failed checks: 1, Skipped checks: 0
+
+Check: CKV_SECRET_6: "Base64 High Entropy String"
+	FAILED for resource: 80ead63a322cc84c893c0ced91a5eb3e1e16277f
+	File: /main.tf:13-14
+	Guide: https://docs.bridgecrew.io/docs/git_secrets_6
+
+		13 |   master_password     = "mustbeeightchars"
 
 

@@ -1,7 +1,7 @@
 
   Result 1
 
-  [aws-dynamodb-enable-recovery][[0m[33mMEDIUM[39m[0m] Resource 'aws_dynamodb_table.basic-dynamodb-table' doesn't have point in time recovery
+  [aws-dynamodb-enable-recovery][MEDIUM] Resource 'aws_dynamodb_table.basic-dynamodb-table' doesn't have point in time recovery
   /src/main.tf:1-43
 
 
@@ -55,13 +55,13 @@
   Resolution: Enable point in time recovery
 
   More Info:
-  - https://tfsec.dev/docs/aws/dynamodb/enable-recovery#aws/dynamodb 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/dynamodb/enable-recovery 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table#point_in_time_recovery 
   - https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/PointInTimeRecovery.html 
 
   Result 2
 
-  [aws-dynamodb-table-customer-key][[0m[97mLOW[39m[0m] Resource 'aws_dynamodb_table.basic-dynamodb-table' is not using KMS CMK for encryption
+  [aws-dynamodb-table-customer-key][LOW] Resource 'aws_dynamodb_table.basic-dynamodb-table' is not using KMS CMK for encryption
   /src/main.tf:1-43
 
 
@@ -115,16 +115,16 @@
   Resolution: Enable server side encryption with a customer managed key
 
   More Info:
-  - https://tfsec.dev/docs/aws/dynamodb/table-customer-key#aws/dynamodb 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/dynamodb/table-customer-key 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table#server_side_encryption 
   - https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/EncryptionAtRest.html 
 
   times
   ------------------------------------------
-  disk i/o             49.601418ms
-  parsing HCL          579.209µs
-  evaluating values    2.183875ms
-  running checks       19.421208ms
+  disk i/o             26.409417ms
+  parsing HCL          606.125µs
+  evaluating values    2.323957ms
+  running checks       17.388875ms
 
   counts
   ------------------------------------------

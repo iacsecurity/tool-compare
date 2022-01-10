@@ -1,161 +1,7 @@
 
   Result 1
 
-  [aws-cloudfront-enforce-https][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'aws_cloudfront_distribution.s3_distribution' defines a CloudFront distribution that allows unencrypted communications.
-  /src/main.tf:44
-
-
-      41 |       }
-      42 |     }
-      43 | 
-      44 |     viewer_protocol_policy = "allow-all"    string: "allow-all"
-      45 |     min_ttl                = 0
-      46 |     default_ttl            = 3600
-      47 |     max_ttl                = 86400
-
-  Legacy ID:  AWS020
-  Impact:     CloudFront is available through an unencrypted connection
-  Resolution: Only allow HTTPS for CloudFront distribution communication
-
-  More Info:
-  - https://tfsec.dev/docs/aws/cloudfront/enforce-https#aws/cloudfront 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution#viewer_protocol_policy 
-  - https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-https-cloudfront-to-s3-origin.html 
-
-  Result 2
-
-  [aws-cloudfront-use-secure-tls-policy][[0m[31mHIGH[39m[0m] Resource 'aws_cloudfront_distribution.s3_distribution' defines outdated SSL/TLS policies (missing minimum_protocol_version attribute)
-  /src/main.tf:108-110
-
-
-     105 |     Environment = "production"
-     106 |   }
-     107 | 
-     108 |   viewer_certificate {
-     109 |     cloudfront_default_certificate = true
-     110 |   }
-     111 | }
-
-  Legacy ID:  AWS021
-  Impact:     Outdated SSL policies increase exposure to known vulnerabilities
-  Resolution: Use the most modern TLS/SSL policies available
-
-  More Info:
-  - https://tfsec.dev/docs/aws/cloudfront/use-secure-tls-policy#aws/cloudfront 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution#minimum_protocol_version 
-  - https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/secure-connections-supported-viewer-protocols-ciphers.html 
-
-  Result 3
-
-  [aws-s3-enable-bucket-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_s3_bucket.b' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
-  /src/main.tf:1-8
-
-
-       1 | resource "aws_s3_bucket" "b" {
-       2 |   bucket = "mybucket"
-       3 |   acl    = "private"
-       4 | 
-       5 |   tags = {
-       6 |     Name = "My bucket"
-       7 |   }
-       8 | }
-       9 | 
-      10 | locals {
-      11 |   s3_origin_id = "myS3Origin"
-
-  Legacy ID:  AWS017
-  Impact:     The bucket objects could be read if compromised
-  Resolution: Configure bucket encryption
-
-  More Info:
-  - https://tfsec.dev/docs/aws/s3/enable-bucket-encryption#aws/s3 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#enable-default-server-side-encryption 
-  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-encryption.html 
-
-  Result 4
-
-  [aws-s3-enable-bucket-logging][[0m[33mMEDIUM[39m[0m] Resource 'aws_s3_bucket.b' does not have logging enabled.
-  /src/main.tf:1-8
-
-
-       1 | resource "aws_s3_bucket" "b" {
-       2 |   bucket = "mybucket"
-       3 |   acl    = "private"
-       4 | 
-       5 |   tags = {
-       6 |     Name = "My bucket"
-       7 |   }
-       8 | }
-       9 | 
-      10 | locals {
-      11 |   s3_origin_id = "myS3Origin"
-
-  Legacy ID:  AWS002
-  Impact:     There is no way to determine the access to this bucket
-  Resolution: Add a logging block to the resource to enable access logging
-
-  More Info:
-  - https://tfsec.dev/docs/aws/s3/enable-bucket-logging#aws/s3 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket 
-  - https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerLogs.html 
-
-  Result 5
-
-  [aws-s3-enable-versioning][[0m[33mMEDIUM[39m[0m] Resource 'aws_s3_bucket.b' does not have versioning enabled
-  /src/main.tf:1-8
-
-
-       1 | resource "aws_s3_bucket" "b" {
-       2 |   bucket = "mybucket"
-       3 |   acl    = "private"
-       4 | 
-       5 |   tags = {
-       6 |     Name = "My bucket"
-       7 |   }
-       8 | }
-       9 | 
-      10 | locals {
-      11 |   s3_origin_id = "myS3Origin"
-
-  Legacy ID:  AWS077
-  Impact:     Deleted or modified data would not be recoverable
-  Resolution: Enable versioning to protect against accidental/malicious removal or modification
-
-  More Info:
-  - https://tfsec.dev/docs/aws/s3/enable-versioning#aws/s3 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#versioning 
-  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/Versioning.html 
-
-  Result 6
-
-  [aws-s3-specify-public-access-block][[0m[33mMEDIUM[39m[0m] Resource aws_s3_bucket.b has no associated aws_s3_bucket_public_access_block.
-  /src/main.tf:1-8
-
-
-       1 | resource "aws_s3_bucket" "b" {
-       2 |   bucket = "mybucket"
-       3 |   acl    = "private"
-       4 | 
-       5 |   tags = {
-       6 |     Name = "My bucket"
-       7 |   }
-       8 | }
-       9 | 
-      10 | locals {
-      11 |   s3_origin_id = "myS3Origin"
-
-  Legacy ID:  AWS098
-  Impact:     Public access policies may be applied to sensitive data buckets
-  Resolution: Define a aws_s3_bucket_public_access_block for the given bucket to control public access policies
-
-  More Info:
-  - https://tfsec.dev/docs/aws/s3/specify-public-access-block#aws/s3 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#bucket 
-  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html 
-
-  Result 7
-
-  [aws-cloudfront-enable-logging][[0m[33mMEDIUM[39m[0m] Resource 'aws_cloudfront_distribution.s3_distribution' does not have Access Logging configured
+  [aws-cloudfront-enable-logging][MEDIUM] Resource 'aws_cloudfront_distribution.s3_distribution' does not have Access Logging configured
   /src/main.tf:14-111
 
 
@@ -266,13 +112,13 @@
   Resolution: Enable logging for CloudFront distributions
 
   More Info:
-  - https://tfsec.dev/docs/aws/cloudfront/enable-logging#aws/cloudfront 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/cloudfront/enable-logging 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution#logging_config 
   - https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/AccessLogs.html 
 
-  Result 8
+  Result 2
 
-  [aws-cloudfront-enable-waf][[0m[31mHIGH[39m[0m] Resource 'aws_cloudfront_distribution.s3_distribution' does not have a WAF in front of it.
+  [aws-cloudfront-enable-waf][HIGH] Resource 'aws_cloudfront_distribution.s3_distribution' does not have a WAF in front of it.
   /src/main.tf:14-111
 
 
@@ -383,16 +229,147 @@
   Resolution: Enable WAF for the CloudFront distribution
 
   More Info:
-  - https://tfsec.dev/docs/aws/cloudfront/enable-waf#aws/cloudfront 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/cloudfront/enable-waf 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution#web_acl_id 
   - https://docs.aws.amazon.com/waf/latest/developerguide/cloudfront-features.html 
 
+  Result 3
+
+  [aws-cloudfront-enforce-https][CRITICAL] Resource 'aws_cloudfront_distribution.s3_distribution' defines a CloudFront distribution that allows unencrypted communications.
+  /src/main.tf:44
+
+
+      41 |       }
+      42 |     }
+      43 | 
+      44 |     viewer_protocol_policy = "allow-all"    string: "allow-all"
+      45 |     min_ttl                = 0
+      46 |     default_ttl            = 3600
+      47 |     max_ttl                = 86400
+
+  Legacy ID:  AWS020
+  Impact:     CloudFront is available through an unencrypted connection
+  Resolution: Only allow HTTPS for CloudFront distribution communication
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/cloudfront/enforce-https 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution#viewer_protocol_policy 
+  - https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-https-cloudfront-to-s3-origin.html 
+
+  Result 4
+
+  [aws-s3-enable-bucket-encryption][HIGH] Resource 'aws_s3_bucket.b' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
+  /src/main.tf:1-8
+
+
+       1 | resource "aws_s3_bucket" "b" {
+       2 |   bucket = "mybucket"
+       3 |   acl    = "private"
+       4 | 
+       5 |   tags = {
+       6 |     Name = "My bucket"
+       7 |   }
+       8 | }
+       9 | 
+      10 | locals {
+      11 |   s3_origin_id = "myS3Origin"
+
+  Legacy ID:  AWS017
+  Impact:     The bucket objects could be read if compromised
+  Resolution: Configure bucket encryption
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/s3/enable-bucket-encryption 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#enable-default-server-side-encryption 
+  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-encryption.html 
+
+  Result 5
+
+  [aws-s3-enable-bucket-logging][MEDIUM] Resource 'aws_s3_bucket.b' does not have logging enabled.
+  /src/main.tf:1-8
+
+
+       1 | resource "aws_s3_bucket" "b" {
+       2 |   bucket = "mybucket"
+       3 |   acl    = "private"
+       4 | 
+       5 |   tags = {
+       6 |     Name = "My bucket"
+       7 |   }
+       8 | }
+       9 | 
+      10 | locals {
+      11 |   s3_origin_id = "myS3Origin"
+
+  Legacy ID:  AWS002
+  Impact:     There is no way to determine the access to this bucket
+  Resolution: Add a logging block to the resource to enable access logging
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/s3/enable-bucket-logging 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket 
+  - https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerLogs.html 
+
+  Result 6
+
+  [aws-s3-enable-versioning][MEDIUM] Resource 'aws_s3_bucket.b' does not have versioning enabled
+  /src/main.tf:1-8
+
+
+       1 | resource "aws_s3_bucket" "b" {
+       2 |   bucket = "mybucket"
+       3 |   acl    = "private"
+       4 | 
+       5 |   tags = {
+       6 |     Name = "My bucket"
+       7 |   }
+       8 | }
+       9 | 
+      10 | locals {
+      11 |   s3_origin_id = "myS3Origin"
+
+  Legacy ID:  AWS077
+  Impact:     Deleted or modified data would not be recoverable
+  Resolution: Enable versioning to protect against accidental/malicious removal or modification
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/s3/enable-versioning 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#versioning 
+  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/Versioning.html 
+
+  Result 7
+
+  [aws-s3-specify-public-access-block][MEDIUM] Resource aws_s3_bucket.b has no associated aws_s3_bucket_public_access_block.
+  /src/main.tf:1-8
+
+
+       1 | resource "aws_s3_bucket" "b" {
+       2 |   bucket = "mybucket"
+       3 |   acl    = "private"
+       4 | 
+       5 |   tags = {
+       6 |     Name = "My bucket"
+       7 |   }
+       8 | }
+       9 | 
+      10 | locals {
+      11 |   s3_origin_id = "myS3Origin"
+
+  Legacy ID:  AWS098
+  Impact:     Public access policies may be applied to sensitive data buckets
+  Resolution: Define a aws_s3_bucket_public_access_block for the given bucket to control public access policies
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/s3/specify-public-access-block 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#bucket 
+  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html 
+
   times
   ------------------------------------------
-  disk i/o             50.376666ms
-  parsing HCL          596.25µs
-  evaluating values    2.728626ms
-  running checks       59.547291ms
+  disk i/o             32.587291ms
+  parsing HCL          642.292µs
+  evaluating values    2.751ms
+  running checks       28.233041ms
 
   counts
   ------------------------------------------
@@ -403,10 +380,10 @@
   results
   ------------------------------------------
   critical             1
-  high                 3
+  high                 2
   medium               4
   low                  0
   ignored              0
 
-  8 potential problems detected.
+  7 potential problems detected.
 

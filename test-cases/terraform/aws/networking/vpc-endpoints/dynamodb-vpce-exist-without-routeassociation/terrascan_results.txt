@@ -2,7 +2,16 @@
 
 Violation Details -
     
-	Description    :	Ensure DynamoDb is encrypted at rest
+	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	83
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure Point In Time Recovery is enabled for DynamoDB Tables
 	File           :	main.tf
 	Module Name    :	root
 	Plan Root      :	./
@@ -11,7 +20,7 @@ Violation Details -
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	Ensure Point In Time Recovery is enabled for DynamoDB Tables
+	Description    :	Ensure DynamoDb is encrypted at rest
 	File           :	main.tf
 	Module Name    :	root
 	Plan Root      :	./
@@ -29,15 +38,6 @@ Violation Details -
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
-	File           :	main.tf
-	Module Name    :	root
-	Plan Root      :	./
-	Line           :	83
-	Severity       :	MEDIUM
-	
-	-----------------------------------------------------------------------
-	
 	Description    :	Ensure VPC flow logging is enabled in all VPCs
 	File           :	main.tf
 	Module Name    :	root
@@ -52,7 +52,7 @@ Scan Summary -
 
 	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-08-18 17:40:56.204291877 +0000 UTC
+	Scanned At          :	2022-01-05 16:24:41.113632718 +0000 UTC
 	Policies Validated  :	146
 	Violated Policies   :	5
 	Low                 :	1

@@ -16,52 +16,91 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+Scanning with Keeping Infrastructure as Code Secure v1.4.9
 
 
 
-Files scanned: 1
-Parsed files: 1
-Queries loaded: 575
+Files scanned: 2
+Parsed files: 2
+Queries loaded: 851
 Queries failed to execute: 0
 
 ------------------------------------
 
-Resource Not Using Tags, Severity: INFO, Results: 2
+Resource Not Using Tags, Severity: INFO, Results: 4
 Description: AWS services resource tags are an essential part of managing components
 Platform: Terraform
 
-	[1]: /src/main.tf:7
+	[1]: ../../src/plan.json:32
+
+		031:             "sqs_success_feedback_sample_rate": null,
+		032:             "tags": {
+		033:               "Name": "Sns Topic Cloudrail Test"
+
+
+	[2]: ../../src/plan.json:55
+
+		054:             "redrive_policy": null,
+		055:             "tags": {
+		056:               "Name": "Sqs Cloudrail Test"
+
+
+	[3]: ../../src/main.tf:7
 
 		006:   name              = "sns_not_ecnrypted-1"
 		007:   tags = {
 		008:     Name = "Sns Topic Cloudrail Test"
 
 
-	[2]: /src/main.tf:14
+	[4]: ../../src/main.tf:14
 
 		013:   name = "sqs_non_encrypted"
 		014:   tags = {
 		015:     Name = "Sqs Cloudrail Test"
 
 
-SQS With SSE Disabled, Severity: HIGH, Results: 1
+SNS Topic Not Encrypted, Severity: MEDIUM, Results: 2
+Description: SNS (Simple Notification Service) Topic should be encrypted
+Platform: Terraform
+
+	[1]: ../../src/main.tf:5
+
+		004: 
+		005: resource "aws_sns_topic" "cloudrail_1" {
+		006:   name              = "sns_not_ecnrypted-1"
+
+
+	[2]: ../../src/plan.json:8
+
+		007:         {
+		008:           "address": "aws_sns_topic.cloudrail_1",
+		009:           "mode": "managed",
+
+
+SQS With SSE Disabled, Severity: HIGH, Results: 2
 Description: Amazon Simple Queue Service (SQS) queue is not protecting the contents of their messages using Server-Side Encryption (SSE)
 Platform: Terraform
 
-	[1]: /src/main.tf:12
+	[1]: ../../src/main.tf:12
 
 		011: 
 		012: resource "aws_sqs_queue" "cloudrail" {
 		013:   name = "sqs_non_encrypted"
 
 
+	[2]: ../../src/plan.json:1
+
+		001: {
+		002:   "format_version": "0.1",
+		003:   "terraform_version": "0.15.1-dev",
+
+
 
 Results Summary:
-HIGH: 1
-MEDIUM: 0
+HIGH: 2
+MEDIUM: 2
 LOW: 0
-INFO: 2
-TOTAL: 3
+INFO: 4
+TOTAL: 8
 
-Scan duration: 4.582518356s
+Scan duration: 9.031937879s

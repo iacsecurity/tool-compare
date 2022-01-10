@@ -16,7 +16,7 @@ Scan Summary -
 
 	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-08-18 17:45:51.482592722 +0000 UTC
+	Scanned At          :	2022-01-05 16:29:26.512237919 +0000 UTC
 	Policies Validated  :	1
 	Violated Policies   :	1
 	Low                 :	0

@@ -11,15 +11,6 @@ Violation Details -
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	Enabling S3 versioning will enable easy recovery from both unintended user actions, like deletes and overwrites
-	File           :	main.tf
-	Module Name    :	root
-	Plan Root      :	./
-	Line           :	33
-	Severity       :	HIGH
-	
-	-----------------------------------------------------------------------
-	
 	Description    :	Ensure S3 buckets have access logging enabled.
 	File           :	main.tf
 	Module Name    :	root
@@ -29,12 +20,21 @@ Violation Details -
 	
 	-----------------------------------------------------------------------
 	
+	Description    :	Enabling S3 versioning will enable easy recovery from both unintended user actions, like deletes and overwrites
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	33
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
 
 Scan Summary -
 
 	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-08-18 17:47:01.441790712 +0000 UTC
+	Scanned At          :	2022-01-05 16:30:30.260334421 +0000 UTC
 	Policies Validated  :	10
 	Violated Policies   :	3
 	Low                 :	0

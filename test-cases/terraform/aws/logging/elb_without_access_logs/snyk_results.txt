@@ -4,7 +4,7 @@ Failed to run the process ...
     "isPrivate": true,
     "isLicensesEnabled": false,
     "ignoreSettings": null,
-    "org": "yi2020",
+    "org": "ryder.d",
     "projectId": "",
     "policy": ""
   },
@@ -15,7 +15,7 @@ Failed to run the process ...
   "ignoreSettings": null,
   "targetFile": "main.tf",
   "projectName": "project",
-  "org": "yi2020",
+  "org": "ryder.d",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
@@ -34,7 +34,7 @@ Failed to run the process ...
         "cloudformation": "Set `Properties.Scheme` attribute to `internal`",
         "terraform": "Set `internal` attribute to `true`"
       },
-      "subType": "Elastic Load Balancing (ELB Classic)",
+      "subType": "Elastic Load Balancing",
       "issue": "Load balancer is internet facing",
       "publicId": "SNYK-CC-TF-48",
       "title": "Load balancer is internet facing",
@@ -49,6 +49,7 @@ Failed to run the process ...
       },
       "lineNumber": 1,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-48",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_elb[test]",

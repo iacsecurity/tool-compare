@@ -4,7 +4,7 @@ Failed to run the process ...
     "isPrivate": true,
     "isLicensesEnabled": false,
     "ignoreSettings": null,
-    "org": "yi2020",
+    "org": "ryder.d",
     "projectId": "",
     "policy": ""
   },
@@ -15,7 +15,7 @@ Failed to run the process ...
   "ignoreSettings": null,
   "targetFile": "main.tf",
   "projectName": "project",
-  "org": "yi2020",
+  "org": "ryder.d",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
@@ -50,6 +50,7 @@ Failed to run the process ...
       },
       "lineNumber": 107,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-65",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_elasticsearch_domain[test]",
@@ -82,6 +83,7 @@ Failed to run the process ...
       },
       "lineNumber": 107,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-66",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_elasticsearch_domain[test]",
@@ -113,6 +115,7 @@ Failed to run the process ...
       },
       "lineNumber": 107,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-67",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_elasticsearch_domain[test]",
@@ -145,6 +148,7 @@ Failed to run the process ...
       },
       "lineNumber": 138,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-426",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_instance[public_ins]",
@@ -175,6 +179,7 @@ Failed to run the process ...
       },
       "lineNumber": 129,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-73",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_security_group[publicly_accessible_sg]",
@@ -202,6 +207,7 @@ Failed to run the process ...
       },
       "lineNumber": 92,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-56",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_security_group[esdomain]",
@@ -229,6 +235,7 @@ Failed to run the process ...
       },
       "lineNumber": 121,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-56",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_security_group[publicly_accessible_sg]",
@@ -260,6 +267,7 @@ Failed to run the process ...
       },
       "lineNumber": 26,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-41",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_network_acl[ec2_nacl]",
@@ -295,6 +303,7 @@ Failed to run the process ...
       },
       "lineNumber": 138,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-53",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_instance[public_ins]",
@@ -329,6 +338,7 @@ Failed to run the process ...
       },
       "lineNumber": 107,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-68",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_elasticsearch_domain[test]",
@@ -361,6 +371,7 @@ Failed to run the process ...
       },
       "lineNumber": 53,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-41",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_network_acl[redshift_eni2_nacl]",
@@ -390,6 +401,7 @@ Failed to run the process ...
       },
       "lineNumber": 141,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-51",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_instance[public_ins]",
@@ -420,6 +432,7 @@ Failed to run the process ...
       },
       "lineNumber": 138,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-130",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_instance[public_ins]",
@@ -451,6 +464,7 @@ Failed to run the process ...
       },
       "lineNumber": 123,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-1",
+      "isGeneratedByCustomRule": false,
       "path": [
         "input",
         "resource",
@@ -483,6 +497,7 @@ Failed to run the process ...
       },
       "lineNumber": 107,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-140",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_elasticsearch_domain[test]"

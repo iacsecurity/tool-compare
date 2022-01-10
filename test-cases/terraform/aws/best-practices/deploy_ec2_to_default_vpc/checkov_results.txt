@@ -1,16 +1,3 @@
-
-
-       _               _              
-   ___| |__   ___  ___| | _______   __
-  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
- | (__| | | |  __/ (__|   < (_) \ V / 
-  \___|_| |_|\___|\___|_|\_\___/ \_/  
-                                      
-By bridgecrew.io | version: 2.0.358 
-Update available 2.0.358 -> 2.0.359
-Run pip3 install -U checkov to update 
-
-
 terraform scan results:
 
 Passed checks: 4, Failed checks: 5, Skipped checks: 0
@@ -25,18 +12,6 @@ Check: CKV_AWS_148: "Ensure no default VPC is planned to be provisioned"
 		14 |     Name = "Default VPC"
 		15 |   }
 		16 | }
-
-
-Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration EBS is securely encrypted"
-	FAILED for resource: aws_instance.t2-instance
-	File: /main.tf:49-53
-	Guide: https://docs.bridgecrew.io/docs/general_13
-
-		49 | resource "aws_instance" "t2-instance" {
-		50 |   ami = data.aws_ami.ubuntu.id
-		51 |   instance_type = "t2.micro"
-		52 |   subnet_id = aws_subnet.default-subnet.id
-		53 | }
 
 
 Check: CKV_AWS_79: "Ensure Instance Metadata Service Version 1 is not enabled"
@@ -55,6 +30,18 @@ Check: CKV_AWS_135: "Ensure that EC2 is EBS optimized"
 	FAILED for resource: aws_instance.t2-instance
 	File: /main.tf:49-53
 	Guide: https://docs.bridgecrew.io/docs/ensure-that-ec2-is-ebs-optimized
+
+		49 | resource "aws_instance" "t2-instance" {
+		50 |   ami = data.aws_ami.ubuntu.id
+		51 |   instance_type = "t2.micro"
+		52 |   subnet_id = aws_subnet.default-subnet.id
+		53 | }
+
+
+Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration EBS is securely encrypted"
+	FAILED for resource: aws_instance.t2-instance
+	File: /main.tf:49-53
+	Guide: https://docs.bridgecrew.io/docs/general_13
 
 		49 | resource "aws_instance" "t2-instance" {
 		50 |   ami = data.aws_ami.ubuntu.id

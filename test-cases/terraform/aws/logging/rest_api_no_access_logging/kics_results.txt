@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+Scanning with Keeping Infrastructure as Code Secure v1.4.9
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 851
 Queries failed to execute: 0
 
 ------------------------------------
@@ -31,14 +31,14 @@ Resource Not Using Tags, Severity: INFO, Results: 2
 Description: AWS services resource tags are an essential part of managing components
 Platform: Terraform
 
-	[1]: /src/main.tf:44
+	[1]: ../../src/main.tf:44
 
 		043: 
 		044: resource "aws_api_gateway_stage" "api_gw_stage" {
 		045:   stage_name    = "prod"
 
 
-	[2]: /src/main.tf:5
+	[2]: ../../src/main.tf:5
 
 		004: 
 		005: resource "aws_api_gateway_rest_api" "api_gw" {
@@ -49,7 +49,7 @@ Open Access To Resources Through API, Severity: LOW, Results: 1
 Description: Open access to back-end resources through API
 Platform: Terraform
 
-	[1]: /src/main.tf:26
+	[1]: ../../src/main.tf:26
 
 		025:   http_method   = "GET"
 		026:   authorization = "NONE"
@@ -60,7 +60,7 @@ API Gateway Stage Without API Gateway UsagePlan Associated, Severity: LOW, Resul
 Description: API Gateway Stage should have API Gateway UsagePlan defined and associated.
 Platform: Terraform
 
-	[1]: /src/main.tf:44
+	[1]: ../../src/main.tf:44
 
 		043: 
 		044: resource "aws_api_gateway_stage" "api_gw_stage" {
@@ -71,7 +71,7 @@ API Gateway Deployment Without API Gateway UsagePlan Associated, Severity: LOW, 
 Description: API Gateway Deployment should have API Gateway UsagePlan defined and associated.
 Platform: Terraform
 
-	[1]: /src/main.tf:10
+	[1]: ../../src/main.tf:10
 
 		009: 
 		010: resource "aws_api_gateway_deployment" "api_gw_deploy" {
@@ -82,7 +82,7 @@ CloudWatch Metrics Disabled, Severity: MEDIUM, Results: 1
 Description: Checks if CloudWatch Metrics is Enabled
 Platform: Terraform
 
-	[1]: /src/main.tf:55
+	[1]: ../../src/main.tf:55
 
 		054: 
 		055:   settings {
@@ -93,7 +93,18 @@ Api Gateway Access Logging Disabled, Severity: MEDIUM, Results: 1
 Description: RDS does not have any kind of logger
 Platform: Terraform
 
-	[1]: /src/main.tf:44
+	[1]: ../../src/main.tf:44
+
+		043: 
+		044: resource "aws_api_gateway_stage" "api_gw_stage" {
+		045:   stage_name    = "prod"
+
+
+API Gateway without WAF, Severity: MEDIUM, Results: 1
+Description: API Gateway should have WAF (Web Application Firewall) enabled
+Platform: Terraform
+
+	[1]: ../../src/main.tf:44
 
 		043: 
 		044: resource "aws_api_gateway_stage" "api_gw_stage" {
@@ -104,7 +115,7 @@ API Gateway X-Ray Disabled, Severity: MEDIUM, Results: 1
 Description: X-ray Tracing is not enabled
 Platform: Terraform
 
-	[1]: /src/main.tf:44
+	[1]: ../../src/main.tf:44
 
 		043: 
 		044: resource "aws_api_gateway_stage" "api_gw_stage" {
@@ -115,7 +126,7 @@ API Gateway Without SSL Certificate, Severity: MEDIUM, Results: 1
 Description: SSL Client Certificate should be enabled in aws_api_gateway_stage resource
 Platform: Terraform
 
-	[1]: /src/main.tf:44
+	[1]: ../../src/main.tf:44
 
 		043: 
 		044: resource "aws_api_gateway_stage" "api_gw_stage" {
@@ -126,7 +137,7 @@ API Gateway Without Content Encoding, Severity: MEDIUM, Results: 1
 Description: Enable Content Encoding through the attribute 'minimum_compression_size'. This value should be greater than -1 and smaller than 10485760
 Platform: Terraform
 
-	[1]: /src/main.tf:5
+	[1]: ../../src/main.tf:5
 
 		004: 
 		005: resource "aws_api_gateway_rest_api" "api_gw" {
@@ -137,7 +148,7 @@ API Gateway With Open Access, Severity: MEDIUM, Results: 1
 Description: API Gateway Method should restrict the authorization type, except for the HTTP OPTIONS method.
 Platform: Terraform
 
-	[1]: /src/main.tf:25
+	[1]: ../../src/main.tf:25
 
 		024:   resource_id   = aws_api_gateway_resource.api_gw_resource.id
 		025:   http_method   = "GET"
@@ -148,7 +159,7 @@ API Gateway With CloudWatch Logging Disabled, Severity: MEDIUM, Results: 1
 Description: AWS CloudWatch Logs for APIs is not enabled
 Platform: Terraform
 
-	[1]: /src/main.tf:44
+	[1]: ../../src/main.tf:44
 
 		043: 
 		044: resource "aws_api_gateway_stage" "api_gw_stage" {
@@ -159,7 +170,7 @@ API Gateway Method Does Not Contains An API Key, Severity: MEDIUM, Results: 1
 Description: An API Key should be required on a method request.
 Platform: Terraform
 
-	[1]: /src/main.tf:22
+	[1]: ../../src/main.tf:22
 
 		021: 
 		022: resource "aws_api_gateway_method" "api_gw_method" {
@@ -170,30 +181,19 @@ API Gateway Deployment Without Access Log Setting, Severity: MEDIUM, Results: 1
 Description: API Gateway Deployment should have access log setting defined when connected to an API Gateway Stage.
 Platform: Terraform
 
-	[1]: /src/main.tf:10
+	[1]: ../../src/main.tf:10
 
 		009: 
 		010: resource "aws_api_gateway_deployment" "api_gw_deploy" {
 		011:   depends_on  = [aws_api_gateway_integration.api_gw_int]
 
 
-API Gateway Method Settings Cache Not Encrypted, Severity: HIGH, Results: 1
-Description: API Gateway Method Settings Cache should be encrypted
-Platform: Terraform
-
-	[1]: /src/main.tf:58
-
-		057:     caching_enabled      = true # This is required for cache encryption
-		058:     cache_data_encrypted = false # This is required for cache encryption
-		059:   }
-
-
 
 Results Summary:
-HIGH: 1
-MEDIUM: 9
+HIGH: 0
+MEDIUM: 10
 LOW: 3
 INFO: 2
 TOTAL: 15
 
-Scan duration: 4.973956646s
+Scan duration: 9.27752192s

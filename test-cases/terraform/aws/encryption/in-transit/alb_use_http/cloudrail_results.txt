@@ -1,67 +1,183 @@
 
 WARNINGs found:
-Rule: Ensure all data stored in the Launch configuration EBS is securely encrypted
+Rule: Ensure target groups are not using HTTP
+Description: Best practices encourage encryption of communication between each two entities in your environment. This includes between a load balancer and the servers it is connected to.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/elasticloadbalancing/latest/application/create-target-group.html to configure HTTPS Protocol.
+Remediation Steps - Terraform: For the aws_lb_target_group resource, set the protocol argument to use HTTPS.
  - 3 Resources Exposed:
 -----------------------------------------------
-   - Exposed Resource: [aws_instance.inst3] (main.tf:108)
-     Violating Resource: [aws_instance.inst3]  (main.tf:108)
+   - Exposed Resource: [aws_lb_target_group_attachment.attach1] (main.tf:76)
+     Violating Resource: [aws_lb_target_group.test]  (main.tf:56)
 
      Evidence:
-             | This rule evaluated aws_instance.inst3's configuration
+         Load Balancer
+             | The Load Balancer Target Group aws_lb_target_group.test is set to use HTTP with its targets
+             | This exposes traffic between the load balancer and its targets
 
 
+   - Exposed Resource: [aws_lb_target_group_attachment.attach2] (main.tf:89)
+     Violating Resource: [aws_lb_target_group.test]  (main.tf:56)
+
+     Evidence:
+         Load Balancer
+             | The Load Balancer Target Group aws_lb_target_group.test is set to use HTTP with its targets
+             | This exposes traffic between the load balancer and its targets
+
+
+   - Exposed Resource: [aws_lb_target_group_attachment.attach3] (main.tf:102)
+     Violating Resource: [aws_lb_target_group.test]  (main.tf:56)
+
+     Evidence:
+         Load Balancer
+             | The Load Balancer Target Group aws_lb_target_group.test is set to use HTTP with its targets
+             | This exposes traffic between the load balancer and its targets
+
+
+-----------------------------------------------
+Rule: Ensure IMDSv2 is used and IMDSv1 is disabled
+Description: There have been hacks in the past caused by the use of IMDSv1. It is now best practice to disable IMDSv1 and use IMDSv2. It’s important to test the disablement of IMDSv1 carefully, as it may cause issues in an application’s execution (if it using an old SDK, for example).
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html to change the instance metadata for existing instances. Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html to configure instance metadata for new instances.
+Remediation Steps - Terraform: For the aws_instance resource, in metadata_options block, set http_tokens argument to required.
+ - 3 Resources Exposed:
+-----------------------------------------------
    - Exposed Resource: [aws_instance.inst1] (main.tf:82)
      Violating Resource: [aws_instance.inst1]  (main.tf:82)
 
      Evidence:
-             | This rule evaluated aws_instance.inst1's configuration
+             | The EC2 Instance aws_instance.inst1 is allowing IMDSv1
 
 
    - Exposed Resource: [aws_instance.inst2] (main.tf:95)
      Violating Resource: [aws_instance.inst2]  (main.tf:95)
 
      Evidence:
-             | This rule evaluated aws_instance.inst2's configuration
+             | The EC2 Instance aws_instance.inst2 is allowing IMDSv1
+
+
+   - Exposed Resource: [aws_instance.inst3] (main.tf:108)
+     Violating Resource: [aws_instance.inst3]  (main.tf:108)
+
+     Evidence:
+             | The EC2 Instance aws_instance.inst3 is allowing IMDSv1
 
 
 -----------------------------------------------
-Rule: Ensure ELB has logging enabled
+Rule: Allow only private AMIs to be used
+Description: Some organizations may only allow the use of private AMIs. If this rule is enabled, any EC2 instance attempting to use a public AMI will be flagged.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instances-and-amis.html in order to terminate flagged EC2 instances and create new EC2 instance with an approved AMI.
+Remediation Steps - Terraform: For the aws_instance resource, update the ami argument to set an approved AMI. Terraform will destroy and create new resources.
+ - 3 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.inst1] (main.tf:82)
+     Violating Resource: [ami-0688ba7eeeeefe3cd]  (Not found in TF)
+
+     Evidence:
+             | The EC2 Instance aws_instance.inst1 uses AMI ami-0688ba7eeeeefe3cd, which is public
+
+
+   - Exposed Resource: [aws_instance.inst2] (main.tf:95)
+     Violating Resource: [ami-0688ba7eeeeefe3cd]  (Not found in TF)
+
+     Evidence:
+             | The EC2 Instance aws_instance.inst2 uses AMI ami-0688ba7eeeeefe3cd, which is public
+
+
+   - Exposed Resource: [aws_instance.inst3] (main.tf:108)
+     Violating Resource: [ami-0688ba7eeeeefe3cd]  (Not found in TF)
+
+     Evidence:
+             | The EC2 Instance aws_instance.inst3 uses AMI ami-0688ba7eeeeefe3cd, which is public
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+Description: Some organizations require that all resources have at least one tag set. This rule will review the resources that can be tagged, and make sure each one has a tag that is not the Name tag. Resources that are not tagged will be flagged.
+Remediation Steps - Cloud Console: Access the specific resource in the AWS console and add tags.
+Remediation Steps - Terraform: Add a tags section to the resource with at least one tag beyond the Name tag.
+ - 9 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_lb_target_group.test] (main.tf:56)
+     Violating Resource: [aws_lb_target_group.test]  (main.tf:56)
+
+     Evidence:
+             | Resource Load Balancer Target Group aws_lb_target_group.test does not have any tags set
+
+
+   - Exposed Resource: [aws_instance.inst3] (main.tf:108)
+     Violating Resource: [aws_instance.inst3]  (main.tf:108)
+
+     Evidence:
+             | Resource EC2 Instance aws_instance.inst3 does not have any tags set
+
+
+   - Exposed Resource: [aws_vpc.vpc1] (main.tf:26)
+     Violating Resource: [aws_vpc.vpc1]  (main.tf:26)
+
+     Evidence:
+             | Resource VPC aws_vpc.vpc1 does not have any tags set
+
+
+   - Exposed Resource: [aws_instance.inst1] (main.tf:82)
+     Violating Resource: [aws_instance.inst1]  (main.tf:82)
+
+     Evidence:
+             | Resource EC2 Instance aws_instance.inst1 does not have any tags set
+
+
+   - Exposed Resource: [aws_default_security_group.dsg] (main.tf:63)
+     Violating Resource: [aws_default_security_group.dsg]  (main.tf:63)
+
+     Evidence:
+             | Resource Security group aws_default_security_group.dsg does not have any tags set
+
+
+   - Exposed Resource: [aws_subnet.subnet1] (main.tf:30)
+     Violating Resource: [aws_subnet.subnet1]  (main.tf:30)
+
+     Evidence:
+             | Resource Subnet aws_subnet.subnet1 does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [aws_subnet.subnet2] (main.tf:39)
+     Violating Resource: [aws_subnet.subnet2]  (main.tf:39)
+
+     Evidence:
+             | Resource Subnet aws_subnet.subnet2 does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [aws_instance.inst2] (main.tf:95)
+     Violating Resource: [aws_instance.inst2]  (main.tf:95)
+
+     Evidence:
+             | Resource EC2 Instance aws_instance.inst2 does not have any tags set
+
+
+   - Exposed Resource: [aws_lb.test] (main.tf:49)
+     Violating Resource: [aws_lb.test]  (main.tf:49)
+
+     Evidence:
+             | Resource Load Balancer aws_lb.test does not have any tags set
+
+
+-----------------------------------------------
+Rule: Ensure Load Balancer drops invalid HTTP headers
+Description: Cloudrail will review the Load Balancers in your environment. If a Load Balancer is not set drop invalid HTTP headers, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/elasticloadbalancing/latest/application/application-load-balancers.html to enable the Drop invalid header fields parameter.
+Remediation Steps - Terraform: For the aws_lb resource, set the drop_invalid_header_fields parameter to true.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_lb.test] (main.tf:49)
      Violating Resource: [aws_lb.test]  (main.tf:49)
 
      Evidence:
-             | The Load Balancer aws_lb.test does not have logging enabled
-
-
------------------------------------------------
-Rule: Ensure EC2 instance has detailed monitoring enabled
- - 3 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.inst3] (main.tf:108)
-     Violating Resource: [aws_instance.inst3]  (main.tf:108)
-
-     Evidence:
-             | The EC2 Instance aws_instance.inst3 has detailed monitoring disabled
-
-
-   - Exposed Resource: [aws_instance.inst1] (main.tf:82)
-     Violating Resource: [aws_instance.inst1]  (main.tf:82)
-
-     Evidence:
-             | The EC2 Instance aws_instance.inst1 has detailed monitoring disabled
-
-
-   - Exposed Resource: [aws_instance.inst2] (main.tf:95)
-     Violating Resource: [aws_instance.inst2]  (main.tf:95)
-
-     Evidence:
-             | The EC2 Instance aws_instance.inst2 has detailed monitoring disabled
+             | The Load Balancer aws_lb.test does not drop invalid HTTP headers
 
 
 -----------------------------------------------
 Rule: Ensure EC2 instance is EBS optimized
+Description: Cloudrail will review the EC2 instances configuration in your environment. If it is not configured to be EBS-optimized, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-optimized.html to enable EBS optimization for an EC2 instance.
+Remediation Steps - Terraform: For the aws_instance resource, set the ebs_optimized parameter to true.
  - 3 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_instance.inst1] (main.tf:82)
@@ -86,162 +202,45 @@ Rule: Ensure EC2 instance is EBS optimized
 
 
 -----------------------------------------------
-Rule: Ensure Load Balancer drops invalid HTTP headers
+Rule: Ensure EC2 instance has detailed monitoring enabled
+Description: Cloudrail will review the EC2 instances configuration in your environment. If an instance does not have detailed monitoring configured, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-cloudwatch-new.html in order to enable detailed monitoring for an EC2 instance.
+Remediation Steps - Terraform: For the aws_instance resource, set the monitoring argument to true.
+ - 3 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.inst1] (main.tf:82)
+     Violating Resource: [aws_instance.inst1]  (main.tf:82)
+
+     Evidence:
+             | The EC2 Instance aws_instance.inst1 has detailed monitoring disabled
+
+
+   - Exposed Resource: [aws_instance.inst2] (main.tf:95)
+     Violating Resource: [aws_instance.inst2]  (main.tf:95)
+
+     Evidence:
+             | The EC2 Instance aws_instance.inst2 has detailed monitoring disabled
+
+
+   - Exposed Resource: [aws_instance.inst3] (main.tf:108)
+     Violating Resource: [aws_instance.inst3]  (main.tf:108)
+
+     Evidence:
+             | The EC2 Instance aws_instance.inst3 has detailed monitoring disabled
+
+
+-----------------------------------------------
+Rule: Ensure ELB has logging enabled
+Description: Cloudrail will review the Elastic Load Balancers configuration in your environment. If a load balancer does not have logging enabled, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-access-logs.html or https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-access-logs.html in order to enable access logs for the load balancer.
+Remediation Steps - Terraform: For the aws_lb resource, set the access_logs block with enabled argument set to true and the bucket argument set to the S3 bucket name.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_lb.test] (main.tf:49)
      Violating Resource: [aws_lb.test]  (main.tf:49)
 
      Evidence:
-             | The Load Balancer aws_lb.test does not drop invalid HTTP headers
-
-
------------------------------------------------
-Rule: Ensure all resources that can be tagged have at least one tag
- - 9 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.inst1] (main.tf:82)
-     Violating Resource: [aws_instance.inst1]  (main.tf:82)
-
-     Evidence:
-             | Resource EC2 Instance aws_instance.inst1 does not have any tags set
-
-
-   - Exposed Resource: [aws_instance.inst2] (main.tf:95)
-     Violating Resource: [aws_instance.inst2]  (main.tf:95)
-
-     Evidence:
-             | Resource EC2 Instance aws_instance.inst2 does not have any tags set
-
-
-   - Exposed Resource: [aws_instance.inst3] (main.tf:108)
-     Violating Resource: [aws_instance.inst3]  (main.tf:108)
-
-     Evidence:
-             | Resource EC2 Instance aws_instance.inst3 does not have any tags set
-
-
-   - Exposed Resource: [aws_lb.test] (main.tf:49)
-     Violating Resource: [aws_lb.test]  (main.tf:49)
-
-     Evidence:
-             | Resource Load Balancer aws_lb.test does not have any tags set
-
-
-   - Exposed Resource: [aws_lb_target_group.test] (main.tf:56)
-     Violating Resource: [aws_lb_target_group.test]  (main.tf:56)
-
-     Evidence:
-             | Resource Load Balancer Target Group aws_lb_target_group.test does not have any tags set
-
-
-   - Exposed Resource: [aws_default_security_group.dsg] (main.tf:63)
-     Violating Resource: [aws_default_security_group.dsg]  (main.tf:63)
-
-     Evidence:
-             | Resource Security group aws_default_security_group.dsg does not have any tags set
-
-
-   - Exposed Resource: [aws_vpc.vpc1] (main.tf:26)
-     Violating Resource: [aws_vpc.vpc1]  (main.tf:26)
-
-     Evidence:
-             | Resource VPC aws_vpc.vpc1 does not have any tags set
-
-
-   - Exposed Resource: [aws_subnet.subnet1] (main.tf:30)
-     Violating Resource: [aws_subnet.subnet1]  (main.tf:30)
-
-     Evidence:
-             | Resource Subnet aws_subnet.subnet1 does not have any tags set other than "Name"
-
-
-   - Exposed Resource: [aws_subnet.subnet2] (main.tf:39)
-     Violating Resource: [aws_subnet.subnet2]  (main.tf:39)
-
-     Evidence:
-             | Resource Subnet aws_subnet.subnet2 does not have any tags set other than "Name"
-
-
------------------------------------------------
-Rule: Allow only private AMIs to be used
- - 3 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.inst1] (main.tf:82)
-     Violating Resource: [ami-0dd273d94ed0540c0]  (Not found in TF)
-
-     Evidence:
-             | The EC2 Instance aws_instance.inst1 uses AMI ami-0dd273d94ed0540c0, which is public
-
-
-   - Exposed Resource: [aws_instance.inst3] (main.tf:108)
-     Violating Resource: [ami-0dd273d94ed0540c0]  (Not found in TF)
-
-     Evidence:
-             | The EC2 Instance aws_instance.inst3 uses AMI ami-0dd273d94ed0540c0, which is public
-
-
-   - Exposed Resource: [aws_instance.inst2] (main.tf:95)
-     Violating Resource: [ami-0dd273d94ed0540c0]  (Not found in TF)
-
-     Evidence:
-             | The EC2 Instance aws_instance.inst2 uses AMI ami-0dd273d94ed0540c0, which is public
-
-
------------------------------------------------
-Rule: Ensure IMDSv2 is used and IMDSv1 is disabled
- - 3 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.inst3] (main.tf:108)
-     Violating Resource: [aws_instance.inst3]  (main.tf:108)
-
-     Evidence:
-             | The EC2 Instance aws_instance.inst3 is allowing IMDSv1
-
-
-   - Exposed Resource: [aws_instance.inst1] (main.tf:82)
-     Violating Resource: [aws_instance.inst1]  (main.tf:82)
-
-     Evidence:
-             | The EC2 Instance aws_instance.inst1 is allowing IMDSv1
-
-
-   - Exposed Resource: [aws_instance.inst2] (main.tf:95)
-     Violating Resource: [aws_instance.inst2]  (main.tf:95)
-
-     Evidence:
-             | The EC2 Instance aws_instance.inst2 is allowing IMDSv1
-
-
------------------------------------------------
-Rule: Ensure target groups are not using HTTP
- - 3 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_lb_target_group_attachment.attach1] (main.tf:76)
-     Violating Resource: [aws_lb_target_group.test]  (main.tf:56)
-
-     Evidence:
-         Load Balancer
-             | The Load Balancer Target Group aws_lb_target_group.test is set to use HTTP with its targets
-             | This exposes traffic between the load balancer and its targets
-
-
-   - Exposed Resource: [aws_lb_target_group_attachment.attach3] (main.tf:102)
-     Violating Resource: [aws_lb_target_group.test]  (main.tf:56)
-
-     Evidence:
-         Load Balancer
-             | The Load Balancer Target Group aws_lb_target_group.test is set to use HTTP with its targets
-             | This exposes traffic between the load balancer and its targets
-
-
-   - Exposed Resource: [aws_lb_target_group_attachment.attach2] (main.tf:89)
-     Violating Resource: [aws_lb_target_group.test]  (main.tf:56)
-
-     Evidence:
-         Load Balancer
-             | The Load Balancer Target Group aws_lb_target_group.test is set to use HTTP with its targets
-             | This exposes traffic between the load balancer and its targets
+             | The Load Balancer aws_lb.test does not have logging enabled
 
 
 -----------------------------------------------

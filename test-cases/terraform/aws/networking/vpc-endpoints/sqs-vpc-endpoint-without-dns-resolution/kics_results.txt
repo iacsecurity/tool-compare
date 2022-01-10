@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+Scanning with Keeping Infrastructure as Code Secure v1.4.9
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 851
 Queries failed to execute: 0
 
 ------------------------------------
@@ -31,14 +31,14 @@ Security Group Rules Without Description, Severity: INFO, Results: 2
 Description: It's considered a best practice for all rules in AWS Security Group to have a description
 Platform: Terraform
 
-	[1]: /src/main.tf:55
+	[1]: ../../src/main.tf:55
 
 		054: 
 		055:   egress {
 		056:     from_port   = 0
 
 
-	[2]: /src/main.tf:62
+	[2]: ../../src/main.tf:62
 
 		061: 
 		062:   ingress {
@@ -49,67 +49,120 @@ Resource Not Using Tags, Severity: INFO, Results: 8
 Description: AWS services resource tags are an essential part of managing components
 Platform: Terraform
 
-	[1]: /src/main.tf:103
-
-		102: 
-		103: resource "aws_sqs_queue" "test-queue" {
-		104:   name = "test-queue"
-
-
-	[2]: /src/main.tf:12
-
-		011: 
-		012: resource "aws_vpc" "main" {
-		013:   cidr_block = local.cidr_block
-
-
-	[3]: /src/main.tf:94
-
-		093: 
-		094: resource "aws_vpc_endpoint" "sqs-vpc-endpoint" {
-		095:   vpc_id            = aws_vpc.main.id
-
-
-	[4]: /src/main.tf:107
-
-		106: 
-		107: resource "aws_internet_gateway" "igw" {
-		108:   vpc_id = aws_vpc.main.id
-
-
-	[5]: /src/main.tf:50
-
-		049: 
-		050: resource "aws_security_group" "public-internet-sg" {
-		051:   name        = "public-internet-sg"
-
-
-	[6]: /src/main.tf:87
-
-		086: 
-		087: resource "aws_instance" "test-ec2-instance" {
-		088:   ami = data.aws_ami.ubuntu.id
-
-
-	[7]: /src/main.tf:40
-
-		039: 
-		040:   tags = {
-		041:     Name = "public-rtb"
-
-
-	[8]: /src/main.tf:22
+	[1]: ../../src/main.tf:22
 
 		021: 
 		022:   tags = {
 		023:     Name = "public-subnet"
 
 
+	[2]: ../../src/main.tf:94
+
+		093: 
+		094: resource "aws_vpc_endpoint" "sqs-vpc-endpoint" {
+		095:   vpc_id            = aws_vpc.main.id
+
+
+	[3]: ../../src/main.tf:87
+
+		086: 
+		087: resource "aws_instance" "test-ec2-instance" {
+		088:   ami = data.aws_ami.ubuntu.id
+
+
+	[4]: ../../src/main.tf:103
+
+		102: 
+		103: resource "aws_sqs_queue" "test-queue" {
+		104:   name = "test-queue"
+
+
+	[5]: ../../src/main.tf:50
+
+		049: 
+		050: resource "aws_security_group" "public-internet-sg" {
+		051:   name        = "public-internet-sg"
+
+
+	[6]: ../../src/main.tf:12
+
+		011: 
+		012: resource "aws_vpc" "main" {
+		013:   cidr_block = local.cidr_block
+
+
+	[7]: ../../src/main.tf:40
+
+		039: 
+		040:   tags = {
+		041:     Name = "public-rtb"
+
+
+	[8]: ../../src/main.tf:107
+
+		106: 
+		107: resource "aws_internet_gateway" "igw" {
+		108:   vpc_id = aws_vpc.main.id
+
+
+Name Is Not Snake Case, Severity: INFO, Results: 7
+Description: All names should follow snake case pattern.
+Platform: Terraform
+
+	[1]: ../../src/main.tf:18
+
+		017: 
+		018: resource "aws_subnet" "public-subnet" {
+		019:   vpc_id     = aws_vpc.main.id
+
+
+	[2]: ../../src/main.tf:87
+
+		086: 
+		087: resource "aws_instance" "test-ec2-instance" {
+		088:   ami = data.aws_ami.ubuntu.id
+
+
+	[3]: ../../src/main.tf:27
+
+		026: 
+		027: resource "aws_route_table" "public-rtb" {
+		028:   vpc_id = aws_vpc.main.id
+
+
+	[4]: ../../src/main.tf:94
+
+		093: 
+		094: resource "aws_vpc_endpoint" "sqs-vpc-endpoint" {
+		095:   vpc_id            = aws_vpc.main.id
+
+
+	[5]: ../../src/main.tf:45
+
+		044: 
+		045: resource "aws_route_table_association" "public-rtb-assoc" {
+		046:   subnet_id      = aws_subnet.public-subnet.id
+
+
+	[6]: ../../src/main.tf:50
+
+		049: 
+		050: resource "aws_security_group" "public-internet-sg" {
+		051:   name        = "public-internet-sg"
+
+
+	[7]: ../../src/main.tf:103
+
+		102: 
+		103: resource "aws_sqs_queue" "test-queue" {
+		104:   name = "test-queue"
+
+
 EC2 Not EBS Optimized, Severity: INFO, Results: 1
 Description: It's considered a best practice for an EC2 instance to use an EBS optimized instance. This provides the best performance for your EBS volumes by minimizing contention between Amazon EBS I/O and other traffic from your instance
 Platform: Terraform
 
-	[1]: /src/main.tf:87
+	[1]: ../../src/main.tf:87
 
 		086: 
 		087: resource "aws_instance" "test-ec2-instance" {
@@ -120,18 +173,29 @@ EC2 Instance Monitoring Disabled, Severity: INFO, Results: 1
 Description: EC2 Instance should have detailed monitoring enabled. With detailed monitoring enabled data is available in 1-minute periods
 Platform: Terraform
 
-	[1]: /src/main.tf:87
+	[1]: ../../src/main.tf:87
 
 		086: 
 		087: resource "aws_instance" "test-ec2-instance" {
 		088:   ami = data.aws_ami.ubuntu.id
 
 
+VPC Without Network Firewall, Severity: MEDIUM, Results: 1
+Description: VPC should have a Network Firewall associated
+Platform: Terraform
+
+	[1]: ../../src/main.tf:12
+
+		011: 
+		012: resource "aws_vpc" "main" {
+		013:   cidr_block = local.cidr_block
+
+
 VPC FlowLogs Disabled, Severity: MEDIUM, Results: 1
 Description: VPC hasn't got any FlowLog associated
 Platform: Terraform
 
-	[1]: /src/main.tf:12
+	[1]: ../../src/main.tf:12
 
 		011: 
 		012: resource "aws_vpc" "main" {
@@ -142,7 +206,7 @@ SQS VPC Endpoint Without DNS Resolution, Severity: MEDIUM, Results: 1
 Description: SQS VPC Endpoint should have DNS resolution enabled
 Platform: Terraform
 
-	[1]: /src/main.tf:95
+	[1]: ../../src/main.tf:95
 
 		094: resource "aws_vpc_endpoint" "sqs-vpc-endpoint" {
 		095:   vpc_id            = aws_vpc.main.id
@@ -153,7 +217,7 @@ SQS With SSE Disabled, Severity: HIGH, Results: 1
 Description: Amazon Simple Queue Service (SQS) queue is not protecting the contents of their messages using Server-Side Encryption (SSE)
 Platform: Terraform
 
-	[1]: /src/main.tf:103
+	[1]: ../../src/main.tf:103
 
 		102: 
 		103: resource "aws_sqs_queue" "test-queue" {
@@ -164,7 +228,7 @@ EC2 Instance Has Public IP, Severity: HIGH, Results: 1
 Description: EC2 Instance should not have a public IP address.
 Platform: Terraform
 
-	[1]: /src/main.tf:87
+	[1]: ../../src/main.tf:87
 
 		086: 
 		087: resource "aws_instance" "test-ec2-instance" {
@@ -174,9 +238,9 @@ Platform: Terraform
 
 Results Summary:
 HIGH: 2
-MEDIUM: 2
+MEDIUM: 3
 LOW: 0
-INFO: 12
-TOTAL: 16
+INFO: 19
+TOTAL: 24
 
-Scan duration: 5.141669867s
+Scan duration: 8.896065087s

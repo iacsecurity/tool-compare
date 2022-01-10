@@ -1,28 +1,24 @@
 
 WARNINGs found:
-Rule: Ensure RDS instances and clusters have logging enabled
+Rule: Ensure RDS instances/clusters being created are set to be encrypted at rest
+Description: Cloudrail will review the RDS instances, clusters and global clusters being created in your environment. If an instance, cluster or global cluster is not set to be encrypted at rest, Cloudrail will highlight it as a violation. This rule will only flag a violation for resources that are not yet created.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html to enable encryption for RDS instances. Follow the guide at https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.CreateInstance.html to enable encryption for RDS clusters. Follow the guide at https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database-getting-started.html to enable encryption for RDS global clusters.
+Remediation Steps - Terraform: For the aws_db_instance, aws_rds_global_cluster, and aws_rds_cluster resources, set the storage_encrypted argument to true.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_rds_cluster.default] (main.tf:5)
      Violating Resource: [aws_rds_cluster.default]  (main.tf:5)
 
      Evidence:
-             | The RDS DB cluster aws_rds_cluster.default does not have Cloudwatch log export enabled
-
-
------------------------------------------------
-Rule: Ensure RDS database has IAM authentication enabled
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_rds_cluster.default] (main.tf:5)
-     Violating Resource: [aws_rds_cluster.default]  (main.tf:5)
-
-     Evidence:
-             | The RDS DB cluster aws_rds_cluster.default has IAM database authentication disabled
+         RDS DB cluster
+             | RDS DB cluster aws_rds_cluster.default is not set to use encrypt at rest
 
 
 -----------------------------------------------
 Rule: Ensure all resources that can be tagged have at least one tag
+Description: Some organizations require that all resources have at least one tag set. This rule will review the resources that can be tagged, and make sure each one has a tag that is not the Name tag. Resources that are not tagged will be flagged.
+Remediation Steps - Cloud Console: Access the specific resource in the AWS console and add tags.
+Remediation Steps - Terraform: Add a tags section to the resource with at least one tag beyond the Name tag.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_rds_cluster.default] (main.tf:5)
@@ -33,15 +29,31 @@ Rule: Ensure all resources that can be tagged have at least one tag
 
 
 -----------------------------------------------
-Rule: Ensure RDS instances/clusters being created are set to be encrypted at rest
+Rule: Ensure RDS database has IAM authentication enabled
+Description: Cloudrail will review RDS instances and clusters configuration in your environment. If IAM authentication is not enabled, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.Enabling.html in order to enable IAM database authentication for the RDS instance or cluster.
+Remediation Steps - Terraform: For the aws_db_instance or aws_rds_cluster resources, set the iam_database_authentication_enabled argument to true.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_rds_cluster.default] (main.tf:5)
      Violating Resource: [aws_rds_cluster.default]  (main.tf:5)
 
      Evidence:
-         RDS DB cluster
-             | RDS DB cluster aws_rds_cluster.default is not set to use encrypt at rest
+             | The RDS DB cluster aws_rds_cluster.default has IAM database authentication disabled
+
+
+-----------------------------------------------
+Rule: Ensure RDS instances and clusters have logging enabled
+Description: Cloudrail will review the RDS instances and clusters configuration in your environment. If an instance or cluster is not configured to export logs to Cloudwatch, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_LogAccess.html#USER_LogAccess.Procedural.UploadtoCloudWatch in order to enable log export to Cloudwatch for RDS instances and clusters.
+Remediation Steps - Terraform: For the aws_db_instance or aws_rds_cluster resource, set enabled_cloudwatch_logs_exports argument to a list containing at least one of the supported log types.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_rds_cluster.default] (main.tf:5)
+     Violating Resource: [aws_rds_cluster.default]  (main.tf:5)
+
+     Evidence:
+             | The RDS DB cluster aws_rds_cluster.default does not have Cloudwatch log export enabled
 
 
 -----------------------------------------------

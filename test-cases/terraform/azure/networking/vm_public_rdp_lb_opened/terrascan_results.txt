@@ -2,21 +2,21 @@
 
 Violation Details -
     
-	Description    :	Ensure that Azure Resource Group has resource lock enabled
-	File           :	main.tf
-	Module Name    :	root
-	Plan Root      :	./
-	Line           :	13
-	Severity       :	LOW
-	
-	-----------------------------------------------------------------------
-	
 	Description    :	Ensure that Azure Virtual Network subnet is configured with a Network Security Group
 	File           :	main.tf
 	Module Name    :	root
 	Plan Root      :	./
-	Line           :	25
+	Line           :	24
 	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that Azure Resource Group has resource lock enabled
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	12
+	Severity       :	LOW
 	
 	-----------------------------------------------------------------------
 	
@@ -25,7 +25,7 @@ Scan Summary -
 
 	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-08-20 05:12:58.321549821 +0000 UTC
+	Scanned At          :	2022-01-05 15:53:23.031438709 +0000 UTC
 	Policies Validated  :	2
 	Violated Policies   :	2
 	Low                 :	1

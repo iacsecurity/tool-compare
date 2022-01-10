@@ -1,7 +1,7 @@
 
   Result 1
 
-  [aws-documentdb-enable-log-export][[0m[33mMEDIUM[39m[0m] Resource 'aws_docdb_cluster.docdb' uses default value for enabled_cloudwatch_logs_exports
+  [aws-documentdb-enable-log-export][MEDIUM] Resource 'aws_docdb_cluster.docdb' uses default value for enabled_cloudwatch_logs_exports
   /src/main.tf:1-9
 
 
@@ -19,12 +19,12 @@
   Resolution: Enable export logs
 
   More Info:
-  - https://tfsec.dev/docs/aws/documentdb/enable-log-export#aws/documentdb 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/documentdb/enable-log-export 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/docdb_cluster#enabled_cloudwatch_logs_exports 
 
   Result 2
 
-  [aws-documentdb-enable-storage-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_docdb_cluster.docdb' uses default value for storage_encrypted
+  [aws-documentdb-enable-storage-encryption][HIGH] Resource 'aws_docdb_cluster.docdb' uses default value for storage_encrypted
   /src/main.tf:1-9
 
 
@@ -42,12 +42,12 @@
   Resolution: Enable storage encryption
 
   More Info:
-  - https://tfsec.dev/docs/aws/documentdb/enable-storage-encryption#aws/documentdb 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/documentdb/enable-storage-encryption 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/docdb_cluster#storage_encrypted 
 
   Result 3
 
-  [aws-documentdb-encryption-customer-key][[0m[97mLOW[39m[0m] Resource 'aws_docdb_cluster.docdb' does not use CMK
+  [aws-documentdb-encryption-customer-key][LOW] Resource 'aws_docdb_cluster.docdb' does not use CMK
   /src/main.tf:1-9
 
 
@@ -65,12 +65,12 @@
   Resolution: Enable encryption using customer managed keys
 
   More Info:
-  - https://tfsec.dev/docs/aws/documentdb/encryption-customer-key#aws/documentdb 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/documentdb/encryption-customer-key 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/docdb_cluster#kms_key_id 
 
   Result 4
 
-  [general-secrets-sensitive-in-attribute][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Block 'aws_docdb_cluster.docdb' includes a potentially sensitive attribute which is defined within the project.
+  [general-secrets-sensitive-in-attribute][CRITICAL] Block 'aws_docdb_cluster.docdb' includes a potentially sensitive attribute which is defined within the project.
   /src/main.tf:5
 
 
@@ -87,15 +87,15 @@
   Resolution: Don't include sensitive data in blocks
 
   More Info:
-  - https://tfsec.dev/docs/general/secrets/sensitive-in-attribute#general/secrets 
+  - https://aquasecurity.github.io/tfsec/latest/checks/general/secrets/sensitive-in-attribute 
   - https://www.terraform.io/docs/state/sensitive-data.html 
 
   times
   ------------------------------------------
-  disk i/o             52.984459ms
-  parsing HCL          582.666µs
-  evaluating values    1.733416ms
-  running checks       37.634167ms
+  disk i/o             24.570375ms
+  parsing HCL          591.625µs
+  evaluating values    1.589916ms
+  running checks       21.84625ms
 
   counts
   ------------------------------------------

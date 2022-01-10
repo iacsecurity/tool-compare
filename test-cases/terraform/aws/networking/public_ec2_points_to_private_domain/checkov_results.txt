@@ -1,19 +1,6 @@
-
-
-       _               _              
-   ___| |__   ___  ___| | _______   __
-  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
- | (__| | | |  __/ (__|   < (_) \ V / 
-  \___|_| |_|\___|\___|_|\_\___/ \_/  
-                                      
-By bridgecrew.io | version: 2.0.358 
-Update available 2.0.358 -> 2.0.359
-Run pip3 install -U checkov to update 
-
-
 terraform scan results:
 
-Passed checks: 13, Failed checks: 14, Skipped checks: 0
+Passed checks: 12, Failed checks: 14, Skipped checks: 0
 
 Check: CKV_AWS_23: "Ensure every security groups rule has a description"
 	FAILED for resource: aws_security_group.esdomain
@@ -51,26 +38,6 @@ Check: CKV_AWS_83: "Ensure Elasticsearch Domain enforces HTTPS"
 		119 | }
 
 
-Check: CKV_AWS_84: "Ensure Elasticsearch Domain Logging is enabled"
-	FAILED for resource: aws_elasticsearch_domain.test
-	File: /main.tf:107-119
-	Guide: https://docs.bridgecrew.io/docs/elasticsearch_7
-
-		107 | resource "aws_elasticsearch_domain" "test" {
-		108 |   domain_name = "test"
-		109 |   vpc_options {
-		110 |     subnet_ids = [aws_subnet.nondefault_1.id]
-		111 |     security_group_ids = [aws_security_group.esdomain.id]
-		112 |   }
-		113 | 
-		114 |   ebs_options {
-		115 |     ebs_enabled = true
-		116 |     volume_size = 10
-		117 |     volume_type = "gp2"
-		118 |   }
-		119 | }
-
-
 Check: CKV_AWS_5: "Ensure all data stored in the Elasticsearch is securely encrypted at rest"
 	FAILED for resource: aws_elasticsearch_domain.test
 	File: /main.tf:107-119
@@ -91,10 +58,30 @@ Check: CKV_AWS_5: "Ensure all data stored in the Elasticsearch is securely encry
 		119 | }
 
 
-Check: CKV_AWS_24: "Ensure no security groups allow ingress from 0.0.0.0:0 to port 22"
+Check: CKV_AWS_84: "Ensure Elasticsearch Domain Logging is enabled"
+	FAILED for resource: aws_elasticsearch_domain.test
+	File: /main.tf:107-119
+	Guide: https://docs.bridgecrew.io/docs/elasticsearch_7
+
+		107 | resource "aws_elasticsearch_domain" "test" {
+		108 |   domain_name = "test"
+		109 |   vpc_options {
+		110 |     subnet_ids = [aws_subnet.nondefault_1.id]
+		111 |     security_group_ids = [aws_security_group.esdomain.id]
+		112 |   }
+		113 | 
+		114 |   ebs_options {
+		115 |     ebs_enabled = true
+		116 |     volume_size = 10
+		117 |     volume_type = "gp2"
+		118 |   }
+		119 | }
+
+
+Check: CKV_AWS_25: "Ensure no security groups allow ingress from 0.0.0.0:0 to port 3389"
 	FAILED for resource: aws_security_group.publicly_accessible_sg
 	File: /main.tf:121-135
-	Guide: https://docs.bridgecrew.io/docs/networking_1-port-security
+	Guide: https://docs.bridgecrew.io/docs/networking_2
 
 		121 | resource "aws_security_group" "publicly_accessible_sg" {
 		122 |   vpc_id = aws_vpc.nondefault.id
@@ -135,10 +122,10 @@ Check: CKV_AWS_23: "Ensure every security groups rule has a description"
 		135 | }
 
 
-Check: CKV_AWS_25: "Ensure no security groups allow ingress from 0.0.0.0:0 to port 3389"
+Check: CKV_AWS_24: "Ensure no security groups allow ingress from 0.0.0.0:0 to port 22"
 	FAILED for resource: aws_security_group.publicly_accessible_sg
 	File: /main.tf:121-135
-	Guide: https://docs.bridgecrew.io/docs/networking_2
+	Guide: https://docs.bridgecrew.io/docs/networking_1-port-security
 
 		121 | resource "aws_security_group" "publicly_accessible_sg" {
 		122 |   vpc_id = aws_vpc.nondefault.id
@@ -157,32 +144,6 @@ Check: CKV_AWS_25: "Ensure no security groups allow ingress from 0.0.0.0:0 to po
 		135 | }
 
 
-Check: CKV_AWS_88: "EC2 instance should not have public IP."
-	FAILED for resource: aws_instance.public_ins
-	File: /main.tf:138-144
-	Guide: https://docs.bridgecrew.io/docs/public_12
-
-		138 | resource "aws_instance" "public_ins" {
-		139 |   ami = "ami-0130bec6e5047f596"
-		140 |   instance_type = "t3.nano"
-		141 |   associate_public_ip_address = true
-		142 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
-		143 |   subnet_id = aws_subnet.nondefault_1.id
-		144 | }
-
-Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration EBS is securely encrypted"
-	FAILED for resource: aws_instance.public_ins
-	File: /main.tf:138-144
-	Guide: https://docs.bridgecrew.io/docs/general_13
-
-		138 | resource "aws_instance" "public_ins" {
-		139 |   ami = "ami-0130bec6e5047f596"
-		140 |   instance_type = "t3.nano"
-		141 |   associate_public_ip_address = true
-		142 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
-		143 |   subnet_id = aws_subnet.nondefault_1.id
-		144 | }
-
 Check: CKV_AWS_79: "Ensure Instance Metadata Service Version 1 is not enabled"
 	FAILED for resource: aws_instance.public_ins
 	File: /main.tf:138-144
@@ -200,6 +161,32 @@ Check: CKV_AWS_135: "Ensure that EC2 is EBS optimized"
 	FAILED for resource: aws_instance.public_ins
 	File: /main.tf:138-144
 	Guide: https://docs.bridgecrew.io/docs/ensure-that-ec2-is-ebs-optimized
+
+		138 | resource "aws_instance" "public_ins" {
+		139 |   ami = "ami-0130bec6e5047f596"
+		140 |   instance_type = "t3.nano"
+		141 |   associate_public_ip_address = true
+		142 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
+		143 |   subnet_id = aws_subnet.nondefault_1.id
+		144 | }
+
+Check: CKV_AWS_88: "EC2 instance should not have public IP."
+	FAILED for resource: aws_instance.public_ins
+	File: /main.tf:138-144
+	Guide: https://docs.bridgecrew.io/docs/public_12
+
+		138 | resource "aws_instance" "public_ins" {
+		139 |   ami = "ami-0130bec6e5047f596"
+		140 |   instance_type = "t3.nano"
+		141 |   associate_public_ip_address = true
+		142 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
+		143 |   subnet_id = aws_subnet.nondefault_1.id
+		144 | }
+
+Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration EBS is securely encrypted"
+	FAILED for resource: aws_instance.public_ins
+	File: /main.tf:138-144
+	Guide: https://docs.bridgecrew.io/docs/general_13
 
 		138 | resource "aws_instance" "public_ins" {
 		139 |   ami = "ami-0130bec6e5047f596"

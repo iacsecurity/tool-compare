@@ -1,9 +1,10 @@
+Failed to run the process ...
 {
   "meta": {
     "isPrivate": true,
     "isLicensesEnabled": false,
     "ignoreSettings": null,
-    "org": "yi2020",
+    "org": "ryder.d",
     "projectId": "",
     "policy": ""
   },
@@ -14,13 +15,48 @@
   "ignoreSettings": null,
   "targetFile": "main.tf",
   "projectName": "project",
-  "org": "yi2020",
+  "org": "ryder.d",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
   "packageManager": "terraformconfig",
   "path": "/project",
   "projectType": "terraformconfig",
-  "ok": true,
-  "infrastructureAsCodeIssues": []
+  "ok": false,
+  "infrastructureAsCodeIssues": [
+    {
+      "severity": "low",
+      "resolve": "Set `replica_count` to `3` or greater",
+      "impact": "An insufficient replicas configuration might impact the availability of Cognitive Search",
+      "msg": "resource.azurerm_search_service[search].replica_count",
+      "remediation": {
+        "terraform": "Set `replica_count` to `3` or greater",
+        "arm": "Set `replicaCount` to `3` or greater"
+      },
+      "subType": "Search",
+      "issue": "Cognitive Search has insufficient replicas configured",
+      "publicId": "SNYK-CC-AZURE-640",
+      "title": "Cognitive Search has insufficient replicas configured",
+      "references": [
+        "https://docs.microsoft.com/en-us/azure/templates/microsoft.search/searchservices?tabs=json",
+        "https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/search_service",
+        "https://docs.microsoft.com/en-us/azure/search/search-performance-optimization"
+      ],
+      "id": "SNYK-CC-AZURE-640",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Cognitive Search has insufficient replicas configured",
+        "impact": "An insufficient replicas configuration might impact the availability of Cognitive Search",
+        "resolve": "Set `replica_count` to `3` or greater"
+      },
+      "lineNumber": 15,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AZURE-640",
+      "isGeneratedByCustomRule": false,
+      "path": [
+        "resource",
+        "azurerm_search_service[search]",
+        "replica_count"
+      ]
+    }
+  ]
 }

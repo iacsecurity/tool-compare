@@ -6,6 +6,15 @@ Violation Details -
 	File           :	main.tf
 	Module Name    :	root
 	Plan Root      :	./
+	Line           :	82
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure that detailed monitoring is enabled for EC2 instances.
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
 	Line           :	95
 	Severity       :	HIGH
 	
@@ -17,24 +26,6 @@ Violation Details -
 	Plan Root      :	./
 	Line           :	108
 	Severity       :	HIGH
-	
-	-----------------------------------------------------------------------
-	
-	Description    :	Ensure that detailed monitoring is enabled for EC2 instances.
-	File           :	main.tf
-	Module Name    :	root
-	Plan Root      :	./
-	Line           :	82
-	Severity       :	HIGH
-	
-	-----------------------------------------------------------------------
-	
-	Description    :	Ensure VPC flow logging is enabled in all VPCs
-	File           :	main.tf
-	Module Name    :	root
-	Plan Root      :	./
-	Line           :	26
-	Severity       :	LOW
 	
 	-----------------------------------------------------------------------
 	
@@ -60,6 +51,15 @@ Violation Details -
 	File           :	main.tf
 	Module Name    :	root
 	Plan Root      :	./
+	Line           :	82
+	Severity       :	MEDIUM
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
 	Line           :	95
 	Severity       :	MEDIUM
 	
@@ -74,12 +74,12 @@ Violation Details -
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
+	Description    :	Ensure VPC flow logging is enabled in all VPCs
 	File           :	main.tf
 	Module Name    :	root
 	Plan Root      :	./
-	Line           :	82
-	Severity       :	MEDIUM
+	Line           :	26
+	Severity       :	LOW
 	
 	-----------------------------------------------------------------------
 	
@@ -88,7 +88,7 @@ Scan Summary -
 
 	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-08-18 16:17:56.732264627 +0000 UTC
+	Scanned At          :	2022-01-05 16:14:41.277315468 +0000 UTC
 	Policies Validated  :	9
 	Violated Policies   :	9
 	Low                 :	1

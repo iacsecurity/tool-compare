@@ -1,50 +1,9 @@
 
 WARNINGs found:
-Rule: Ensure Elasticsearch Domain enforces HTTPS
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_elasticsearch_domain.es-not-secure-policy] (main.tf:5)
-     Violating Resource: [aws_elasticsearch_domain.es-not-secure-policy]  (main.tf:5)
-
-     Evidence:
-             | This rule evaluated aws_elasticsearch_domain.es-not-secure-policy's configuration
-
-
------------------------------------------------
-Rule: Ensure Elasticsearch Domain has logging enabled
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_elasticsearch_domain.es-not-secure-policy] (main.tf:5)
-     Violating Resource: [aws_elasticsearch_domain.es-not-secure-policy]  (main.tf:5)
-
-     Evidence:
-             | The ElasticSearch Domain aws_elasticsearch_domain.es-not-secure-policy does not have logging configured at all
-
-
------------------------------------------------
-Rule: Ensure all resources that can be tagged have at least one tag
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_elasticsearch_domain.es-not-secure-policy] (main.tf:5)
-     Violating Resource: [aws_elasticsearch_domain.es-not-secure-policy]  (main.tf:5)
-
-     Evidence:
-             | Resource ElasticSearch Domain aws_elasticsearch_domain.es-not-secure-policy does not have any tags set
-
-
------------------------------------------------
-Rule: Ensure use of Elasticsearch Service domain policy, and no action wildcards are being used
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_elasticsearch_domain.es-not-secure-policy] (main.tf:5)
-     Violating Resource: [aws_elasticsearch_domain_policy.main]  (main.tf:15)
-
-     Evidence:
-             | The policy attached to the ElasticSearch Domain aws_elasticsearch_domain.es-not-secure-policy is using wildcard action es:*, and principal AWS: *, without any condition
-
-
------------------------------------------------
 Rule: Ensure Elasticsearch Domain is not publicly accessible
+Description: Cloudrail will review all of the Elasticsearch domains configured in your environment. For each domain it will review if it is set to be publicly accessible.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-createupdatedomains.html to configure VPC access instead of Public access in Network configuration section.
+Remediation Steps - Terraform: For the aws_elasticsearch_domain resource, in vpc_options block, set subnet_ids and security_group_ids arguments.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_elasticsearch_domain.es-not-secure-policy] (main.tf:5)
@@ -55,6 +14,48 @@ Rule: Ensure Elasticsearch Domain is not publicly accessible
              | ElasticSearch Domain: aws_elasticsearch_domain.es-not-secure-policy is publicly accessible
              | ElasticSearch Domain is currently not deployed within a VPC
          ElasticSearch
+
+
+-----------------------------------------------
+Rule: Ensure use of Elasticsearch Service domain policy, and no action wildcards are being used
+Description: Using wildcard actions may inadvertently allow users to take actions you do not want to allow them to do. In addition, using a resource policy will provide an additional layer of security. It is a best practice to use a resource policy and give specific permissions only.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-ac.html#es-ac-types-resource to modify Elasticsearch Service domain policy in order to avoid using wildcard actions.
+Remediation Steps - Terraform: For the aws_elasticsearch_domain_policy resource, modify policy argument in order to avoid using wildcard actions.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_elasticsearch_domain.es-not-secure-policy] (main.tf:5)
+     Violating Resource: [aws_elasticsearch_domain_policy.main]  (main.tf:15)
+
+     Evidence:
+             | The policy attached to the ElasticSearch Domain aws_elasticsearch_domain.es-not-secure-policy is using wildcard action es:*, and principal AWS: *, without any condition
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+Description: Some organizations require that all resources have at least one tag set. This rule will review the resources that can be tagged, and make sure each one has a tag that is not the Name tag. Resources that are not tagged will be flagged.
+Remediation Steps - Cloud Console: Access the specific resource in the AWS console and add tags.
+Remediation Steps - Terraform: Add a tags section to the resource with at least one tag beyond the Name tag.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_elasticsearch_domain.es-not-secure-policy] (main.tf:5)
+     Violating Resource: [aws_elasticsearch_domain.es-not-secure-policy]  (main.tf:5)
+
+     Evidence:
+             | Resource ElasticSearch Domain aws_elasticsearch_domain.es-not-secure-policy does not have any tags set
+
+
+-----------------------------------------------
+Rule: Ensure Elasticsearch Domain has logging enabled
+Description: Cloudrail will review the Elasticsearch Domains configuration in your environment. If a domain does not have logging enabled, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-createdomain-configure-slow-logs.html in order to configure log publishing for the Elasticsearch domain.
+Remediation Steps - Terraform: For the aws_elasticsearch_domain resource, set the log_publishing_options block with enabled argument set to true, log_type argument set to any of the valid values, and cloudwatch_log_group_arn argument set to the ARN of the CloudWatch Log Group.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_elasticsearch_domain.es-not-secure-policy] (main.tf:5)
+     Violating Resource: [aws_elasticsearch_domain.es-not-secure-policy]  (main.tf:5)
+
+     Evidence:
+             | The ElasticSearch Domain aws_elasticsearch_domain.es-not-secure-policy does not have logging configured at all
 
 
 -----------------------------------------------

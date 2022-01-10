@@ -1,24 +1,11 @@
-
-
-       _               _              
-   ___| |__   ___  ___| | _______   __
-  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
- | (__| | | |  __/ (__|   < (_) \ V / 
-  \___|_| |_|\___|\___|_|\_\___/ \_/  
-                                      
-By bridgecrew.io | version: 2.0.358 
-Update available 2.0.358 -> 2.0.359
-Run pip3 install -U checkov to update 
-
-
 terraform scan results:
 
 Passed checks: 6, Failed checks: 4, Skipped checks: 0
 
-Check: CKV_AWS_115: "Ensure that AWS Lambda function is configured for function-level concurrent execution limit"
+Check: CKV_AWS_50: "X-ray tracing is enabled for Lambda"
 	FAILED for resource: aws_lambda_function.test_lambda
 	File: /main.tf:57-67
-	Guide: https://docs.bridgecrew.io/docs/ensure-that-aws-lambda-function-is-configured-for-function-level-concurrent-execution-limit
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_serverless_4
 
 		57 | resource "aws_lambda_function" "test_lambda" {
 		58 |   filename      = "${path.module}/Archive.zip"
@@ -32,10 +19,10 @@ Check: CKV_AWS_115: "Ensure that AWS Lambda function is configured for function-
 		66 |   ]
 		67 | }
 
-Check: CKV_AWS_50: "X-ray tracing is enabled for Lambda"
+Check: CKV_AWS_115: "Ensure that AWS Lambda function is configured for function-level concurrent execution limit"
 	FAILED for resource: aws_lambda_function.test_lambda
 	File: /main.tf:57-67
-	Guide: https://docs.bridgecrew.io/docs/bc_aws_serverless_4
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-aws-lambda-function-is-configured-for-function-level-concurrent-execution-limit
 
 		57 | resource "aws_lambda_function" "test_lambda" {
 		58 |   filename      = "${path.module}/Archive.zip"

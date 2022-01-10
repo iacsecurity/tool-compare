@@ -4,7 +4,7 @@ Failed to run the process ...
     "isPrivate": true,
     "isLicensesEnabled": false,
     "ignoreSettings": null,
-    "org": "yi2020",
+    "org": "ryder.d",
     "projectId": "",
     "policy": ""
   },
@@ -15,7 +15,7 @@ Failed to run the process ...
   "ignoreSettings": null,
   "targetFile": "main.tf",
   "projectName": "project",
-  "org": "yi2020",
+  "org": "ryder.d",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
@@ -52,6 +52,7 @@ Failed to run the process ...
       },
       "lineNumber": 45,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-53",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_instance[example_with_new_ami]",
@@ -83,6 +84,7 @@ Failed to run the process ...
       },
       "lineNumber": 98,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-130",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_instance[public-ubuntu-from-data]",
@@ -114,6 +116,7 @@ Failed to run the process ...
       },
       "lineNumber": 98,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-426",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_instance[public-ubuntu-from-data]",
@@ -148,6 +151,7 @@ Failed to run the process ...
       },
       "lineNumber": 98,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-53",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_instance[public-ubuntu-from-data]",
@@ -180,6 +184,7 @@ Failed to run the process ...
       },
       "lineNumber": 93,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-426",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_instance[example_with_ami_from_instance]",
@@ -211,6 +216,7 @@ Failed to run the process ...
       },
       "lineNumber": 80,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-426",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_instance[example_with_copied_ami]",
@@ -245,6 +251,7 @@ Failed to run the process ...
       },
       "lineNumber": 93,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-53",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_instance[example_with_ami_from_instance]",
@@ -280,6 +287,7 @@ Failed to run the process ...
       },
       "lineNumber": 80,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-53",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_instance[example_with_copied_ami]",
@@ -312,6 +320,7 @@ Failed to run the process ...
       },
       "lineNumber": 45,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-426",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_instance[example_with_new_ami]",
@@ -343,6 +352,7 @@ Failed to run the process ...
       },
       "lineNumber": 69,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-404",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_ami_copy[example]",
@@ -373,6 +383,7 @@ Failed to run the process ...
       },
       "lineNumber": 93,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-130",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_instance[example_with_ami_from_instance]",
@@ -403,6 +414,7 @@ Failed to run the process ...
       },
       "lineNumber": 80,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-130",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_instance[example_with_copied_ami]",
@@ -433,6 +445,7 @@ Failed to run the process ...
       },
       "lineNumber": 45,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-130",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_instance[example_with_new_ami]",

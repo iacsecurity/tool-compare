@@ -1,18 +1,73 @@
 
 WARNINGs found:
-Rule: Ensure Neptune cluster has logging enabled
+Rule: Ensure Neptune clusters being created are set to be encrypted at rest with customer-managed CMK
+Description: Cloudrail will review the Neptune clusters being created in your environment. If a cluster is not set to encrypt data at rest with a customer-managed CMK, Cloudrail will highlight it as a violation. This rule will only flag a violation for resources that are not yet created.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/neptune/latest/userguide/encrypt.html to enable encryption at rest using a customer-managed CMK.
+Remediation Steps - Terraform: For the aws_neptune_cluster resource, set storage_encrypted argument to true and set kms_key_arn argument to use a customer-managed CMK.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_neptune_cluster.encrypted_neptune_cluster] (main.tf:66)
      Violating Resource: [aws_neptune_cluster.encrypted_neptune_cluster]  (main.tf:66)
 
      Evidence:
-             | The Neptune DB Cluster aws_neptune_cluster.encrypted_neptune_cluster does not have Cloudwatch log export enabled
+             | The Neptune cluster aws_neptune_cluster.encrypted_neptune_cluster is not set to be encrypted at rest using customer-managed CMK
+
+
+-----------------------------------------------
+Rule: Ensure all security groups and rules have a description detailing the rule
+Description: Cloudrail will review your security groups. If a security group is using a default description, or has a rule which does not include a description, this rule will trigger.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html to update the security group or security group rules description field.
+Remediation Steps - Terraform: For the aws_security_group and aws_security_group_rule resources, set description argument with a proper value. Note, this will force the re-creation of the security group and all resources that depend on it. This is an AWS limitation.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_security_group.free] (main.tf:18)
+     Violating Resource: [aws_security_group.free]  (main.tf:18)
+
+     Evidence:
+             | The Security group aws_security_group.free does not have a description for the ingress rule of 0.0.0.0/0 for ports 0:64000 using protocol TCP
+
+
+-----------------------------------------------
+Rule: Ensure Neptune database is not publicly accessible
+Description: Databases should not be publicly accessible. If a database is serving content to be consumed by external users, it's best to go through an API gateway or some other control point.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/neptune/latest/userguide/security-vpc-security-group.html to modify Neptune database Security Groups to block traffic from publicly-accessible AWS resources.
+Remediation Steps - Terraform: For the aws_neptune_cluster resource, set vpc_security_group_ids or cluster_security_groups arguments to use a Security Group that blocks traffic from publicly-accessible AWS resources.
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_neptune_cluster_instance.neptune_instance[0]] (main.tf:76)
+     Violating Resource: [aws_security_group.free]  (main.tf:18)
+
+     Evidence:
+         Internet
+             | Instance aws_neptune_cluster_instance.neptune_instance[0] is in Neptune DB Cluster aws_neptune_cluster.encrypted_neptune_cluster
+             | Neptune Instance is on VPC aws_vpc.external
+             | Neptune Instance uses subnet(s) aws_subnet.free_1, aws_subnet.free_2
+             | Neptune Instance is reachable from the internet due to subnet(s) and route table(s)
+             | Subnet uses Network ACL(s) nacl-pseudo-49bb9dfb-d791-433a-988b-b28a48026b6a
+             | Network ACL's and security group(s) allows the Neptune Instance configured ports
+         Neptune Instance
+
+
+   - Exposed Resource: [aws_neptune_cluster_instance.neptune_instance[1]] (main.tf:76)
+     Violating Resource: [aws_security_group.free]  (main.tf:18)
+
+     Evidence:
+         Internet
+             | Instance aws_neptune_cluster_instance.neptune_instance[1] is in Neptune DB Cluster aws_neptune_cluster.encrypted_neptune_cluster
+             | Neptune Instance is on VPC aws_vpc.external
+             | Neptune Instance uses subnet(s) aws_subnet.free_1, aws_subnet.free_2
+             | Neptune Instance is reachable from the internet due to subnet(s) and route table(s)
+             | Subnet uses Network ACL(s) nacl-pseudo-49bb9dfb-d791-433a-988b-b28a48026b6a
+             | Network ACL's and security group(s) allows the Neptune Instance configured ports
+         Neptune Instance
 
 
 -----------------------------------------------
 Rule: Ensure all resources that can be tagged have at least one tag
- - 9 Resources Exposed:
+Description: Some organizations require that all resources have at least one tag set. This rule will review the resources that can be tagged, and make sure each one has a tag that is not the Name tag. Resources that are not tagged will be flagged.
+Remediation Steps - Cloud Console: Access the specific resource in the AWS console and add tags.
+Remediation Steps - Terraform: Add a tags section to the resource with at least one tag beyond the Name tag.
+ - 10 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_db_subnet_group.free] (main.tf:59)
      Violating Resource: [aws_db_subnet_group.free]  (main.tf:59)
@@ -21,18 +76,32 @@ Rule: Ensure all resources that can be tagged have at least one tag
              | Resource DB subnet group aws_db_subnet_group.free does not have any tags set
 
 
-   - Exposed Resource: [aws_vpc.external] (main.tf:5)
-     Violating Resource: [aws_vpc.external]  (main.tf:5)
+   - Exposed Resource: [aws_neptune_cluster_instance.neptune_instance[1]] (main.tf:76)
+     Violating Resource: [aws_neptune_cluster_instance.neptune_instance[1]]  (main.tf:76)
 
      Evidence:
-             | Resource VPC aws_vpc.external does not have any tags set other than "Name"
+             | Resource Neptune Instance aws_neptune_cluster_instance.neptune_instance[1] does not have any tags set
 
 
-   - Exposed Resource: [aws_subnet.free_2] (main.tf:53)
-     Violating Resource: [aws_subnet.free_2]  (main.tf:53)
+   - Exposed Resource: [aws_neptune_cluster_instance.neptune_instance[0]] (main.tf:76)
+     Violating Resource: [aws_neptune_cluster_instance.neptune_instance[0]]  (main.tf:76)
 
      Evidence:
-             | Resource Subnet aws_subnet.free_2 does not have any tags set
+             | Resource Neptune Instance aws_neptune_cluster_instance.neptune_instance[0] does not have any tags set
+
+
+   - Exposed Resource: [aws_route_table.rt] (main.tf:29)
+     Violating Resource: [aws_route_table.rt]  (main.tf:29)
+
+     Evidence:
+             | Resource Route table aws_route_table.rt does not have any tags set
+
+
+   - Exposed Resource: [aws_security_group.free] (main.tf:18)
+     Violating Resource: [aws_security_group.free]  (main.tf:18)
+
+     Evidence:
+             | Resource Security group aws_security_group.free does not have any tags set
 
 
    - Exposed Resource: [aws_subnet.free_1] (main.tf:47)
@@ -49,86 +118,39 @@ Rule: Ensure all resources that can be tagged have at least one tag
              | Resource Neptune DB Cluster aws_neptune_cluster.encrypted_neptune_cluster does not have any tags set
 
 
-   - Exposed Resource: [aws_neptune_cluster_instance.neptune_instance[0]] (main.tf:76)
-     Violating Resource: [aws_neptune_cluster_instance.neptune_instance[0]]  (main.tf:76)
+   - Exposed Resource: [aws_vpc.external] (main.tf:5)
+     Violating Resource: [aws_vpc.external]  (main.tf:5)
 
      Evidence:
-             | Resource Neptune Instance aws_neptune_cluster_instance.neptune_instance[0] does not have any tags set
+             | Resource VPC aws_vpc.external does not have any tags set other than "Name"
 
 
-   - Exposed Resource: [aws_neptune_cluster_instance.neptune_instance[1]] (main.tf:76)
-     Violating Resource: [aws_neptune_cluster_instance.neptune_instance[1]]  (main.tf:76)
-
-     Evidence:
-             | Resource Neptune Instance aws_neptune_cluster_instance.neptune_instance[1] does not have any tags set
-
-
-   - Exposed Resource: [aws_security_group.free] (main.tf:18)
-     Violating Resource: [aws_security_group.free]  (main.tf:18)
+   - Exposed Resource: [aws_subnet.free_2] (main.tf:53)
+     Violating Resource: [aws_subnet.free_2]  (main.tf:53)
 
      Evidence:
-             | Resource Security group aws_security_group.free does not have any tags set
+             | Resource Subnet aws_subnet.free_2 does not have any tags set
 
 
-   - Exposed Resource: [aws_route_table.rt] (main.tf:29)
-     Violating Resource: [aws_route_table.rt]  (main.tf:29)
+   - Exposed Resource: [aws_internet_gateway.igw] (main.tf:14)
+     Violating Resource: [aws_internet_gateway.igw]  (main.tf:14)
 
      Evidence:
-             | Resource Route table aws_route_table.rt does not have any tags set
+             | Resource Internet gateway aws_internet_gateway.igw does not have any tags set
 
 
 -----------------------------------------------
-Rule: Ensure Neptune database is not publicly accessible
- - 2 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_neptune_cluster_instance.neptune_instance[1]] (main.tf:76)
-     Violating Resource: [aws_security_group.free]  (main.tf:18)
-
-     Evidence:
-         Internet
-             | Instance aws_neptune_cluster_instance.neptune_instance[1] is in Neptune DB Cluster aws_neptune_cluster.encrypted_neptune_cluster
-             | Neptune Instance is on VPC aws_vpc.external
-             | Neptune Instance uses subnet(s) aws_subnet.free_1, aws_subnet.free_2
-             | Neptune Instance is reachable from the internet due to subnet(s) and route table(s)
-             | Subnet uses Network ACL(s) nacl-pseudo-24d4cb82-8c14-44d0-9c52-003d23edc69a
-             | Network ACL's and security group(s) allows the Neptune Instance configured ports
-         Neptune Instance
-
-
-   - Exposed Resource: [aws_neptune_cluster_instance.neptune_instance[0]] (main.tf:76)
-     Violating Resource: [aws_security_group.free]  (main.tf:18)
-
-     Evidence:
-         Internet
-             | Instance aws_neptune_cluster_instance.neptune_instance[0] is in Neptune DB Cluster aws_neptune_cluster.encrypted_neptune_cluster
-             | Neptune Instance is on VPC aws_vpc.external
-             | Neptune Instance uses subnet(s) aws_subnet.free_1, aws_subnet.free_2
-             | Neptune Instance is reachable from the internet due to subnet(s) and route table(s)
-             | Subnet uses Network ACL(s) nacl-pseudo-24d4cb82-8c14-44d0-9c52-003d23edc69a
-             | Network ACL's and security group(s) allows the Neptune Instance configured ports
-         Neptune Instance
-
-
------------------------------------------------
-Rule: Ensure all security groups and rules have a description detailing the rule
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_security_group.free] (main.tf:18)
-     Violating Resource: [aws_security_group.free]  (main.tf:18)
-
-     Evidence:
-             | The Security group aws_security_group.free does not have a description for the ingress rule of 0.0.0.0/0 for ports 0:64000 using protocol TCP
-
-
------------------------------------------------
-Rule: Ensure Neptune clusters being created are set to be encrypted at rest with customer-managed CMK
+Rule: Ensure Neptune cluster has logging enabled
+Description: Cloudrail will review the Neptune clusters configuration in your environment. If a cluster is not configured to export logs to Cloudwatch, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/neptune/latest/userguide/cloudwatch-logs.html in order to enable log export to Cloudwatch for Neptune cluster.
+Remediation Steps - Terraform: For the aws_neptune_cluster resource, set enable_cloudwatch_logs_exports argument to a list containing the element “audit”.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_neptune_cluster.encrypted_neptune_cluster] (main.tf:66)
      Violating Resource: [aws_neptune_cluster.encrypted_neptune_cluster]  (main.tf:66)
 
      Evidence:
-             | The Neptune cluster aws_neptune_cluster.encrypted_neptune_cluster is not set to be encrypted at rest using customer-managed CMK
+             | The Neptune DB Cluster aws_neptune_cluster.encrypted_neptune_cluster does not have Cloudwatch log export enabled
 
 
 -----------------------------------------------

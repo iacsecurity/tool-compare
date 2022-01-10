@@ -1,58 +1,23 @@
 
 WARNINGs found:
-Rule: Ensure IAM policies pass Access Analyzer policy validation without WARNING and SUGGESTION issues
- - 3 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_iam_role.dms-vpc-role] (main.tf:32)
-     Violating Resource: [aws_iam_role.dms-vpc-role]  (main.tf:32)
-
-     Evidence:
-         Line 5, Col 13:
-             | Add a value to the empty string in the Sid element
-             | See https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-reference-policy-checks.html#access-analyzer-reference-policy-checks-suggestion-empty-sid-value
-
-
-   - Exposed Resource: [aws_iam_role.dms-access-for-endpoint] (main.tf:12)
-     Violating Resource: [aws_iam_role.dms-access-for-endpoint]  (main.tf:12)
-
-     Evidence:
-         Line 5, Col 13:
-             | Add a value to the empty string in the Sid element
-             | See https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-reference-policy-checks.html#access-analyzer-reference-policy-checks-suggestion-empty-sid-value
-
-
-   - Exposed Resource: [aws_iam_role.dms-cloudwatch-logs-role] (main.tf:22)
-     Violating Resource: [aws_iam_role.dms-cloudwatch-logs-role]  (main.tf:22)
-
-     Evidence:
-         Line 5, Col 13:
-             | Add a value to the empty string in the Sid element
-             | See https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-reference-policy-checks.html#access-analyzer-reference-policy-checks-suggestion-empty-sid-value
-
-
------------------------------------------------
 Rule: Ensure all resources that can be tagged have at least one tag
- - 8 Resources Exposed:
+Description: Some organizations require that all resources have at least one tag set. This rule will review the resources that can be tagged, and make sure each one has a tag that is not the Name tag. Resources that are not tagged will be flagged.
+Remediation Steps - Cloud Console: Access the specific resource in the AWS console and add tags.
+Remediation Steps - Terraform: Add a tags section to the resource with at least one tag beyond the Name tag.
+ - 4 Resources Exposed:
 -----------------------------------------------
-   - Exposed Resource: [aws_dms_replication_subnet_group.test] (main.tf:73)
-     Violating Resource: [aws_dms_replication_subnet_group.test]  (main.tf:73)
+   - Exposed Resource: [aws_dms_replication_subnet_group.test] (main.tf:42)
+     Violating Resource: [aws_dms_replication_subnet_group.test]  (main.tf:42)
 
      Evidence:
              | Resource Dms Subnet Group aws_dms_replication_subnet_group.test does not have any tags set other than "Name"
 
 
-   - Exposed Resource: [aws_vpc.test_vpc] (main.tf:42)
-     Violating Resource: [aws_vpc.test_vpc]  (main.tf:42)
+   - Exposed Resource: [aws_iam_role.dms-vpc-role] (main.tf:32)
+     Violating Resource: [aws_iam_role.dms-vpc-role]  (main.tf:32)
 
      Evidence:
-             | Resource VPC aws_vpc.test_vpc does not have any tags set
-
-
-   - Exposed Resource: [aws_subnet.test_sub] (main.tf:46)
-     Violating Resource: [aws_subnet.test_sub]  (main.tf:46)
-
-     Evidence:
-             | Resource Subnet aws_subnet.test_sub does not have any tags set
+             | Resource IAM Role aws_iam_role.dms-vpc-role does not have any tags set
 
 
    - Exposed Resource: [aws_iam_role.dms-access-for-endpoint] (main.tf:12)
@@ -69,44 +34,41 @@ Rule: Ensure all resources that can be tagged have at least one tag
              | Resource IAM Role aws_iam_role.dms-cloudwatch-logs-role does not have any tags set
 
 
+-----------------------------------------------
+Rule: Ensure IAM policies pass Access Analyzer policy validation without WARNING and SUGGESTION issues
+Description: Cloudrail will send all of your IAM policies to the AWS Access Analyzer for Policy Validation. Any issues found by Access Analyzer at the WARNING and SUGGESTION severities will be highlighted as issues by Cloudrail under this rule.
+Remediation Steps - Cloud Console: Review the findings and correct them within the policy.
+Remediation Steps - Terraform: Review the findings and correct them within the policy.
+ - 3 Resources Exposed:
+-----------------------------------------------
    - Exposed Resource: [aws_iam_role.dms-vpc-role] (main.tf:32)
      Violating Resource: [aws_iam_role.dms-vpc-role]  (main.tf:32)
 
      Evidence:
-             | Resource IAM Role aws_iam_role.dms-vpc-role does not have any tags set
+         Line 5, Col 13:
+             | Add a value to the empty string in the Sid element
+             | See https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-reference-policy-checks.html#access-analyzer-reference-policy-checks-suggestion-empty-sid-value
 
 
-   - Exposed Resource: [aws_dms_replication_instance.test] (main.tf:85)
-     Violating Resource: [aws_dms_replication_instance.test]  (main.tf:85)
-
-     Evidence:
-             | Resource DMS replication instance aws_dms_replication_instance.test does not have any tags set other than "Name"
-
-
-   - Exposed Resource: [aws_route_table.rt1] (main.tf:60)
-     Violating Resource: [aws_route_table.rt1]  (main.tf:60)
+   - Exposed Resource: [aws_iam_role.dms-cloudwatch-logs-role] (main.tf:22)
+     Violating Resource: [aws_iam_role.dms-cloudwatch-logs-role]  (main.tf:22)
 
      Evidence:
-             | Resource Route table aws_route_table.rt1 does not have any tags set
+         Line 5, Col 13:
+             | Add a value to the empty string in the Sid element
+             | See https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-reference-policy-checks.html#access-analyzer-reference-policy-checks-suggestion-empty-sid-value
+
+
+   - Exposed Resource: [aws_iam_role.dms-access-for-endpoint] (main.tf:12)
+     Violating Resource: [aws_iam_role.dms-access-for-endpoint]  (main.tf:12)
+
+     Evidence:
+         Line 5, Col 13:
+             | Add a value to the empty string in the Sid element
+             | See https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-reference-policy-checks.html#access-analyzer-reference-policy-checks-suggestion-empty-sid-value
 
 
 -----------------------------------------------
-Rule: Ensure all used default security groups of every VPC restrict all traffic
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_dms_replication_instance.test] (main.tf:85)
-     Violating Resource: [sg-pseudo-0d1fe98e-6940-46c3-b071-15271f26cd44]  (Not found in TF)
-
-     Evidence:
-         VPC aws_vpc.test_vpc
-             | aws_dms_replication_instance.test uses ENI eni-pseudo-4a6443b5-e7c4-4e92-bfdd-37499bcc50a8
-             | The ENI is secured by default Security group sg-pseudo-0d1fe98e-6940-46c3-b071-15271f26cd44 and allows all traffic
-
-
------------------------------------------------
-
-Cloudrail has listed "pseudo" objects in the above results.
-These are resources that don't exist yet, or don't show in the Terraform input, but we know will be created in the real live environment.
 
 Cloudrail ran this assessment without any policies and so all rule violations show as warnings.
 You can increase a rule's enforcement level by creating a Policy in the Web UI and adding the rule to it.

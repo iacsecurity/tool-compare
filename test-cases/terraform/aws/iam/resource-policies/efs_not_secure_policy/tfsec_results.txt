@@ -1,7 +1,7 @@
 
   Result 1
 
-  [aws-efs-enable-at-rest-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_efs_file_system.not_secure' does not specify if encryption should be used.
+  [aws-efs-enable-at-rest-encryption][HIGH] Resource 'aws_efs_file_system.not_secure' does not specify if encryption should be used.
   /src/main.tf:5-11
 
 
@@ -24,16 +24,16 @@
   Resolution: Enable encryption for EFS
 
   More Info:
-  - https://tfsec.dev/docs/aws/efs/enable-at-rest-encryption#aws/efs 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/efs/enable-at-rest-encryption 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/efs_file_system 
   - https://docs.aws.amazon.com/efs/latest/ug/encryption.html 
 
   times
   ------------------------------------------
-  disk i/o             68.345625ms
-  parsing HCL          540.25µs
-  evaluating values    3.316625ms
-  running checks       16.888167ms
+  disk i/o             27.037625ms
+  parsing HCL          510.583µs
+  evaluating values    3.487251ms
+  running checks       15.830542ms
 
   counts
   ------------------------------------------

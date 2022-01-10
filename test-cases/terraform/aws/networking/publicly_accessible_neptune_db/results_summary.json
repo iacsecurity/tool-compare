@@ -1,7 +1,8 @@
 {
+  "last_reviewed": "10/01/2022",
   "checkov": "yes",
   "cloudrail": "yes",
-  "kics": "no",
+  "kics": "yes",
   "snyk": "yes",
   "terrascan": "no",
   "tfsec": "no"

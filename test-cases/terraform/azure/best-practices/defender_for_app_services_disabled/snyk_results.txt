@@ -4,7 +4,7 @@ Failed to run the process ...
     "isPrivate": true,
     "isLicensesEnabled": false,
     "ignoreSettings": null,
-    "org": "yi2020",
+    "org": "ryder.d",
     "projectId": "",
     "policy": ""
   },
@@ -15,7 +15,7 @@ Failed to run the process ...
   "ignoreSettings": null,
   "targetFile": "main.tf",
   "projectName": "project",
-  "org": "yi2020",
+  "org": "ryder.d",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
@@ -25,29 +25,68 @@ Failed to run the process ...
   "ok": false,
   "infrastructureAsCodeIssues": [
     {
-      "severity": "low",
+      "severity": "medium",
       "resolve": "Set `tier` attribute to `Standard`",
-      "id": "SNYK-CC-TF-164",
       "impact": "Most of Azure Security Center features are disabled under the Free tier",
       "msg": "resource.azurerm_security_center_subscription_pricing[example]",
+      "remediation": {
+        "terraform": "Set `tier` attribute to `Standard`",
+        "arm": "Set `properties.pricingTier` attribute to `Standard`"
+      },
       "subType": "Security Center",
-      "issue": "Azure Security Center standard tier pricing is not enabled",
+      "issue": "Security Center Free Tier",
       "publicId": "SNYK-CC-TF-164",
       "title": "Security Center Free Tier",
       "references": [
         "https://docs.microsoft.com/bs-cyrl-ba/azure/security-center/security-center-pricing"
       ],
+      "id": "SNYK-CC-TF-164",
       "isIgnored": false,
       "iacDescription": {
-        "issue": "Azure Security Center standard tier pricing is not enabled",
+        "issue": "Security Center Free Tier",
         "impact": "Most of Azure Security Center features are disabled under the Free tier",
         "resolve": "Set `tier` attribute to `Standard`"
       },
-      "lineNumber": 11,
+      "lineNumber": 10,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-164",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "azurerm_security_center_subscription_pricing[example]"
+      ]
+    },
+    {
+      "severity": "low",
+      "resolve": "Set `tier` to `Standard` and `resource_type` to `AppServices`",
+      "impact": "App Service might be vulnerable to a broad range of threats",
+      "msg": "resource.azurerm_security_center_subscription_pricing[example].resource_type",
+      "remediation": {
+        "terraform": "Set `tier` to `Standard` and `resource_type` to `AppServices`",
+        "arm": "Set `name` to `AppServices` and `properties.pricingTier` to `Standard`"
+      },
+      "subType": "Security Center",
+      "issue": "App Service is not protected by Azure Defender",
+      "publicId": "SNYK-CC-AZURE-522",
+      "title": "App Service is not protected by Azure Defender",
+      "references": [
+        "https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/security_center_subscription_pricing",
+        "https://docs.microsoft.com/en-us/azure/security-center/azure-defender",
+        "CIS Microsoft Azure Foundations Benchmark v1.3.1 - 2.2 Ensure that Azure Defender is set to On for App Service"
+      ],
+      "id": "SNYK-CC-AZURE-522",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "App Service is not protected by Azure Defender",
+        "impact": "App Service might be vulnerable to a broad range of threats",
+        "resolve": "Set `tier` to `Standard` and `resource_type` to `AppServices`"
+      },
+      "lineNumber": 12,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AZURE-522",
+      "isGeneratedByCustomRule": false,
+      "path": [
+        "resource",
+        "azurerm_security_center_subscription_pricing[example]",
+        "resource_type"
       ]
     }
   ]

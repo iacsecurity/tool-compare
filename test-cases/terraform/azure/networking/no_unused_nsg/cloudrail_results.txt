@@ -1,6 +1,9 @@
 
 WARNINGs found:
 Rule: Ensure no unused Network Security Group exists in the subscription
+Description: Network Security Groups should be maintained carefully, in order to provide network access for desired entities. Having unused Network Security Groups is giving the opportunity to accidentally assign vulnerable network access to your resources.
+Remediation Steps - Cloud Console: Delete the unused Network Security Group from your Azure Portal.
+Remediation Steps - Terraform: Remove the unused azurerm_network_security_group resource, from your TF template.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [azurerm_network_security_group.nsg] (main.tf:24)

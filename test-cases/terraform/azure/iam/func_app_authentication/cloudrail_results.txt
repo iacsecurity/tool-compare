@@ -1,17 +1,93 @@
 
 WARNINGs found:
-Rule: Ensure that Function apps is only accessible over HTTPS
+Rule: Ensure authentication is enabled in Function Apps
+Description: Cloudrail will review the Function Apps configuration in your environment. If a function does not have authentication enabled, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.microsoft.com/en-us/azure/azure-functions/functions-how-to-use-azure-function-app-settings?tabs=portal#auth in order to enable authentication for the Function App.
+Remediation Steps - Terraform: For the azurerm_function_app resource, set the auth_settings block with enabled argument set to true.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [azurerm_function_app.functionapp] (main.tf:42)
      Violating Resource: [azurerm_function_app.functionapp]  (main.tf:42)
 
      Evidence:
-             | This rule evaluated my-func-app-functionapp's configuration
+             | The Function App my-func-app-functionapp does not have authentication enabled.
 
 
 -----------------------------------------------
-Rule: Ensure Storage Account is using the latest version of TLS encryption
+Rule: Ensure HTTP version is the latest in Function Apps
+Description: Cloudrail will review the App Service (Function Apps) configuration in your environment. If an app does not use the latest HTTP version, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://azure.microsoft.com/en-us/blog/announcing-http-2-support-in-azure-app-service/ in order to configure HTTP version for the web app.
+Remediation Steps - Terraform: For the azurerm_function_app resource, set the site_config block with http2_enabled argument set to true.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [azurerm_function_app.functionapp] (main.tf:42)
+     Violating Resource: [azurerm_function_app.functionapp]  (main.tf:42)
+
+     Evidence:
+             | The Function App my-func-app-functionapp does not use the latest HTTP version.
+
+
+-----------------------------------------------
+Rule: Ensure Storage Account has default network access denied
+Description: Cloudrail will review the Storage Accounts configuration in your environment. If the account network rules are not denying default network access, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.microsoft.com/en-us/azure/storage/common/storage-network-security?tabs=azure-portal#change-the-default-network-access-rule in order to deny access by default.
+Remediation Steps - Terraform: For the azurerm_storage_account resource, in the network_rules block, set the default_action argument to “Deny”. If azurerm_storage_account_network_rules resource is being used, set the default_action argument to “Deny”.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [azurerm_storage_account.storacc] (main.tf:22)
+     Violating Resource: [azurerm_storage_account.storacc]  (main.tf:22)
+
+     Evidence:
+             | The Storage Account myfuncappstorageaccount is not denying default network access
+
+
+-----------------------------------------------
+Rule: Ensure Function App is only accessible via HTTPS
+Description: Cloudrail will review the Function Apps configuration in your environment. If a function does not have HTTPS only enabled, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.microsoft.com/en-us/azure/app-service/configure-ssl-bindings#enforce-https in order to configured HTTPS Only for the Function App.
+Remediation Steps - Terraform: For the azurerm_function_app resource, set the https_only argument to true.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [azurerm_function_app.functionapp] (main.tf:42)
+     Violating Resource: [azurerm_function_app.functionapp]  (main.tf:42)
+
+     Evidence:
+             | The Function App my-func-app-functionapp does not have HTTPS only enabled.
+
+
+-----------------------------------------------
+Rule: Ensure Function App enforces FTPS only
+Description: Cloudrail will review the Function App configuration in your environment. If a function app has FTP enabled and it is not enforcing FTPS only, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.microsoft.com/en-us/azure/app-service/deploy-ftp?tabs=portal#enforce-ftps in order to select FTPS Only in FTP state.
+Remediation Steps - Terraform: For the azurerm_function_app resource, set the site_config block with ftps_state argument set to "FtpsOnly".
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [azurerm_function_app.functionapp] (main.tf:42)
+     Violating Resource: [azurerm_function_app.functionapp]  (main.tf:42)
+
+     Evidence:
+             | The Function App my-func-app-functionapp is not enforcing FTPS only or does not have FTP disabled.
+
+
+-----------------------------------------------
+Rule: Ensure Function App is using a managed identity
+Description: Cloudrail will review the Function Apps configuration in your environment. If a function of type “functionapp” does not have a managed identity enabled, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.microsoft.com/en-us/azure/app-service/overview-managed-identity?toc=%2Fazure%2Fazure-functions%2Ftoc.json&tabs=dotnet in order to configure a managed identity for the Function app.
+Remediation Steps - Terraform: For the azure_function_app resource, in identity block, set the type argument to “SystemAssigned”, or to “UserAssigned” and also set identity_ids argument.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [azurerm_function_app.functionapp] (main.tf:42)
+     Violating Resource: [azurerm_function_app.functionapp]  (main.tf:42)
+
+     Evidence:
+             | The Function App my-func-app-functionapp does not use managed identity.
+
+
+-----------------------------------------------
+Rule: Ensure Storage logging is enabled for Queue service for read, write and delete requests
+Description: The Azure Queue Storage sevice stores messages that may be read by any client with access to the storage account. It is recommended to enable the logging for read, write, and delete events in order to monitor user activity.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.microsoft.com/en-us/azure/storage/queues/monitor-queue-storage?tabs=azure-portal in order to enable StorageRead, StorageWrite, and StorageDelete.
+Remediation Steps - Terraform: For the azurerm_storage_account resource, in the queue_properties, logging block, set delete/read/write arguments to true.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [azurerm_storage_account.storacc] (main.tf:22)
@@ -23,6 +99,9 @@ Rule: Ensure Storage Account is using the latest version of TLS encryption
 
 -----------------------------------------------
 Rule: Ensure default network access rule for Storage Accounts is set to deny
+Description: In order to add an extra layer of protection to Storage Accounts, network access should be restricted by default in order to only allow access from a selected groups of IPs.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.microsoft.com/en-us/azure/storage/common/storage-network-security?tabs=azure-portal#change-the-default-network-access-rule in order to change the default network access rule.
+Remediation Steps - Terraform: For the azurerm_storage_account resource with network_rules block, set the default_action to Deny. For azurerm_storage_account_network_rules resources, ensure the default_action argument is set to Deny.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [azurerm_storage_account.storacc] (main.tf:22)
@@ -33,7 +112,10 @@ Rule: Ensure default network access rule for Storage Accounts is set to deny
 
 
 -----------------------------------------------
-Rule: Ensure Storage logging is enabled for Queue service for read, write and delete requests
+Rule: Ensure Storage Account is using the latest version of TLS encryption
+Description: Azure Storage Account should use the latest version of TLS (1.2) in order to be compliant with industry standards.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.microsoft.com/en-us/azure/storage/common/transport-layer-security-configure-minimum-version?tabs=portal#configure-the-minimum-tls-version-for-a-storage-account in order to configure the minimum TLS version for a storage account.
+Remediation Steps - Terraform: For the azurerm_storage_account resource, set the min_tls_version argument to TLS1_2.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [azurerm_storage_account.storacc] (main.tf:22)
@@ -44,58 +126,17 @@ Rule: Ensure Storage logging is enabled for Queue service for read, write and de
 
 
 -----------------------------------------------
-Rule: Ensure Function App is only accessible via HTTPS
+Rule: Ensure that Function apps is only accessible over HTTPS
+Description: In order to protect data in transit, Azure Function Apps should only use HTTPS transport protocol.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.microsoft.com/en-us/azure/azure-functions/security-concepts in order to configure Azure Function Apps to use HTTPS only.
+Remediation Steps - Terraform: For the azurerm_function_app resource, set the https_only argument to true.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [azurerm_function_app.functionapp] (main.tf:42)
      Violating Resource: [azurerm_function_app.functionapp]  (main.tf:42)
 
      Evidence:
-             | The Function App my-func-app-functionapp does not have HTTPS only enabled.
-
-
------------------------------------------------
-Rule: Ensure Storage Account has default network access denied
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [azurerm_storage_account.storacc] (main.tf:22)
-     Violating Resource: [azurerm_storage_account.storacc]  (main.tf:22)
-
-     Evidence:
-             | The Storage Account myfuncappstorageaccount is not denying default network access
-
-
------------------------------------------------
-Rule: Ensure HTTP version is the latest in Function Apps
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [azurerm_function_app.functionapp] (main.tf:42)
-     Violating Resource: [azurerm_function_app.functionapp]  (main.tf:42)
-
-     Evidence:
-             | The Function App my-func-app-functionapp does not use the latest HTTP version.
-
-
------------------------------------------------
-Rule: Ensure client certificates are required in Function App
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [azurerm_function_app.functionapp] (main.tf:42)
-     Violating Resource: [azurerm_function_app.functionapp]  (main.tf:42)
-
-     Evidence:
-             | The Function App my-func-app-functionapp does not have client certificates mode set to required.
-
-
------------------------------------------------
-Rule: Ensure authentication is enabled in Function Apps
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [azurerm_function_app.functionapp] (main.tf:42)
-     Violating Resource: [azurerm_function_app.functionapp]  (main.tf:42)
-
-     Evidence:
-             | The Function App my-func-app-functionapp does not have authentication enabled.
+             | This rule evaluated my-func-app-functionapp's configuration
 
 
 -----------------------------------------------

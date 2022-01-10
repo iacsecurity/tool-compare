@@ -1,7 +1,7 @@
 
   Result 1
 
-  [aws-cloudtrail-enable-all-regions][[0m[33mMEDIUM[39m[0m] Resource 'aws_cloudtrail.foobar' does not set multi region trail config.
+  [aws-cloudtrail-enable-all-regions][MEDIUM] Resource 'aws_cloudtrail.foobar' does not set multi region trail config.
   /src/main.tf:11-16
 
 
@@ -23,13 +23,13 @@
   Resolution: Enable Cloudtrail in all regions
 
   More Info:
-  - https://tfsec.dev/docs/aws/cloudtrail/enable-all-regions#aws/cloudtrail 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/cloudtrail/enable-all-regions 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudtrail#is_multi_region_trail 
   - https://docs.aws.amazon.com/awscloudtrail/latest/userguide/receive-cloudtrail-log-files-from-multiple-regions.html 
 
   Result 2
 
-  [aws-cloudtrail-enable-at-rest-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_cloudtrail.foobar' does not have a kms_key_id set.
+  [aws-cloudtrail-enable-at-rest-encryption][HIGH] Resource 'aws_cloudtrail.foobar' does not have a kms_key_id set.
   /src/main.tf:11-16
 
 
@@ -51,13 +51,13 @@
   Resolution: Enable encryption at rest
 
   More Info:
-  - https://tfsec.dev/docs/aws/cloudtrail/enable-at-rest-encryption#aws/cloudtrail 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/cloudtrail/enable-at-rest-encryption 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudtrail#kms_key_id 
   - https://docs.aws.amazon.com/awscloudtrail/latest/userguide/encrypting-cloudtrail-log-files-with-aws-kms.html 
 
   Result 3
 
-  [aws-cloudtrail-enable-log-validation][[0m[31mHIGH[39m[0m] Resource 'aws_cloudtrail.foobar' does not enable log file validation.
+  [aws-cloudtrail-enable-log-validation][HIGH] Resource 'aws_cloudtrail.foobar' does not enable log file validation.
   /src/main.tf:11-16
 
 
@@ -79,13 +79,13 @@
   Resolution: Turn on log validation for Cloudtrail
 
   More Info:
-  - https://tfsec.dev/docs/aws/cloudtrail/enable-log-validation#aws/cloudtrail 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/cloudtrail/enable-log-validation 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudtrail#enable_log_file_validation 
   - https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-log-file-validation-intro.html 
 
   Result 4
 
-  [aws-s3-enable-bucket-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_s3_bucket.foo' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
+  [aws-s3-enable-bucket-encryption][HIGH] Resource 'aws_s3_bucket.foo' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
   /src/main.tf:18-52
 
 
@@ -133,13 +133,13 @@
   Resolution: Configure bucket encryption
 
   More Info:
-  - https://tfsec.dev/docs/aws/s3/enable-bucket-encryption#aws/s3 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/s3/enable-bucket-encryption 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#enable-default-server-side-encryption 
   - https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-encryption.html 
 
   Result 5
 
-  [aws-s3-enable-bucket-logging][[0m[33mMEDIUM[39m[0m] Resource 'aws_s3_bucket.foo' does not have logging enabled.
+  [aws-s3-enable-bucket-logging][MEDIUM] Resource 'aws_s3_bucket.foo' does not have logging enabled.
   /src/main.tf:18-52
 
 
@@ -187,13 +187,13 @@
   Resolution: Add a logging block to the resource to enable access logging
 
   More Info:
-  - https://tfsec.dev/docs/aws/s3/enable-bucket-logging#aws/s3 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/s3/enable-bucket-logging 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket 
   - https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerLogs.html 
 
   Result 6
 
-  [aws-s3-enable-versioning][[0m[33mMEDIUM[39m[0m] Resource 'aws_s3_bucket.foo' does not have versioning enabled
+  [aws-s3-enable-versioning][MEDIUM] Resource 'aws_s3_bucket.foo' does not have versioning enabled
   /src/main.tf:18-52
 
 
@@ -241,13 +241,13 @@
   Resolution: Enable versioning to protect against accidental/malicious removal or modification
 
   More Info:
-  - https://tfsec.dev/docs/aws/s3/enable-versioning#aws/s3 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/s3/enable-versioning 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#versioning 
   - https://docs.aws.amazon.com/AmazonS3/latest/userguide/Versioning.html 
 
   Result 7
 
-  [aws-s3-specify-public-access-block][[0m[33mMEDIUM[39m[0m] Resource aws_s3_bucket.foo has no associated aws_s3_bucket_public_access_block.
+  [aws-s3-specify-public-access-block][MEDIUM] Resource aws_s3_bucket.foo has no associated aws_s3_bucket_public_access_block.
   /src/main.tf:18-52
 
 
@@ -295,16 +295,16 @@
   Resolution: Define a aws_s3_bucket_public_access_block for the given bucket to control public access policies
 
   More Info:
-  - https://tfsec.dev/docs/aws/s3/specify-public-access-block#aws/s3 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/s3/specify-public-access-block 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#bucket 
   - https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html 
 
   times
   ------------------------------------------
-  disk i/o             50.785584ms
-  parsing HCL          555.583µs
-  evaluating values    3.525918ms
-  running checks       47.219667ms
+  disk i/o             27.206708ms
+  parsing HCL          636.292µs
+  evaluating values    3.297166ms
+  running checks       26.128958ms
 
   counts
   ------------------------------------------

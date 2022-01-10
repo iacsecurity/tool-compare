@@ -1,17 +1,52 @@
 
 WARNINGs found:
-Rule: Ensure App Service web app redirects all HTTP traffic to HTTPS
+Rule: FTPS should be required in your Web App
+Description: Cloudrail will review the App service configuration in your environment. If an app has FTP enabled and is not enforcing FTPS only, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.microsoft.com/en-us/azure/app-service/deploy-ftp?tabs=portal#enforce-ftps in order to disable FTP or select FTPS Only in FTP state.
+Remediation Steps - Terraform: For the azurerm_app_service resource, set the site_config block with ftps_state argument set to “FtpsOnly” to enforce FTPS or to “Disabled” if you want to disable FTP.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [azurerm_app_service.webapp] (main.tf:28)
      Violating Resource: [azurerm_app_service.webapp]  (main.tf:28)
 
      Evidence:
-             | This rule evaluated azurerm_app_service.webapp's configuration
+         Azure App Service
+             | The web app azurerm_app_service.webapp is not enforcing FTPS only or does not have FTP disabled
+
+
+-----------------------------------------------
+Rule: Ensure authentication is enabled in Web Apps
+Description: Cloudrail will review the App Service (Web Apps) configuration in your environment. If an app does not have authentication enabled, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.microsoft.com/en-us/azure/app-service/overview-authentication-authorization in order to enable authentication for the web app.
+Remediation Steps - Terraform: For the azurerm_app_service resource, set the auth_settings block with enabled argument set to true.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [azurerm_app_service.webapp] (main.tf:28)
+     Violating Resource: [azurerm_app_service.webapp]  (main.tf:28)
+
+     Evidence:
+             | The web app azurerm_app_service.webapp does not have authentication enabled.
+
+
+-----------------------------------------------
+Rule: Ensure Web App is only accessible via HTTPS
+Description: Cloudrail will review the Web Apps configuration in your environment. If a function does not have HTTPS only enabled, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.microsoft.com/en-us/azure/app-service/configure-ssl-bindings#enforce-https in order to configured HTTPS Only for the Web App.
+Remediation Steps - Terraform: For the azurerm_app_service resource, set the https_only argument to true.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [azurerm_app_service.webapp] (main.tf:28)
+     Violating Resource: [azurerm_app_service.webapp]  (main.tf:28)
+
+     Evidence:
+             | The Web App azurerm_app_service.webapp does not have HTTPS only enabled.
 
 
 -----------------------------------------------
 Rule: Ensure diagnostic logs are enabled in App Services
+Description: Cloudrail will review the App Services configuration in your environment. If an app does not have diagnostic logs enabled (detailed error messages, HTTP logging, and failed requests tracing), Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.microsoft.com/en-us/azure/app-service/troubleshoot-diagnostic-logs in order to enable diagnostics logging for apps in App Service.
+Remediation Steps - Terraform: For the azurerm_app_service resource, set the log block with detailed_error_messages_enabled argument set to true, failed_request_tracing_enabled argument set to true, and http_logs block with either file_system or azure_blob_storage arguments set.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [azurerm_app_service.webapp] (main.tf:28)
@@ -24,37 +59,59 @@ Rule: Ensure diagnostic logs are enabled in App Services
 
 
 -----------------------------------------------
-Rule: Ensure Web App is only accessible via HTTPS
+Rule: Ensure client certificates are required in Web App
+Description: Cloudrail will review the Web Apps configuration in your environment. If an app does not have client certificates enabled, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.microsoft.com/en-us/azure/app-service/app-service-web-configure-tls-mutual-auth in order to enable client certificates for Web App.
+Remediation Steps - Terraform: For the azurerm_app_service resource, set the client_cert_enabled argument to true.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [azurerm_app_service.webapp] (main.tf:28)
      Violating Resource: [azurerm_app_service.webapp]  (main.tf:28)
 
      Evidence:
-             | The Web App azurerm_app_service.webapp does not have HTTPS only enabled.
+             | The Azure App Service azurerm_app_service.webapp does not have client certificates enabled.
 
 
 -----------------------------------------------
-Rule: Ensure authentication is enabled in Web Apps
+Rule: Ensure Web App is using a managed identity
+Description: Cloudrail will review the Web Apps configuration in your environment. If an app, of kind “app”, does not have managed identity enabled, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.microsoft.com/en-us/azure/app-service/overview-managed-identity?tabs=dotnet in order to use managed identities for a Web App.
+Remediation Steps - Terraform: For the azurerm_app_service resource, in identity block, set the type argument to “SystemAssigned”, or to “UserAssigned” and also set identity_ids argument.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [azurerm_app_service.webapp] (main.tf:28)
      Violating Resource: [azurerm_app_service.webapp]  (main.tf:28)
 
      Evidence:
-             | The web app azurerm_app_service.webapp does not have authentication enabled.
+             | The Azure App Service azurerm_app_service.webapp does not use managed identity.
 
 
 -----------------------------------------------
-Rule: FTPS should be required in your Web App
+Rule: Ensure Web App is using the latest HTTP version
+Description: Cloudrail will review the Web Apps configuration in your environment. If an app, of kind "app" or "linux", does not use the latest HTTP version, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://azure.microsoft.com/en-us/blog/announcing-http-2-support-in-azure-app-service/ in order to configure the latest HTTP version for the Web App.
+Remediation Steps - Terraform: For the azurerm_app_service resource, in site_config block, set the http2_enabled argument to true.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [azurerm_app_service.webapp] (main.tf:28)
      Violating Resource: [azurerm_app_service.webapp]  (main.tf:28)
 
      Evidence:
-         Azure App Service
-             | The web app azurerm_app_service.webapp is not enforcing FTPS only or does not have FTP disabled
+             | The Azure App Service azurerm_app_service.webapp does not use the latest HTTP version.
+
+
+-----------------------------------------------
+Rule: Ensure App Service web app redirects all HTTP traffic to HTTPS
+Description: Web apps should enforce HTTPS-only traffic to increase security. HTTPS uses SSL/TLS protocol to protect data in transit.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.microsoft.com/en-us/azure/app-service/configure-ssl-bindings#enforce-https in order to enable HTTP redirect to HTTPS by setting the parameter HTTPS Only to ON.
+Remediation Steps - Terraform: For the azurerm_app_service resource, set the https_only argument to true.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [azurerm_app_service.webapp] (main.tf:28)
+     Violating Resource: [azurerm_app_service.webapp]  (main.tf:28)
+
+     Evidence:
+             | This rule evaluated azurerm_app_service.webapp's configuration
 
 
 -----------------------------------------------

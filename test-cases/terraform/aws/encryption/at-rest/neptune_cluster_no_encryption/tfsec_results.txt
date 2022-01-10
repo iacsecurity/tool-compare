@@ -1,7 +1,7 @@
 
   Result 1
 
-  [aws-neptune-enable-log-export][[0m[33mMEDIUM[39m[0m] Resource 'aws_neptune_cluster.test' uses default value for enable_cloudwatch_logs_exports
+  [aws-neptune-enable-log-export][MEDIUM] Resource 'aws_neptune_cluster.test' uses default value for enable_cloudwatch_logs_exports
   /src/main.tf:1-9
 
 
@@ -20,12 +20,12 @@
   Resolution: Enable export logs
 
   More Info:
-  - https://tfsec.dev/docs/aws/neptune/enable-log-export#aws/neptune 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/neptune/enable-log-export 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/neptune_cluster#enable_cloudwatch_logs_exports 
 
   Result 2
 
-  [aws-neptune-enable-storage-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_neptune_cluster.test' uses default value for storage_encrypted
+  [aws-neptune-enable-storage-encryption][HIGH] Resource 'aws_neptune_cluster.test' uses default value for storage_encrypted
   /src/main.tf:1-9
 
 
@@ -44,15 +44,15 @@
   Resolution: Enable encryption of Neptune storage
 
   More Info:
-  - https://tfsec.dev/docs/aws/neptune/enable-storage-encryption#aws/neptune 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/neptune/enable-storage-encryption 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/neptune_cluster#storage_encrypted 
 
   times
   ------------------------------------------
-  disk i/o             65.033502ms
-  parsing HCL          520.625µs
-  evaluating values    1.770166ms
-  running checks       18.653792ms
+  disk i/o             26.451542ms
+  parsing HCL          666.125µs
+  evaluating values    1.584958ms
+  running checks       16.647375ms
 
   counts
   ------------------------------------------

@@ -1,7 +1,133 @@
 
   Result 1
 
-  [aws-vpc-add-decription-to-security-group][[0m[97mLOW[39m[0m] Resource 'aws_security_group.publicly_accessible_sg' should include a description for auditing purposes.
+  [aws-vpc-no-public-ingress-sg][CRITICAL] Resource 'aws_security_group.publicly_accessible_sg' defines a fully open ingress security group.
+  /src/main.tf:120
+
+
+     117 |     from_port = 0
+     118 |     protocol = "tcp"
+     119 |     to_port = 65000
+     120 |     cidr_blocks = ["0.0.0.0/0"]    list: ["0.0.0.0/0"]
+     121 |   }
+     122 |   egress {
+     123 |     from_port = 0
+
+  Legacy ID:  AWS008
+  Impact:     The port is exposed for ingress from the internet
+  Resolution: Set a more restrictive cidr range
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/vpc/no-public-ingress-sg 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
+
+  Result 2
+
+  [general-secrets-sensitive-in-attribute][CRITICAL] Block 'aws_redshift_cluster.test' includes a potentially sensitive attribute which is defined within the project.
+  /src/main.tf:106
+
+
+     103 | resource "aws_redshift_cluster" "test" {
+     104 |   cluster_identifier = "redshift-defaults-only"
+     105 |   node_type = "dc2.large"
+     106 |   master_password = "Test1234"    string: "Test1234"
+     107 |   master_username = "test"
+     108 |   skip_final_snapshot = true
+     109 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
+
+  Legacy ID:  GEN003
+  Impact:     Block attribute could be leaking secrets
+  Resolution: Don't include sensitive data in blocks
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/general/secrets/sensitive-in-attribute 
+  - https://www.terraform.io/docs/state/sensitive-data.html 
+
+  Result 3
+
+  [aws-autoscaling-no-public-ip][HIGH] Resource 'aws_instance.public_ins' has a public IP address associated.
+  /src/main.tf:134
+
+
+     131 | resource "aws_instance" "public_ins" {
+     132 |   ami = "ami-0130bec6e5047f596"
+     133 |   instance_type = "t3.nano"
+     134 |   associate_public_ip_address = true    bool: true
+     135 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
+     136 |   subnet_id = aws_subnet.nondefault_1.id
+     137 | }
+
+  Legacy ID:  AWS012
+  Impact:     The instance or configuration is publicly accessible
+  Resolution: Set the instance to not be publicly accessible
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/autoscaling/no-public-ip 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/launch_configuration#associate_public_ip_address 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#associate_public_ip_address 
+  - https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html 
+
+  Result 4
+
+  [aws-ec2-enforce-http-token-imds][HIGH] Resource 'aws_instance.public_ins' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
+  /src/main.tf:131-137
+
+
+     128 | }
+     129 | 
+     130 | // This instance is can potentially be used to hop into the DB
+     131 | resource "aws_instance" "public_ins" {
+     132 |   ami = "ami-0130bec6e5047f596"
+     133 |   instance_type = "t3.nano"
+     134 |   associate_public_ip_address = true
+     135 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
+     136 |   subnet_id = aws_subnet.nondefault_1.id
+     137 | }
+
+  Legacy ID:  AWS079
+  Impact:     Instance metadata service can be interacted with freely
+  Resolution: Enable HTTP token requirement for IMDS
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/ec2/enforce-http-token-imds 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#metadata-options 
+  - https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service 
+
+  Result 5
+
+  [aws-redshift-encryption-customer-key][HIGH] Resource 'aws_redshift_cluster.test' does not have encryption enabled
+  /src/main.tf:103-112
+
+
+     100 | 
+     101 | }
+     102 | 
+     103 | resource "aws_redshift_cluster" "test" {
+     104 |   cluster_identifier = "redshift-defaults-only"
+     105 |   node_type = "dc2.large"
+     106 |   master_password = "Test1234"
+     107 |   master_username = "test"
+     108 |   skip_final_snapshot = true
+     109 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
+     110 |   cluster_subnet_group_name = aws_redshift_subnet_group.nondefault.name
+     111 |   publicly_accessible = false // Note that while the subnet itself has public access, the redshift is set NOT to have a public IP
+     112 | }
+     113 | 
+     114 | resource "aws_security_group" "publicly_accessible_sg" {
+     115 |   vpc_id = aws_vpc.nondefault.id
+
+  Legacy ID:  AWS094
+  Impact:     Data may be leaked if infrastructure is compromised
+  Resolution: Enable encryption using CMK
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/redshift/encryption-customer-key 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/redshift_cluster#encrypted 
+  - https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-db-encryption.html 
+
+  Result 6
+
+  [aws-vpc-add-description-to-security-group][LOW] Resource 'aws_security_group.publicly_accessible_sg' should include a description for auditing purposes.
   /src/main.tf:114-128
 
 
@@ -32,14 +158,14 @@
   Resolution: Add descriptions for all security groups and rules
 
   More Info:
-  - https://tfsec.dev/docs/aws/vpc/add-decription-to-security-group#aws/vpc 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/vpc/add-description-to-security-group 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule 
   - https://www.cloudconformity.com/knowledge-base/aws/EC2/security-group-rules-description.html 
 
-  Result 2
+  Result 7
 
-  [aws-vpc-no-public-egress-sg][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'aws_security_group.publicly_accessible_sg' defines a fully open egress security group.
+  [aws-vpc-no-public-egress-sg][CRITICAL] Resource 'aws_security_group.publicly_accessible_sg' defines a fully open egress security group.
   /src/main.tf:126
 
 
@@ -56,141 +182,15 @@
   Resolution: Set a more restrictive cidr range
 
   More Info:
-  - https://tfsec.dev/docs/aws/vpc/no-public-egress-sg#aws/vpc 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/vpc/no-public-egress-sg 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
-
-  Result 3
-
-  [aws-vpc-no-public-ingress-sg][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'aws_security_group.publicly_accessible_sg' defines a fully open ingress security group.
-  /src/main.tf:120
-
-
-     117 |     from_port = 0
-     118 |     protocol = "tcp"
-     119 |     to_port = 65000
-     120 |     cidr_blocks = ["0.0.0.0/0"]    list: ["0.0.0.0/0"]
-     121 |   }
-     122 |   egress {
-     123 |     from_port = 0
-
-  Legacy ID:  AWS008
-  Impact:     The port is exposed for ingress from the internet
-  Resolution: Set a more restrictive cidr range
-
-  More Info:
-  - https://tfsec.dev/docs/aws/vpc/no-public-ingress-sg#aws/vpc 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
-
-  Result 4
-
-  [general-secrets-sensitive-in-attribute][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Block 'aws_redshift_cluster.test' includes a potentially sensitive attribute which is defined within the project.
-  /src/main.tf:106
-
-
-     103 | resource "aws_redshift_cluster" "test" {
-     104 |   cluster_identifier = "redshift-defaults-only"
-     105 |   node_type = "dc2.large"
-     106 |   master_password = "Test1234"    string: "Test1234"
-     107 |   master_username = "test"
-     108 |   skip_final_snapshot = true
-     109 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
-
-  Legacy ID:  GEN003
-  Impact:     Block attribute could be leaking secrets
-  Resolution: Don't include sensitive data in blocks
-
-  More Info:
-  - https://tfsec.dev/docs/general/secrets/sensitive-in-attribute#general/secrets 
-  - https://www.terraform.io/docs/state/sensitive-data.html 
-
-  Result 5
-
-  [aws-autoscaling-no-public-ip][[0m[31mHIGH[39m[0m] Resource 'aws_instance.public_ins' has a public IP address associated.
-  /src/main.tf:134
-
-
-     131 | resource "aws_instance" "public_ins" {
-     132 |   ami = "ami-0130bec6e5047f596"
-     133 |   instance_type = "t3.nano"
-     134 |   associate_public_ip_address = true    bool: true
-     135 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
-     136 |   subnet_id = aws_subnet.nondefault_1.id
-     137 | }
-
-  Legacy ID:  AWS012
-  Impact:     The instance or configuration is publicly accessible
-  Resolution: Set the instance to not be publicly accessible
-
-  More Info:
-  - https://tfsec.dev/docs/aws/autoscaling/no-public-ip#aws/autoscaling 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/launch_configuration#associate_public_ip_address 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#associate_public_ip_address 
-  - https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html 
-
-  Result 6
-
-  [aws-ec2-enforce-http-token-imds][[0m[31mHIGH[39m[0m] Resource 'aws_instance.public_ins' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
-  /src/main.tf:131-137
-
-
-     128 | }
-     129 | 
-     130 | // This instance is can potentially be used to hop into the DB
-     131 | resource "aws_instance" "public_ins" {
-     132 |   ami = "ami-0130bec6e5047f596"
-     133 |   instance_type = "t3.nano"
-     134 |   associate_public_ip_address = true
-     135 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
-     136 |   subnet_id = aws_subnet.nondefault_1.id
-     137 | }
-
-  Legacy ID:  AWS079
-  Impact:     Instance metadata service can be interacted with freely
-  Resolution: Enable HTTP token requirement for IMDS
-
-  More Info:
-  - https://tfsec.dev/docs/aws/ec2/enforce-http-token-imds#aws/ec2 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#metadata-options 
-  - https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service 
-
-  Result 7
-
-  [aws-redshift-encryption-customer-key][[0m[31mHIGH[39m[0m] Resource 'aws_redshift_cluster.test' does not have encryption enabled
-  /src/main.tf:103-112
-
-
-     100 | 
-     101 | }
-     102 | 
-     103 | resource "aws_redshift_cluster" "test" {
-     104 |   cluster_identifier = "redshift-defaults-only"
-     105 |   node_type = "dc2.large"
-     106 |   master_password = "Test1234"
-     107 |   master_username = "test"
-     108 |   skip_final_snapshot = true
-     109 |   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
-     110 |   cluster_subnet_group_name = aws_redshift_subnet_group.nondefault.name
-     111 |   publicly_accessible = false // Note that while the subnet itself has public access, the redshift is set NOT to have a public IP
-     112 | }
-     113 | 
-     114 | resource "aws_security_group" "publicly_accessible_sg" {
-     115 |   vpc_id = aws_vpc.nondefault.id
-
-  Legacy ID:  AWS094
-  Impact:     Data may be leaked if infrastructure is compromised
-  Resolution: Enable encryption using CMK
-
-  More Info:
-  - https://tfsec.dev/docs/aws/redshift/encryption-customer-key#aws/redshift 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/redshift_cluster#encrypted 
-  - https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-db-encryption.html 
 
   times
   ------------------------------------------
-  disk i/o             52.896709ms
-  parsing HCL          583.916µs
-  evaluating values    6.282958ms
-  running checks       66.429625ms
+  disk i/o             31.606792ms
+  parsing HCL          624.958µs
+  evaluating values    5.215333ms
+  running checks       37.290667ms
 
   counts
   ------------------------------------------

@@ -1,7 +1,58 @@
 
   Result 1
 
-  [aws-vpc-add-decription-to-security-group][[0m[97mLOW[39m[0m] Resource 'aws_security_group.free' should include a description for auditing purposes.
+  [aws-vpc-no-public-ingress-sg][CRITICAL] Resource 'aws_security_group.free' defines a fully open ingress security group.
+  /src/main.tf:25
+
+
+      22 |     from_port = 0
+      23 |     protocol = "TCP"
+      24 |     to_port = 64000
+      25 |     cidr_blocks = ["0.0.0.0/0"]    list: ["0.0.0.0/0"]
+      26 |   }
+      27 | }
+      28 | 
+
+  Legacy ID:  AWS008
+  Impact:     The port is exposed for ingress from the internet
+  Resolution: Set a more restrictive cidr range
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/vpc/no-public-ingress-sg 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
+
+  Result 2
+
+  [aws-neptune-enable-log-export][MEDIUM] Resource 'aws_neptune_cluster.encrypted_neptune_cluster' uses default value for enable_cloudwatch_logs_exports
+  /src/main.tf:66-74
+
+
+      63 |     aws_subnet.free_2.id]
+      64 | }
+      65 | 
+      66 | resource "aws_neptune_cluster" "encrypted_neptune_cluster" {
+      67 |   cluster_identifier  = "cloudrail-test-encrypted"
+      68 |   engine              = "neptune"
+      69 |   skip_final_snapshot = true
+      70 |   apply_immediately   = true
+      71 |   storage_encrypted   = true
+      72 |   neptune_subnet_group_name = aws_db_subnet_group.free.name
+      73 |   vpc_security_group_ids = [aws_security_group.free.id]
+      74 | }
+      75 | 
+      76 | resource "aws_neptune_cluster_instance" "neptune_instance" {
+      77 |   count              = 2
+
+  Impact:     Limited visibility of audit trail for changes to Neptune
+  Resolution: Enable export logs
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/neptune/enable-log-export 
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/neptune_cluster#enable_cloudwatch_logs_exports 
+
+  Result 3
+
+  [aws-vpc-add-description-to-security-group][LOW] Resource 'aws_security_group.free' should include a description for auditing purposes.
   /src/main.tf:18-27
 
 
@@ -27,68 +78,17 @@
   Resolution: Add descriptions for all security groups and rules
 
   More Info:
-  - https://tfsec.dev/docs/aws/vpc/add-decription-to-security-group#aws/vpc 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/vpc/add-description-to-security-group 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule 
   - https://www.cloudconformity.com/knowledge-base/aws/EC2/security-group-rules-description.html 
 
-  Result 2
-
-  [aws-vpc-no-public-ingress-sg][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'aws_security_group.free' defines a fully open ingress security group.
-  /src/main.tf:25
-
-
-      22 |     from_port = 0
-      23 |     protocol = "TCP"
-      24 |     to_port = 64000
-      25 |     cidr_blocks = ["0.0.0.0/0"]    list: ["0.0.0.0/0"]
-      26 |   }
-      27 | }
-      28 | 
-
-  Legacy ID:  AWS008
-  Impact:     The port is exposed for ingress from the internet
-  Resolution: Set a more restrictive cidr range
-
-  More Info:
-  - https://tfsec.dev/docs/aws/vpc/no-public-ingress-sg#aws/vpc 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
-
-  Result 3
-
-  [aws-neptune-enable-log-export][[0m[33mMEDIUM[39m[0m] Resource 'aws_neptune_cluster.encrypted_neptune_cluster' uses default value for enable_cloudwatch_logs_exports
-  /src/main.tf:66-74
-
-
-      63 |     aws_subnet.free_2.id]
-      64 | }
-      65 | 
-      66 | resource "aws_neptune_cluster" "encrypted_neptune_cluster" {
-      67 |   cluster_identifier  = "cloudrail-test-encrypted"
-      68 |   engine              = "neptune"
-      69 |   skip_final_snapshot = true
-      70 |   apply_immediately   = true
-      71 |   storage_encrypted   = true
-      72 |   neptune_subnet_group_name = aws_db_subnet_group.free.name
-      73 |   vpc_security_group_ids = [aws_security_group.free.id]
-      74 | }
-      75 | 
-      76 | resource "aws_neptune_cluster_instance" "neptune_instance" {
-      77 |   count              = 2
-
-  Impact:     Limited visibility of audit trail for changes to Neptune
-  Resolution: Enable export logs
-
-  More Info:
-  - https://tfsec.dev/docs/aws/neptune/enable-log-export#aws/neptune 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/neptune_cluster#enable_cloudwatch_logs_exports 
-
   times
   ------------------------------------------
-  disk i/o             51.049ms
-  parsing HCL          623.209µs
-  evaluating values    6.856874ms
-  running checks       31.92775ms
+  disk i/o             26.654457ms
+  parsing HCL          531.625µs
+  evaluating values    5.677333ms
+  running checks       24.421917ms
 
   counts
   ------------------------------------------

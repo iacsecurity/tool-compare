@@ -4,7 +4,7 @@ Failed to run the process ...
     "isPrivate": true,
     "isLicensesEnabled": false,
     "ignoreSettings": null,
-    "org": "yi2020",
+    "org": "ryder.d",
     "projectId": "",
     "policy": ""
   },
@@ -15,7 +15,7 @@ Failed to run the process ...
   "ignoreSettings": null,
   "targetFile": "main.tf",
   "projectName": "project",
-  "org": "yi2020",
+  "org": "ryder.d",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
@@ -51,6 +51,7 @@ Failed to run the process ...
       },
       "lineNumber": 113,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-408",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_db_instance[test]",
@@ -82,6 +83,7 @@ Failed to run the process ...
       },
       "lineNumber": 146,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-426",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_instance[public_ins]",
@@ -112,6 +114,7 @@ Failed to run the process ...
       },
       "lineNumber": 137,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-73",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_security_group[publicly_accessible_sg]",
@@ -143,6 +146,7 @@ Failed to run the process ...
       },
       "lineNumber": 113,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-414",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_db_instance[test]",
@@ -170,6 +174,7 @@ Failed to run the process ...
       },
       "lineNumber": 129,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-56",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_security_group[publicly_accessible_sg]",
@@ -201,6 +206,7 @@ Failed to run the process ...
       },
       "lineNumber": 31,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-41",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_network_acl[ec2_nacl]",
@@ -236,6 +242,7 @@ Failed to run the process ...
       },
       "lineNumber": 146,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-53",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_instance[public_ins]",
@@ -264,6 +271,7 @@ Failed to run the process ...
       },
       "lineNumber": 103,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-56",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_security_group[db]",
@@ -295,6 +303,7 @@ Failed to run the process ...
       },
       "lineNumber": 58,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-41",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_network_acl[redshift_eni2_nacl]",
@@ -324,6 +333,7 @@ Failed to run the process ...
       },
       "lineNumber": 149,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-51",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_instance[public_ins]",
@@ -354,6 +364,7 @@ Failed to run the process ...
       },
       "lineNumber": 146,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-130",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_instance[public_ins]",
@@ -385,6 +396,7 @@ Failed to run the process ...
       },
       "lineNumber": 113,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-201",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "aws_db_instance[test]",
@@ -416,6 +428,7 @@ Failed to run the process ...
       },
       "lineNumber": 131,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-1",
+      "isGeneratedByCustomRule": false,
       "path": [
         "input",
         "resource",

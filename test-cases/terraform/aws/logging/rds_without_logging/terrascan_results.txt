@@ -2,7 +2,7 @@
 
 Violation Details -
     
-	Description    :	Ensure that your RDS database has IAM Authentication enabled.
+	Description    :	Ensure AWS RDS instances have logging enabled.
 	File           :	main.tf
 	Module Name    :	root
 	Plan Root      :	./
@@ -11,7 +11,7 @@ Violation Details -
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	Ensure AWS RDS instances have logging enabled.
+	Description    :	Ensure that your RDS database has IAM Authentication enabled.
 	File           :	main.tf
 	Module Name    :	root
 	Plan Root      :	./
@@ -34,7 +34,7 @@ Scan Summary -
 
 	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-08-20 04:58:02.923682029 +0000 UTC
+	Scanned At          :	2022-01-05 16:46:47.457533554 +0000 UTC
 	Policies Validated  :	6
 	Violated Policies   :	3
 	Low                 :	0

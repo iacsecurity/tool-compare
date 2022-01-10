@@ -16,23 +16,59 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+Scanning with Keeping Infrastructure as Code Secure v1.4.9
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 851
 Queries failed to execute: 0
 
 ------------------------------------
 
+Resource Not Using Tags, Severity: INFO, Results: 2
+Description: AWS services resource tags are an essential part of managing components
+Platform: Terraform
+
+	[1]: ../../src/main.tf:10
+
+		009: 
+		010: resource "aws_iam_user" "jack" {
+		011:   name          = "jack"
+
+
+	[2]: ../../src/main.tf:22
+
+		021: 
+		022: resource "aws_iam_user" "jill" {
+		023:   name          = "jill"
+
+
+IAM User With Access To Console, Severity: MEDIUM, Results: 2
+Description: AWS IAM Users should not have access to console
+Platform: Terraform
+
+	[1]: ../../src/main.tf:11
+
+		010: resource "aws_iam_user" "jack" {
+		011:   name          = "jack"
+		012:   path          = "/"
+
+
+	[2]: ../../src/main.tf:23
+
+		022: resource "aws_iam_user" "jill" {
+		023:   name          = "jill"
+		024:   path          = "/"
+
+
 
 Results Summary:
 HIGH: 0
-MEDIUM: 0
+MEDIUM: 2
 LOW: 0
-INFO: 0
-TOTAL: 0
+INFO: 2
+TOTAL: 4
 
-Scan duration: 22.739523219s
+Scan duration: 8.88314017s

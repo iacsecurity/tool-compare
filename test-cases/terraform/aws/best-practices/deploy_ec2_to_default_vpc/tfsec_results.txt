@@ -1,7 +1,7 @@
 
   Result 1
 
-  [aws-ec2-enforce-http-token-imds][[0m[31mHIGH[39m[0m] Resource 'aws_instance.t2-instance' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
+  [aws-ec2-enforce-http-token-imds][HIGH] Resource 'aws_instance.t2-instance' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
   /src/main.tf:49-53
 
 
@@ -20,13 +20,13 @@
   Resolution: Enable HTTP token requirement for IMDS
 
   More Info:
-  - https://tfsec.dev/docs/aws/ec2/enforce-http-token-imds#aws/ec2 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/ec2/enforce-http-token-imds 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#metadata-options 
   - https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service 
 
   Result 2
 
-  [aws-vpc-no-default-vpc][[0m[31mHIGH[39m[0m] Resource 'aws_default_vpc.default' should not exist
+  [aws-vpc-no-default-vpc][HIGH] Resource 'aws_default_vpc.default' should not exist
   /src/main.tf:12-16
 
 
@@ -47,16 +47,16 @@
   Resolution: Create a non-default vpc for resources to be created in
 
   More Info:
-  - https://tfsec.dev/docs/aws/vpc/no-default-vpc#aws/vpc 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/vpc/no-default-vpc 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/default_vpc 
   - https://docs.aws.amazon.com/vpc/latest/userguide/default-vpc.html 
 
   times
   ------------------------------------------
-  disk i/o             50.030459ms
-  parsing HCL          626.541µs
-  evaluating values    5.142251ms
-  running checks       24.936959ms
+  disk i/o             27.309542ms
+  parsing HCL          651.708µs
+  evaluating values    4.258833ms
+  running checks       18.997209ms
 
   counts
   ------------------------------------------

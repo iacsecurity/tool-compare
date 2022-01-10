@@ -1,68 +1,90 @@
 
 WARNINGs found:
-Rule: Ensure DynamoDB Point-in-Time recovery (backup) is enabled
+Rule: Ensure all used default security groups of every VPC restrict all traffic
+Description: Using default security groups in general is inadvisable. By locking security groups down, you are validating that if anyone uses them by accident, they will realize before any security issues occur.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/working-with-security-groups.html#deleting-security-group-rule to update the security group rules.
+Remediation Steps - Terraform: For the resource aws_default_security_group, update the inline ingress and egress rules.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_nat_gateway.private-subnet-nat-gw] (main.tf:47)
+     Violating Resource: [sg-pseudo-a17f17bf-6060-47f8-94ab-b3f32d5d5ad1]  (Not found in TF)
+
+     Evidence:
+         VPC aws_vpc.main
+             | aws_nat_gateway.private-subnet-nat-gw uses ENI eni-pseudo-041e2ed0-8781-46e7-aa36-e5c222a13a8b
+             | The ENI is secured by default Security group sg-pseudo-a17f17bf-6060-47f8-94ab-b3f32d5d5ad1 and allows all traffic
+
+
+-----------------------------------------------
+Rule: Ensure IMDSv2 is used and IMDSv1 is disabled
+Description: There have been hacks in the past caused by the use of IMDSv1. It is now best practice to disable IMDSv1 and use IMDSv2. It’s important to test the disablement of IMDSv1 carefully, as it may cause issues in an application’s execution (if it using an old SDK, for example).
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html to change the instance metadata for existing instances. Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html to configure instance metadata for new instances.
+Remediation Steps - Terraform: For the aws_instance resource, in metadata_options block, set http_tokens argument to required.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_instance.test] (main.tf:136)
+     Violating Resource: [aws_instance.test]  (main.tf:136)
+
+     Evidence:
+             | The EC2 Instance aws_instance.test is allowing IMDSv1
+
+
+-----------------------------------------------
+Rule: Ensure VPC Endpoint for DynamoDB is enabled in all VPCs
+Description: A best practice is to enforce the use of VPC Endpoints to avoid the need of sending data destined to DynamoDB through the internet.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/vpc/latest/userguide/vpc-endpoints-s3.html to configure DynamoDB endpoint for the VPC.
+Remediation Steps - Terraform: Create the aws_vpc_endpoint resource for the corresponding VPC to associate the DynamoDB endpoint. Create the aws_vpc_endpoint_route_table_association resource in order to populate the route table with routes to the DynamoDB service.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_dynamodb_table.basic-dynamodb-table] (main.tf:143)
-     Violating Resource: [aws_dynamodb_table.basic-dynamodb-table]  (main.tf:143)
+     Violating Resource: [aws_vpc.main]  (main.tf:5)
 
      Evidence:
-             | This rule evaluated aws_dynamodb_table.basic-dynamodb-table's configuration
+         The VPC
+             | aws_vpc.main in region us-east-1 is in use but not leveraging DYNAMODB Endpoint Gateway
 
 
 -----------------------------------------------
-Rule: Ensure all data stored in the Launch configuration EBS is securely encrypted
+Rule: Allow only private AMIs to be used
+Description: Some organizations may only allow the use of private AMIs. If this rule is enabled, any EC2 instance attempting to use a public AMI will be flagged.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instances-and-amis.html in order to terminate flagged EC2 instances and create new EC2 instance with an approved AMI.
+Remediation Steps - Terraform: For the aws_instance resource, update the ami argument to set an approved AMI. Terraform will destroy and create new resources.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_instance.test] (main.tf:136)
-     Violating Resource: [aws_instance.test]  (main.tf:136)
+     Violating Resource: [ami-0b0ea68c435eb488d]  (Not found in TF)
 
      Evidence:
-             | This rule evaluated aws_instance.test's configuration
+             | The EC2 Instance aws_instance.test uses AMI ami-0b0ea68c435eb488d, which is public
 
 
 -----------------------------------------------
-Rule: Ensure EC2 instance has detailed monitoring enabled
+Rule: Ensure VPC Endpoint for EC2 is enabled in all VPCs in use
+Description: A best practice is to enforce the use of VPC Endpoints to avoid sending data destined to EC2 through the internet. Cloudrail will identify misconfigurations by checking if VPC Endpoint Interfaces are in use or not, by reviewing that an endpoint exists in the VPC. VPC Interface Endpoints might not be available in all regions, so the rule checks that if the service is running it's configured in all possible VPCs. This rule has potential false positives given that not all VPCs require communication with EC2.
+Remediation Steps - Cloud Console: Create a VPC Endpoint for EC2, follow the guide at https://docs.aws.amazon.com/vpc/latest/userguide/vpce-interface.html#create-interface-endpoint.
+Remediation Steps - Terraform: Create a resource aws_vpc_endpoint for EC2 interface, and associate it to the VPC.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_instance.test] (main.tf:136)
-     Violating Resource: [aws_instance.test]  (main.tf:136)
+     Violating Resource: [aws_vpc.main]  (main.tf:5)
 
      Evidence:
-             | The EC2 Instance aws_instance.test has detailed monitoring disabled
-
-
------------------------------------------------
-Rule: Ensure EC2 instance is EBS optimized
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.test] (main.tf:136)
-     Violating Resource: [aws_instance.test]  (main.tf:136)
-
-     Evidence:
-             | The EC2 Instance aws_instance.test is not EBS optimized
-
-
------------------------------------------------
-Rule: Ensure DynamoDB tables are encrypted at rest with customer-managed CMK
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_dynamodb_table.basic-dynamodb-table] (main.tf:143)
-     Violating Resource: [aws_dynamodb_table.basic-dynamodb-table]  (main.tf:143)
-
-     Evidence:
-             | The DynamoDB table aws_dynamodb_table.basic-dynamodb-table is not set to be encrypted at rest using customer-managed CMK
+             | The service EC2 is in use in region us-east-1, but VPC aws_vpc.main
+             | is not configured to use a VPC Endpoint for EC2
 
 
 -----------------------------------------------
 Rule: Ensure all resources that can be tagged have at least one tag
- - 11 Resources Exposed:
+Description: Some organizations require that all resources have at least one tag set. This rule will review the resources that can be tagged, and make sure each one has a tag that is not the Name tag. Resources that are not tagged will be flagged.
+Remediation Steps - Cloud Console: Access the specific resource in the AWS console and add tags.
+Remediation Steps - Terraform: Add a tags section to the resource with at least one tag beyond the Name tag.
+ - 12 Resources Exposed:
 -----------------------------------------------
-   - Exposed Resource: [aws_instance.test] (main.tf:136)
-     Violating Resource: [aws_instance.test]  (main.tf:136)
+   - Exposed Resource: [aws_route_table.public-rtb] (main.tf:20)
+     Violating Resource: [aws_route_table.public-rtb]  (main.tf:20)
 
      Evidence:
-             | Resource EC2 Instance aws_instance.test does not have any tags set
+             | Resource Route table aws_route_table.public-rtb does not have any tags set other than "Name"
 
 
    - Exposed Resource: [aws_nat_gateway.private-subnet-nat-gw] (main.tf:47)
@@ -72,25 +94,11 @@ Rule: Ensure all resources that can be tagged have at least one tag
              | Resource NAT gateway aws_nat_gateway.private-subnet-nat-gw does not have any tags set other than "Name"
 
 
-   - Exposed Resource: [aws_network_acl.allow-public-outbound-nacl] (main.tf:80)
-     Violating Resource: [aws_network_acl.allow-public-outbound-nacl]  (main.tf:80)
-
-     Evidence:
-             | Resource Network ACL's aws_network_acl.allow-public-outbound-nacl does not have any tags set other than "Name"
-
-
    - Exposed Resource: [aws_route_table.private-rtb] (main.tf:66)
      Violating Resource: [aws_route_table.private-rtb]  (main.tf:66)
 
      Evidence:
              | Resource Route table aws_route_table.private-rtb does not have any tags set other than "Name"
-
-
-   - Exposed Resource: [aws_route_table.public-rtb] (main.tf:20)
-     Violating Resource: [aws_route_table.public-rtb]  (main.tf:20)
-
-     Evidence:
-             | Resource Route table aws_route_table.public-rtb does not have any tags set other than "Name"
 
 
    - Exposed Resource: [aws_security_group.allow-public-outbound-sg] (main.tf:98)
@@ -107,25 +115,11 @@ Rule: Ensure all resources that can be tagged have at least one tag
              | Resource DynamoDB table aws_dynamodb_table.basic-dynamodb-table does not have any tags set
 
 
-   - Exposed Resource: [aws_eip.allocate-ip-to-nat-gw] (main.tf:56)
-     Violating Resource: [aws_eip.allocate-ip-to-nat-gw]  (main.tf:56)
+   - Exposed Resource: [aws_network_acl.allow-public-outbound-nacl] (main.tf:80)
+     Violating Resource: [aws_network_acl.allow-public-outbound-nacl]  (main.tf:80)
 
      Evidence:
-             | Resource Elastic IP address aws_eip.allocate-ip-to-nat-gw does not have any tags set
-
-
-   - Exposed Resource: [aws_vpc.main] (main.tf:5)
-     Violating Resource: [aws_vpc.main]  (main.tf:5)
-
-     Evidence:
-             | Resource VPC aws_vpc.main does not have any tags set
-
-
-   - Exposed Resource: [aws_subnet.private-subnet] (main.tf:38)
-     Violating Resource: [aws_subnet.private-subnet]  (main.tf:38)
-
-     Evidence:
-             | Resource Subnet aws_subnet.private-subnet does not have any tags set other than "Name"
+             | Resource Network ACL's aws_network_acl.allow-public-outbound-nacl does not have any tags set other than "Name"
 
 
    - Exposed Resource: [aws_subnet.public-subnet] (main.tf:10)
@@ -135,63 +129,81 @@ Rule: Ensure all resources that can be tagged have at least one tag
              | Resource Subnet aws_subnet.public-subnet does not have any tags set other than "Name"
 
 
------------------------------------------------
-Rule: Ensure VPC Endpoint for EC2 is enabled in all VPCs in use
- - 1 Resources Exposed:
------------------------------------------------
    - Exposed Resource: [aws_instance.test] (main.tf:136)
+     Violating Resource: [aws_instance.test]  (main.tf:136)
+
+     Evidence:
+             | Resource EC2 Instance aws_instance.test does not have any tags set
+
+
+   - Exposed Resource: [aws_eip.allocate-ip-to-nat-gw] (main.tf:56)
+     Violating Resource: [aws_eip.allocate-ip-to-nat-gw]  (main.tf:56)
+
+     Evidence:
+             | Resource Elastic IP address aws_eip.allocate-ip-to-nat-gw does not have any tags set
+
+
+   - Exposed Resource: [aws_subnet.private-subnet] (main.tf:38)
+     Violating Resource: [aws_subnet.private-subnet]  (main.tf:38)
+
+     Evidence:
+             | Resource Subnet aws_subnet.private-subnet does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [aws_internet_gateway.internet-gateway] (main.tf:112)
+     Violating Resource: [aws_internet_gateway.internet-gateway]  (main.tf:112)
+
+     Evidence:
+             | Resource Internet gateway aws_internet_gateway.internet-gateway does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [aws_vpc.main] (main.tf:5)
      Violating Resource: [aws_vpc.main]  (main.tf:5)
 
      Evidence:
-             | The service EC2 is in use in region us-east-1, but VPC aws_vpc.main
-             | is not configured to use a VPC Endpoint for EC2
+             | Resource VPC aws_vpc.main does not have any tags set
 
 
 -----------------------------------------------
-Rule: Allow only private AMIs to be used
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_instance.test] (main.tf:136)
-     Violating Resource: [ami-0ee02acd56a52998e]  (Not found in TF)
-
-     Evidence:
-             | The EC2 Instance aws_instance.test uses AMI ami-0ee02acd56a52998e, which is public
-
-
------------------------------------------------
-Rule: Ensure VPC Endpoint for DynamoDB is enabled in all VPCs
+Rule: Ensure DynamoDB tables are encrypted at rest with customer-managed CMK
+Description: Cloudrail will review the DynamoDB tables in your environment. If a table is not set to be encrypted at rest using a customer-managed CMK, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/encryption.tutorial.html to set DynamoDB table encryption using a customer-managed CMK.
+Remediation Steps - Terraform: For the aws_dynamodb_table resource, set kms_key_arn argument, in server_side_encryption block, to use a customer-managed CMK.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_dynamodb_table.basic-dynamodb-table] (main.tf:143)
-     Violating Resource: [aws_vpc.main]  (main.tf:5)
+     Violating Resource: [aws_dynamodb_table.basic-dynamodb-table]  (main.tf:143)
 
      Evidence:
-         The VPC
-             | aws_vpc.main in region us-east-1 is in use but not leveraging DYNAMODB Endpoint Gateway
+             | The DynamoDB table aws_dynamodb_table.basic-dynamodb-table is not set to be encrypted at rest using customer-managed CMK
 
 
 -----------------------------------------------
-Rule: Ensure IMDSv2 is used and IMDSv1 is disabled
+Rule: Ensure EC2 instance is EBS optimized
+Description: Cloudrail will review the EC2 instances configuration in your environment. If it is not configured to be EBS-optimized, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-optimized.html to enable EBS optimization for an EC2 instance.
+Remediation Steps - Terraform: For the aws_instance resource, set the ebs_optimized parameter to true.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_instance.test] (main.tf:136)
      Violating Resource: [aws_instance.test]  (main.tf:136)
 
      Evidence:
-             | The EC2 Instance aws_instance.test is allowing IMDSv1
+             | The EC2 Instance aws_instance.test is not EBS optimized
 
 
 -----------------------------------------------
-Rule: Ensure all used default security groups of every VPC restrict all traffic
+Rule: Ensure EC2 instance has detailed monitoring enabled
+Description: Cloudrail will review the EC2 instances configuration in your environment. If an instance does not have detailed monitoring configured, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-cloudwatch-new.html in order to enable detailed monitoring for an EC2 instance.
+Remediation Steps - Terraform: For the aws_instance resource, set the monitoring argument to true.
  - 1 Resources Exposed:
 -----------------------------------------------
-   - Exposed Resource: [aws_nat_gateway.private-subnet-nat-gw] (main.tf:47)
-     Violating Resource: [sg-pseudo-9cec852c-4af5-486a-8381-6ea7441e42f2]  (Not found in TF)
+   - Exposed Resource: [aws_instance.test] (main.tf:136)
+     Violating Resource: [aws_instance.test]  (main.tf:136)
 
      Evidence:
-         VPC aws_vpc.main
-             | aws_nat_gateway.private-subnet-nat-gw uses ENI eni-pseudo-c804b948-0419-467b-9ee3-c67b6dac732c
-             | The ENI is secured by default Security group sg-pseudo-9cec852c-4af5-486a-8381-6ea7441e42f2 and allows all traffic
+             | The EC2 Instance aws_instance.test has detailed monitoring disabled
 
 
 -----------------------------------------------

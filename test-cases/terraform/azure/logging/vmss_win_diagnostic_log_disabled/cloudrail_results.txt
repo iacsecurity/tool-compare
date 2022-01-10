@@ -1,6 +1,23 @@
 
 WARNINGs found:
-Rule: Ensure Storage Account is using the latest version of TLS encryption
+Rule: Ensure Storage Account has default network access denied
+Description: Cloudrail will review the Storage Accounts configuration in your environment. If the account network rules are not denying default network access, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.microsoft.com/en-us/azure/storage/common/storage-network-security?tabs=azure-portal#change-the-default-network-access-rule in order to deny access by default.
+Remediation Steps - Terraform: For the azurerm_storage_account resource, in the network_rules block, set the default_action argument to “Deny”. If azurerm_storage_account_network_rules resource is being used, set the default_action argument to “Deny”.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [azurerm_storage_account.storacc] (main.tf:41)
+     Violating Resource: [azurerm_storage_account.storacc]  (main.tf:41)
+
+     Evidence:
+             | The Storage Account asdftstsa is not denying default network access
+
+
+-----------------------------------------------
+Rule: Ensure Storage logging is enabled for Queue service for read, write and delete requests
+Description: The Azure Queue Storage sevice stores messages that may be read by any client with access to the storage account. It is recommended to enable the logging for read, write, and delete events in order to monitor user activity.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.microsoft.com/en-us/azure/storage/queues/monitor-queue-storage?tabs=azure-portal in order to enable StorageRead, StorageWrite, and StorageDelete.
+Remediation Steps - Terraform: For the azurerm_storage_account resource, in the queue_properties, logging block, set delete/read/write arguments to true.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [azurerm_storage_account.storacc] (main.tf:41)
@@ -12,6 +29,9 @@ Rule: Ensure Storage Account is using the latest version of TLS encryption
 
 -----------------------------------------------
 Rule: Ensure default network access rule for Storage Accounts is set to deny
+Description: In order to add an extra layer of protection to Storage Accounts, network access should be restricted by default in order to only allow access from a selected groups of IPs.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.microsoft.com/en-us/azure/storage/common/storage-network-security?tabs=azure-portal#change-the-default-network-access-rule in order to change the default network access rule.
+Remediation Steps - Terraform: For the azurerm_storage_account resource with network_rules block, set the default_action to Deny. For azurerm_storage_account_network_rules resources, ensure the default_action argument is set to Deny.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [azurerm_storage_account.storacc] (main.tf:41)
@@ -22,7 +42,10 @@ Rule: Ensure default network access rule for Storage Accounts is set to deny
 
 
 -----------------------------------------------
-Rule: Ensure Storage logging is enabled for Queue service for read, write and delete requests
+Rule: Ensure Storage Account is using the latest version of TLS encryption
+Description: Azure Storage Account should use the latest version of TLS (1.2) in order to be compliant with industry standards.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.microsoft.com/en-us/azure/storage/common/transport-layer-security-configure-minimum-version?tabs=portal#configure-the-minimum-tls-version-for-a-storage-account in order to configure the minimum TLS version for a storage account.
+Remediation Steps - Terraform: For the azurerm_storage_account resource, set the min_tls_version argument to TLS1_2.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [azurerm_storage_account.storacc] (main.tf:41)
@@ -30,17 +53,6 @@ Rule: Ensure Storage logging is enabled for Queue service for read, write and de
 
      Evidence:
              | This rule evaluated asdftstsa's configuration
-
-
------------------------------------------------
-Rule: Ensure Storage Account has default network access denied
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [azurerm_storage_account.storacc] (main.tf:41)
-     Violating Resource: [azurerm_storage_account.storacc]  (main.tf:41)
-
-     Evidence:
-             | The Storage Account asdftstsa is not denying default network access
 
 
 -----------------------------------------------

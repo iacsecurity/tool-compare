@@ -1,7 +1,7 @@
 
   Result 1
 
-  [aws-lambda-enable-tracing][[0m[97mLOW[39m[0m] Resource 'aws_lambda_function.my-lambda' uses default value for tracing_config.mode
+  [aws-lambda-enable-tracing][LOW] Resource 'aws_lambda_function.my-lambda' uses default value for tracing_config.mode
   /src/main.tf:5-11
 
 
@@ -19,19 +19,19 @@
       13 | resource "aws_iam_role" "lambda-role" {
       14 |   name = "lambda-role"
 
-  Impact:     WIthout full tracing enabled it is difficult to trace the flow of logs
+  Impact:     Without full tracing enabled, it is difficult to trace the flow of logs
   Resolution: Enable tracing
 
   More Info:
-  - https://tfsec.dev/docs/aws/lambda/enable-tracing#aws/lambda 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/lambda/enable-tracing 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_function#mode 
 
   times
   ------------------------------------------
-  disk i/o             59.793417ms
-  parsing HCL          509.083µs
-  evaluating values    3.501875ms
-  running checks       20.450125ms
+  disk i/o             25.311167ms
+  parsing HCL          693.792µs
+  evaluating values    3.5545ms
+  running checks       18.202542ms
 
   counts
   ------------------------------------------

@@ -1,6 +1,161 @@
 Failed to run the process ...
 {
+  "meta": {
+    "isPrivate": true,
+    "isLicensesEnabled": false,
+    "ignoreSettings": null,
+    "org": "ryder.d",
+    "projectId": "",
+    "policy": ""
+  },
+  "filesystemPolicy": false,
+  "vulnerabilities": [],
+  "dependencyCount": 0,
+  "licensesPolicy": null,
+  "ignoreSettings": null,
+  "targetFile": "main.tf",
+  "projectName": "project",
+  "org": "ryder.d",
+  "policy": "",
+  "isPrivate": true,
+  "targetFilePath": "/project/main.tf",
+  "packageManager": "terraformconfig",
+  "path": "/project",
+  "projectType": "terraformconfig",
   "ok": false,
-  "error": "Failed to build policy engine",
-  "path": "/project"
+  "infrastructureAsCodeIssues": [
+    {
+      "severity": "low",
+      "resolve": "Set `xray_tracing_enabled` attribute to `true`",
+      "id": "SNYK-CC-TF-129",
+      "impact": "Traces will not be collected for this api gateway, which can impede incident management",
+      "msg": "resource.aws_api_gateway_stage[api_gw_stage].xray_tracing_enabled",
+      "remediation": {
+        "cloudformation": "Set `Properties.TracingEnabled` attribute to `true`",
+        "terraform": "Set `xray_tracing_enabled` attribute to `true`"
+      },
+      "subType": "API Gateway (REST APIs)",
+      "issue": "X-Ray tracing is not enabled for this api gateway stage",
+      "publicId": "SNYK-CC-TF-129",
+      "title": "API Gateway X-Ray tracing disabled",
+      "references": [
+        "https://docs.aws.amazon.com/xray/latest/devguide/xray-services-apigateway.html",
+        "https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-enabling-xray.html",
+        "https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-understanding-xray-traces.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "X-Ray tracing is not enabled for this api gateway stage",
+        "impact": "Traces will not be collected for this api gateway, which can impede incident management",
+        "resolve": "Set `xray_tracing_enabled` attribute to `true`"
+      },
+      "lineNumber": 44,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-129",
+      "isGeneratedByCustomRule": false,
+      "path": [
+        "resource",
+        "aws_api_gateway_stage[api_gw_stage]",
+        "xray_tracing_enabled"
+      ]
+    },
+    {
+      "severity": "high",
+      "resolve": "Set `authorization` attribute to value other than `NONE`",
+      "id": "SNYK-CC-TF-99",
+      "impact": "Anyone could potentially access resources behind the gateway",
+      "msg": "resource.aws_api_gateway_method[api_gw_method].authorization",
+      "remediation": {
+        "cloudformation": "Set `Properties.AuthorizationType` attribute to value other than `NONE`",
+        "terraform": "Set `authorization` attribute to value other than `NONE`"
+      },
+      "subType": "API Gateway (REST APIs)",
+      "issue": "API gateway will accept http methods without authorization header",
+      "publicId": "SNYK-CC-TF-99",
+      "title": "API Gateway allows anonymous access",
+      "references": [
+        "https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-method-settings-method-request.html",
+        "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-apigateway-method.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "API gateway will accept http methods without authorization header",
+        "impact": "Anyone could potentially access resources behind the gateway",
+        "resolve": "Set `authorization` attribute to value other than `NONE`"
+      },
+      "lineNumber": 26,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-99",
+      "isGeneratedByCustomRule": false,
+      "path": [
+        "resource",
+        "aws_api_gateway_method[api_gw_method]",
+        "authorization"
+      ]
+    },
+    {
+      "severity": "low",
+      "resolve": "Set `access_log_settings` attribute",
+      "id": "SNYK-CC-TF-138",
+      "impact": "Audit records may not be available during investigation",
+      "msg": "resource.aws_api_gateway_stage[api_gw_stage].access_log_settings",
+      "remediation": {
+        "cloudformation": "Set `Properties.AccessLogSetting.DestinationArn` attribute",
+        "terraform": "Set `access_log_settings` attribute"
+      },
+      "subType": "API Gateway (REST APIs)",
+      "issue": "Amazon Api Gateway access logging is not enabled",
+      "publicId": "SNYK-CC-TF-138",
+      "title": "API Gateway access logging disabled",
+      "references": [
+        "https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-logging.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Amazon Api Gateway access logging is not enabled",
+        "impact": "Audit records may not be available during investigation",
+        "resolve": "Set `access_log_settings` attribute"
+      },
+      "lineNumber": 44,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-138",
+      "isGeneratedByCustomRule": false,
+      "path": [
+        "resource",
+        "aws_api_gateway_stage[api_gw_stage]",
+        "access_log_settings"
+      ]
+    },
+    {
+      "severity": "medium",
+      "resolve": "Set `settings.cache_data_encrypted` attribute to `true`",
+      "id": "SNYK-CC-AWS-419",
+      "impact": "If someone gains unauthorized access to the cache storage location the contents will be readable which may disclose sensitive information",
+      "msg": "resource.aws_api_gateway_method_settings[api_gw_method_sett].settings.cache_data_encrypted",
+      "remediation": {
+        "cloudformation": "Set `Properties.StageDescription.CacheDataEncrypted` attribute to `true`",
+        "terraform": "Set `settings.cache_data_encrypted` attribute to `true`"
+      },
+      "subType": "API Gateway (REST APIs)",
+      "issue": "API gateway cache is not encrypted",
+      "publicId": "SNYK-CC-AWS-419",
+      "title": "API gateway cached responses are not encrypted",
+      "references": [
+        "https://docs.aws.amazon.com/apigateway/latest/developerguide/data-protection-encryption.html",
+        "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-apigateway-deployment-stagedescription.html"
+      ],
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "API gateway cache is not encrypted",
+        "impact": "If someone gains unauthorized access to the cache storage location the contents will be readable which may disclose sensitive information",
+        "resolve": "Set `settings.cache_data_encrypted` attribute to `true`"
+      },
+      "lineNumber": 58,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AWS-419",
+      "isGeneratedByCustomRule": false,
+      "path": [
+        "resource",
+        "aws_api_gateway_method_settings[api_gw_method_sett]",
+        "settings",
+        "cache_data_encrypted"
+      ]
+    }
+  ]
 }

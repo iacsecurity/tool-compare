@@ -2,12 +2,21 @@
 
 Violation Details -
     
-	Description    :	Ensure no security groups is wide open to public, that is, allows traffic from 0.0.0.0/0 to ALL ports and protocols
+	Description    :	Ensure VPC flow logging is enabled in all VPCs
 	File           :	main.tf
 	Module Name    :	root
 	Plan Root      :	./
-	Line           :	9
-	Severity       :	HIGH
+	Line           :	5
+	Severity       :	LOW
+	
+	-----------------------------------------------------------------------
+	
+	Description    :	Ensure AWS RDS instances have logging enabled.
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	60
+	Severity       :	MEDIUM
 	
 	-----------------------------------------------------------------------
 	
@@ -29,24 +38,6 @@ Violation Details -
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	Ensure VPC flow logging is enabled in all VPCs
-	File           :	main.tf
-	Module Name    :	root
-	Plan Root      :	./
-	Line           :	5
-	Severity       :	LOW
-	
-	-----------------------------------------------------------------------
-	
-	Description    :	Ensure AWS RDS instances have logging enabled.
-	File           :	main.tf
-	Module Name    :	root
-	Plan Root      :	./
-	Line           :	60
-	Severity       :	MEDIUM
-	
-	-----------------------------------------------------------------------
-	
 	Description    :	Ensure that your RDS database has IAM Authentication enabled.
 	File           :	main.tf
 	Module Name    :	root
@@ -56,12 +47,21 @@ Violation Details -
 	
 	-----------------------------------------------------------------------
 	
+	Description    :	Ensure no security groups is wide open to public, that is, allows traffic from 0.0.0.0/0 to ALL ports and protocols
+	File           :	main.tf
+	Module Name    :	root
+	Plan Root      :	./
+	Line           :	9
+	Severity       :	HIGH
+	
+	-----------------------------------------------------------------------
+	
 
 Scan Summary -
 
 	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-08-18 17:42:23.623377417 +0000 UTC
+	Scanned At          :	2022-01-05 16:26:09.606684925 +0000 UTC
 	Policies Validated  :	145
 	Violated Policies   :	6
 	Low                 :	1

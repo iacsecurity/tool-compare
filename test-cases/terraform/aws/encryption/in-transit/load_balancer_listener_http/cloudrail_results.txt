@@ -1,74 +1,25 @@
 
 WARNINGs found:
-Rule: Ensure ELB has logging enabled
+Rule: Ensure all used default security groups of every VPC restrict all traffic
+Description: Using default security groups in general is inadvisable. By locking security groups down, you are validating that if anyone uses them by accident, they will realize before any security issues occur.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/working-with-security-groups.html#deleting-security-group-rule to update the security group rules.
+Remediation Steps - Terraform: For the resource aws_default_security_group, update the inline ingress and egress rules.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_lb.alb_test] (main.tf:60)
-     Violating Resource: [aws_lb.alb_test]  (main.tf:60)
+     Violating Resource: [sg-pseudo-4503aa77-82c6-460f-a1b5-a3b8bb30ef5f]  (Not found in TF)
 
      Evidence:
-             | The Load Balancer aws_lb.alb_test does not have logging enabled
-
-
------------------------------------------------
-Rule: Ensure Load Balancer drops invalid HTTP headers
- - 1 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_lb.alb_test] (main.tf:60)
-     Violating Resource: [aws_lb.alb_test]  (main.tf:60)
-
-     Evidence:
-             | The Load Balancer aws_lb.alb_test does not drop invalid HTTP headers
-
-
------------------------------------------------
-Rule: Ensure all resources that can be tagged have at least one tag
- - 6 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_lb.alb_test] (main.tf:60)
-     Violating Resource: [aws_lb.alb_test]  (main.tf:60)
-
-     Evidence:
-             | Resource Load Balancer aws_lb.alb_test does not have any tags set
-
-
-   - Exposed Resource: [aws_vpc.vpc1] (main.tf:5)
-     Violating Resource: [aws_vpc.vpc1]  (main.tf:5)
-
-     Evidence:
-             | Resource VPC aws_vpc.vpc1 does not have any tags set
-
-
-   - Exposed Resource: [aws_subnet.subnet2] (main.tf:22)
-     Violating Resource: [aws_subnet.subnet2]  (main.tf:22)
-
-     Evidence:
-             | Resource Subnet aws_subnet.subnet2 does not have any tags set other than "Name"
-
-
-   - Exposed Resource: [aws_lb_target_group.test] (main.tf:54)
-     Violating Resource: [aws_lb_target_group.test]  (main.tf:54)
-
-     Evidence:
-             | Resource Load Balancer Target Group aws_lb_target_group.test does not have any tags set
-
-
-   - Exposed Resource: [aws_route_table.rt1] (main.tf:36)
-     Violating Resource: [aws_route_table.rt1]  (main.tf:36)
-
-     Evidence:
-             | Resource Route table aws_route_table.rt1 does not have any tags set
-
-
-   - Exposed Resource: [aws_subnet.subnet1] (main.tf:13)
-     Violating Resource: [aws_subnet.subnet1]  (main.tf:13)
-
-     Evidence:
-             | Resource Subnet aws_subnet.subnet1 does not have any tags set other than "Name"
+         VPC aws_vpc.vpc1
+             | aws_lb.alb_test uses ENI eni-pseudo-653c1c98-6108-4b30-818d-3f507c1b8c4a
+             | The ENI is secured by default Security group sg-pseudo-4503aa77-82c6-460f-a1b5-a3b8bb30ef5f and allows all traffic
 
 
 -----------------------------------------------
 Rule: Ensure ALB is using HTTPS and not HTTP
+Description: In most cases, it is inadvisable to be using HTTP, as confidential or sensitive data may be transported over it, and it’s best to use HTTPS.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/elasticloadbalancing/latest/application/create-application-load-balancer.html#configure-security-settings to create a listener that uses HTTPS Protocol.
+Remediation Steps - Terraform: For the aws_lb_listener resource, set protocol argument to HTTPS. Also set ssl_policy and certificate_arn arguments.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_lb_listener.lb_listener_test] (main.tf:65)
@@ -80,16 +31,87 @@ Rule: Ensure ALB is using HTTPS and not HTTP
 
 
 -----------------------------------------------
-Rule: Ensure all used default security groups of every VPC restrict all traffic
+Rule: Ensure all resources that can be tagged have at least one tag
+Description: Some organizations require that all resources have at least one tag set. This rule will review the resources that can be tagged, and make sure each one has a tag that is not the Name tag. Resources that are not tagged will be flagged.
+Remediation Steps - Cloud Console: Access the specific resource in the AWS console and add tags.
+Remediation Steps - Terraform: Add a tags section to the resource with at least one tag beyond the Name tag.
+ - 7 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_vpc.vpc1] (main.tf:5)
+     Violating Resource: [aws_vpc.vpc1]  (main.tf:5)
+
+     Evidence:
+             | Resource VPC aws_vpc.vpc1 does not have any tags set
+
+
+   - Exposed Resource: [aws_route_table.rt1] (main.tf:36)
+     Violating Resource: [aws_route_table.rt1]  (main.tf:36)
+
+     Evidence:
+             | Resource Route table aws_route_table.rt1 does not have any tags set
+
+
+   - Exposed Resource: [aws_subnet.subnet2] (main.tf:22)
+     Violating Resource: [aws_subnet.subnet2]  (main.tf:22)
+
+     Evidence:
+             | Resource Subnet aws_subnet.subnet2 does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [aws_lb.alb_test] (main.tf:60)
+     Violating Resource: [aws_lb.alb_test]  (main.tf:60)
+
+     Evidence:
+             | Resource Load Balancer aws_lb.alb_test does not have any tags set
+
+
+   - Exposed Resource: [aws_subnet.subnet1] (main.tf:13)
+     Violating Resource: [aws_subnet.subnet1]  (main.tf:13)
+
+     Evidence:
+             | Resource Subnet aws_subnet.subnet1 does not have any tags set other than "Name"
+
+
+   - Exposed Resource: [aws_internet_gateway.igw1] (main.tf:32)
+     Violating Resource: [aws_internet_gateway.igw1]  (main.tf:32)
+
+     Evidence:
+             | Resource Internet gateway aws_internet_gateway.igw1 does not have any tags set
+
+
+   - Exposed Resource: [aws_lb_target_group.test] (main.tf:54)
+     Violating Resource: [aws_lb_target_group.test]  (main.tf:54)
+
+     Evidence:
+             | Resource Load Balancer Target Group aws_lb_target_group.test does not have any tags set
+
+
+-----------------------------------------------
+Rule: Ensure Load Balancer drops invalid HTTP headers
+Description: Cloudrail will review the Load Balancers in your environment. If a Load Balancer is not set drop invalid HTTP headers, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/elasticloadbalancing/latest/application/application-load-balancers.html to enable the Drop invalid header fields parameter.
+Remediation Steps - Terraform: For the aws_lb resource, set the drop_invalid_header_fields parameter to true.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_lb.alb_test] (main.tf:60)
-     Violating Resource: [sg-pseudo-0912f4a5-d406-4343-9cf0-358629f51ab6]  (Not found in TF)
+     Violating Resource: [aws_lb.alb_test]  (main.tf:60)
 
      Evidence:
-         VPC aws_vpc.vpc1
-             | aws_lb.alb_test uses ENI eni-pseudo-3343e1de-0db3-49a5-bbd3-7fa2101bca53
-             | The ENI is secured by default Security group sg-pseudo-0912f4a5-d406-4343-9cf0-358629f51ab6 and allows all traffic
+             | The Load Balancer aws_lb.alb_test does not drop invalid HTTP headers
+
+
+-----------------------------------------------
+Rule: Ensure ELB has logging enabled
+Description: Cloudrail will review the Elastic Load Balancers configuration in your environment. If a load balancer does not have logging enabled, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-access-logs.html or https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-access-logs.html in order to enable access logs for the load balancer.
+Remediation Steps - Terraform: For the aws_lb resource, set the access_logs block with enabled argument set to true and the bucket argument set to the S3 bucket name.
+ - 1 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_lb.alb_test] (main.tf:60)
+     Violating Resource: [aws_lb.alb_test]  (main.tf:60)
+
+     Evidence:
+             | The Load Balancer aws_lb.alb_test does not have logging enabled
 
 
 -----------------------------------------------

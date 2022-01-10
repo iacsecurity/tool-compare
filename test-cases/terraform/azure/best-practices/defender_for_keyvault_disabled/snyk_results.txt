@@ -4,7 +4,7 @@ Failed to run the process ...
     "isPrivate": true,
     "isLicensesEnabled": false,
     "ignoreSettings": null,
-    "org": "yi2020",
+    "org": "ryder.d",
     "projectId": "",
     "policy": ""
   },
@@ -15,7 +15,7 @@ Failed to run the process ...
   "ignoreSettings": null,
   "targetFile": "main.tf",
   "projectName": "project",
-  "org": "yi2020",
+  "org": "ryder.d",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
@@ -26,25 +26,64 @@ Failed to run the process ...
   "infrastructureAsCodeIssues": [
     {
       "severity": "low",
+      "resolve": "Set `tier` to `Standard` and `resource_type` to `KeyVaults`",
+      "impact": "Key Vault service will not be protected with threat intelligence, anomaly detection, and behavior analytics in the Azure Security Center",
+      "msg": "resource.azurerm_security_center_subscription_pricing[example].resource_type",
+      "remediation": {
+        "terraform": "Set `tier` to `Standard` and `resource_type` to `KeyVaults`",
+        "arm": "Set `name` to `KeyVaults` and `properties.pricingTier` to `Standard`"
+      },
+      "subType": "Security Center",
+      "issue": "Key Vault is not protected by Azure Defender",
+      "publicId": "SNYK-CC-AZURE-528",
+      "title": "Key Vault is not protected by Azure Defender",
+      "references": [
+        "https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/security_center_subscription_pricing",
+        "https://docs.microsoft.com/en-us/azure/security-center/azure-defender",
+        "CIS Benchmark - `2.8 Ensure that Azure Defender is set to On for Key Vault`"
+      ],
+      "id": "SNYK-CC-AZURE-528",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "Key Vault is not protected by Azure Defender",
+        "impact": "Key Vault service will not be protected with threat intelligence, anomaly detection, and behavior analytics in the Azure Security Center",
+        "resolve": "Set `tier` to `Standard` and `resource_type` to `KeyVaults`"
+      },
+      "lineNumber": 12,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AZURE-528",
+      "isGeneratedByCustomRule": false,
+      "path": [
+        "resource",
+        "azurerm_security_center_subscription_pricing[example]",
+        "resource_type"
+      ]
+    },
+    {
+      "severity": "medium",
       "resolve": "Set `tier` attribute to `Standard`",
-      "id": "SNYK-CC-TF-164",
       "impact": "Most of Azure Security Center features are disabled under the Free tier",
       "msg": "resource.azurerm_security_center_subscription_pricing[example]",
+      "remediation": {
+        "terraform": "Set `tier` attribute to `Standard`",
+        "arm": "Set `properties.pricingTier` attribute to `Standard`"
+      },
       "subType": "Security Center",
-      "issue": "Azure Security Center standard tier pricing is not enabled",
+      "issue": "Security Center Free Tier",
       "publicId": "SNYK-CC-TF-164",
       "title": "Security Center Free Tier",
       "references": [
         "https://docs.microsoft.com/bs-cyrl-ba/azure/security-center/security-center-pricing"
       ],
+      "id": "SNYK-CC-TF-164",
       "isIgnored": false,
       "iacDescription": {
-        "issue": "Azure Security Center standard tier pricing is not enabled",
+        "issue": "Security Center Free Tier",
         "impact": "Most of Azure Security Center features are disabled under the Free tier",
         "resolve": "Set `tier` attribute to `Standard`"
       },
-      "lineNumber": 11,
+      "lineNumber": 10,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-164",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "azurerm_security_center_subscription_pricing[example]"

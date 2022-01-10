@@ -4,7 +4,7 @@ Failed to run the process ...
     "isPrivate": true,
     "isLicensesEnabled": false,
     "ignoreSettings": null,
-    "org": "yi2020",
+    "org": "ryder.d",
     "projectId": "",
     "policy": ""
   },
@@ -15,7 +15,7 @@ Failed to run the process ...
   "ignoreSettings": null,
   "targetFile": "main.tf",
   "projectName": "project",
-  "org": "yi2020",
+  "org": "ryder.d",
   "policy": "",
   "isPrivate": true,
   "targetFilePath": "/project/main.tf",
@@ -48,11 +48,45 @@ Failed to run the process ...
         "impact": "Connection logs will not be available for troubleshooting, or investigations",
         "resolve": "Set `name` attribute to `log_connections`, and `value` attribute to `on`"
       },
-      "lineNumber": 30,
+      "lineNumber": 29,
       "documentation": "https://snyk.io/security-rules/SNYK-CC-TF-257",
+      "isGeneratedByCustomRule": false,
       "path": [
         "resource",
         "azurerm_postgresql_configuration[example]"
+      ]
+    },
+    {
+      "severity": "medium",
+      "resolve": "Set `ssl_minimal_tls_version_enforced` to `TLS1_2`",
+      "impact": "An outdated TLS version might lead to data leakage or manipulation",
+      "msg": "resource.azurerm_postgresql_server[example]",
+      "remediation": {
+        "terraform": "Set `ssl_minimal_tls_version_enforced` to `TLS1_2`",
+        "arm": "Set `minimalTlsVersion` to `TLS1_2`"
+      },
+      "subType": "Database",
+      "issue": "PostgreSQL server minimum TLS version 1.2",
+      "publicId": "SNYK-CC-AZURE-template",
+      "title": "PostgreSQL server minimum TLS version 1.2",
+      "references": [
+        "https://docs.microsoft.com/en-us/azure/postgresql/concepts-ssl-connection-security",
+        "https://docs.microsoft.com/en-us/azure/templates/microsoft.dbforpostgresql/servers?tabs=json",
+        "https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_server"
+      ],
+      "id": "SNYK-CC-AZURE-template",
+      "isIgnored": false,
+      "iacDescription": {
+        "issue": "PostgreSQL server minimum TLS version 1.2",
+        "impact": "An outdated TLS version might lead to data leakage or manipulation",
+        "resolve": "Set `ssl_minimal_tls_version_enforced` to `TLS1_2`"
+      },
+      "lineNumber": 15,
+      "documentation": "https://snyk.io/security-rules/SNYK-CC-AZURE-template",
+      "isGeneratedByCustomRule": false,
+      "path": [
+        "resource",
+        "azurerm_postgresql_server[example]"
       ]
     }
   ]

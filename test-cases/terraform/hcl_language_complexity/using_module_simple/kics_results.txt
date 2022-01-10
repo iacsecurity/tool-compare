@@ -16,70 +16,607 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+Scanning with Keeping Infrastructure as Code Secure v1.4.9
 
 
 
-Files scanned: 55
-Parsed files: 55
-Queries loaded: 809
+Files scanned: 58
+Parsed files: 58
+Queries loaded: 1127
 Queries failed to execute: 0
 
 ------------------------------------
 
-Resource Not Using Tags, Severity: INFO, Results: 1
+Variable Without Description, Severity: INFO, Results: 2
+Description: All variables should contain a valid description.
+Platform: Terraform
+
+	[1]: ../../src/.terraform/modules/jack/examples/complete/variables.tf:1
+
+		001: variable "region" {
+		002:   type = string
+		003: }
+
+
+	[2]: ../../src/.terraform/modules/jack/examples/complete/variables.tf:5
+
+		004: 
+		005: variable "user_name" {
+		006:   type = string
+
+
+Resource Not Using Tags, Severity: INFO, Results: 2
 Description: AWS services resource tags are an essential part of managing components
 Platform: Terraform
 
-	[1]: /src/.terraform/modules/jack.this/examples/autoscalinggroup/main.tf:13
+	[1]: ../../src/.terraform/modules/jack.this/examples/autoscalinggroup/main.tf:13
 
 		012: #######################
 		013: resource "aws_launch_template" "default" {
 		014:   # terraform-null-label example used here: Set template name prefix
 
 
+	[2]: ../../src/.terraform/modules/jack/main.tf:8
+
+		007:   force_destroy        = var.force_destroy
+		008:   tags                 = module.this.tags
+		009: }
+
+
+Output Without Description, Severity: INFO, Results: 73
+Description: All outputs should contain a valid description.
+Platform: Terraform
+
+	[1]: ../../src/.terraform/modules/jack.this/examples/complete/label8u.tf:40
+
+		039: 
+		040: output "label8u_id" {
+		041:   value = module.label8u.id
+
+
+	[2]: ../../src/.terraform/modules/jack.this/examples/complete/label3c.tf:26
+
+		025: 
+		026: output "label3c_tags" {
+		027:   value = module.label3c.tags
+
+
+	[3]: ../../src/.terraform/modules/jack.this/examples/complete/label8d.tf:42
+
+		041: 
+		042: output "label8d_tags" {
+		043:   value = module.label8d.tags
+
+
+	[4]: ../../src/.terraform/modules/jack.this/examples/complete/label8n.tf:27
+
+		026: 
+		027: output "label8n_context_context" {
+		028:   value = module.label8n_context.context
+
+
+	[5]: ../../src/.terraform/modules/jack.this/examples/complete/label6t.tf:17
+
+		016: 
+		017: output "label6t_tags" {
+		018:   value = module.label6t.tags
+
+
+	[6]: ../../src/.terraform/modules/jack.this/examples/complete/label8dnd.tf:18
+
+		017: 
+		018: output "label8dnd_context_id" {
+		019:   value = module.label8dnd_context.id
+
+
+	[7]: ../../src/.terraform/modules/jack.this/examples/complete/label8l.tf:40
+
+		039: 
+		040: output "label8l_context" {
+		041:   value = module.label8l.context
+
+
+	[8]: ../../src/.terraform/modules/jack.this/examples/complete/label8l.tf:32
+
+		031: 
+		032: output "label8l_context_tags" {
+		033:   value = module.label8l_context.tags
+
+
+	[9]: ../../src/.terraform/modules/jack.this/examples/complete/label8l.tf:44
+
+		043: 
+		044: output "label8l_tags" {
+		045:   value = module.label8l.tags
+
+
+	[10]: ../../src/.terraform/modules/jack.this/examples/complete/label8t.tf:39
+
+		038: 
+		039: output "label8t_context" {
+		040:   value = module.label8t.context
+
+
+	[11]: ../../src/.terraform/modules/jack.this/examples/complete/label8t.tf:27
+
+		026: 
+		027: output "label8t_context_context" {
+		028:   value = module.label8t_context.context
+
+
+	[12]: ../../src/.terraform/modules/jack.this/examples/complete/label8t.tf:23
+
+		022: 
+		023: output "label8t_context_id" {
+		024:   value = module.label8t_context.id
+
+
+	[13]: ../../src/.terraform/modules/jack.this/examples/complete/label2.tf:40
+
+		039: 
+		040: output "label2_context" {
+		041:   value = module.label2.context
+
+
+	[14]: ../../src/.terraform/modules/jack.this/examples/autoscalinggroup/outputs.tf:10
+
+		009: 
+		010: output "id" {
+		011:   value = module.label.id
+
+
+	[15]: ../../src/.terraform/modules/jack.this/examples/complete/label3n.tf:26
+
+		025: 
+		026: output "label3n_tags" {
+		027:   value = module.label3n.tags
+
+
+	[16]: ../../src/.terraform/modules/jack.this/examples/complete/label5.tf:27
+
+		026: 
+		027: output "label5_tags" {
+		028:   value = module.label5.tags
+
+
+	[17]: ../../src/.terraform/modules/jack.this/examples/complete/label8u.tf:32
+
+		031: // debug
+		032: output "label8u_context_normalized_context" {
+		033:   value = module.label8u_context.normalized_context
+
+
+	[18]: ../../src/.terraform/modules/jack.this/examples/complete/label8l.tf:28
+
+		027: 
+		028: output "label8l_context_context" {
+		029:   value = module.label8l_context.context
+
+
+	[19]: ../../src/.terraform/modules/jack.this/examples/complete/label8u.tf:23
+
+		022: 
+		023: output "label8u_context_id" {
+		024:   value = module.label8u_context.id
+
+
+	[20]: ../../src/.terraform/modules/jack.this/examples/complete/label8d.tf:30
+
+		029: 
+		030: output "label8d_context_tags" {
+		031:   value = module.label8d_context.tags
+
+
+	[21]: ../../src/.terraform/modules/jack.this/examples/complete/label2.tf:21
+
+		020: 
+		021: output "label2" {
+		022:   value = {
+
+
+	[22]: ../../src/.terraform/modules/jack.this/examples/complete/label4.tf:28
+
+		027: 
+		028: output "label4_tags" {
+		029:   value = module.label4.tags
+
+
+	[23]: ../../src/.terraform/modules/jack.this/examples/complete/label7.tf:42
+
+		041: 
+		042: output "label7_context" {
+		043:   value = module.label7.context
+
+
+	[24]: ../../src/.terraform/modules/jack.this/examples/complete/label8dcd.tf:18
+
+		017: 
+		018: output "label8dcd_context_id" {
+		019:   value = module.label8dcd_context.id
+
+
+	[25]: ../../src/.terraform/modules/jack.this/examples/complete/label8u.tf:44
+
+		043: 
+		044: output "label8u_context" {
+		045:   value = module.label8u.context
+
+
+	[26]: ../../src/.terraform/modules/jack.this/examples/autoscalinggroup/outputs.tf:6
+
+		005: 
+		006: output "tags" {
+		007:   value = module.label.tags
+
+
+	[27]: ../../src/.terraform/modules/jack.this/examples/complete/label4.tf:17
+
+		016: 
+		017: output "label4" {
+		018:   value = {
+
+
+	[28]: ../../src/.terraform/modules/jack.this/examples/complete/label8u.tf:48
+
+		047: 
+		048: output "label8u_tags" {
+		049:   value = module.label8u.tags
+
+
+	[29]: ../../src/.terraform/modules/jack.this/examples/complete/label1.tf:18
+
+		017: 
+		018: output "label1" {
+		019:   value = {
+
+
+	[30]: ../../src/.terraform/modules/jack.this/examples/complete/label7.tf:38
+
+		037: 
+		038: output "label7_attributes" {
+		039:   value = module.label7.attributes
+
+
+	[31]: ../../src/.terraform/modules/jack.this/examples/complete/label8d.tf:26
+
+		025: 
+		026: output "label8d_context_context" {
+		027:   value = module.label8d_context.context
+
+
+	[32]: ../../src/.terraform/modules/jack.this/examples/complete/label8dnd.tf:22
+
+		021: 
+		022: output "label8dnd_id" {
+		023:   value = module.label8dnd.id
+
+
+	[33]: ../../src/.terraform/modules/jack.this/examples/complete/label8t.tf:43
+
+		042: 
+		043: output "label8t_tags" {
+		044:   value = module.label8t.tags
+
+
+	[34]: ../../src/.terraform/modules/jack.this/examples/complete/label8u.tf:27
+
+		026: 
+		027: output "label8u_context_context" {
+		028:   value = module.label8u_context.context
+
+
+	[35]: ../../src/.terraform/modules/jack.this/examples/complete/label2.tf:36
+
+		035: 
+		036: output "label2_tags_as_list_of_maps" {
+		037:   value = module.label2.tags_as_list_of_maps
+
+
+	[36]: ../../src/.terraform/modules/jack.this/examples/autoscalinggroup/outputs.tf:2
+
+		001: # terraform-null-label example used here: Output list of tags applied in each format
+		002: output "tags_as_list_of_maps" {
+		003:   value = module.label.tags_as_list_of_maps
+
+
+	[37]: ../../src/.terraform/modules/jack.this/examples/complete/label1.tf:33
+
+		032: 
+		033: output "label1_context" {
+		034:   value = module.label1.context
+
+
+	[38]: ../../src/.terraform/modules/jack.this/examples/complete/label4.tf:32
+
+		031: 
+		032: output "label4_context" {
+		033:   value = module.label4.context
+
+
+	[39]: ../../src/.terraform/modules/jack.this/examples/complete/label6t.tf:9
+
+		008: 
+		009: output "label6t" {
+		010:   value = {
+
+
+	[40]: ../../src/.terraform/modules/jack.this/examples/complete/label8d.tf:38
+
+		037: 
+		038: output "label8d_context" {
+		039:   value = module.label8d.context
+
+
+	[41]: ../../src/.terraform/modules/jack.this/examples/complete/label8n.tf:39
+
+		038: 
+		039: output "label8n_context" {
+		040:   value = module.label8n.context
+
+
+	[42]: ../../src/.terraform/modules/jack.this/examples/complete/label8n.tf:23
+
+		022: 
+		023: output "label8n_context_id" {
+		024:   value = module.label8n_context.id
+
+
+	[43]: ../../src/.terraform/modules/jack.this/examples/complete/label1.tf:29
+
+		028: 
+		029: output "label1_tags" {
+		030:   value = module.label1.tags
+
+
+	[44]: ../../src/.terraform/modules/jack.this/examples/complete/label3n.tf:15
+
+		014: 
+		015: output "label3n" {
+		016:   value = {
+
+
+	[45]: ../../src/.terraform/modules/jack.this/examples/complete/label8d.tf:34
+
+		033: 
+		034: output "label8d_id" {
+		035:   value = module.label8d.id
+
+
+	[46]: ../../src/.terraform/modules/jack.this/examples/complete/label1.tf:37
+
+		036: 
+		037: output "label1_normalized_context" {
+		038:   value = module.label1.normalized_context
+
+
+	[47]: ../../src/.terraform/modules/jack.this/examples/complete/label3n.tf:30
+
+		029: 
+		030: output "label3n_context" {
+		031:   value = module.label3n.context
+
+
+	[48]: ../../src/.terraform/modules/jack.this/examples/complete/label7.tf:23
+
+		022: 
+		023: output "label7" {
+		024:   value = {
+
+
+	[49]: ../../src/.terraform/modules/jack.this/examples/complete/label8dcd.tf:22
+
+		021: 
+		022: output "label8dcd_id" {
+		023:   value = module.label8dcd.id
+
+
+	[50]: ../../src/.terraform/modules/jack.this/examples/complete/label1t2.tf:16
+
+		015: 
+		016: output "label1t2_tags" {
+		017:   value = module.label1t2.tags
+
+
+	[51]: ../../src/.terraform/modules/jack.this/examples/complete/label5.tf:16
+
+		015: 
+		016: output "label5" {
+		017:   value = {
+
+
+	[52]: ../../src/.terraform/modules/jack.this/examples/complete/label8l.tf:36
+
+		035: 
+		036: output "label8l_id" {
+		037:   value = module.label8l.id
+
+
+	[53]: ../../src/.terraform/modules/jack.this/examples/complete/label8t.tf:31
+
+		030: 
+		031: output "label8t_context_tags" {
+		032:   value = module.label8t_context.tags
+
+
+	[54]: ../../src/.terraform/modules/jack.this/examples/complete/label1t1.tf:16
+
+		015: 
+		016: output "label1t1_tags" {
+		017:   value = module.label1t1.tags
+
+
+	[55]: ../../src/.terraform/modules/jack/examples/complete/outputs.tf:1
+
+		001: output "user_name" {
+		002:   value = module.user.user_name
+		003: }
+
+
+	[56]: ../../src/.terraform/modules/jack.this/examples/complete/label1t1.tf:9
+
+		008: 
+		009: output "label1t1" {
+		010:   value = {
+
+
+	[57]: ../../src/.terraform/modules/jack.this/examples/complete/label2.tf:32
+
+		031: 
+		032: output "label2_tags" {
+		033:   value = module.label2.tags
+
+
+	[58]: ../../src/.terraform/modules/jack.this/examples/complete/label3c.tf:30
+
+		029: 
+		030: output "label3c_context" {
+		031:   value = module.label3c.context
+
+
+	[59]: ../../src/.terraform/modules/jack.this/examples/complete/label3c.tf:34
+
+		033: 
+		034: output "label3c_normalized_context" {
+		035:   value = module.label3c.normalized_context
+
+
+	[60]: ../../src/.terraform/modules/jack.this/examples/complete/label6f.tf:11
+
+		010: 
+		011: output "label6f" {
+		012:   value = {
+
+
+	[61]: ../../src/.terraform/modules/jack.this/examples/complete/label6f.tf:18
+
+		017: 
+		018: output "label6f_tags" {
+		019:   value = module.label6f.tags
+
+
+	[62]: ../../src/.terraform/modules/jack.this/examples/complete/label8t.tf:35
+
+		034: 
+		035: output "label8t_id" {
+		036:   value = module.label8t.id
+
+
+	[63]: ../../src/.terraform/modules/jack.this/examples/complete/label8n.tf:31
+
+		030: 
+		031: output "label8n_context_tags" {
+		032:   value = module.label8n_context.tags
+
+
+	[64]: ../../src/.terraform/modules/jack.this/examples/complete/label1t2.tf:9
+
+		008: 
+		009: output "label1t2" {
+		010:   value = {
+
+
+	[65]: ../../src/.terraform/modules/jack.this/examples/complete/label3c.tf:15
+
+		014: 
+		015: output "label3c" {
+		016:   value = {
+
+
+	[66]: ../../src/.terraform/modules/jack.this/examples/complete/label8n.tf:35
+
+		034: 
+		035: output "label8n_id" {
+		036:   value = module.label8n.id
+
+
+	[67]: ../../src/.terraform/modules/jack.this/examples/complete/label5.tf:31
+
+		030: 
+		031: output "label5_context" {
+		032:   value = module.label5.context
+
+
+	[68]: ../../src/.terraform/modules/jack.this/examples/complete/label8n.tf:43
+
+		042: 
+		043: output "label8n_tags" {
+		044:   value = module.label8n.tags
+
+
+	[69]: ../../src/.terraform/modules/jack.this/examples/complete/label3n.tf:34
+
+		033: 
+		034: output "label3n_normalized_context" {
+		035:   value = module.label3n.normalized_context
+
+
+	[70]: ../../src/.terraform/modules/jack.this/examples/complete/label8d.tf:22
+
+		021: 
+		022: output "label8d_context_id" {
+		023:   value = module.label8d_context.id
+
+
+	[71]: ../../src/.terraform/modules/jack.this/examples/complete/label8l.tf:24
+
+		023: 
+		024: output "label8l_context_id" {
+		025:   value = module.label8l_context.id
+
+
+	[72]: ../../src/.terraform/modules/jack.this/examples/complete/label8u.tf:36
+
+		035: 
+		036: output "label8u_context_tags" {
+		037:   value = module.label8u_context.tags
+
+
+	[73]: ../../src/.terraform/modules/jack.this/examples/complete/label7.tf:34
+
+		033: 
+		034: output "label7_id" {
+		035:   value = module.label7.id
+
+
+IAM User With Access To Console, Severity: MEDIUM, Results: 1
+Description: AWS IAM Users should not have access to console
+Platform: Terraform
+
+	[1]: ../../src/.terraform/modules/jack/main.tf:14
+
+		013: 
+		014:   user                    = aws_iam_user.default[count.index].name
+		015:   pgp_key                 = var.pgp_key
+
+
 Auto Scaling Group With No Associated ELB, Severity: MEDIUM, Results: 1
 Description: AWS Auto Scaling Groups must have associated ELBs to ensure high availability and improve application performance. This means the attribute 'load_balancers' must be defined and not empty.
 Platform: Terraform
 
-	[1]: /src/.terraform/modules/jack.this/examples/autoscalinggroup/main.tf:36
+	[1]: ../../src/.terraform/modules/jack.this/examples/autoscalinggroup/main.tf:36
 
 		035: ######################
 		036: resource "aws_autoscaling_group" "default" {
 		037:   # terraform-null-label example used here: Set ASG name prefix
 
 
-Passwords And Secrets In Infrastructure Code, Severity: HIGH, Results: 3
+Passwords And Secrets - Generic Password, Severity: HIGH, Results: 1
 Description: Query to find passwords and secrets in infrastructure code.
 Platform: Common
 
-	[1]: /src/.terraform/modules/jack.this/examples/complete/label2.tf:7
+	[1]: ../../src/.terraform/modules/jack/main.tf:29
 
-		006:   delimiter           = "+"
-		007:   regex_replace_chars = "/[^a-zA-Z0-9-+]/"
-		008: 
-
-
-	[2]: /src/.terraform/modules/jack.this/examples/complete/label3c.tf:7
-
-		006:   delimiter           = "."
-		007:   regex_replace_chars = "/[^-a-zA-Z0-9.]/"
-		008: 
-
-
-	[3]: /src/.terraform/modules/jack.this/examples/complete/label3n.tf:7
-
-		006:   delimiter           = "."
-		007:   regex_replace_chars = "/[^-a-zA-Z0-9.]/"
-		008: 
+		028: locals {
+		029:   encrypted_password               = join("", aws_iam_user_login_profile.default.*.encrypted_password)
+		030:   pgp_key_is_keybase               = length(regexall("keybase:", var.pgp_key)) > 0 ? true : false
 
 
 
 Results Summary:
-HIGH: 3
-MEDIUM: 1
+HIGH: 1
+MEDIUM: 2
 LOW: 0
-INFO: 1
-TOTAL: 5
+INFO: 77
+TOTAL: 80
 
-Scan duration: 46.568984063s
+Scan duration: 16.244288757s

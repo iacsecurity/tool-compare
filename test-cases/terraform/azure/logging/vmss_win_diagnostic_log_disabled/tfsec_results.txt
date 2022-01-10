@@ -1,61 +1,90 @@
 
   Result 1
 
-  [general-secrets-sensitive-in-attribute][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Block 'azurerm_windows_virtual_machine_scale_set.vmss' includes a potentially sensitive attribute which is defined within the project.
-  /src/main.tf:56
+  [general-secrets-sensitive-in-attribute][CRITICAL] Block 'azurerm_windows_virtual_machine_scale_set.vmss' includes a potentially sensitive attribute which is defined within the project.
+  /src/main.tf:55
 
 
-      53 |   resource_group_name = azurerm_resource_group.rg.name
-      54 |   sku                 = "Standard_B2s"
-      55 |   instances           = 1
-      56 |   admin_password      = "P@55w0rd1234!"    string: "P@55w0rd1234!"
-      57 |   admin_username      = "adminuser"
-      58 |   computer_name_prefix = "winsrv"
-      59 | 
+      52 |   resource_group_name = azurerm_resource_group.rg.name
+      53 |   sku                 = "Standard_B2s"
+      54 |   instances           = 1
+      55 |   admin_password      = "P@55w0rd1234!"    string: "P@55w0rd1234!"
+      56 |   admin_username      = "adminuser"
+      57 |   computer_name_prefix = "winsrv"
+      58 | 
 
   Legacy ID:  GEN003
   Impact:     Block attribute could be leaking secrets
   Resolution: Don't include sensitive data in blocks
 
   More Info:
-  - https://tfsec.dev/docs/general/secrets/sensitive-in-attribute#general/secrets 
+  - https://aquasecurity.github.io/tfsec/latest/checks/general/secrets/sensitive-in-attribute 
   - https://www.terraform.io/docs/state/sensitive-data.html 
 
   Result 2
 
-  [azure-storage-use-secure-tls-policy][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'azurerm_storage_account.storacc' should have the min tls version set to TLS1_2 .
-  /src/main.tf:42-48
+  [azure-storage-default-action-deny][CRITICAL] Resource 'azurerm_storage_account.storacc' does not have network_rules and there isn't a configured `azurerm_storage_account_network_rules.
+  /src/main.tf:41-47
 
 
-      39 |   }
-      40 | }
-      41 | 
-      42 | resource "azurerm_storage_account" "storacc" {
-      43 |   name                     = "${local.resource_prefix}tstsa"
-      44 |   resource_group_name      = azurerm_resource_group.rg.name
-      45 |   location                 = azurerm_resource_group.rg.location
-      46 |   account_tier             = "Standard"
-      47 |   account_replication_type = "LRS"
-      48 | }
-      49 | 
-      50 | resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
-      51 |   name                = "${local.resource_prefix}-vmss"
+      38 |   }
+      39 | }
+      40 | 
+      41 | resource "azurerm_storage_account" "storacc" {
+      42 |   name                     = "${local.resource_prefix}tstsa"
+      43 |   resource_group_name      = azurerm_resource_group.rg.name
+      44 |   location                 = azurerm_resource_group.rg.location
+      45 |   account_tier             = "Standard"
+      46 |   account_replication_type = "LRS"
+      47 | }
+      48 | 
+      49 | resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
+      50 |   name                = "${local.resource_prefix}-vmss"
+
+  Legacy ID:  AZU012
+  Impact:     Network rules that allow could cause data to be exposed publicly
+  Resolution: Set network rules to deny
+
+  More Info:
+  - https://aquasecurity.github.io/tfsec/latest/checks/azure/storage/default-action-deny 
+  - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account_network_rules#default_action 
+  - https://docs.microsoft.com/en-us/azure/firewall/rule-processing 
+
+  Result 3
+
+  [azure-storage-use-secure-tls-policy][CRITICAL] Resource 'azurerm_storage_account.storacc' should have the min tls version set to TLS1_2 .
+  /src/main.tf:41-47
+
+
+      38 |   }
+      39 | }
+      40 | 
+      41 | resource "azurerm_storage_account" "storacc" {
+      42 |   name                     = "${local.resource_prefix}tstsa"
+      43 |   resource_group_name      = azurerm_resource_group.rg.name
+      44 |   location                 = azurerm_resource_group.rg.location
+      45 |   account_tier             = "Standard"
+      46 |   account_replication_type = "LRS"
+      47 | }
+      48 | 
+      49 | resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
+      50 |   name                = "${local.resource_prefix}-vmss"
 
   Legacy ID:  AZU015
   Impact:     The TLS version being outdated and has known vulnerabilities
   Resolution: Use a more recent TLS/SSL policy for the load balancer
 
   More Info:
-  - https://tfsec.dev/docs/azure/storage/use-secure-tls-policy#azure/storage 
+  - https://aquasecurity.github.io/tfsec/latest/checks/azure/storage/use-secure-tls-policy 
   - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account#min_tls_version 
   - https://docs.microsoft.com/en-us/azure/storage/common/transport-layer-security-configure-minimum-version 
 
   times
   ------------------------------------------
-  disk i/o             803.214µs
-  parsing HCL          10.455µs
-  evaluating values    439.336µs
-  running checks       2.647267ms
+  disk i/o             26.687333ms
+  parsing HCL          582.292µs
+  evaluating values    4.248624ms
+  running checks       23.436208ms
 
   counts
   ------------------------------------------
@@ -65,11 +94,11 @@
 
   results
   ------------------------------------------
-  critical             2
+  critical             3
   high                 0
   medium               0
   low                  0
   ignored              0
 
-  2 potential problems detected.
+  3 potential problems detected.
 

@@ -16,13 +16,13 @@ WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk,
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+Scanning with Keeping Infrastructure as Code Secure v1.4.9
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 851
 Queries failed to execute: 0
 
 ------------------------------------
@@ -31,7 +31,7 @@ Security Group Without Description, Severity: INFO, Results: 1
 Description: It's considered a best practice for AWS Security Group to have a description
 Platform: Terraform
 
-	[1]: /src/main.tf:9
+	[1]: ../../src/main.tf:9
 
 		008: 
 		009: resource "aws_security_group" "nondefault" {
@@ -42,7 +42,7 @@ Security Group Rules Without Description, Severity: INFO, Results: 1
 Description: It's considered a best practice for all rules in AWS Security Group to have a description
 Platform: Terraform
 
-	[1]: /src/main.tf:12
+	[1]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
@@ -53,78 +53,89 @@ Resource Not Using Tags, Severity: INFO, Results: 8
 Description: AWS services resource tags are an essential part of managing components
 Platform: Terraform
 
-	[1]: /src/main.tf:32
+	[1]: ../../src/main.tf:60
 
-		031: 
-		032: resource "aws_db_subnet_group" nondefault {
-		033:   name = "nondefault"
+		059: 
+		060: resource "aws_db_instance" "test" {
+		061:   instance_class = "db.t3.micro"
 
 
-	[2]: /src/main.tf:38
+	[2]: ../../src/main.tf:38
 
 		037: 
 		038: resource "aws_internet_gateway" "igw" {
 		039:   vpc_id = aws_vpc.nondefault.id
 
 
-	[3]: /src/main.tf:42
-
-		041: 
-		042: resource "aws_route_table" "nondefault" {
-		043:   vpc_id = aws_vpc.nondefault.id
-
-
-	[4]: /src/main.tf:60
-
-		059: 
-		060: resource "aws_db_instance" "test" {
-		061:   instance_class = "db.t3.micro"
-
-
-	[5]: /src/main.tf:5
-
-		004: 
-		005: resource "aws_vpc" "nondefault" {
-		006:   cidr_block = "10.1.1.0/24"
-
-
-	[6]: /src/main.tf:9
-
-		008: 
-		009: resource "aws_security_group" "nondefault" {
-		010:   vpc_id = aws_vpc.nondefault.id
-
-
-	[7]: /src/main.tf:20
-
-		019: 
-		020: resource "aws_subnet" "nondefault_1" {
-		021:   vpc_id = aws_vpc.nondefault.id
-
-
-	[8]: /src/main.tf:26
+	[3]: ../../src/main.tf:26
 
 		025: 
 		026: resource "aws_subnet" "nondefault_2" {
 		027:   vpc_id = aws_vpc.nondefault.id
 
 
+	[4]: ../../src/main.tf:9
+
+		008: 
+		009: resource "aws_security_group" "nondefault" {
+		010:   vpc_id = aws_vpc.nondefault.id
+
+
+	[5]: ../../src/main.tf:5
+
+		004: 
+		005: resource "aws_vpc" "nondefault" {
+		006:   cidr_block = "10.1.1.0/24"
+
+
+	[6]: ../../src/main.tf:32
+
+		031: 
+		032: resource "aws_db_subnet_group" nondefault {
+		033:   name = "nondefault"
+
+
+	[7]: ../../src/main.tf:42
+
+		041: 
+		042: resource "aws_route_table" "nondefault" {
+		043:   vpc_id = aws_vpc.nondefault.id
+
+
+	[8]: ../../src/main.tf:20
+
+		019: 
+		020: resource "aws_subnet" "nondefault_1" {
+		021:   vpc_id = aws_vpc.nondefault.id
+
+
 RDS Without Logging, Severity: INFO, Results: 1
 Description: RDS does not have any kind of logger
 Platform: Terraform
 
-	[1]: /src/main.tf:60
+	[1]: ../../src/main.tf:60
 
 		059: 
 		060: resource "aws_db_instance" "test" {
 		061:   instance_class = "db.t3.micro"
 
 
+VPC Without Network Firewall, Severity: MEDIUM, Results: 1
+Description: VPC should have a Network Firewall associated
+Platform: Terraform
+
+	[1]: ../../src/main.tf:5
+
+		004: 
+		005: resource "aws_vpc" "nondefault" {
+		006:   cidr_block = "10.1.1.0/24"
+
+
 VPC FlowLogs Disabled, Severity: MEDIUM, Results: 1
 Description: VPC hasn't got any FlowLog associated
 Platform: Terraform
 
-	[1]: /src/main.tf:5
+	[1]: ../../src/main.tf:5
 
 		004: 
 		005: resource "aws_vpc" "nondefault" {
@@ -135,7 +146,7 @@ RDS With Backup Disabled, Severity: MEDIUM, Results: 1
 Description: RDS configured without backup
 Platform: Terraform
 
-	[1]: /src/main.tf:60
+	[1]: ../../src/main.tf:60
 
 		059: 
 		060: resource "aws_db_instance" "test" {
@@ -146,7 +157,7 @@ Unrestricted Security Group Ingress, Severity: HIGH, Results: 1
 Description: Security groups allow ingress from 0.0.0.0:0
 Platform: Terraform
 
-	[1]: /src/main.tf:16
+	[1]: ../../src/main.tf:16
 
 		015:     to_port = 65000
 		016:     cidr_blocks = ["0.0.0.0/0"]
@@ -157,397 +168,456 @@ Unknown Port Exposed To Internet, Severity: HIGH, Results: 1
 Description: AWS Security Group should not have an unknown port exposed to the entire Internet
 Platform: Terraform
 
-	[1]: /src/main.tf:16
+	[1]: ../../src/main.tf:16
 
 		015:     to_port = 65000
 		016:     cidr_blocks = ["0.0.0.0/0"]
 		017:   }
 
 
-Sensitive Port Is Exposed To Entire Network, Severity: HIGH, Results: 52
+Sensitive Port Is Exposed To Entire Network, Severity: HIGH, Results: 62
 Description: A sensitive port, such as port 23 or port 110, is open for the whole network in either TCP or UDP protocol
 Platform: Terraform
 
-	[1]: /src/main.tf:12
+	[1]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[2]: /src/main.tf:12
+	[2]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[3]: /src/main.tf:12
+	[3]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[4]: /src/main.tf:12
+	[4]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[5]: /src/main.tf:12
+	[5]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[6]: /src/main.tf:12
+	[6]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[7]: /src/main.tf:12
+	[7]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[8]: /src/main.tf:12
+	[8]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[9]: /src/main.tf:12
+	[9]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[10]: /src/main.tf:12
+	[10]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[11]: /src/main.tf:12
+	[11]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[12]: /src/main.tf:12
+	[12]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[13]: /src/main.tf:12
+	[13]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[14]: /src/main.tf:12
+	[14]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[15]: /src/main.tf:12
+	[15]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[16]: /src/main.tf:12
+	[16]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[17]: /src/main.tf:12
+	[17]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[18]: /src/main.tf:12
+	[18]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[19]: /src/main.tf:12
+	[19]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[20]: /src/main.tf:12
+	[20]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[21]: /src/main.tf:12
+	[21]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[22]: /src/main.tf:12
+	[22]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[23]: /src/main.tf:12
+	[23]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[24]: /src/main.tf:12
+	[24]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[25]: /src/main.tf:12
+	[25]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[26]: /src/main.tf:12
+	[26]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[27]: /src/main.tf:12
+	[27]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[28]: /src/main.tf:12
+	[28]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[29]: /src/main.tf:12
+	[29]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[30]: /src/main.tf:12
+	[30]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[31]: /src/main.tf:12
+	[31]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[32]: /src/main.tf:12
+	[32]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[33]: /src/main.tf:12
+	[33]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[34]: /src/main.tf:12
+	[34]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[35]: /src/main.tf:12
+	[35]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[36]: /src/main.tf:12
+	[36]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[37]: /src/main.tf:12
+	[37]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[38]: /src/main.tf:12
+	[38]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[39]: /src/main.tf:12
+	[39]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[40]: /src/main.tf:12
+	[40]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[41]: /src/main.tf:12
+	[41]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[42]: /src/main.tf:12
+	[42]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[43]: /src/main.tf:12
+	[43]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[44]: /src/main.tf:12
+	[44]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[45]: /src/main.tf:12
+	[45]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[46]: /src/main.tf:12
+	[46]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[47]: /src/main.tf:12
+	[47]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[48]: /src/main.tf:12
+	[48]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[49]: /src/main.tf:12
+	[49]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[50]: /src/main.tf:12
+	[50]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[51]: /src/main.tf:12
+	[51]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-	[52]: /src/main.tf:12
+	[52]: ../../src/main.tf:12
 
 		011: 
 		012:     ingress {
 		013:     from_port = 0
 
 
-Security Group With Unrestricted Access To SSH, Severity: HIGH, Results: 1
-Description: SSH' (TCP:22) should not be public in AWS Security Group
-Platform: Terraform
+	[53]: ../../src/main.tf:12
 
-	[1]: /src/main.tf:16
+		011: 
+		012:     ingress {
+		013:     from_port = 0
 
-		015:     to_port = 65000
-		016:     cidr_blocks = ["0.0.0.0/0"]
-		017:   }
+
+	[54]: ../../src/main.tf:12
+
+		011: 
+		012:     ingress {
+		013:     from_port = 0
+
+
+	[55]: ../../src/main.tf:12
+
+		011: 
+		012:     ingress {
+		013:     from_port = 0
+
+
+	[56]: ../../src/main.tf:12
+
+		011: 
+		012:     ingress {
+		013:     from_port = 0
+
+
+	[57]: ../../src/main.tf:12
+
+		011: 
+		012:     ingress {
+		013:     from_port = 0
+
+
+	[58]: ../../src/main.tf:12
+
+		011: 
+		012:     ingress {
+		013:     from_port = 0
+
+
+	[59]: ../../src/main.tf:12
+
+		011: 
+		012:     ingress {
+		013:     from_port = 0
+
+
+	[60]: ../../src/main.tf:12
+
+		011: 
+		012:     ingress {
+		013:     from_port = 0
+
+
+	[61]: ../../src/main.tf:12
+
+		011: 
+		012:     ingress {
+		013:     from_port = 0
+
+
+	[62]: ../../src/main.tf:12
+
+		011: 
+		012:     ingress {
+		013:     from_port = 0
 
 
 IAM Database Auth Not Enabled, Severity: HIGH, Results: 1
 Description: IAM Database Auth Enabled must be configured to true
 Platform: Terraform
 
-	[1]: /src/main.tf:60
+	[1]: ../../src/main.tf:60
 
 		059: 
 		060: resource "aws_db_instance" "test" {
@@ -558,7 +628,7 @@ DB Instance Storage Not Encrypted, Severity: HIGH, Results: 1
 Description: The parameter storage_encrypted in aws_db_instance must be set to 'true' (the default is 'false').
 Platform: Terraform
 
-	[1]: /src/main.tf:60
+	[1]: ../../src/main.tf:60
 
 		059: 
 		060: resource "aws_db_instance" "test" {
@@ -569,7 +639,7 @@ DB Instance Publicly Accessible, Severity: HIGH, Results: 1
 Description: The field 'publicly_accessible' should not be set to 'true' (default is 'false').
 Platform: Terraform
 
-	[1]: /src/main.tf:62
+	[1]: ../../src/main.tf:62
 
 		061:   instance_class = "db.t3.micro"
 		062:   publicly_accessible = true
@@ -578,10 +648,10 @@ Platform: Terraform
 
 
 Results Summary:
-HIGH: 58
-MEDIUM: 2
+HIGH: 67
+MEDIUM: 3
 LOW: 0
 INFO: 11
-TOTAL: 71
+TOTAL: 81
 
-Scan duration: 4.66645852s
+Scan duration: 8.852450129s

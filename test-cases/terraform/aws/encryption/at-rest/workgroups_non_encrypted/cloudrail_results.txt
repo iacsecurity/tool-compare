@@ -1,110 +1,51 @@
 
 WARNINGs found:
-Rule: Ensure S3 bucket has access logging enabled
- - 2 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_s3_bucket.cloudrail_anthena_bucket_2] (main.tf:32)
-     Violating Resource: [aws_s3_bucket.cloudrail_anthena_bucket_2]  (main.tf:32)
-
-     Evidence:
-             | The S3 Bucket aws_s3_bucket.cloudrail_anthena_bucket_2 does not have access logging enabled
-
-
-   - Exposed Resource: [aws_s3_bucket.cloudrail_anthena_bucket] (main.tf:5)
-     Violating Resource: [aws_s3_bucket.cloudrail_anthena_bucket]  (main.tf:5)
-
-     Evidence:
-             | The S3 Bucket aws_s3_bucket.cloudrail_anthena_bucket does not have access logging enabled
-
-
------------------------------------------------
-Rule: Ensure all resources that can be tagged have at least one tag
- - 4 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_athena_workgroup.cloudrail_wg_2] (main.tf:45)
-     Violating Resource: [aws_athena_workgroup.cloudrail_wg_2]  (main.tf:45)
-
-     Evidence:
-             | Resource Athena Workgroup aws_athena_workgroup.cloudrail_wg_2 does not have any tags set
-
-
-   - Exposed Resource: [aws_athena_workgroup.cloudrail_wg] (main.tf:18)
-     Violating Resource: [aws_athena_workgroup.cloudrail_wg]  (main.tf:18)
-
-     Evidence:
-             | Resource Athena Workgroup aws_athena_workgroup.cloudrail_wg does not have any tags set
-
-
-   - Exposed Resource: [aws_s3_bucket.cloudrail_anthena_bucket_2] (main.tf:32)
-     Violating Resource: [aws_s3_bucket.cloudrail_anthena_bucket_2]  (main.tf:32)
-
-     Evidence:
-             | Resource S3 Bucket aws_s3_bucket.cloudrail_anthena_bucket_2 does not have any tags set
-
-
-   - Exposed Resource: [aws_s3_bucket.cloudrail_anthena_bucket] (main.tf:5)
-     Violating Resource: [aws_s3_bucket.cloudrail_anthena_bucket]  (main.tf:5)
-
-     Evidence:
-             | Resource S3 Bucket aws_s3_bucket.cloudrail_anthena_bucket does not have any tags set
-
-
------------------------------------------------
-Rule: Enforce use of HTTPS in S3 bucket policy
- - 2 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_s3_bucket.cloudrail_anthena_bucket_2] (main.tf:32)
-     Violating Resource: [aws_s3_bucket.cloudrail_anthena_bucket_2]  (main.tf:32)
-
-     Evidence:
-             | The S3 Bucket aws_s3_bucket.cloudrail_anthena_bucket_2 does not have a policy with the aws:SecureTransport condition
-
-
-   - Exposed Resource: [aws_s3_bucket.cloudrail_anthena_bucket] (main.tf:5)
-     Violating Resource: [aws_s3_bucket.cloudrail_anthena_bucket]  (main.tf:5)
-
-     Evidence:
-             | The S3 Bucket aws_s3_bucket.cloudrail_anthena_bucket does not have a policy with the aws:SecureTransport condition
-
-
------------------------------------------------
-Rule: Ensure use of S3 bucket policy, and no action wildcards are being used
- - 2 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_s3_bucket.cloudrail_anthena_bucket_2] (main.tf:32)
-     Violating Resource: [aws_s3_bucket.cloudrail_anthena_bucket_2]  (main.tf:32)
-
-     Evidence:
-             | There is no resource policy or no statements attached to aws_s3_bucket.cloudrail_anthena_bucket_2
-
-
-   - Exposed Resource: [aws_s3_bucket.cloudrail_anthena_bucket] (main.tf:5)
-     Violating Resource: [aws_s3_bucket.cloudrail_anthena_bucket]  (main.tf:5)
-
-     Evidence:
-             | There is no resource policy or no statements attached to aws_s3_bucket.cloudrail_anthena_bucket
-
-
------------------------------------------------
-Rule: Ensure Athena Workgroup query results being created are set to be encrypted at rest using customer-managed CMKs
+Rule: Ensure Athena Workgroup query results are set to be encrypted at rest and enforced on clients
+Description: Cloudrail will review the Athena Workgroups in your environment. If a Workgroup is not set to encrypt at rest the query results, or has it set, but not enforced on the clients, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/athena/latest/ug/encrypting-query-results-stored-in-s3.html to encrypt query results.
+Remediation Steps - Terraform: For the aws_athena_workgroup resource, in configuration, result_configuration, encryption_configuration block, set the encryption_option argument. Additionally, in configuration, set enforce_workgroup_configuration to true.
  - 2 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_athena_workgroup.cloudrail_wg] (main.tf:18)
      Violating Resource: [aws_athena_workgroup.cloudrail_wg]  (main.tf:18)
 
      Evidence:
-             | The Athena Workgroup aws_athena_workgroup.cloudrail_wg is set to use encrypt at rest but it is not using customer-managed CMKs
+             | The Athena Workgroup aws_athena_workgroup.cloudrail_wg is not set to encrypt at rest the query results
 
 
    - Exposed Resource: [aws_athena_workgroup.cloudrail_wg_2] (main.tf:45)
      Violating Resource: [aws_athena_workgroup.cloudrail_wg_2]  (main.tf:45)
 
      Evidence:
-             | The Athena Workgroup aws_athena_workgroup.cloudrail_wg_2 is set to use encrypt at rest but it is not using customer-managed CMKs
+             | The Athena Workgroup aws_athena_workgroup.cloudrail_wg_2 is not set to encrypt at rest the query results
+
+
+-----------------------------------------------
+Rule: Ensure S3 buckets are set to be encrypted at rest
+Description: Cloudrail will review the S3 buckets in your environment. If an S3 bucket is not set to be encrypted at rest, and the bucket is not public, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AmazonS3/latest/userguide/serv-side-encryption.html to enable S3 bucket encryption at rest.
+Remediation Steps - Terraform: For the aws_s3_bucket resource, in server_side_encryption_configuration, rule, apply_server_side_encryption_by_default block, set sse_algorithm argument to an allowed value.
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.cloudrail_anthena_bucket] (main.tf:5)
+     Violating Resource: [aws_s3_bucket.cloudrail_anthena_bucket]  (main.tf:5)
+
+     Evidence:
+             | The S3 Bucket aws_s3_bucket.cloudrail_anthena_bucket is not set to be encrypted at rest
+
+
+   - Exposed Resource: [aws_s3_bucket.cloudrail_anthena_bucket_2] (main.tf:32)
+     Violating Resource: [aws_s3_bucket.cloudrail_anthena_bucket_2]  (main.tf:32)
+
+     Evidence:
+             | The S3 Bucket aws_s3_bucket.cloudrail_anthena_bucket_2 is not set to be encrypted at rest
 
 
 -----------------------------------------------
 Rule: Ensure S3 buckets have versioning enabled
+Description: Using versioning is a good practice to deal with accidental deletion or modifications. Cloudrail will review your buckets to ensure versioning is enabled. This rule is not context aware
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AmazonS3/latest/userguide/manage-versioning-examples.html to enable S3 bucket versioning.
+Remediation Steps - Terraform: For the aws_s3_bucket resource, in versioning block, set enabled argument to true.
  - 2 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_s3_bucket.cloudrail_anthena_bucket] (main.tf:5)
@@ -122,39 +63,122 @@ Rule: Ensure S3 buckets have versioning enabled
 
 
 -----------------------------------------------
-Rule: Ensure S3 buckets are set to be encrypted at rest
- - 2 Resources Exposed:
------------------------------------------------
-   - Exposed Resource: [aws_s3_bucket.cloudrail_anthena_bucket_2] (main.tf:32)
-     Violating Resource: [aws_s3_bucket.cloudrail_anthena_bucket_2]  (main.tf:32)
-
-     Evidence:
-             | The S3 Bucket aws_s3_bucket.cloudrail_anthena_bucket_2 is not set to be encrypted at rest
-
-
-   - Exposed Resource: [aws_s3_bucket.cloudrail_anthena_bucket] (main.tf:5)
-     Violating Resource: [aws_s3_bucket.cloudrail_anthena_bucket]  (main.tf:5)
-
-     Evidence:
-             | The S3 Bucket aws_s3_bucket.cloudrail_anthena_bucket is not set to be encrypted at rest
-
-
------------------------------------------------
-Rule: Ensure Athena Workgroup query results are set to be encrypted at rest and enforced on clients
+Rule: Ensure Athena Workgroup query results being created are set to be encrypted at rest using customer-managed CMKs
+Description: Cloudrail will review the Athena Workgroups being created in your environment. If a Workgroup is not set to encrypt at rest the query results using customer-managed CMK, Cloudrail will highlight it as a violation. This rule will only flag a violation for resources that are not yet created.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/athena/latest/ug/encrypting-query-results-stored-in-s3.html to encrypt query results using a customer-managed CMK.
+Remediation Steps - Terraform: For the aws_athena_workgroup resource, in configuration, result_configuration, encryption_configuration block, set the encryption_option argument to "SSE_KMS" and set kms_key_arn argument to use a customer-managed CMK. Additionally, in configuration, set enforce_workgroup_configuration to true.
  - 2 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_athena_workgroup.cloudrail_wg] (main.tf:18)
      Violating Resource: [aws_athena_workgroup.cloudrail_wg]  (main.tf:18)
 
      Evidence:
-             | The Athena Workgroup aws_athena_workgroup.cloudrail_wg is not set to encrypt at rest the query results
+             | The Athena Workgroup aws_athena_workgroup.cloudrail_wg is set to use encrypt at rest but it is not using customer-managed CMKs
 
 
    - Exposed Resource: [aws_athena_workgroup.cloudrail_wg_2] (main.tf:45)
      Violating Resource: [aws_athena_workgroup.cloudrail_wg_2]  (main.tf:45)
 
      Evidence:
-             | The Athena Workgroup aws_athena_workgroup.cloudrail_wg_2 is not set to encrypt at rest the query results
+             | The Athena Workgroup aws_athena_workgroup.cloudrail_wg_2 is set to use encrypt at rest but it is not using customer-managed CMKs
+
+
+-----------------------------------------------
+Rule: Ensure use of S3 bucket policy, and no action wildcards are being used
+Description: Using wildcard actions may inadvertently allow users to take actions you do not want to allow them to do. In addition, using a resource policy will provide an additional layer of security. It is a best practice to use a resource policy and give specific permissions only.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-policy-language-overview.html to modify S3 bucket policy in order to avoid using wildcard actions.
+Remediation Steps - Terraform: For the aws_s3_bucket_policy resource, modify policy argument in order to avoid using wildcard actions.
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.cloudrail_anthena_bucket] (main.tf:5)
+     Violating Resource: [aws_s3_bucket.cloudrail_anthena_bucket]  (main.tf:5)
+
+     Evidence:
+             | There is no resource policy or no statements attached to aws_s3_bucket.cloudrail_anthena_bucket
+
+
+   - Exposed Resource: [aws_s3_bucket.cloudrail_anthena_bucket_2] (main.tf:32)
+     Violating Resource: [aws_s3_bucket.cloudrail_anthena_bucket_2]  (main.tf:32)
+
+     Evidence:
+             | There is no resource policy or no statements attached to aws_s3_bucket.cloudrail_anthena_bucket_2
+
+
+-----------------------------------------------
+Rule: Enforce use of HTTPS in S3 bucket policy
+Description: Access to objects in S3 should only be done via HTTPS. Blocking HTTP can be done by including a SecureTransport condition in the S3 bucket’s policy.
+Remediation Steps - Cloud Console: Follow the guide at https://aws.amazon.com/premiumsupport/knowledge-center/s3-bucket-policy-for-config-rule/ to create an S3 bucket policy that enforces the use of HTTPS.
+Remediation Steps - Terraform: For the aws_s3_bucket_policy resource, ensure the policy denies all actions on the bucket and objects when the request meets the condition (aws:SecureTransport == false).
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.cloudrail_anthena_bucket] (main.tf:5)
+     Violating Resource: [aws_s3_bucket.cloudrail_anthena_bucket]  (main.tf:5)
+
+     Evidence:
+             | The S3 Bucket aws_s3_bucket.cloudrail_anthena_bucket does not have a policy with the aws:SecureTransport condition
+
+
+   - Exposed Resource: [aws_s3_bucket.cloudrail_anthena_bucket_2] (main.tf:32)
+     Violating Resource: [aws_s3_bucket.cloudrail_anthena_bucket_2]  (main.tf:32)
+
+     Evidence:
+             | The S3 Bucket aws_s3_bucket.cloudrail_anthena_bucket_2 does not have a policy with the aws:SecureTransport condition
+
+
+-----------------------------------------------
+Rule: Ensure all resources that can be tagged have at least one tag
+Description: Some organizations require that all resources have at least one tag set. This rule will review the resources that can be tagged, and make sure each one has a tag that is not the Name tag. Resources that are not tagged will be flagged.
+Remediation Steps - Cloud Console: Access the specific resource in the AWS console and add tags.
+Remediation Steps - Terraform: Add a tags section to the resource with at least one tag beyond the Name tag.
+ - 4 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.cloudrail_anthena_bucket_2] (main.tf:32)
+     Violating Resource: [aws_s3_bucket.cloudrail_anthena_bucket_2]  (main.tf:32)
+
+     Evidence:
+             | Resource S3 Bucket aws_s3_bucket.cloudrail_anthena_bucket_2 does not have any tags set
+
+
+   - Exposed Resource: [aws_s3_bucket.cloudrail_anthena_bucket] (main.tf:5)
+     Violating Resource: [aws_s3_bucket.cloudrail_anthena_bucket]  (main.tf:5)
+
+     Evidence:
+             | Resource S3 Bucket aws_s3_bucket.cloudrail_anthena_bucket does not have any tags set
+
+
+   - Exposed Resource: [aws_athena_workgroup.cloudrail_wg_2] (main.tf:45)
+     Violating Resource: [aws_athena_workgroup.cloudrail_wg_2]  (main.tf:45)
+
+     Evidence:
+             | Resource Athena Workgroup aws_athena_workgroup.cloudrail_wg_2 does not have any tags set
+
+
+   - Exposed Resource: [aws_athena_workgroup.cloudrail_wg] (main.tf:18)
+     Violating Resource: [aws_athena_workgroup.cloudrail_wg]  (main.tf:18)
+
+     Evidence:
+             | Resource Athena Workgroup aws_athena_workgroup.cloudrail_wg does not have any tags set
+
+
+-----------------------------------------------
+Rule: Ensure S3 bucket has access logging enabled
+Description: Cloudrail will review the S3 buckets configuration in your environment. If a bucket does not have access logging enabled, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/AmazonS3/latest/userguide/enable-server-access-logging.html in order to enable server access logging for an S3 bucket.
+Remediation Steps - Terraform: For the aws_s3_bucket resource, set the logging block with target_bucket argument set to the name of an S3 bucket that will receive the log objects.
+ - 2 Resources Exposed:
+-----------------------------------------------
+   - Exposed Resource: [aws_s3_bucket.cloudrail_anthena_bucket] (main.tf:5)
+     Violating Resource: [aws_s3_bucket.cloudrail_anthena_bucket]  (main.tf:5)
+
+     Evidence:
+             | The S3 Bucket aws_s3_bucket.cloudrail_anthena_bucket does not have access logging enabled
+
+
+   - Exposed Resource: [aws_s3_bucket.cloudrail_anthena_bucket_2] (main.tf:32)
+     Violating Resource: [aws_s3_bucket.cloudrail_anthena_bucket_2]  (main.tf:32)
+
+     Evidence:
+             | The S3 Bucket aws_s3_bucket.cloudrail_anthena_bucket_2 does not have access logging enabled
 
 
 -----------------------------------------------

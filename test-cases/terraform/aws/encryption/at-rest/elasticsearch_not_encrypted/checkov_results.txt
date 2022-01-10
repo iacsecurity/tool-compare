@@ -1,42 +1,6 @@
-
-
-       _               _              
-   ___| |__   ___  ___| | _______   __
-  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
- | (__| | | |  __/ (__|   < (_) \ V / 
-  \___|_| |_|\___|\___|_|\_\___/ \_/  
-                                      
-By bridgecrew.io | version: 2.0.358 
-Update available 2.0.358 -> 2.0.359
-Run pip3 install -U checkov to update 
-
-
 terraform scan results:
 
 Passed checks: 1, Failed checks: 4, Skipped checks: 0
-
-Check: CKV_AWS_83: "Ensure Elasticsearch Domain enforces HTTPS"
-	FAILED for resource: aws_elasticsearch_domain.example
-	File: /main.tf:1-16
-	Guide: https://docs.bridgecrew.io/docs/elasticsearch_6
-
-		1  | resource "aws_elasticsearch_domain" "example" {
-		2  |   domain_name           = "example"
-		3  |   elasticsearch_version = "1.5"
-		4  | 
-		5  |   cluster_config {
-		6  |     instance_type = "r4.large.elasticsearch"
-		7  |   }
-		8  | 
-		9  |   snapshot_options {
-		10 |     automated_snapshot_start_hour = 23
-		11 |   }
-		12 | 
-		13 |   tags = {
-		14 |     Domain = "TestDomain"
-		15 |   }
-		16 | }
-
 
 Check: CKV_AWS_137: "Ensure that Elasticsearch is configured inside a VPC"
 	FAILED for resource: aws_elasticsearch_domain.example
@@ -61,10 +25,10 @@ Check: CKV_AWS_137: "Ensure that Elasticsearch is configured inside a VPC"
 		16 | }
 
 
-Check: CKV_AWS_84: "Ensure Elasticsearch Domain Logging is enabled"
+Check: CKV_AWS_83: "Ensure Elasticsearch Domain enforces HTTPS"
 	FAILED for resource: aws_elasticsearch_domain.example
 	File: /main.tf:1-16
-	Guide: https://docs.bridgecrew.io/docs/elasticsearch_7
+	Guide: https://docs.bridgecrew.io/docs/elasticsearch_6
 
 		1  | resource "aws_elasticsearch_domain" "example" {
 		2  |   domain_name           = "example"
@@ -88,6 +52,29 @@ Check: CKV_AWS_5: "Ensure all data stored in the Elasticsearch is securely encry
 	FAILED for resource: aws_elasticsearch_domain.example
 	File: /main.tf:1-16
 	Guide: https://docs.bridgecrew.io/docs/elasticsearch_3-enable-encryptionatrest
+
+		1  | resource "aws_elasticsearch_domain" "example" {
+		2  |   domain_name           = "example"
+		3  |   elasticsearch_version = "1.5"
+		4  | 
+		5  |   cluster_config {
+		6  |     instance_type = "r4.large.elasticsearch"
+		7  |   }
+		8  | 
+		9  |   snapshot_options {
+		10 |     automated_snapshot_start_hour = 23
+		11 |   }
+		12 | 
+		13 |   tags = {
+		14 |     Domain = "TestDomain"
+		15 |   }
+		16 | }
+
+
+Check: CKV_AWS_84: "Ensure Elasticsearch Domain Logging is enabled"
+	FAILED for resource: aws_elasticsearch_domain.example
+	File: /main.tf:1-16
+	Guide: https://docs.bridgecrew.io/docs/elasticsearch_7
 
 		1  | resource "aws_elasticsearch_domain" "example" {
 		2  |   domain_name           = "example"

@@ -1,17 +1,23 @@
 
 WARNINGs found:
-Rule: Ensure DocDB logging is enabled
+Rule: Ensure DocDB clusters being created are set to be encrypted at rest using customer-managed CMK
+Description: Cloudrail will review the DocDB clusters being created in your environment. If a cluster is not set to encrypt at rest using a customer-managed CMK, Cloudrail will highlight it as a violation. This rule will only flag a violation for resources that are not yet created.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/documentdb/latest/developerguide/encryption-at-rest.html to enable encryption at rest using a customer-managed CMK.
+Remediation Steps - Terraform: For the aws_docdb_cluster resource, set the argument storage_encrypted to true and set the argument kms_key_id to use a customer-managed CMK.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_docdb_cluster.test1] (main.tf:5)
      Violating Resource: [aws_docdb_cluster.test1]  (main.tf:5)
 
      Evidence:
-             | The DocumentDB Cluster aws_docdb_cluster.test1 has logging disabled
+             | The DocDB cluster aws_docdb_cluster.test1 is not set to be encrypted at rest using customer-managed CMK
 
 
 -----------------------------------------------
 Rule: Ensure all resources that can be tagged have at least one tag
+Description: Some organizations require that all resources have at least one tag set. This rule will review the resources that can be tagged, and make sure each one has a tag that is not the Name tag. Resources that are not tagged will be flagged.
+Remediation Steps - Cloud Console: Access the specific resource in the AWS console and add tags.
+Remediation Steps - Terraform: Add a tags section to the resource with at least one tag beyond the Name tag.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_docdb_cluster.test1] (main.tf:5)
@@ -22,14 +28,17 @@ Rule: Ensure all resources that can be tagged have at least one tag
 
 
 -----------------------------------------------
-Rule: Ensure DocDB clusters being created are set to be encrypted at rest using customer-managed CMK
+Rule: Ensure DocDB logging is enabled
+Description: Cloudrail will review the DocDB clusters configuration in your environment. If a cluster is not configured to export logs to CloudWatch, Cloudrail will highlight it as a violation.
+Remediation Steps - Cloud Console: Follow the guide at https://docs.aws.amazon.com/documentdb/latest/developerguide/event-auditing.html in order to enable audit and profiler logs export to CloudWatch.
+Remediation Steps - Terraform: For the aws_docdb_cluster resource, set the enabled_cloudwatch_logs_exports argument to a list containing the values “audit” and “profiler”.
  - 1 Resources Exposed:
 -----------------------------------------------
    - Exposed Resource: [aws_docdb_cluster.test1] (main.tf:5)
      Violating Resource: [aws_docdb_cluster.test1]  (main.tf:5)
 
      Evidence:
-             | The DocDB cluster aws_docdb_cluster.test1 is not set to be encrypted at rest using customer-managed CMK
+             | The DocumentDB Cluster aws_docdb_cluster.test1 has logging disabled
 
 
 -----------------------------------------------

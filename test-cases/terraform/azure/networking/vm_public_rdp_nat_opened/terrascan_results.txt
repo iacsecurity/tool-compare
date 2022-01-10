@@ -6,7 +6,7 @@ Violation Details -
 	File           :	main.tf
 	Module Name    :	root
 	Plan Root      :	./
-	Line           :	25
+	Line           :	24
 	Severity       :	MEDIUM
 	
 	-----------------------------------------------------------------------
@@ -15,7 +15,7 @@ Violation Details -
 	File           :	main.tf
 	Module Name    :	root
 	Plan Root      :	./
-	Line           :	13
+	Line           :	12
 	Severity       :	LOW
 	
 	-----------------------------------------------------------------------
@@ -25,7 +25,7 @@ Scan Summary -
 
 	File/Folder         :	/iac
 	IaC Type            :	all
-	Scanned At          :	2021-08-20 05:13:11.340064683 +0000 UTC
+	Scanned At          :	2022-01-05 15:53:43.307008886 +0000 UTC
 	Policies Validated  :	2
 	Violated Policies   :	2
 	Low                 :	1

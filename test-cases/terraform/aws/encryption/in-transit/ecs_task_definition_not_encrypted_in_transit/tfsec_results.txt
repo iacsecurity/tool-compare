@@ -1,7 +1,7 @@
 
   Result 1
 
-  [aws-ecs-enable-in-transit-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_ecs_task_definition.service' has efs configuration with in transit encryption implicitly disabled
+  [aws-ecs-enable-in-transit-encryption][HIGH] Resource 'aws_ecs_task_definition.service' has efs configuration with in transit encryption implicitly disabled
   /src/main.tf:9-49
 
 
@@ -56,14 +56,14 @@
   Resolution: Enable in transit encryption when using efs
 
   More Info:
-  - https://tfsec.dev/docs/aws/ecs/enable-in-transit-encryption#aws/ecs 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/ecs/enable-in-transit-encryption 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecs_task_definition#transit_encryption 
   - https://docs.aws.amazon.com/AmazonECS/latest/userguide/efs-volumes.html 
   - https://docs.aws.amazon.com/efs/latest/ug/encryption-in-transit.html 
 
   Result 2
 
-  [aws-efs-enable-at-rest-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_efs_file_system.test' does not specify if encryption should be used.
+  [aws-efs-enable-at-rest-encryption][HIGH] Resource 'aws_efs_file_system.test' does not specify if encryption should be used.
   /src/main.tf:5-7
 
 
@@ -82,16 +82,16 @@
   Resolution: Enable encryption for EFS
 
   More Info:
-  - https://tfsec.dev/docs/aws/efs/enable-at-rest-encryption#aws/efs 
+  - https://aquasecurity.github.io/tfsec/latest/checks/aws/efs/enable-at-rest-encryption 
   - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/efs_file_system 
   - https://docs.aws.amazon.com/efs/latest/ug/encryption.html 
 
   times
   ------------------------------------------
-  disk i/o             49.380917ms
-  parsing HCL          542.291µs
-  evaluating values    1.931124ms
-  running checks       24.049334ms
+  disk i/o             26.558875ms
+  parsing HCL          515.334µs
+  evaluating values    1.875125ms
+  running checks       23.094167ms
 
   counts
   ------------------------------------------
