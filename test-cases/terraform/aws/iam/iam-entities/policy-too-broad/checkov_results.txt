@@ -1,17 +1,36 @@
-
-
-       _               _              
-   ___| |__   ___  ___| | _______   __
-  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
- | (__| | | |  __/ (__|   < (_) \ V / 
-  \___|_| |_|\___|\___|_|\_\___/ \_/  
-                                      
-By bridgecrew.io | version: 2.0.358 
-Update available 2.0.358 -> 2.0.359
-Run pip3 install -U checkov to update 
-
-
 terraform scan results:
 
-Passed checks: 5, Failed checks: 0, Skipped checks: 0
+Passed checks: 6, Failed checks: 1, Skipped checks: 0
+
+Check: CKV2_AWS_40: "Ensure AWS IAM policy does not allow full IAM privileges"
+	FAILED for resource: aws_iam_role_policy.policy
+	File: /main.tf:25-50
+
+		25 | resource "aws_iam_role_policy" "policy" {
+		26 |   name = "policy"
+		27 |   role = aws_iam_role.role.id
+		28 | 
+		29 |   policy = <<-EOF
+		30 |   {
+		31 |     "Version": "2012-10-17",
+		32 |     "Statement": [
+		33 |       {
+		34 |         "Action": [
+		35 |           "iam:*", "iam: AttachUser*"
+		36 |         ],
+		37 |         "Effect": "Allow",
+		38 |         "Resource": "*"
+		39 |       },
+		40 |       {
+		41 |         "Action": [
+		42 |           "s3:*"
+		43 |         ],
+		44 |         "Effect": "Allow",
+		45 |         "Resource": "*"
+		46 |       }
+		47 |     ]
+		48 |   }
+		49 |   EOF
+		50 | }
+
 

@@ -1,108 +1,174 @@
 
-  Result 1
+Result #1 CRITICAL Security group rule allows ingress from public internet. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:25
+────────────────────────────────────────────────────────────────────────────────
+   18    resource "aws_security_group" "free" {
+   19      vpc_id = aws_vpc.external.id
+   20    
+   21      ingress {
+   22        from_port = 0
+   23        protocol = "TCP"
+   24        to_port = 64000
+   25  [     cidr_blocks = ["0.0.0.0/0"]
+   26      }
+   27    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ec2-no-public-ingress-sgr
+      Impact Your port exposed to the internet
+  Resolution Set a more restrictive cidr range
 
-  [aws-vpc-add-decription-to-security-group][[0m[97mLOW[39m[0m] Resource 'aws_security_group.free' should include a description for auditing purposes.
-  /src/main.tf:18-27
-
-
-      15 |   vpc_id = aws_vpc.external.id
-      16 | }
-      17 | 
-      18 | resource "aws_security_group" "free" {
-      19 |   vpc_id = aws_vpc.external.id
-      20 | 
-      21 |   ingress {
-      22 |     from_port = 0
-      23 |     protocol = "TCP"
-      24 |     to_port = 64000
-      25 |     cidr_blocks = ["0.0.0.0/0"]
-      26 |   }
-      27 | }
-      28 | 
-      29 | resource "aws_route_table" "rt" {
-      30 |   vpc_id = aws_vpc.external.id
-
-  Legacy ID:  AWS018
-  Impact:     Descriptions provide context for the firewall rule reasons
-  Resolution: Add descriptions for all security groups and rules
-
-  More Info:
-  - https://tfsec.dev/docs/aws/vpc/add-decription-to-security-group#aws/vpc 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule 
-  - https://www.cloudconformity.com/knowledge-base/aws/EC2/security-group-rules-description.html 
-
-  Result 2
-
-  [aws-vpc-no-public-ingress-sg][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'aws_security_group.free' defines a fully open ingress security group.
-  /src/main.tf:25
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/no-public-ingress-sgr/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule#cidr_blocks
+────────────────────────────────────────────────────────────────────────────────
 
 
-      22 |     from_port = 0
-      23 |     protocol = "TCP"
-      24 |     to_port = 64000
-      25 |     cidr_blocks = ["0.0.0.0/0"]    list: ["0.0.0.0/0"]
-      26 |   }
-      27 | }
-      28 | 
+Result #2 HIGH Cluster does not encrypt data with a customer managed key. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:66-74
+────────────────────────────────────────────────────────────────────────────────
+   66    resource "aws_neptune_cluster" "encrypted_neptune_cluster" {
+   67      cluster_identifier  = "cloudrail-test-encrypted"
+   68      engine              = "neptune"
+   69      skip_final_snapshot = true
+   70      apply_immediately   = true
+   71      storage_encrypted   = true
+   72      neptune_subnet_group_name = aws_db_subnet_group.free.name
+   73      vpc_security_group_ids = [aws_security_group.free.id]
+   74    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-neptune-encryption-customer-key
+      Impact Using AWS managed keys does not allow for fine grained control
+  Resolution Enable encryption using customer managed keys
 
-  Legacy ID:  AWS008
-  Impact:     The port is exposed for ingress from the internet
-  Resolution: Set a more restrictive cidr range
-
-  More Info:
-  - https://tfsec.dev/docs/aws/vpc/no-public-ingress-sg#aws/vpc 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
-
-  Result 3
-
-  [aws-neptune-enable-log-export][[0m[33mMEDIUM[39m[0m] Resource 'aws_neptune_cluster.encrypted_neptune_cluster' uses default value for enable_cloudwatch_logs_exports
-  /src/main.tf:66-74
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/neptune/encryption-customer-key/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/neptune_cluster#storage_encrypted
+────────────────────────────────────────────────────────────────────────────────
 
 
-      63 |     aws_subnet.free_2.id]
-      64 | }
-      65 | 
-      66 | resource "aws_neptune_cluster" "encrypted_neptune_cluster" {
-      67 |   cluster_identifier  = "cloudrail-test-encrypted"
-      68 |   engine              = "neptune"
-      69 |   skip_final_snapshot = true
-      70 |   apply_immediately   = true
-      71 |   storage_encrypted   = true
-      72 |   neptune_subnet_group_name = aws_db_subnet_group.free.name
-      73 |   vpc_security_group_ids = [aws_security_group.free.id]
-      74 | }
-      75 | 
-      76 | resource "aws_neptune_cluster_instance" "neptune_instance" {
-      77 |   count              = 2
+Result #3 MEDIUM VPC Flow Logs is not enabled for VPC  
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:5-12
+────────────────────────────────────────────────────────────────────────────────
+    5    resource "aws_vpc" "external" {
+    6      cidr_block = "10.1.1.0/24"
+    7      enable_dns_support   = "true"
+    8      enable_dns_hostnames = "true"
+    9      tags = {
+   10        Name = "external-vpc"
+   11      }
+   12    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ec2-require-vpc-flow-logs-for-all-vpcs
+      Impact Without VPC flow logs, you risk not having enough information about network traffic flow to investigate incidents or identify security issues.
+  Resolution Enable flow logs for VPC
 
-  Impact:     Limited visibility of audit trail for changes to Neptune
-  Resolution: Enable export logs
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/require-vpc-flow-logs-for-all-vpcs/
+────────────────────────────────────────────────────────────────────────────────
 
-  More Info:
-  - https://tfsec.dev/docs/aws/neptune/enable-log-export#aws/neptune 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/neptune_cluster#enable_cloudwatch_logs_exports 
 
-  times
-  ------------------------------------------
-  disk i/o             51.049ms
-  parsing HCL          623.209µs
-  evaluating values    6.856874ms
-  running checks       31.92775ms
+Result #4 MEDIUM Cluster does not have audit logging enabled. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:66-74
+────────────────────────────────────────────────────────────────────────────────
+   66    resource "aws_neptune_cluster" "encrypted_neptune_cluster" {
+   67      cluster_identifier  = "cloudrail-test-encrypted"
+   68      engine              = "neptune"
+   69      skip_final_snapshot = true
+   70      apply_immediately   = true
+   71      storage_encrypted   = true
+   72      neptune_subnet_group_name = aws_db_subnet_group.free.name
+   73      vpc_security_group_ids = [aws_security_group.free.id]
+   74    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-neptune-enable-log-export
+      Impact Limited visibility of audit trail for changes to Neptune
+  Resolution Enable export logs
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/neptune/enable-log-export/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/neptune_cluster#enable_cloudwatch_logs_exports
+────────────────────────────────────────────────────────────────────────────────
+
+
+Result #5 LOW Security group explicitly uses the default description. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:18-27
+────────────────────────────────────────────────────────────────────────────────
+   18    resource "aws_security_group" "free" {
+   19      vpc_id = aws_vpc.external.id
+   20    
+   21      ingress {
+   22        from_port = 0
+   23        protocol = "TCP"
+   24        to_port = 64000
+   25        cidr_blocks = ["0.0.0.0/0"]
+   26      }
+   27    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ec2-add-description-to-security-group
+      Impact Descriptions provide context for the firewall rule reasons
+  Resolution Add descriptions for all security groups
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/add-description-to-security-group/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule
+────────────────────────────────────────────────────────────────────────────────
+
+
+Result #6 LOW Security group rule does not have a description. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:21-26
+────────────────────────────────────────────────────────────────────────────────
+   18    resource "aws_security_group" "free" {
+   19      vpc_id = aws_vpc.external.id
+   20    
+   21  ┌   ingress {
+   22  │     from_port = 0
+   23  │     protocol = "TCP"
+   24  │     to_port = 64000
+   25  │     cidr_blocks = ["0.0.0.0/0"]
+   26  └   }
+   27    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ec2-add-description-to-security-group-rule
+      Impact Descriptions provide context for the firewall rule reasons
+  Resolution Add descriptions for all security groups rules
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/add-description-to-security-group-rule/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule
+────────────────────────────────────────────────────────────────────────────────
+
+
+  timings
+  ──────────────────────────────────────────
+  disk i/o             2.762917ms
+  parsing              744.124µs
+  adaptation           67.791µs
+  checks               4.868625ms
+  total                8.443457ms
 
   counts
-  ------------------------------------------
-  files loaded         1
-  blocks               12
-  modules              0
+  ──────────────────────────────────────────
+  modules downloaded   0
+  modules processed    1
+  blocks processed     12
+  files read           1
 
   results
-  ------------------------------------------
-  critical             1
-  high                 0
-  medium               1
-  low                  1
+  ──────────────────────────────────────────
+  passed               5
   ignored              0
+  critical             1
+  high                 1
+  medium               2
+  low                  2
 
-  3 potential problems detected.
+  5 passed, 6 potential problem(s) detected.
 

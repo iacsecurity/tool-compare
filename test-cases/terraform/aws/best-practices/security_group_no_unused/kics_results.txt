@@ -1,4 +1,4 @@
-
+[38;2;34;187;51m
                    .0MO.                                    
                    OMMMx                                    
                    ;NMX;                                    
@@ -15,86 +15,108 @@ WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
 WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
-
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+[0m
+Scanning with Keeping Infrastructure as Code Secure v1.6.5
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 1039
 Queries failed to execute: 0
 
 ------------------------------------
 
-Security Group Rules Without Description, Severity: INFO, Results: 1
-Description: It's considered a best practice for all rules in AWS Security Group to have a description
-Platform: Terraform
+[38;2;91;192;222mSecurity Group Rule Without Description[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 1
+[1mDescription:[0m It's considered a best practice for all rules in AWS Security Group to have a description
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:20
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m20[0m
 
 		019: 
-		020:   egress {
-		021:     from_port        = 0
+[38;2;240;173;78m		020:   egress {
+[0m		021:     from_port        = 0
 
 
-Resource Not Using Tags, Severity: INFO, Results: 2
-Description: AWS services resource tags are an essential part of managing components
-Platform: Terraform
+[38;2;91;192;222mSecurity Group Not Used[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 1
+[1mDescription:[0m Security group must be used or not declared
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:3
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m7[0m
+
+		006: 
+[38;2;240;173;78m		007: resource "aws_security_group" "allow_tls" {
+[0m		008:   name        = "allow_tls"
+
+
+[38;2;91;192;222mResource Not Using Tags[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 2
+[1mDescription:[0m AWS services resource tags are an essential part of managing components. As a best practice, the field 'tags' should have additional tags defined other than 'Name'
+[1mPlatform:[0m Terraform
+
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m3[0m
 
 		002: 
-		003: resource "aws_vpc" "example" {
-		004:     cidr_block = "10.0.0.0/16"
+[38;2;240;173;78m		003: resource "aws_vpc" "example" {
+[0m		004:     cidr_block = "10.0.0.0/16"
 
 
-	[2]: /src/main.tf:28
+	[38;2;91;192;222m[2]:[0m ../../src/main.tf:[38;2;34;187;51m28[0m
 
 		027: 
-		028:   tags = {
-		029:     Name = "allow_tls"
+[38;2;240;173;78m		028:   tags = {
+[0m		029:     Name = "allow_tls"
 
 
-VPC FlowLogs Disabled, Severity: MEDIUM, Results: 1
-Description: VPC hasn't got any FlowLog associated
-Platform: Terraform
+[38;2;237;213;126mVPC FlowLogs Disabled[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m Every VPC resource should have an associated Flow Log
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:3
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m3[0m
 
 		002: 
-		003: resource "aws_vpc" "example" {
-		004:     cidr_block = "10.0.0.0/16"
+[38;2;240;173;78m		003: resource "aws_vpc" "example" {
+[0m		004:     cidr_block = "10.0.0.0/16"
 
 
-Unrestricted Security Group Ingress, Severity: HIGH, Results: 1
-Description: Security groups allow ingress from 0.0.0.0:0
-Platform: Terraform
+[38;2;255;114;19mVPC Without Network Firewall[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m VPC should have a Network Firewall associated
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:17
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m3[0m
+
+		002: 
+[38;2;240;173;78m		003: resource "aws_vpc" "example" {
+[0m		004:     cidr_block = "10.0.0.0/16"
+
+
+[38;2;187;33;36mUnrestricted Security Group Ingress[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mDescription:[0m Security groups allow ingress from 0.0.0.0:0
+[1mPlatform:[0m Terraform
+
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m17[0m
 
 		016:     protocol         = "tcp"
-		017:     cidr_blocks      = ["0.0.0.0/0"]
-		018:   }
+[38;2;240;173;78m		017:     cidr_blocks      = ["0.0.0.0/0"]
+[0m		018:   }
 
 
-Unknown Port Exposed To Internet, Severity: HIGH, Results: 1
-Description: AWS Security Group should not have an unknown port exposed to the entire Internet
-Platform: Terraform
+[38;2;187;33;36mSensitive Port Is Exposed To Entire Network[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mDescription:[0m A sensitive port, such as port 23 or port 110, is open for the whole network in either TCP or UDP protocol
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:17
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m12[0m
 
-		016:     protocol         = "tcp"
-		017:     cidr_blocks      = ["0.0.0.0/0"]
-		018:   }
+		011: 
+[38;2;240;173;78m		012:   ingress {
+[0m		013:     description      = "TLS anywhere"
 
 
 
 Results Summary:
-HIGH: 2
-MEDIUM: 1
-LOW: 0
-INFO: 3
-TOTAL: 6
+[38;2;187;33;36mHIGH[0m: 2
+[38;2;255;114;19mMEDIUM[0m: 1
+[38;2;237;213;126mLOW[0m: 1
+[38;2;91;192;222mINFO[0m: 4
+TOTAL: 8
 
-Scan duration: 23.351623345s
+Scan duration: 15.376155716s

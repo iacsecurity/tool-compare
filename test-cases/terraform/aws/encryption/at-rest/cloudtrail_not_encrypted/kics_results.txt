@@ -1,4 +1,4 @@
-
+[38;2;34;187;51m
                    .0MO.                                    
                    OMMMx                                    
                    ;NMX;                                    
@@ -15,137 +15,200 @@ WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
 WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
-
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+[0m
+Scanning with Keeping Infrastructure as Code Secure v1.6.5
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 1039
 Queries failed to execute: 0
 
 ------------------------------------
 
-Resource Not Using Tags, Severity: INFO, Results: 2
-Description: AWS services resource tags are an essential part of managing components
-Platform: Terraform
+[38;2;91;192;222mResource Not Using Tags[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 2
+[1mDescription:[0m AWS services resource tags are an essential part of managing components. As a best practice, the field 'tags' should have additional tags defined other than 'Name'
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:18
-
-		017: 
-		018: resource "aws_s3_bucket" "foo" {
-		019:   bucket        = local.name
-
-
-	[2]: /src/main.tf:11
-
-		010: 
-		011: resource "aws_cloudtrail" "foobar" {
-		012:   name                          = local.name
-
-
-S3 Bucket Logging Disabled, Severity: LOW, Results: 1
-Description: S3 bucket without logging
-Platform: Terraform
-
-	[1]: /src/main.tf:18
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m18[0m
 
 		017: 
-		018: resource "aws_s3_bucket" "foo" {
-		019:   bucket        = local.name
+[38;2;240;173;78m		018: resource "aws_s3_bucket" "foo" {
+[0m		019:   bucket        = local.name
 
 
-CloudTrail Log File Validation Disabled, Severity: LOW, Results: 1
-Description: CloudTrail log file validation should be enabled
-Platform: Terraform
-
-	[1]: /src/main.tf:11
+	[38;2;91;192;222m[2]:[0m ../../src/main.tf:[38;2;34;187;51m11[0m
 
 		010: 
-		011: resource "aws_cloudtrail" "foobar" {
-		012:   name                          = local.name
+[38;2;240;173;78m		011: resource "aws_cloudtrail" "foobar" {
+[0m		012:   name                          = local.name
 
 
-S3 Bucket Without Versioning, Severity: MEDIUM, Results: 1
-Description: S3 bucket without versioning
-Platform: Terraform
+[38;2;237;213;126mIAM Access Analyzer Not Enabled[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m IAM Access Analyzer should be enabled and configured to continuously monitor resource permissions
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:18
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m11[0m
+
+		010: 
+[38;2;240;173;78m		011: resource "aws_cloudtrail" "foobar" {
+[0m		012:   name                          = local.name
+
+
+[38;2;237;213;126mCloudTrail Log Files Not Encrypted With KMS[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mCIS ID:[0m CIS Security - CIS Amazon Web Services Foundations Benchmark v1.4.0 - Rule 3.7
+[1mTitle:[0m Ensure CloudTrail logs are encrypted at rest using KMS CMKs
+[1mDescription:[0m AWS CloudTrail is a web service that records AWS API calls for an account and makes those logs available to users and resources in accordance with IAM policies. AWS Key Management Service (KMS) is a managed service that helps create and control the encryption keys used to encrypt account data, and uses Hardware Security Modules (HSMs) to protect the security of encryption keys. CloudTrail logs can be configured to leverage server side encryption (SSE) and KMS customer created master keys (CMK) to further protect CloudTrail logs. It is recommended that CloudTrail be configured to use SSE-KMS.
+Configuring CloudTrail to use SSE-KMS provides additional confidentiality controls on log data as a given user must have S3 read permission on the corresponding log bucket and must be granted decrypt permission by the CMK policy.
+[1mPlatform:[0m Terraform
+
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m11[0m
+
+		010: 
+[38;2;240;173;78m		011: resource "aws_cloudtrail" "foobar" {
+[0m		012:   name                          = local.name
+
+
+[38;2;237;213;126mCloudTrail Log File Validation Disabled[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mCIS ID:[0m CIS Security - CIS Amazon Web Services Foundations Benchmark v1.4.0 - Rule 3.2
+[1mTitle:[0m Ensure CloudTrail log file validation is enabled
+[1mDescription:[0m CloudTrail log file validation creates a digitally signed digest file containing a hash of each log that CloudTrail writes to S3. These digest files can be used to determine whether a log file was changed, deleted, or unchanged after CloudTrail delivered the log. It is recommended that file validation be enabled on all CloudTrails.
+Enabling log file validation will provide additional integrity checking of CloudTrail logs.
+[1mPlatform:[0m Terraform
+
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m11[0m
+
+		010: 
+[38;2;240;173;78m		011: resource "aws_cloudtrail" "foobar" {
+[0m		012:   name                          = local.name
+
+
+[38;2;255;114;19mS3 Bucket Without Versioning[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m S3 bucket should have versioning enabled
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m18[0m
 
 		017: 
-		018: resource "aws_s3_bucket" "foo" {
-		019:   bucket        = local.name
+[38;2;240;173;78m		018: resource "aws_s3_bucket" "foo" {
+[0m		019:   bucket        = local.name
 
 
-CloudTrail SNS Topic Name Undefined, Severity: MEDIUM, Results: 1
-Description: Check if SNS topic name is set for CloudTrail
-Platform: Terraform
+[38;2;255;114;19mS3 Bucket Policy Accepts HTTP Requests[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m S3 Bucket policy should not accept HTTP Requests
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:11
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m22[0m
 
-		010: 
-		011: resource "aws_cloudtrail" "foobar" {
-		012:   name                          = local.name
-
-
-CloudTrail Not Integrated With CloudWatch, Severity: MEDIUM, Results: 2
-Description: CloudTrail should be integrated with CloudWatch
-Platform: Terraform
-
-	[1]: /src/main.tf:11
-
-		010: 
-		011: resource "aws_cloudtrail" "foobar" {
-		012:   name                          = local.name
+		021: 
+[38;2;240;173;78m		022:   policy = <<POLICY
+[0m		023: {
 
 
-	[2]: /src/main.tf:11
+[38;2;255;114;19mS3 Bucket Logging Disabled[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m Server Access Logging should be enabled on S3 Buckets so that all changes are logged and trackable
+[1mPlatform:[0m Terraform
 
-		010: 
-		011: resource "aws_cloudtrail" "foobar" {
-		012:   name                          = local.name
-
-
-CloudTrail Multi Region Disabled, Severity: MEDIUM, Results: 1
-Description: Check if MultiRegion is Enabled
-Platform: Terraform
-
-	[1]: /src/main.tf:11
-
-		010: 
-		011: resource "aws_cloudtrail" "foobar" {
-		012:   name                          = local.name
-
-
-S3 Bucket Without Server-side-encryption, Severity: HIGH, Results: 1
-Description: S3 bucket should have encryption defined
-Platform: Terraform
-
-	[1]: /src/main.tf:18
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m18[0m
 
 		017: 
-		018: resource "aws_s3_bucket" "foo" {
-		019:   bucket        = local.name
+[38;2;240;173;78m		018: resource "aws_s3_bucket" "foo" {
+[0m		019:   bucket        = local.name
 
 
-CloudTrail Log Files Not Encrypted, Severity: HIGH, Results: 1
-Description: Logs delivered by CloudTrail should be encrypted using KMS
-Platform: Terraform
+[38;2;255;114;19mCloudTrail SNS Topic Name Undefined[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m Check if SNS topic name is set for CloudTrail
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:11
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m11[0m
 
 		010: 
-		011: resource "aws_cloudtrail" "foobar" {
-		012:   name                          = local.name
+[38;2;240;173;78m		011: resource "aws_cloudtrail" "foobar" {
+[0m		012:   name                          = local.name
+
+
+[38;2;255;114;19mCloudTrail Not Integrated With CloudWatch[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 2
+[1mDescription:[0m CloudTrail should be integrated with CloudWatch
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m11[0m
+
+		010: 
+[38;2;240;173;78m		011: resource "aws_cloudtrail" "foobar" {
+[0m		012:   name                          = local.name
+
+
+	[38;2;255;114;19m[2]:[0m ../../src/main.tf:[38;2;34;187;51m11[0m
+
+		010: 
+[38;2;240;173;78m		011: resource "aws_cloudtrail" "foobar" {
+[0m		012:   name                          = local.name
+
+
+[38;2;255;114;19mCloudTrail Multi Region Disabled[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 2
+[1mCIS ID:[0m CIS Security - CIS Amazon Web Services Foundations Benchmark v1.4.0 - Rule 3.1
+[1mTitle:[0m Ensure CloudTrail is enabled in all regions
+[1mDescription:[0m AWS CloudTrail is a web service that records AWS API calls for your account and delivers log files to you. The recorded information includes the identity of the API caller, the time of the API call, the source IP address of the API caller, the request parameters, and the response elements returned by the AWS service. CloudTrail provides a history of AWS API calls for an account, including API calls made via the Management Console, SDKs, command line tools, and higher-level AWS services (such as CloudFormation).
+The AWS API call history produced by CloudTrail enables security analysis, resource change tracking, and compliance auditing. Additionally, ensuring that a multi-regions trail exists will ensure that unexpected activity occurring in otherwise unused regions is detected ensuring that a multi-regions trail exists will ensure that Global Service Logging is enabled for a trail by default to capture recording of events generated onAWS global services for a multi-regions trail, ensuring that management events configured for all type of Read/Writes ensures recording of management operations that are performed on all resources in an AWS account 
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m15[0m
+
+		014:   s3_key_prefix                 = "prefix"
+[38;2;240;173;78m		015:   include_global_service_events = false
+[0m		016: }
+
+
+	[38;2;255;114;19m[2]:[0m ../../src/main.tf:[38;2;34;187;51m11[0m
+
+		010: 
+[38;2;240;173;78m		011: resource "aws_cloudtrail" "foobar" {
+[0m		012:   name                          = local.name
+
+
+[38;2;187;33;36mS3 Bucket Without Enabled MFA Delete[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mCIS ID:[0m CIS Security - CIS Amazon Web Services Foundations Benchmark v1.4.0 - Rule 2.1.3
+[1mTitle:[0m Ensure MFA Delete is enable on S3 buckets
+[1mDescription:[0m Once MFA Delete is enabled on your sensitive and classified S3 bucket it requires the user to have two forms of authentication.
+Adding MFA delete to an S3 bucket, requires additional authentication when you change the version state of your bucket or you delete and object version adding another layer of security in the event your security credentials are compromised or unauthorized access is granted.
+[1mPlatform:[0m Terraform
+
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m18[0m
+
+		017: 
+[38;2;240;173;78m		018: resource "aws_s3_bucket" "foo" {
+[0m		019:   bucket        = local.name
+
+
+[38;2;187;33;36mS3 Bucket SSE Disabled[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mDescription:[0m If algorithm is AES256 then the master key is null, empty or undefined, otherwise the master key is required
+[1mPlatform:[0m Terraform
+
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m18[0m
+
+		017: 
+[38;2;240;173;78m		018: resource "aws_s3_bucket" "foo" {
+[0m		019:   bucket        = local.name
+
+
+[38;2;187;33;36mCloudTrail Log Files S3 Bucket with Logging Disabled[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mDescription:[0m CloudTrail Log Files S3 Bucket should have 'logging' enabled
+[1mPlatform:[0m Terraform
+
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m18[0m
+
+		017: 
+[38;2;240;173;78m		018: resource "aws_s3_bucket" "foo" {
+[0m		019:   bucket        = local.name
 
 
 
 Results Summary:
-HIGH: 2
-MEDIUM: 5
-LOW: 2
-INFO: 2
-TOTAL: 11
+[38;2;187;33;36mHIGH[0m: 3
+[38;2;255;114;19mMEDIUM[0m: 8
+[38;2;237;213;126mLOW[0m: 3
+[38;2;91;192;222mINFO[0m: 2
+TOTAL: 16
 
-Scan duration: 4.861770087s
+Scan duration: 14.662945632s

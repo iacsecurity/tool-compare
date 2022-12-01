@@ -1,4 +1,4 @@
-
+[38;2;34;187;51m
                    .0MO.                                    
                    OMMMx                                    
                    ;NMX;                                    
@@ -15,64 +15,75 @@ WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
 WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
-
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+[0m
+Scanning with Keeping Infrastructure as Code Secure v1.6.5
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 1039
 Queries failed to execute: 0
 
 ------------------------------------
 
-Resource Not Using Tags, Severity: INFO, Results: 1
-Description: AWS services resource tags are an essential part of managing components
-Platform: Terraform
+[38;2;91;192;222mResource Not Using Tags[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 1
+[1mDescription:[0m AWS services resource tags are an essential part of managing components. As a best practice, the field 'tags' should have additional tags defined other than 'Name'
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:5
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
 
 		004: 
-		005: resource "aws_iam_role" "role" {
-		006:   name = "role"
+[38;2;240;173;78m		005: resource "aws_iam_role" "role" {
+[0m		006:   name = "role"
 
 
-IAM Role Policy passRole Allows All, Severity: MEDIUM, Results: 1
-Description: Using the iam:passrole action with wildcards (*) in the resource can be overly permissive because it allows iam:passrole permissions on multiple resources
-Platform: Terraform
+[38;2;91;192;222mName Is Not Snake Case[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 2
+[1mDescription:[0m All names should follow snake case pattern.
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:35
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m25[0m
 
-		034:         "Action": [
-		035:           "iam:passrole"
-		036:         ],
-
-
-IAM Policy Grants Full Permissions, Severity: MEDIUM, Results: 2
-Description: IAM policies allow all ('*') in a statement action
-Platform: Terraform
-
-	[1]: /src/main.tf:38
-
-		037:         "Effect": "Allow",
-		038:         "Resource": "*"
-		039:       }
+		024: 
+[38;2;240;173;78m		025: resource "aws_iam_role_policy" "allow-policy-1" {
+[0m		026:   name = "allow-policy-1"
 
 
-	[2]: /src/main.tf:58
+	[38;2;91;192;222m[2]:[0m ../../src/main.tf:[38;2;34;187;51m45[0m
 
-		057:         "Effect": "Allow",
-		058:         "Resource": "*"
-		059:       }
+		044: 
+[38;2;240;173;78m		045: resource "aws_iam_role_policy" "allow-policy-2" {
+[0m		046:   name = "allow-policy-2"
+
+
+[38;2;237;213;126mIAM Access Analyzer Not Enabled[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m IAM Access Analyzer should be enabled and configured to continuously monitor resource permissions
+[1mPlatform:[0m Terraform
+
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
+
+		004: 
+[38;2;240;173;78m		005: resource "aws_iam_role" "role" {
+[0m		006:   name = "role"
+
+
+[38;2;255;114;19mIAM Role Policy passRole Allows All[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m Using the iam:passrole action with wildcards (*) in the resource can be overly permissive because it allows iam:passrole permissions on multiple resources
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m29[0m
+
+		028: 
+[38;2;240;173;78m		029:   policy = <<-EOF
+[0m		030:   {
 
 
 
 Results Summary:
-HIGH: 0
-MEDIUM: 3
-LOW: 0
-INFO: 1
-TOTAL: 4
+[38;2;187;33;36mHIGH[0m: 0
+[38;2;255;114;19mMEDIUM[0m: 1
+[38;2;237;213;126mLOW[0m: 1
+[38;2;91;192;222mINFO[0m: 3
+TOTAL: 5
 
-Scan duration: 4.727074023s
+Scan duration: 15.053430965s

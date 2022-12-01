@@ -1,4 +1,4 @@
-
+[38;2;34;187;51m
                    .0MO.                                    
                    OMMMx                                    
                    ;NMX;                                    
@@ -15,185 +15,196 @@ WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
 WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
-
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+[0m
+Scanning with Keeping Infrastructure as Code Secure v1.6.5
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 1039
 Queries failed to execute: 0
 
 ------------------------------------
 
-Resource Not Using Tags, Severity: INFO, Results: 2
-Description: AWS services resource tags are an essential part of managing components
-Platform: Terraform
+[38;2;91;192;222mResource Not Using Tags[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 2
+[1mDescription:[0m AWS services resource tags are an essential part of managing components. As a best practice, the field 'tags' should have additional tags defined other than 'Name'
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:44
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m44[0m
 
 		043: 
-		044: resource "aws_api_gateway_stage" "api_gw_stage" {
-		045:   stage_name    = "prod"
+[38;2;240;173;78m		044: resource "aws_api_gateway_stage" "api_gw_stage" {
+[0m		045:   stage_name    = "prod"
 
 
-	[2]: /src/main.tf:5
+	[38;2;91;192;222m[2]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
 
 		004: 
-		005: resource "aws_api_gateway_rest_api" "api_gw" {
-		006:   name        = "api-gw-cache-non-encrypted"
+[38;2;240;173;78m		005: resource "aws_api_gateway_rest_api" "api_gw" {
+[0m		006:   name        = "api-gw-cache-non-encrypted"
 
 
-Open Access To Resources Through API, Severity: LOW, Results: 1
-Description: Open access to back-end resources through API
-Platform: Terraform
+[38;2;237;213;126mIAM Access Analyzer Not Enabled[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m IAM Access Analyzer should be enabled and configured to continuously monitor resource permissions
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:26
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
 
-		025:   http_method   = "GET"
-		026:   authorization = "NONE"
-		027: }
+		004: 
+[38;2;240;173;78m		005: resource "aws_api_gateway_rest_api" "api_gw" {
+[0m		006:   name        = "api-gw-cache-non-encrypted"
 
 
-API Gateway Stage Without API Gateway UsagePlan Associated, Severity: LOW, Results: 1
-Description: API Gateway Stage should have API Gateway UsagePlan defined and associated.
-Platform: Terraform
+[38;2;237;213;126mAPI Gateway Stage Without API Gateway UsagePlan Associated[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m API Gateway Stage should have API Gateway UsagePlan defined and associated.
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:44
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m44[0m
 
 		043: 
-		044: resource "aws_api_gateway_stage" "api_gw_stage" {
-		045:   stage_name    = "prod"
+[38;2;240;173;78m		044: resource "aws_api_gateway_stage" "api_gw_stage" {
+[0m		045:   stage_name    = "prod"
 
 
-API Gateway Deployment Without API Gateway UsagePlan Associated, Severity: LOW, Results: 1
-Description: API Gateway Deployment should have API Gateway UsagePlan defined and associated.
-Platform: Terraform
+[38;2;237;213;126mAPI Gateway Deployment Without API Gateway UsagePlan Associated[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m API Gateway Deployment should have API Gateway UsagePlan defined and associated.
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:10
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m10[0m
 
 		009: 
-		010: resource "aws_api_gateway_deployment" "api_gw_deploy" {
-		011:   depends_on  = [aws_api_gateway_integration.api_gw_int]
+[38;2;240;173;78m		010: resource "aws_api_gateway_deployment" "api_gw_deploy" {
+[0m		011:   depends_on  = [aws_api_gateway_integration.api_gw_int]
 
 
-CloudWatch Metrics Disabled, Severity: MEDIUM, Results: 1
-Description: Checks if CloudWatch Metrics is Enabled
-Platform: Terraform
+[38;2;255;114;19mCloudWatch Metrics Disabled[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m Checks if CloudWatch Metrics is Enabled
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:55
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m55[0m
 
 		054: 
-		055:   settings {
-		056:     logging_level        = "OFF"
+[38;2;240;173;78m		055:   settings {
+[0m		056:     logging_level        = "OFF"
 
 
-Api Gateway Access Logging Disabled, Severity: MEDIUM, Results: 1
-Description: RDS does not have any kind of logger
-Platform: Terraform
+[38;2;255;114;19mAPI Gateway without WAF[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m API Gateway should have WAF (Web Application Firewall) enabled
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:44
-
-		043: 
-		044: resource "aws_api_gateway_stage" "api_gw_stage" {
-		045:   stage_name    = "prod"
-
-
-API Gateway X-Ray Disabled, Severity: MEDIUM, Results: 1
-Description: X-ray Tracing is not enabled
-Platform: Terraform
-
-	[1]: /src/main.tf:44
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m44[0m
 
 		043: 
-		044: resource "aws_api_gateway_stage" "api_gw_stage" {
-		045:   stage_name    = "prod"
+[38;2;240;173;78m		044: resource "aws_api_gateway_stage" "api_gw_stage" {
+[0m		045:   stage_name    = "prod"
 
 
-API Gateway Without SSL Certificate, Severity: MEDIUM, Results: 1
-Description: SSL Client Certificate should be enabled in aws_api_gateway_stage resource
-Platform: Terraform
+[38;2;255;114;19mAPI Gateway X-Ray Disabled[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m API Gateway should have X-Ray Tracing enabled
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:44
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m44[0m
 
 		043: 
-		044: resource "aws_api_gateway_stage" "api_gw_stage" {
-		045:   stage_name    = "prod"
+[38;2;240;173;78m		044: resource "aws_api_gateway_stage" "api_gw_stage" {
+[0m		045:   stage_name    = "prod"
 
 
-API Gateway Without Content Encoding, Severity: MEDIUM, Results: 1
-Description: Enable Content Encoding through the attribute 'minimum_compression_size'. This value should be greater than -1 and smaller than 10485760
-Platform: Terraform
+[38;2;255;114;19mAPI Gateway Without SSL Certificate[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m SSL Client Certificate should be enabled
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:5
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m44[0m
+
+		043: 
+[38;2;240;173;78m		044: resource "aws_api_gateway_stage" "api_gw_stage" {
+[0m		045:   stage_name    = "prod"
+
+
+[38;2;255;114;19mAPI Gateway Without Configured Authorizer[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m API Gateway REST API should have an API Gateway Authorizer
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
 
 		004: 
-		005: resource "aws_api_gateway_rest_api" "api_gw" {
-		006:   name        = "api-gw-cache-non-encrypted"
+[38;2;240;173;78m		005: resource "aws_api_gateway_rest_api" "api_gw" {
+[0m		006:   name        = "api-gw-cache-non-encrypted"
 
 
-API Gateway With Open Access, Severity: MEDIUM, Results: 1
-Description: API Gateway Method should restrict the authorization type, except for the HTTP OPTIONS method.
-Platform: Terraform
+[38;2;255;114;19mAPI Gateway With Open Access[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m API Gateway Method should restrict the authorization type, except for the HTTP OPTIONS method.
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:25
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m25[0m
 
 		024:   resource_id   = aws_api_gateway_resource.api_gw_resource.id
-		025:   http_method   = "GET"
-		026:   authorization = "NONE"
+[38;2;240;173;78m		025:   http_method   = "GET"
+[0m		026:   authorization = "NONE"
 
 
-API Gateway With CloudWatch Logging Disabled, Severity: MEDIUM, Results: 1
-Description: AWS CloudWatch Logs for APIs is not enabled
-Platform: Terraform
+[38;2;255;114;19mAPI Gateway With Invalid Compression[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m API Gateway should have valid compression, which means attribute 'minimum_compression_size' should be set and its value should be greater than -1 and smaller than 10485760.
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:44
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
+
+		004: 
+[38;2;240;173;78m		005: resource "aws_api_gateway_rest_api" "api_gw" {
+[0m		006:   name        = "api-gw-cache-non-encrypted"
+
+
+[38;2;255;114;19mAPI Gateway With CloudWatch Logging Disabled[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m AWS CloudWatch Logs for APIs should be enabled and using the naming convention described in documentation
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m44[0m
 
 		043: 
-		044: resource "aws_api_gateway_stage" "api_gw_stage" {
-		045:   stage_name    = "prod"
+[38;2;240;173;78m		044: resource "aws_api_gateway_stage" "api_gw_stage" {
+[0m		045:   stage_name    = "prod"
 
 
-API Gateway Method Does Not Contains An API Key, Severity: MEDIUM, Results: 1
-Description: An API Key should be required on a method request.
-Platform: Terraform
+[38;2;255;114;19mAPI Gateway Method Does Not Contains An API Key[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m An API Key should be required on a method request.
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:22
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m22[0m
 
 		021: 
-		022: resource "aws_api_gateway_method" "api_gw_method" {
-		023:   rest_api_id   = aws_api_gateway_rest_api.api_gw.id
+[38;2;240;173;78m		022: resource "aws_api_gateway_method" "api_gw_method" {
+[0m		023:   rest_api_id   = aws_api_gateway_rest_api.api_gw.id
 
 
-API Gateway Deployment Without Access Log Setting, Severity: MEDIUM, Results: 1
-Description: API Gateway Deployment should have access log setting defined when connected to an API Gateway Stage.
-Platform: Terraform
+[38;2;255;114;19mAPI Gateway Deployment Without Access Log Setting[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m API Gateway Deployment should have access log setting defined when connected to an API Gateway Stage.
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:10
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m10[0m
 
 		009: 
-		010: resource "aws_api_gateway_deployment" "api_gw_deploy" {
-		011:   depends_on  = [aws_api_gateway_integration.api_gw_int]
+[38;2;240;173;78m		010: resource "aws_api_gateway_deployment" "api_gw_deploy" {
+[0m		011:   depends_on  = [aws_api_gateway_integration.api_gw_int]
 
 
-API Gateway Method Settings Cache Not Encrypted, Severity: HIGH, Results: 1
-Description: API Gateway Method Settings Cache should be encrypted
-Platform: Terraform
+[38;2;255;114;19mAPI Gateway Access Logging Disabled[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m API Gateway should have Access Log Settings defined
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:58
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m44[0m
 
-		057:     caching_enabled      = true # This is required for cache encryption
-		058:     cache_data_encrypted = false # This is required for cache encryption
-		059:   }
+		043: 
+[38;2;240;173;78m		044: resource "aws_api_gateway_stage" "api_gw_stage" {
+[0m		045:   stage_name    = "prod"
 
 
 
 Results Summary:
-HIGH: 1
-MEDIUM: 9
-LOW: 3
-INFO: 2
-TOTAL: 15
+[38;2;187;33;36mHIGH[0m: 0
+[38;2;255;114;19mMEDIUM[0m: 11
+[38;2;237;213;126mLOW[0m: 3
+[38;2;91;192;222mINFO[0m: 2
+TOTAL: 16
 
-Scan duration: 4.888372105s
+Scan duration: 15.200344256s

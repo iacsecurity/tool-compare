@@ -1,16 +1,3 @@
-
-
-       _               _              
-   ___| |__   ___  ___| | _______   __
-  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
- | (__| | | |  __/ (__|   < (_) \ V / 
-  \___|_| |_|\___|\___|_|\_\___/ \_/  
-                                      
-By bridgecrew.io | version: 2.0.358 
-Update available 2.0.358 -> 2.0.359
-Run pip3 install -U checkov to update 
-
-
 terraform scan results:
 
 Passed checks: 0, Failed checks: 2, Skipped checks: 0
@@ -27,7 +14,6 @@ Check: CKV_AWS_134: "Ensure that Amazon ElastiCache Redis clusters have automati
 		5 |   num_cache_nodes      = 1
 		6 |   parameter_group_name = "default.redis6.x"
 		7 | }
-
 
 Check: CKV_AWS_134: "Ensure that Amazon ElastiCache Redis clusters have automatic backup turned on"
 	FAILED for resource: aws_elasticache_cluster.disabled

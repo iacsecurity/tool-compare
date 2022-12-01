@@ -1,78 +1,77 @@
 
-  Result 1
+Result #1 HIGH Replication group does not have at-rest encryption enabled. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:1-10
+────────────────────────────────────────────────────────────────────────────────
+    1    resource "aws_elasticache_replication_group" "example" {
+    2      automatic_failover_enabled    = true
+    3      availability_zones            = ["us-west-2a", "us-west-2b"]
+    4      replication_group_id          = "tf-rep-group-1"
+    5      replication_group_description = "test description"
+    6      node_type                     = "cache.m4.large"
+    7      number_cache_clusters         = 2
+    8      parameter_group_name          = "default.redis3.2"
+    9      port                          = 6379
+   10    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-elasticache-enable-at-rest-encryption
+      Impact At-rest data in the Replication Group could be compromised if accessed.
+  Resolution Enable at-rest encryption for replication group
 
-  [aws-elastic-search-encrypt-replication-group][[0m[31mHIGH[39m[0m] Resource 'aws_elasticache_replication_group.example' defines an unencrypted Elasticache Replication Group (missing at_rest_encryption_enabled attribute).
-  /src/main.tf:1-10
-
-
-       1 | resource "aws_elasticache_replication_group" "example" {
-       2 |   automatic_failover_enabled    = true
-       3 |   availability_zones            = ["us-west-2a", "us-west-2b"]
-       4 |   replication_group_id          = "tf-rep-group-1"
-       5 |   replication_group_description = "test description"
-       6 |   node_type                     = "cache.m4.large"
-       7 |   number_cache_clusters         = 2
-       8 |   parameter_group_name          = "default.redis3.2"
-       9 |   port                          = 6379
-      10 | }
-      11 | 
-
-  Legacy ID:  AWS035
-  Impact:     Data in the replication group could be readable if compromised
-  Resolution: Enable encryption for replication group
-
-  More Info:
-  - https://tfsec.dev/docs/aws/elastic-search/encrypt-replication-group#aws/elastic-search 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticache_replication_group#at_rest_encryption_enabled 
-  - https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/at-rest-encryption.html 
-
-  Result 2
-
-  [aws-elasticache-enable-in-transit-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_elasticache_replication_group.example' defines an unencrypted Elasticache Replication Group (missing transit_encryption_enabled attribute).
-  /src/main.tf:1-10
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/elasticache/enable-at-rest-encryption/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticache_replication_group#at_rest_encryption_enabled
+────────────────────────────────────────────────────────────────────────────────
 
 
-       1 | resource "aws_elasticache_replication_group" "example" {
-       2 |   automatic_failover_enabled    = true
-       3 |   availability_zones            = ["us-west-2a", "us-west-2b"]
-       4 |   replication_group_id          = "tf-rep-group-1"
-       5 |   replication_group_description = "test description"
-       6 |   node_type                     = "cache.m4.large"
-       7 |   number_cache_clusters         = 2
-       8 |   parameter_group_name          = "default.redis3.2"
-       9 |   port                          = 6379
-      10 | }
-      11 | 
+Result #2 HIGH Replication group does not have transit encryption enabled. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:1-10
+────────────────────────────────────────────────────────────────────────────────
+    1    resource "aws_elasticache_replication_group" "example" {
+    2      automatic_failover_enabled    = true
+    3      availability_zones            = ["us-west-2a", "us-west-2b"]
+    4      replication_group_id          = "tf-rep-group-1"
+    5      replication_group_description = "test description"
+    6      node_type                     = "cache.m4.large"
+    7      number_cache_clusters         = 2
+    8      parameter_group_name          = "default.redis3.2"
+    9      port                          = 6379
+   10    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-elasticache-enable-in-transit-encryption
+      Impact In transit data in the Replication Group could be read if intercepted
+  Resolution Enable in transit encryption for replication group
 
-  Legacy ID:  AWS036
-  Impact:     In transit data in the Replication Group could be read if intercepted
-  Resolution: Enable in transit encryption for replication group
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/elasticache/enable-in-transit-encryption/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticache_replication_group#transit_encryption_enabled
+────────────────────────────────────────────────────────────────────────────────
 
-  More Info:
-  - https://tfsec.dev/docs/aws/elasticache/enable-in-transit-encryption#aws/elasticache 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticache_replication_group#transit_encryption_enabled 
-  - https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/in-transit-encryption.html 
 
-  times
-  ------------------------------------------
-  disk i/o             51.278792ms
-  parsing HCL          603.458µs
-  evaluating values    2.237999ms
-  running checks       18.739666ms
+  timings
+  ──────────────────────────────────────────
+  disk i/o             3.073625ms
+  parsing              177.25µs
+  adaptation           82.541µs
+  checks               3.747083ms
+  total                7.080499ms
 
   counts
-  ------------------------------------------
-  files loaded         1
-  blocks               1
-  modules              0
+  ──────────────────────────────────────────
+  modules downloaded   0
+  modules processed    1
+  blocks processed     1
+  files read           1
 
   results
-  ------------------------------------------
+  ──────────────────────────────────────────
+  passed               2
+  ignored              0
   critical             0
   high                 2
   medium               0
   low                  0
-  ignored              0
 
-  2 potential problems detected.
+  2 passed, 2 potential problem(s) detected.
 

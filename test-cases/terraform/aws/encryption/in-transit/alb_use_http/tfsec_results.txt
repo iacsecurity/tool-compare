@@ -1,163 +1,214 @@
 
-  Result 1
+Result #1 CRITICAL Listener for application load balancer does not use HTTPS. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:67-74
+────────────────────────────────────────────────────────────────────────────────
+   67    resource "aws_lb_listener" "listener" {
+   68      load_balancer_arn = aws_lb.test.arn
+   69      port = 80
+   70      default_action {
+   71        type             = "forward"
+   72        target_group_arn = aws_lb_target_group.test.arn
+   73      }
+   74    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-elb-http-not-used
+      Impact Your traffic is not protected
+  Resolution Switch to HTTPS to benefit from TLS security features
 
-  [aws-elbv2-http-not-used][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'aws_lb_listener.listener' uses plain HTTP instead of HTTPS.
-  /src/main.tf:67-74
-
-
-      64 |   vpc_id = aws_vpc.vpc1.id
-      65 | }
-      66 | 
-      67 | resource "aws_lb_listener" "listener" {
-      68 |   load_balancer_arn = aws_lb.test.arn
-      69 |   port = 80
-      70 |   default_action {
-      71 |     type             = "forward"
-      72 |     target_group_arn = aws_lb_target_group.test.arn
-      73 |   }
-      74 | }
-      75 | 
-      76 | resource "aws_lb_target_group_attachment" "attach1" {
-      77 |   target_group_arn = aws_lb_target_group.test.arn
-
-  Legacy ID:  AWS004
-  Impact:     Your traffic is not protected
-  Resolution: Switch to HTTPS to benefit from TLS security features
-
-  More Info:
-  - https://tfsec.dev/docs/aws/elbv2/http-not-used#aws/elbv2 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener 
-  - https://www.cloudflare.com/en-gb/learning/ssl/why-is-http-not-secure/ 
-
-  Result 2
-
-  [aws-ec2-enforce-http-token-imds][[0m[31mHIGH[39m[0m] Resource 'aws_instance.inst3' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
-  /src/main.tf:108-113
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/elb/http-not-used/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener
+────────────────────────────────────────────────────────────────────────────────
 
 
-     105 |   port = 80
-     106 | }
-     107 | 
-     108 | resource "aws_instance" "inst3" {
-     109 |   vpc_security_group_ids = [aws_default_security_group.dsg.id]
-     110 |   subnet_id = aws_subnet.subnet1.id
-     111 |   ami = data.aws_ami.ubuntu.id
-     112 |   instance_type = "t3.micro"
-     113 | }
+Result #2 HIGH Instance does not require IMDS access to require a token 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:108-113
+────────────────────────────────────────────────────────────────────────────────
+  108    resource "aws_instance" "inst3" {
+  109      vpc_security_group_ids = [aws_default_security_group.dsg.id]
+  110      subnet_id = aws_subnet.subnet1.id
+  111      ami = data.aws_ami.ubuntu.id
+  112      instance_type = "t3.micro"
+  113    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ec2-enforce-http-token-imds
+      Impact Instance metadata service can be interacted with freely
+  Resolution Enable HTTP token requirement for IMDS
 
-  Legacy ID:  AWS079
-  Impact:     Instance metadata service can be interacted with freely
-  Resolution: Enable HTTP token requirement for IMDS
-
-  More Info:
-  - https://tfsec.dev/docs/aws/ec2/enforce-http-token-imds#aws/ec2 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#metadata-options 
-  - https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service 
-
-  Result 3
-
-  [aws-ec2-enforce-http-token-imds][[0m[31mHIGH[39m[0m] Resource 'aws_instance.inst2' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
-  /src/main.tf:95-100
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/enforce-http-token-imds/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#metadata-options
+────────────────────────────────────────────────────────────────────────────────
 
 
-      92 |   port = 80
-      93 | }
-      94 | 
-      95 | resource "aws_instance" "inst2" {
-      96 |   vpc_security_group_ids = [aws_default_security_group.dsg.id]
-      97 |   subnet_id = aws_subnet.subnet1.id
-      98 |   ami = data.aws_ami.ubuntu.id
-      99 |   instance_type = "t3.micro"
-     100 | }
-     101 | 
-     102 | resource "aws_lb_target_group_attachment" "attach3" {
-     103 |   target_group_arn = aws_lb_target_group.test.arn
+Result #3 HIGH Root block device is not encrypted. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:108-113
+────────────────────────────────────────────────────────────────────────────────
+  108    resource "aws_instance" "inst3" {
+  109      vpc_security_group_ids = [aws_default_security_group.dsg.id]
+  110      subnet_id = aws_subnet.subnet1.id
+  111      ami = data.aws_ami.ubuntu.id
+  112      instance_type = "t3.micro"
+  113    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ec2-enable-at-rest-encryption
+      Impact The block device could be compromised and read from
+  Resolution Turn on encryption for all block devices
 
-  Legacy ID:  AWS079
-  Impact:     Instance metadata service can be interacted with freely
-  Resolution: Enable HTTP token requirement for IMDS
-
-  More Info:
-  - https://tfsec.dev/docs/aws/ec2/enforce-http-token-imds#aws/ec2 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#metadata-options 
-  - https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service 
-
-  Result 4
-
-  [aws-ec2-enforce-http-token-imds][[0m[31mHIGH[39m[0m] Resource 'aws_instance.inst1' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
-  /src/main.tf:82-87
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/enable-at-rest-encryption/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#ebs-ephemeral-and-root-block-devices
+────────────────────────────────────────────────────────────────────────────────
 
 
-      79 |   port = 80
-      80 | }
-      81 | 
-      82 | resource "aws_instance" "inst1" {
-      83 |   vpc_security_group_ids = [aws_default_security_group.dsg.id]
-      84 |   subnet_id = aws_subnet.subnet1.id
-      85 |   ami = data.aws_ami.ubuntu.id
-      86 |   instance_type = "t3.micro"
-      87 | }
-      88 | 
-      89 | resource "aws_lb_target_group_attachment" "attach2" {
-      90 |   target_group_arn = aws_lb_target_group.test.arn
+Result #4 HIGH Application load balancer is not set to drop invalid headers. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:49-54
+────────────────────────────────────────────────────────────────────────────────
+   49    resource "aws_lb" "test" {
+   50      name = "test123"
+   51      load_balancer_type = "application"
+   52      subnets = [aws_subnet.subnet1.id, aws_subnet.subnet2.id]
+   53      internal = true
+   54    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-elb-drop-invalid-headers
+      Impact Invalid headers being passed through to the target of the load balance may exploit vulnerabilities
+  Resolution Set drop_invalid_header_fields to true
 
-  Legacy ID:  AWS079
-  Impact:     Instance metadata service can be interacted with freely
-  Resolution: Enable HTTP token requirement for IMDS
-
-  More Info:
-  - https://tfsec.dev/docs/aws/ec2/enforce-http-token-imds#aws/ec2 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#metadata-options 
-  - https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service 
-
-  Result 5
-
-  [aws-elb-drop-invalid-headers][[0m[31mHIGH[39m[0m] Resource 'aws_lb.test' does not drop invalid header fields
-  /src/main.tf:49-54
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/elb/drop-invalid-headers/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb#drop_invalid_header_fields
+────────────────────────────────────────────────────────────────────────────────
 
 
-      46 |   }
-      47 | }
-      48 | 
-      49 | resource "aws_lb" "test" {
-      50 |   name = "test123"
-      51 |   load_balancer_type = "application"
-      52 |   subnets = [aws_subnet.subnet1.id, aws_subnet.subnet2.id]
-      53 |   internal = true
-      54 | }
-      55 | 
-      56 | resource "aws_lb_target_group" "test" {
-      57 |   port = 80
+Result #5 HIGH Instance does not require IMDS access to require a token 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:82-87
+────────────────────────────────────────────────────────────────────────────────
+   82    resource "aws_instance" "inst1" {
+   83      vpc_security_group_ids = [aws_default_security_group.dsg.id]
+   84      subnet_id = aws_subnet.subnet1.id
+   85      ami = data.aws_ami.ubuntu.id
+   86      instance_type = "t3.micro"
+   87    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ec2-enforce-http-token-imds
+      Impact Instance metadata service can be interacted with freely
+  Resolution Enable HTTP token requirement for IMDS
 
-  Legacy ID:  AWS083
-  Impact:     Invalid headers being passed through to the target of the load balance may exploit vulnerabilities
-  Resolution: Set drop_invalid_header_fields to true
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/enforce-http-token-imds/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#metadata-options
+────────────────────────────────────────────────────────────────────────────────
 
-  More Info:
-  - https://tfsec.dev/docs/aws/elb/drop-invalid-headers#aws/elb 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb#drop_invalid_header_fields 
-  - https://docs.aws.amazon.com/elasticloadbalancing/latest/application/application-load-balancers.html 
 
-  times
-  ------------------------------------------
-  disk i/o             51.875416ms
-  parsing HCL          613.917µs
-  evaluating values    5.38725ms
-  running checks       40.63225ms
+Result #6 HIGH Root block device is not encrypted. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:82-87
+────────────────────────────────────────────────────────────────────────────────
+   82    resource "aws_instance" "inst1" {
+   83      vpc_security_group_ids = [aws_default_security_group.dsg.id]
+   84      subnet_id = aws_subnet.subnet1.id
+   85      ami = data.aws_ami.ubuntu.id
+   86      instance_type = "t3.micro"
+   87    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ec2-enable-at-rest-encryption
+      Impact The block device could be compromised and read from
+  Resolution Turn on encryption for all block devices
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/enable-at-rest-encryption/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#ebs-ephemeral-and-root-block-devices
+────────────────────────────────────────────────────────────────────────────────
+
+
+Result #7 HIGH Instance does not require IMDS access to require a token 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:95-100
+────────────────────────────────────────────────────────────────────────────────
+   95    resource "aws_instance" "inst2" {
+   96      vpc_security_group_ids = [aws_default_security_group.dsg.id]
+   97      subnet_id = aws_subnet.subnet1.id
+   98      ami = data.aws_ami.ubuntu.id
+   99      instance_type = "t3.micro"
+  100    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ec2-enforce-http-token-imds
+      Impact Instance metadata service can be interacted with freely
+  Resolution Enable HTTP token requirement for IMDS
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/enforce-http-token-imds/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#metadata-options
+────────────────────────────────────────────────────────────────────────────────
+
+
+Result #8 HIGH Root block device is not encrypted. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:95-100
+────────────────────────────────────────────────────────────────────────────────
+   95    resource "aws_instance" "inst2" {
+   96      vpc_security_group_ids = [aws_default_security_group.dsg.id]
+   97      subnet_id = aws_subnet.subnet1.id
+   98      ami = data.aws_ami.ubuntu.id
+   99      instance_type = "t3.micro"
+  100    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ec2-enable-at-rest-encryption
+      Impact The block device could be compromised and read from
+  Resolution Turn on encryption for all block devices
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/enable-at-rest-encryption/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#ebs-ephemeral-and-root-block-devices
+────────────────────────────────────────────────────────────────────────────────
+
+
+Result #9 MEDIUM VPC Flow Logs is not enabled for VPC  
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:26-28
+────────────────────────────────────────────────────────────────────────────────
+   26    resource "aws_vpc" "vpc1" {
+   27      cidr_block = "10.10.0.0/16"
+   28    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ec2-require-vpc-flow-logs-for-all-vpcs
+      Impact Without VPC flow logs, you risk not having enough information about network traffic flow to investigate incidents or identify security issues.
+  Resolution Enable flow logs for VPC
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/require-vpc-flow-logs-for-all-vpcs/
+────────────────────────────────────────────────────────────────────────────────
+
+
+  timings
+  ──────────────────────────────────────────
+  disk i/o             3.372916ms
+  parsing              1.009542ms
+  adaptation           75.041µs
+  checks               6.416042ms
+  total                10.873541ms
 
   counts
-  ------------------------------------------
-  files loaded         1
-  blocks               16
-  modules              0
+  ──────────────────────────────────────────
+  modules downloaded   0
+  modules processed    1
+  blocks processed     16
+  files read           1
 
   results
-  ------------------------------------------
-  critical             1
-  high                 4
-  medium               0
-  low                  0
+  ──────────────────────────────────────────
+  passed               12
   ignored              0
+  critical             1
+  high                 7
+  medium               1
+  low                  0
 
-  5 potential problems detected.
+  12 passed, 9 potential problem(s) detected.
 

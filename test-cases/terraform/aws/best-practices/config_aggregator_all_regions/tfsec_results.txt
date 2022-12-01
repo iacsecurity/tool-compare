@@ -1,50 +1,51 @@
 
-  Result 1
+Result #1 HIGH Configuration aggregation is not set to source from all regions. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:5-8
+────────────────────────────────────────────────────────────────────────────────
+    1    resource "aws_config_configuration_aggregator" "organization" {
+    2    
+    3      name = "example"
+    4    
+    5  ┌   account_aggregation_source {
+    6  │     account_ids = ["123456789012"]
+    7  │     regions     = ["us-east-2", "us-west-2", "us-west-1", "us-west-2"]
+    8  └   }
+    9    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-config-aggregate-all-regions
+      Impact Sources that aren't covered by the aggregator are not include in the configuration
+  Resolution Set the aggregator to cover all regions
 
-  [aws-config-aggregate-all-regions][[0m[31mHIGH[39m[0m] Resource 'aws_config_configuration_aggregator.organization' should have account aggregation sources to all regions
-  /src/main.tf:1-9
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/config/aggregate-all-regions/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/config_configuration_aggregator#all_regions
+────────────────────────────────────────────────────────────────────────────────
 
 
-       1 | resource "aws_config_configuration_aggregator" "organization" {
-       2 | 
-       3 |   name = "example"
-       4 | 
-       5 |   account_aggregation_source {
-       6 |     account_ids = ["123456789012"]
-       7 |     regions     = ["us-east-2", "us-east-1", "us-west-1", "us-west-2"]
-       8 |   }
-       9 | }
-      10 | 
-
-  Legacy ID:  AWS085
-  Impact:     Sources that aren't covered by the aggregator are not include in the configuration
-  Resolution: Set the aggregator to cover all regions
-
-  More Info:
-  - https://tfsec.dev/docs/aws/config/aggregate-all-regions#aws/config 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/config_configuration_aggregator#all_regions 
-  - https://docs.aws.amazon.com/config/latest/developerguide/aggregate-data.html 
-
-  times
-  ------------------------------------------
-  disk i/o             49.8705ms
-  parsing HCL          607.084µs
-  evaluating values    1.645125ms
-  running checks       14.917791ms
+  timings
+  ──────────────────────────────────────────
+  disk i/o             3.7745ms
+  parsing              90.209µs
+  adaptation           211.917µs
+  checks               2.266125ms
+  total                6.342751ms
 
   counts
-  ------------------------------------------
-  files loaded         1
-  blocks               1
-  modules              0
+  ──────────────────────────────────────────
+  modules downloaded   0
+  modules processed    1
+  blocks processed     1
+  files read           1
 
   results
-  ------------------------------------------
+  ──────────────────────────────────────────
+  passed               2
+  ignored              0
   critical             0
   high                 1
   medium               0
   low                  0
-  ignored              0
 
-  1 potential problems detected.
+  2 passed, 1 potential problem(s) detected.
 

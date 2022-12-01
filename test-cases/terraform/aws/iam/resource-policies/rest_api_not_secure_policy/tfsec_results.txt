@@ -1,76 +1,88 @@
 
-  Result 1
+Result #1 MEDIUM Access logging is not configured. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:72-76
+────────────────────────────────────────────────────────────────────────────────
+   72    resource "aws_api_gateway_stage" "api_gw_stage" {
+   73      stage_name    = "prod"
+   74      rest_api_id   = aws_api_gateway_rest_api.api_gw.id
+   75      deployment_id = aws_api_gateway_deployment.api_gw_deploy.id
+   76    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-api-gateway-enable-access-logging
+      Impact Logging provides vital information about access and usage
+  Resolution Enable logging for API Gateway stages
 
-  [aws-api-gateway-enable-access-logging][[0m[33mMEDIUM[39m[0m] Resource 'aws_api_gateway_stage.api_gw_stage' is missing access log settings block.
-  /src/main.tf:72-76
-
-
-      69 |   }
-      70 | }
-      71 | 
-      72 | resource "aws_api_gateway_stage" "api_gw_stage" {
-      73 |   stage_name    = "prod"
-      74 |   rest_api_id   = aws_api_gateway_rest_api.api_gw.id
-      75 |   deployment_id = aws_api_gateway_deployment.api_gw_deploy.id
-      76 | }
-      77 | 
-      78 | resource "aws_api_gateway_method_settings" "api_gw_method_sett" {
-      79 |   rest_api_id = aws_api_gateway_rest_api.api_gw.id
-
-  Legacy ID:  AWS061
-  Impact:     Logging provides vital information about access and usage
-  Resolution: Enable logging for API Gateway stages
-
-  More Info:
-  - https://tfsec.dev/docs/aws/api-gateway/enable-access-logging#aws/api-gateway 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_stage#access_log_settings 
-  - https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-logging.html 
-
-  Result 2
-
-  [aws-api-gateway-enable-tracing][[0m[97mLOW[39m[0m] Resource 'aws_api_gateway_stage.api_gw_stage' uses default value for xray_tracing_enabled
-  /src/main.tf:72-76
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/api-gateway/enable-access-logging/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_stage#access_log_settings
+────────────────────────────────────────────────────────────────────────────────
 
 
-      69 |   }
-      70 | }
-      71 | 
-      72 | resource "aws_api_gateway_stage" "api_gw_stage" {
-      73 |   stage_name    = "prod"
-      74 |   rest_api_id   = aws_api_gateway_rest_api.api_gw.id
-      75 |   deployment_id = aws_api_gateway_deployment.api_gw_deploy.id
-      76 | }
-      77 | 
-      78 | resource "aws_api_gateway_method_settings" "api_gw_method_sett" {
-      79 |   rest_api_id = aws_api_gateway_rest_api.api_gw.id
+Result #2 LOW Authorization is not enabled for this method. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:54
+────────────────────────────────────────────────────────────────────────────────
+   50    resource "aws_api_gateway_method" "api_gw_method" {
+   51      rest_api_id   = aws_api_gateway_rest_api.api_gw.id
+   52      resource_id   = aws_api_gateway_resource.api_gw_resource.id
+   53      http_method   = "GET"
+   54  [   authorization = "NONE" ("NONE")
+   55    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-api-gateway-no-public-access
+      Impact API gateway methods can be accessed without authorization.
+  Resolution Use and authorization method or require API Key
 
-  Impact:     WIthout full tracing enabled it is difficult to trace the flow of logs
-  Resolution: Enable tracing
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/api-gateway/no-public-access/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_method#authorization
+────────────────────────────────────────────────────────────────────────────────
 
-  More Info:
-  - https://tfsec.dev/docs/aws/api-gateway/enable-tracing#aws/api-gateway 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_stage#xray_tracing_enabled 
 
-  times
-  ------------------------------------------
-  disk i/o             63.700001ms
-  parsing HCL          517.583µs
-  evaluating values    4.98125ms
-  running checks       51.608667ms
+Result #3 LOW X-Ray tracing is not enabled, 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:72-76
+────────────────────────────────────────────────────────────────────────────────
+   72    resource "aws_api_gateway_stage" "api_gw_stage" {
+   73      stage_name    = "prod"
+   74      rest_api_id   = aws_api_gateway_rest_api.api_gw.id
+   75      deployment_id = aws_api_gateway_deployment.api_gw_deploy.id
+   76    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-api-gateway-enable-tracing
+      Impact Without full tracing enabled it is difficult to trace the flow of logs
+  Resolution Enable tracing
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/api-gateway/enable-tracing/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_stage#xray_tracing_enabled
+────────────────────────────────────────────────────────────────────────────────
+
+
+  timings
+  ──────────────────────────────────────────
+  disk i/o             4.053334ms
+  parsing              1.266916ms
+  adaptation           70.5µs
+  checks               2.632208ms
+  total                8.022958ms
 
   counts
-  ------------------------------------------
-  files loaded         1
-  blocks               9
-  modules              0
+  ──────────────────────────────────────────
+  modules downloaded   0
+  modules processed    1
+  blocks processed     9
+  files read           1
 
   results
-  ------------------------------------------
+  ──────────────────────────────────────────
+  passed               3
+  ignored              0
   critical             0
   high                 0
   medium               1
-  low                  1
-  ignored              0
+  low                  2
 
-  2 potential problems detected.
+  3 passed, 3 potential problem(s) detected.
 

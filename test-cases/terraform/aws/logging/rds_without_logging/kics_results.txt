@@ -1,4 +1,4 @@
-
+[38;2;34;187;51m
                    .0MO.                                    
                    OMMMx                                    
                    ;NMX;                                    
@@ -15,90 +15,90 @@ WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
 WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
-
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+[0m
+Scanning with Keeping Infrastructure as Code Secure v1.6.5
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 1039
 Queries failed to execute: 0
 
 ------------------------------------
 
-Resource Not Using Tags, Severity: INFO, Results: 1
-Description: AWS services resource tags are an essential part of managing components
-Platform: Terraform
+[38;2;91;192;222mResource Not Using Tags[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 1
+[1mDescription:[0m AWS services resource tags are an essential part of managing components. As a best practice, the field 'tags' should have additional tags defined other than 'Name'
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:1
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m1[0m
 
-		001: resource "aws_db_instance" "default" {
-		002:   allocated_storage    = 10
+[38;2;240;173;78m		001: resource "aws_db_instance" "default" {
+[0m		002:   allocated_storage    = 10
 		003:   engine               = "mysql"
 
 
-RDS Without Logging, Severity: INFO, Results: 1
-Description: RDS does not have any kind of logger
-Platform: Terraform
+[38;2;91;192;222mRDS Without Logging[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 1
+[1mDescription:[0m RDS does not have any kind of logger
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:1
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m1[0m
 
-		001: resource "aws_db_instance" "default" {
-		002:   allocated_storage    = 10
+[38;2;240;173;78m		001: resource "aws_db_instance" "default" {
+[0m		002:   allocated_storage    = 10
 		003:   engine               = "mysql"
 
 
-RDS With Backup Disabled, Severity: MEDIUM, Results: 1
-Description: RDS configured without backup
-Platform: Terraform
+[38;2;237;213;126mIAM Access Analyzer Not Enabled[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m IAM Access Analyzer should be enabled and configured to continuously monitor resource permissions
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:1
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m1[0m
 
-		001: resource "aws_db_instance" "default" {
-		002:   allocated_storage    = 10
+[38;2;240;173;78m		001: resource "aws_db_instance" "default" {
+[0m		002:   allocated_storage    = 10
 		003:   engine               = "mysql"
 
 
-Passwords And Secrets In Infrastructure Code, Severity: HIGH, Results: 1
-Description: Query to find passwords and secrets in infrastructure code.
-Platform: Common
+[38;2;187;33;36mPasswords And Secrets - Generic Password[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mDescription:[0m Query to find passwords and secrets in infrastructure code.
+[1mPlatform:[0m Common
 
-	[1]: /src/main.tf:8
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m8[0m
 
 		007:   username             = "foo"
-		008:   password             = "foobarbaz"
-		009:   parameter_group_name = "default.mysql5.7"
+[38;2;240;173;78m		008:   password             = <SECRET-MASKED-ON-PURPOSE>
+[0m		009:   parameter_group_name = "default.mysql5.7"
 
 
-IAM Database Auth Not Enabled, Severity: HIGH, Results: 1
-Description: IAM Database Auth Enabled must be configured to true
-Platform: Terraform
+[38;2;187;33;36mIAM Database Auth Not Enabled[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mDescription:[0m IAM Database Auth Enabled should be configured to true when using compatible engine and version
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:1
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m1[0m
 
-		001: resource "aws_db_instance" "default" {
-		002:   allocated_storage    = 10
+[38;2;240;173;78m		001: resource "aws_db_instance" "default" {
+[0m		002:   allocated_storage    = 10
 		003:   engine               = "mysql"
 
 
-DB Instance Storage Not Encrypted, Severity: HIGH, Results: 1
-Description: The parameter storage_encrypted in aws_db_instance must be set to 'true' (the default is 'false').
-Platform: Terraform
+[38;2;187;33;36mDB Instance Storage Not Encrypted[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mDescription:[0m AWS DB Instance should have its storage encrypted by setting the parameter to 'true'. The storage_encrypted default value is 'false'.
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:1
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m1[0m
 
-		001: resource "aws_db_instance" "default" {
-		002:   allocated_storage    = 10
+[38;2;240;173;78m		001: resource "aws_db_instance" "default" {
+[0m		002:   allocated_storage    = 10
 		003:   engine               = "mysql"
 
 
 
 Results Summary:
-HIGH: 3
-MEDIUM: 1
-LOW: 0
-INFO: 2
+[38;2;187;33;36mHIGH[0m: 3
+[38;2;255;114;19mMEDIUM[0m: 0
+[38;2;237;213;126mLOW[0m: 1
+[38;2;91;192;222mINFO[0m: 2
 TOTAL: 6
 
-Scan duration: 4.999059827s
+Scan duration: 16.579885675s

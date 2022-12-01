@@ -1,98 +1,107 @@
 
-  Result 1
+Result #1 CRITICAL Listener for application load balancer does not use HTTPS. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:68
+────────────────────────────────────────────────────────────────────────────────
+   65    resource "aws_lb_listener" "lb_listener_test" {
+   66      load_balancer_arn = aws_lb.alb_test.arn
+   67      port              = "80"
+   68  [   protocol          = "HTTP" ("HTTP")
+   69    
+   70      default_action {
+   71        type             = "forward"
+   72        target_group_arn = aws_lb_target_group.test.arn
+   73      }
+   74    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-elb-http-not-used
+      Impact Your traffic is not protected
+  Resolution Switch to HTTPS to benefit from TLS security features
 
-  [aws-elb-drop-invalid-headers][[0m[31mHIGH[39m[0m] Resource 'aws_lb.alb_test' does not drop invalid header fields
-  /src/main.tf:60-63
-
-
-      57 |   protocol = "HTTP"
-      58 | }
-      59 | 
-      60 | resource "aws_lb" "alb_test" {
-      61 |   subnets = [aws_subnet.subnet1.id, aws_subnet.subnet2.id]
-      62 |   load_balancer_type = "application"
-      63 | }
-      64 | 
-      65 | resource "aws_lb_listener" "lb_listener_test" {
-      66 |   load_balancer_arn = aws_lb.alb_test.arn
-
-  Legacy ID:  AWS083
-  Impact:     Invalid headers being passed through to the target of the load balance may exploit vulnerabilities
-  Resolution: Set drop_invalid_header_fields to true
-
-  More Info:
-  - https://tfsec.dev/docs/aws/elb/drop-invalid-headers#aws/elb 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb#drop_invalid_header_fields 
-  - https://docs.aws.amazon.com/elasticloadbalancing/latest/application/application-load-balancers.html 
-
-  Result 2
-
-  [aws-elbv2-alb-not-public][[0m[31mHIGH[39m[0m] Resource 'aws_lb.alb_test' is exposed publicly.
-  /src/main.tf:60-63
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/elb/http-not-used/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener
+────────────────────────────────────────────────────────────────────────────────
 
 
-      57 |   protocol = "HTTP"
-      58 | }
-      59 | 
-      60 | resource "aws_lb" "alb_test" {
-      61 |   subnets = [aws_subnet.subnet1.id, aws_subnet.subnet2.id]
-      62 |   load_balancer_type = "application"
-      63 | }
-      64 | 
-      65 | resource "aws_lb_listener" "lb_listener_test" {
-      66 |   load_balancer_arn = aws_lb.alb_test.arn
+Result #2 HIGH Application load balancer is not set to drop invalid headers. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:60-63
+────────────────────────────────────────────────────────────────────────────────
+   60    resource "aws_lb" "alb_test" {
+   61      subnets = [aws_subnet.subnet1.id, aws_subnet.subnet2.id]
+   62      load_balancer_type = "application"
+   63    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-elb-drop-invalid-headers
+      Impact Invalid headers being passed through to the target of the load balance may exploit vulnerabilities
+  Resolution Set drop_invalid_header_fields to true
 
-  Legacy ID:  AWS005
-  Impact:     The load balancer is exposed on the internet
-  Resolution: Switch to an internal load balancer or add a tfsec ignore
-
-  More Info:
-  - https://tfsec.dev/docs/aws/elbv2/alb-not-public#aws/elbv2 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb 
-
-  Result 3
-
-  [aws-elbv2-http-not-used][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'aws_lb_listener.lb_listener_test' uses plain HTTP instead of HTTPS.
-  /src/main.tf:68
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/elb/drop-invalid-headers/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb#drop_invalid_header_fields
+────────────────────────────────────────────────────────────────────────────────
 
 
-      65 | resource "aws_lb_listener" "lb_listener_test" {
-      66 |   load_balancer_arn = aws_lb.alb_test.arn
-      67 |   port              = "80"
-      68 |   protocol          = "HTTP"    string: "HTTP"
-      69 | 
-      70 |   default_action {
-      71 |     type             = "forward"
+Result #3 HIGH Load balancer is exposed publicly. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:60-63
+────────────────────────────────────────────────────────────────────────────────
+   60    resource "aws_lb" "alb_test" {
+   61      subnets = [aws_subnet.subnet1.id, aws_subnet.subnet2.id]
+   62      load_balancer_type = "application"
+   63    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-elb-alb-not-public
+      Impact The load balancer is exposed on the internet
+  Resolution Switch to an internal load balancer or add a tfsec ignore
 
-  Legacy ID:  AWS004
-  Impact:     Your traffic is not protected
-  Resolution: Switch to HTTPS to benefit from TLS security features
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/elb/alb-not-public/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb
+────────────────────────────────────────────────────────────────────────────────
 
-  More Info:
-  - https://tfsec.dev/docs/aws/elbv2/http-not-used#aws/elbv2 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener 
-  - https://www.cloudflare.com/en-gb/learning/ssl/why-is-http-not-secure/ 
 
-  times
-  ------------------------------------------
-  disk i/o             49.656458ms
-  parsing HCL          625.25µs
-  evaluating values    4.806667ms
-  running checks       39.894083ms
+Result #4 MEDIUM VPC Flow Logs is not enabled for VPC  
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:5-7
+────────────────────────────────────────────────────────────────────────────────
+    5    resource "aws_vpc" "vpc1" {
+    6      cidr_block = "10.10.0.0/16"
+    7    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ec2-require-vpc-flow-logs-for-all-vpcs
+      Impact Without VPC flow logs, you risk not having enough information about network traffic flow to investigate incidents or identify security issues.
+  Resolution Enable flow logs for VPC
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/require-vpc-flow-logs-for-all-vpcs/
+────────────────────────────────────────────────────────────────────────────────
+
+
+  timings
+  ──────────────────────────────────────────
+  disk i/o             4.051291ms
+  parsing              5.213541ms
+  adaptation           76.875µs
+  checks               2.139875ms
+  total                11.481582ms
 
   counts
-  ------------------------------------------
-  files loaded         1
-  blocks               12
-  modules              0
+  ──────────────────────────────────────────
+  modules downloaded   0
+  modules processed    1
+  blocks processed     12
+  files read           1
 
   results
-  ------------------------------------------
+  ──────────────────────────────────────────
+  passed               8
+  ignored              0
   critical             1
   high                 2
-  medium               0
+  medium               1
   low                  0
-  ignored              0
 
-  3 potential problems detected.
+  8 passed, 4 potential problem(s) detected.
 

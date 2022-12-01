@@ -1,60 +1,21 @@
-
-
-       _               _              
-   ___| |__   ___  ___| | _______   __
-  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
- | (__| | | |  __/ (__|   < (_) \ V / 
-  \___|_| |_|\___|\___|_|\_\___/ \_/  
-                                      
-By bridgecrew.io | version: 2.0.358 
-Update available 2.0.358 -> 2.0.359
-Run pip3 install -U checkov to update 
-
-
 terraform scan results:
 
-Passed checks: 13, Failed checks: 7, Skipped checks: 0
+Passed checks: 16, Failed checks: 7, Skipped checks: 0
 
-Check: CKV_AWS_110: "Ensure IAM policies does not allow privilege escalation"
-	FAILED for resource: aws_iam_policy_document.glue-example-policy
-	File: /main.tf:54-65
-	Guide: https://docs.bridgecrew.io/docs/ensure-iam-policies-does-not-allow-privilege-escalation
+Check: CKV_AWS_195: "Ensure Glue component has a security configuration associated"
+	FAILED for resource: aws_glue_crawler.cloudrail_table_crawler
+	File: /main.tf:38-46
+	Guide: https://docs.bridgecrew.io/docs/ensure-aws-glue-component-is-associated-with-a-security-configuration
 
-		54 | data "aws_iam_policy_document" "glue-example-policy" {
-		55 |   statement {
-		56 |     actions = [
-		57 |       "glue:*",
-		58 |     ]
-		59 |     resources = ["arn:${data.aws_partition.current.partition}:glue:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:*"]
-		60 |     principals {
-		61 |       identifiers = ["*"]
-		62 |       type        = "AWS"
-		63 |     }
-		64 |   }
-		65 | }
-
-
-Check: CKV_AWS_21: "Ensure all data stored in the S3 bucket have versioning enabled"
-	FAILED for resource: aws_s3_bucket.cloudrail
-	File: /main.tf:33-36
-	Guide: https://docs.bridgecrew.io/docs/s3_16-enable-versioning
-
-		33 | resource "aws_s3_bucket" "cloudrail" {
-		34 |   bucket = "cloudrail-glue"
-		35 |   acl    = "private"
-		36 | }
-
-
-Check: CKV_AWS_144: "Ensure that S3 bucket has cross-region replication enabled"
-	FAILED for resource: aws_s3_bucket.cloudrail
-	File: /main.tf:33-36
-	Guide: https://docs.bridgecrew.io/docs/ensure-that-s3-bucket-has-cross-region-replication-enabled
-
-		33 | resource "aws_s3_bucket" "cloudrail" {
-		34 |   bucket = "cloudrail-glue"
-		35 |   acl    = "private"
-		36 | }
-
+		38 | resource "aws_glue_crawler" "cloudrail_table_crawler" {
+		39 |   database_name = aws_glue_catalog_database.cloudrail_table_database.name
+		40 |   name          = "cloudrail_table_crawler"
+		41 |   role          = aws_iam_role.cloudrail_glue_iam.arn
+		42 | 
+		43 |   s3_target {
+		44 |     path = "s3://${aws_s3_bucket.cloudrail.bucket}"
+		45 |   }
+		46 | }
 
 Check: CKV_AWS_18: "Ensure the S3 bucket has access logging enabled"
 	FAILED for resource: aws_s3_bucket.cloudrail
@@ -66,6 +27,15 @@ Check: CKV_AWS_18: "Ensure the S3 bucket has access logging enabled"
 		35 |   acl    = "private"
 		36 | }
 
+Check: CKV_AWS_21: "Ensure all data stored in the S3 bucket have versioning enabled"
+	FAILED for resource: aws_s3_bucket.cloudrail
+	File: /main.tf:33-36
+	Guide: https://docs.bridgecrew.io/docs/s3_16-enable-versioning
+
+		33 | resource "aws_s3_bucket" "cloudrail" {
+		34 |   bucket = "cloudrail-glue"
+		35 |   acl    = "private"
+		36 | }
 
 Check: CKV_AWS_145: "Ensure that S3 buckets are encrypted with KMS by default"
 	FAILED for resource: aws_s3_bucket.cloudrail
@@ -77,6 +47,15 @@ Check: CKV_AWS_145: "Ensure that S3 buckets are encrypted with KMS by default"
 		35 |   acl    = "private"
 		36 | }
 
+Check: CKV2_AWS_6: "Ensure that S3 bucket has a Public Access block"
+	FAILED for resource: aws_s3_bucket.cloudrail
+	File: /main.tf:33-36
+	Guide: https://docs.bridgecrew.io/docs/s3-bucket-should-have-public-access-blocks-defaults-to-false-if-the-public-access-block-is-not-attached
+
+		33 | resource "aws_s3_bucket" "cloudrail" {
+		34 |   bucket = "cloudrail-glue"
+		35 |   acl    = "private"
+		36 | }
 
 Check: CKV_AWS_19: "Ensure all data stored in the S3 bucket is securely encrypted at rest"
 	FAILED for resource: aws_s3_bucket.cloudrail
@@ -88,11 +67,10 @@ Check: CKV_AWS_19: "Ensure all data stored in the S3 bucket is securely encrypte
 		35 |   acl    = "private"
 		36 | }
 
-
-Check: CKV2_AWS_6: "Ensure that S3 bucket has a Public Access block"
+Check: CKV_AWS_144: "Ensure that S3 bucket has cross-region replication enabled"
 	FAILED for resource: aws_s3_bucket.cloudrail
 	File: /main.tf:33-36
-	Guide: https://docs.bridgecrew.io/docs/s3-bucket-should-have-public-access-blocks-defaults-to-false-if-the-public-access-block-is-not-attached
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-s3-bucket-has-cross-region-replication-enabled
 
 		33 | resource "aws_s3_bucket" "cloudrail" {
 		34 |   bucket = "cloudrail-glue"

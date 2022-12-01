@@ -1,144 +1,102 @@
 
-  Result 1
+Result #1 HIGH Table encryption is not enabled. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:1-43
+────────────────────────────────────────────────────────────────────────────────
+    1  ┌ resource "aws_dynamodb_table" "basic-dynamodb-table" {
+    2  │   name           = "GameScores"
+    3  │   billing_mode   = "PROVISIONED"
+    4  │   read_capacity  = 20
+    5  │   write_capacity = 20
+    6  │   hash_key       = "UserId"
+    7  │   range_key      = "GameTitle"
+    8  │ 
+    9  └   attribute {
+   ..  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-dynamodb-enable-at-rest-encryption
+      Impact Data can be freely read if compromised
+  Resolution Enable encryption at rest for DAX Cluster
 
-  [aws-dynamodb-enable-recovery][[0m[33mMEDIUM[39m[0m] Resource 'aws_dynamodb_table.basic-dynamodb-table' doesn't have point in time recovery
-  /src/main.tf:1-43
-
-
-       1 | resource "aws_dynamodb_table" "basic-dynamodb-table" {
-       2 |   name           = "GameScores"
-       3 |   billing_mode   = "PROVISIONED"
-       4 |   read_capacity  = 20
-       5 |   write_capacity = 20
-       6 |   hash_key       = "UserId"
-       7 |   range_key      = "GameTitle"
-       8 | 
-       9 |   attribute {
-      10 |     name = "UserId"
-      11 |     type = "S"
-      12 |   }
-      13 | 
-      14 |   attribute {
-      15 |     name = "GameTitle"
-      16 |     type = "S"
-      17 |   }
-      18 | 
-      19 |   attribute {
-      20 |     name = "TopScore"
-      21 |     type = "N"
-      22 |   }
-      23 | 
-      24 |   ttl {
-      25 |     attribute_name = "TimeToExist"
-      26 |     enabled        = false
-      27 |   }
-      28 | 
-      29 |   global_secondary_index {
-      30 |     name               = "GameTitleIndex"
-      31 |     hash_key           = "GameTitle"
-      32 |     range_key          = "TopScore"
-      33 |     write_capacity     = 10
-      34 |     read_capacity      = 10
-      35 |     projection_type    = "INCLUDE"
-      36 |     non_key_attributes = ["UserId"]
-      37 |   }
-      38 | 
-      39 |   tags = {
-      40 |     Name        = "dynamodb-table-1"
-      41 |     Environment = "production"
-      42 |   }
-      43 | }
-      44 | 
-
-  Legacy ID:  AWS086
-  Impact:     Accidental or malicious writes and deletes can't be rolled back
-  Resolution: Enable point in time recovery
-
-  More Info:
-  - https://tfsec.dev/docs/aws/dynamodb/enable-recovery#aws/dynamodb 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table#point_in_time_recovery 
-  - https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/PointInTimeRecovery.html 
-
-  Result 2
-
-  [aws-dynamodb-table-customer-key][[0m[97mLOW[39m[0m] Resource 'aws_dynamodb_table.basic-dynamodb-table' is not using KMS CMK for encryption
-  /src/main.tf:1-43
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/dynamodb/enable-at-rest-encryption/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dax_cluster#server_side_encryption
+────────────────────────────────────────────────────────────────────────────────
 
 
-       1 | resource "aws_dynamodb_table" "basic-dynamodb-table" {
-       2 |   name           = "GameScores"
-       3 |   billing_mode   = "PROVISIONED"
-       4 |   read_capacity  = 20
-       5 |   write_capacity = 20
-       6 |   hash_key       = "UserId"
-       7 |   range_key      = "GameTitle"
-       8 | 
-       9 |   attribute {
-      10 |     name = "UserId"
-      11 |     type = "S"
-      12 |   }
-      13 | 
-      14 |   attribute {
-      15 |     name = "GameTitle"
-      16 |     type = "S"
-      17 |   }
-      18 | 
-      19 |   attribute {
-      20 |     name = "TopScore"
-      21 |     type = "N"
-      22 |   }
-      23 | 
-      24 |   ttl {
-      25 |     attribute_name = "TimeToExist"
-      26 |     enabled        = false
-      27 |   }
-      28 | 
-      29 |   global_secondary_index {
-      30 |     name               = "GameTitleIndex"
-      31 |     hash_key           = "GameTitle"
-      32 |     range_key          = "TopScore"
-      33 |     write_capacity     = 10
-      34 |     read_capacity      = 10
-      35 |     projection_type    = "INCLUDE"
-      36 |     non_key_attributes = ["UserId"]
-      37 |   }
-      38 | 
-      39 |   tags = {
-      40 |     Name        = "dynamodb-table-1"
-      41 |     Environment = "production"
-      42 |   }
-      43 | }
-      44 | 
+Result #2 MEDIUM Point-in-time recovery is not enabled. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:1-43
+────────────────────────────────────────────────────────────────────────────────
+    1  ┌ resource "aws_dynamodb_table" "basic-dynamodb-table" {
+    2  │   name           = "GameScores"
+    3  │   billing_mode   = "PROVISIONED"
+    4  │   read_capacity  = 20
+    5  │   write_capacity = 20
+    6  │   hash_key       = "UserId"
+    7  │   range_key      = "GameTitle"
+    8  │ 
+    9  └   attribute {
+   ..  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-dynamodb-enable-recovery
+      Impact Accidental or malicious writes and deletes can't be rolled back
+  Resolution Enable point in time recovery
 
-  Legacy ID:  AWS092
-  Impact:     Using AWS managed keys does not allow for fine grained control
-  Resolution: Enable server side encryption with a customer managed key
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/dynamodb/enable-recovery/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table#point_in_time_recovery
+────────────────────────────────────────────────────────────────────────────────
 
-  More Info:
-  - https://tfsec.dev/docs/aws/dynamodb/table-customer-key#aws/dynamodb 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table#server_side_encryption 
-  - https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/EncryptionAtRest.html 
 
-  times
-  ------------------------------------------
-  disk i/o             62.812541ms
-  parsing HCL          553.208µs
-  evaluating values    2.297251ms
-  running checks       19.197333ms
+Result #3 LOW Table encryption does not use a customer-managed KMS key. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:1-43
+────────────────────────────────────────────────────────────────────────────────
+    1  ┌ resource "aws_dynamodb_table" "basic-dynamodb-table" {
+    2  │   name           = "GameScores"
+    3  │   billing_mode   = "PROVISIONED"
+    4  │   read_capacity  = 20
+    5  │   write_capacity = 20
+    6  │   hash_key       = "UserId"
+    7  │   range_key      = "GameTitle"
+    8  │ 
+    9  └   attribute {
+   ..  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-dynamodb-table-customer-key
+      Impact Using AWS managed keys does not allow for fine grained control
+  Resolution Enable server side encryption with a customer managed key
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/dynamodb/table-customer-key/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table#server_side_encryption
+────────────────────────────────────────────────────────────────────────────────
+
+
+  timings
+  ──────────────────────────────────────────
+  disk i/o             4.17475ms
+  parsing              166.874µs
+  adaptation           59.5µs
+  checks               5.23125ms
+  total                9.632374ms
 
   counts
-  ------------------------------------------
-  files loaded         1
-  blocks               1
-  modules              0
+  ──────────────────────────────────────────
+  modules downloaded   0
+  modules processed    1
+  blocks processed     1
+  files read           1
 
   results
-  ------------------------------------------
+  ──────────────────────────────────────────
+  passed               2
+  ignored              0
   critical             0
-  high                 0
+  high                 1
   medium               1
   low                  1
-  ignored              0
 
-  2 potential problems detected.
+  2 passed, 3 potential problem(s) detected.
 

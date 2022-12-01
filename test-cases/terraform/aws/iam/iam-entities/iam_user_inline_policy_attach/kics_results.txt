@@ -1,4 +1,4 @@
-
+[38;2;34;187;51m
                    .0MO.                                    
                    OMMMx                                    
                    ;NMX;                                    
@@ -15,57 +15,82 @@ WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
 WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
-
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+[0m
+Scanning with Keeping Infrastructure as Code Secure v1.6.5
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 1039
 Queries failed to execute: 0
 
 ------------------------------------
 
-Resource Not Using Tags, Severity: INFO, Results: 1
-Description: AWS services resource tags are an essential part of managing components
-Platform: Terraform
+[38;2;91;192;222mResource Not Using Tags[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 1
+[1mDescription:[0m AWS services resource tags are an essential part of managing components. As a best practice, the field 'tags' should have additional tags defined other than 'Name'
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:5
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
 
 		004: 
-		005: resource "aws_iam_user" "user-1" {
-		006:   name = "user-1"
+[38;2;240;173;78m		005: resource "aws_iam_user" "user-1" {
+[0m		006:   name = "user-1"
 
 
-IAM Policies Attached To User, Severity: LOW, Results: 1
-Description: IAM policies should be attached only to groups or roles
-Platform: Terraform
+[38;2;91;192;222mName Is Not Snake Case[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 1
+[1mDescription:[0m All names should follow snake case pattern.
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:11
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
+
+		004: 
+[38;2;240;173;78m		005: resource "aws_iam_user" "user-1" {
+[0m		006:   name = "user-1"
+
+
+[38;2;237;213;126mIAM Access Analyzer Not Enabled[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m IAM Access Analyzer should be enabled and configured to continuously monitor resource permissions
+[1mPlatform:[0m Terraform
+
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
+
+		004: 
+[38;2;240;173;78m		005: resource "aws_iam_user" "user-1" {
+[0m		006:   name = "user-1"
+
+
+[38;2;255;114;19mIAM Policies Attached To User[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m IAM policies should be attached only to groups or roles
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m11[0m
 
 		010:   name = "inline-policy"
-		011:   user = aws_iam_user.user-1.name
+[38;2;240;173;78m		011:   user = aws_iam_user.user-1.name
+[0m		012: 
+
+
+[38;2;187;33;36mAuthentication Without MFA[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mCIS ID:[0m CIS Security - CIS Amazon Web Services Foundations Benchmark v1.4.0 - Rule 1.10
+[1mTitle:[0m Ensure multi-factor authentication (MFA) is enabled for all IAM users that have a console password
+[1mDescription:[0m Multi-Factor Authentication (MFA) adds an extra layer of authentication assurance beyond traditional credentials. With MFA enabled, when a user signs in to the AWS Console, they will be prompted for their user name and password as well as for an authentication code from their physical or virtual MFA token. It is recommended that MFA be enabled for all accounts that have a console password.
+Enabling MFA provides increased security for console access as it requires the authenticating principal to possess a device that displays a time-sensitive key and have knowledge of a credential.
+[1mPlatform:[0m Terraform
+
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m13[0m
+
 		012: 
-
-
-IAM Policy Grants Full Permissions, Severity: MEDIUM, Results: 1
-Description: IAM policies allow all ('*') in a statement action
-Platform: Terraform
-
-	[1]: /src/main.tf:22
-
-		021:       "Effect": "Allow",
-		022:       "Resource": "*"
-		023:     }
+[38;2;240;173;78m		013:   policy = <<EOF
+[0m		014: {
 
 
 
 Results Summary:
-HIGH: 0
-MEDIUM: 1
-LOW: 1
-INFO: 1
-TOTAL: 3
+[38;2;187;33;36mHIGH[0m: 1
+[38;2;255;114;19mMEDIUM[0m: 1
+[38;2;237;213;126mLOW[0m: 1
+[38;2;91;192;222mINFO[0m: 2
+TOTAL: 5
 
-Scan duration: 4.780012905s
+Scan duration: 17.648647758s

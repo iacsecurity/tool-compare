@@ -1,4 +1,4 @@
-
+[38;2;34;187;51m
                    .0MO.                                    
                    OMMMx                                    
                    ;NMX;                                    
@@ -15,106 +15,675 @@ WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
 WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
+[0m
+Scanning with Keeping Infrastructure as Code Secure v1.6.5
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
 
 
-
-Files scanned: 1
-Parsed files: 1
-Queries loaded: 575
+Files scanned: 60
+Parsed files: 60
+Queries loaded: 1318
 Queries failed to execute: 0
 
 ------------------------------------
 
-Resource Not Using Tags, Severity: INFO, Results: 2
-Description: AWS services resource tags are an essential part of managing components
-Platform: Terraform
+[38;2;91;192;222mSecurity Group Not Used[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 1
+[1mDescription:[0m Security group must be used or not declared
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:25
+	[38;2;91;192;222m[1]:[0m ../../src/.terraform/modules/vpc/examples/complete-vpc/main.tf:[38;2;34;187;51m236[0m
 
-		024: 
-		025: resource "aws_lb" "default" {
-		026:   internal           = false
+		235: 
+[38;2;240;173;78m		236: resource "aws_security_group" "vpc_tls" {
+[0m		237:   name_prefix = "${local.name}-vpc_tls"
 
 
-	[2]: /src/main.tf:39
+[38;2;91;192;222mResource Not Using Tags[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 45
+[1mDescription:[0m AWS services resource tags are an essential part of managing components. As a best practice, the field 'tags' should have additional tags defined other than 'Name'
+[1mPlatform:[0m Terraform
+
+	[38;2;91;192;222m[1]:[0m ../../src/.terraform/modules/vpc/main.tf:[38;2;34;187;51m806[0m
+
+		805: 
+[38;2;240;173;78m		806:   tags = merge(
+[0m		807:     { "Name" = "${var.name}-${var.intra_subnet_suffix}" },
+
+
+	[38;2;91;192;222m[2]:[0m ../../src/.terraform/modules/vpc/main.tf:[38;2;34;187;51m398[0m
+
+		397: 
+[38;2;240;173;78m		398:   tags = merge(
+[0m		399:     {
+
+
+	[38;2;91;192;222m[3]:[0m ../../src/.terraform/modules/vpc/main.tf:[38;2;34;187;51m1164[0m
+
+		1163: 
+[38;2;240;173;78m		1164:   tags = merge(
+[0m		1165:     { Name = "${var.name}-${each.key}" },
+
+
+	[38;2;91;192;222m[4]:[0m ../../src/.terraform/modules/vpc/main.tf:[38;2;34;187;51m1013[0m
+
+		1012: 
+[38;2;240;173;78m		1013:   tags = merge(
+[0m		1014:     {
+
+
+	[38;2;91;192;222m[5]:[0m ../../src/.terraform/modules/vpc/main.tf:[38;2;34;187;51m556[0m
+
+		555: 
+[38;2;240;173;78m		556:   tags = merge(
+[0m		557:     { "Name" = coalesce(var.elasticache_subnet_group_name, var.name) },
+
+
+	[38;2;91;192;222m[6]:[0m ../../src/.terraform/modules/vpc/main.tf:[38;2;34;187;51m959[0m
+
+		958: 
+[38;2;240;173;78m		959:   tags = merge(
+[0m		960:     { "Name" = "${var.name}-${var.elasticache_subnet_suffix}" },
+
+
+	[38;2;91;192;222m[7]:[0m ../../src/.terraform/modules/vpc/main.tf:[38;2;34;187;51m704[0m
+
+		703: 
+[38;2;240;173;78m		704:   tags = merge(
+[0m		705:     { "Name" = "${var.name}-${var.private_subnet_suffix}" },
+
+
+	[38;2;91;192;222m[8]:[0m ../../src/.terraform/modules/vpc/main.tf:[38;2;34;187;51m259[0m
+
+		258: 
+[38;2;240;173;78m		259:   tags = merge(
+[0m		260:     {
+
+
+	[38;2;91;192;222m[9]:[0m ../../src/.terraform/modules/vpc/main.tf:[38;2;34;187;51m578[0m
+
+		577: 
+[38;2;240;173;78m		578:   tags = merge(
+[0m		579:     {
+
+
+	[38;2;91;192;222m[10]:[0m ../../src/.terraform/modules/vpc/main.tf:[38;2;34;187;51m201[0m
+
+		200: 
+[38;2;240;173;78m		201:   tags = merge(
+[0m		202:     { "Name" = "${var.name}-${var.public_subnet_suffix}" },
+
+
+	[38;2;91;192;222m[11]:[0m ../../src/.terraform/modules/vpc/main.tf:[38;2;34;187;51m316[0m
+
+		315: 
+[38;2;240;173;78m		316:   tags = merge(
+[0m		317:     { "Name" = "${var.name}-${var.redshift_subnet_suffix}" },
+
+
+	[38;2;91;192;222m[12]:[0m ../../src/.terraform/modules/vpc/vpc-flow-logs.tf:[38;2;34;187;51m94[0m
+
+		093:   policy      = data.aws_iam_policy_document.vpc_flow_log_cloudwatch[0].json
+[38;2;240;173;78m		094:   tags        = merge(var.tags, var.vpc_flow_log_tags)
+[0m		095: }
+
+
+	[38;2;91;192;222m[13]:[0m ../../src/.terraform/modules/vpc/modules/vpc-endpoints/main.tf:[38;2;34;187;51m35[0m
+
+		034: 
+[38;2;240;173;78m		035:   tags = merge(var.tags, lookup(each.value, "tags", {}))
+[0m		036: 
+
+
+	[38;2;91;192;222m[14]:[0m ../../src/.terraform/modules/vpc/examples/vpc-flow-logs/main.tf:[38;2;34;187;51m170[0m
+
+		169: 
+[38;2;240;173;78m		170: resource "aws_iam_policy" "vpc_flow_log_cloudwatch" {
+[0m		171:   name_prefix = "vpc-flow-log-cloudwatch-"
+
+
+	[38;2;91;192;222m[15]:[0m ../../src/.terraform/modules/vpc/main.tf:[38;2;34;187;51m908[0m
+
+		907: 
+[38;2;240;173;78m		908:   tags = merge(
+[0m		909:     { "Name" = "${var.name}-${var.redshift_subnet_suffix}" },
+
+
+	[38;2;91;192;222m[16]:[0m ../../src/.terraform/modules/vpc/main.tf:[38;2;34;187;51m348[0m
+
+		347: 
+[38;2;240;173;78m		348:   tags = merge(
+[0m		349:     { "Name" = "${var.name}-${var.intra_subnet_suffix}" },
+
+
+	[38;2;91;192;222m[17]:[0m ../../src/.terraform/modules/vpc/main.tf:[38;2;34;187;51m537[0m
+
+		536: 
+[38;2;240;173;78m		537:   tags = merge(
+[0m		538:     {
+
+
+	[38;2;91;192;222m[18]:[0m ../../src/.terraform/modules/vpc/main.tf:[38;2;34;187;51m371[0m
+
+		370: 
+[38;2;240;173;78m		371:   tags = merge(
+[0m		372:     {
+
+
+	[38;2;91;192;222m[19]:[0m ../../src/.terraform/modules/vpc/main.tf:[38;2;34;187;51m38[0m
+
+		037: 
+[38;2;240;173;78m		038:   tags = merge(
+[0m		039:     { "Name" = var.name },
+
+
+	[38;2;91;192;222m[20]:[0m ../../src/.terraform/modules/vpc/vpc-flow-logs.tf:[38;2;34;187;51m52[0m
+
+		051: 
+[38;2;240;173;78m		052:   tags = merge(var.tags, var.vpc_flow_log_tags)
+[0m		053: }
+
+
+	[38;2;91;192;222m[21]:[0m ../../src/main.tf:[38;2;34;187;51m39[0m
 
 		038: 
-		039: resource "aws_lb" "disabled" {
-		040:   internal           = false
+[38;2;240;173;78m		039: resource "aws_lb" "disabled" {
+[0m		040:   internal           = false
 
 
-ALB Not Dropping Invalid Headers, Severity: MEDIUM, Results: 4
-Description: It's considered a best practice when using Application Load Balancers to drop invalid header fields
-Platform: Terraform
+	[38;2;91;192;222m[22]:[0m ../../src/.terraform/modules/vpc/main.tf:[38;2;34;187;51m857[0m
 
-	[1]: /src/main.tf:45
-
-		044: 
-		045:   drop_invalid_header_fields = false
-		046: }
+		856: 
+[38;2;240;173;78m		857:   tags = merge(
+[0m		858:     { "Name" = "${var.name}-${var.database_subnet_suffix}" },
 
 
-	[2]: /src/main.tf:54
+	[38;2;91;192;222m[23]:[0m ../../src/.terraform/modules/vpc/examples/vpc-flow-logs/main.tf:[38;2;34;187;51m145[0m
 
-		053: 
-		054:   drop_invalid_header_fields = false
-		055: }
+		144: # Cloudwatch logs
+[38;2;240;173;78m		145: resource "aws_cloudwatch_log_group" "flow_log" {
+[0m		146:   name = local.cloudwatch_log_group_name
 
 
-	[3]: /src/main.tf:25
+	[38;2;91;192;222m[24]:[0m ../../src/.terraform/modules/vpc/main.tf:[38;2;34;187;51m472[0m
+
+		471: 
+[38;2;240;173;78m		472:   tags = merge(
+[0m		473:     {
+
+
+	[38;2;91;192;222m[25]:[0m ../../src/.terraform/modules/vpc/main.tf:[38;2;34;187;51m755[0m
+
+		754: 
+[38;2;240;173;78m		755:   tags = merge(
+[0m		756:     { "Name" = "${var.name}-${var.outpost_subnet_suffix}" },
+
+
+	[38;2;91;192;222m[26]:[0m ../../src/.terraform/modules/vpc/main.tf:[38;2;34;187;51m238[0m
+
+		237: 
+[38;2;240;173;78m		238:   tags = merge(
+[0m		239:     {
+
+
+	[38;2;91;192;222m[27]:[0m ../../src/.terraform/modules/vpc/examples/vpc-flow-logs/main.tf:[38;2;34;187;51m149[0m
+
+		148: 
+[38;2;240;173;78m		149: resource "aws_iam_role" "vpc_flow_log_cloudwatch" {
+[0m		150:   name_prefix        = "vpc-flow-log-role-"
+
+
+	[38;2;91;192;222m[28]:[0m ../../src/.terraform/modules/vpc/main.tf:[38;2;34;187;51m132[0m
+
+		131: 
+[38;2;240;173;78m		132:   tags = merge(
+[0m		133:     { "Name" = var.name },
+
+
+	[38;2;91;192;222m[29]:[0m ../../src/.terraform/modules/vpc/main.tf:[38;2;34;187;51m453[0m
+
+		452: 
+[38;2;240;173;78m		453:   tags = merge(
+[0m		454:     {
+
+
+	[38;2;91;192;222m[30]:[0m ../../src/.terraform/modules/vpc/main.tf:[38;2;34;187;51m109[0m
+
+		108: 
+[38;2;240;173;78m		109:   tags = merge(
+[0m		110:     { "Name" = var.name },
+
+
+	[38;2;91;192;222m[31]:[0m ../../src/.terraform/modules/vpc/main.tf:[38;2;34;187;51m1037[0m
+
+		1036: 
+[38;2;240;173;78m		1037:   tags = merge(
+[0m		1038:     {
+
+
+	[38;2;91;192;222m[32]:[0m ../../src/.terraform/modules/vpc/main.tf:[38;2;34;187;51m653[0m
+
+		652: 
+[38;2;240;173;78m		653:   tags = merge(
+[0m		654:     { "Name" = "${var.name}-${var.public_subnet_suffix}" },
+
+
+	[38;2;91;192;222m[33]:[0m ../../src/.terraform/modules/vpc/main.tf:[38;2;34;187;51m1182[0m
+
+		1181: 
+[38;2;240;173;78m		1182:   tags = merge(
+[0m		1183:     { "Name" = var.name },
+
+
+	[38;2;91;192;222m[34]:[0m ../../src/.terraform/modules/vpc/vpc-flow-logs.tf:[38;2;34;187;51m38[0m
+
+		037: 
+[38;2;240;173;78m		038:   tags = merge(var.tags, var.vpc_flow_log_tags)
+[0m		039: }
+
+
+	[38;2;91;192;222m[35]:[0m ../../src/.terraform/modules/vpc/main.tf:[38;2;34;187;51m632[0m
+
+		631: 
+[38;2;240;173;78m		632:   tags = merge(
+[0m		633:     { "Name" = coalesce(var.default_network_acl_name, var.name) },
+
+
+	[38;2;91;192;222m[36]:[0m ../../src/.terraform/modules/vpc/main.tf:[38;2;34;187;51m144[0m
+
+		143: 
+[38;2;240;173;78m		144:   tags = merge(
+[0m		145:     { "Name" = var.name },
+
+
+	[38;2;91;192;222m[37]:[0m ../../src/.terraform/modules/vpc/vpc-flow-logs.tf:[38;2;34;187;51m62[0m
+
+		061: 
+[38;2;240;173;78m		062:   tags = merge(var.tags, var.vpc_flow_log_tags)
+[0m		063: }
+
+
+	[38;2;91;192;222m[38]:[0m ../../src/main.tf:[38;2;34;187;51m25[0m
 
 		024: 
-		025: resource "aws_lb" "default" {
-		026:   internal           = false
+[38;2;240;173;78m		025: resource "aws_lb" "default" {
+[0m		026:   internal           = false
 
 
-	[4]: /src/main.tf:32
+	[38;2;91;192;222m[39]:[0m ../../src/.terraform/modules/vpc/main.tf:[38;2;34;187;51m89[0m
 
-		031: 
-		032: resource "aws_alb" "default" {
-		033:   internal           = false
-
-
-ALB Is Not Integrated With WAF, Severity: MEDIUM, Results: 4
-Description: All Application Load Balancers (ALB) must be protected with Web Application Firewall (WAF) service
-Platform: Terraform
-
-	[1]: /src/main.tf:32
-
-		031: 
-		032: resource "aws_alb" "default" {
-		033:   internal           = false
+		088: 
+[38;2;240;173;78m		089:   tags = merge(
+[0m		090:     { "Name" = coalesce(var.default_security_group_name, var.name) },
 
 
-	[2]: /src/main.tf:48
+	[38;2;91;192;222m[40]:[0m ../../src/.terraform/modules/vpc/main.tf:[38;2;34;187;51m332[0m
+
+		331: 
+[38;2;240;173;78m		332:   tags = merge(
+[0m		333:     { "Name" = "${var.name}-${var.elasticache_subnet_suffix}" },
+
+
+	[38;2;91;192;222m[41]:[0m ../../src/.terraform/modules/vpc/main.tf:[38;2;34;187;51m496[0m
+
+		495: 
+[38;2;240;173;78m		496:   tags = merge(
+[0m		497:     {
+
+
+	[38;2;91;192;222m[42]:[0m ../../src/.terraform/modules/vpc/examples/complete-vpc/main.tf:[38;2;34;187;51m249[0m
+
+		248: 
+[38;2;240;173;78m		249:   tags = local.tags
+[0m		250: }
+
+
+	[38;2;91;192;222m[43]:[0m ../../src/.terraform/modules/vpc/main.tf:[38;2;34;187;51m185[0m
+
+		184: 
+[38;2;240;173;78m		185:   tags = merge(
+[0m		186:     { "Name" = coalesce(var.default_route_table_name, var.name) },
+
+
+	[38;2;91;192;222m[44]:[0m ../../src/.terraform/modules/vpc/main.tf:[38;2;34;187;51m515[0m
+
+		514: 
+[38;2;240;173;78m		515:   tags = merge(
+[0m		516:     { "Name" = coalesce(var.redshift_subnet_group_name, var.name) },
+
+
+	[38;2;91;192;222m[45]:[0m ../../src/.terraform/modules/vpc/main.tf:[38;2;34;187;51m426[0m
+
+		425: 
+[38;2;240;173;78m		426:   tags = merge(
+[0m		427:     {
+
+
+[38;2;237;213;126mVPC FlowLogs Disabled[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 2
+[1mDescription:[0m Every VPC resource should have an associated Flow Log
+[1mPlatform:[0m Terraform
+
+	[38;2;237;213;126m[1]:[0m ../../src/.terraform/modules/vpc/main.tf:[38;2;34;187;51m20[0m
+
+		019: 
+[38;2;240;173;78m		020: resource "aws_vpc" "this" {
+[0m		021:   count = local.create_vpc ? 1 : 0
+
+
+	[38;2;237;213;126m[2]:[0m ../../src/main.tf:[38;2;34;187;51m1[0m
+
+[38;2;240;173;78m		001: module "vpc" {
+[0m		002:   source  = "terraform-aws-modules/vpc/aws"
+		003: 
+
+
+[38;2;237;213;126mShield Advanced Not In Use[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 3
+[1mDescription:[0m AWS Shield Advanced should be used for Amazon Route 53 hosted zone, AWS Global Accelerator accelerator, Elastic IP Address, Elastic Load Balancing, and Amazon CloudFront Distribution to protect these resources against robust DDoS attacks
+[1mPlatform:[0m Terraform
+
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m25[0m
+
+		024: 
+[38;2;240;173;78m		025: resource "aws_lb" "default" {
+[0m		026:   internal           = false
+
+
+	[38;2;237;213;126m[2]:[0m ../../src/.terraform/modules/vpc/main.tf:[38;2;34;187;51m1008[0m
+
+		1007: 
+[38;2;240;173;78m		1008: resource "aws_eip" "nat" {
+[0m		1009:   count = local.create_vpc && var.enable_nat_gateway && false == var.reuse_nat_ips ? local.nat_gateway_count : 0
+
+
+	[38;2;237;213;126m[3]:[0m ../../src/main.tf:[38;2;34;187;51m39[0m
+
+		038: 
+[38;2;240;173;78m		039: resource "aws_lb" "disabled" {
+[0m		040:   internal           = false
+
+
+[38;2;237;213;126mS3 Bucket Without Ignore Public ACL[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m S3 bucket without ignore public ACL
+[1mPlatform:[0m Terraform
+
+	[38;2;237;213;126m[1]:[0m ../../src/.terraform/modules/vpc/examples/vpc-flow-logs/main.tf:[38;2;34;187;51m105[0m
+
+		104: # S3 Bucket
+[38;2;240;173;78m		105: module "s3_bucket" {
+[0m		106:   source  = "terraform-aws-modules/s3-bucket/aws"
+
+
+[38;2;237;213;126mIAM Access Analyzer Not Enabled[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m IAM Access Analyzer should be enabled and configured to continuously monitor resource permissions
+[1mPlatform:[0m Terraform
+
+	[38;2;237;213;126m[1]:[0m ../../src/.terraform/modules/vpc/examples/complete-vpc/main.tf:[38;2;34;187;51m236[0m
+
+		235: 
+[38;2;240;173;78m		236: resource "aws_security_group" "vpc_tls" {
+[0m		237:   name_prefix = "${local.name}-vpc_tls"
+
+
+[38;2;237;213;126mALB Deletion Protection Disabled[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 4
+[1mDescription:[0m Application Load Balancer should have deletion protection enabled
+[1mPlatform:[0m Terraform
+
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m39[0m
+
+		038: 
+[38;2;240;173;78m		039: resource "aws_lb" "disabled" {
+[0m		040:   internal           = false
+
+
+	[38;2;237;213;126m[2]:[0m ../../src/main.tf:[38;2;34;187;51m48[0m
 
 		047: 
-		048: resource "aws_alb" "disabled" {
-		049:   internal           = false
+[38;2;240;173;78m		048: resource "aws_alb" "disabled" {
+[0m		049:   internal           = false
 
 
-	[3]: /src/main.tf:39
+	[38;2;237;213;126m[3]:[0m ../../src/main.tf:[38;2;34;187;51m32[0m
 
-		038: 
-		039: resource "aws_lb" "disabled" {
-		040:   internal           = false
+		031: 
+[38;2;240;173;78m		032: resource "aws_alb" "default" {
+[0m		033:   internal           = false
 
 
-	[4]: /src/main.tf:25
+	[38;2;237;213;126m[4]:[0m ../../src/main.tf:[38;2;34;187;51m25[0m
 
 		024: 
-		025: resource "aws_lb" "default" {
-		026:   internal           = false
+[38;2;240;173;78m		025: resource "aws_lb" "default" {
+[0m		026:   internal           = false
+
+
+[38;2;255;114;19mVPC Without Network Firewall[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m VPC should have a Network Firewall associated
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/.terraform/modules/vpc/main.tf:[38;2;34;187;51m20[0m
+
+		019: 
+[38;2;240;173;78m		020: resource "aws_vpc" "this" {
+[0m		021:   count = local.create_vpc ? 1 : 0
+
+
+[38;2;255;114;19mVPC Subnet Assigns Public IP[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 2
+[1mDescription:[0m VPC Subnet should not assign public IP
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/.terraform/modules/vpc/main.tf:[38;2;34;187;51m366[0m
+
+		365:   availability_zone_id            = length(regexall("^[a-z]{2}-", element(var.azs, count.index))) == 0 ? element(var.azs, count.index) : null
+[38;2;240;173;78m		366:   map_public_ip_on_launch         = var.map_public_ip_on_launch
+[0m		367:   assign_ipv6_address_on_creation = var.public_subnet_assign_ipv6_address_on_creation == null ? var.assign_ipv6_address_on_creation : var.public_subnet_assign_ipv6_address_on_creation
+
+
+	[38;2;255;114;19m[2]:[0m ../../src/main.tf:[38;2;34;187;51m1[0m
+
+[38;2;240;173;78m		001: module "vpc" {
+[0m		002:   source  = "terraform-aws-modules/vpc/aws"
+		003: 
+
+
+[38;2;255;114;19mS3 Bucket Without Versioning[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m S3 bucket should have versioning enabled
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/.terraform/modules/vpc/examples/vpc-flow-logs/main.tf:[38;2;34;187;51m105[0m
+
+		104: # S3 Bucket
+[38;2;240;173;78m		105: module "s3_bucket" {
+[0m		106:   source  = "terraform-aws-modules/s3-bucket/aws"
+
+
+[38;2;255;114;19mS3 Bucket Policy Accepts HTTP Requests[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m S3 Bucket policy should not accept HTTP Requests
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/.terraform/modules/vpc/examples/vpc-flow-logs/main.tf:[38;2;34;187;51m110[0m
+
+		109:   bucket        = local.s3_bucket_name
+[38;2;240;173;78m		110:   policy        = data.aws_iam_policy_document.flow_log_s3.json
+[0m		111:   force_destroy = true
+
+
+[38;2;255;114;19mS3 Bucket Logging Disabled[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m Server Access Logging should be enabled on S3 Buckets so that all changes are logged and trackable
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/.terraform/modules/vpc/examples/vpc-flow-logs/main.tf:[38;2;34;187;51m105[0m
+
+		104: # S3 Bucket
+[38;2;240;173;78m		105: module "s3_bucket" {
+[0m		106:   source  = "terraform-aws-modules/s3-bucket/aws"
+
+
+[38;2;255;114;19mS3 Bucket Allows Public ACL[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m S3 bucket allows public ACL
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/.terraform/modules/vpc/examples/vpc-flow-logs/main.tf:[38;2;34;187;51m105[0m
+
+		104: # S3 Bucket
+[38;2;240;173;78m		105: module "s3_bucket" {
+[0m		106:   source  = "terraform-aws-modules/s3-bucket/aws"
+
+
+[38;2;255;114;19mDefault VPC Exists[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m It isn't recommended to use resources in default VPC
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/.terraform/modules/vpc/main.tf:[38;2;34;187;51m1239[0m
+
+		1238: 
+[38;2;240;173;78m		1239: resource "aws_default_vpc" "this" {
+[0m		1240:   count = var.manage_default_vpc ? 1 : 0
+
+
+[38;2;255;114;19mCloudWatch Without Retention Period Specified[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 2
+[1mDescription:[0m AWS CloudWatch Log groups should have retention days specified
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/.terraform/modules/vpc/vpc-flow-logs.tf:[38;2;34;187;51m49[0m
+
+		048:   name              = "${var.flow_log_cloudwatch_log_group_name_prefix}${local.flow_log_cloudwatch_log_group_name_suffix}"
+[38;2;240;173;78m		049:   retention_in_days = var.flow_log_cloudwatch_log_group_retention_in_days
+[0m		050:   kms_key_id        = var.flow_log_cloudwatch_log_group_kms_key_id
+
+
+	[38;2;255;114;19m[2]:[0m ../../src/.terraform/modules/vpc/examples/vpc-flow-logs/main.tf:[38;2;34;187;51m145[0m
+
+		144: # Cloudwatch logs
+[38;2;240;173;78m		145: resource "aws_cloudwatch_log_group" "flow_log" {
+[0m		146:   name = local.cloudwatch_log_group_name
+
+
+[38;2;255;114;19mCloudWatch Log Group Without KMS[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m AWS CloudWatch Log groups should be encrypted using KMS
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/.terraform/modules/vpc/examples/vpc-flow-logs/main.tf:[38;2;34;187;51m145[0m
+
+		144: # Cloudwatch logs
+[38;2;240;173;78m		145: resource "aws_cloudwatch_log_group" "flow_log" {
+[0m		146:   name = local.cloudwatch_log_group_name
+
+
+[38;2;255;114;19mALB Not Dropping Invalid Headers[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 4
+[1mDescription:[0m It's considered a best practice when using Application Load Balancers to drop invalid header fields
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m54[0m
+
+		053: 
+[38;2;240;173;78m		054:   drop_invalid_header_fields = false
+[0m		055: }
+
+
+	[38;2;255;114;19m[2]:[0m ../../src/main.tf:[38;2;34;187;51m25[0m
+
+		024: 
+[38;2;240;173;78m		025: resource "aws_lb" "default" {
+[0m		026:   internal           = false
+
+
+	[38;2;255;114;19m[3]:[0m ../../src/main.tf:[38;2;34;187;51m45[0m
+
+		044: 
+[38;2;240;173;78m		045:   drop_invalid_header_fields = false
+[0m		046: }
+
+
+	[38;2;255;114;19m[4]:[0m ../../src/main.tf:[38;2;34;187;51m32[0m
+
+		031: 
+[38;2;240;173;78m		032: resource "aws_alb" "default" {
+[0m		033:   internal           = false
+
+
+[38;2;255;114;19mALB Is Not Integrated With WAF[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 4
+[1mDescription:[0m All Application Load Balancers (ALB) must be protected with Web Application Firewall (WAF) service
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m32[0m
+
+		031: 
+[38;2;240;173;78m		032: resource "aws_alb" "default" {
+[0m		033:   internal           = false
+
+
+	[38;2;255;114;19m[2]:[0m ../../src/main.tf:[38;2;34;187;51m25[0m
+
+		024: 
+[38;2;240;173;78m		025: resource "aws_lb" "default" {
+[0m		026:   internal           = false
+
+
+	[38;2;255;114;19m[3]:[0m ../../src/main.tf:[38;2;34;187;51m48[0m
+
+		047: 
+[38;2;240;173;78m		048: resource "aws_alb" "disabled" {
+[0m		049:   internal           = false
+
+
+	[38;2;255;114;19m[4]:[0m ../../src/main.tf:[38;2;34;187;51m39[0m
+
+		038: 
+[38;2;240;173;78m		039: resource "aws_lb" "disabled" {
+[0m		040:   internal           = false
+
+
+[38;2;187;33;36mS3 Bucket Without Restriction Of Public Bucket[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mDescription:[0m S3 bucket without restriction of public bucket
+[1mPlatform:[0m Terraform
+
+	[38;2;187;33;36m[1]:[0m ../../src/.terraform/modules/vpc/examples/vpc-flow-logs/main.tf:[38;2;34;187;51m105[0m
+
+		104: # S3 Bucket
+[38;2;240;173;78m		105: module "s3_bucket" {
+[0m		106:   source  = "terraform-aws-modules/s3-bucket/aws"
+
+
+[38;2;187;33;36mS3 Bucket Without Enabled MFA Delete[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mCIS ID:[0m CIS Security - CIS Amazon Web Services Foundations Benchmark v1.4.0 - Rule 2.1.3
+[1mTitle:[0m Ensure MFA Delete is enable on S3 buckets
+[1mDescription:[0m Once MFA Delete is enabled on your sensitive and classified S3 bucket it requires the user to have two forms of authentication.
+Adding MFA delete to an S3 bucket, requires additional authentication when you change the version state of your bucket or you delete and object version adding another layer of security in the event your security credentials are compromised or unauthorized access is granted.
+[1mPlatform:[0m Terraform
+
+	[38;2;187;33;36m[1]:[0m ../../src/.terraform/modules/vpc/examples/vpc-flow-logs/main.tf:[38;2;34;187;51m105[0m
+
+		104: # S3 Bucket
+[38;2;240;173;78m		105: module "s3_bucket" {
+[0m		106:   source  = "terraform-aws-modules/s3-bucket/aws"
+
+
+[38;2;187;33;36mS3 Bucket SSE Disabled[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mDescription:[0m If algorithm is AES256 then the master key is null, empty or undefined, otherwise the master key is required
+[1mPlatform:[0m Terraform
+
+	[38;2;187;33;36m[1]:[0m ../../src/.terraform/modules/vpc/examples/vpc-flow-logs/main.tf:[38;2;34;187;51m105[0m
+
+		104: # S3 Bucket
+[38;2;240;173;78m		105: module "s3_bucket" {
+[0m		106:   source  = "terraform-aws-modules/s3-bucket/aws"
+
+
+[38;2;187;33;36mS3 Bucket Allows Public Policy[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mDescription:[0m S3 bucket allows public policy
+[1mPlatform:[0m Terraform
+
+	[38;2;187;33;36m[1]:[0m ../../src/.terraform/modules/vpc/examples/vpc-flow-logs/main.tf:[38;2;34;187;51m105[0m
+
+		104: # S3 Bucket
+[38;2;240;173;78m		105: module "s3_bucket" {
+[0m		106:   source  = "terraform-aws-modules/s3-bucket/aws"
 
 
 
 Results Summary:
-HIGH: 0
-MEDIUM: 8
-LOW: 0
-INFO: 2
-TOTAL: 10
+[38;2;187;33;36mHIGH[0m: 4
+[38;2;255;114;19mMEDIUM[0m: 19
+[38;2;237;213;126mLOW[0m: 11
+[38;2;91;192;222mINFO[0m: 46
+TOTAL: 80
 
-Scan duration: 4.53761852s
+Scan duration: 21.808716593s

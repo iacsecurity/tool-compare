@@ -1,51 +1,90 @@
 
-  Result 1
+Result #1 HIGH Table encryption is not enabled. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:25-30
+────────────────────────────────────────────────────────────────────────────────
+   25    resource "aws_dax_cluster" "cloudrail-test" {
+   26      cluster_name       = "non-encrypt"
+   27      iam_role_arn       = aws_iam_role.dax.arn
+   28      node_type          = "dax.r4.large"
+   29      replication_factor = 1
+   30    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-dynamodb-enable-at-rest-encryption
+      Impact Data can be freely read if compromised
+  Resolution Enable encryption at rest for DAX Cluster
 
-  [aws-dynamodb-enable-at-rest-encryption][[0m[31mHIGH[39m[0m] DAX cluster 'aws_dax_cluster.cloudrail-test' does not have server side encryption configured. By default it is disabled.
-  /src/main.tf:25-30
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/dynamodb/enable-at-rest-encryption/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dax_cluster#server_side_encryption
+────────────────────────────────────────────────────────────────────────────────
 
 
-      22 | EOF
-      23 | }
-      24 | 
-      25 | resource "aws_dax_cluster" "cloudrail-test" {
-      26 |   cluster_name       = "non-encrypt"
-      27 |   iam_role_arn       = aws_iam_role.dax.arn
-      28 |   node_type          = "dax.r4.large"
-      29 |   replication_factor = 1
-      30 | }
-      31 | 
+Result #2 MEDIUM Point-in-time recovery is not enabled. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:25-30
+────────────────────────────────────────────────────────────────────────────────
+   25    resource "aws_dax_cluster" "cloudrail-test" {
+   26      cluster_name       = "non-encrypt"
+   27      iam_role_arn       = aws_iam_role.dax.arn
+   28      node_type          = "dax.r4.large"
+   29      replication_factor = 1
+   30    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-dynamodb-enable-recovery
+      Impact Accidental or malicious writes and deletes can't be rolled back
+  Resolution Enable point in time recovery
 
-  Legacy ID:  AWS081
-  Impact:     Data can be freely read if compromised
-  Resolution: Enable encryption at rest for DAX Cluster
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/dynamodb/enable-recovery/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table#point_in_time_recovery
+────────────────────────────────────────────────────────────────────────────────
 
-  More Info:
-  - https://tfsec.dev/docs/aws/dynamodb/enable-at-rest-encryption#aws/dynamodb 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dax_cluster#server_side_encryption 
-  - https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DAXEncryptionAtRest.html 
-  - https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-dax-cluster.html 
 
-  times
-  ------------------------------------------
-  disk i/o             72.372875ms
-  parsing HCL          507.917µs
-  evaluating values    2.896626ms
-  running checks       18.232166ms
+Result #3 LOW Cluster encryption does not use a customer-managed KMS key. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:25-30
+────────────────────────────────────────────────────────────────────────────────
+   25    resource "aws_dax_cluster" "cloudrail-test" {
+   26      cluster_name       = "non-encrypt"
+   27      iam_role_arn       = aws_iam_role.dax.arn
+   28      node_type          = "dax.r4.large"
+   29      replication_factor = 1
+   30    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-dynamodb-table-customer-key
+      Impact Using AWS managed keys does not allow for fine grained control
+  Resolution Enable server side encryption with a customer managed key
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/dynamodb/table-customer-key/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table#server_side_encryption
+────────────────────────────────────────────────────────────────────────────────
+
+
+  timings
+  ──────────────────────────────────────────
+  disk i/o             4.174166ms
+  parsing              545.25µs
+  adaptation           477.666µs
+  checks               4.721959ms
+  total                9.919041ms
 
   counts
-  ------------------------------------------
-  files loaded         1
-  blocks               3
-  modules              0
+  ──────────────────────────────────────────
+  modules downloaded   0
+  modules processed    1
+  blocks processed     3
+  files read           1
 
   results
-  ------------------------------------------
+  ──────────────────────────────────────────
+  passed               2
+  ignored              0
   critical             0
   high                 1
-  medium               0
-  low                  0
-  ignored              0
+  medium               1
+  low                  1
 
-  1 potential problems detected.
+  2 passed, 3 potential problem(s) detected.
 

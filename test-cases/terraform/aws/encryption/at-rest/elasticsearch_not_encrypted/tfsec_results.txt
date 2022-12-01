@@ -1,188 +1,152 @@
 
-  Result 1
+Result #1 CRITICAL Domain does not enforce HTTPS. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:1-16
+────────────────────────────────────────────────────────────────────────────────
+    1  ┌ resource "aws_elasticsearch_domain" "example" {
+    2  │   domain_name           = "example"
+    3  │   elasticsearch_version = "1.5"
+    4  │ 
+    5  │   cluster_config {
+    6  │     instance_type = "r4.large.elasticsearch"
+    7  │   }
+    8  │ 
+    9  └   snapshot_options {
+   ..  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-elastic-search-enforce-https
+      Impact HTTP traffic can be intercepted and the contents read
+  Resolution Enforce the use of HTTPS for ElasticSearch
 
-  [aws-elastic-search-enable-domain-logging][[0m[33mMEDIUM[39m[0m] Resource 'aws_elasticsearch_domain.example' does not configure logging at rest on the domain.
-  /src/main.tf:1-16
-
-
-       1 | resource "aws_elasticsearch_domain" "example" {
-       2 |   domain_name           = "example"
-       3 |   elasticsearch_version = "1.5"
-       4 | 
-       5 |   cluster_config {
-       6 |     instance_type = "r4.large.elasticsearch"
-       7 |   }
-       8 | 
-       9 |   snapshot_options {
-      10 |     automated_snapshot_start_hour = 23
-      11 |   }
-      12 | 
-      13 |   tags = {
-      14 |     Domain = "TestDomain"
-      15 |   }
-      16 | }
-      17 | 
-
-  Legacy ID:  AWS057
-  Impact:     Logging provides vital information about access and usage
-  Resolution: Enable logging for ElasticSearch domains
-
-  More Info:
-  - https://tfsec.dev/docs/aws/elastic-search/enable-domain-logging#aws/elastic-search 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticsearch_domain#log_type 
-  - https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-createdomain-configure-slow-logs.html 
-
-  Result 2
-
-  [aws-elastic-search-enable-in-transit-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_elasticsearch_domain.example' defines an Elasticsearch domain with plaintext traffic (missing node_to_node_encryption block).
-  /src/main.tf:1-16
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/elastic-search/enforce-https/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticsearch_domain#enforce_https
+────────────────────────────────────────────────────────────────────────────────
 
 
-       1 | resource "aws_elasticsearch_domain" "example" {
-       2 |   domain_name           = "example"
-       3 |   elasticsearch_version = "1.5"
-       4 | 
-       5 |   cluster_config {
-       6 |     instance_type = "r4.large.elasticsearch"
-       7 |   }
-       8 | 
-       9 |   snapshot_options {
-      10 |     automated_snapshot_start_hour = 23
-      11 |   }
-      12 | 
-      13 |   tags = {
-      14 |     Domain = "TestDomain"
-      15 |   }
-      16 | }
-      17 | 
+Result #2 HIGH Domain does not have in-transit encryption enabled. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:1-16
+────────────────────────────────────────────────────────────────────────────────
+    1  ┌ resource "aws_elasticsearch_domain" "example" {
+    2  │   domain_name           = "example"
+    3  │   elasticsearch_version = "1.5"
+    4  │ 
+    5  │   cluster_config {
+    6  │     instance_type = "r4.large.elasticsearch"
+    7  │   }
+    8  │ 
+    9  └   snapshot_options {
+   ..  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-elastic-search-enable-in-transit-encryption
+      Impact In transit data between nodes could be read if intercepted
+  Resolution Enable encrypted node to node communication
 
-  Legacy ID:  AWS032
-  Impact:     In transit data between nodes could be read if intercepted
-  Resolution: Enable encrypted node to node communication
-
-  More Info:
-  - https://tfsec.dev/docs/aws/elastic-search/enable-in-transit-encryption#aws/elastic-search 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticsearch_domain#encrypt_at_rest 
-  - https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/ntn.html 
-
-  Result 3
-
-  [aws-elastic-search-enable-logging][[0m[33mMEDIUM[39m[0m] Resource 'aws_elasticsearch_domain.example' is missing 'AUDIT_LOGS` in one of the `log_publishing_options`-`log_type` attributes so audit log is not enabled
-  /src/main.tf:1-16
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/elastic-search/enable-in-transit-encryption/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticsearch_domain#encrypt_at_rest
+────────────────────────────────────────────────────────────────────────────────
 
 
-       1 | resource "aws_elasticsearch_domain" "example" {
-       2 |   domain_name           = "example"
-       3 |   elasticsearch_version = "1.5"
-       4 | 
-       5 |   cluster_config {
-       6 |     instance_type = "r4.large.elasticsearch"
-       7 |   }
-       8 | 
-       9 |   snapshot_options {
-      10 |     automated_snapshot_start_hour = 23
-      11 |   }
-      12 | 
-      13 |   tags = {
-      14 |     Domain = "TestDomain"
-      15 |   }
-      16 | }
-      17 | 
+Result #3 HIGH Domain does not have at-rest encryption enabled. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:1-16
+────────────────────────────────────────────────────────────────────────────────
+    1  ┌ resource "aws_elasticsearch_domain" "example" {
+    2  │   domain_name           = "example"
+    3  │   elasticsearch_version = "1.5"
+    4  │ 
+    5  │   cluster_config {
+    6  │     instance_type = "r4.large.elasticsearch"
+    7  │   }
+    8  │ 
+    9  └   snapshot_options {
+   ..  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-elastic-search-enable-domain-encryption
+      Impact Data will be readable if compromised
+  Resolution Enable ElasticSearch domain encryption
 
-  Legacy ID:  AWS070
-  Impact:     Logging provides vital information about access and usage
-  Resolution: Enable logging for ElasticSearch domains
-
-  More Info:
-  - https://tfsec.dev/docs/aws/elastic-search/enable-logging#aws/elastic-search 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticsearch_domain#log_publishing_options 
-
-  Result 4
-
-  [aws-elastic-search-enforce-https][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'aws_elasticsearch_domain.example' defines an Elasticsearch domain with plaintext traffic (missing domain_endpoint_options block).
-  /src/main.tf:1-16
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/elastic-search/enable-domain-encryption/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticsearch_domain#encrypt_at_rest
+────────────────────────────────────────────────────────────────────────────────
 
 
-       1 | resource "aws_elasticsearch_domain" "example" {
-       2 |   domain_name           = "example"
-       3 |   elasticsearch_version = "1.5"
-       4 | 
-       5 |   cluster_config {
-       6 |     instance_type = "r4.large.elasticsearch"
-       7 |   }
-       8 | 
-       9 |   snapshot_options {
-      10 |     automated_snapshot_start_hour = 23
-      11 |   }
-      12 | 
-      13 |   tags = {
-      14 |     Domain = "TestDomain"
-      15 |   }
-      16 | }
-      17 | 
+Result #4 HIGH Domain does not have a secure TLS policy. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:1-16
+────────────────────────────────────────────────────────────────────────────────
+    1  ┌ resource "aws_elasticsearch_domain" "example" {
+    2  │   domain_name           = "example"
+    3  │   elasticsearch_version = "1.5"
+    4  │ 
+    5  │   cluster_config {
+    6  │     instance_type = "r4.large.elasticsearch"
+    7  │   }
+    8  │ 
+    9  └   snapshot_options {
+   ..  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-elastic-search-use-secure-tls-policy
+      Impact Outdated SSL policies increase exposure to known vulnerabilities
+  Resolution Use the most modern TLS/SSL policies available
 
-  Legacy ID:  AWS033
-  Impact:     HTTP traffic can be intercepted and the contents read
-  Resolution: Enforce the use of HTTPS for ElasticSearch
-
-  More Info:
-  - https://tfsec.dev/docs/aws/elastic-search/enforce-https#aws/elastic-search 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticsearch_domain#enforce_https 
-  - https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-data-protection.html 
-
-  Result 5
-
-  [aws-elastic-service-enable-domain-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_elasticsearch_domain.example' defines an unencrypted Elasticsearch domain (missing encrypt_at_rest block).
-  /src/main.tf:1-16
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/elastic-search/use-secure-tls-policy/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticsearch_domain#tls_security_policy
+────────────────────────────────────────────────────────────────────────────────
 
 
-       1 | resource "aws_elasticsearch_domain" "example" {
-       2 |   domain_name           = "example"
-       3 |   elasticsearch_version = "1.5"
-       4 | 
-       5 |   cluster_config {
-       6 |     instance_type = "r4.large.elasticsearch"
-       7 |   }
-       8 | 
-       9 |   snapshot_options {
-      10 |     automated_snapshot_start_hour = 23
-      11 |   }
-      12 | 
-      13 |   tags = {
-      14 |     Domain = "TestDomain"
-      15 |   }
-      16 | }
-      17 | 
+Result #5 MEDIUM Domain audit logging is not enabled. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:1-16
+────────────────────────────────────────────────────────────────────────────────
+    1  ┌ resource "aws_elasticsearch_domain" "example" {
+    2  │   domain_name           = "example"
+    3  │   elasticsearch_version = "1.5"
+    4  │ 
+    5  │   cluster_config {
+    6  │     instance_type = "r4.large.elasticsearch"
+    7  │   }
+    8  │ 
+    9  └   snapshot_options {
+   ..  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-elastic-search-enable-domain-logging
+      Impact Logging provides vital information about access and usage
+  Resolution Enable logging for ElasticSearch domains
 
-  Legacy ID:  AWS031
-  Impact:     Data will be readable if compromised
-  Resolution: Enable ElasticSearch domain encryption
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/elastic-search/enable-domain-logging/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticsearch_domain#log_type
+────────────────────────────────────────────────────────────────────────────────
 
-  More Info:
-  - https://tfsec.dev/docs/aws/elastic-service/enable-domain-encryption#aws/elastic-service 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticsearch_domain#encrypt_at_rest 
-  - https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/encryption-at-rest.html 
 
-  times
-  ------------------------------------------
-  disk i/o             49.501041ms
-  parsing HCL          500.125µs
-  evaluating values    2.252166ms
-  running checks       68.682875ms
+  timings
+  ──────────────────────────────────────────
+  disk i/o             3.353334ms
+  parsing              474.959µs
+  adaptation           120.958µs
+  checks               4.831584ms
+  total                8.780835ms
 
   counts
-  ------------------------------------------
-  files loaded         1
-  blocks               1
-  modules              0
+  ──────────────────────────────────────────
+  modules downloaded   0
+  modules processed    1
+  blocks processed     1
+  files read           1
 
   results
-  ------------------------------------------
-  critical             1
-  high                 2
-  medium               2
-  low                  0
+  ──────────────────────────────────────────
+  passed               2
   ignored              0
+  critical             1
+  high                 3
+  medium               1
+  low                  0
 
-  5 potential problems detected.
+  2 passed, 5 potential problem(s) detected.
 

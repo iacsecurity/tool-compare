@@ -1,61 +1,36 @@
-
-
-       _               _              
-   ___| |__   ___  ___| | _______   __
-  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
- | (__| | | |  __/ (__|   < (_) \ V / 
-  \___|_| |_|\___|\___|_|\_\___/ \_/  
-                                      
-By bridgecrew.io | version: 2.0.358 
-Update available 2.0.358 -> 2.0.359
-Run pip3 install -U checkov to update 
-
-
 terraform scan results:
 
-Passed checks: 8, Failed checks: 7, Skipped checks: 0
+Passed checks: 9, Failed checks: 8, Skipped checks: 0
 
-Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration EBS is securely encrypted"
-	FAILED for resource: aws_instance.ec2
-	File: /main.tf:63-69
-	Guide: https://docs.bridgecrew.io/docs/general_13
+Check: CKV_AWS_23: "Ensure every security groups rule has a description"
+	FAILED for resource: aws_security_group.default
+	File: /main.tf:15-38
+	Guide: https://docs.bridgecrew.io/docs/networking_31
 
-		63 | resource "aws_instance" "ec2" {
-		64 |   ami = data.aws_ami.ubuntu.id
-		65 |   instance_type = "t2.micro"
-		66 |   subnet_id     = aws_subnet.subnet.id
-		67 |   vpc_security_group_ids  = [aws_security_group.default.id]
-		68 | 
-		69 | }
-
-
-Check: CKV_AWS_79: "Ensure Instance Metadata Service Version 1 is not enabled"
-	FAILED for resource: aws_instance.ec2
-	File: /main.tf:63-69
-	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_31
-
-		63 | resource "aws_instance" "ec2" {
-		64 |   ami = data.aws_ami.ubuntu.id
-		65 |   instance_type = "t2.micro"
-		66 |   subnet_id     = aws_subnet.subnet.id
-		67 |   vpc_security_group_ids  = [aws_security_group.default.id]
-		68 | 
-		69 | }
-
-
-Check: CKV_AWS_135: "Ensure that EC2 is EBS optimized"
-	FAILED for resource: aws_instance.ec2
-	File: /main.tf:63-69
-	Guide: https://docs.bridgecrew.io/docs/ensure-that-ec2-is-ebs-optimized
-
-		63 | resource "aws_instance" "ec2" {
-		64 |   ami = data.aws_ami.ubuntu.id
-		65 |   instance_type = "t2.micro"
-		66 |   subnet_id     = aws_subnet.subnet.id
-		67 |   vpc_security_group_ids  = [aws_security_group.default.id]
-		68 | 
-		69 | }
-
+		15 | resource "aws_security_group" "default" {
+		16 |   name        = "examplerulename"
+		17 |   vpc_id      = aws_vpc.vpc.id
+		18 | 
+		19 |   ingress {
+		20 |     description = "This is an inbound rule for something...."
+		21 |     from_port   = 443
+		22 |     to_port     = 443
+		23 |     protocol    = "tcp"
+		24 |     cidr_blocks = ["10.0.0.0/24"]
+		25 |   }
+		26 | 
+		27 |   egress {
+		28 |     description = "this is an egress rule for something else...."
+		29 |     from_port   = 0
+		30 |     to_port     = 0
+		31 |     protocol    = "-1"
+		32 |     cidr_blocks = ["0.0.0.0/0"]
+		33 |   }
+		34 | 
+		35 |   tags = {
+		36 |     Name = "example_rule_with_descriptions"
+		37 |   }
+		38 | }
 
 Check: CKV_AWS_126: "Ensure that detailed monitoring is enabled for EC2 instances"
 	FAILED for resource: aws_instance.ec2
@@ -70,33 +45,71 @@ Check: CKV_AWS_126: "Ensure that detailed monitoring is enabled for EC2 instance
 		68 | 
 		69 | }
 
+Check: CKV_AWS_135: "Ensure that EC2 is EBS optimized"
+	FAILED for resource: aws_instance.ec2
+	File: /main.tf:63-69
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-ec2-is-ebs-optimized
 
-Check: CKV2_AWS_11: "Ensure VPC flow logging is enabled in all VPCs"
-	FAILED for resource: aws_vpc.vpc
-	File: /main.tf:10-13
-	Guide: https://docs.bridgecrew.io/docs/logging_9-enable-vpc-flow-logging
+		63 | resource "aws_instance" "ec2" {
+		64 |   ami = data.aws_ami.ubuntu.id
+		65 |   instance_type = "t2.micro"
+		66 |   subnet_id     = aws_subnet.subnet.id
+		67 |   vpc_security_group_ids  = [aws_security_group.default.id]
+		68 | 
+		69 | }
 
-		10 | resource "aws_vpc" "vpc" {
-		11 |   cidr_block = local.cidr_block
-		12 | 
-		13 | }
+Check: CKV_AWS_79: "Ensure Instance Metadata Service Version 1 is not enabled"
+	FAILED for resource: aws_instance.ec2
+	File: /main.tf:63-69
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_31
 
+		63 | resource "aws_instance" "ec2" {
+		64 |   ami = data.aws_ami.ubuntu.id
+		65 |   instance_type = "t2.micro"
+		66 |   subnet_id     = aws_subnet.subnet.id
+		67 |   vpc_security_group_ids  = [aws_security_group.default.id]
+		68 | 
+		69 | }
 
-Check: CKV2_AWS_1: "Ensure that all NACL are attached to subnets"
-	FAILED for resource: aws_vpc.vpc
-	File: /main.tf:10-13
-	Guide: https://docs.bridgecrew.io/docs/ensure-that-all-nacl-are-attached-to-subnets
+Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration or instance Elastic Blocks Store is securely encrypted"
+	FAILED for resource: aws_instance.ec2
+	File: /main.tf:63-69
+	Guide: https://docs.bridgecrew.io/docs/general_13
 
-		10 | resource "aws_vpc" "vpc" {
-		11 |   cidr_block = local.cidr_block
-		12 | 
-		13 | }
+		63 | resource "aws_instance" "ec2" {
+		64 |   ami = data.aws_ami.ubuntu.id
+		65 |   instance_type = "t2.micro"
+		66 |   subnet_id     = aws_subnet.subnet.id
+		67 |   vpc_security_group_ids  = [aws_security_group.default.id]
+		68 | 
+		69 | }
 
+Check: CKV2_AWS_41: "Ensure an IAM role is attached to EC2 instance"
+	FAILED for resource: aws_instance.ec2
+	File: /main.tf:63-69
+
+		63 | resource "aws_instance" "ec2" {
+		64 |   ami = data.aws_ami.ubuntu.id
+		65 |   instance_type = "t2.micro"
+		66 |   subnet_id     = aws_subnet.subnet.id
+		67 |   vpc_security_group_ids  = [aws_security_group.default.id]
+		68 | 
+		69 | }
 
 Check: CKV2_AWS_12: "Ensure the default security group of every VPC restricts all traffic"
 	FAILED for resource: aws_vpc.vpc
 	File: /main.tf:10-13
 	Guide: https://docs.bridgecrew.io/docs/networking_4
+
+		10 | resource "aws_vpc" "vpc" {
+		11 |   cidr_block = local.cidr_block
+		12 | 
+		13 | }
+
+Check: CKV2_AWS_11: "Ensure VPC flow logging is enabled in all VPCs"
+	FAILED for resource: aws_vpc.vpc
+	File: /main.tf:10-13
+	Guide: https://docs.bridgecrew.io/docs/logging_9-enable-vpc-flow-logging
 
 		10 | resource "aws_vpc" "vpc" {
 		11 |   cidr_block = local.cidr_block

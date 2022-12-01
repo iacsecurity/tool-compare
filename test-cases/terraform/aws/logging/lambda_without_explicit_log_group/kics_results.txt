@@ -1,4 +1,4 @@
-
+[38;2;34;187;51m
                    .0MO.                                    
                    OMMMx                                    
                    ;NMX;                                    
@@ -15,71 +15,71 @@ WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
 WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
-
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+[0m
+Scanning with Keeping Infrastructure as Code Secure v1.6.5
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 1039
 Queries failed to execute: 0
 
 ------------------------------------
 
-Resource Not Using Tags, Severity: INFO, Results: 3
-Description: AWS services resource tags are an essential part of managing components
-Platform: Terraform
+[38;2;91;192;222mResource Not Using Tags[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 3
+[1mDescription:[0m AWS services resource tags are an essential part of managing components. As a best practice, the field 'tags' should have additional tags defined other than 'Name'
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:9
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m9[0m
 
 		008: 
-		009: resource "aws_iam_role" "iam_for_lambda" {
-		010:   name = "iam_for_lambda"
+[38;2;240;173;78m		009: resource "aws_iam_role" "iam_for_lambda" {
+[0m		010:   name = "iam_for_lambda"
 
 
-	[2]: /src/main.tf:29
+	[38;2;91;192;222m[2]:[0m ../../src/main.tf:[38;2;34;187;51m57[0m
+
+		056: 
+[38;2;240;173;78m		057: resource "aws_lambda_function" "test_lambda" {
+[0m		058:   filename      = "${path.module}/Archive.zip"
+
+
+	[38;2;91;192;222m[3]:[0m ../../src/main.tf:[38;2;34;187;51m29[0m
 
 		028: 
-		029: resource "aws_iam_policy" "lambda_logging" {
-		030:   name        = "lambda_logging"
+[38;2;240;173;78m		029: resource "aws_iam_policy" "lambda_logging" {
+[0m		030:   name        = "lambda_logging"
 
 
-	[3]: /src/main.tf:57
+[38;2;237;213;126mLambda Functions Without X-Ray Tracing[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m AWS Lambda functions should have TracingConfig enabled. For this, property 'tracing_Config.mode' should have the value 'Active'
+[1mPlatform:[0m Terraform
 
-		056: 
-		057: resource "aws_lambda_function" "test_lambda" {
-		058:   filename      = "${path.module}/Archive.zip"
-
-
-Lambda Functions Without X-Ray Tracing, Severity: LOW, Results: 1
-Description: AWS Lambda functions should have TracingConfig enabled. For this, property 'tracing_Config.mode' should have the value 'Active'
-Platform: Terraform
-
-	[1]: /src/main.tf:57
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m57[0m
 
 		056: 
-		057: resource "aws_lambda_function" "test_lambda" {
-		058:   filename      = "${path.module}/Archive.zip"
+[38;2;240;173;78m		057: resource "aws_lambda_function" "test_lambda" {
+[0m		058:   filename      = "${path.module}/Archive.zip"
 
 
-Lambda Function Without Tags, Severity: MEDIUM, Results: 1
-Description: AWS Lambda Functions must have associated tags.
-Platform: Terraform
+[38;2;237;213;126mIAM Access Analyzer Not Enabled[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m IAM Access Analyzer should be enabled and configured to continuously monitor resource permissions
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:57
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m9[0m
 
-		056: 
-		057: resource "aws_lambda_function" "test_lambda" {
-		058:   filename      = "${path.module}/Archive.zip"
+		008: 
+[38;2;240;173;78m		009: resource "aws_iam_role" "iam_for_lambda" {
+[0m		010:   name = "iam_for_lambda"
 
 
 
 Results Summary:
-HIGH: 0
-MEDIUM: 1
-LOW: 1
-INFO: 3
+[38;2;187;33;36mHIGH[0m: 0
+[38;2;255;114;19mMEDIUM[0m: 0
+[38;2;237;213;126mLOW[0m: 2
+[38;2;91;192;222mINFO[0m: 3
 TOTAL: 5
 
-Scan duration: 4.660305756s
+Scan duration: 18.494813925s

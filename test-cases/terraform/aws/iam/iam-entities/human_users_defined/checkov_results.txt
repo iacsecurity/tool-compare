@@ -1,19 +1,24 @@
-
-
-       _               _              
-   ___| |__   ___  ___| | _______   __
-  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
- | (__| | | |  __/ (__|   < (_) \ V / 
-  \___|_| |_|\___|\___|_|\_\___/ \_/  
-                                      
-By bridgecrew.io | version: 2.0.358 
-Update available 2.0.358 -> 2.0.359
-Run pip3 install -U checkov to update 
-
-
 terraform scan results:
 
-Passed checks: 2, Failed checks: 1, Skipped checks: 0
+Passed checks: 2, Failed checks: 3, Skipped checks: 0
+
+Check: CKV_AWS_273: "Ensure access is controlled through SSO and not AWS IAM defined users"
+	FAILED for resource: aws_iam_user.iam_user_1
+	File: /main.tf:5-8
+
+		5 | resource "aws_iam_user" "iam_user_1" {
+		6 |   name = "iam_user_1"
+		7 | 
+		8 | }
+
+Check: CKV_AWS_273: "Ensure access is controlled through SSO and not AWS IAM defined users"
+	FAILED for resource: aws_iam_user.iam_user_2
+	File: /main.tf:15-18
+
+		15 | resource "aws_iam_user" "iam_user_2" {
+		16 |   name = "iam_user_2"
+		17 | 
+		18 | }
 
 Check: CKV2_AWS_22: "Ensure an IAM User does not have access to the console"
 	FAILED for resource: aws_iam_user.iam_user_1

@@ -1,4 +1,4 @@
-
+[38;2;34;187;51m
                    .0MO.                                    
                    OMMMx                                    
                    ;NMX;                                    
@@ -15,78 +15,107 @@ WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
 WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
-
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+[0m
+Scanning with Keeping Infrastructure as Code Secure v1.6.5
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 1039
 Queries failed to execute: 0
 
 ------------------------------------
 
-Resource Not Using Tags, Severity: INFO, Results: 2
-Description: AWS services resource tags are an essential part of managing components
-Platform: Terraform
+[38;2;91;192;222mResource Not Using Tags[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 2
+[1mDescription:[0m AWS services resource tags are an essential part of managing components. As a best practice, the field 'tags' should have additional tags defined other than 'Name'
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:1
-
-		001: resource "aws_elasticache_cluster" "default" {
-		002:   cluster_id           = "cluster"
-		003:   engine               = "redis"
-
-
-	[2]: /src/main.tf:9
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m9[0m
 
 		008: 
-		009: resource "aws_elasticache_cluster" "disabled" {
-		010:   cluster_id           = "cluster"
+[38;2;240;173;78m		009: resource "aws_elasticache_cluster" "disabled" {
+[0m		010:   cluster_id           = "cluster"
 
 
-ElastiCache Redis Cluster Without Backup, Severity: MEDIUM, Results: 2
-Description: ElastiCache Redis cluster should have 'snapshot_retention_limit' higher than 0
-Platform: Terraform
+	[38;2;91;192;222m[2]:[0m ../../src/main.tf:[38;2;34;187;51m1[0m
 
-	[1]: /src/main.tf:1
-
-		001: resource "aws_elasticache_cluster" "default" {
-		002:   cluster_id           = "cluster"
+[38;2;240;173;78m		001: resource "aws_elasticache_cluster" "default" {
+[0m		002:   cluster_id           = "cluster"
 		003:   engine               = "redis"
 
 
-	[2]: /src/main.tf:16
+[38;2;237;213;126mIAM Access Analyzer Not Enabled[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m IAM Access Analyzer should be enabled and configured to continuously monitor resource permissions
+[1mPlatform:[0m Terraform
+
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m1[0m
+
+[38;2;240;173;78m		001: resource "aws_elasticache_cluster" "default" {
+[0m		002:   cluster_id           = "cluster"
+		003:   engine               = "redis"
+
+
+[38;2;237;213;126mElastiCache Without VPC[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 2
+[1mDescription:[0m ElastiCache should be launched in a Virtual Private Cloud (VPC)
+[1mPlatform:[0m Terraform
+
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m1[0m
+
+[38;2;240;173;78m		001: resource "aws_elasticache_cluster" "default" {
+[0m		002:   cluster_id           = "cluster"
+		003:   engine               = "redis"
+
+
+	[38;2;237;213;126m[2]:[0m ../../src/main.tf:[38;2;34;187;51m9[0m
+
+		008: 
+[38;2;240;173;78m		009: resource "aws_elasticache_cluster" "disabled" {
+[0m		010:   cluster_id           = "cluster"
+
+
+[38;2;237;213;126mElastiCache Using Default Port[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 2
+[1mDescription:[0m ElastiCache should not use the default port (an attacker can easily guess the port). For engine set to Redis, the default port is 6379. The Memcached default port is 11211
+[1mPlatform:[0m Terraform
+
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m1[0m
+
+[38;2;240;173;78m		001: resource "aws_elasticache_cluster" "default" {
+[0m		002:   cluster_id           = "cluster"
+		003:   engine               = "redis"
+
+
+	[38;2;237;213;126m[2]:[0m ../../src/main.tf:[38;2;34;187;51m9[0m
+
+		008: 
+[38;2;240;173;78m		009: resource "aws_elasticache_cluster" "disabled" {
+[0m		010:   cluster_id           = "cluster"
+
+
+[38;2;255;114;19mElastiCache Redis Cluster Without Backup[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 2
+[1mDescription:[0m ElastiCache Redis cluster should have 'snapshot_retention_limit' higher than 0
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m1[0m
+
+[38;2;240;173;78m		001: resource "aws_elasticache_cluster" "default" {
+[0m		002:   cluster_id           = "cluster"
+		003:   engine               = "redis"
+
+
+	[38;2;255;114;19m[2]:[0m ../../src/main.tf:[38;2;34;187;51m16[0m
 
 		015: 
-		016:   snapshot_retention_limit = 0
-		017: }
-
-
-Memcached Disabled, Severity: HIGH, Results: 2
-Description: Check if the Memcached is disabled on the ElastiCache
-Platform: Terraform
-
-	[1]: /src/main.tf:11
-
-		010:   cluster_id           = "cluster"
-		011:   engine               = "redis"
-		012:   node_type            = "cache.m5.large"
-
-
-	[2]: /src/main.tf:3
-
-		002:   cluster_id           = "cluster"
-		003:   engine               = "redis"
-		004:   node_type            = "cache.m5.large"
+[38;2;240;173;78m		016:   snapshot_retention_limit = 0
+[0m		017: }
 
 
 
 Results Summary:
-HIGH: 2
-MEDIUM: 2
-LOW: 0
-INFO: 2
-TOTAL: 6
+[38;2;187;33;36mHIGH[0m: 0
+[38;2;255;114;19mMEDIUM[0m: 2
+[38;2;237;213;126mLOW[0m: 5
+[38;2;91;192;222mINFO[0m: 2
+TOTAL: 9
 
-Scan duration: 4.888592068s
+Scan duration: 14.916284757s

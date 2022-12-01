@@ -1,4 +1,4 @@
-
+[38;2;34;187;51m
                    .0MO.                                    
                    OMMMx                                    
                    ;NMX;                                    
@@ -15,79 +15,90 @@ WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
 WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
-
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+[0m
+Scanning with Keeping Infrastructure as Code Secure v1.6.5
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 1039
 Queries failed to execute: 0
 
 ------------------------------------
 
-Resource Not Using Tags, Severity: INFO, Results: 1
-Description: AWS services resource tags are an essential part of managing components
-Platform: Terraform
+[38;2;91;192;222mResource Not Using Tags[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 1
+[1mDescription:[0m AWS services resource tags are an essential part of managing components. As a best practice, the field 'tags' should have additional tags defined other than 'Name'
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:1
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m1[0m
 
-		001: resource "aws_ecr_repository" "foo" {
-		002:   name                 = "bar"
+[38;2;240;173;78m		001: resource "aws_ecr_repository" "foo" {
+[0m		002:   name                 = "bar"
 		003:   image_tag_mutability = "MUTABLE"
 
 
-ECR Repository Without Policy, Severity: LOW, Results: 1
-Description: ECR Repository should have Policies attached to it
-Platform: Terraform
+[38;2;237;213;126mIAM Access Analyzer Not Enabled[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m IAM Access Analyzer should be enabled and configured to continuously monitor resource permissions
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:1
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m1[0m
 
-		001: resource "aws_ecr_repository" "foo" {
-		002:   name                 = "bar"
+[38;2;240;173;78m		001: resource "aws_ecr_repository" "foo" {
+[0m		002:   name                 = "bar"
 		003:   image_tag_mutability = "MUTABLE"
 
 
-Unscanned ECR Image, Severity: MEDIUM, Results: 1
-Description: Checks if the ECR Image has been scanned
-Platform: Terraform
+[38;2;237;213;126mECR Repository Without Policy[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m ECR Repository should have Policies attached to it
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:6
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m1[0m
+
+[38;2;240;173;78m		001: resource "aws_ecr_repository" "foo" {
+[0m		002:   name                 = "bar"
+		003:   image_tag_mutability = "MUTABLE"
+
+
+[38;2;237;213;126mECR Repository Not Encrypted With CMK[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m ECR repositories should be encrypted with customer-managed keys to meet stricter security and compliance requirements on access control, monitoring, and key rotation
+[1mPlatform:[0m Terraform
+
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m1[0m
+
+[38;2;240;173;78m		001: resource "aws_ecr_repository" "foo" {
+[0m		002:   name                 = "bar"
+		003:   image_tag_mutability = "MUTABLE"
+
+
+[38;2;255;114;19mUnscanned ECR Image[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m Checks if the ECR Image has been scanned
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m6[0m
 
 		005:   image_scanning_configuration {
-		006:     scan_on_push = false
-		007:   }
+[38;2;240;173;78m		006:     scan_on_push = false
+[0m		007:   }
 
 
-ECR Repository Not Encrypted, Severity: MEDIUM, Results: 1
-Description: ECR (Elastic Container Registry) Repository encryption should be set
-Platform: Terraform
+[38;2;255;114;19mECR Image Tag Not Immutable[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m ECR should have an image tag be immutable. This prevents image tags from being overwritten.
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:1
-
-		001: resource "aws_ecr_repository" "foo" {
-		002:   name                 = "bar"
-		003:   image_tag_mutability = "MUTABLE"
-
-
-ECR Image Tag Not Immutable, Severity: MEDIUM, Results: 1
-Description: ECR should have an image tag be immutable
-Platform: Terraform
-
-	[1]: /src/main.tf:3
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m3[0m
 
 		002:   name                 = "bar"
-		003:   image_tag_mutability = "MUTABLE"
-		004: 
+[38;2;240;173;78m		003:   image_tag_mutability = "MUTABLE"
+[0m		004: 
 
 
 
 Results Summary:
-HIGH: 0
-MEDIUM: 3
-LOW: 1
-INFO: 1
-TOTAL: 5
+[38;2;187;33;36mHIGH[0m: 0
+[38;2;255;114;19mMEDIUM[0m: 2
+[38;2;237;213;126mLOW[0m: 3
+[38;2;91;192;222mINFO[0m: 1
+TOTAL: 6
 
-Scan duration: 4.4848094s
+Scan duration: 16.003077341s

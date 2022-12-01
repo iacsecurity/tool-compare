@@ -1,46 +1,27 @@
-
-  Result 1
-
-  [aws-rds-no-public-db-access][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'aws_dms_replication_instance.test' is exposed publicly.
-  /src/main.tf:62
-
-
-      59 |   auto_minor_version_upgrade   = true
-      60 |   multi_az                     = false
-      61 |   preferred_maintenance_window = "sun:10:30-sun:14:30"
-      62 |   publicly_accessible          = true    bool: true
-      63 |   replication_instance_class   = "dms.t2.micro"
-      64 |   replication_instance_id      = "test-dms-replication-instance-tf"
-      65 |   replication_subnet_group_id  = aws_dms_replication_subnet_group.test.id
-
-  Legacy ID:  AWS011
-  Impact:     The database instance is publicly accessible
-  Resolution: Set the database to not be publicly accessible
-
-  More Info:
-  - https://tfsec.dev/docs/aws/rds/no-public-db-access#aws/rds 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_instance 
-
-  times
-  ------------------------------------------
-  disk i/o             52.546125ms
-  parsing HCL          599.584µs
-  evaluating values    4.642458ms
-  running checks       27.477542ms
+  timings
+  ──────────────────────────────────────────
+  disk i/o             4.383917ms
+  parsing              853µs
+  adaptation           77.334µs
+  checks               1.853416ms
+  total                7.167667ms
 
   counts
-  ------------------------------------------
-  files loaded         1
-  blocks               9
-  modules              0
+  ──────────────────────────────────────────
+  modules downloaded   0
+  modules processed    1
+  blocks processed     9
+  files read           1
 
   results
-  ------------------------------------------
-  critical             1
+  ──────────────────────────────────────────
+  passed               2
+  ignored              0
+  critical             0
   high                 0
   medium               0
   low                  0
-  ignored              0
 
-  1 potential problems detected.
+
+No problems detected!
 

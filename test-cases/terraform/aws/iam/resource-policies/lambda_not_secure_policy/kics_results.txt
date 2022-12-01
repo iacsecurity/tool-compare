@@ -1,4 +1,4 @@
-
+[38;2;34;187;51m
                    .0MO.                                    
                    OMMMx                                    
                    ;NMX;                                    
@@ -15,86 +15,111 @@ WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
 WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
-
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+[0m
+Scanning with Keeping Infrastructure as Code Secure v1.6.5
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 1039
 Queries failed to execute: 0
 
 ------------------------------------
 
-Resource Not Using Tags, Severity: INFO, Results: 2
-Description: AWS services resource tags are an essential part of managing components
-Platform: Terraform
+[38;2;91;192;222mResource Not Using Tags[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 2
+[1mDescription:[0m AWS services resource tags are an essential part of managing components. As a best practice, the field 'tags' should have additional tags defined other than 'Name'
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:5
-
-		004: 
-		005: resource "aws_lambda_function" "my-lambda" {
-		006:   filename = "~/Downloads/lambda.json.zip"
-
-
-	[2]: /src/main.tf:13
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m13[0m
 
 		012: 
-		013: resource "aws_iam_role" "lambda-role" {
-		014:   name = "lambda-role"
+[38;2;240;173;78m		013: resource "aws_iam_role" "lambda-role" {
+[0m		014:   name = "lambda-role"
 
 
-Lambda Permission Misconfigured, Severity: LOW, Results: 1
-Description: Lambda permission may be misconfigured if the action field is not filled in by 'lambda:InvokeFunction'
-Platform: Terraform
-
-	[1]: /src/main.tf:35
-
-		034:   statement_id  = "AllowAllResources"
-		035:   action        = "lambda:*"
-		036:   function_name = aws_lambda_function.my-lambda.function_name
-
-
-Lambda Functions Without X-Ray Tracing, Severity: LOW, Results: 1
-Description: AWS Lambda functions should have TracingConfig enabled. For this, property 'tracing_Config.mode' should have the value 'Active'
-Platform: Terraform
-
-	[1]: /src/main.tf:5
+	[38;2;91;192;222m[2]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
 
 		004: 
-		005: resource "aws_lambda_function" "my-lambda" {
-		006:   filename = "~/Downloads/lambda.json.zip"
+[38;2;240;173;78m		005: resource "aws_lambda_function" "my-lambda" {
+[0m		006:   filename = "~/Downloads/lambda.json.zip"
 
 
-Lambda With Vulnerable Policy, Severity: MEDIUM, Results: 1
-Description: The attribute 'action' should not have wildcard
-Platform: Terraform
+[38;2;91;192;222mName Is Not Snake Case[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 3
+[1mDescription:[0m All names should follow snake case pattern.
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:35
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m13[0m
 
-		034:   statement_id  = "AllowAllResources"
-		035:   action        = "lambda:*"
-		036:   function_name = aws_lambda_function.my-lambda.function_name
+		012: 
+[38;2;240;173;78m		013: resource "aws_iam_role" "lambda-role" {
+[0m		014:   name = "lambda-role"
 
 
-Lambda Function Without Tags, Severity: MEDIUM, Results: 1
-Description: AWS Lambda Functions must have associated tags.
-Platform: Terraform
-
-	[1]: /src/main.tf:5
+	[38;2;91;192;222m[2]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
 
 		004: 
-		005: resource "aws_lambda_function" "my-lambda" {
-		006:   filename = "~/Downloads/lambda.json.zip"
+[38;2;240;173;78m		005: resource "aws_lambda_function" "my-lambda" {
+[0m		006:   filename = "~/Downloads/lambda.json.zip"
+
+
+	[38;2;91;192;222m[3]:[0m ../../src/main.tf:[38;2;34;187;51m44[0m
+
+		043: 
+[38;2;240;173;78m		044: resource "aws_lambda_alias" "my-lambda-alias" {
+[0m		045:   name             = "v1"
+
+
+[38;2;237;213;126mLambda Permission Misconfigured[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m Lambda permission may be misconfigured if the action field is not filled in by 'lambda:InvokeFunction'
+[1mPlatform:[0m Terraform
+
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m35[0m
+
+		034:   statement_id  = "AllowAllResources"
+[38;2;240;173;78m		035:   action        = "lambda:*"
+[0m		036:   function_name = aws_lambda_function.my-lambda.function_name
+
+
+[38;2;237;213;126mLambda Functions Without X-Ray Tracing[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m AWS Lambda functions should have TracingConfig enabled. For this, property 'tracing_Config.mode' should have the value 'Active'
+[1mPlatform:[0m Terraform
+
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
+
+		004: 
+[38;2;240;173;78m		005: resource "aws_lambda_function" "my-lambda" {
+[0m		006:   filename = "~/Downloads/lambda.json.zip"
+
+
+[38;2;237;213;126mIAM Access Analyzer Not Enabled[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m IAM Access Analyzer should be enabled and configured to continuously monitor resource permissions
+[1mPlatform:[0m Terraform
+
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
+
+		004: 
+[38;2;240;173;78m		005: resource "aws_lambda_function" "my-lambda" {
+[0m		006:   filename = "~/Downloads/lambda.json.zip"
+
+
+[38;2;255;114;19mLambda With Vulnerable Policy[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m The attribute 'action' should not have wildcard
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m35[0m
+
+		034:   statement_id  = "AllowAllResources"
+[38;2;240;173;78m		035:   action        = "lambda:*"
+[0m		036:   function_name = aws_lambda_function.my-lambda.function_name
 
 
 
 Results Summary:
-HIGH: 0
-MEDIUM: 2
-LOW: 2
-INFO: 2
-TOTAL: 6
+[38;2;187;33;36mHIGH[0m: 0
+[38;2;255;114;19mMEDIUM[0m: 1
+[38;2;237;213;126mLOW[0m: 3
+[38;2;91;192;222mINFO[0m: 5
+TOTAL: 9
 
-Scan duration: 4.557551192s
+Scan duration: 14.989190007s

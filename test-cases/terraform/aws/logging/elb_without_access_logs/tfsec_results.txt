@@ -1,50 +1,52 @@
 
-  Result 1
+Result #1 HIGH Load balancer is exposed publicly. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:1-10
+────────────────────────────────────────────────────────────────────────────────
+    1    resource "aws_elb" "test" {
+    2      name = "test-lb-tf"
+    3      availability_zones = ["us-west-2a", "us-west-2b", "us-west-2c"]
+    4      listener {
+    5        instance_port     = 8000
+    6        instance_protocol = "http"
+    7        lb_port           = 80
+    8        lb_protocol       = "http"
+    9      }
+   10    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-elb-alb-not-public
+      Impact The load balancer is exposed on the internet
+  Resolution Switch to an internal load balancer or add a tfsec ignore
 
-  [aws-elbv2-alb-not-public][[0m[31mHIGH[39m[0m] Resource 'aws_elb.test' is exposed publicly.
-  /src/main.tf:1-10
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/elb/alb-not-public/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb
+────────────────────────────────────────────────────────────────────────────────
 
 
-       1 | resource "aws_elb" "test" {
-       2 |   name = "test-lb-tf"
-       3 |   availability_zones = ["us-west-2a", "us-west-2b", "us-west-2c"]
-       4 |   listener {
-       5 |     instance_port     = 8000
-       6 |     instance_protocol = "http"
-       7 |     lb_port           = 80
-       8 |     lb_protocol       = "http"
-       9 |   }
-      10 | }
-      11 | 
-
-  Legacy ID:  AWS005
-  Impact:     The load balancer is exposed on the internet
-  Resolution: Switch to an internal load balancer or add a tfsec ignore
-
-  More Info:
-  - https://tfsec.dev/docs/aws/elbv2/alb-not-public#aws/elbv2 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb 
-
-  times
-  ------------------------------------------
-  disk i/o             47.672917ms
-  parsing HCL          489.458µs
-  evaluating values    1.901667ms
-  running checks       15.275583ms
+  timings
+  ──────────────────────────────────────────
+  disk i/o             3.605125ms
+  parsing              108.416µs
+  adaptation           59.458µs
+  checks               2.828ms
+  total                6.600999ms
 
   counts
-  ------------------------------------------
-  files loaded         1
-  blocks               1
-  modules              0
+  ──────────────────────────────────────────
+  modules downloaded   0
+  modules processed    1
+  blocks processed     1
+  files read           1
 
   results
-  ------------------------------------------
+  ──────────────────────────────────────────
+  passed               2
+  ignored              0
   critical             0
   high                 1
   medium               0
   low                  0
-  ignored              0
 
-  1 potential problems detected.
+  2 passed, 1 potential problem(s) detected.
 

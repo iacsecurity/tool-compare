@@ -1,4 +1,4 @@
-
+[38;2;34;187;51m
                    .0MO.                                    
                    OMMMx                                    
                    ;NMX;                                    
@@ -15,53 +15,75 @@ WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
 WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
-
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+[0m
+Scanning with Keeping Infrastructure as Code Secure v1.6.5
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 1039
 Queries failed to execute: 0
 
 ------------------------------------
 
-Resource Not Using Tags, Severity: INFO, Results: 2
-Description: AWS services resource tags are an essential part of managing components
-Platform: Terraform
+[38;2;91;192;222mResource Not Using Tags[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 2
+[1mDescription:[0m AWS services resource tags are an essential part of managing components. As a best practice, the field 'tags' should have additional tags defined other than 'Name'
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:10
-
-		009: # No policy attached to this role because it is for testing purposes
-		010: resource "aws_iam_role" "codebuild" {
-		011:   name = "codebuild-cloudrail-test"
-
-
-	[2]: /src/main.tf:29
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m29[0m
 
 		028: 
-		029: resource "aws_codebuild_project" "project-cloudrail-test" {
-		030:   name           = "project-cloudrail-test"
+[38;2;240;173;78m		029: resource "aws_codebuild_project" "project-cloudrail-test" {
+[0m		030:   name           = "project-cloudrail-test"
 
 
-CodeBuild Project Encrypted With AWS Managed Key, Severity: HIGH, Results: 1
-Description: CodeBuild Project should be encrypted with customer-managed KMS keys instead of AWS managed keys
-Platform: Terraform
+	[38;2;91;192;222m[2]:[0m ../../src/main.tf:[38;2;34;187;51m10[0m
 
-	[1]: /src/main.tf:35
+		009: # No policy attached to this role because it is for testing purposes
+[38;2;240;173;78m		010: resource "aws_iam_role" "codebuild" {
+[0m		011:   name = "codebuild-cloudrail-test"
+
+
+[38;2;91;192;222mName Is Not Snake Case[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 1
+[1mDescription:[0m All names should follow snake case pattern.
+[1mPlatform:[0m Terraform
+
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m29[0m
+
+		028: 
+[38;2;240;173;78m		029: resource "aws_codebuild_project" "project-cloudrail-test" {
+[0m		030:   name           = "project-cloudrail-test"
+
+
+[38;2;237;213;126mIAM Access Analyzer Not Enabled[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m IAM Access Analyzer should be enabled and configured to continuously monitor resource permissions
+[1mPlatform:[0m Terraform
+
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m10[0m
+
+		009: # No policy attached to this role because it is for testing purposes
+[38;2;240;173;78m		010: resource "aws_iam_role" "codebuild" {
+[0m		011:   name = "codebuild-cloudrail-test"
+
+
+[38;2;187;33;36mCodeBuild Project Encrypted With AWS Managed Key[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mDescription:[0m CodeBuild Project should be encrypted with customer-managed KMS keys instead of AWS managed keys
+[1mPlatform:[0m Terraform
+
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m35[0m
 
 		034:   service_role   = aws_iam_role.codebuild.arn
-		035:   encryption_key = data.aws_kms_key.by_alias.arn
-		036: 
+[38;2;240;173;78m		035:   encryption_key = data.aws_kms_key.by_alias.arn
+[0m		036: 
 
 
 
 Results Summary:
-HIGH: 1
-MEDIUM: 0
-LOW: 0
-INFO: 2
-TOTAL: 3
+[38;2;187;33;36mHIGH[0m: 1
+[38;2;255;114;19mMEDIUM[0m: 0
+[38;2;237;213;126mLOW[0m: 1
+[38;2;91;192;222mINFO[0m: 3
+TOTAL: 5
 
-Scan duration: 4.550050216s
+Scan duration: 14.880224549s

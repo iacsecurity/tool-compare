@@ -1,64 +1,6 @@
-
-
-       _               _              
-   ___| |__   ___  ___| | _______   __
-  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
- | (__| | | |  __/ (__|   < (_) \ V / 
-  \___|_| |_|\___|\___|_|\_\___/ \_/  
-                                      
-By bridgecrew.io | version: 2.0.358 
-Update available 2.0.358 -> 2.0.359
-Run pip3 install -U checkov to update 
-
-
 terraform scan results:
 
 Passed checks: 2, Failed checks: 6, Skipped checks: 0
-
-Check: CKV_AWS_71: "Ensure Redshift Cluster logging is enabled"
-	FAILED for resource: aws_redshift_cluster.default
-	File: /main.tf:5-12
-	Guide: https://docs.bridgecrew.io/docs/bc_aws_logging_12
-
-		5  | resource "aws_redshift_cluster" "default" {
-		6  |   cluster_identifier = "tf-redshift-cluster"
-		7  |   database_name      = "mydb"
-		8  |   master_username    = "foo"
-		9  |   master_password    = "Mustbe8characters"
-		10 |   node_type          = "dc1.large"
-		11 |   cluster_type       = "single-node"
-		12 | }
-
-
-Check: CKV_AWS_154: "Ensure Redshift is not deployed outside of a VPC"
-	FAILED for resource: aws_redshift_cluster.default
-	File: /main.tf:5-12
-	Guide: https://docs.bridgecrew.io/docs/ensure-redshift-is-not-deployed-outside-of-a-vpc
-
-		5  | resource "aws_redshift_cluster" "default" {
-		6  |   cluster_identifier = "tf-redshift-cluster"
-		7  |   database_name      = "mydb"
-		8  |   master_username    = "foo"
-		9  |   master_password    = "Mustbe8characters"
-		10 |   node_type          = "dc1.large"
-		11 |   cluster_type       = "single-node"
-		12 | }
-
-
-Check: CKV_AWS_142: "Ensure that Redshift cluster is encrypted by KMS"
-	FAILED for resource: aws_redshift_cluster.default
-	File: /main.tf:5-12
-	Guide: https://docs.bridgecrew.io/docs/ensure-that-redshift-cluster-is-encrypted-by-kms
-
-		5  | resource "aws_redshift_cluster" "default" {
-		6  |   cluster_identifier = "tf-redshift-cluster"
-		7  |   database_name      = "mydb"
-		8  |   master_username    = "foo"
-		9  |   master_password    = "Mustbe8characters"
-		10 |   node_type          = "dc1.large"
-		11 |   cluster_type       = "single-node"
-		12 | }
-
 
 Check: CKV_AWS_87: "Redshift cluster should not be publicly accessible"
 	FAILED for resource: aws_redshift_cluster.default
@@ -74,6 +16,61 @@ Check: CKV_AWS_87: "Redshift cluster should not be publicly accessible"
 		11 |   cluster_type       = "single-node"
 		12 | }
 
+Check: CKV_AWS_154: "Ensure Redshift is not deployed outside of a VPC"
+	FAILED for resource: aws_redshift_cluster.default
+	File: /main.tf:5-12
+	Guide: https://docs.bridgecrew.io/docs/ensure-redshift-is-not-deployed-outside-of-a-vpc
+
+		5  | resource "aws_redshift_cluster" "default" {
+		6  |   cluster_identifier = "tf-redshift-cluster"
+		7  |   database_name      = "mydb"
+		8  |   master_username    = "foo"
+		9  |   master_password    = "Mustbe8characters"
+		10 |   node_type          = "dc1.large"
+		11 |   cluster_type       = "single-node"
+		12 | }
+
+Check: CKV_AWS_188: "Ensure RedShift Cluster is encrypted by KMS using a customer managed Key (CMK)"
+	FAILED for resource: aws_redshift_cluster.default
+	File: /main.tf:5-12
+	Guide: https://docs.bridgecrew.io/docs/ensure-aws-redshift-cluster-is-encrypted-by-key-management-service-kms-using-a-customer-managed-key-cmk
+
+		5  | resource "aws_redshift_cluster" "default" {
+		6  |   cluster_identifier = "tf-redshift-cluster"
+		7  |   database_name      = "mydb"
+		8  |   master_username    = "foo"
+		9  |   master_password    = "Mustbe8characters"
+		10 |   node_type          = "dc1.large"
+		11 |   cluster_type       = "single-node"
+		12 | }
+
+Check: CKV_AWS_71: "Ensure Redshift Cluster logging is enabled"
+	FAILED for resource: aws_redshift_cluster.default
+	File: /main.tf:5-12
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_logging_12
+
+		5  | resource "aws_redshift_cluster" "default" {
+		6  |   cluster_identifier = "tf-redshift-cluster"
+		7  |   database_name      = "mydb"
+		8  |   master_username    = "foo"
+		9  |   master_password    = "Mustbe8characters"
+		10 |   node_type          = "dc1.large"
+		11 |   cluster_type       = "single-node"
+		12 | }
+
+Check: CKV_AWS_142: "Ensure that Redshift cluster is encrypted by KMS"
+	FAILED for resource: aws_redshift_cluster.default
+	File: /main.tf:5-12
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-redshift-cluster-is-encrypted-by-kms
+
+		5  | resource "aws_redshift_cluster" "default" {
+		6  |   cluster_identifier = "tf-redshift-cluster"
+		7  |   database_name      = "mydb"
+		8  |   master_username    = "foo"
+		9  |   master_password    = "Mustbe8characters"
+		10 |   node_type          = "dc1.large"
+		11 |   cluster_type       = "single-node"
+		12 | }
 
 Check: CKV_AWS_64: "Ensure all data stored in the Redshift cluster is securely encrypted at rest"
 	FAILED for resource: aws_redshift_cluster.default
@@ -89,19 +86,15 @@ Check: CKV_AWS_64: "Ensure all data stored in the Redshift cluster is securely e
 		11 |   cluster_type       = "single-node"
 		12 | }
 
+secrets scan results:
 
-Check: CKV2_AWS_13: "Ensure that Redshift clusters has backup plan of AWS Backup"
-	FAILED for resource: aws_redshift_cluster.default
-	File: /main.tf:5-12
-	Guide: https://docs.bridgecrew.io/docs/ensure-that-redshift-clusters-has-backup-plan-of-aws-backup
+Passed checks: 0, Failed checks: 1, Skipped checks: 0
 
-		5  | resource "aws_redshift_cluster" "default" {
-		6  |   cluster_identifier = "tf-redshift-cluster"
-		7  |   database_name      = "mydb"
-		8  |   master_username    = "foo"
-		9  |   master_password    = "Mustbe8characters"
-		10 |   node_type          = "dc1.large"
-		11 |   cluster_type       = "single-node"
-		12 | }
+Check: CKV_SECRET_6: "Base64 High Entropy String"
+	FAILED for resource: 7b5865e6360213cdd65426347e9c465041a038e5
+	File: /main.tf:9-10
+	Guide: https://docs.bridgecrew.io/docs/git_secrets_6
+
+		9 |   master_password    = "Must*************"
 
 

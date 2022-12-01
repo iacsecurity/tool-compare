@@ -1,4 +1,4 @@
-
+[38;2;34;187;51m
                    .0MO.                                    
                    OMMMx                                    
                    ;NMX;                                    
@@ -15,79 +15,90 @@ WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
 WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
-
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+[0m
+Scanning with Keeping Infrastructure as Code Secure v1.6.5
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 1039
 Queries failed to execute: 0
 
 ------------------------------------
 
-Resource Not Using Tags, Severity: INFO, Results: 1
-Description: AWS services resource tags are an essential part of managing components
-Platform: Terraform
+[38;2;91;192;222mResource Not Using Tags[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 1
+[1mDescription:[0m AWS services resource tags are an essential part of managing components. As a best practice, the field 'tags' should have additional tags defined other than 'Name'
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:1
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m1[0m
 
-		001: resource "aws_docdb_cluster" "docdb" {
-		002:   cluster_identifier      = "my-docdb-cluster"
+[38;2;240;173;78m		001: resource "aws_docdb_cluster" "docdb" {
+[0m		002:   cluster_identifier      = "my-docdb-cluster"
 		003:   engine                  = "docdb"
 
 
-DocDB Logging Is Disabled, Severity: LOW, Results: 1
-Description: DocDB logging should be enabled
-Platform: Terraform
+[38;2;237;213;126mIAM Access Analyzer Not Enabled[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m IAM Access Analyzer should be enabled and configured to continuously monitor resource permissions
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:1
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m1[0m
 
-		001: resource "aws_docdb_cluster" "docdb" {
-		002:   cluster_identifier      = "my-docdb-cluster"
+[38;2;240;173;78m		001: resource "aws_docdb_cluster" "docdb" {
+[0m		002:   cluster_identifier      = "my-docdb-cluster"
 		003:   engine                  = "docdb"
 
 
-Passwords And Secrets In Infrastructure Code, Severity: HIGH, Results: 1
-Description: Query to find passwords and secrets in infrastructure code.
-Platform: Common
+[38;2;237;213;126mDocDB Logging Is Disabled[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m DocDB logging should be enabled
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:5
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m1[0m
+
+[38;2;240;173;78m		001: resource "aws_docdb_cluster" "docdb" {
+[0m		002:   cluster_identifier      = "my-docdb-cluster"
+		003:   engine                  = "docdb"
+
+
+[38;2;187;33;36mPasswords And Secrets - Generic Password[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mDescription:[0m Query to find passwords and secrets in infrastructure code.
+[1mPlatform:[0m Common
+
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
 
 		004:   master_username         = "foo"
-		005:   master_password         = "mustbeeightchars"
-		006:   backup_retention_period = 5
+[38;2;240;173;78m		005:   master_password         = <SECRET-MASKED-ON-PURPOSE>
+[0m		006:   backup_retention_period = 5
 
 
-DOCDB Cluster Without KMS, Severity: HIGH, Results: 1
-Description: AWS DOCDB Cluster should be encrypted with a KMS encryption key
-Platform: Terraform
+[38;2;187;33;36mDOCDB Cluster Without KMS[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mDescription:[0m AWS DOCDB Cluster should be encrypted with a KMS encryption key
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:1
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m1[0m
 
-		001: resource "aws_docdb_cluster" "docdb" {
-		002:   cluster_identifier      = "my-docdb-cluster"
+[38;2;240;173;78m		001: resource "aws_docdb_cluster" "docdb" {
+[0m		002:   cluster_identifier      = "my-docdb-cluster"
 		003:   engine                  = "docdb"
 
 
-DOCDB Cluster Not Encrypted, Severity: HIGH, Results: 1
-Description: AWS DOCDB Cluster storage should be encrypted
-Platform: Terraform
+[38;2;187;33;36mDOCDB Cluster Not Encrypted[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mDescription:[0m AWS DOCDB Cluster storage should be encrypted
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:1
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m1[0m
 
-		001: resource "aws_docdb_cluster" "docdb" {
-		002:   cluster_identifier      = "my-docdb-cluster"
+[38;2;240;173;78m		001: resource "aws_docdb_cluster" "docdb" {
+[0m		002:   cluster_identifier      = "my-docdb-cluster"
 		003:   engine                  = "docdb"
 
 
 
 Results Summary:
-HIGH: 3
-MEDIUM: 0
-LOW: 1
-INFO: 1
-TOTAL: 5
+[38;2;187;33;36mHIGH[0m: 3
+[38;2;255;114;19mMEDIUM[0m: 0
+[38;2;237;213;126mLOW[0m: 2
+[38;2;91;192;222mINFO[0m: 1
+TOTAL: 6
 
-Scan duration: 4.874315792s
+Scan duration: 16.686142883s

@@ -1,114 +1,204 @@
 
-  Result 1
+Result #1 HIGH Instance does not require IMDS access to require a token 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:106-111
+────────────────────────────────────────────────────────────────────────────────
+  106    resource "aws_instance" "priv_ins" {
+  107      ami           = "${data.aws_ami.ubuntu.id}"
+  108      instance_type = "t2.micro"
+  109      subnet_id = module.vpc.private_subnets[0]
+  110      iam_instance_profile = aws_iam_instance_profile.test_profile.name
+  111    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ec2-enforce-http-token-imds
+      Impact Instance metadata service can be interacted with freely
+  Resolution Enable HTTP token requirement for IMDS
 
-  [aws-ec2-enforce-http-token-imds][[0m[31mHIGH[39m[0m] Resource 'aws_instance.pub_ins' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
-  /src/main.tf:98-104
-
-
-      95 | }
-      96 | 
-      97 | 
-      98 | resource "aws_instance" "pub_ins" {
-      99 |   ami           = "${data.aws_ami.ubuntu.id}"
-     100 |   instance_type = "t2.micro"
-     101 |   subnet_id = module.vpc.public_subnets[0]
-     102 |   iam_instance_profile = aws_iam_instance_profile.test_profile.name
-     103 | 
-     104 | }
-     105 | 
-     106 | resource "aws_instance" "priv_ins" {
-     107 |   ami           = "${data.aws_ami.ubuntu.id}"
-
-  Legacy ID:  AWS079
-  Impact:     Instance metadata service can be interacted with freely
-  Resolution: Enable HTTP token requirement for IMDS
-
-  More Info:
-  - https://tfsec.dev/docs/aws/ec2/enforce-http-token-imds#aws/ec2 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#metadata-options 
-  - https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service 
-
-  Result 2
-
-  [aws-ec2-enforce-http-token-imds][[0m[31mHIGH[39m[0m] Resource 'aws_instance.priv_ins' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
-  /src/main.tf:106-111
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/enforce-http-token-imds/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#metadata-options
+────────────────────────────────────────────────────────────────────────────────
 
 
-     103 | 
-     104 | }
-     105 | 
-     106 | resource "aws_instance" "priv_ins" {
-     107 |   ami           = "${data.aws_ami.ubuntu.id}"
-     108 |   instance_type = "t2.micro"
-     109 |   subnet_id = module.vpc.private_subnets[0]
-     110 |   iam_instance_profile = aws_iam_instance_profile.test_profile.name
-     111 | }
+Result #2 HIGH Root block device is not encrypted. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:106-111
+────────────────────────────────────────────────────────────────────────────────
+  106    resource "aws_instance" "priv_ins" {
+  107      ami           = "${data.aws_ami.ubuntu.id}"
+  108      instance_type = "t2.micro"
+  109      subnet_id = module.vpc.private_subnets[0]
+  110      iam_instance_profile = aws_iam_instance_profile.test_profile.name
+  111    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ec2-enable-at-rest-encryption
+      Impact The block device could be compromised and read from
+  Resolution Turn on encryption for all block devices
 
-  Legacy ID:  AWS079
-  Impact:     Instance metadata service can be interacted with freely
-  Resolution: Enable HTTP token requirement for IMDS
-
-  More Info:
-  - https://tfsec.dev/docs/aws/ec2/enforce-http-token-imds#aws/ec2 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#metadata-options 
-  - https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service 
-
-  Result 3
-
-  [aws-iam-no-policy-wildcards][[0m[31mHIGH[39m[0m] Resource 'aws_iam_role_policy.test_policy' defines a policy with wildcarded resources.
-  /src/main.tf:81-94
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/enable-at-rest-encryption/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#ebs-ephemeral-and-root-block-devices
+────────────────────────────────────────────────────────────────────────────────
 
 
-      78 |   name = "test_policy"
-      79 |   role = "${aws_iam_role.test_role.id}"
-      80 | 
-      81 |   policy = <<EOF    string: "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Action\": [\n        \"s3:*\"\n      ],\n      \"Effect\": \"Allow\",\n      \"Resource\": \"*\"\n    }\n  ]\n}\n"
-      82 | {
-      83 |   "Version": "2012-10-17",
-      84 |   "Statement": [
-      85 |     {
-      86 |       "Action": [
-      87 |         "s3:*"
-      88 |       ],
-      89 |       "Effect": "Allow",
-      90 |       "Resource": "*"
-      91 |     }
-      92 |   ]
-      93 | }
-      94 | EOF
-      95 | }
-      96 | 
-      97 | 
+Result #3 HIGH IAM policy document uses wildcarded action 's3:*' 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:86-88
+────────────────────────────────────────────────────────────────────────────────
+   77    resource "aws_iam_role_policy" "test_policy" {
+   ..  
+   86  ┌       "Action": [
+   87  │         "s3:*"
+   88  └       ],
+   ..  
+   95    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-iam-no-policy-wildcards
+      Impact Overly permissive policies may grant access to sensitive resources
+  Resolution Specify the exact permissions required, and to which resources they should apply instead of using wildcards.
 
-  Legacy ID:  AWS099
-  Impact:     Overly permissive policies may grant access to sensitive resources
-  Resolution: Specify the exact permissions required, and to which resources they should apply instead of using wildcards.
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/iam/no-policy-wildcards/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document
+────────────────────────────────────────────────────────────────────────────────
 
-  More Info:
-  - https://tfsec.dev/docs/aws/iam/no-policy-wildcards#aws/iam 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document 
-  - https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html 
 
-  times
-  ------------------------------------------
-  disk i/o             40.619497ms
-  parsing HCL          121.064µs
-  evaluating values    94.268314ms
-  running checks       17.337631ms
+Result #4 HIGH IAM policy document uses sensitive action 's3:*' on wildcarded resource '*' 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:90
+────────────────────────────────────────────────────────────────────────────────
+   77    resource "aws_iam_role_policy" "test_policy" {
+   ..  
+   90  [       "Resource": "*"
+   ..  
+   95    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-iam-no-policy-wildcards
+      Impact Overly permissive policies may grant access to sensitive resources
+  Resolution Specify the exact permissions required, and to which resources they should apply instead of using wildcards.
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/iam/no-policy-wildcards/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document
+────────────────────────────────────────────────────────────────────────────────
+
+
+Result #5 HIGH Instance does not require IMDS access to require a token 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:98-104
+────────────────────────────────────────────────────────────────────────────────
+   98    resource "aws_instance" "pub_ins" {
+   99      ami           = "${data.aws_ami.ubuntu.id}"
+  100      instance_type = "t2.micro"
+  101      subnet_id = module.vpc.public_subnets[0]
+  102      iam_instance_profile = aws_iam_instance_profile.test_profile.name
+  103    
+  104    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ec2-enforce-http-token-imds
+      Impact Instance metadata service can be interacted with freely
+  Resolution Enable HTTP token requirement for IMDS
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/enforce-http-token-imds/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#metadata-options
+────────────────────────────────────────────────────────────────────────────────
+
+
+Result #6 HIGH Root block device is not encrypted. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:98-104
+────────────────────────────────────────────────────────────────────────────────
+   98    resource "aws_instance" "pub_ins" {
+   99      ami           = "${data.aws_ami.ubuntu.id}"
+  100      instance_type = "t2.micro"
+  101      subnet_id = module.vpc.public_subnets[0]
+  102      iam_instance_profile = aws_iam_instance_profile.test_profile.name
+  103    
+  104    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ec2-enable-at-rest-encryption
+      Impact The block device could be compromised and read from
+  Resolution Turn on encryption for all block devices
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/enable-at-rest-encryption/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#ebs-ephemeral-and-root-block-devices
+────────────────────────────────────────────────────────────────────────────────
+
+
+Results #7-9 HIGH Subnet associates public IP address. (3 similar results)
+────────────────────────────────────────────────────────────────────────────────
+  terraform-aws-modules/vpc/aws/src/.terraform/modules/vpc/main.tf:366
+   via main.tf:10-32 (module.vpc)
+────────────────────────────────────────────────────────────────────────────────
+  359    resource "aws_subnet" "public" {
+  ...  
+  366  [   map_public_ip_on_launch         = var.map_public_ip_on_launch (true)
+  ...  
+  381    }
+────────────────────────────────────────────────────────────────────────────────
+  Individual Causes
+  - terraform-aws-modules/vpc/aws/src/.terraform/modules/vpc/main.tf:10-32 (module.vpc) 3 instances
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ec2-no-public-ip-subnet
+      Impact The instance is publicly accessible
+  Resolution Set the instance to not be publicly accessible
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/no-public-ip-subnet/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet#map_public_ip_on_launch
+────────────────────────────────────────────────────────────────────────────────
+
+
+Result #10 MEDIUM VPC Flow Logs is not enabled for VPC  
+────────────────────────────────────────────────────────────────────────────────
+  terraform-aws-modules/vpc/aws/src/.terraform/modules/vpc/main.tf:20-43
+   via main.tf:10-32 (module.vpc)
+────────────────────────────────────────────────────────────────────────────────
+   20  ┌ resource "aws_vpc" "this" {
+   21  │   count = local.create_vpc ? 1 : 0
+   22  │ 
+   23  │   cidr_block          = var.use_ipam_pool ? null : var.cidr
+   24  │   ipv4_ipam_pool_id   = var.ipv4_ipam_pool_id
+   25  │   ipv4_netmask_length = var.ipv4_netmask_length
+   26  │ 
+   27  │   assign_generated_ipv6_cidr_block = var.enable_ipv6 && !var.use_ipam_pool ? true : null
+   28  └   ipv6_cidr_block                  = var.ipv6_cidr
+   ..  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ec2-require-vpc-flow-logs-for-all-vpcs
+      Impact Without VPC flow logs, you risk not having enough information about network traffic flow to investigate incidents or identify security issues.
+  Resolution Enable flow logs for VPC
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/require-vpc-flow-logs-for-all-vpcs/
+────────────────────────────────────────────────────────────────────────────────
+
+
+  timings
+  ──────────────────────────────────────────
+  disk i/o             24.23021ms
+  parsing              177.598292ms
+  adaptation           213.959µs
+  checks               3.16775ms
+  total                205.210211ms
 
   counts
-  ------------------------------------------
-  files loaded         6
-  blocks               9
-  modules              1
+  ──────────────────────────────────────────
+  modules downloaded   0
+  modules processed    2
+  blocks processed     382
+  files read           6
 
   results
-  ------------------------------------------
-  critical             0
-  high                 3
-  medium               0
-  low                  0
+  ──────────────────────────────────────────
+  passed               7
   ignored              0
+  critical             0
+  high                 9
+  medium               1
+  low                  0
 
-  3 potential problems detected.
+  7 passed, 10 potential problem(s) detected.
 

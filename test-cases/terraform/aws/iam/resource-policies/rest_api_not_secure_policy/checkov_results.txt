@@ -1,19 +1,27 @@
-
-
-       _               _              
-   ___| |__   ___  ___| | _______   __
-  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
- | (__| | | |  __/ (__|   < (_) \ V / 
-  \___|_| |_|\___|\___|_|\_\___/ \_/  
-                                      
-By bridgecrew.io | version: 2.0.358 
-Update available 2.0.358 -> 2.0.359
-Run pip3 install -U checkov to update 
-
-
 terraform scan results:
 
-Passed checks: 1, Failed checks: 6, Skipped checks: 0
+Passed checks: 3, Failed checks: 8, Skipped checks: 0
+
+Check: CKV_AWS_237: "Ensure Create before destroy for API GATEWAY"
+	FAILED for resource: aws_api_gateway_rest_api.api_gw
+	File: /main.tf:5-8
+	Guide: https://docs.bridgecrew.io/docs/ensure-aws-api-gateway-enables-create-before-destroy
+
+		5 | resource "aws_api_gateway_rest_api" "api_gw" {
+		6 |   name        = "api-gw-cache-encrypted"
+		7 |   description = "API GW test"
+		8 | }
+
+Check: CKV_AWS_217: "Ensure Create before destroy for API deployments"
+	FAILED for resource: aws_api_gateway_deployment.api_gw_deploy
+	File: /main.tf:38-42
+	Guide: https://docs.bridgecrew.io/docs/ensure-aws-api-deployments-enable-create-before-destroy
+
+		38 | resource "aws_api_gateway_deployment" "api_gw_deploy" {
+		39 |   depends_on  = [aws_api_gateway_integration.api_gw_int]
+		40 |   rest_api_id = aws_api_gateway_rest_api.api_gw.id
+		41 |   stage_name  = "dev"
+		42 | }
 
 Check: CKV_AWS_59: "Ensure there is no open access to back-end resources through API"
 	FAILED for resource: aws_api_gateway_method.api_gw_method
@@ -27,29 +35,16 @@ Check: CKV_AWS_59: "Ensure there is no open access to back-end resources through
 		54 |   authorization = "NONE"
 		55 | }
 
-
 Check: CKV_AWS_120: "Ensure API Gateway caching is enabled"
 	FAILED for resource: aws_api_gateway_stage.api_gw_stage
 	File: /main.tf:72-76
+	Guide: https://docs.bridgecrew.io/docs/ensure-aws-api-gateway-caching-is-enabled
 
 		72 | resource "aws_api_gateway_stage" "api_gw_stage" {
 		73 |   stage_name    = "prod"
 		74 |   rest_api_id   = aws_api_gateway_rest_api.api_gw.id
 		75 |   deployment_id = aws_api_gateway_deployment.api_gw_deploy.id
 		76 | }
-
-
-Check: CKV_AWS_73: "Ensure API Gateway has X-Ray Tracing enabled"
-	FAILED for resource: aws_api_gateway_stage.api_gw_stage
-	File: /main.tf:72-76
-	Guide: https://docs.bridgecrew.io/docs/logging_15
-
-		72 | resource "aws_api_gateway_stage" "api_gw_stage" {
-		73 |   stage_name    = "prod"
-		74 |   rest_api_id   = aws_api_gateway_rest_api.api_gw.id
-		75 |   deployment_id = aws_api_gateway_deployment.api_gw_deploy.id
-		76 | }
-
 
 Check: CKV_AWS_76: "Ensure API Gateway has Access Logging enabled"
 	FAILED for resource: aws_api_gateway_stage.api_gw_stage
@@ -62,11 +57,10 @@ Check: CKV_AWS_76: "Ensure API Gateway has Access Logging enabled"
 		75 |   deployment_id = aws_api_gateway_deployment.api_gw_deploy.id
 		76 | }
 
-
-Check: CKV2_AWS_29: "Ensure public API gateway are protected by WAF"
+Check: CKV_AWS_73: "Ensure API Gateway has X-Ray Tracing enabled"
 	FAILED for resource: aws_api_gateway_stage.api_gw_stage
 	File: /main.tf:72-76
-	Guide: https://docs.bridgecrew.io/docs/ensure-public-api-gateway-are-protected-by-waf
+	Guide: https://docs.bridgecrew.io/docs/logging_15
 
 		72 | resource "aws_api_gateway_stage" "api_gw_stage" {
 		73 |   stage_name    = "prod"
@@ -74,11 +68,21 @@ Check: CKV2_AWS_29: "Ensure public API gateway are protected by WAF"
 		75 |   deployment_id = aws_api_gateway_deployment.api_gw_deploy.id
 		76 | }
 
-
 Check: CKV2_AWS_4: "Ensure API Gateway stage have logging level defined as appropriate"
 	FAILED for resource: aws_api_gateway_stage.api_gw_stage
 	File: /main.tf:72-76
 	Guide: https://docs.bridgecrew.io/docs/ensure-api-gateway-stage-have-logging-level-defined-as-appropiate
+
+		72 | resource "aws_api_gateway_stage" "api_gw_stage" {
+		73 |   stage_name    = "prod"
+		74 |   rest_api_id   = aws_api_gateway_rest_api.api_gw.id
+		75 |   deployment_id = aws_api_gateway_deployment.api_gw_deploy.id
+		76 | }
+
+Check: CKV2_AWS_29: "Ensure public API gateway are protected by WAF"
+	FAILED for resource: aws_api_gateway_stage.api_gw_stage
+	File: /main.tf:72-76
+	Guide: https://docs.bridgecrew.io/docs/ensure-public-api-gateway-are-protected-by-waf
 
 		72 | resource "aws_api_gateway_stage" "api_gw_stage" {
 		73 |   stage_name    = "prod"

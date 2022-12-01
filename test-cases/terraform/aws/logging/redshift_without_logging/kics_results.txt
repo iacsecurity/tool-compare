@@ -1,4 +1,4 @@
-
+[38;2;34;187;51m
                    .0MO.                                    
                    OMMMx                                    
                    ;NMX;                                    
@@ -15,97 +15,119 @@ WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
 WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
-
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+[0m
+Scanning with Keeping Infrastructure as Code Secure v1.6.5
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 1039
 Queries failed to execute: 0
 
 ------------------------------------
 
-Resource Not Using Tags, Severity: INFO, Results: 1
-Description: AWS services resource tags are an essential part of managing components
-Platform: Terraform
+[38;2;91;192;222mResource Not Using Tags[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 1
+[1mDescription:[0m AWS services resource tags are an essential part of managing components. As a best practice, the field 'tags' should have additional tags defined other than 'Name'
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:1
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m1[0m
 
-		001: resource "aws_redshift_cluster" "default" {
-		002:   cluster_identifier = "tf-redshift-cluster"
+[38;2;240;173;78m		001: resource "aws_redshift_cluster" "default" {
+[0m		002:   cluster_identifier = "tf-redshift-cluster"
 		003:   database_name      = "mydb"
 
 
-Redshift Cluster Without VPC, Severity: MEDIUM, Results: 2
-Description: Redshift Cluster should be configured in VPC (Virtual Private Cloud)
-Platform: Terraform
+[38;2;237;213;126mRedshift Using Default Port[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m Redshift should not use the default port (5439) because an attacker can easily guess the port
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:1
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m1[0m
 
-		001: resource "aws_redshift_cluster" "default" {
-		002:   cluster_identifier = "tf-redshift-cluster"
+[38;2;240;173;78m		001: resource "aws_redshift_cluster" "default" {
+[0m		002:   cluster_identifier = "tf-redshift-cluster"
 		003:   database_name      = "mydb"
 
 
-	[2]: /src/main.tf:1
+[38;2;237;213;126mIAM Access Analyzer Not Enabled[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m IAM Access Analyzer should be enabled and configured to continuously monitor resource permissions
+[1mPlatform:[0m Terraform
 
-		001: resource "aws_redshift_cluster" "default" {
-		002:   cluster_identifier = "tf-redshift-cluster"
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m1[0m
+
+[38;2;240;173;78m		001: resource "aws_redshift_cluster" "default" {
+[0m		002:   cluster_identifier = "tf-redshift-cluster"
 		003:   database_name      = "mydb"
 
 
-Redshift Cluster Logging Disabled, Severity: MEDIUM, Results: 1
-Description: Make sure Logging is enabled for Redshift Cluster
-Platform: Terraform
+[38;2;255;114;19mRedshift Cluster Without VPC[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 2
+[1mDescription:[0m Redshift Cluster should be configured in VPC (Virtual Private Cloud)
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:1
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m1[0m
 
-		001: resource "aws_redshift_cluster" "default" {
-		002:   cluster_identifier = "tf-redshift-cluster"
+[38;2;240;173;78m		001: resource "aws_redshift_cluster" "default" {
+[0m		002:   cluster_identifier = "tf-redshift-cluster"
 		003:   database_name      = "mydb"
 
 
-Redshift Publicly Accessible, Severity: HIGH, Results: 1
-Description: Check if 'publicly_accessible' field is true or undefined (default is true)
-Platform: Terraform
+	[38;2;255;114;19m[2]:[0m ../../src/main.tf:[38;2;34;187;51m1[0m
 
-	[1]: /src/main.tf:1
-
-		001: resource "aws_redshift_cluster" "default" {
-		002:   cluster_identifier = "tf-redshift-cluster"
+[38;2;240;173;78m		001: resource "aws_redshift_cluster" "default" {
+[0m		002:   cluster_identifier = "tf-redshift-cluster"
 		003:   database_name      = "mydb"
 
 
-Redshift Not Encrypted, Severity: HIGH, Results: 1
-Description: Check if 'encrypted' field is false or undefined (default is false)
-Platform: Terraform
+[38;2;255;114;19mRedshift Cluster Logging Disabled[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m Make sure Logging is enabled for Redshift Cluster
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:1
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m1[0m
 
-		001: resource "aws_redshift_cluster" "default" {
-		002:   cluster_identifier = "tf-redshift-cluster"
+[38;2;240;173;78m		001: resource "aws_redshift_cluster" "default" {
+[0m		002:   cluster_identifier = "tf-redshift-cluster"
 		003:   database_name      = "mydb"
 
 
-Passwords And Secrets In Infrastructure Code, Severity: HIGH, Results: 1
-Description: Query to find passwords and secrets in infrastructure code.
-Platform: Common
+[38;2;187;33;36mRedshift Publicly Accessible[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mDescription:[0m AWS Redshift Clusters must not be publicly accessible. Check if 'publicly_accessible' field is true or undefined (default is true)
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:5
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m1[0m
+
+[38;2;240;173;78m		001: resource "aws_redshift_cluster" "default" {
+[0m		002:   cluster_identifier = "tf-redshift-cluster"
+		003:   database_name      = "mydb"
+
+
+[38;2;187;33;36mRedshift Not Encrypted[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mDescription:[0m AWS Redshift Cluster should be encrypted. Check if 'encrypted' field is false or undefined (default is false)
+[1mPlatform:[0m Terraform
+
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m1[0m
+
+[38;2;240;173;78m		001: resource "aws_redshift_cluster" "default" {
+[0m		002:   cluster_identifier = "tf-redshift-cluster"
+		003:   database_name      = "mydb"
+
+
+[38;2;187;33;36mPasswords And Secrets - Generic Password[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mDescription:[0m Query to find passwords and secrets in infrastructure code.
+[1mPlatform:[0m Common
+
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
 
 		004:   master_username    = "foo"
-		005:   master_password    = "Mustbe8characters"
-		006:   node_type          = "dc1.large"
+[38;2;240;173;78m		005:   master_password    = <SECRET-MASKED-ON-PURPOSE>
+[0m		006:   node_type          = "dc1.large"
 
 
 
 Results Summary:
-HIGH: 3
-MEDIUM: 3
-LOW: 0
-INFO: 1
-TOTAL: 7
+[38;2;187;33;36mHIGH[0m: 3
+[38;2;255;114;19mMEDIUM[0m: 3
+[38;2;237;213;126mLOW[0m: 2
+[38;2;91;192;222mINFO[0m: 1
+TOTAL: 9
 
-Scan duration: 4.779222003s
+Scan duration: 17.800936134s

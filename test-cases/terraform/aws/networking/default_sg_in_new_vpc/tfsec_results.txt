@@ -1,52 +1,96 @@
 
-  Result 1
+Result #1 HIGH Instance does not require IMDS access to require a token 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:31-39
+────────────────────────────────────────────────────────────────────────────────
+   31    resource "aws_instance" "ec2" {
+   32      ami           = "ami-07cda0db070313c52"
+   33      instance_type = "t2.micro"
+   34      subnet_id     = aws_subnet.subnet.id
+   35    
+   36      tags = {
+   37        Name = local.test_name
+   38      }
+   39    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ec2-enforce-http-token-imds
+      Impact Instance metadata service can be interacted with freely
+  Resolution Enable HTTP token requirement for IMDS
 
-  [aws-ec2-enforce-http-token-imds][[0m[31mHIGH[39m[0m] Resource 'aws_instance.ec2' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
-  /src/main.tf:31-39
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/enforce-http-token-imds/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#metadata-options
+────────────────────────────────────────────────────────────────────────────────
 
 
-      28 |   }
-      29 | }
-      30 | 
-      31 | resource "aws_instance" "ec2" {
-      32 |   ami           = "ami-07cda0db070313c52"
-      33 |   instance_type = "t2.micro"
-      34 |   subnet_id     = aws_subnet.subnet.id
-      35 | 
-      36 |   tags = {
-      37 |     Name = local.test_name
-      38 |   }
-      39 | }
+Result #2 HIGH Root block device is not encrypted. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:31-39
+────────────────────────────────────────────────────────────────────────────────
+   31    resource "aws_instance" "ec2" {
+   32      ami           = "ami-07cda0db070313c52"
+   33      instance_type = "t2.micro"
+   34      subnet_id     = aws_subnet.subnet.id
+   35    
+   36      tags = {
+   37        Name = local.test_name
+   38      }
+   39    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ec2-enable-at-rest-encryption
+      Impact The block device could be compromised and read from
+  Resolution Turn on encryption for all block devices
 
-  Legacy ID:  AWS079
-  Impact:     Instance metadata service can be interacted with freely
-  Resolution: Enable HTTP token requirement for IMDS
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/enable-at-rest-encryption/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#ebs-ephemeral-and-root-block-devices
+────────────────────────────────────────────────────────────────────────────────
 
-  More Info:
-  - https://tfsec.dev/docs/aws/ec2/enforce-http-token-imds#aws/ec2 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#metadata-options 
-  - https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service 
 
-  times
-  ------------------------------------------
-  disk i/o             49.799666ms
-  parsing HCL          570.292µs
-  evaluating values    4.328209ms
-  running checks       16.616ms
+Result #3 MEDIUM VPC Flow Logs is not enabled for VPC  
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:14-20
+────────────────────────────────────────────────────────────────────────────────
+   14    resource "aws_vpc" "vpc" {
+   15      cidr_block = local.cidr_block
+   16    
+   17      tags = {
+   18        Name = local.test_name
+   19      }
+   20    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ec2-require-vpc-flow-logs-for-all-vpcs
+      Impact Without VPC flow logs, you risk not having enough information about network traffic flow to investigate incidents or identify security issues.
+  Resolution Enable flow logs for VPC
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/require-vpc-flow-logs-for-all-vpcs/
+────────────────────────────────────────────────────────────────────────────────
+
+
+  timings
+  ──────────────────────────────────────────
+  disk i/o             2.687584ms
+  parsing              359.25µs
+  adaptation           58.75µs
+  checks               2.154042ms
+  total                5.259626ms
 
   counts
-  ------------------------------------------
-  files loaded         1
-  blocks               5
-  modules              0
+  ──────────────────────────────────────────
+  modules downloaded   0
+  modules processed    1
+  blocks processed     5
+  files read           1
 
   results
-  ------------------------------------------
-  critical             0
-  high                 1
-  medium               0
-  low                  0
+  ──────────────────────────────────────────
+  passed               4
   ignored              0
+  critical             0
+  high                 2
+  medium               1
+  low                  0
 
-  1 potential problems detected.
+  4 passed, 3 potential problem(s) detected.
 

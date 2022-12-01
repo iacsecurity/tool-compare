@@ -1,8 +1,72 @@
 
+	
+Scan Errors - 
+
+	IaC Type            :	docker
+	Directory           :	/iac
+	Error Message       :	Dockerfile not found in the directory /iac
+	
+	-----------------------------------------------------------------------
+	
+	IaC Type            :	cft
+	Directory           :	/iac
+	Error Message       :	error while loading iac file '/iac/checkov_results.txt', err: error while resolving intrinsic functions, error invalid YAML template: yaml: line 2: mapping values are not allowed in this context
+	
+	-----------------------------------------------------------------------
+	
+	IaC Type            :	cft
+	Directory           :	/iac
+	Error Message       :	error while loading iac file '/iac/cloudrail_results.txt', err: error while resolving intrinsic functions, error invalid YAML template: yaml: line 3: mapping values are not allowed in this context
+	
+	-----------------------------------------------------------------------
+	
+	IaC Type            :	cft
+	Directory           :	/iac
+	Error Message       :	error while loading iac file '/iac/kics_results.txt', err: error while resolving intrinsic functions, error invalid YAML template: yaml: control characters are not allowed
+	
+	-----------------------------------------------------------------------
+	
+	IaC Type            :	cft
+	Directory           :	/iac
+	Error Message       :	error while loading iac file '/iac/results_summary.json', err: failed to find valid Resources key in file: /iac/results_summary.json
+	
+	-----------------------------------------------------------------------
+	
+	IaC Type            :	cft
+	Directory           :	/iac
+	Error Message       :	error while loading iac file '/iac/snyk_results.txt', err: error while resolving intrinsic functions, error invalid YAML template: yaml: line 2: mapping values are not allowed in this context
+	
+	-----------------------------------------------------------------------
+	
+	IaC Type            :	cft
+	Directory           :	/iac
+	Error Message       :	error while loading iac file '/iac/terrascan_results.txt', err: failed to find valid Resources key in file: /iac/terrascan_results.txt
+	
+	-----------------------------------------------------------------------
+	
+	IaC Type            :	cft
+	Directory           :	/iac
+	Error Message       :	error while loading iac file '/iac/tfsec_results.txt', err: error while resolving intrinsic functions, error invalid YAML template: yaml: line 2: did not find expected <document start>
+	
+	-----------------------------------------------------------------------
+	
+	IaC Type            :	kustomize
+	Directory           :	/iac
+	Error Message       :	kustomization.y(a)ml file not found in the directory /iac
+	
+	-----------------------------------------------------------------------
+	
+	IaC Type            :	helm
+	Directory           :	/iac
+	Error Message       :	no helm charts found in directory /iac
+	
+	-----------------------------------------------------------------------
+	
+	
 
 Violation Details -
     
-	Description    :	Ensure root volume for Workspaces is Encrypted
+	Description    :	Ensure user volume for Workspaces is Encrypted
 	File           :	main.tf
 	Module Name    :	root
 	Plan Root      :	./
@@ -11,7 +75,7 @@ Violation Details -
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	Ensure user volume for Workspaces is Encrypted
+	Description    :	Ensure root volume for Workspaces is Encrypted
 	File           :	main.tf
 	Module Name    :	root
 	Plan Root      :	./
@@ -24,8 +88,8 @@ Violation Details -
 Scan Summary -
 
 	File/Folder         :	/iac
-	IaC Type            :	all
-	Scanned At          :	2021-08-18 16:22:17.062975679 +0000 UTC
+	IaC Type            :	terraform
+	Scanned At          :	2022-12-01 13:34:40.327473428 +0000 UTC
 	Policies Validated  :	2
 	Violated Policies   :	2
 	Low                 :	0

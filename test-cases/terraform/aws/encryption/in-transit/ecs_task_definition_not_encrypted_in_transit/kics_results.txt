@@ -1,4 +1,4 @@
-
+[38;2;34;187;51m
                    .0MO.                                    
                    OMMMx                                    
                    ;NMX;                                    
@@ -15,75 +15,86 @@ WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
 WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
-
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+[0m
+Scanning with Keeping Infrastructure as Code Secure v1.6.5
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 1039
 Queries failed to execute: 0
 
 ------------------------------------
 
-Resource Not Using Tags, Severity: INFO, Results: 2
-Description: AWS services resource tags are an essential part of managing components
-Platform: Terraform
+[38;2;91;192;222mResource Not Using Tags[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 2
+[1mDescription:[0m AWS services resource tags are an essential part of managing components. As a best practice, the field 'tags' should have additional tags defined other than 'Name'
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:5
-
-		004: 
-		005: resource "aws_efs_file_system" "test" {
-		006:   creation_token = "cloudrail-test"
-
-
-	[2]: /src/main.tf:9
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m9[0m
 
 		008: 
-		009: resource "aws_ecs_task_definition" "service" {
-		010:   family                = "cloudrail-test-encryption"
+[38;2;240;173;78m		009: resource "aws_ecs_task_definition" "service" {
+[0m		010:   family                = "cloudrail-test-encryption"
 
 
-EFS Without KMS, Severity: HIGH, Results: 1
-Description: Elastic File System (EFS) must have KMS Key ID
-Platform: Terraform
-
-	[1]: /src/main.tf:5
+	[38;2;91;192;222m[2]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
 
 		004: 
-		005: resource "aws_efs_file_system" "test" {
-		006:   creation_token = "cloudrail-test"
+[38;2;240;173;78m		005: resource "aws_efs_file_system" "test" {
+[0m		006:   creation_token = "cloudrail-test"
 
 
-EFS Not Encrypted, Severity: HIGH, Results: 1
-Description: Elastic File System (EFS) must be encrypted
-Platform: Terraform
+[38;2;237;213;126mIAM Access Analyzer Not Enabled[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m IAM Access Analyzer should be enabled and configured to continuously monitor resource permissions
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:5
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
 
 		004: 
-		005: resource "aws_efs_file_system" "test" {
-		006:   creation_token = "cloudrail-test"
+[38;2;240;173;78m		005: resource "aws_efs_file_system" "test" {
+[0m		006:   creation_token = "cloudrail-test"
 
 
-ECS Task Definition Volume Not Encrypted, Severity: HIGH, Results: 1
-Description: AWS ECS Task Definition EFS data in transit between AWS ECS host and AWS EFS server should be encrypted
-Platform: Terraform
+[38;2;187;33;36mEFS Without KMS[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mDescription:[0m Amazon Elastic Filesystem should have filesystem encryption enabled using KMS CMK customer-managed keys instead of AWS managed-keys
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:44
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
+
+		004: 
+[38;2;240;173;78m		005: resource "aws_efs_file_system" "test" {
+[0m		006:   creation_token = "cloudrail-test"
+
+
+[38;2;187;33;36mEFS Not Encrypted[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mDescription:[0m Elastic File System (EFS) must be encrypted
+[1mPlatform:[0m Terraform
+
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
+
+		004: 
+[38;2;240;173;78m		005: resource "aws_efs_file_system" "test" {
+[0m		006:   creation_token = "cloudrail-test"
+
+
+[38;2;187;33;36mECS Task Definition Volume Not Encrypted[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mDescription:[0m AWS ECS Task Definition EFS data in transit between AWS ECS host and AWS EFS server should be encrypted
+[1mPlatform:[0m Terraform
+
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m44[0m
 
 		043: 
-		044:     efs_volume_configuration {
-		045:       file_system_id = aws_efs_file_system.test.id
+[38;2;240;173;78m		044:     efs_volume_configuration {
+[0m		045:       file_system_id = aws_efs_file_system.test.id
 
 
 
 Results Summary:
-HIGH: 3
-MEDIUM: 0
-LOW: 0
-INFO: 2
-TOTAL: 5
+[38;2;187;33;36mHIGH[0m: 3
+[38;2;255;114;19mMEDIUM[0m: 0
+[38;2;237;213;126mLOW[0m: 1
+[38;2;91;192;222mINFO[0m: 2
+TOTAL: 6
 
-Scan duration: 4.526464807s
+Scan duration: 14.642740632s

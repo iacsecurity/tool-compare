@@ -1,90 +1,75 @@
 
-  Result 1
+Results #1-2 HIGH IAM policy document uses sensitive action 'logs:CreateLogGroup' on wildcarded resource 'arn:aws:logs:*:*:*' (2 similar results)
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:44
+────────────────────────────────────────────────────────────────────────────────
+   29    resource "aws_iam_policy" "lambda_logging" {
+   ..  
+   44  [       "Resource": "arn:aws:logs:*:*:*",
+   ..  
+   50    }
+────────────────────────────────────────────────────────────────────────────────
+  Individual Causes
+  - main.tf:29-50 (aws_iam_policy.lambda_logging) 2 instances
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-iam-no-policy-wildcards
+      Impact Overly permissive policies may grant access to sensitive resources
+  Resolution Specify the exact permissions required, and to which resources they should apply instead of using wildcards.
 
-  [aws-lambda-enable-tracing][[0m[97mLOW[39m[0m] Resource 'aws_lambda_function.test_lambda' uses default value for tracing_config.mode
-  /src/main.tf:57-67
-
-
-      54 |   policy_arn = aws_iam_policy.lambda_logging.arn
-      55 | }
-      56 | 
-      57 | resource "aws_lambda_function" "test_lambda" {
-      58 |   filename      = "${path.module}/Archive.zip"
-      59 |   function_name = local.lambda_name
-      60 |   role          = aws_iam_role.iam_for_lambda.arn
-      61 |   handler       = "main.handler"
-      62 |   runtime       = "python3.8"
-      63 | 
-      64 |   depends_on = [
-      65 |     aws_iam_role_policy_attachment.lambda_logs
-      66 |   ]
-      67 | }
-
-  Impact:     WIthout full tracing enabled it is difficult to trace the flow of logs
-  Resolution: Enable tracing
-
-  More Info:
-  - https://tfsec.dev/docs/aws/lambda/enable-tracing#aws/lambda 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_function#mode 
-
-  Result 2
-
-  [aws-iam-no-policy-wildcards][[0m[31mHIGH[39m[0m] Resource 'aws_iam_policy.lambda_logging' defines a policy with wildcarded resources.
-  /src/main.tf:34-49
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/iam/no-policy-wildcards/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document
+────────────────────────────────────────────────────────────────────────────────
 
 
-      31 |   path        = "/"
-      32 |   description = "IAM policy for logging from a lambda"
-      33 | 
-      34 |   policy = <<EOF    string: "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Action\": [\n        \"logs:CreateLogGroup\",\n        \"logs:CreateLogStream\",\n        \"logs:PutLogEvents\"\n      ],\n      \"Resource\": \"arn:aws:logs:*:*:*\",\n      \"Effect\": \"Allow\"\n    }\n  ]\n}\n"
-      35 | {
-      36 |   "Version": "2012-10-17",
-      37 |   "Statement": [
-      38 |     {
-      39 |       "Action": [
-      40 |         "logs:CreateLogGroup",
-      41 |         "logs:CreateLogStream",
-      42 |         "logs:PutLogEvents"
-      43 |       ],
-      44 |       "Resource": "arn:aws:logs:*:*:*",
-      45 |       "Effect": "Allow"
-      46 |     }
-      47 |   ]
-      48 | }
-      49 | EOF
-      50 | }
-      51 | 
-      52 | resource "aws_iam_role_policy_attachment" "lambda_logs" {
+Result #3 LOW Function does not have tracing enabled. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:57-67
+────────────────────────────────────────────────────────────────────────────────
+   57  ┌ resource "aws_lambda_function" "test_lambda" {
+   58  │   filename      = "${path.module}/Archive.zip"
+   59  │   function_name = local.lambda_name
+   60  │   role          = aws_iam_role.iam_for_lambda.arn
+   61  │   handler       = "main.handler"
+   62  │   runtime       = "python3.8"
+   63  │ 
+   64  │   depends_on = [
+   65  └     aws_iam_role_policy_attachment.lambda_logs
+   ..  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-lambda-enable-tracing
+      Impact Without full tracing enabled it is difficult to trace the flow of logs
+  Resolution Enable tracing
 
-  Legacy ID:  AWS099
-  Impact:     Overly permissive policies may grant access to sensitive resources
-  Resolution: Specify the exact permissions required, and to which resources they should apply instead of using wildcards.
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/lambda/enable-tracing/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_function#mode
+────────────────────────────────────────────────────────────────────────────────
 
-  More Info:
-  - https://tfsec.dev/docs/aws/iam/no-policy-wildcards#aws/iam 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document 
-  - https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html 
 
-  times
-  ------------------------------------------
-  disk i/o             51.570999ms
-  parsing HCL          626.083µs
-  evaluating values    3.734167ms
-  running checks       36.250917ms
+  timings
+  ──────────────────────────────────────────
+  disk i/o             3.738584ms
+  parsing              366.167µs
+  adaptation           172.417µs
+  checks               5.180041ms
+  total                9.457209ms
 
   counts
-  ------------------------------------------
-  files loaded         1
-  blocks               6
-  modules              0
+  ──────────────────────────────────────────
+  modules downloaded   0
+  modules processed    1
+  blocks processed     6
+  files read           1
 
   results
-  ------------------------------------------
+  ──────────────────────────────────────────
+  passed               8
+  ignored              0
   critical             0
-  high                 1
+  high                 2
   medium               0
   low                  1
-  ignored              0
 
-  2 potential problems detected.
+  8 passed, 3 potential problem(s) detected.
 

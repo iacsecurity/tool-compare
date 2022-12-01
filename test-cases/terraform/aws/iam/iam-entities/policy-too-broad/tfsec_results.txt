@@ -1,66 +1,114 @@
 
-  Result 1
+Results #1-2 HIGH IAM policy document uses wildcarded action 'iam:*' (2 similar results)
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:34-36
+────────────────────────────────────────────────────────────────────────────────
+   25    resource "aws_iam_role_policy" "policy" {
+   ..  
+   34  ┌         "Action": [
+   35  │           "iam:*", "iam: AttachUser*"
+   36  └         ],
+   ..  
+   50    }
+────────────────────────────────────────────────────────────────────────────────
+  Individual Causes
+  - main.tf:25-50 (aws_iam_role_policy.policy) 2 instances
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-iam-no-policy-wildcards
+      Impact Overly permissive policies may grant access to sensitive resources
+  Resolution Specify the exact permissions required, and to which resources they should apply instead of using wildcards.
 
-  [aws-iam-no-policy-wildcards][[0m[31mHIGH[39m[0m] Resource 'aws_iam_role_policy.policy' defines a policy with wildcarded resources.
-  /src/main.tf:29-49
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/iam/no-policy-wildcards/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document
+────────────────────────────────────────────────────────────────────────────────
 
 
-      26 |   name = "policy"
-      27 |   role = aws_iam_role.role.id
-      28 | 
-      29 |   policy = <<-EOF    string: "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Action\": [\n        \"iam:*\", \"iam: AttachUser*\"\n      ],\n      \"Effect\": \"Allow\",\n      \"Resource\": \"*\"\n    },\n    {\n      \"Action\": [\n        \"s3:*\"\n      ],\n      \"Effect\": \"Allow\",\n      \"Resource\": \"*\"\n    }\n  ]\n}\n"
-      30 |   {
-      31 |     "Version": "2012-10-17",
-      32 |     "Statement": [
-      33 |       {
-      34 |         "Action": [
-      35 |           "iam:*", "iam: AttachUser*"
-      36 |         ],
-      37 |         "Effect": "Allow",
-      38 |         "Resource": "*"
-      39 |       },
-      40 |       {
-      41 |         "Action": [
-      42 |           "s3:*"
-      43 |         ],
-      44 |         "Effect": "Allow",
-      45 |         "Resource": "*"
-      46 |       }
-      47 |     ]
-      48 |   }
-      49 |   EOF
-      50 | }
-      51 | 
+Result #3 HIGH IAM policy document uses sensitive action 'iam:*' on wildcarded resource '*' 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:38
+────────────────────────────────────────────────────────────────────────────────
+   25    resource "aws_iam_role_policy" "policy" {
+   ..  
+   38  [         "Resource": "*"
+   ..  
+   50    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-iam-no-policy-wildcards
+      Impact Overly permissive policies may grant access to sensitive resources
+  Resolution Specify the exact permissions required, and to which resources they should apply instead of using wildcards.
 
-  Legacy ID:  AWS099
-  Impact:     Overly permissive policies may grant access to sensitive resources
-  Resolution: Specify the exact permissions required, and to which resources they should apply instead of using wildcards.
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/iam/no-policy-wildcards/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document
+────────────────────────────────────────────────────────────────────────────────
 
-  More Info:
-  - https://tfsec.dev/docs/aws/iam/no-policy-wildcards#aws/iam 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document 
-  - https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html 
 
-  times
-  ------------------------------------------
-  disk i/o             54.564166ms
-  parsing HCL          561.667µs
-  evaluating values    3.487625ms
-  running checks       70.559458ms
+Result #4 HIGH IAM policy document uses wildcarded action 's3:*' 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:41-43
+────────────────────────────────────────────────────────────────────────────────
+   25    resource "aws_iam_role_policy" "policy" {
+   ..  
+   41  ┌         "Action": [
+   42  │           "s3:*"
+   43  └         ],
+   ..  
+   50    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-iam-no-policy-wildcards
+      Impact Overly permissive policies may grant access to sensitive resources
+  Resolution Specify the exact permissions required, and to which resources they should apply instead of using wildcards.
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/iam/no-policy-wildcards/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document
+────────────────────────────────────────────────────────────────────────────────
+
+
+Result #5 HIGH IAM policy document uses sensitive action 's3:*' on wildcarded resource '*' 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:45
+────────────────────────────────────────────────────────────────────────────────
+   25    resource "aws_iam_role_policy" "policy" {
+   ..  
+   45  [         "Resource": "*"
+   ..  
+   50    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-iam-no-policy-wildcards
+      Impact Overly permissive policies may grant access to sensitive resources
+  Resolution Specify the exact permissions required, and to which resources they should apply instead of using wildcards.
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/iam/no-policy-wildcards/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document
+────────────────────────────────────────────────────────────────────────────────
+
+
+  timings
+  ──────────────────────────────────────────
+  disk i/o             4.037625ms
+  parsing              197.834µs
+  adaptation           155.667µs
+  checks               2.535208ms
+  total                6.926334ms
 
   counts
-  ------------------------------------------
-  files loaded         1
-  blocks               3
-  modules              0
+  ──────────────────────────────────────────
+  modules downloaded   0
+  modules processed    1
+  blocks processed     3
+  files read           1
 
   results
-  ------------------------------------------
+  ──────────────────────────────────────────
+  passed               2
+  ignored              0
   critical             0
-  high                 1
+  high                 5
   medium               0
   low                  0
-  ignored              0
 
-  1 potential problems detected.
+  2 passed, 5 potential problem(s) detected.
 

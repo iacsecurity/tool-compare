@@ -1,213 +1,252 @@
 
-  Result 1
+Result #1 HIGH Application load balancer is not set to drop invalid headers. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:25-30
+────────────────────────────────────────────────────────────────────────────────
+   25    resource "aws_lb" "default" {
+   26      internal           = false
+   27      load_balancer_type = "application"
+   28      name               = "alb"
+   29      subnets            = module.vpc.public_subnets
+   30    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-elb-drop-invalid-headers
+      Impact Invalid headers being passed through to the target of the load balance may exploit vulnerabilities
+  Resolution Set drop_invalid_header_fields to true
 
-  [aws-elbv2-alb-not-public][[0m[31mHIGH[39m[0m] Resource 'aws_alb.default' is exposed publicly.
-  /src/main.tf:33
-
-
-      30 | }
-      31 | 
-      32 | resource "aws_alb" "default" {
-      33 |   internal           = false    bool: false
-      34 |   load_balancer_type = "application"
-      35 |   name               = "alb"
-      36 |   subnets            = module.vpc.public_subnets
-
-  Legacy ID:  AWS005
-  Impact:     The load balancer is exposed on the internet
-  Resolution: Switch to an internal load balancer or add a tfsec ignore
-
-  More Info:
-  - https://tfsec.dev/docs/aws/elbv2/alb-not-public#aws/elbv2 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb 
-
-  Result 2
-
-  [aws-elb-drop-invalid-headers][[0m[31mHIGH[39m[0m] Resource 'aws_lb.disabled' sets the drop_invalid_header_fields to false
-  /src/main.tf:45
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/elb/drop-invalid-headers/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb#drop_invalid_header_fields
+────────────────────────────────────────────────────────────────────────────────
 
 
-      42 |   name               = "alb"
-      43 |   subnets            = module.vpc.public_subnets
-      44 | 
-      45 |   drop_invalid_header_fields = false    bool: false
-      46 | }
-      47 | 
-      48 | resource "aws_alb" "disabled" {
+Result #2 HIGH Load balancer is exposed publicly. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:26
+────────────────────────────────────────────────────────────────────────────────
+   25    resource "aws_lb" "default" {
+   26  [   internal           = false (false)
+   27      load_balancer_type = "application"
+   28      name               = "alb"
+   29      subnets            = module.vpc.public_subnets
+   30    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-elb-alb-not-public
+      Impact The load balancer is exposed on the internet
+  Resolution Switch to an internal load balancer or add a tfsec ignore
 
-  Legacy ID:  AWS083
-  Impact:     Invalid headers being passed through to the target of the load balance may exploit vulnerabilities
-  Resolution: Set drop_invalid_header_fields to true
-
-  More Info:
-  - https://tfsec.dev/docs/aws/elb/drop-invalid-headers#aws/elb 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb#drop_invalid_header_fields 
-  - https://docs.aws.amazon.com/elasticloadbalancing/latest/application/application-load-balancers.html 
-
-  Result 3
-
-  [aws-elb-drop-invalid-headers][[0m[31mHIGH[39m[0m] Resource 'aws_lb.default' does not drop invalid header fields
-  /src/main.tf:25-30
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/elb/alb-not-public/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb
+────────────────────────────────────────────────────────────────────────────────
 
 
-      22 |   default_security_group_egress =[]
-      23 | }
-      24 | 
-      25 | resource "aws_lb" "default" {
-      26 |   internal           = false
-      27 |   load_balancer_type = "application"
-      28 |   name               = "alb"
-      29 |   subnets            = module.vpc.public_subnets
-      30 | }
-      31 | 
-      32 | resource "aws_alb" "default" {
-      33 |   internal           = false
+Result #3 HIGH Application load balancer is not set to drop invalid headers. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:32-37
+────────────────────────────────────────────────────────────────────────────────
+   32    resource "aws_alb" "default" {
+   33      internal           = false
+   34      load_balancer_type = "application"
+   35      name               = "alb"
+   36      subnets            = module.vpc.public_subnets
+   37    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-elb-drop-invalid-headers
+      Impact Invalid headers being passed through to the target of the load balance may exploit vulnerabilities
+  Resolution Set drop_invalid_header_fields to true
 
-  Legacy ID:  AWS083
-  Impact:     Invalid headers being passed through to the target of the load balance may exploit vulnerabilities
-  Resolution: Set drop_invalid_header_fields to true
-
-  More Info:
-  - https://tfsec.dev/docs/aws/elb/drop-invalid-headers#aws/elb 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb#drop_invalid_header_fields 
-  - https://docs.aws.amazon.com/elasticloadbalancing/latest/application/application-load-balancers.html 
-
-  Result 4
-
-  [aws-elb-drop-invalid-headers][[0m[31mHIGH[39m[0m] Resource 'aws_alb.disabled' sets the drop_invalid_header_fields to false
-  /src/main.tf:54
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/elb/drop-invalid-headers/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb#drop_invalid_header_fields
+────────────────────────────────────────────────────────────────────────────────
 
 
-      51 |   name               = "alb"
-      52 |   subnets            = module.vpc.public_subnets
-      53 | 
-      54 |   drop_invalid_header_fields = false    bool: false
-      55 | }
-      56 | 
+Result #4 HIGH Load balancer is exposed publicly. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:33
+────────────────────────────────────────────────────────────────────────────────
+   32    resource "aws_alb" "default" {
+   33  [   internal           = false (false)
+   34      load_balancer_type = "application"
+   35      name               = "alb"
+   36      subnets            = module.vpc.public_subnets
+   37    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-elb-alb-not-public
+      Impact The load balancer is exposed on the internet
+  Resolution Switch to an internal load balancer or add a tfsec ignore
 
-  Legacy ID:  AWS083
-  Impact:     Invalid headers being passed through to the target of the load balance may exploit vulnerabilities
-  Resolution: Set drop_invalid_header_fields to true
-
-  More Info:
-  - https://tfsec.dev/docs/aws/elb/drop-invalid-headers#aws/elb 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb#drop_invalid_header_fields 
-  - https://docs.aws.amazon.com/elasticloadbalancing/latest/application/application-load-balancers.html 
-
-  Result 5
-
-  [aws-elb-drop-invalid-headers][[0m[31mHIGH[39m[0m] Resource 'aws_alb.default' does not drop invalid header fields
-  /src/main.tf:32-37
-
-
-      29 |   subnets            = module.vpc.public_subnets
-      30 | }
-      31 | 
-      32 | resource "aws_alb" "default" {
-      33 |   internal           = false
-      34 |   load_balancer_type = "application"
-      35 |   name               = "alb"
-      36 |   subnets            = module.vpc.public_subnets
-      37 | }
-      38 | 
-      39 | resource "aws_lb" "disabled" {
-      40 |   internal           = false
-
-  Legacy ID:  AWS083
-  Impact:     Invalid headers being passed through to the target of the load balance may exploit vulnerabilities
-  Resolution: Set drop_invalid_header_fields to true
-
-  More Info:
-  - https://tfsec.dev/docs/aws/elb/drop-invalid-headers#aws/elb 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb#drop_invalid_header_fields 
-  - https://docs.aws.amazon.com/elasticloadbalancing/latest/application/application-load-balancers.html 
-
-  Result 6
-
-  [aws-elbv2-alb-not-public][[0m[31mHIGH[39m[0m] Resource 'aws_lb.disabled' is exposed publicly.
-  /src/main.tf:40
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/elb/alb-not-public/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb
+────────────────────────────────────────────────────────────────────────────────
 
 
-      37 | }
-      38 | 
-      39 | resource "aws_lb" "disabled" {
-      40 |   internal           = false    bool: false
-      41 |   load_balancer_type = "application"
-      42 |   name               = "alb"
-      43 |   subnets            = module.vpc.public_subnets
+Result #5 HIGH Load balancer is exposed publicly. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:40
+────────────────────────────────────────────────────────────────────────────────
+   39    resource "aws_lb" "disabled" {
+   40  [   internal           = false (false)
+   41      load_balancer_type = "application"
+   42      name               = "alb"
+   43      subnets            = module.vpc.public_subnets
+   44    
+   45      drop_invalid_header_fields = false
+   46    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-elb-alb-not-public
+      Impact The load balancer is exposed on the internet
+  Resolution Switch to an internal load balancer or add a tfsec ignore
 
-  Legacy ID:  AWS005
-  Impact:     The load balancer is exposed on the internet
-  Resolution: Switch to an internal load balancer or add a tfsec ignore
-
-  More Info:
-  - https://tfsec.dev/docs/aws/elbv2/alb-not-public#aws/elbv2 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb 
-
-  Result 7
-
-  [aws-elbv2-alb-not-public][[0m[31mHIGH[39m[0m] Resource 'aws_lb.default' is exposed publicly.
-  /src/main.tf:26
-
-
-      23 | }
-      24 | 
-      25 | resource "aws_lb" "default" {
-      26 |   internal           = false    bool: false
-      27 |   load_balancer_type = "application"
-      28 |   name               = "alb"
-      29 |   subnets            = module.vpc.public_subnets
-
-  Legacy ID:  AWS005
-  Impact:     The load balancer is exposed on the internet
-  Resolution: Switch to an internal load balancer or add a tfsec ignore
-
-  More Info:
-  - https://tfsec.dev/docs/aws/elbv2/alb-not-public#aws/elbv2 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb 
-
-  Result 8
-
-  [aws-elbv2-alb-not-public][[0m[31mHIGH[39m[0m] Resource 'aws_alb.disabled' is exposed publicly.
-  /src/main.tf:49
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/elb/alb-not-public/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb
+────────────────────────────────────────────────────────────────────────────────
 
 
-      46 | }
-      47 | 
-      48 | resource "aws_alb" "disabled" {
-      49 |   internal           = false    bool: false
-      50 |   load_balancer_type = "application"
-      51 |   name               = "alb"
-      52 |   subnets            = module.vpc.public_subnets
+Result #6 HIGH Application load balancer is not set to drop invalid headers. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:45
+────────────────────────────────────────────────────────────────────────────────
+   39    resource "aws_lb" "disabled" {
+   40      internal           = false
+   41      load_balancer_type = "application"
+   42      name               = "alb"
+   43      subnets            = module.vpc.public_subnets
+   44    
+   45  [   drop_invalid_header_fields = false (false)
+   46    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-elb-drop-invalid-headers
+      Impact Invalid headers being passed through to the target of the load balance may exploit vulnerabilities
+  Resolution Set drop_invalid_header_fields to true
 
-  Legacy ID:  AWS005
-  Impact:     The load balancer is exposed on the internet
-  Resolution: Switch to an internal load balancer or add a tfsec ignore
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/elb/drop-invalid-headers/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb#drop_invalid_header_fields
+────────────────────────────────────────────────────────────────────────────────
 
-  More Info:
-  - https://tfsec.dev/docs/aws/elbv2/alb-not-public#aws/elbv2 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb 
 
-  times
-  ------------------------------------------
-  disk i/o             41.411645ms
-  parsing HCL          141.456µs
-  evaluating values    98.540203ms
-  running checks       16.298252ms
+Result #7 HIGH Load balancer is exposed publicly. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:49
+────────────────────────────────────────────────────────────────────────────────
+   48    resource "aws_alb" "disabled" {
+   49  [   internal           = false (false)
+   50      load_balancer_type = "application"
+   51      name               = "alb"
+   52      subnets            = module.vpc.public_subnets
+   53    
+   54      drop_invalid_header_fields = false
+   55    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-elb-alb-not-public
+      Impact The load balancer is exposed on the internet
+  Resolution Switch to an internal load balancer or add a tfsec ignore
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/elb/alb-not-public/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb
+────────────────────────────────────────────────────────────────────────────────
+
+
+Result #8 HIGH Application load balancer is not set to drop invalid headers. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:54
+────────────────────────────────────────────────────────────────────────────────
+   48    resource "aws_alb" "disabled" {
+   49      internal           = false
+   50      load_balancer_type = "application"
+   51      name               = "alb"
+   52      subnets            = module.vpc.public_subnets
+   53    
+   54  [   drop_invalid_header_fields = false (false)
+   55    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-elb-drop-invalid-headers
+      Impact Invalid headers being passed through to the target of the load balance may exploit vulnerabilities
+  Resolution Set drop_invalid_header_fields to true
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/elb/drop-invalid-headers/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb#drop_invalid_header_fields
+────────────────────────────────────────────────────────────────────────────────
+
+
+Results #9-11 HIGH Subnet associates public IP address. (3 similar results)
+────────────────────────────────────────────────────────────────────────────────
+  terraform-aws-modules/vpc/aws/src/.terraform/modules/vpc/main.tf:366
+   via main.tf:1-23 (module.vpc)
+────────────────────────────────────────────────────────────────────────────────
+  359    resource "aws_subnet" "public" {
+  ...  
+  366  [   map_public_ip_on_launch         = var.map_public_ip_on_launch (true)
+  ...  
+  381    }
+────────────────────────────────────────────────────────────────────────────────
+  Individual Causes
+  - terraform-aws-modules/vpc/aws/src/.terraform/modules/vpc/main.tf:1-23 (module.vpc) 3 instances
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ec2-no-public-ip-subnet
+      Impact The instance is publicly accessible
+  Resolution Set the instance to not be publicly accessible
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/no-public-ip-subnet/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet#map_public_ip_on_launch
+────────────────────────────────────────────────────────────────────────────────
+
+
+Result #12 MEDIUM VPC Flow Logs is not enabled for VPC  
+────────────────────────────────────────────────────────────────────────────────
+  terraform-aws-modules/vpc/aws/src/.terraform/modules/vpc/main.tf:20-43
+   via main.tf:1-23 (module.vpc)
+────────────────────────────────────────────────────────────────────────────────
+   20  ┌ resource "aws_vpc" "this" {
+   21  │   count = local.create_vpc ? 1 : 0
+   22  │ 
+   23  │   cidr_block          = var.use_ipam_pool ? null : var.cidr
+   24  │   ipv4_ipam_pool_id   = var.ipv4_ipam_pool_id
+   25  │   ipv4_netmask_length = var.ipv4_netmask_length
+   26  │ 
+   27  │   assign_generated_ipv6_cidr_block = var.enable_ipv6 && !var.use_ipam_pool ? true : null
+   28  └   ipv6_cidr_block                  = var.ipv6_cidr
+   ..  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ec2-require-vpc-flow-logs-for-all-vpcs
+      Impact Without VPC flow logs, you risk not having enough information about network traffic flow to investigate incidents or identify security issues.
+  Resolution Enable flow logs for VPC
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/require-vpc-flow-logs-for-all-vpcs/
+────────────────────────────────────────────────────────────────────────────────
+
+
+  timings
+  ──────────────────────────────────────────
+  disk i/o             19.047793ms
+  parsing              164.214791ms
+  adaptation           76.167µs
+  checks               5.857625ms
+  total                189.196376ms
 
   counts
-  ------------------------------------------
-  files loaded         6
-  blocks               5
-  modules              1
+  ──────────────────────────────────────────
+  modules downloaded   0
+  modules processed    2
+  blocks processed     378
+  files read           6
 
   results
-  ------------------------------------------
-  critical             0
-  high                 8
-  medium               0
-  low                  0
+  ──────────────────────────────────────────
+  passed               5
   ignored              0
+  critical             0
+  high                 11
+  medium               1
+  low                  0
 
-  8 potential problems detected.
+  5 passed, 12 potential problem(s) detected.
 

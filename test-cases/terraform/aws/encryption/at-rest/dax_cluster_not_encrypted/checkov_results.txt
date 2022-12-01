@@ -1,24 +1,23 @@
-
-
-       _               _              
-   ___| |__   ___  ___| | _______   __
-  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
- | (__| | | |  __/ (__|   < (_) \ V / 
-  \___|_| |_|\___|\___|_|\_\___/ \_/  
-                                      
-By bridgecrew.io | version: 2.0.358 
-Update available 2.0.358 -> 2.0.359
-Run pip3 install -U checkov to update 
-
-
 terraform scan results:
 
-Passed checks: 3, Failed checks: 1, Skipped checks: 0
+Passed checks: 4, Failed checks: 2, Skipped checks: 0
 
 Check: CKV_AWS_47: "Ensure DAX is encrypted at rest (default is unencrypted)"
 	FAILED for resource: aws_dax_cluster.cloudrail-test
 	File: /main.tf:25-30
 	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_23
+
+		25 | resource "aws_dax_cluster" "cloudrail-test" {
+		26 |   cluster_name       = "non-encrypt"
+		27 |   iam_role_arn       = aws_iam_role.dax.arn
+		28 |   node_type          = "dax.r4.large"
+		29 |   replication_factor = 1
+		30 | }
+
+Check: CKV_AWS_239: "Ensure DAX cluster endpoint is using TLS"
+	FAILED for resource: aws_dax_cluster.cloudrail-test
+	File: /main.tf:25-30
+	Guide: https://docs.bridgecrew.io/docs/ensure-aws-dax-cluster-endpoint-uses-transport-layer-security-tls
 
 		25 | resource "aws_dax_cluster" "cloudrail-test" {
 		26 |   cluster_name       = "non-encrypt"

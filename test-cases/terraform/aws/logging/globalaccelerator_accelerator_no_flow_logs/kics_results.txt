@@ -1,4 +1,4 @@
-
+[38;2;34;187;51m
                    .0MO.                                    
                    OMMMx                                    
                    ;NMX;                                    
@@ -15,46 +15,68 @@ WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
 WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
-
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+[0m
+Scanning with Keeping Infrastructure as Code Secure v1.6.5
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 1039
 Queries failed to execute: 0
 
 ------------------------------------
 
-Resource Not Using Tags, Severity: INFO, Results: 1
-Description: AWS services resource tags are an essential part of managing components
-Platform: Terraform
+[38;2;91;192;222mResource Not Using Tags[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 1
+[1mDescription:[0m AWS services resource tags are an essential part of managing components. As a best practice, the field 'tags' should have additional tags defined other than 'Name'
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:1
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m1[0m
 
-		001: resource "aws_globalaccelerator_accelerator" "example" {
-		002:   name            = "Example"
+[38;2;240;173;78m		001: resource "aws_globalaccelerator_accelerator" "example" {
+[0m		002:   name            = "Example"
 		003:   ip_address_type = "IPV4"
 
 
-Global Accelerator Flow Logs Disabled, Severity: LOW, Results: 1
-Description: Global Accelerator should have flow logs enabled
-Platform: Terraform
+[38;2;237;213;126mShield Advanced Not In Use[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m AWS Shield Advanced should be used for Amazon Route 53 hosted zone, AWS Global Accelerator accelerator, Elastic IP Address, Elastic Load Balancing, and Amazon CloudFront Distribution to protect these resources against robust DDoS attacks
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:6
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m1[0m
+
+[38;2;240;173;78m		001: resource "aws_globalaccelerator_accelerator" "example" {
+[0m		002:   name            = "Example"
+		003:   ip_address_type = "IPV4"
+
+
+[38;2;237;213;126mIAM Access Analyzer Not Enabled[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m IAM Access Analyzer should be enabled and configured to continuously monitor resource permissions
+[1mPlatform:[0m Terraform
+
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m1[0m
+
+[38;2;240;173;78m		001: resource "aws_globalaccelerator_accelerator" "example" {
+[0m		002:   name            = "Example"
+		003:   ip_address_type = "IPV4"
+
+
+[38;2;237;213;126mGlobal Accelerator Flow Logs Disabled[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m Global Accelerator should have flow logs enabled
+[1mPlatform:[0m Terraform
+
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m6[0m
 
 		005: 
-		006:   attributes {
-		007:     #flow_logs_enabled   = true
+[38;2;240;173;78m		006:   attributes {
+[0m		007:     #flow_logs_enabled   = true
 
 
 
 Results Summary:
-HIGH: 0
-MEDIUM: 0
-LOW: 1
-INFO: 1
-TOTAL: 2
+[38;2;187;33;36mHIGH[0m: 0
+[38;2;255;114;19mMEDIUM[0m: 0
+[38;2;237;213;126mLOW[0m: 3
+[38;2;91;192;222mINFO[0m: 1
+TOTAL: 4
 
-Scan duration: 4.498851107s
+Scan duration: 16.841339924s

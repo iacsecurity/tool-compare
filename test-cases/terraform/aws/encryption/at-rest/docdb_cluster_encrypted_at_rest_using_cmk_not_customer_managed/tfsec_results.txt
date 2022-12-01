@@ -1,93 +1,51 @@
 
-  Result 1
+Result #1 MEDIUM Neither CloudWatch audit nor profiler log exports are enabled. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:9-17
+────────────────────────────────────────────────────────────────────────────────
+    9    resource "aws_docdb_cluster" "test2" {
+   10      cluster_identifier  = "my-docdb-cluster-test2"
+   11      engine              = "docdb"
+   12      master_username     = "foo"
+   13      master_password     = "mustbeeightchars"
+   14      skip_final_snapshot = true
+   15      storage_encrypted   = true
+   16      kms_key_id          = data.aws_kms_key.test.arn
+   17    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-documentdb-enable-log-export
+      Impact Limited visibility of audit trail for changes to the DocumentDB
+  Resolution Enable export logs
 
-  [aws-documentdb-enable-log-export][[0m[33mMEDIUM[39m[0m] Resource 'aws_docdb_cluster.test2' uses default value for enabled_cloudwatch_logs_exports
-  /src/main.tf:9-17
-
-
-       6 |   key_id = "alias/aws/rds"
-       7 | }
-       8 | 
-       9 | resource "aws_docdb_cluster" "test2" {
-      10 |   cluster_identifier  = "my-docdb-cluster-test2"
-      11 |   engine              = "docdb"
-      12 |   master_username     = "foo"
-      13 |   master_password     = "mustbeeightchars"
-      14 |   skip_final_snapshot = true
-      15 |   storage_encrypted   = true
-      16 |   kms_key_id          = data.aws_kms_key.test.arn
-      17 | }
-      18 | 
-
-  Impact:     Limited visibility of audit trail for changes to the DocumentDB
-  Resolution: Enable export logs
-
-  More Info:
-  - https://tfsec.dev/docs/aws/documentdb/enable-log-export#aws/documentdb 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/docdb_cluster#enabled_cloudwatch_logs_exports 
-
-  Result 2
-
-  [aws-documentdb-encryption-customer-key][[0m[97mLOW[39m[0m] Resource 'aws_docdb_cluster.test2' explicitly uses the default CMK
-  /src/main.tf:16
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/documentdb/enable-log-export/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/docdb_cluster#enabled_cloudwatch_logs_exports
+────────────────────────────────────────────────────────────────────────────────
 
 
-      13 |   master_password     = "mustbeeightchars"
-      14 |   skip_final_snapshot = true
-      15 |   storage_encrypted   = true
-      16 |   kms_key_id          = data.aws_kms_key.test.arn    unknown: ???
-      17 | }
-      18 | 
-
-  Impact:     Using AWS managed keys does not allow for fine grained control
-  Resolution: Enable encryption using customer managed keys
-
-  More Info:
-  - https://tfsec.dev/docs/aws/documentdb/encryption-customer-key#aws/documentdb 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/docdb_cluster#kms_key_id 
-
-  Result 3
-
-  [general-secrets-sensitive-in-attribute][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Block 'aws_docdb_cluster.test2' includes a potentially sensitive attribute which is defined within the project.
-  /src/main.tf:13
-
-
-      10 |   cluster_identifier  = "my-docdb-cluster-test2"
-      11 |   engine              = "docdb"
-      12 |   master_username     = "foo"
-      13 |   master_password     = "mustbeeightchars"    string: "mustbeeightchars"
-      14 |   skip_final_snapshot = true
-      15 |   storage_encrypted   = true
-      16 |   kms_key_id          = data.aws_kms_key.test.arn
-
-  Legacy ID:  GEN003
-  Impact:     Block attribute could be leaking secrets
-  Resolution: Don't include sensitive data in blocks
-
-  More Info:
-  - https://tfsec.dev/docs/general/secrets/sensitive-in-attribute#general/secrets 
-  - https://www.terraform.io/docs/state/sensitive-data.html 
-
-  times
-  ------------------------------------------
-  disk i/o             50.965875ms
-  parsing HCL          606.75µs
-  evaluating values    3.043124ms
-  running checks       34.245167ms
+  timings
+  ──────────────────────────────────────────
+  disk i/o             5.936417ms
+  parsing              316.75µs
+  adaptation           84.667µs
+  checks               5.545ms
+  total                11.882834ms
 
   counts
-  ------------------------------------------
-  files loaded         1
-  blocks               3
-  modules              0
+  ──────────────────────────────────────────
+  modules downloaded   0
+  modules processed    1
+  blocks processed     3
+  files read           1
 
   results
-  ------------------------------------------
-  critical             1
+  ──────────────────────────────────────────
+  passed               4
+  ignored              0
+  critical             0
   high                 0
   medium               1
-  low                  1
-  ignored              0
+  low                  0
 
-  3 potential problems detected.
+  4 passed, 1 potential problem(s) detected.
 

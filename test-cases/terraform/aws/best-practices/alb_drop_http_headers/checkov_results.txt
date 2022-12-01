@@ -1,19 +1,8 @@
-
-
-       _               _              
-   ___| |__   ___  ___| | _______   __
-  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
- | (__| | | |  __/ (__|   < (_) \ V / 
-  \___|_| |_|\___|\___|_|\_\___/ \_/  
-                                      
-By bridgecrew.io | version: 2.0.358 
-Update available 2.0.358 -> 2.0.359
-Run pip3 install -U checkov to update 
-
-
+2022-11-29 15:57:04,562 [MainThread  ] [WARNI]  Failed to download module terraform-aws-modules/vpc/aws:None (for external modules, the --download-external-modules flag is required)
+2022-11-29 15:57:04,564 [MainThread  ] [WARNI]  Failed to download module terraform-aws-modules/s3-bucket/aws:~>3.0 (for external modules, the --download-external-modules flag is required)
 terraform scan results:
 
-Passed checks: 2, Failed checks: 14, Skipped checks: 0
+Passed checks: 4, Failed checks: 16, Skipped checks: 0
 
 Check: CKV_AWS_91: "Ensure the ELBv2 (Application/Network) has access logging enabled"
 	FAILED for resource: aws_lb.default
@@ -27,7 +16,6 @@ Check: CKV_AWS_91: "Ensure the ELBv2 (Application/Network) has access logging en
 		29 |   subnets            = module.vpc.public_subnets
 		30 | }
 
-
 Check: CKV_AWS_131: "Ensure that ALB drops HTTP headers"
 	FAILED for resource: aws_lb.default
 	File: /main.tf:25-30
@@ -40,10 +28,10 @@ Check: CKV_AWS_131: "Ensure that ALB drops HTTP headers"
 		29 |   subnets            = module.vpc.public_subnets
 		30 | }
 
-
 Check: CKV_AWS_150: "Ensure that Load Balancer has deletion protection enabled"
 	FAILED for resource: aws_lb.default
 	File: /main.tf:25-30
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_networking_62
 
 		25 | resource "aws_lb" "default" {
 		26 |   internal           = false
@@ -51,7 +39,6 @@ Check: CKV_AWS_150: "Ensure that Load Balancer has deletion protection enabled"
 		28 |   name               = "alb"
 		29 |   subnets            = module.vpc.public_subnets
 		30 | }
-
 
 Check: CKV_AWS_91: "Ensure the ELBv2 (Application/Network) has access logging enabled"
 	FAILED for resource: aws_alb.default
@@ -65,7 +52,6 @@ Check: CKV_AWS_91: "Ensure the ELBv2 (Application/Network) has access logging en
 		36 |   subnets            = module.vpc.public_subnets
 		37 | }
 
-
 Check: CKV_AWS_131: "Ensure that ALB drops HTTP headers"
 	FAILED for resource: aws_alb.default
 	File: /main.tf:32-37
@@ -78,10 +64,10 @@ Check: CKV_AWS_131: "Ensure that ALB drops HTTP headers"
 		36 |   subnets            = module.vpc.public_subnets
 		37 | }
 
-
 Check: CKV_AWS_150: "Ensure that Load Balancer has deletion protection enabled"
 	FAILED for resource: aws_alb.default
 	File: /main.tf:32-37
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_networking_62
 
 		32 | resource "aws_alb" "default" {
 		33 |   internal           = false
@@ -89,7 +75,6 @@ Check: CKV_AWS_150: "Ensure that Load Balancer has deletion protection enabled"
 		35 |   name               = "alb"
 		36 |   subnets            = module.vpc.public_subnets
 		37 | }
-
 
 Check: CKV_AWS_91: "Ensure the ELBv2 (Application/Network) has access logging enabled"
 	FAILED for resource: aws_lb.disabled
@@ -105,7 +90,6 @@ Check: CKV_AWS_91: "Ensure the ELBv2 (Application/Network) has access logging en
 		45 |   drop_invalid_header_fields = false
 		46 | }
 
-
 Check: CKV_AWS_131: "Ensure that ALB drops HTTP headers"
 	FAILED for resource: aws_lb.disabled
 	File: /main.tf:39-46
@@ -120,10 +104,10 @@ Check: CKV_AWS_131: "Ensure that ALB drops HTTP headers"
 		45 |   drop_invalid_header_fields = false
 		46 | }
 
-
 Check: CKV_AWS_150: "Ensure that Load Balancer has deletion protection enabled"
 	FAILED for resource: aws_lb.disabled
 	File: /main.tf:39-46
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_networking_62
 
 		39 | resource "aws_lb" "disabled" {
 		40 |   internal           = false
@@ -133,7 +117,6 @@ Check: CKV_AWS_150: "Ensure that Load Balancer has deletion protection enabled"
 		44 | 
 		45 |   drop_invalid_header_fields = false
 		46 | }
-
 
 Check: CKV_AWS_91: "Ensure the ELBv2 (Application/Network) has access logging enabled"
 	FAILED for resource: aws_alb.disabled
@@ -149,7 +132,6 @@ Check: CKV_AWS_91: "Ensure the ELBv2 (Application/Network) has access logging en
 		54 |   drop_invalid_header_fields = false
 		55 | }
 
-
 Check: CKV_AWS_131: "Ensure that ALB drops HTTP headers"
 	FAILED for resource: aws_alb.disabled
 	File: /main.tf:48-55
@@ -164,10 +146,10 @@ Check: CKV_AWS_131: "Ensure that ALB drops HTTP headers"
 		54 |   drop_invalid_header_fields = false
 		55 | }
 
-
 Check: CKV_AWS_150: "Ensure that Load Balancer has deletion protection enabled"
 	FAILED for resource: aws_alb.disabled
 	File: /main.tf:48-55
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_networking_62
 
 		48 | resource "aws_alb" "disabled" {
 		49 |   internal           = false
@@ -177,7 +159,6 @@ Check: CKV_AWS_150: "Ensure that Load Balancer has deletion protection enabled"
 		53 | 
 		54 |   drop_invalid_header_fields = false
 		55 | }
-
 
 Check: CKV2_AWS_28: "Ensure public facing ALB are protected by WAF"
 	FAILED for resource: aws_lb.default
@@ -191,6 +172,17 @@ Check: CKV2_AWS_28: "Ensure public facing ALB are protected by WAF"
 		29 |   subnets            = module.vpc.public_subnets
 		30 | }
 
+Check: CKV2_AWS_28: "Ensure public facing ALB are protected by WAF"
+	FAILED for resource: aws_alb.default
+	File: /main.tf:32-37
+	Guide: https://docs.bridgecrew.io/docs/ensure-public-facing-alb-are-protected-by-waf
+
+		32 | resource "aws_alb" "default" {
+		33 |   internal           = false
+		34 |   load_balancer_type = "application"
+		35 |   name               = "alb"
+		36 |   subnets            = module.vpc.public_subnets
+		37 | }
 
 Check: CKV2_AWS_28: "Ensure public facing ALB are protected by WAF"
 	FAILED for resource: aws_lb.disabled
@@ -205,5 +197,19 @@ Check: CKV2_AWS_28: "Ensure public facing ALB are protected by WAF"
 		44 | 
 		45 |   drop_invalid_header_fields = false
 		46 | }
+
+Check: CKV2_AWS_28: "Ensure public facing ALB are protected by WAF"
+	FAILED for resource: aws_alb.disabled
+	File: /main.tf:48-55
+	Guide: https://docs.bridgecrew.io/docs/ensure-public-facing-alb-are-protected-by-waf
+
+		48 | resource "aws_alb" "disabled" {
+		49 |   internal           = false
+		50 |   load_balancer_type = "application"
+		51 |   name               = "alb"
+		52 |   subnets            = module.vpc.public_subnets
+		53 | 
+		54 |   drop_invalid_header_fields = false
+		55 | }
 
 

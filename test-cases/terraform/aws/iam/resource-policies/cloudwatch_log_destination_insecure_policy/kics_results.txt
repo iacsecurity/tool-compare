@@ -1,4 +1,4 @@
-
+[38;2;34;187;51m
                    .0MO.                                    
                    OMMMx                                    
                    ;NMX;                                    
@@ -15,64 +15,75 @@ WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
 WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
-
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+[0m
+Scanning with Keeping Infrastructure as Code Secure v1.6.5
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 1039
 Queries failed to execute: 0
 
 ------------------------------------
 
-Resource Not Using Tags, Severity: INFO, Results: 2
-Description: AWS services resource tags are an essential part of managing components
-Platform: Terraform
+[38;2;91;192;222mResource Not Using Tags[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 2
+[1mDescription:[0m AWS services resource tags are an essential part of managing components. As a best practice, the field 'tags' should have additional tags defined other than 'Name'
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:29
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m29[0m
 
 		028: 
-		029: resource "aws_iam_role" "iam_for_cloudwatch" {
-		030:   name = "iam_for_cloudwatch"
+[38;2;240;173;78m		029: resource "aws_iam_role" "iam_for_cloudwatch" {
+[0m		030:   name = "iam_for_cloudwatch"
 
 
-	[2]: /src/main.tf:49
+	[38;2;91;192;222m[2]:[0m ../../src/main.tf:[38;2;34;187;51m49[0m
 
 		048: 
-		049: resource "aws_kinesis_stream" "kinesis_for_cloudwatch" {
-		050:   name             = "kinesis_for_cloudwatch"
+[38;2;240;173;78m		049: resource "aws_kinesis_stream" "kinesis_for_cloudwatch" {
+[0m		050:   name             = "kinesis_for_cloudwatch"
 
 
-CloudWatch Logs Destination With Vulnerable Policy, Severity: MEDIUM, Results: 1
-Description: CloudWatch Logs destination policy should avoid wildcard in 'principals' and 'actions'
-Platform: Terraform
+[38;2;237;213;126mIAM Access Analyzer Not Enabled[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m IAM Access Analyzer should be enabled and configured to continuously monitor resource permissions
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:87
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m9[0m
+
+		008: 
+[38;2;240;173;78m		009: resource "aws_iam_role_policy" "test_policy" {
+[0m		010:   name = "test_policy"
+
+
+[38;2;255;114;19mCloudWatch Logs Destination With Vulnerable Policy[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m CloudWatch Logs destination policy should avoid wildcard in 'principals' and 'actions'
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m87[0m
 
 		086:   destination_name = aws_cloudwatch_log_destination.test_destination.name
-		087:   access_policy    = data.aws_iam_policy_document.test_destination_policy.json
-		088: }
+[38;2;240;173;78m		087:   access_policy    = data.aws_iam_policy_document.test_destination_policy.json
+[0m		088: }
 
 
-Kinesis Not Encrypted With KMS, Severity: HIGH, Results: 1
-Description: AWS Kinesis Streams and metadata should be protected with KMS
-Platform: Terraform
+[38;2;187;33;36mKinesis Not Encrypted With KMS[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mDescription:[0m AWS Kinesis Streams and metadata should be protected with KMS
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:49
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m49[0m
 
 		048: 
-		049: resource "aws_kinesis_stream" "kinesis_for_cloudwatch" {
-		050:   name             = "kinesis_for_cloudwatch"
+[38;2;240;173;78m		049: resource "aws_kinesis_stream" "kinesis_for_cloudwatch" {
+[0m		050:   name             = "kinesis_for_cloudwatch"
 
 
 
 Results Summary:
-HIGH: 1
-MEDIUM: 1
-LOW: 0
-INFO: 2
-TOTAL: 4
+[38;2;187;33;36mHIGH[0m: 1
+[38;2;255;114;19mMEDIUM[0m: 1
+[38;2;237;213;126mLOW[0m: 1
+[38;2;91;192;222mINFO[0m: 2
+TOTAL: 5
 
-Scan duration: 4.620773476s
+Scan duration: 15.962878758s

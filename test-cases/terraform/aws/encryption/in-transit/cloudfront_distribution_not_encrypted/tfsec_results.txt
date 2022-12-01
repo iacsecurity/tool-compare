@@ -1,411 +1,259 @@
 
-  Result 1
+Result #1 CRITICAL Distribution allows unencrypted communications. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:100
+────────────────────────────────────────────────────────────────────────────────
+   44    resource "aws_cloudfront_distribution" "s3_distribution" {
+   ..  
+  100  [     viewer_protocol_policy = "allow-all" ("allow-all")
+  ...  
+  128    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-cloudfront-enforce-https
+      Impact CloudFront is available through an unencrypted connection
+  Resolution Only allow HTTPS for CloudFront distribution communication
 
-  [aws-cloudfront-enable-waf][[0m[31mHIGH[39m[0m] Resource 'aws_cloudfront_distribution.s3_distribution' does not have a WAF in front of it.
-  /src/main.tf:44-128
-
-
-      41 |   comment = local.name
-      42 | }
-      43 | 
-      44 | resource "aws_cloudfront_distribution" "s3_distribution" {
-      45 |   enabled             = true
-      46 |   price_class         = "PriceClass_200"
-      47 |   default_root_object = "index.html"
-      48 |   comment             = local.name
-      49 | 
-      50 |   origin {
-      51 |     domain_name = aws_s3_bucket.cdn-content.bucket_regional_domain_name
-      52 |     origin_id   = local.s3_origin_id
-      53 | 
-      54 |     s3_origin_config {
-      55 |       origin_access_identity = join("",
-      56 |         ["origin-access-identity/cloudfront/",
-      57 |         aws_cloudfront_origin_access_identity.oai.id]
-      58 |       )
-      59 |     }
-      60 |   }
-      61 | 
-      62 |   custom_error_response {
-      63 |     error_caching_min_ttl = 300
-      64 |     error_code            = 403
-      65 |     response_code         = 404
-      66 |     response_page_path    = "/404.html"
-      67 |   }
-      68 | 
-      69 |   restrictions {
-      70 |     geo_restriction {
-      71 |       restriction_type = "none"
-      72 |     }
-      73 |   }
-      74 | 
-      75 |   viewer_certificate {
-      76 |     cloudfront_default_certificate = true
-      77 |   }
-      78 | 
-      79 |   default_cache_behavior {
-      80 |     allowed_methods        = ["GET", "HEAD", "OPTIONS"]
-      81 |     cached_methods         = ["GET", "HEAD"]
-      82 |     target_origin_id       = local.s3_origin_id
-      83 |     viewer_protocol_policy = "allow-all"
-      84 | 
-      85 |     forwarded_values {
-      86 |       query_string = false
-      87 | 
-      88 |       cookies {
-      89 |         forward = "none"
-      90 |       }
-      91 |     }
-      92 |   }
-      93 | 
-      94 |   # Cache behavior with precedence 0
-      95 |   ordered_cache_behavior {
-      96 |     path_pattern           = "/path01/*"
-      97 |     allowed_methods        = ["GET", "HEAD", "OPTIONS"]
-      98 |     cached_methods         = ["GET", "HEAD", "OPTIONS"]
-      99 |     target_origin_id       = local.s3_origin_id
-     100 |     viewer_protocol_policy = "allow-all"
-     101 | 
-     102 |     forwarded_values {
-     103 |       query_string = false
-     104 |       headers      = ["Origin"]
-     105 | 
-     106 |       cookies {
-     107 |         forward = "none"
-     108 |       }
-     109 |     }
-     110 |   }
-     111 | 
-     112 |   # Cache behavior with precedence 1
-     113 |   ordered_cache_behavior {
-     114 |     path_pattern           = "/path02/*"
-     115 |     allowed_methods        = ["GET", "HEAD", "OPTIONS"]
-     116 |     cached_methods         = ["GET", "HEAD"]
-     117 |     target_origin_id       = local.s3_origin_id
-     118 |     viewer_protocol_policy = "allow-all"
-     119 | 
-     120 |     forwarded_values {
-     121 |       query_string = false
-     122 | 
-     123 |       cookies {
-     124 |         forward = "none"
-     125 |       }
-     126 |     }
-     127 |   }
-     128 | }
-     129 | 
-
-  Legacy ID:  AWS045
-  Impact:     Complex web application attacks can more easily be performed without a WAF
-  Resolution: Enable WAF for the CloudFront distribution
-
-  More Info:
-  - https://tfsec.dev/docs/aws/cloudfront/enable-waf#aws/cloudfront 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution#web_acl_id 
-  - https://docs.aws.amazon.com/waf/latest/developerguide/cloudfront-features.html 
-
-  Result 2
-
-  [aws-cloudfront-enforce-https][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'aws_cloudfront_distribution.s3_distribution' defines a CloudFront distribution that allows unencrypted communications.
-  /src/main.tf:83
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/cloudfront/enforce-https/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution#viewer_protocol_policy
+────────────────────────────────────────────────────────────────────────────────
 
 
-      80 |     allowed_methods        = ["GET", "HEAD", "OPTIONS"]
-      81 |     cached_methods         = ["GET", "HEAD"]
-      82 |     target_origin_id       = local.s3_origin_id
-      83 |     viewer_protocol_policy = "allow-all"    string: "allow-all"
-      84 | 
-      85 |     forwarded_values {
-      86 |       query_string = false
+Result #2 CRITICAL Distribution allows unencrypted communications. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:118
+────────────────────────────────────────────────────────────────────────────────
+   44    resource "aws_cloudfront_distribution" "s3_distribution" {
+   ..  
+  118  [     viewer_protocol_policy = "allow-all" ("allow-all")
+  ...  
+  128    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-cloudfront-enforce-https
+      Impact CloudFront is available through an unencrypted connection
+  Resolution Only allow HTTPS for CloudFront distribution communication
 
-  Legacy ID:  AWS020
-  Impact:     CloudFront is available through an unencrypted connection
-  Resolution: Only allow HTTPS for CloudFront distribution communication
-
-  More Info:
-  - https://tfsec.dev/docs/aws/cloudfront/enforce-https#aws/cloudfront 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution#viewer_protocol_policy 
-  - https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-https-cloudfront-to-s3-origin.html 
-
-  Result 3
-
-  [aws-cloudfront-use-secure-tls-policy][[0m[31mHIGH[39m[0m] Resource 'aws_cloudfront_distribution.s3_distribution' defines outdated SSL/TLS policies (missing minimum_protocol_version attribute)
-  /src/main.tf:75-77
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/cloudfront/enforce-https/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution#viewer_protocol_policy
+────────────────────────────────────────────────────────────────────────────────
 
 
-      72 |     }
-      73 |   }
-      74 | 
-      75 |   viewer_certificate {
-      76 |     cloudfront_default_certificate = true
-      77 |   }
-      78 | 
-      79 |   default_cache_behavior {
-      80 |     allowed_methods        = ["GET", "HEAD", "OPTIONS"]
+Result #3 CRITICAL Distribution allows unencrypted communications. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:83
+────────────────────────────────────────────────────────────────────────────────
+   44    resource "aws_cloudfront_distribution" "s3_distribution" {
+   ..  
+   83  [     viewer_protocol_policy = "allow-all" ("allow-all")
+  ...  
+  128    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-cloudfront-enforce-https
+      Impact CloudFront is available through an unencrypted connection
+  Resolution Only allow HTTPS for CloudFront distribution communication
 
-  Legacy ID:  AWS021
-  Impact:     Outdated SSL policies increase exposure to known vulnerabilities
-  Resolution: Use the most modern TLS/SSL policies available
-
-  More Info:
-  - https://tfsec.dev/docs/aws/cloudfront/use-secure-tls-policy#aws/cloudfront 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution#minimum_protocol_version 
-  - https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/secure-connections-supported-viewer-protocols-ciphers.html 
-
-  Result 4
-
-  [aws-s3-enable-bucket-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_s3_bucket.cdn-content' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
-  /src/main.tf:10-30
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/cloudfront/enforce-https/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution#viewer_protocol_policy
+────────────────────────────────────────────────────────────────────────────────
 
 
-       7 |   s3_origin_id = "cloudfront-dist-non-encrypted-bucket"
-       8 | }
-       9 | 
-      10 | resource "aws_s3_bucket" "cdn-content" {
-      11 |   bucket = local.name
-      12 |   acl    = "private"
-      13 |   policy = <<POLICY
-      14 | {
-      15 |   "Version": "2012-10-17",
-      16 |   "Id": "AllowCloudFrontOAI",
-      17 |   "Statement": [
-      18 |     {
-      19 |       "Sid": "AllowCloudFrontOAI",
-      20 |       "Effect": "Allow",
-      21 |       "Principal": {
-      22 |         "CanonicalUser": "${aws_cloudfront_origin_access_identity.oai.s3_canonical_user_id}"
-      23 |       },
-      24 |       "Action": "s3:GetObject",
-      25 |       "Resource": "arn:aws:s3:::${local.name}/*"
-      26 |     }
-      27 |   ]
-      28 | }
-      29 | POLICY
-      30 | }
-      31 | 
-      32 | resource "aws_s3_bucket_public_access_block" "cdn-content" {
-      33 |   bucket                  = aws_s3_bucket.cdn-content.id
+Result #4 HIGH Bucket does not have encryption enabled 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:10-30
+────────────────────────────────────────────────────────────────────────────────
+   10  ┌ resource "aws_s3_bucket" "cdn-content" {
+   11  │   bucket = local.name
+   12  │   acl    = "private"
+   13  │   policy = <<POLICY
+   14  │ {
+   15  │   "Version": "2012-10-17",
+   16  │   "Id": "AllowCloudFrontOAI",
+   17  │   "Statement": [
+   18  └     {
+   ..  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-enable-bucket-encryption
+      Impact The bucket objects could be read if compromised
+  Resolution Configure bucket encryption
 
-  Legacy ID:  AWS017
-  Impact:     The bucket objects could be read if compromised
-  Resolution: Configure bucket encryption
-
-  More Info:
-  - https://tfsec.dev/docs/aws/s3/enable-bucket-encryption#aws/s3 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#enable-default-server-side-encryption 
-  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-encryption.html 
-
-  Result 5
-
-  [aws-s3-enable-bucket-logging][[0m[33mMEDIUM[39m[0m] Resource 'aws_s3_bucket.cdn-content' does not have logging enabled.
-  /src/main.tf:10-30
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/enable-bucket-encryption/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#enable-default-server-side-encryption
+────────────────────────────────────────────────────────────────────────────────
 
 
-       7 |   s3_origin_id = "cloudfront-dist-non-encrypted-bucket"
-       8 | }
-       9 | 
-      10 | resource "aws_s3_bucket" "cdn-content" {
-      11 |   bucket = local.name
-      12 |   acl    = "private"
-      13 |   policy = <<POLICY
-      14 | {
-      15 |   "Version": "2012-10-17",
-      16 |   "Id": "AllowCloudFrontOAI",
-      17 |   "Statement": [
-      18 |     {
-      19 |       "Sid": "AllowCloudFrontOAI",
-      20 |       "Effect": "Allow",
-      21 |       "Principal": {
-      22 |         "CanonicalUser": "${aws_cloudfront_origin_access_identity.oai.s3_canonical_user_id}"
-      23 |       },
-      24 |       "Action": "s3:GetObject",
-      25 |       "Resource": "arn:aws:s3:::${local.name}/*"
-      26 |     }
-      27 |   ]
-      28 | }
-      29 | POLICY
-      30 | }
-      31 | 
-      32 | resource "aws_s3_bucket_public_access_block" "cdn-content" {
-      33 |   bucket                  = aws_s3_bucket.cdn-content.id
+Result #5 HIGH Bucket does not encrypt data with a customer managed key. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:10-30
+────────────────────────────────────────────────────────────────────────────────
+   10  ┌ resource "aws_s3_bucket" "cdn-content" {
+   11  │   bucket = local.name
+   12  │   acl    = "private"
+   13  │   policy = <<POLICY
+   14  │ {
+   15  │   "Version": "2012-10-17",
+   16  │   "Id": "AllowCloudFrontOAI",
+   17  │   "Statement": [
+   18  └     {
+   ..  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-encryption-customer-key
+      Impact Using AWS managed keys does not allow for fine grained control
+  Resolution Enable encryption using customer managed keys
 
-  Legacy ID:  AWS002
-  Impact:     There is no way to determine the access to this bucket
-  Resolution: Add a logging block to the resource to enable access logging
-
-  More Info:
-  - https://tfsec.dev/docs/aws/s3/enable-bucket-logging#aws/s3 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket 
-  - https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerLogs.html 
-
-  Result 6
-
-  [aws-s3-enable-versioning][[0m[33mMEDIUM[39m[0m] Resource 'aws_s3_bucket.cdn-content' does not have versioning enabled
-  /src/main.tf:10-30
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/encryption-customer-key/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#enable-default-server-side-encryption
+────────────────────────────────────────────────────────────────────────────────
 
 
-       7 |   s3_origin_id = "cloudfront-dist-non-encrypted-bucket"
-       8 | }
-       9 | 
-      10 | resource "aws_s3_bucket" "cdn-content" {
-      11 |   bucket = local.name
-      12 |   acl    = "private"
-      13 |   policy = <<POLICY
-      14 | {
-      15 |   "Version": "2012-10-17",
-      16 |   "Id": "AllowCloudFrontOAI",
-      17 |   "Statement": [
-      18 |     {
-      19 |       "Sid": "AllowCloudFrontOAI",
-      20 |       "Effect": "Allow",
-      21 |       "Principal": {
-      22 |         "CanonicalUser": "${aws_cloudfront_origin_access_identity.oai.s3_canonical_user_id}"
-      23 |       },
-      24 |       "Action": "s3:GetObject",
-      25 |       "Resource": "arn:aws:s3:::${local.name}/*"
-      26 |     }
-      27 |   ]
-      28 | }
-      29 | POLICY
-      30 | }
-      31 | 
-      32 | resource "aws_s3_bucket_public_access_block" "cdn-content" {
-      33 |   bucket                  = aws_s3_bucket.cdn-content.id
+Result #6 HIGH Distribution does not utilise a WAF. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:44-128
+────────────────────────────────────────────────────────────────────────────────
+   44  ┌ resource "aws_cloudfront_distribution" "s3_distribution" {
+   45  │   enabled             = true
+   46  │   price_class         = "PriceClass_200"
+   47  │   default_root_object = "index.html"
+   48  │   comment             = local.name
+   49  │ 
+   50  │   origin {
+   51  │     domain_name = aws_s3_bucket.cdn-content.bucket_regional_domain_name
+   52  └     origin_id   = local.s3_origin_id
+   ..  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-cloudfront-enable-waf
+      Impact Complex web application attacks can more easily be performed without a WAF
+  Resolution Enable WAF for the CloudFront distribution
 
-  Legacy ID:  AWS077
-  Impact:     Deleted or modified data would not be recoverable
-  Resolution: Enable versioning to protect against accidental/malicious removal or modification
-
-  More Info:
-  - https://tfsec.dev/docs/aws/s3/enable-versioning#aws/s3 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#versioning 
-  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/Versioning.html 
-
-  Result 7
-
-  [aws-cloudfront-enable-logging][[0m[33mMEDIUM[39m[0m] Resource 'aws_cloudfront_distribution.s3_distribution' does not have Access Logging configured
-  /src/main.tf:44-128
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/cloudfront/enable-waf/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution#web_acl_id
+────────────────────────────────────────────────────────────────────────────────
 
 
-      41 |   comment = local.name
-      42 | }
-      43 | 
-      44 | resource "aws_cloudfront_distribution" "s3_distribution" {
-      45 |   enabled             = true
-      46 |   price_class         = "PriceClass_200"
-      47 |   default_root_object = "index.html"
-      48 |   comment             = local.name
-      49 | 
-      50 |   origin {
-      51 |     domain_name = aws_s3_bucket.cdn-content.bucket_regional_domain_name
-      52 |     origin_id   = local.s3_origin_id
-      53 | 
-      54 |     s3_origin_config {
-      55 |       origin_access_identity = join("",
-      56 |         ["origin-access-identity/cloudfront/",
-      57 |         aws_cloudfront_origin_access_identity.oai.id]
-      58 |       )
-      59 |     }
-      60 |   }
-      61 | 
-      62 |   custom_error_response {
-      63 |     error_caching_min_ttl = 300
-      64 |     error_code            = 403
-      65 |     response_code         = 404
-      66 |     response_page_path    = "/404.html"
-      67 |   }
-      68 | 
-      69 |   restrictions {
-      70 |     geo_restriction {
-      71 |       restriction_type = "none"
-      72 |     }
-      73 |   }
-      74 | 
-      75 |   viewer_certificate {
-      76 |     cloudfront_default_certificate = true
-      77 |   }
-      78 | 
-      79 |   default_cache_behavior {
-      80 |     allowed_methods        = ["GET", "HEAD", "OPTIONS"]
-      81 |     cached_methods         = ["GET", "HEAD"]
-      82 |     target_origin_id       = local.s3_origin_id
-      83 |     viewer_protocol_policy = "allow-all"
-      84 | 
-      85 |     forwarded_values {
-      86 |       query_string = false
-      87 | 
-      88 |       cookies {
-      89 |         forward = "none"
-      90 |       }
-      91 |     }
-      92 |   }
-      93 | 
-      94 |   # Cache behavior with precedence 0
-      95 |   ordered_cache_behavior {
-      96 |     path_pattern           = "/path01/*"
-      97 |     allowed_methods        = ["GET", "HEAD", "OPTIONS"]
-      98 |     cached_methods         = ["GET", "HEAD", "OPTIONS"]
-      99 |     target_origin_id       = local.s3_origin_id
-     100 |     viewer_protocol_policy = "allow-all"
-     101 | 
-     102 |     forwarded_values {
-     103 |       query_string = false
-     104 |       headers      = ["Origin"]
-     105 | 
-     106 |       cookies {
-     107 |         forward = "none"
-     108 |       }
-     109 |     }
-     110 |   }
-     111 | 
-     112 |   # Cache behavior with precedence 1
-     113 |   ordered_cache_behavior {
-     114 |     path_pattern           = "/path02/*"
-     115 |     allowed_methods        = ["GET", "HEAD", "OPTIONS"]
-     116 |     cached_methods         = ["GET", "HEAD"]
-     117 |     target_origin_id       = local.s3_origin_id
-     118 |     viewer_protocol_policy = "allow-all"
-     119 | 
-     120 |     forwarded_values {
-     121 |       query_string = false
-     122 | 
-     123 |       cookies {
-     124 |         forward = "none"
-     125 |       }
-     126 |     }
-     127 |   }
-     128 | }
-     129 | 
+Result #7 HIGH Distribution allows unencrypted communications. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:75-77
+────────────────────────────────────────────────────────────────────────────────
+   44    resource "aws_cloudfront_distribution" "s3_distribution" {
+   ..  
+   75  ┌   viewer_certificate {
+   76  │     cloudfront_default_certificate = true
+   77  └   }
+  ...  
+  128    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-cloudfront-use-secure-tls-policy
+      Impact Outdated SSL policies increase exposure to known vulnerabilities
+  Resolution Use the most modern TLS/SSL policies available
 
-  Legacy ID:  AWS071
-  Impact:     Logging provides vital information about access and usage
-  Resolution: Enable logging for CloudFront distributions
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/cloudfront/use-secure-tls-policy/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution#minimum_protocol_version
+────────────────────────────────────────────────────────────────────────────────
 
-  More Info:
-  - https://tfsec.dev/docs/aws/cloudfront/enable-logging#aws/cloudfront 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution#logging_config 
-  - https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/AccessLogs.html 
 
-  times
-  ------------------------------------------
-  disk i/o             53.203291ms
-  parsing HCL          651µs
-  evaluating values    3.831916ms
-  running checks       54.993042ms
+Result #8 MEDIUM Bucket does not have logging enabled 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:10-30
+────────────────────────────────────────────────────────────────────────────────
+   10  ┌ resource "aws_s3_bucket" "cdn-content" {
+   11  │   bucket = local.name
+   12  │   acl    = "private"
+   13  │   policy = <<POLICY
+   14  │ {
+   15  │   "Version": "2012-10-17",
+   16  │   "Id": "AllowCloudFrontOAI",
+   17  │   "Statement": [
+   18  └     {
+   ..  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-enable-bucket-logging
+      Impact There is no way to determine the access to this bucket
+  Resolution Add a logging block to the resource to enable access logging
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/enable-bucket-logging/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket
+────────────────────────────────────────────────────────────────────────────────
+
+
+Result #9 MEDIUM Bucket does not have versioning enabled 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:10-30
+────────────────────────────────────────────────────────────────────────────────
+   10  ┌ resource "aws_s3_bucket" "cdn-content" {
+   11  │   bucket = local.name
+   12  │   acl    = "private"
+   13  │   policy = <<POLICY
+   14  │ {
+   15  │   "Version": "2012-10-17",
+   16  │   "Id": "AllowCloudFrontOAI",
+   17  │   "Statement": [
+   18  └     {
+   ..  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-enable-versioning
+      Impact Deleted or modified data would not be recoverable
+  Resolution Enable versioning to protect against accidental/malicious removal or modification
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/enable-versioning/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#versioning
+────────────────────────────────────────────────────────────────────────────────
+
+
+Result #10 MEDIUM Distribution does not have logging enabled. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:44-128
+────────────────────────────────────────────────────────────────────────────────
+   44  ┌ resource "aws_cloudfront_distribution" "s3_distribution" {
+   45  │   enabled             = true
+   46  │   price_class         = "PriceClass_200"
+   47  │   default_root_object = "index.html"
+   48  │   comment             = local.name
+   49  │ 
+   50  │   origin {
+   51  │     domain_name = aws_s3_bucket.cdn-content.bucket_regional_domain_name
+   52  └     origin_id   = local.s3_origin_id
+   ..  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-cloudfront-enable-logging
+      Impact Logging provides vital information about access and usage
+  Resolution Enable logging for CloudFront distributions
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/cloudfront/enable-logging/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution#logging_config
+────────────────────────────────────────────────────────────────────────────────
+
+
+  timings
+  ──────────────────────────────────────────
+  disk i/o             3.397333ms
+  parsing              373.833µs
+  adaptation           76µs
+  checks               6.012167ms
+  total                9.859333ms
 
   counts
-  ------------------------------------------
-  files loaded         1
-  blocks               6
-  modules              0
+  ──────────────────────────────────────────
+  modules downloaded   0
+  modules processed    1
+  blocks processed     6
+  files read           1
 
   results
-  ------------------------------------------
-  critical             1
-  high                 3
+  ──────────────────────────────────────────
+  passed               8
+  ignored              0
+  critical             3
+  high                 4
   medium               3
   low                  0
-  ignored              0
 
-  7 potential problems detected.
+  8 passed, 10 potential problem(s) detected.
 

@@ -1,4 +1,4 @@
-
+[38;2;34;187;51m
                    .0MO.                                    
                    OMMMx                                    
                    ;NMX;                                    
@@ -15,46 +15,68 @@ WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
 WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
-
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+[0m
+Scanning with Keeping Infrastructure as Code Secure v1.6.5
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 1039
 Queries failed to execute: 0
 
 ------------------------------------
 
-DynamoDB Table Point In Time Recovery Disabled, Severity: INFO, Results: 1
-Description: It's considered a best practice to have point in time recovery enabled for DynamoDB Table
-Platform: Terraform
+[38;2;91;192;222mName Is Not Snake Case[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 1
+[1mDescription:[0m All names should follow snake case pattern.
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:1
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m1[0m
 
-		001: resource "aws_dynamodb_table" "basic-dynamodb-table" {
-		002:   name           = "GameScores"
+[38;2;240;173;78m		001: resource "aws_dynamodb_table" "basic-dynamodb-table" {
+[0m		002:   name           = "GameScores"
 		003:   billing_mode   = "PROVISIONED"
 
 
-DynamoDB Table Not Encrypted, Severity: MEDIUM, Results: 1
-Description: AWS DynamoDB Tables should have server-side encryption
-Platform: Terraform
+[38;2;91;192;222mDynamoDB Table Point In Time Recovery Disabled[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 1
+[1mDescription:[0m It's considered a best practice to have point in time recovery enabled for DynamoDB Table
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:1
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m1[0m
 
-		001: resource "aws_dynamodb_table" "basic-dynamodb-table" {
-		002:   name           = "GameScores"
+[38;2;240;173;78m		001: resource "aws_dynamodb_table" "basic-dynamodb-table" {
+[0m		002:   name           = "GameScores"
+		003:   billing_mode   = "PROVISIONED"
+
+
+[38;2;237;213;126mIAM Access Analyzer Not Enabled[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m IAM Access Analyzer should be enabled and configured to continuously monitor resource permissions
+[1mPlatform:[0m Terraform
+
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m1[0m
+
+[38;2;240;173;78m		001: resource "aws_dynamodb_table" "basic-dynamodb-table" {
+[0m		002:   name           = "GameScores"
+		003:   billing_mode   = "PROVISIONED"
+
+
+[38;2;255;114;19mDynamoDB Table Not Encrypted[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m AWS DynamoDB Tables should have server-side encryption
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m1[0m
+
+[38;2;240;173;78m		001: resource "aws_dynamodb_table" "basic-dynamodb-table" {
+[0m		002:   name           = "GameScores"
 		003:   billing_mode   = "PROVISIONED"
 
 
 
 Results Summary:
-HIGH: 0
-MEDIUM: 1
-LOW: 0
-INFO: 1
-TOTAL: 2
+[38;2;187;33;36mHIGH[0m: 0
+[38;2;255;114;19mMEDIUM[0m: 1
+[38;2;237;213;126mLOW[0m: 1
+[38;2;91;192;222mINFO[0m: 2
+TOTAL: 4
 
-Scan duration: 4.560370257s
+Scan duration: 14.599804839s

@@ -1,90 +1,130 @@
 
-  Result 1
+Result #1 CRITICAL Security group rule allows ingress from public internet. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:17
+────────────────────────────────────────────────────────────────────────────────
+    7    resource "aws_security_group" "allow_tls" {
+    .  
+   17  [     cidr_blocks      = ["0.0.0.0/0"]
+   ..  
+   31    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ec2-no-public-ingress-sgr
+      Impact Your port exposed to the internet
+  Resolution Set a more restrictive cidr range
 
-  [aws-vpc-no-public-egress-sg][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'aws_security_group.allow_tls' defines a fully open egress security group.
-  /src/main.tf:25
-
-
-      22 |     to_port          = 0
-      23 |     protocol         = "-1"
-      24 |     cidr_blocks      = ["0.0.0.0/0"]
-      25 |     ipv6_cidr_blocks = ["::/0"]    list: ["::/0"]
-      26 |   }
-      27 | 
-      28 |   tags = {
-
-  Legacy ID:  AWS009
-  Impact:     The port is exposed for egressing data to the internet
-  Resolution: Set a more restrictive cidr range
-
-  More Info:
-  - https://tfsec.dev/docs/aws/vpc/no-public-egress-sg#aws/vpc 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
-
-  Result 2
-
-  [aws-vpc-no-public-egress-sg][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'aws_security_group.allow_tls' defines a fully open egress security group.
-  /src/main.tf:24
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/no-public-ingress-sgr/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule#cidr_blocks
+────────────────────────────────────────────────────────────────────────────────
 
 
-      21 |     from_port        = 0
-      22 |     to_port          = 0
-      23 |     protocol         = "-1"
-      24 |     cidr_blocks      = ["0.0.0.0/0"]    list: ["0.0.0.0/0"]
-      25 |     ipv6_cidr_blocks = ["::/0"]
-      26 |   }
-      27 | 
+Result #2 CRITICAL Security group rule allows egress to multiple public internet addresses. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:24
+────────────────────────────────────────────────────────────────────────────────
+    7    resource "aws_security_group" "allow_tls" {
+    .  
+   24  [     cidr_blocks      = ["0.0.0.0/0"]
+   ..  
+   31    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ec2-no-public-egress-sgr
+      Impact Your port is egressing data to the internet
+  Resolution Set a more restrictive cidr range
 
-  Legacy ID:  AWS009
-  Impact:     The port is exposed for egressing data to the internet
-  Resolution: Set a more restrictive cidr range
-
-  More Info:
-  - https://tfsec.dev/docs/aws/vpc/no-public-egress-sg#aws/vpc 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
-
-  Result 3
-
-  [aws-vpc-no-public-ingress-sg][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'aws_security_group.allow_tls' defines a fully open ingress security group.
-  /src/main.tf:17
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/no-public-egress-sgr/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group
+────────────────────────────────────────────────────────────────────────────────
 
 
-      14 |     from_port        = 443
-      15 |     to_port          = 443
-      16 |     protocol         = "tcp"
-      17 |     cidr_blocks      = ["0.0.0.0/0"]    list: ["0.0.0.0/0"]
-      18 |   }
-      19 | 
-      20 |   egress {
+Result #3 CRITICAL Security group rule allows egress to multiple public internet addresses. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:25
+────────────────────────────────────────────────────────────────────────────────
+    7    resource "aws_security_group" "allow_tls" {
+    .  
+   25  [     ipv6_cidr_blocks = ["::/0"]
+   ..  
+   31    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ec2-no-public-egress-sgr
+      Impact Your port is egressing data to the internet
+  Resolution Set a more restrictive cidr range
 
-  Legacy ID:  AWS008
-  Impact:     The port is exposed for ingress from the internet
-  Resolution: Set a more restrictive cidr range
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/no-public-egress-sgr/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group
+────────────────────────────────────────────────────────────────────────────────
 
-  More Info:
-  - https://tfsec.dev/docs/aws/vpc/no-public-ingress-sg#aws/vpc 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
 
-  times
-  ------------------------------------------
-  disk i/o             52.157542ms
-  parsing HCL          608.333µs
-  evaluating values    3.145125ms
-  running checks       37.859333ms
+Result #4 MEDIUM VPC Flow Logs is not enabled for VPC  
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:3-5
+────────────────────────────────────────────────────────────────────────────────
+    3    resource "aws_vpc" "example" {
+    4        cidr_block = "10.0.0.0/16"
+    5    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ec2-require-vpc-flow-logs-for-all-vpcs
+      Impact Without VPC flow logs, you risk not having enough information about network traffic flow to investigate incidents or identify security issues.
+  Resolution Enable flow logs for VPC
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/require-vpc-flow-logs-for-all-vpcs/
+────────────────────────────────────────────────────────────────────────────────
+
+
+Result #5 LOW Security group rule does not have a description. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:20-26
+────────────────────────────────────────────────────────────────────────────────
+    7    resource "aws_security_group" "allow_tls" {
+    .  
+   20  ┌   egress {
+   21  │     from_port        = 0
+   22  │     to_port          = 0
+   23  │     protocol         = "-1"
+   24  │     cidr_blocks      = ["0.0.0.0/0"]
+   25  │     ipv6_cidr_blocks = ["::/0"]
+   26  └   }
+   ..  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ec2-add-description-to-security-group-rule
+      Impact Descriptions provide context for the firewall rule reasons
+  Resolution Add descriptions for all security groups rules
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/add-description-to-security-group-rule/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule
+────────────────────────────────────────────────────────────────────────────────
+
+
+  timings
+  ──────────────────────────────────────────
+  disk i/o             3.926542ms
+  parsing              218.126µs
+  adaptation           127.458µs
+  checks               5.674709ms
+  total                9.946835ms
 
   counts
-  ------------------------------------------
-  files loaded         1
-  blocks               2
-  modules              0
+  ──────────────────────────────────────────
+  modules downloaded   0
+  modules processed    1
+  blocks processed     2
+  files read           1
 
   results
-  ------------------------------------------
+  ──────────────────────────────────────────
+  passed               4
+  ignored              0
   critical             3
   high                 0
-  medium               0
-  low                  0
-  ignored              0
+  medium               1
+  low                  1
 
-  3 potential problems detected.
+  4 passed, 5 potential problem(s) detected.
 

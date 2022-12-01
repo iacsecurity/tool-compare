@@ -1,24 +1,11 @@
-
-
-       _               _              
-   ___| |__   ___  ___| | _______   __
-  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
- | (__| | | |  __/ (__|   < (_) \ V / 
-  \___|_| |_|\___|\___|_|\_\___/ \_/  
-                                      
-By bridgecrew.io | version: 2.0.358 
-Update available 2.0.358 -> 2.0.359
-Run pip3 install -U checkov to update 
-
-
 terraform scan results:
 
-Passed checks: 1, Failed checks: 2, Skipped checks: 0
+Passed checks: 2, Failed checks: 2, Skipped checks: 0
 
-Check: CKV_AWS_33: "Ensure KMS key policy does not contain wildcard (*) principal"
+Check: CKV_AWS_7: "Ensure rotation for customer created CMKs is enabled"
 	FAILED for resource: aws_kms_key.not_secure_policy
 	File: /main.tf:5-25
-	Guide: https://docs.bridgecrew.io/docs/ensure-kms-key-policy-does-not-contain-wildcard-principal
+	Guide: https://docs.bridgecrew.io/docs/logging_8
 
 		5  | resource "aws_kms_key" "not_secure_policy" {
 		6  |   description             = "KMS key + not_secure_policy"
@@ -41,11 +28,10 @@ Check: CKV_AWS_33: "Ensure KMS key policy does not contain wildcard (*) principa
 		23 | }
 		24 | EOF
 		25 | }
-
-Check: CKV_AWS_7: "Ensure rotation for customer created CMKs is enabled"
+Check: CKV_AWS_33: "Ensure KMS key policy does not contain wildcard (*) principal"
 	FAILED for resource: aws_kms_key.not_secure_policy
 	File: /main.tf:5-25
-	Guide: https://docs.bridgecrew.io/docs/logging_8
+	Guide: https://docs.bridgecrew.io/docs/ensure-kms-key-policy-does-not-contain-wildcard-principal
 
 		5  | resource "aws_kms_key" "not_secure_policy" {
 		6  |   description             = "KMS key + not_secure_policy"
