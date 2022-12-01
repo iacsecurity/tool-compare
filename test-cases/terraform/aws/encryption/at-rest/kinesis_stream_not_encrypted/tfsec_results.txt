@@ -1,54 +1,52 @@
 
-  Result 1
+Result #1 HIGH Stream does not use KMS encryption. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:1-14
+────────────────────────────────────────────────────────────────────────────────
+    1  ┌ resource "aws_kinesis_stream" "test_stream" {
+    2  │   name             = "terraform-kinesis-test"
+    3  │   shard_count      = 1
+    4  │   retention_period = 48
+    5  │ 
+    6  │   shard_level_metrics = [
+    7  │     "IncomingBytes",
+    8  │     "OutgoingBytes",
+    9  └   ]
+   ..  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-kinesis-enable-in-transit-encryption
+      Impact Intercepted data can be read in transit
+  Resolution Enable in transit encryption
 
-  [aws-kinesis-enable-in-transit-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_kinesis_stream.test_stream' defines an unencrypted Kinesis Stream.
-  /src/main.tf:1-14
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/kinesis/enable-in-transit-encryption/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kinesis_stream#encryption_type
+────────────────────────────────────────────────────────────────────────────────
 
 
-       1 | resource "aws_kinesis_stream" "test_stream" {
-       2 |   name             = "terraform-kinesis-test"
-       3 |   shard_count      = 1
-       4 |   retention_period = 48
-       5 | 
-       6 |   shard_level_metrics = [
-       7 |     "IncomingBytes",
-       8 |     "OutgoingBytes",
-       9 |   ]
-      10 | 
-      11 |   tags = {
-      12 |     Environment = "test"
-      13 |   }
-      14 | }
-
-  Legacy ID:  AWS024
-  Impact:     Intercepted data can be read in transit
-  Resolution: Enable in transit encryption
-
-  More Info:
-  - https://tfsec.dev/docs/aws/kinesis/enable-in-transit-encryption#aws/kinesis 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kinesis_stream#encryption_type 
-  - https://docs.aws.amazon.com/streams/latest/dev/server-side-encryption.html 
-
-  times
-  ------------------------------------------
-  disk i/o             69.817418ms
-  parsing HCL          510.958µs
-  evaluating values    2.321999ms
-  running checks       15.44825ms
+  timings
+  ──────────────────────────────────────────
+  disk i/o             4.152416ms
+  parsing              139.293µs
+  adaptation           55.625µs
+  checks               7.0565ms
+  total                11.403834ms
 
   counts
-  ------------------------------------------
-  files loaded         1
-  blocks               1
-  modules              0
+  ──────────────────────────────────────────
+  modules downloaded   0
+  modules processed    1
+  blocks processed     1
+  files read           1
 
   results
-  ------------------------------------------
+  ──────────────────────────────────────────
+  passed               2
+  ignored              0
   critical             0
   high                 1
   medium               0
   low                  0
-  ignored              0
 
-  1 potential problems detected.
+  2 passed, 1 potential problem(s) detected.
 

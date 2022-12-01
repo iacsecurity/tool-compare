@@ -1,4 +1,4 @@
-
+[38;2;34;187;51m
                    .0MO.                                    
                    OMMMx                                    
                    ;NMX;                                    
@@ -15,121 +15,165 @@ WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
 WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
-
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+[0m
+Scanning with Keeping Infrastructure as Code Secure v1.6.5
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 1039
 Queries failed to execute: 0
 
 ------------------------------------
 
-Resource Not Using Tags, Severity: INFO, Results: 7
-Description: AWS services resource tags are an essential part of managing components
-Platform: Terraform
+[38;2;91;192;222mResource Not Using Tags[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 7
+[1mDescription:[0m AWS services resource tags are an essential part of managing components. As a best practice, the field 'tags' should have additional tags defined other than 'Name'
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:32
-
-		031: 
-		032: resource "aws_internet_gateway" "igw1" {
-		033:   vpc_id = aws_vpc.vpc1.id
-
-
-	[2]: /src/main.tf:36
-
-		035: 
-		036: resource "aws_route_table" "rt1" {
-		037:   vpc_id = aws_vpc.vpc1.id
-
-
-	[3]: /src/main.tf:54
-
-		053: 
-		054: resource "aws_lb_target_group" "test" {
-		055:   vpc_id = aws_vpc.vpc1.id
-
-
-	[4]: /src/main.tf:60
-
-		059: 
-		060: resource "aws_lb" "alb_test" {
-		061:   subnets = [aws_subnet.subnet1.id, aws_subnet.subnet2.id]
-
-
-	[5]: /src/main.tf:5
-
-		004: 
-		005: resource "aws_vpc" "vpc1" {
-		006:   cidr_block = "10.10.0.0/16"
-
-
-	[6]: /src/main.tf:17
-
-		016:   availability_zone_id = data.aws_availability_zones.available.zone_ids[0]
-		017:   tags = {
-		018:     Name = "subnet1"
-
-
-	[7]: /src/main.tf:27
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m27[0m
 
 		026: 
-		027:   tags = {
-		028:     Name = "subnet2"
+[38;2;240;173;78m		027:   tags = {
+[0m		028:     Name = "subnet2"
 
 
-VPC FlowLogs Disabled, Severity: MEDIUM, Results: 1
-Description: VPC hasn't got any FlowLog associated
-Platform: Terraform
+	[38;2;91;192;222m[2]:[0m ../../src/main.tf:[38;2;34;187;51m54[0m
 
-	[1]: /src/main.tf:5
+		053: 
+[38;2;240;173;78m		054: resource "aws_lb_target_group" "test" {
+[0m		055:   vpc_id = aws_vpc.vpc1.id
+
+
+	[38;2;91;192;222m[3]:[0m ../../src/main.tf:[38;2;34;187;51m36[0m
+
+		035: 
+[38;2;240;173;78m		036: resource "aws_route_table" "rt1" {
+[0m		037:   vpc_id = aws_vpc.vpc1.id
+
+
+	[38;2;91;192;222m[4]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
 
 		004: 
-		005: resource "aws_vpc" "vpc1" {
-		006:   cidr_block = "10.10.0.0/16"
+[38;2;240;173;78m		005: resource "aws_vpc" "vpc1" {
+[0m		006:   cidr_block = "10.10.0.0/16"
 
 
-ALB Not Dropping Invalid Headers, Severity: MEDIUM, Results: 1
-Description: It's considered a best practice when using Application Load Balancers to drop invalid header fields
-Platform: Terraform
+	[38;2;91;192;222m[5]:[0m ../../src/main.tf:[38;2;34;187;51m32[0m
 
-	[1]: /src/main.tf:60
-
-		059: 
-		060: resource "aws_lb" "alb_test" {
-		061:   subnets = [aws_subnet.subnet1.id, aws_subnet.subnet2.id]
+		031: 
+[38;2;240;173;78m		032: resource "aws_internet_gateway" "igw1" {
+[0m		033:   vpc_id = aws_vpc.vpc1.id
 
 
-ALB Is Not Integrated With WAF, Severity: MEDIUM, Results: 1
-Description: All Application Load Balancers (ALB) must be protected with Web Application Firewall (WAF) service
-Platform: Terraform
-
-	[1]: /src/main.tf:60
+	[38;2;91;192;222m[6]:[0m ../../src/main.tf:[38;2;34;187;51m60[0m
 
 		059: 
-		060: resource "aws_lb" "alb_test" {
-		061:   subnets = [aws_subnet.subnet1.id, aws_subnet.subnet2.id]
+[38;2;240;173;78m		060: resource "aws_lb" "alb_test" {
+[0m		061:   subnets = [aws_subnet.subnet1.id, aws_subnet.subnet2.id]
 
 
-ALB Listening on HTTP, Severity: HIGH, Results: 1
-Description: AWS Application Load Balancer (alb) should not listen on HTTP
-Platform: Terraform
+	[38;2;91;192;222m[7]:[0m ../../src/main.tf:[38;2;34;187;51m17[0m
 
-	[1]: /src/main.tf:70
+		016:   availability_zone_id = data.aws_availability_zones.available.zone_ids[0]
+[38;2;240;173;78m		017:   tags = {
+[0m		018:     Name = "subnet1"
+
+
+[38;2;237;213;126mVPC FlowLogs Disabled[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m Every VPC resource should have an associated Flow Log
+[1mPlatform:[0m Terraform
+
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
+
+		004: 
+[38;2;240;173;78m		005: resource "aws_vpc" "vpc1" {
+[0m		006:   cidr_block = "10.10.0.0/16"
+
+
+[38;2;237;213;126mShield Advanced Not In Use[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m AWS Shield Advanced should be used for Amazon Route 53 hosted zone, AWS Global Accelerator accelerator, Elastic IP Address, Elastic Load Balancing, and Amazon CloudFront Distribution to protect these resources against robust DDoS attacks
+[1mPlatform:[0m Terraform
+
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m60[0m
+
+		059: 
+[38;2;240;173;78m		060: resource "aws_lb" "alb_test" {
+[0m		061:   subnets = [aws_subnet.subnet1.id, aws_subnet.subnet2.id]
+
+
+[38;2;237;213;126mIAM Access Analyzer Not Enabled[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m IAM Access Analyzer should be enabled and configured to continuously monitor resource permissions
+[1mPlatform:[0m Terraform
+
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
+
+		004: 
+[38;2;240;173;78m		005: resource "aws_vpc" "vpc1" {
+[0m		006:   cidr_block = "10.10.0.0/16"
+
+
+[38;2;237;213;126mALB Deletion Protection Disabled[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m Application Load Balancer should have deletion protection enabled
+[1mPlatform:[0m Terraform
+
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m60[0m
+
+		059: 
+[38;2;240;173;78m		060: resource "aws_lb" "alb_test" {
+[0m		061:   subnets = [aws_subnet.subnet1.id, aws_subnet.subnet2.id]
+
+
+[38;2;255;114;19mVPC Without Network Firewall[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m VPC should have a Network Firewall associated
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
+
+		004: 
+[38;2;240;173;78m		005: resource "aws_vpc" "vpc1" {
+[0m		006:   cidr_block = "10.10.0.0/16"
+
+
+[38;2;255;114;19mALB Not Dropping Invalid Headers[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m It's considered a best practice when using Application Load Balancers to drop invalid header fields
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m60[0m
+
+		059: 
+[38;2;240;173;78m		060: resource "aws_lb" "alb_test" {
+[0m		061:   subnets = [aws_subnet.subnet1.id, aws_subnet.subnet2.id]
+
+
+[38;2;255;114;19mALB Is Not Integrated With WAF[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m All Application Load Balancers (ALB) must be protected with Web Application Firewall (WAF) service
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m60[0m
+
+		059: 
+[38;2;240;173;78m		060: resource "aws_lb" "alb_test" {
+[0m		061:   subnets = [aws_subnet.subnet1.id, aws_subnet.subnet2.id]
+
+
+[38;2;187;33;36mALB Listening on HTTP[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mDescription:[0m AWS Application Load Balancer (alb) should not listen on HTTP
+[1mPlatform:[0m Terraform
+
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m70[0m
 
 		069: 
-		070:   default_action {
-		071:     type             = "forward"
+[38;2;240;173;78m		070:   default_action {
+[0m		071:     type             = "forward"
 
 
 
 Results Summary:
-HIGH: 1
-MEDIUM: 3
-LOW: 0
-INFO: 7
-TOTAL: 11
+[38;2;187;33;36mHIGH[0m: 1
+[38;2;255;114;19mMEDIUM[0m: 3
+[38;2;237;213;126mLOW[0m: 4
+[38;2;91;192;222mINFO[0m: 7
+TOTAL: 15
 
-Scan duration: 4.955641762s
+Scan duration: 14.188043048s

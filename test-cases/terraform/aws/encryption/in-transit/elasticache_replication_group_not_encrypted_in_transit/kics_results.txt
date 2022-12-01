@@ -1,4 +1,4 @@
-
+[38;2;34;187;51m
                    .0MO.                                    
                    OMMMx                                    
                    ;NMX;                                    
@@ -15,57 +15,68 @@ WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
 WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
-
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+[0m
+Scanning with Keeping Infrastructure as Code Secure v1.6.5
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 1039
 Queries failed to execute: 0
 
 ------------------------------------
 
-Resource Not Using Tags, Severity: INFO, Results: 1
-Description: AWS services resource tags are an essential part of managing components
-Platform: Terraform
+[38;2;91;192;222mResource Not Using Tags[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 1
+[1mDescription:[0m AWS services resource tags are an essential part of managing components. As a best practice, the field 'tags' should have additional tags defined other than 'Name'
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:5
-
-		004: 
-		005: resource "aws_elasticache_replication_group" "example" {
-		006:   automatic_failover_enabled    = true
-
-
-ElastiCache Replication Group Not Encrypted At Transit, Severity: MEDIUM, Results: 1
-Description: ElastiCache Replication Group encryption should be enabled at Transit
-Platform: Terraform
-
-	[1]: /src/main.tf:5
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
 
 		004: 
-		005: resource "aws_elasticache_replication_group" "example" {
-		006:   automatic_failover_enabled    = true
+[38;2;240;173;78m		005: resource "aws_elasticache_replication_group" "example" {
+[0m		006:   automatic_failover_enabled    = true
 
 
-ElastiCache Replication Group Not Encrypted At Rest, Severity: MEDIUM, Results: 1
-Description: ElastiCache Replication Group encryption should be enabled at Rest
-Platform: Terraform
+[38;2;237;213;126mIAM Access Analyzer Not Enabled[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m IAM Access Analyzer should be enabled and configured to continuously monitor resource permissions
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:5
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
 
 		004: 
-		005: resource "aws_elasticache_replication_group" "example" {
-		006:   automatic_failover_enabled    = true
+[38;2;240;173;78m		005: resource "aws_elasticache_replication_group" "example" {
+[0m		006:   automatic_failover_enabled    = true
+
+
+[38;2;255;114;19mElastiCache Replication Group Not Encrypted At Transit[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m ElastiCache Replication Group encryption should be enabled at Transit
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
+
+		004: 
+[38;2;240;173;78m		005: resource "aws_elasticache_replication_group" "example" {
+[0m		006:   automatic_failover_enabled    = true
+
+
+[38;2;255;114;19mElastiCache Replication Group Not Encrypted At Rest[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m ElastiCache Replication Group encryption should be enabled at Rest
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
+
+		004: 
+[38;2;240;173;78m		005: resource "aws_elasticache_replication_group" "example" {
+[0m		006:   automatic_failover_enabled    = true
 
 
 
 Results Summary:
-HIGH: 0
-MEDIUM: 2
-LOW: 0
-INFO: 1
-TOTAL: 3
+[38;2;187;33;36mHIGH[0m: 0
+[38;2;255;114;19mMEDIUM[0m: 2
+[38;2;237;213;126mLOW[0m: 1
+[38;2;91;192;222mINFO[0m: 1
+TOTAL: 4
 
-Scan duration: 4.724542068s
+Scan duration: 13.866096548s

@@ -1,4 +1,4 @@
-
+[38;2;34;187;51m
                    .0MO.                                    
                    OMMMx                                    
                    ;NMX;                                    
@@ -15,688 +15,776 @@ WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
 WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
-
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+[0m
+Scanning with Keeping Infrastructure as Code Secure v1.6.5
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 1039
 Queries failed to execute: 0
 
 ------------------------------------
 
-Security Group Without Description, Severity: INFO, Results: 2
-Description: It's considered a best practice for AWS Security Group to have a description
-Platform: Terraform
+[38;2;91;192;222mSecurity Group Rule Without Description[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 2
+[1mDescription:[0m It's considered a best practice for AWS Security Group to have a description
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:103
-
-		102: 
-		103: resource "aws_security_group" "db" {
-		104:   vpc_id = aws_vpc.nondefault.id
-
-
-	[2]: /src/main.tf:129
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m129[0m
 
 		128: 
-		129: resource "aws_security_group" "publicly_accessible_sg" {
-		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		129: resource "aws_security_group" "publicly_accessible_sg" {
+[0m		130:   vpc_id = aws_vpc.nondefault.id
 
 
-Security Group Rules Without Description, Severity: INFO, Results: 3
-Description: It's considered a best practice for all rules in AWS Security Group to have a description
-Platform: Terraform
+	[38;2;91;192;222m[2]:[0m ../../src/main.tf:[38;2;34;187;51m103[0m
 
-	[1]: /src/main.tf:105
+		102: 
+[38;2;240;173;78m		103: resource "aws_security_group" "db" {
+[0m		104:   vpc_id = aws_vpc.nondefault.id
+
+
+[38;2;91;192;222mSecurity Group Rule Without Description[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 3
+[1mDescription:[0m It's considered a best practice for all rules in AWS Security Group to have a description
+[1mPlatform:[0m Terraform
+
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m105[0m
 
 		104:   vpc_id = aws_vpc.nondefault.id
-		105:   ingress {
-		106:     from_port = 3306
+[38;2;240;173;78m		105:   ingress {
+[0m		106:     from_port = 3306
 
 
-	[2]: /src/main.tf:137
+	[38;2;91;192;222m[2]:[0m ../../src/main.tf:[38;2;34;187;51m137[0m
 
 		136:   }
-		137:   egress {
-		138:     from_port = 0
+[38;2;240;173;78m		137:   egress {
+[0m		138:     from_port = 0
 
 
-	[3]: /src/main.tf:131
+	[38;2;91;192;222m[3]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
 
 		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
 
 
-Resource Not Using Tags, Severity: INFO, Results: 12
-Description: AWS services resource tags are an essential part of managing components
-Platform: Terraform
+[38;2;91;192;222mResource Not Using Tags[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 12
+[1mDescription:[0m AWS services resource tags are an essential part of managing components. As a best practice, the field 'tags' should have additional tags defined other than 'Name'
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:84
-
-		083: 
-		084: resource aws_route_table "nondefault_1" {
-		085:   vpc_id = aws_vpc.nondefault.id
-
-
-	[2]: /src/main.tf:97
-
-		096: 
-		097: resource "aws_db_subnet_group" "db" {
-		098:   name = "rds_db"
-
-
-	[3]: /src/main.tf:10
-
-		009: 
-		010: resource "aws_vpc" "nondefault" {
-		011:   cidr_block = "10.1.1.0/24"
-
-
-	[4]: /src/main.tf:129
-
-		128: 
-		129: resource "aws_security_group" "publicly_accessible_sg" {
-		130:   vpc_id = aws_vpc.nondefault.id
-
-
-	[5]: /src/main.tf:103
-
-		102: 
-		103: resource "aws_security_group" "db" {
-		104:   vpc_id = aws_vpc.nondefault.id
-
-
-	[6]: /src/main.tf:68
-
-		067: 
-		068: resource "aws_subnet" "nondefault_1" {
-		069:   vpc_id = aws_vpc.nondefault.id
-
-
-	[7]: /src/main.tf:74
-
-		073: 
-		074: resource "aws_subnet" "nondefault_2" {
-		075:   vpc_id = aws_vpc.nondefault.id
-
-
-	[8]: /src/main.tf:146
-
-		145: // This instance is can potentially be used to hop into the DB
-		146: resource "aws_instance" "public_ins" {
-		147:   ami = "ami-0130bec6e5047f596"
-
-
-	[9]: /src/main.tf:113
-
-		112: 
-		113: resource "aws_db_instance" "test" {
-		114:   identifier = "tf-test-db"
-
-
-	[10]: /src/main.tf:80
-
-		079: 
-		080: resource "aws_internet_gateway" "igw" {
-		081:   vpc_id = aws_vpc.nondefault.id
-
-
-	[11]: /src/main.tf:36
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m36[0m
 
 		035: 
-		036:   tags = {
-		037:     Name = "main"
+[38;2;240;173;78m		036:   tags = {
+[0m		037:     Name = "main"
 
 
-	[12]: /src/main.tf:63
+	[38;2;91;192;222m[2]:[0m ../../src/main.tf:[38;2;34;187;51m103[0m
 
-		062: 
-		063:   tags = {
-		064:     Name = "main"
-
-
-RDS Without Logging, Severity: INFO, Results: 1
-Description: RDS does not have any kind of logger
-Platform: Terraform
-
-	[1]: /src/main.tf:113
-
-		112: 
-		113: resource "aws_db_instance" "test" {
-		114:   identifier = "tf-test-db"
+		102: 
+[38;2;240;173;78m		103: resource "aws_security_group" "db" {
+[0m		104:   vpc_id = aws_vpc.nondefault.id
 
 
-EC2 Not EBS Optimized, Severity: INFO, Results: 1
-Description: It's considered a best practice for an EC2 instance to use an EBS optimized instance. This provides the best performance for your EBS volumes by minimizing contention between Amazon EBS I/O and other traffic from your instance
-Platform: Terraform
+	[38;2;91;192;222m[3]:[0m ../../src/main.tf:[38;2;34;187;51m74[0m
 
-	[1]: /src/main.tf:146
-
-		145: // This instance is can potentially be used to hop into the DB
-		146: resource "aws_instance" "public_ins" {
-		147:   ami = "ami-0130bec6e5047f596"
+		073: 
+[38;2;240;173;78m		074: resource "aws_subnet" "nondefault_2" {
+[0m		075:   vpc_id = aws_vpc.nondefault.id
 
 
-EC2 Instance Monitoring Disabled, Severity: INFO, Results: 1
-Description: EC2 Instance should have detailed monitoring enabled. With detailed monitoring enabled data is available in 1-minute periods
-Platform: Terraform
-
-	[1]: /src/main.tf:146
-
-		145: // This instance is can potentially be used to hop into the DB
-		146: resource "aws_instance" "public_ins" {
-		147:   ami = "ami-0130bec6e5047f596"
-
-
-VPC FlowLogs Disabled, Severity: MEDIUM, Results: 1
-Description: VPC hasn't got any FlowLog associated
-Platform: Terraform
-
-	[1]: /src/main.tf:10
+	[38;2;91;192;222m[4]:[0m ../../src/main.tf:[38;2;34;187;51m10[0m
 
 		009: 
-		010: resource "aws_vpc" "nondefault" {
-		011:   cidr_block = "10.1.1.0/24"
+[38;2;240;173;78m		010: resource "aws_vpc" "nondefault" {
+[0m		011:   cidr_block = "10.1.1.0/24"
 
 
-SQL Analysis Services Port 2383 (TCP) Is Publicly Accessible, Severity: MEDIUM, Results: 1
-Description: Check if port 2383 on TCP is publicly accessible by checking the CIDR block range that can access it.
-Platform: Terraform
+	[38;2;91;192;222m[5]:[0m ../../src/main.tf:[38;2;34;187;51m80[0m
 
-	[1]: /src/main.tf:131
+		079: 
+[38;2;240;173;78m		080: resource "aws_internet_gateway" "igw" {
+[0m		081:   vpc_id = aws_vpc.nondefault.id
 
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
 
+	[38;2;91;192;222m[6]:[0m ../../src/main.tf:[38;2;34;187;51m63[0m
 
-RDS With Backup Disabled, Severity: MEDIUM, Results: 1
-Description: RDS configured without backup
-Platform: Terraform
+		062: 
+[38;2;240;173;78m		063:   tags = {
+[0m		064:     Name = "main"
 
-	[1]: /src/main.tf:113
 
-		112: 
-		113: resource "aws_db_instance" "test" {
-		114:   identifier = "tf-test-db"
-
-
-Unrestricted Security Group Ingress, Severity: HIGH, Results: 1
-Description: Security groups allow ingress from 0.0.0.0:0
-Platform: Terraform
-
-	[1]: /src/main.tf:135
-
-		134:     to_port = 65000
-		135:     cidr_blocks = ["0.0.0.0/0"]
-		136:   }
-
-
-Unknown Port Exposed To Internet, Severity: HIGH, Results: 1
-Description: AWS Security Group should not have an unknown port exposed to the entire Internet
-Platform: Terraform
-
-	[1]: /src/main.tf:135
-
-		134:     to_port = 65000
-		135:     cidr_blocks = ["0.0.0.0/0"]
-		136:   }
-
-
-Sensitive Port Is Exposed To Entire Network, Severity: HIGH, Results: 52
-Description: A sensitive port, such as port 23 or port 110, is open for the whole network in either TCP or UDP protocol
-Platform: Terraform
-
-	[1]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[2]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[3]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[4]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[5]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[6]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[7]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[8]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[9]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[10]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[11]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[12]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[13]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[14]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[15]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[16]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[17]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[18]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[19]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[20]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[21]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[22]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[23]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[24]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[25]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[26]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[27]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[28]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[29]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[30]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[31]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[32]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[33]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[34]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[35]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[36]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[37]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[38]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[39]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[40]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[41]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[42]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[43]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[44]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[45]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[46]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[47]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[48]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[49]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[50]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[51]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-	[52]: /src/main.tf:131
-
-		130:   vpc_id = aws_vpc.nondefault.id
-		131:   ingress {
-		132:     from_port = 0
-
-
-Security Group With Unrestricted Access To SSH, Severity: HIGH, Results: 1
-Description: SSH' (TCP:22) should not be public in AWS Security Group
-Platform: Terraform
-
-	[1]: /src/main.tf:135
-
-		134:     to_port = 65000
-		135:     cidr_blocks = ["0.0.0.0/0"]
-		136:   }
-
-
-Remote Desktop Port Open, Severity: HIGH, Results: 1
-Description: The Remote Desktop port is open in a Security Group
-Platform: Terraform
-
-	[1]: /src/main.tf:129
+	[38;2;91;192;222m[7]:[0m ../../src/main.tf:[38;2;34;187;51m129[0m
 
 		128: 
-		129: resource "aws_security_group" "publicly_accessible_sg" {
+[38;2;240;173;78m		129: resource "aws_security_group" "publicly_accessible_sg" {
+[0m		130:   vpc_id = aws_vpc.nondefault.id
+
+
+	[38;2;91;192;222m[8]:[0m ../../src/main.tf:[38;2;34;187;51m146[0m
+
+		145: // This instance is can potentially be used to hop into the DB
+[38;2;240;173;78m		146: resource "aws_instance" "public_ins" {
+[0m		147:   ami = "ami-0130bec6e5047f596"
+
+
+	[38;2;91;192;222m[9]:[0m ../../src/main.tf:[38;2;34;187;51m113[0m
+
+		112: 
+[38;2;240;173;78m		113: resource "aws_db_instance" "test" {
+[0m		114:   identifier = "tf-test-db"
+
+
+	[38;2;91;192;222m[10]:[0m ../../src/main.tf:[38;2;34;187;51m84[0m
+
+		083: 
+[38;2;240;173;78m		084: resource aws_route_table "nondefault_1" {
+[0m		085:   vpc_id = aws_vpc.nondefault.id
+
+
+	[38;2;91;192;222m[11]:[0m ../../src/main.tf:[38;2;34;187;51m68[0m
+
+		067: 
+[38;2;240;173;78m		068: resource "aws_subnet" "nondefault_1" {
+[0m		069:   vpc_id = aws_vpc.nondefault.id
+
+
+	[38;2;91;192;222m[12]:[0m ../../src/main.tf:[38;2;34;187;51m97[0m
+
+		096: 
+[38;2;240;173;78m		097: resource "aws_db_subnet_group" "db" {
+[0m		098:   name = "rds_db"
+
+
+[38;2;91;192;222mRDS Without Logging[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 1
+[1mDescription:[0m RDS does not have any kind of logger
+[1mPlatform:[0m Terraform
+
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m113[0m
+
+		112: 
+[38;2;240;173;78m		113: resource "aws_db_instance" "test" {
+[0m		114:   identifier = "tf-test-db"
+
+
+[38;2;91;192;222mEC2 Instance Monitoring Disabled[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 1
+[1mDescription:[0m EC2 Instance should have detailed monitoring enabled. With detailed monitoring enabled data is available in 1-minute periods
+[1mPlatform:[0m Terraform
+
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m146[0m
+
+		145: // This instance is can potentially be used to hop into the DB
+[38;2;240;173;78m		146: resource "aws_instance" "public_ins" {
+[0m		147:   ami = "ami-0130bec6e5047f596"
+
+
+[38;2;237;213;126mVPC FlowLogs Disabled[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m Every VPC resource should have an associated Flow Log
+[1mPlatform:[0m Terraform
+
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m10[0m
+
+		009: 
+[38;2;240;173;78m		010: resource "aws_vpc" "nondefault" {
+[0m		011:   cidr_block = "10.1.1.0/24"
+
+
+[38;2;237;213;126mIAM Access Analyzer Not Enabled[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m IAM Access Analyzer should be enabled and configured to continuously monitor resource permissions
+[1mPlatform:[0m Terraform
+
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m10[0m
+
+		009: 
+[38;2;240;173;78m		010: resource "aws_vpc" "nondefault" {
+[0m		011:   cidr_block = "10.1.1.0/24"
+
+
+[38;2;237;213;126mEC2 Instance Using Default VPC[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m EC2 Instances should not be configured under a default VPC network
+[1mPlatform:[0m Terraform
+
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m151[0m
+
+		150:   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
+[38;2;240;173;78m		151:   subnet_id = aws_subnet.nondefault_1.id
+[0m		152: }
+
+
+[38;2;255;114;19mVPC Without Network Firewall[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m VPC should have a Network Firewall associated
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m10[0m
+
+		009: 
+[38;2;240;173;78m		010: resource "aws_vpc" "nondefault" {
+[0m		011:   cidr_block = "10.1.1.0/24"
+
+
+[38;2;255;114;19mSQL Analysis Services Port 2383 (TCP) Is Publicly Accessible[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m Check if port 2383 on TCP is publicly accessible by checking the CIDR block range that can access it.
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
 		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
 
 
-Passwords And Secrets In Infrastructure Code, Severity: HIGH, Results: 1
-Description: Query to find passwords and secrets in infrastructure code.
-Platform: Common
+[38;2;187;33;36mUnrestricted Security Group Ingress[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mDescription:[0m Security groups allow ingress from 0.0.0.0:0
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:120
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m135[0m
+
+		134:     to_port = 65000
+[38;2;240;173;78m		135:     cidr_blocks = ["0.0.0.0/0"]
+[0m		136:   }
+
+
+[38;2;187;33;36mUnknown Port Exposed To Internet[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mDescription:[0m AWS Security Group should not have an unknown port exposed to the entire Internet
+[1mPlatform:[0m Terraform
+
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m135[0m
+
+		134:     to_port = 65000
+[38;2;240;173;78m		135:     cidr_blocks = ["0.0.0.0/0"]
+[0m		136:   }
+
+
+[38;2;187;33;36mSensitive Port Is Exposed To Entire Network[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 63
+[1mDescription:[0m A sensitive port, such as port 23 or port 110, is open for the whole network in either TCP or UDP protocol
+[1mPlatform:[0m Terraform
+
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[2]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[3]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[4]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[5]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[6]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[7]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[8]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[9]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[10]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[11]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[12]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[13]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[14]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[15]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[16]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[17]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[18]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[19]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[20]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[21]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[22]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[23]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[24]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[25]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[26]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[27]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[28]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[29]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[30]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[31]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[32]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[33]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[34]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[35]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[36]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[37]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[38]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[39]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[40]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[41]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[42]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[43]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[44]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[45]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[46]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[47]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[48]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[49]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[50]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[51]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[52]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[53]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[54]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[55]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[56]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[57]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[58]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[59]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[60]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[61]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[62]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+	[38;2;187;33;36m[63]:[0m ../../src/main.tf:[38;2;34;187;51m131[0m
+
+		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		131:   ingress {
+[0m		132:     from_port = 0
+
+
+[38;2;187;33;36mSecurity Group With Unrestricted Access To SSH[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mDescription:[0m 'SSH' (TCP:22) should not be public in AWS Security Group
+[1mPlatform:[0m Terraform
+
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m135[0m
+
+		134:     to_port = 65000
+[38;2;240;173;78m		135:     cidr_blocks = ["0.0.0.0/0"]
+[0m		136:   }
+
+
+[38;2;187;33;36mRemote Desktop Port Open To Internet[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mDescription:[0m The Remote Desktop port is open to the internet in a Security Group
+[1mPlatform:[0m Terraform
+
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m129[0m
+
+		128: 
+[38;2;240;173;78m		129: resource "aws_security_group" "publicly_accessible_sg" {
+[0m		130:   vpc_id = aws_vpc.nondefault.id
+
+
+[38;2;187;33;36mPasswords And Secrets - Generic Password[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mDescription:[0m Query to find passwords and secrets in infrastructure code.
+[1mPlatform:[0m Common
+
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m120[0m
 
 		119:   username = "admin"
-		120:   password = "password123"
-		121:   db_subnet_group_name = aws_db_subnet_group.db.name
+[38;2;240;173;78m		120:   password = <SECRET-MASKED-ON-PURPOSE>
+[0m		121:   db_subnet_group_name = aws_db_subnet_group.db.name
 
 
-IAM Database Auth Not Enabled, Severity: HIGH, Results: 1
-Description: IAM Database Auth Enabled must be configured to true
-Platform: Terraform
+[38;2;187;33;36mIAM Database Auth Not Enabled[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mDescription:[0m IAM Database Auth Enabled should be configured to true when using compatible engine and version
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:113
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m113[0m
 
 		112: 
-		113: resource "aws_db_instance" "test" {
-		114:   identifier = "tf-test-db"
+[38;2;240;173;78m		113: resource "aws_db_instance" "test" {
+[0m		114:   identifier = "tf-test-db"
 
 
-HTTP Port Open, Severity: HIGH, Results: 1
-Description: The HTTP port is open in a Security Group
-Platform: Terraform
+[38;2;187;33;36mHTTP Port Open To Internet[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mDescription:[0m The HTTP port is open to the internet in a Security Group
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:129
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m129[0m
 
 		128: 
-		129: resource "aws_security_group" "publicly_accessible_sg" {
-		130:   vpc_id = aws_vpc.nondefault.id
+[38;2;240;173;78m		129: resource "aws_security_group" "publicly_accessible_sg" {
+[0m		130:   vpc_id = aws_vpc.nondefault.id
 
 
-EC2 Instance Has Public IP, Severity: HIGH, Results: 1
-Description: EC2 Instance should not have a public IP address.
-Platform: Terraform
+[38;2;187;33;36mEC2 Instance Has Public IP[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mDescription:[0m EC2 Instance should not have a public IP address.
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:149
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m149[0m
 
 		148:   instance_type = "t3.nano"
-		149:   associate_public_ip_address = true
-		150:   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
+[38;2;240;173;78m		149:   associate_public_ip_address = true
+[0m		150:   vpc_security_group_ids = [aws_security_group.publicly_accessible_sg.id]
 
 
-DB Instance Storage Not Encrypted, Severity: HIGH, Results: 1
-Description: The parameter storage_encrypted in aws_db_instance must be set to 'true' (the default is 'false').
-Platform: Terraform
+[38;2;187;33;36mDB Instance Storage Not Encrypted[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mDescription:[0m AWS DB Instance should have its storage encrypted by setting the parameter to 'true'. The storage_encrypted default value is 'false'.
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:113
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m113[0m
 
 		112: 
-		113: resource "aws_db_instance" "test" {
-		114:   identifier = "tf-test-db"
+[38;2;240;173;78m		113: resource "aws_db_instance" "test" {
+[0m		114:   identifier = "tf-test-db"
 
 
 
 Results Summary:
-HIGH: 61
-MEDIUM: 3
-LOW: 0
-INFO: 20
-TOTAL: 84
+[38;2;187;33;36mHIGH[0m: 72
+[38;2;255;114;19mMEDIUM[0m: 2
+[38;2;237;213;126mLOW[0m: 3
+[38;2;91;192;222mINFO[0m: 19
+TOTAL: 96
 
-Scan duration: 5.15866696s
+Scan duration: 16.027407883s

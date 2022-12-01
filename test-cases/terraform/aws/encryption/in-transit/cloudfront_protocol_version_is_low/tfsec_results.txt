@@ -1,404 +1,474 @@
 
-  Result 1
+Result #1 CRITICAL Distribution allows unencrypted communications. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:64
+────────────────────────────────────────────────────────────────────────────────
+   32    resource "aws_cloudfront_distribution" "s3_distribution" {
+   ..  
+   64  [     viewer_protocol_policy = "allow-all" ("allow-all")
+  ...  
+  131    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-cloudfront-enforce-https
+      Impact CloudFront is available through an unencrypted connection
+  Resolution Only allow HTTPS for CloudFront distribution communication
 
-  [aws-cloudfront-use-secure-tls-policy][[0m[31mHIGH[39m[0m] Resource 'aws_cloudfront_distribution.s3_distribution' defines outdated SSL/TLS policies (missing minimum_protocol_version attribute)
-  /src/main.tf:128-130
-
-
-     125 |     Environment = "production"
-     126 |   }
-     127 | 
-     128 |   viewer_certificate {
-     129 |     cloudfront_default_certificate = true
-     130 |   }
-     131 | }
-
-  Legacy ID:  AWS021
-  Impact:     Outdated SSL policies increase exposure to known vulnerabilities
-  Resolution: Use the most modern TLS/SSL policies available
-
-  More Info:
-  - https://tfsec.dev/docs/aws/cloudfront/use-secure-tls-policy#aws/cloudfront 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution#minimum_protocol_version 
-  - https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/secure-connections-supported-viewer-protocols-ciphers.html 
-
-  Result 2
-
-  [aws-s3-enable-bucket-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_s3_bucket.logging' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
-  /src/main.tf:5-12
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/cloudfront/enforce-https/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution#viewer_protocol_policy
+────────────────────────────────────────────────────────────────────────────────
 
 
-       2 |   region = "us-east-2"
-       3 | }
-       4 | 
-       5 | resource "aws_s3_bucket" "logging" {
-       6 |   bucket = "dist-cloud-test-logs"
-       7 |   acl    = "log-delivery-write"
-       8 | 
-       9 |   tags = {
-      10 |     Name = "dist-cloud-test-logs"
-      11 |   }
-      12 | }
-      13 | 
-      14 | resource "aws_s3_bucket" "dist" {
-      15 |   bucket = "dist-cloud-test"
+Result #2 HIGH Distribution allows unencrypted communications. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:128-130
+────────────────────────────────────────────────────────────────────────────────
+   32    resource "aws_cloudfront_distribution" "s3_distribution" {
+   ..  
+  128  ┌   viewer_certificate {
+  129  │     cloudfront_default_certificate = true
+  130  └   }
+  131    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-cloudfront-use-secure-tls-policy
+      Impact Outdated SSL policies increase exposure to known vulnerabilities
+  Resolution Use the most modern TLS/SSL policies available
 
-  Legacy ID:  AWS017
-  Impact:     The bucket objects could be read if compromised
-  Resolution: Configure bucket encryption
-
-  More Info:
-  - https://tfsec.dev/docs/aws/s3/enable-bucket-encryption#aws/s3 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#enable-default-server-side-encryption 
-  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-encryption.html 
-
-  Result 3
-
-  [aws-s3-enable-versioning][[0m[33mMEDIUM[39m[0m] Resource 'aws_s3_bucket.logging' does not have versioning enabled
-  /src/main.tf:5-12
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/cloudfront/use-secure-tls-policy/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution#minimum_protocol_version
+────────────────────────────────────────────────────────────────────────────────
 
 
-       2 |   region = "us-east-2"
-       3 | }
-       4 | 
-       5 | resource "aws_s3_bucket" "logging" {
-       6 |   bucket = "dist-cloud-test-logs"
-       7 |   acl    = "log-delivery-write"
-       8 | 
-       9 |   tags = {
-      10 |     Name = "dist-cloud-test-logs"
-      11 |   }
-      12 | }
-      13 | 
-      14 | resource "aws_s3_bucket" "dist" {
-      15 |   bucket = "dist-cloud-test"
+Result #3 HIGH No public access block so not blocking public acls 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:14-25
+────────────────────────────────────────────────────────────────────────────────
+   14  ┌ resource "aws_s3_bucket" "dist" {
+   15  │   bucket = "dist-cloud-test"
+   16  │   acl    = "public-read-write"
+   17  │ 
+   18  │   tags = {
+   19  │     Name = "dist-cloud-test"
+   20  │   }
+   21  │   logging {
+   22  └    	target_bucket = aws_s3_bucket.logging.id
+   ..  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-block-public-acls
+      Impact PUT calls with public ACLs specified can make objects public
+  Resolution Enable blocking any PUT calls with a public ACL specified
 
-  Legacy ID:  AWS077
-  Impact:     Deleted or modified data would not be recoverable
-  Resolution: Enable versioning to protect against accidental/malicious removal or modification
-
-  More Info:
-  - https://tfsec.dev/docs/aws/s3/enable-versioning#aws/s3 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#versioning 
-  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/Versioning.html 
-
-  Result 4
-
-  [aws-s3-enable-versioning][[0m[33mMEDIUM[39m[0m] Resource 'aws_s3_bucket.dist' does not have versioning enabled
-  /src/main.tf:14-25
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/block-public-acls/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#block_public_acls
+────────────────────────────────────────────────────────────────────────────────
 
 
-      11 |   }
-      12 | }
-      13 | 
-      14 | resource "aws_s3_bucket" "dist" {
-      15 |   bucket = "dist-cloud-test"
-      16 |   acl    = "public-read-write"
-      17 | 
-      18 |   tags = {
-      19 |     Name = "dist-cloud-test"
-      20 |   }
-      21 |   logging {
-      22 |    	target_bucket = aws_s3_bucket.logging.id
-      23 |   	target_prefix = "log/"
-      24 |   }
-      25 | }
-      26 | 
-      27 | locals {
-      28 |   s3_origin_id = "myDistTestCloduFront"
+Result #4 HIGH No public access block so not blocking public policies 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:14-25
+────────────────────────────────────────────────────────────────────────────────
+   14  ┌ resource "aws_s3_bucket" "dist" {
+   15  │   bucket = "dist-cloud-test"
+   16  │   acl    = "public-read-write"
+   17  │ 
+   18  │   tags = {
+   19  │     Name = "dist-cloud-test"
+   20  │   }
+   21  │   logging {
+   22  └    	target_bucket = aws_s3_bucket.logging.id
+   ..  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-block-public-policy
+      Impact Users could put a policy that allows public access
+  Resolution Prevent policies that allow public access being PUT
 
-  Legacy ID:  AWS077
-  Impact:     Deleted or modified data would not be recoverable
-  Resolution: Enable versioning to protect against accidental/malicious removal or modification
-
-  More Info:
-  - https://tfsec.dev/docs/aws/s3/enable-versioning#aws/s3 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#versioning 
-  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/Versioning.html 
-
-  Result 5
-
-  [aws-cloudfront-enable-waf][[0m[31mHIGH[39m[0m] Resource 'aws_cloudfront_distribution.s3_distribution' does not have a WAF in front of it.
-  /src/main.tf:32-131
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/block-public-policy/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#block_public_policy
+────────────────────────────────────────────────────────────────────────────────
 
 
-      29 | }
-      30 | 
-      31 | 
-      32 | resource "aws_cloudfront_distribution" "s3_distribution" {
-      33 |   origin {
-      34 |     domain_name = aws_s3_bucket.dist.bucket_regional_domain_name
-      35 |     origin_id   = local.s3_origin_id
-      36 |   }
-      37 | 
-      38 |   enabled             = true
-      39 |   is_ipv6_enabled     = true
-      40 |   comment             = "Some comment"
-      41 |   default_root_object = "index.html"
-      42 | 
-      43 |   logging_config {
-      44 |     include_cookies = false
-      45 |     bucket          = "dist-cloud-test-logs.s3.amazonaws.com"
-      46 |     prefix          = "log/"
-      47 |   }
-      48 | 
-      49 |   aliases = ["mysite.example.com", "yoursite.example.com"]
-      50 | 
-      51 |   default_cache_behavior {
-      52 |     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
-      53 |     cached_methods   = ["GET", "HEAD"]
-      54 |     target_origin_id = local.s3_origin_id
-      55 | 
-      56 |     forwarded_values {
-      57 |       query_string = false
-      58 | 
-      59 |       cookies {
-      60 |         forward = "none"
-      61 |       }
-      62 |     }
-      63 | 
-      64 |     viewer_protocol_policy = "allow-all"
-      65 |     min_ttl                = 0
-      66 |     default_ttl            = 3600
-      67 |     max_ttl                = 86400
-      68 |   }
-      69 | 
-      70 |   # Cache behavior with precedence 0
-      71 |   ordered_cache_behavior {
-      72 |     path_pattern     = "/content/immutable/*"
-      73 |     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
-      74 |     cached_methods   = ["GET", "HEAD", "OPTIONS"]
-      75 |     target_origin_id = local.s3_origin_id
-      76 | 
-      77 |     forwarded_values {
-      78 |       query_string = false
-      79 |       headers      = ["Origin"]
-      80 | 
-      81 |       cookies {
-      82 |         forward = "none"
-      83 |       }
-      84 |     }
-      85 | 
-      86 |     min_ttl                = 0
-      87 |     default_ttl            = 86400
-      88 |     max_ttl                = 31536000
-      89 |     compress               = true
-      90 |     viewer_protocol_policy = "redirect-to-https"
-      91 |   }
-      92 | 
-      93 |   # Cache behavior with precedence 1
-      94 |   ordered_cache_behavior {
-      95 |     path_pattern     = "/content/*"
-      96 |     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
-      97 |     cached_methods   = ["GET", "HEAD"]
-      98 |     target_origin_id = local.s3_origin_id
-      99 | 
-     100 |     forwarded_values {
-     101 |       query_string = false
-     102 | 
-     103 |       cookies {
-     104 |         forward = "none"
-     105 |       }
-     106 |     }
-     107 | 
-     108 |     min_ttl                = 0
-     109 |     default_ttl            = 3600
-     110 |     max_ttl                = 86400
-     111 |     compress               = true
-     112 |     viewer_protocol_policy = "redirect-to-https"
-     113 |   }
-     114 | 
-     115 |   price_class = "PriceClass_200"
-     116 | 
-     117 |   restrictions {
-     118 |     geo_restriction {
-     119 |       restriction_type = "whitelist"
-     120 |       locations        = ["US", "CA", "GB", "DE"]
-     121 |     }
-     122 |   }
-     123 | 
-     124 |   tags = {
-     125 |     Environment = "production"
-     126 |   }
-     127 | 
-     128 |   viewer_certificate {
-     129 |     cloudfront_default_certificate = true
-     130 |   }
-     131 | }
+Result #5 HIGH Bucket does not have encryption enabled 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:14-25
+────────────────────────────────────────────────────────────────────────────────
+   14  ┌ resource "aws_s3_bucket" "dist" {
+   15  │   bucket = "dist-cloud-test"
+   16  │   acl    = "public-read-write"
+   17  │ 
+   18  │   tags = {
+   19  │     Name = "dist-cloud-test"
+   20  │   }
+   21  │   logging {
+   22  └    	target_bucket = aws_s3_bucket.logging.id
+   ..  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-enable-bucket-encryption
+      Impact The bucket objects could be read if compromised
+  Resolution Configure bucket encryption
 
-  Legacy ID:  AWS045
-  Impact:     Complex web application attacks can more easily be performed without a WAF
-  Resolution: Enable WAF for the CloudFront distribution
-
-  More Info:
-  - https://tfsec.dev/docs/aws/cloudfront/enable-waf#aws/cloudfront 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution#web_acl_id 
-  - https://docs.aws.amazon.com/waf/latest/developerguide/cloudfront-features.html 
-
-  Result 6
-
-  [aws-cloudfront-enforce-https][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'aws_cloudfront_distribution.s3_distribution' defines a CloudFront distribution that allows unencrypted communications.
-  /src/main.tf:64
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/enable-bucket-encryption/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#enable-default-server-side-encryption
+────────────────────────────────────────────────────────────────────────────────
 
 
-      61 |       }
-      62 |     }
-      63 | 
-      64 |     viewer_protocol_policy = "allow-all"    string: "allow-all"
-      65 |     min_ttl                = 0
-      66 |     default_ttl            = 3600
-      67 |     max_ttl                = 86400
+Result #6 HIGH No public access block so not ignoring public acls 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:14-25
+────────────────────────────────────────────────────────────────────────────────
+   14  ┌ resource "aws_s3_bucket" "dist" {
+   15  │   bucket = "dist-cloud-test"
+   16  │   acl    = "public-read-write"
+   17  │ 
+   18  │   tags = {
+   19  │     Name = "dist-cloud-test"
+   20  │   }
+   21  │   logging {
+   22  └    	target_bucket = aws_s3_bucket.logging.id
+   ..  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-ignore-public-acls
+      Impact PUT calls with public ACLs specified can make objects public
+  Resolution Enable ignoring the application of public ACLs in PUT calls
 
-  Legacy ID:  AWS020
-  Impact:     CloudFront is available through an unencrypted connection
-  Resolution: Only allow HTTPS for CloudFront distribution communication
-
-  More Info:
-  - https://tfsec.dev/docs/aws/cloudfront/enforce-https#aws/cloudfront 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution#viewer_protocol_policy 
-  - https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-https-cloudfront-to-s3-origin.html 
-
-  Result 7
-
-  [aws-s3-enable-bucket-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_s3_bucket.dist' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
-  /src/main.tf:14-25
-
-
-      11 |   }
-      12 | }
-      13 | 
-      14 | resource "aws_s3_bucket" "dist" {
-      15 |   bucket = "dist-cloud-test"
-      16 |   acl    = "public-read-write"
-      17 | 
-      18 |   tags = {
-      19 |     Name = "dist-cloud-test"
-      20 |   }
-      21 |   logging {
-      22 |    	target_bucket = aws_s3_bucket.logging.id
-      23 |   	target_prefix = "log/"
-      24 |   }
-      25 | }
-      26 | 
-      27 | locals {
-      28 |   s3_origin_id = "myDistTestCloduFront"
-
-  Legacy ID:  AWS017
-  Impact:     The bucket objects could be read if compromised
-  Resolution: Configure bucket encryption
-
-  More Info:
-  - https://tfsec.dev/docs/aws/s3/enable-bucket-encryption#aws/s3 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#enable-default-server-side-encryption 
-  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-encryption.html 
-
-  Result 8
-
-  [aws-s3-no-public-access-with-acl][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'aws_s3_bucket.dist' has an ACL which allows public access.
-  /src/main.tf:16
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/ignore-public-acls/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#ignore_public_acls
+────────────────────────────────────────────────────────────────────────────────
 
 
-      13 | 
-      14 | resource "aws_s3_bucket" "dist" {
-      15 |   bucket = "dist-cloud-test"
-      16 |   acl    = "public-read-write"    string: "public-read-write"
-      17 | 
-      18 |   tags = {
-      19 |     Name = "dist-cloud-test"
+Result #7 HIGH No public access block so not restricting public buckets 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:14-25
+────────────────────────────────────────────────────────────────────────────────
+   14  ┌ resource "aws_s3_bucket" "dist" {
+   15  │   bucket = "dist-cloud-test"
+   16  │   acl    = "public-read-write"
+   17  │ 
+   18  │   tags = {
+   19  │     Name = "dist-cloud-test"
+   20  │   }
+   21  │   logging {
+   22  └    	target_bucket = aws_s3_bucket.logging.id
+   ..  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-no-public-buckets
+      Impact Public buckets can be accessed by anyone
+  Resolution Limit the access to public buckets to only the owner or AWS Services (eg; CloudFront)
 
-  Legacy ID:  AWS001
-  Impact:     The contents of the bucket can be accessed publicly
-  Resolution: Apply a more restrictive bucket ACL
-
-  More Info:
-  - https://tfsec.dev/docs/aws/s3/no-public-access-with-acl#aws/s3 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket 
-  - https://aws.amazon.com/premiumsupport/knowledge-center/secure-s3-resources/ 
-
-  Result 9
-
-  [aws-s3-specify-public-access-block][[0m[33mMEDIUM[39m[0m] Resource aws_s3_bucket.logging has no associated aws_s3_bucket_public_access_block.
-  /src/main.tf:5-12
-
-
-       2 |   region = "us-east-2"
-       3 | }
-       4 | 
-       5 | resource "aws_s3_bucket" "logging" {
-       6 |   bucket = "dist-cloud-test-logs"
-       7 |   acl    = "log-delivery-write"
-       8 | 
-       9 |   tags = {
-      10 |     Name = "dist-cloud-test-logs"
-      11 |   }
-      12 | }
-      13 | 
-      14 | resource "aws_s3_bucket" "dist" {
-      15 |   bucket = "dist-cloud-test"
-
-  Legacy ID:  AWS098
-  Impact:     Public access policies may be applied to sensitive data buckets
-  Resolution: Define a aws_s3_bucket_public_access_block for the given bucket to control public access policies
-
-  More Info:
-  - https://tfsec.dev/docs/aws/s3/specify-public-access-block#aws/s3 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#bucket 
-  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html 
-
-  Result 10
-
-  [aws-s3-specify-public-access-block][[0m[33mMEDIUM[39m[0m] Resource aws_s3_bucket.dist has no associated aws_s3_bucket_public_access_block.
-  /src/main.tf:14-25
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/no-public-buckets/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#restrict_public_buckets¡
+────────────────────────────────────────────────────────────────────────────────
 
 
-      11 |   }
-      12 | }
-      13 | 
-      14 | resource "aws_s3_bucket" "dist" {
-      15 |   bucket = "dist-cloud-test"
-      16 |   acl    = "public-read-write"
-      17 | 
-      18 |   tags = {
-      19 |     Name = "dist-cloud-test"
-      20 |   }
-      21 |   logging {
-      22 |    	target_bucket = aws_s3_bucket.logging.id
-      23 |   	target_prefix = "log/"
-      24 |   }
-      25 | }
-      26 | 
-      27 | locals {
-      28 |   s3_origin_id = "myDistTestCloduFront"
+Result #8 HIGH Bucket does not encrypt data with a customer managed key. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:14-25
+────────────────────────────────────────────────────────────────────────────────
+   14  ┌ resource "aws_s3_bucket" "dist" {
+   15  │   bucket = "dist-cloud-test"
+   16  │   acl    = "public-read-write"
+   17  │ 
+   18  │   tags = {
+   19  │     Name = "dist-cloud-test"
+   20  │   }
+   21  │   logging {
+   22  └    	target_bucket = aws_s3_bucket.logging.id
+   ..  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-encryption-customer-key
+      Impact Using AWS managed keys does not allow for fine grained control
+  Resolution Enable encryption using customer managed keys
 
-  Legacy ID:  AWS098
-  Impact:     Public access policies may be applied to sensitive data buckets
-  Resolution: Define a aws_s3_bucket_public_access_block for the given bucket to control public access policies
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/encryption-customer-key/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#enable-default-server-side-encryption
+────────────────────────────────────────────────────────────────────────────────
 
-  More Info:
-  - https://tfsec.dev/docs/aws/s3/specify-public-access-block#aws/s3 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#bucket 
-  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html 
 
-  times
-  ------------------------------------------
-  disk i/o             50.612751ms
-  parsing HCL          584.959µs
-  evaluating values    2.858417ms
-  running checks       79.13975ms
+Result #9 HIGH Bucket has a public ACL: 'public-read-write'. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:16
+────────────────────────────────────────────────────────────────────────────────
+   14    resource "aws_s3_bucket" "dist" {
+   ..  
+   16  [   acl    = "public-read-write" ("public-read-write")
+   ..  
+   25    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-no-public-access-with-acl
+      Impact Public access to the bucket can lead to data leakage
+  Resolution Don't use canned ACLs or switch to private acl
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/no-public-access-with-acl/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket
+────────────────────────────────────────────────────────────────────────────────
+
+
+Result #10 HIGH Distribution does not utilise a WAF. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:32-131
+────────────────────────────────────────────────────────────────────────────────
+   32  ┌ resource "aws_cloudfront_distribution" "s3_distribution" {
+   33  │   origin {
+   34  │     domain_name = aws_s3_bucket.dist.bucket_regional_domain_name
+   35  │     origin_id   = local.s3_origin_id
+   36  │   }
+   37  │ 
+   38  │   enabled             = true
+   39  │   is_ipv6_enabled     = true
+   40  └   comment             = "Some comment"
+   ..  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-cloudfront-enable-waf
+      Impact Complex web application attacks can more easily be performed without a WAF
+  Resolution Enable WAF for the CloudFront distribution
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/cloudfront/enable-waf/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution#web_acl_id
+────────────────────────────────────────────────────────────────────────────────
+
+
+Result #11 HIGH No public access block so not blocking public acls 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:5-12
+────────────────────────────────────────────────────────────────────────────────
+    5    resource "aws_s3_bucket" "logging" {
+    6      bucket = "dist-cloud-test-logs"
+    7      acl    = "log-delivery-write"
+    8    
+    9      tags = {
+   10        Name = "dist-cloud-test-logs"
+   11      }
+   12    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-block-public-acls
+      Impact PUT calls with public ACLs specified can make objects public
+  Resolution Enable blocking any PUT calls with a public ACL specified
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/block-public-acls/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#block_public_acls
+────────────────────────────────────────────────────────────────────────────────
+
+
+Result #12 HIGH No public access block so not blocking public policies 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:5-12
+────────────────────────────────────────────────────────────────────────────────
+    5    resource "aws_s3_bucket" "logging" {
+    6      bucket = "dist-cloud-test-logs"
+    7      acl    = "log-delivery-write"
+    8    
+    9      tags = {
+   10        Name = "dist-cloud-test-logs"
+   11      }
+   12    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-block-public-policy
+      Impact Users could put a policy that allows public access
+  Resolution Prevent policies that allow public access being PUT
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/block-public-policy/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#block_public_policy
+────────────────────────────────────────────────────────────────────────────────
+
+
+Result #13 HIGH Bucket does not have encryption enabled 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:5-12
+────────────────────────────────────────────────────────────────────────────────
+    5    resource "aws_s3_bucket" "logging" {
+    6      bucket = "dist-cloud-test-logs"
+    7      acl    = "log-delivery-write"
+    8    
+    9      tags = {
+   10        Name = "dist-cloud-test-logs"
+   11      }
+   12    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-enable-bucket-encryption
+      Impact The bucket objects could be read if compromised
+  Resolution Configure bucket encryption
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/enable-bucket-encryption/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#enable-default-server-side-encryption
+────────────────────────────────────────────────────────────────────────────────
+
+
+Result #14 HIGH No public access block so not ignoring public acls 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:5-12
+────────────────────────────────────────────────────────────────────────────────
+    5    resource "aws_s3_bucket" "logging" {
+    6      bucket = "dist-cloud-test-logs"
+    7      acl    = "log-delivery-write"
+    8    
+    9      tags = {
+   10        Name = "dist-cloud-test-logs"
+   11      }
+   12    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-ignore-public-acls
+      Impact PUT calls with public ACLs specified can make objects public
+  Resolution Enable ignoring the application of public ACLs in PUT calls
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/ignore-public-acls/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#ignore_public_acls
+────────────────────────────────────────────────────────────────────────────────
+
+
+Result #15 HIGH No public access block so not restricting public buckets 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:5-12
+────────────────────────────────────────────────────────────────────────────────
+    5    resource "aws_s3_bucket" "logging" {
+    6      bucket = "dist-cloud-test-logs"
+    7      acl    = "log-delivery-write"
+    8    
+    9      tags = {
+   10        Name = "dist-cloud-test-logs"
+   11      }
+   12    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-no-public-buckets
+      Impact Public buckets can be accessed by anyone
+  Resolution Limit the access to public buckets to only the owner or AWS Services (eg; CloudFront)
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/no-public-buckets/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#restrict_public_buckets¡
+────────────────────────────────────────────────────────────────────────────────
+
+
+Result #16 MEDIUM Bucket does not have versioning enabled 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:14-25
+────────────────────────────────────────────────────────────────────────────────
+   14  ┌ resource "aws_s3_bucket" "dist" {
+   15  │   bucket = "dist-cloud-test"
+   16  │   acl    = "public-read-write"
+   17  │ 
+   18  │   tags = {
+   19  │     Name = "dist-cloud-test"
+   20  │   }
+   21  │   logging {
+   22  └    	target_bucket = aws_s3_bucket.logging.id
+   ..  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-enable-versioning
+      Impact Deleted or modified data would not be recoverable
+  Resolution Enable versioning to protect against accidental/malicious removal or modification
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/enable-versioning/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#versioning
+────────────────────────────────────────────────────────────────────────────────
+
+
+Result #17 MEDIUM Bucket does not have versioning enabled 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:5-12
+────────────────────────────────────────────────────────────────────────────────
+    5    resource "aws_s3_bucket" "logging" {
+    6      bucket = "dist-cloud-test-logs"
+    7      acl    = "log-delivery-write"
+    8    
+    9      tags = {
+   10        Name = "dist-cloud-test-logs"
+   11      }
+   12    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-enable-versioning
+      Impact Deleted or modified data would not be recoverable
+  Resolution Enable versioning to protect against accidental/malicious removal or modification
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/enable-versioning/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#versioning
+────────────────────────────────────────────────────────────────────────────────
+
+
+Result #18 LOW Bucket does not have a corresponding public access block. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:14-25
+────────────────────────────────────────────────────────────────────────────────
+   14  ┌ resource "aws_s3_bucket" "dist" {
+   15  │   bucket = "dist-cloud-test"
+   16  │   acl    = "public-read-write"
+   17  │ 
+   18  │   tags = {
+   19  │     Name = "dist-cloud-test"
+   20  │   }
+   21  │   logging {
+   22  └    	target_bucket = aws_s3_bucket.logging.id
+   ..  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-specify-public-access-block
+      Impact Public access policies may be applied to sensitive data buckets
+  Resolution Define a aws_s3_bucket_public_access_block for the given bucket to control public access policies
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/specify-public-access-block/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#bucket
+────────────────────────────────────────────────────────────────────────────────
+
+
+Result #19 LOW Bucket does not have a corresponding public access block. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:5-12
+────────────────────────────────────────────────────────────────────────────────
+    5    resource "aws_s3_bucket" "logging" {
+    6      bucket = "dist-cloud-test-logs"
+    7      acl    = "log-delivery-write"
+    8    
+    9      tags = {
+   10        Name = "dist-cloud-test-logs"
+   11      }
+   12    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-specify-public-access-block
+      Impact Public access policies may be applied to sensitive data buckets
+  Resolution Define a aws_s3_bucket_public_access_block for the given bucket to control public access policies
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/specify-public-access-block/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#bucket
+────────────────────────────────────────────────────────────────────────────────
+
+
+  timings
+  ──────────────────────────────────────────
+  disk i/o             3.155375ms
+  parsing              393.25µs
+  adaptation           81.916µs
+  checks               5.937417ms
+  total                9.567958ms
 
   counts
-  ------------------------------------------
-  files loaded         1
-  blocks               5
-  modules              0
+  ──────────────────────────────────────────
+  modules downloaded   0
+  modules processed    1
+  blocks processed     5
+  files read           1
 
   results
-  ------------------------------------------
-  critical             2
-  high                 4
-  medium               4
-  low                  0
+  ──────────────────────────────────────────
+  passed               8
   ignored              0
+  critical             1
+  high                 14
+  medium               2
+  low                  2
 
-  10 potential problems detected.
+  8 passed, 19 potential problem(s) detected.
 

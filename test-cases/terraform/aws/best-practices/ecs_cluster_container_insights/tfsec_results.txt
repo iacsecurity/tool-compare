@@ -1,49 +1,50 @@
 
-  Result 1
+Result #1 LOW Cluster does not have container insights enabled. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:1-8
+────────────────────────────────────────────────────────────────────────────────
+    1    resource "aws_ecs_cluster" "foo" {
+    2      name = "white-hart"
+    3    
+    4      # setting {
+    5        # name  = "containerInsights"
+    6        # value = "enabled"
+    7      # }
+    8    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ecs-enable-container-insight
+      Impact Not all metrics and logs may be gathered for containers when Container Insights isn't enabled
+  Resolution Enable Container Insights
 
-  [aws-ecs-enable-container-insight][[0m[97mLOW[39m[0m] Resource 'aws_ecs_cluster.foo' does not have containerInsights enabled
-  /src/main.tf:1-8
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ecs/enable-container-insight/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecs_cluster#setting
+────────────────────────────────────────────────────────────────────────────────
 
 
-       1 | resource "aws_ecs_cluster" "foo" {
-       2 |   name = "white-hart"
-       3 | 
-       4 |   # setting {
-       5 |     # name  = "containerInsights"
-       6 |     # value = "enabled"
-       7 |   # }
-       8 | }
-       9 | 
-
-  Legacy ID:  AWS090
-  Impact:     Not all metrics and logs may be gathered for containers when Container Insights isn't enabled
-  Resolution: Enable Container Insights
-
-  More Info:
-  - https://tfsec.dev/docs/aws/ecs/enable-container-insight#aws/ecs 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecs_cluster#setting 
-  - https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/ContainerInsights.html 
-
-  times
-  ------------------------------------------
-  disk i/o             54.015042ms
-  parsing HCL          618.833µs
-  evaluating values    1.825084ms
-  running checks       16.891041ms
+  timings
+  ──────────────────────────────────────────
+  disk i/o             3.500625ms
+  parsing              88.416µs
+  adaptation           62.583µs
+  checks               4.266125ms
+  total                7.917749ms
 
   counts
-  ------------------------------------------
-  files loaded         1
-  blocks               1
-  modules              0
+  ──────────────────────────────────────────
+  modules downloaded   0
+  modules processed    1
+  blocks processed     1
+  files read           1
 
   results
-  ------------------------------------------
+  ──────────────────────────────────────────
+  passed               2
+  ignored              0
   critical             0
   high                 0
   medium               0
   low                  1
-  ignored              0
 
-  1 potential problems detected.
+  2 passed, 1 potential problem(s) detected.
 

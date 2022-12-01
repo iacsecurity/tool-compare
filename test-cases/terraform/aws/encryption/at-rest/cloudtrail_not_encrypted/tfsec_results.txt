@@ -1,324 +1,361 @@
 
-  Result 1
+Result #1 HIGH Trail is not encrypted. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:11-16
+────────────────────────────────────────────────────────────────────────────────
+   11    resource "aws_cloudtrail" "foobar" {
+   12      name                          = local.name
+   13      s3_bucket_name                = aws_s3_bucket.foo.id
+   14      s3_key_prefix                 = "prefix"
+   15      include_global_service_events = false
+   16    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-cloudtrail-enable-at-rest-encryption
+      Impact Data can be freely read if compromised
+  Resolution Enable encryption at rest
 
-  [aws-cloudtrail-enable-log-validation][[0m[31mHIGH[39m[0m] Resource 'aws_cloudtrail.foobar' does not enable log file validation.
-  /src/main.tf:11-16
-
-
-       8 | 
-       9 | data "aws_caller_identity" "current" {}
-      10 | 
-      11 | resource "aws_cloudtrail" "foobar" {
-      12 |   name                          = local.name
-      13 |   s3_bucket_name                = aws_s3_bucket.foo.id
-      14 |   s3_key_prefix                 = "prefix"
-      15 |   include_global_service_events = false
-      16 | }
-      17 | 
-      18 | resource "aws_s3_bucket" "foo" {
-      19 |   bucket        = local.name
-
-  Legacy ID:  AWS064
-  Impact:     Illicit activity could be removed from the logs
-  Resolution: Turn on log validation for Cloudtrail
-
-  More Info:
-  - https://tfsec.dev/docs/aws/cloudtrail/enable-log-validation#aws/cloudtrail 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudtrail#enable_log_file_validation 
-  - https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-log-file-validation-intro.html 
-
-  Result 2
-
-  [aws-s3-enable-bucket-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_s3_bucket.foo' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
-  /src/main.tf:18-52
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/cloudtrail/enable-at-rest-encryption/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudtrail#kms_key_id
+────────────────────────────────────────────────────────────────────────────────
 
 
-      15 |   include_global_service_events = false
-      16 | }
-      17 | 
-      18 | resource "aws_s3_bucket" "foo" {
-      19 |   bucket        = local.name
-      20 |   force_destroy = true
-      21 | 
-      22 |   policy = <<POLICY
-      23 | {
-      24 |     "Version": "2012-10-17",
-      25 |     "Statement": [
-      26 |         {
-      27 |             "Sid": "AWSCloudTrailAclCheck",
-      28 |             "Effect": "Allow",
-      29 |             "Principal": {
-      30 |               "Service": "cloudtrail.amazonaws.com"
-      31 |             },
-      32 |             "Action": "s3:GetBucketAcl",
-      33 |             "Resource": "arn:aws:s3:::${local.name}"
-      34 |         },
-      35 |         {
-      36 |             "Sid": "AWSCloudTrailWrite",
-      37 |             "Effect": "Allow",
-      38 |             "Principal": {
-      39 |               "Service": "cloudtrail.amazonaws.com"
-      40 |             },
-      41 |             "Action": "s3:PutObject",
-      42 |             "Resource": "arn:aws:s3:::${local.name}/prefix/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
-      43 |             "Condition": {
-      44 |                 "StringEquals": {
-      45 |                     "s3:x-amz-acl": "bucket-owner-full-control"
-      46 |                 }
-      47 |             }
-      48 |         }
-      49 |     ]
-      50 | }
-      51 | POLICY
-      52 | }
+Result #2 HIGH Trail does not have log validation enabled. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:11-16
+────────────────────────────────────────────────────────────────────────────────
+   11    resource "aws_cloudtrail" "foobar" {
+   12      name                          = local.name
+   13      s3_bucket_name                = aws_s3_bucket.foo.id
+   14      s3_key_prefix                 = "prefix"
+   15      include_global_service_events = false
+   16    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-cloudtrail-enable-log-validation
+      Impact Illicit activity could be removed from the logs
+  Resolution Turn on log validation for Cloudtrail
 
-  Legacy ID:  AWS017
-  Impact:     The bucket objects could be read if compromised
-  Resolution: Configure bucket encryption
-
-  More Info:
-  - https://tfsec.dev/docs/aws/s3/enable-bucket-encryption#aws/s3 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#enable-default-server-side-encryption 
-  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-encryption.html 
-
-  Result 3
-
-  [aws-s3-enable-bucket-logging][[0m[33mMEDIUM[39m[0m] Resource 'aws_s3_bucket.foo' does not have logging enabled.
-  /src/main.tf:18-52
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/cloudtrail/enable-log-validation/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudtrail#enable_log_file_validation
+────────────────────────────────────────────────────────────────────────────────
 
 
-      15 |   include_global_service_events = false
-      16 | }
-      17 | 
-      18 | resource "aws_s3_bucket" "foo" {
-      19 |   bucket        = local.name
-      20 |   force_destroy = true
-      21 | 
-      22 |   policy = <<POLICY
-      23 | {
-      24 |     "Version": "2012-10-17",
-      25 |     "Statement": [
-      26 |         {
-      27 |             "Sid": "AWSCloudTrailAclCheck",
-      28 |             "Effect": "Allow",
-      29 |             "Principal": {
-      30 |               "Service": "cloudtrail.amazonaws.com"
-      31 |             },
-      32 |             "Action": "s3:GetBucketAcl",
-      33 |             "Resource": "arn:aws:s3:::${local.name}"
-      34 |         },
-      35 |         {
-      36 |             "Sid": "AWSCloudTrailWrite",
-      37 |             "Effect": "Allow",
-      38 |             "Principal": {
-      39 |               "Service": "cloudtrail.amazonaws.com"
-      40 |             },
-      41 |             "Action": "s3:PutObject",
-      42 |             "Resource": "arn:aws:s3:::${local.name}/prefix/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
-      43 |             "Condition": {
-      44 |                 "StringEquals": {
-      45 |                     "s3:x-amz-acl": "bucket-owner-full-control"
-      46 |                 }
-      47 |             }
-      48 |         }
-      49 |     ]
-      50 | }
-      51 | POLICY
-      52 | }
+Result #3 HIGH No public access block so not blocking public acls 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:18-52
+────────────────────────────────────────────────────────────────────────────────
+   18  ┌ resource "aws_s3_bucket" "foo" {
+   19  │   bucket        = local.name
+   20  │   force_destroy = true
+   21  │ 
+   22  │   policy = <<POLICY
+   23  │ {
+   24  │     "Version": "2012-10-17",
+   25  │     "Statement": [
+   26  └         {
+   ..  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-block-public-acls
+      Impact PUT calls with public ACLs specified can make objects public
+  Resolution Enable blocking any PUT calls with a public ACL specified
 
-  Legacy ID:  AWS002
-  Impact:     There is no way to determine the access to this bucket
-  Resolution: Add a logging block to the resource to enable access logging
-
-  More Info:
-  - https://tfsec.dev/docs/aws/s3/enable-bucket-logging#aws/s3 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket 
-  - https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerLogs.html 
-
-  Result 4
-
-  [aws-s3-enable-versioning][[0m[33mMEDIUM[39m[0m] Resource 'aws_s3_bucket.foo' does not have versioning enabled
-  /src/main.tf:18-52
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/block-public-acls/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#block_public_acls
+────────────────────────────────────────────────────────────────────────────────
 
 
-      15 |   include_global_service_events = false
-      16 | }
-      17 | 
-      18 | resource "aws_s3_bucket" "foo" {
-      19 |   bucket        = local.name
-      20 |   force_destroy = true
-      21 | 
-      22 |   policy = <<POLICY
-      23 | {
-      24 |     "Version": "2012-10-17",
-      25 |     "Statement": [
-      26 |         {
-      27 |             "Sid": "AWSCloudTrailAclCheck",
-      28 |             "Effect": "Allow",
-      29 |             "Principal": {
-      30 |               "Service": "cloudtrail.amazonaws.com"
-      31 |             },
-      32 |             "Action": "s3:GetBucketAcl",
-      33 |             "Resource": "arn:aws:s3:::${local.name}"
-      34 |         },
-      35 |         {
-      36 |             "Sid": "AWSCloudTrailWrite",
-      37 |             "Effect": "Allow",
-      38 |             "Principal": {
-      39 |               "Service": "cloudtrail.amazonaws.com"
-      40 |             },
-      41 |             "Action": "s3:PutObject",
-      42 |             "Resource": "arn:aws:s3:::${local.name}/prefix/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
-      43 |             "Condition": {
-      44 |                 "StringEquals": {
-      45 |                     "s3:x-amz-acl": "bucket-owner-full-control"
-      46 |                 }
-      47 |             }
-      48 |         }
-      49 |     ]
-      50 | }
-      51 | POLICY
-      52 | }
+Result #4 HIGH No public access block so not blocking public policies 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:18-52
+────────────────────────────────────────────────────────────────────────────────
+   18  ┌ resource "aws_s3_bucket" "foo" {
+   19  │   bucket        = local.name
+   20  │   force_destroy = true
+   21  │ 
+   22  │   policy = <<POLICY
+   23  │ {
+   24  │     "Version": "2012-10-17",
+   25  │     "Statement": [
+   26  └         {
+   ..  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-block-public-policy
+      Impact Users could put a policy that allows public access
+  Resolution Prevent policies that allow public access being PUT
 
-  Legacy ID:  AWS077
-  Impact:     Deleted or modified data would not be recoverable
-  Resolution: Enable versioning to protect against accidental/malicious removal or modification
-
-  More Info:
-  - https://tfsec.dev/docs/aws/s3/enable-versioning#aws/s3 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#versioning 
-  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/Versioning.html 
-
-  Result 5
-
-  [aws-s3-specify-public-access-block][[0m[33mMEDIUM[39m[0m] Resource aws_s3_bucket.foo has no associated aws_s3_bucket_public_access_block.
-  /src/main.tf:18-52
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/block-public-policy/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#block_public_policy
+────────────────────────────────────────────────────────────────────────────────
 
 
-      15 |   include_global_service_events = false
-      16 | }
-      17 | 
-      18 | resource "aws_s3_bucket" "foo" {
-      19 |   bucket        = local.name
-      20 |   force_destroy = true
-      21 | 
-      22 |   policy = <<POLICY
-      23 | {
-      24 |     "Version": "2012-10-17",
-      25 |     "Statement": [
-      26 |         {
-      27 |             "Sid": "AWSCloudTrailAclCheck",
-      28 |             "Effect": "Allow",
-      29 |             "Principal": {
-      30 |               "Service": "cloudtrail.amazonaws.com"
-      31 |             },
-      32 |             "Action": "s3:GetBucketAcl",
-      33 |             "Resource": "arn:aws:s3:::${local.name}"
-      34 |         },
-      35 |         {
-      36 |             "Sid": "AWSCloudTrailWrite",
-      37 |             "Effect": "Allow",
-      38 |             "Principal": {
-      39 |               "Service": "cloudtrail.amazonaws.com"
-      40 |             },
-      41 |             "Action": "s3:PutObject",
-      42 |             "Resource": "arn:aws:s3:::${local.name}/prefix/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
-      43 |             "Condition": {
-      44 |                 "StringEquals": {
-      45 |                     "s3:x-amz-acl": "bucket-owner-full-control"
-      46 |                 }
-      47 |             }
-      48 |         }
-      49 |     ]
-      50 | }
-      51 | POLICY
-      52 | }
+Result #5 HIGH Bucket does not have encryption enabled 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:18-52
+────────────────────────────────────────────────────────────────────────────────
+   18  ┌ resource "aws_s3_bucket" "foo" {
+   19  │   bucket        = local.name
+   20  │   force_destroy = true
+   21  │ 
+   22  │   policy = <<POLICY
+   23  │ {
+   24  │     "Version": "2012-10-17",
+   25  │     "Statement": [
+   26  └         {
+   ..  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-enable-bucket-encryption
+      Impact The bucket objects could be read if compromised
+  Resolution Configure bucket encryption
 
-  Legacy ID:  AWS098
-  Impact:     Public access policies may be applied to sensitive data buckets
-  Resolution: Define a aws_s3_bucket_public_access_block for the given bucket to control public access policies
-
-  More Info:
-  - https://tfsec.dev/docs/aws/s3/specify-public-access-block#aws/s3 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#bucket 
-  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html 
-
-  Result 6
-
-  [aws-cloudtrail-enable-all-regions][[0m[33mMEDIUM[39m[0m] Resource 'aws_cloudtrail.foobar' does not set multi region trail config.
-  /src/main.tf:11-16
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/enable-bucket-encryption/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#enable-default-server-side-encryption
+────────────────────────────────────────────────────────────────────────────────
 
 
-       8 | 
-       9 | data "aws_caller_identity" "current" {}
-      10 | 
-      11 | resource "aws_cloudtrail" "foobar" {
-      12 |   name                          = local.name
-      13 |   s3_bucket_name                = aws_s3_bucket.foo.id
-      14 |   s3_key_prefix                 = "prefix"
-      15 |   include_global_service_events = false
-      16 | }
-      17 | 
-      18 | resource "aws_s3_bucket" "foo" {
-      19 |   bucket        = local.name
+Result #6 HIGH No public access block so not ignoring public acls 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:18-52
+────────────────────────────────────────────────────────────────────────────────
+   18  ┌ resource "aws_s3_bucket" "foo" {
+   19  │   bucket        = local.name
+   20  │   force_destroy = true
+   21  │ 
+   22  │   policy = <<POLICY
+   23  │ {
+   24  │     "Version": "2012-10-17",
+   25  │     "Statement": [
+   26  └         {
+   ..  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-ignore-public-acls
+      Impact PUT calls with public ACLs specified can make objects public
+  Resolution Enable ignoring the application of public ACLs in PUT calls
 
-  Legacy ID:  AWS063
-  Impact:     Activity could be happening in your account in a different region
-  Resolution: Enable Cloudtrail in all regions
-
-  More Info:
-  - https://tfsec.dev/docs/aws/cloudtrail/enable-all-regions#aws/cloudtrail 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudtrail#is_multi_region_trail 
-  - https://docs.aws.amazon.com/awscloudtrail/latest/userguide/receive-cloudtrail-log-files-from-multiple-regions.html 
-
-  Result 7
-
-  [aws-cloudtrail-enable-at-rest-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_cloudtrail.foobar' does not have a kms_key_id set.
-  /src/main.tf:11-16
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/ignore-public-acls/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#ignore_public_acls
+────────────────────────────────────────────────────────────────────────────────
 
 
-       8 | 
-       9 | data "aws_caller_identity" "current" {}
-      10 | 
-      11 | resource "aws_cloudtrail" "foobar" {
-      12 |   name                          = local.name
-      13 |   s3_bucket_name                = aws_s3_bucket.foo.id
-      14 |   s3_key_prefix                 = "prefix"
-      15 |   include_global_service_events = false
-      16 | }
-      17 | 
-      18 | resource "aws_s3_bucket" "foo" {
-      19 |   bucket        = local.name
+Result #7 HIGH No public access block so not restricting public buckets 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:18-52
+────────────────────────────────────────────────────────────────────────────────
+   18  ┌ resource "aws_s3_bucket" "foo" {
+   19  │   bucket        = local.name
+   20  │   force_destroy = true
+   21  │ 
+   22  │   policy = <<POLICY
+   23  │ {
+   24  │     "Version": "2012-10-17",
+   25  │     "Statement": [
+   26  └         {
+   ..  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-no-public-buckets
+      Impact Public buckets can be accessed by anyone
+  Resolution Limit the access to public buckets to only the owner or AWS Services (eg; CloudFront)
 
-  Legacy ID:  AWS065
-  Impact:     Data can be freely read if compromised
-  Resolution: Enable encryption at rest
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/no-public-buckets/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#restrict_public_buckets¡
+────────────────────────────────────────────────────────────────────────────────
 
-  More Info:
-  - https://tfsec.dev/docs/aws/cloudtrail/enable-at-rest-encryption#aws/cloudtrail 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudtrail#kms_key_id 
-  - https://docs.aws.amazon.com/awscloudtrail/latest/userguide/encrypting-cloudtrail-log-files-with-aws-kms.html 
 
-  times
-  ------------------------------------------
-  disk i/o             49.523875ms
-  parsing HCL          606.75µs
-  evaluating values    3.432333ms
-  running checks       45.974167ms
+Result #8 HIGH Bucket does not encrypt data with a customer managed key. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:18-52
+────────────────────────────────────────────────────────────────────────────────
+   18  ┌ resource "aws_s3_bucket" "foo" {
+   19  │   bucket        = local.name
+   20  │   force_destroy = true
+   21  │ 
+   22  │   policy = <<POLICY
+   23  │ {
+   24  │     "Version": "2012-10-17",
+   25  │     "Statement": [
+   26  └         {
+   ..  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-encryption-customer-key
+      Impact Using AWS managed keys does not allow for fine grained control
+  Resolution Enable encryption using customer managed keys
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/encryption-customer-key/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#enable-default-server-side-encryption
+────────────────────────────────────────────────────────────────────────────────
+
+
+Result #9 MEDIUM Trail is not enabled across all regions. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:11-16
+────────────────────────────────────────────────────────────────────────────────
+   11    resource "aws_cloudtrail" "foobar" {
+   12      name                          = local.name
+   13      s3_bucket_name                = aws_s3_bucket.foo.id
+   14      s3_key_prefix                 = "prefix"
+   15      include_global_service_events = false
+   16    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-cloudtrail-enable-all-regions
+      Impact Activity could be happening in your account in a different region
+  Resolution Enable Cloudtrail in all regions
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/cloudtrail/enable-all-regions/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudtrail#is_multi_region_trail
+────────────────────────────────────────────────────────────────────────────────
+
+
+Result #10 MEDIUM Bucket does not have logging enabled 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:18-52
+────────────────────────────────────────────────────────────────────────────────
+   18  ┌ resource "aws_s3_bucket" "foo" {
+   19  │   bucket        = local.name
+   20  │   force_destroy = true
+   21  │ 
+   22  │   policy = <<POLICY
+   23  │ {
+   24  │     "Version": "2012-10-17",
+   25  │     "Statement": [
+   26  └         {
+   ..  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-enable-bucket-logging
+      Impact There is no way to determine the access to this bucket
+  Resolution Add a logging block to the resource to enable access logging
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/enable-bucket-logging/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket
+────────────────────────────────────────────────────────────────────────────────
+
+
+Result #11 MEDIUM Bucket does not have versioning enabled 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:18-52
+────────────────────────────────────────────────────────────────────────────────
+   18  ┌ resource "aws_s3_bucket" "foo" {
+   19  │   bucket        = local.name
+   20  │   force_destroy = true
+   21  │ 
+   22  │   policy = <<POLICY
+   23  │ {
+   24  │     "Version": "2012-10-17",
+   25  │     "Statement": [
+   26  └         {
+   ..  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-enable-versioning
+      Impact Deleted or modified data would not be recoverable
+  Resolution Enable versioning to protect against accidental/malicious removal or modification
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/enable-versioning/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#versioning
+────────────────────────────────────────────────────────────────────────────────
+
+
+Result #12 LOW Trail does not have CloudWatch logging configured 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:11-16
+────────────────────────────────────────────────────────────────────────────────
+   11    resource "aws_cloudtrail" "foobar" {
+   12      name                          = local.name
+   13      s3_bucket_name                = aws_s3_bucket.foo.id
+   14      s3_key_prefix                 = "prefix"
+   15      include_global_service_events = false
+   16    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-cloudtrail-ensure-cloudwatch-integration
+      Impact Realtime log analysis is not available without enabling CloudWatch logging
+  Resolution Enable logging to CloudWatch
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/cloudtrail/ensure-cloudwatch-integration/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudtrail
+────────────────────────────────────────────────────────────────────────────────
+
+
+Result #13 LOW Bucket does not have a corresponding public access block. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:18-52
+────────────────────────────────────────────────────────────────────────────────
+   18  ┌ resource "aws_s3_bucket" "foo" {
+   19  │   bucket        = local.name
+   20  │   force_destroy = true
+   21  │ 
+   22  │   policy = <<POLICY
+   23  │ {
+   24  │     "Version": "2012-10-17",
+   25  │     "Statement": [
+   26  └         {
+   ..  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-specify-public-access-block
+      Impact Public access policies may be applied to sensitive data buckets
+  Resolution Define a aws_s3_bucket_public_access_block for the given bucket to control public access policies
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/specify-public-access-block/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#bucket
+────────────────────────────────────────────────────────────────────────────────
+
+
+Result #14 LOW Trail S3 bucket does not have logging enabled 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:18-52
+────────────────────────────────────────────────────────────────────────────────
+   18  ┌ resource "aws_s3_bucket" "foo" {
+   19  │   bucket        = local.name
+   20  │   force_destroy = true
+   21  │ 
+   22  │   policy = <<POLICY
+   23  │ {
+   24  │     "Version": "2012-10-17",
+   25  │     "Statement": [
+   26  └         {
+   ..  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-cloudtrail-require-bucket-access-logging
+      Impact There is no way to determine the access to this bucket
+  Resolution Enable access logging on the bucket
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/cloudtrail/require-bucket-access-logging/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudtrail#is_multi_region_trail
+────────────────────────────────────────────────────────────────────────────────
+
+
+  timings
+  ──────────────────────────────────────────
+  disk i/o             13.735541ms
+  parsing              361.792µs
+  adaptation           90.375µs
+  checks               7.988834ms
+  total                22.176542ms
 
   counts
-  ------------------------------------------
-  files loaded         1
-  blocks               5
-  modules              0
+  ──────────────────────────────────────────
+  modules downloaded   0
+  modules processed    1
+  blocks processed     5
+  files read           1
 
   results
-  ------------------------------------------
-  critical             0
-  high                 3
-  medium               4
-  low                  0
+  ──────────────────────────────────────────
+  passed               4
   ignored              0
+  critical             0
+  high                 8
+  medium               3
+  low                  3
 
-  7 potential problems detected.
+  4 passed, 14 potential problem(s) detected.
 

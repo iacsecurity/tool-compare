@@ -1,4 +1,62 @@
 
+	
+Scan Errors - 
+
+	IaC Type            :	docker
+	Directory           :	/iac
+	Error Message       :	Dockerfile not found in the directory /iac
+	
+	-----------------------------------------------------------------------
+	
+	IaC Type            :	cft
+	Directory           :	/iac
+	Error Message       :	error while loading iac file '/iac/checkov_results.txt', err: error while resolving intrinsic functions, error invalid YAML template: yaml: line 2: mapping values are not allowed in this context
+	
+	-----------------------------------------------------------------------
+	
+	IaC Type            :	cft
+	Directory           :	/iac
+	Error Message       :	error while loading iac file '/iac/kics_results.txt', err: error while resolving intrinsic functions, error invalid YAML template: yaml: control characters are not allowed
+	
+	-----------------------------------------------------------------------
+	
+	IaC Type            :	cft
+	Directory           :	/iac
+	Error Message       :	error while loading iac file '/iac/results_summary.json', err: failed to find valid Resources key in file: /iac/results_summary.json
+	
+	-----------------------------------------------------------------------
+	
+	IaC Type            :	cft
+	Directory           :	/iac
+	Error Message       :	error while loading iac file '/iac/snyk_results.txt', err: error while resolving intrinsic functions, error invalid YAML template: yaml: line 2: mapping values are not allowed in this context
+	
+	-----------------------------------------------------------------------
+	
+	IaC Type            :	cft
+	Directory           :	/iac
+	Error Message       :	error while loading iac file '/iac/terrascan_results.txt', err: failed to find valid Resources key in file: /iac/terrascan_results.txt
+	
+	-----------------------------------------------------------------------
+	
+	IaC Type            :	cft
+	Directory           :	/iac
+	Error Message       :	error while loading iac file '/iac/tfsec_results.txt', err: error while resolving intrinsic functions, error invalid YAML template: yaml: line 2: did not find expected <document start>
+	
+	-----------------------------------------------------------------------
+	
+	IaC Type            :	kustomize
+	Directory           :	/iac
+	Error Message       :	kustomization.y(a)ml file not found in the directory /iac
+	
+	-----------------------------------------------------------------------
+	
+	IaC Type            :	helm
+	Directory           :	/iac
+	Error Message       :	no helm charts found in directory /iac
+	
+	-----------------------------------------------------------------------
+	
+	
 
 Violation Details -
     
@@ -11,7 +69,7 @@ Violation Details -
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
+	Description    :	Ensure that your AWS application is not deployed within the default Virtual Private Cloud in order to follow security best practices
 	File           :	main.tf
 	Module Name    :	root
 	Plan Root      :	./
@@ -20,7 +78,7 @@ Violation Details -
 	
 	-----------------------------------------------------------------------
 	
-	Description    :	Ensure that your AWS application is not deployed within the default Virtual Private Cloud in order to follow security best practices
+	Description    :	EC2 instances should disable IMDS or require IMDSv2 as this can be related to the weaponization phase of kill chain
 	File           :	main.tf
 	Module Name    :	root
 	Plan Root      :	./
@@ -33,8 +91,8 @@ Violation Details -
 Scan Summary -
 
 	File/Folder         :	/iac
-	IaC Type            :	all
-	Scanned At          :	2021-08-18 18:01:33.667250338 +0000 UTC
+	IaC Type            :	terraform
+	Scanned At          :	2022-12-01 13:47:23.196900837 +0000 UTC
 	Policies Validated  :	5
 	Violated Policies   :	3
 	Low                 :	0

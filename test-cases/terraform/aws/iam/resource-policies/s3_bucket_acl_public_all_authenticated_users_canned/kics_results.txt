@@ -1,4 +1,4 @@
-
+[38;2;34;187;51m
                    .0MO.                                    
                    OMMMx                                    
                    ;NMX;                                    
@@ -15,79 +15,115 @@ WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
 WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
-
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+[0m
+Scanning with Keeping Infrastructure as Code Secure v1.6.5
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 1039
 Queries failed to execute: 0
 
 ------------------------------------
 
-Resource Not Using Tags, Severity: INFO, Results: 1
-Description: AWS services resource tags are an essential part of managing components
-Platform: Terraform
+[38;2;91;192;222mResource Not Using Tags[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 1
+[1mDescription:[0m AWS services resource tags are an essential part of managing components. As a best practice, the field 'tags' should have additional tags defined other than 'Name'
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:5
-
-		004: 
-		005: resource "aws_s3_bucket" "public-bucket" {
-		006:   bucket = "bucket-with-public-acl-2"
-
-
-S3 Bucket Logging Disabled, Severity: LOW, Results: 1
-Description: S3 bucket without logging
-Platform: Terraform
-
-	[1]: /src/main.tf:5
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
 
 		004: 
-		005: resource "aws_s3_bucket" "public-bucket" {
-		006:   bucket = "bucket-with-public-acl-2"
+[38;2;240;173;78m		005: resource "aws_s3_bucket" "public-bucket" {
+[0m		006:   bucket = "bucket-with-public-acl-2"
 
 
-S3 Bucket Without Versioning, Severity: MEDIUM, Results: 1
-Description: S3 bucket without versioning
-Platform: Terraform
+[38;2;91;192;222mName Is Not Snake Case[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 1
+[1mDescription:[0m All names should follow snake case pattern.
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:5
-
-		004: 
-		005: resource "aws_s3_bucket" "public-bucket" {
-		006:   bucket = "bucket-with-public-acl-2"
-
-
-S3 Bucket Without Server-side-encryption, Severity: HIGH, Results: 1
-Description: S3 bucket should have encryption defined
-Platform: Terraform
-
-	[1]: /src/main.tf:5
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
 
 		004: 
-		005: resource "aws_s3_bucket" "public-bucket" {
+[38;2;240;173;78m		005: resource "aws_s3_bucket" "public-bucket" {
+[0m		006:   bucket = "bucket-with-public-acl-2"
+
+
+[38;2;237;213;126mIAM Access Analyzer Not Enabled[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m IAM Access Analyzer should be enabled and configured to continuously monitor resource permissions
+[1mPlatform:[0m Terraform
+
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
+
+		004: 
+[38;2;240;173;78m		005: resource "aws_s3_bucket" "public-bucket" {
+[0m		006:   bucket = "bucket-with-public-acl-2"
+
+
+[38;2;255;114;19mS3 Bucket Without Versioning[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m S3 bucket should have versioning enabled
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
+
+		004: 
+[38;2;240;173;78m		005: resource "aws_s3_bucket" "public-bucket" {
+[0m		006:   bucket = "bucket-with-public-acl-2"
+
+
+[38;2;255;114;19mS3 Bucket Logging Disabled[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m Server Access Logging should be enabled on S3 Buckets so that all changes are logged and trackable
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
+
+		004: 
+[38;2;240;173;78m		005: resource "aws_s3_bucket" "public-bucket" {
+[0m		006:   bucket = "bucket-with-public-acl-2"
+
+
+[38;2;187;33;36mS3 Bucket Without Enabled MFA Delete[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mCIS ID:[0m CIS Security - CIS Amazon Web Services Foundations Benchmark v1.4.0 - Rule 2.1.3
+[1mTitle:[0m Ensure MFA Delete is enable on S3 buckets
+[1mDescription:[0m Once MFA Delete is enabled on your sensitive and classified S3 bucket it requires the user to have two forms of authentication.
+Adding MFA delete to an S3 bucket, requires additional authentication when you change the version state of your bucket or you delete and object version adding another layer of security in the event your security credentials are compromised or unauthorized access is granted.
+[1mPlatform:[0m Terraform
+
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
+
+		004: 
+[38;2;240;173;78m		005: resource "aws_s3_bucket" "public-bucket" {
+[0m		006:   bucket = "bucket-with-public-acl-2"
+
+
+[38;2;187;33;36mS3 Bucket SSE Disabled[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mDescription:[0m If algorithm is AES256 then the master key is null, empty or undefined, otherwise the master key is required
+[1mPlatform:[0m Terraform
+
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
+
+		004: 
+[38;2;240;173;78m		005: resource "aws_s3_bucket" "public-bucket" {
+[0m		006:   bucket = "bucket-with-public-acl-2"
+
+
+[38;2;187;33;36mS3 Bucket ACL Allows Read to Any Authenticated User[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mDescription:[0m S3 Buckets should not be readable to any authenticated user
+[1mPlatform:[0m Terraform
+
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m7[0m
+
 		006:   bucket = "bucket-with-public-acl-2"
-
-
-S3 Bucket ACL Allows Read to Any Authenticated User, Severity: HIGH, Results: 1
-Description: Misconfigured S3 buckets can leak private information to the entire internet or allow unauthorized data tampering / deletion
-Platform: Terraform
-
-	[1]: /src/main.tf:7
-
-		006:   bucket = "bucket-with-public-acl-2"
-		007:   acl = "authenticated-read"
-		008: }
+[38;2;240;173;78m		007:   acl = "authenticated-read"
+[0m		008: }
 
 
 
 Results Summary:
-HIGH: 2
-MEDIUM: 1
-LOW: 1
-INFO: 1
-TOTAL: 5
+[38;2;187;33;36mHIGH[0m: 3
+[38;2;255;114;19mMEDIUM[0m: 2
+[38;2;237;213;126mLOW[0m: 1
+[38;2;91;192;222mINFO[0m: 2
+TOTAL: 8
 
-Scan duration: 4.409779748s
+Scan duration: 15.18382134s

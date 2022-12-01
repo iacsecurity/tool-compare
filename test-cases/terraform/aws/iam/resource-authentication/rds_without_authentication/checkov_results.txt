@@ -1,24 +1,11 @@
-
-
-       _               _              
-   ___| |__   ___  ___| | _______   __
-  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
- | (__| | | |  __/ (__|   < (_) \ V / 
-  \___|_| |_|\___|\___|_|\_\___/ \_/  
-                                      
-By bridgecrew.io | version: 2.0.358 
-Update available 2.0.358 -> 2.0.359
-Run pip3 install -U checkov to update 
-
-
 terraform scan results:
 
-Passed checks: 1, Failed checks: 5, Skipped checks: 0
+Passed checks: 3, Failed checks: 6, Skipped checks: 0
 
-Check: CKV_AWS_161: "Ensure RDS database has IAM authentication enabled"
+Check: CKV_AWS_226: "Ensure DB instance gets all minor upgrades automatically"
 	FAILED for resource: aws_db_instance.default
 	File: /main.tf:1-11
-	Guide: https://docs.bridgecrew.io/docs/ensure-rds-database-has-iam-authentication-enabled
+	Guide: https://docs.bridgecrew.io/docs/ensure-aws-db-instance-gets-all-minor-upgrades-automatically
 
 		1  | resource "aws_db_instance" "default" {
 		2  |   allocated_storage    = 10
@@ -32,11 +19,10 @@ Check: CKV_AWS_161: "Ensure RDS database has IAM authentication enabled"
 		10 |   skip_final_snapshot  = true
 		11 | }
 
-
-Check: CKV_AWS_118: "Ensure that enhanced monitoring is enabled for Amazon RDS instances"
+Check: CKV_AWS_16: "Ensure all data stored in the RDS is securely encrypted at rest"
 	FAILED for resource: aws_db_instance.default
 	File: /main.tf:1-11
-	Guide: https://docs.bridgecrew.io/docs/ensure-that-enhanced-monitoring-is-enabled-for-amazon-rds-instances
+	Guide: https://docs.bridgecrew.io/docs/general_4
 
 		1  | resource "aws_db_instance" "default" {
 		2  |   allocated_storage    = 10
@@ -49,25 +35,6 @@ Check: CKV_AWS_118: "Ensure that enhanced monitoring is enabled for Amazon RDS i
 		9  |   parameter_group_name = "default.mysql5.7"
 		10 |   skip_final_snapshot  = true
 		11 | }
-
-
-Check: CKV_AWS_157: "Ensure that RDS instances have Multi-AZ enabled"
-	FAILED for resource: aws_db_instance.default
-	File: /main.tf:1-11
-	Guide: https://docs.bridgecrew.io/docs/general_73
-
-		1  | resource "aws_db_instance" "default" {
-		2  |   allocated_storage    = 10
-		3  |   engine               = "mysql"
-		4  |   engine_version       = "5.7"
-		5  |   instance_class       = "db.t3.micro"
-		6  |   name                 = "mydb"
-		7  |   username             = "foo"
-		8  |   password             = "foobarbaz"
-		9  |   parameter_group_name = "default.mysql5.7"
-		10 |   skip_final_snapshot  = true
-		11 | }
-
 
 Check: CKV_AWS_129: "Ensure that respective logs of Amazon Relational Database Service (Amazon RDS) are enabled"
 	FAILED for resource: aws_db_instance.default
@@ -86,11 +53,44 @@ Check: CKV_AWS_129: "Ensure that respective logs of Amazon Relational Database S
 		10 |   skip_final_snapshot  = true
 		11 | }
 
-
-Check: CKV_AWS_16: "Ensure all data stored in the RDS is securely encrypted at rest"
+Check: CKV_AWS_161: "Ensure RDS database has IAM authentication enabled"
 	FAILED for resource: aws_db_instance.default
 	File: /main.tf:1-11
-	Guide: https://docs.bridgecrew.io/docs/general_4
+	Guide: https://docs.bridgecrew.io/docs/ensure-rds-database-has-iam-authentication-enabled
+
+		1  | resource "aws_db_instance" "default" {
+		2  |   allocated_storage    = 10
+		3  |   engine               = "mysql"
+		4  |   engine_version       = "5.7"
+		5  |   instance_class       = "db.t3.micro"
+		6  |   name                 = "mydb"
+		7  |   username             = "foo"
+		8  |   password             = "foobarbaz"
+		9  |   parameter_group_name = "default.mysql5.7"
+		10 |   skip_final_snapshot  = true
+		11 | }
+
+Check: CKV_AWS_157: "Ensure that RDS instances have Multi-AZ enabled"
+	FAILED for resource: aws_db_instance.default
+	File: /main.tf:1-11
+	Guide: https://docs.bridgecrew.io/docs/general_73
+
+		1  | resource "aws_db_instance" "default" {
+		2  |   allocated_storage    = 10
+		3  |   engine               = "mysql"
+		4  |   engine_version       = "5.7"
+		5  |   instance_class       = "db.t3.micro"
+		6  |   name                 = "mydb"
+		7  |   username             = "foo"
+		8  |   password             = "foobarbaz"
+		9  |   parameter_group_name = "default.mysql5.7"
+		10 |   skip_final_snapshot  = true
+		11 | }
+
+Check: CKV_AWS_118: "Ensure that enhanced monitoring is enabled for Amazon RDS instances"
+	FAILED for resource: aws_db_instance.default
+	File: /main.tf:1-11
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-enhanced-monitoring-is-enabled-for-amazon-rds-instances
 
 		1  | resource "aws_db_instance" "default" {
 		2  |   allocated_storage    = 10

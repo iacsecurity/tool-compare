@@ -1,19 +1,6 @@
-
-
-       _               _              
-   ___| |__   ___  ___| | _______   __
-  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
- | (__| | | |  __/ (__|   < (_) \ V / 
-  \___|_| |_|\___|\___|_|\_\___/ \_/  
-                                      
-By bridgecrew.io | version: 2.0.358 
-Update available 2.0.358 -> 2.0.359
-Run pip3 install -U checkov to update 
-
-
 terraform scan results:
 
-Passed checks: 1, Failed checks: 2, Skipped checks: 0
+Passed checks: 1, Failed checks: 3, Skipped checks: 0
 
 Check: CKV_AWS_74: "Ensure DocDB is encrypted at rest (default is unencrypted)"
 	FAILED for resource: aws_docdb_cluster.docdb
@@ -27,7 +14,6 @@ Check: CKV_AWS_74: "Ensure DocDB is encrypted at rest (default is unencrypted)"
 		9  |   master_password     = "mustbeeightchars"
 		10 |   skip_final_snapshot = true
 		11 | }
-
 Check: CKV_AWS_85: "Ensure DocDB Logging is enabled"
 	FAILED for resource: aws_docdb_cluster.docdb
 	File: /main.tf:5-11
@@ -40,4 +26,27 @@ Check: CKV_AWS_85: "Ensure DocDB Logging is enabled"
 		9  |   master_password     = "mustbeeightchars"
 		10 |   skip_final_snapshot = true
 		11 | }
+Check: CKV_AWS_182: "Ensure Doc DB is encrypted by KMS using a customer managed Key (CMK)"
+	FAILED for resource: aws_docdb_cluster.docdb
+	File: /main.tf:5-11
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_102
+
+		5  | resource "aws_docdb_cluster" "docdb" {
+		6  |   cluster_identifier  = "my-docdb-cluster"
+		7  |   engine              = "docdb"
+		8  |   master_username     = "foo"
+		9  |   master_password     = "mustbeeightchars"
+		10 |   skip_final_snapshot = true
+		11 | }
+secrets scan results:
+
+Passed checks: 0, Failed checks: 1, Skipped checks: 0
+
+Check: CKV_SECRET_6: "Base64 High Entropy String"
+	FAILED for resource: 80ead63a322cc84c893c0ced91a5eb3e1e16277f
+	File: /main.tf:9-10
+	Guide: https://docs.bridgecrew.io/docs/git_secrets_6
+
+		9 |   master_password     = "must************"
+
 

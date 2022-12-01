@@ -1,20 +1,28 @@
-
-
-       _               _              
-   ___| |__   ___  ___| | _______   __
-  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
- | (__| | | |  __/ (__|   < (_) \ V / 
-  \___|_| |_|\___|\___|_|\_\___/ \_/  
-                                      
-By bridgecrew.io | version: 2.0.358 
-Update available 2.0.358 -> 2.0.359
-Run pip3 install -U checkov to update 
-
-
 terraform scan results:
 
-Passed checks: 13, Failed checks: 1, Skipped checks: 0
+Passed checks: 21, Failed checks: 2, Skipped checks: 0
 
+Check: CKV_AWS_212: "Ensure EBS Volume is encrypted by KMS using a customer managed Key (CMK)"
+	FAILED for resource: aws_dms_replication_instance.test
+	File: /main.tf:56-71
+	Guide: https://docs.bridgecrew.io/docs/ensure-aws-ebs-volume-is-encrypted-by-key-management-service-kms-using-a-customer-managed-key-cmk
+
+		56 | resource "aws_dms_replication_instance" "test" {
+		57 |   allocated_storage            = 20
+		58 |   apply_immediately            = true
+		59 |   auto_minor_version_upgrade   = true
+		60 |   multi_az                     = false
+		61 |   preferred_maintenance_window = "sun:10:30-sun:14:30"
+		62 |   publicly_accessible          = true
+		63 |   replication_instance_class   = "dms.t2.micro"
+		64 |   replication_instance_id      = "test-dms-replication-instance-tf"
+		65 |   replication_subnet_group_id  = aws_dms_replication_subnet_group.test.id
+		66 | 
+		67 |   tags = {
+		68 |     Name = "test"
+		69 |   }
+		70 | 
+		71 | }
 Check: CKV_AWS_89: "DMS replication instance should not be publicly accessible"
 	FAILED for resource: aws_dms_replication_instance.test
 	File: /main.tf:56-71

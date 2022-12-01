@@ -1,4 +1,4 @@
-
+[38;2;34;187;51m
                    .0MO.                                    
                    OMMMx                                    
                    ;NMX;                                    
@@ -15,46 +15,57 @@ WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
 WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
-
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+[0m
+Scanning with Keeping Infrastructure as Code Secure v1.6.5
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 1039
 Queries failed to execute: 0
 
 ------------------------------------
 
-Resource Not Using Tags, Severity: INFO, Results: 1
-Description: AWS services resource tags are an essential part of managing components
-Platform: Terraform
+[38;2;91;192;222mResource Not Using Tags[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 1
+[1mDescription:[0m AWS services resource tags are an essential part of managing components. As a best practice, the field 'tags' should have additional tags defined other than 'Name'
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:9
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m9[0m
 
 		008: 
-		009: resource "aws_sns_topic" "test" {
+[38;2;240;173;78m		009: resource "aws_sns_topic" "test" {
+[0m		010:   name              = "sns_ecnrypted"
+
+
+[38;2;237;213;126mIAM Access Analyzer Not Enabled[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m IAM Access Analyzer should be enabled and configured to continuously monitor resource permissions
+[1mPlatform:[0m Terraform
+
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m9[0m
+
+		008: 
+[38;2;240;173;78m		009: resource "aws_sns_topic" "test" {
+[0m		010:   name              = "sns_ecnrypted"
+
+
+[38;2;255;114;19mSNS Topic Encrypted With AWS Managed Key[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m SNS (Simple Notification Service) Topic should be encrypted with customer-managed KMS keys instead of AWS managed keys
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m11[0m
+
 		010:   name              = "sns_ecnrypted"
-
-
-SNS Topic Encrypted With AWS Managed Key, Severity: MEDIUM, Results: 1
-Description: SNS (Simple Notification Service) Topic should be encrypted with customer-managed KMS keys instead of AWS managed keys
-Platform: Terraform
-
-	[1]: /src/main.tf:11
-
-		010:   name              = "sns_ecnrypted"
-		011:   kms_master_key_id = data.aws_kms_key.by_alias.arn
-		012: }
+[38;2;240;173;78m		011:   kms_master_key_id = data.aws_kms_key.by_alias.arn
+[0m		012: }
 
 
 
 Results Summary:
-HIGH: 0
-MEDIUM: 1
-LOW: 0
-INFO: 1
-TOTAL: 2
+[38;2;187;33;36mHIGH[0m: 0
+[38;2;255;114;19mMEDIUM[0m: 1
+[38;2;237;213;126mLOW[0m: 1
+[38;2;91;192;222mINFO[0m: 1
+TOTAL: 3
 
-Scan duration: 4.7415986s
+Scan duration: 14.458861047s

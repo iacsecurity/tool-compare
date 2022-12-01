@@ -1,4 +1,4 @@
-
+[38;2;34;187;51m
                    .0MO.                                    
                    OMMMx                                    
                    ;NMX;                                    
@@ -15,79 +15,79 @@ WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
 WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
-
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+[0m
+Scanning with Keeping Infrastructure as Code Secure v1.6.5
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 1039
 Queries failed to execute: 0
 
 ------------------------------------
 
-Resource Not Using Tags, Severity: INFO, Results: 1
-Description: AWS services resource tags are an essential part of managing components
-Platform: Terraform
+[38;2;91;192;222mResource Not Using Tags[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 1
+[1mDescription:[0m AWS services resource tags are an essential part of managing components. As a best practice, the field 'tags' should have additional tags defined other than 'Name'
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:21
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
 
 		020: 
-		021:   tags = {
-		022:     Name = "HelloWorld"
+[38;2;240;173;78m		021:   tags = {
+[0m		022:     Name = "HelloWorld"
 
 
-EC2 Not EBS Optimized, Severity: INFO, Results: 1
-Description: It's considered a best practice for an EC2 instance to use an EBS optimized instance. This provides the best performance for your EBS volumes by minimizing contention between Amazon EBS I/O and other traffic from your instance
-Platform: Terraform
+[38;2;91;192;222mEC2 Instance Monitoring Disabled[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 1
+[1mDescription:[0m EC2 Instance should have detailed monitoring enabled. With detailed monitoring enabled data is available in 1-minute periods
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:17
-
-		016: 
-		017: resource "aws_instance" "web" {
-		018:   ami           = data.aws_ami.ubuntu.id
-
-
-EC2 Instance Monitoring Disabled, Severity: INFO, Results: 1
-Description: EC2 Instance should have detailed monitoring enabled. With detailed monitoring enabled data is available in 1-minute periods
-Platform: Terraform
-
-	[1]: /src/main.tf:17
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m17[0m
 
 		016: 
-		017: resource "aws_instance" "web" {
-		018:   ami           = data.aws_ami.ubuntu.id
+[38;2;240;173;78m		017: resource "aws_instance" "web" {
+[0m		018:   ami           = data.aws_ami.ubuntu.id
 
 
-Instance With No VPC, Severity: MEDIUM, Results: 1
-Description: Instance should be configured in VPC (Virtual Private Cloud)
-Platform: Terraform
+[38;2;237;213;126mIAM Access Analyzer Not Enabled[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m IAM Access Analyzer should be enabled and configured to continuously monitor resource permissions
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:17
-
-		016: 
-		017: resource "aws_instance" "web" {
-		018:   ami           = data.aws_ami.ubuntu.id
-
-
-EC2 Instance Has Public IP, Severity: HIGH, Results: 1
-Description: EC2 Instance should not have a public IP address.
-Platform: Terraform
-
-	[1]: /src/main.tf:17
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m17[0m
 
 		016: 
-		017: resource "aws_instance" "web" {
-		018:   ami           = data.aws_ami.ubuntu.id
+[38;2;240;173;78m		017: resource "aws_instance" "web" {
+[0m		018:   ami           = data.aws_ami.ubuntu.id
+
+
+[38;2;255;114;19mInstance With No VPC[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m EC2 Instances should be configured under a VPC network. AWS VPCs provide the controls to facilitate a formal process for approving and testing all network connections and changes to the firewall and router configurations.
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m17[0m
+
+		016: 
+[38;2;240;173;78m		017: resource "aws_instance" "web" {
+[0m		018:   ami           = data.aws_ami.ubuntu.id
+
+
+[38;2;187;33;36mEC2 Instance Has Public IP[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mDescription:[0m EC2 Instance should not have a public IP address.
+[1mPlatform:[0m Terraform
+
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m17[0m
+
+		016: 
+[38;2;240;173;78m		017: resource "aws_instance" "web" {
+[0m		018:   ami           = data.aws_ami.ubuntu.id
 
 
 
 Results Summary:
-HIGH: 1
-MEDIUM: 1
-LOW: 0
-INFO: 3
+[38;2;187;33;36mHIGH[0m: 1
+[38;2;255;114;19mMEDIUM[0m: 1
+[38;2;237;213;126mLOW[0m: 1
+[38;2;91;192;222mINFO[0m: 2
 TOTAL: 5
 
-Scan duration: 4.800291338s
+Scan duration: 17.223862009s

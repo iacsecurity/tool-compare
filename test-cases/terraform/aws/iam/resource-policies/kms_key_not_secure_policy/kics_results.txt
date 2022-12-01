@@ -1,4 +1,4 @@
-
+[38;2;34;187;51m
                    .0MO.                                    
                    OMMMx                                    
                    ;NMX;                                    
@@ -15,57 +15,71 @@ WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
 WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
-
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+[0m
+Scanning with Keeping Infrastructure as Code Secure v1.6.5
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 1039
 Queries failed to execute: 0
 
 ------------------------------------
 
-Resource Not Using Tags, Severity: INFO, Results: 1
-Description: AWS services resource tags are an essential part of managing components
-Platform: Terraform
+[38;2;91;192;222mResource Not Using Tags[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 1
+[1mDescription:[0m AWS services resource tags are an essential part of managing components. As a best practice, the field 'tags' should have additional tags defined other than 'Name'
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:5
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
 
 		004: 
-		005: resource "aws_kms_key" "not_secure_policy" {
-		006:   description             = "KMS key + not_secure_policy"
+[38;2;240;173;78m		005: resource "aws_kms_key" "not_secure_policy" {
+[0m		006:   description             = "KMS key + not_secure_policy"
 
 
-KMS Key With Vulnerable Policy, Severity: HIGH, Results: 1
-Description: Checks if the policy is vulnerable and needs updating.
-Platform: Terraform
+[38;2;237;213;126mIAM Access Analyzer Not Enabled[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m IAM Access Analyzer should be enabled and configured to continuously monitor resource permissions
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:9
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
+
+		004: 
+[38;2;240;173;78m		005: resource "aws_kms_key" "not_secure_policy" {
+[0m		006:   description             = "KMS key + not_secure_policy"
+
+
+[38;2;187;33;36mKMS Key With Vulnerable Policy[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mDescription:[0m Checks if the policy is vulnerable and needs updating.
+[1mPlatform:[0m Terraform
+
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m9[0m
 
 		008: 
-		009:   policy = <<EOF
-		010: {
+[38;2;240;173;78m		009:   policy = <<EOF
+[0m		010: {
 
 
-CMK Rotation Disabled, Severity: HIGH, Results: 1
-Description: Customer Master Keys (CMK) must have rotation enabled, which means the attribute 'enable_key_rotation' must be set to 'true' when the key is enabled.
-Platform: Terraform
+[38;2;187;33;36mCMK Rotation Disabled[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mCIS ID:[0m CIS Security - CIS Amazon Web Services Foundations Benchmark v1.4.0 - Rule 3.8
+[1mTitle:[0m Ensure rotation for customer created CMKs is enabled
+[1mDescription:[0m AWS Key Management Service (KMS) allows customers to rotate the backing key which is key material stored within the KMS which is tied to the key ID of the Customer Created customer master key (CMK). It is the backing key that is used to perform cryptographic operations such as encryption and decryption. Automated key rotation currently retains all prior backing keys so that decryption of encrypted data can take place transparently. It is recommended that CMK key rotation be enabled.
+Rotating encryption keys helps reduce the potential impact of a compromised key as data encrypted with a new key cannot be accessed with a previous key that may have been exposed.
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:5
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
 
 		004: 
-		005: resource "aws_kms_key" "not_secure_policy" {
-		006:   description             = "KMS key + not_secure_policy"
+[38;2;240;173;78m		005: resource "aws_kms_key" "not_secure_policy" {
+[0m		006:   description             = "KMS key + not_secure_policy"
 
 
 
 Results Summary:
-HIGH: 2
-MEDIUM: 0
-LOW: 0
-INFO: 1
-TOTAL: 3
+[38;2;187;33;36mHIGH[0m: 2
+[38;2;255;114;19mMEDIUM[0m: 0
+[38;2;237;213;126mLOW[0m: 1
+[38;2;91;192;222mINFO[0m: 1
+TOTAL: 4
 
-Scan duration: 4.585311205s
+Scan duration: 17.548987716s

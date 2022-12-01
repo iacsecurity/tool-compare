@@ -1,4 +1,4 @@
-
+[38;2;34;187;51m
                    .0MO.                                    
                    OMMMx                                    
                    ;NMX;                                    
@@ -15,79 +15,112 @@ WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
 WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
-
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+[0m
+Scanning with Keeping Infrastructure as Code Secure v1.6.5
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 1039
 Queries failed to execute: 0
 
 ------------------------------------
 
-Resource Not Using Tags, Severity: INFO, Results: 1
-Description: AWS services resource tags are an essential part of managing components
-Platform: Terraform
+[38;2;91;192;222mResource Not Using Tags[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 1
+[1mDescription:[0m AWS services resource tags are an essential part of managing components. As a best practice, the field 'tags' should have additional tags defined other than 'Name'
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:5
-
-		004: 
-		005: resource "aws_elasticsearch_domain" "es-not-secure-policy" {
-		006:   domain_name = "es-not-secure-policy"
-
-
-Elasticsearch Log is disabled, Severity: MEDIUM, Results: 1
-Description: AWS Elasticsearch should have logs enabled
-Platform: Terraform
-
-	[1]: /src/main.tf:5
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
 
 		004: 
-		005: resource "aws_elasticsearch_domain" "es-not-secure-policy" {
-		006:   domain_name = "es-not-secure-policy"
+[38;2;240;173;78m		005: resource "aws_elasticsearch_domain" "es-not-secure-policy" {
+[0m		006:   domain_name = "es-not-secure-policy"
 
 
-Elasticsearch Domain With Vulnerable Policy, Severity: MEDIUM, Results: 1
-Description: Elasticsearch Domain policy should avoid wildcard in 'Action' and 'Principal'.
-Platform: Terraform
+[38;2;91;192;222mName Is Not Snake Case[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 1
+[1mDescription:[0m All names should follow snake case pattern.
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:18
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
+
+		004: 
+[38;2;240;173;78m		005: resource "aws_elasticsearch_domain" "es-not-secure-policy" {
+[0m		006:   domain_name = "es-not-secure-policy"
+
+
+[38;2;237;213;126mIAM Access Analyzer Not Enabled[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m IAM Access Analyzer should be enabled and configured to continuously monitor resource permissions
+[1mPlatform:[0m Terraform
+
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
+
+		004: 
+[38;2;240;173;78m		005: resource "aws_elasticsearch_domain" "es-not-secure-policy" {
+[0m		006:   domain_name = "es-not-secure-policy"
+
+
+[38;2;255;114;19mElasticsearch Without IAM Authentication[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m AWS Elasticsearch should ensure IAM Authentication
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
+
+		004: 
+[38;2;240;173;78m		005: resource "aws_elasticsearch_domain" "es-not-secure-policy" {
+[0m		006:   domain_name = "es-not-secure-policy"
+
+
+[38;2;255;114;19mElasticsearch Log Disabled[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m AWS Elasticsearch should have logs enabled
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
+
+		004: 
+[38;2;240;173;78m		005: resource "aws_elasticsearch_domain" "es-not-secure-policy" {
+[0m		006:   domain_name = "es-not-secure-policy"
+
+
+[38;2;255;114;19mElasticsearch Domain With Vulnerable Policy[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m Elasticsearch Domain policy should avoid wildcard in 'Action' and 'Principal'.
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m18[0m
 
 		017: 
-		018:   access_policies = <<POLICIES
-		019: {
+[38;2;240;173;78m		018:   access_policies = <<POLICIES
+[0m		019: {
 
 
-Elasticsearch Domain Not Encrypted Node To Node, Severity: MEDIUM, Results: 1
-Description: Elasticsearch Domain encryption should be enabled node to node
-Platform: Terraform
+[38;2;255;114;19mElasticsearch Domain Not Encrypted Node To Node[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m Elasticsearch Domain encryption should be enabled node to node
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:5
-
-		004: 
-		005: resource "aws_elasticsearch_domain" "es-not-secure-policy" {
-		006:   domain_name = "es-not-secure-policy"
-
-
-ElasticSearch Not Encrypted At Rest, Severity: MEDIUM, Results: 1
-Description: Check if ElasticSearch encryption is disabled at Rest
-Platform: Terraform
-
-	[1]: /src/main.tf:5
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
 
 		004: 
-		005: resource "aws_elasticsearch_domain" "es-not-secure-policy" {
-		006:   domain_name = "es-not-secure-policy"
+[38;2;240;173;78m		005: resource "aws_elasticsearch_domain" "es-not-secure-policy" {
+[0m		006:   domain_name = "es-not-secure-policy"
+
+
+[38;2;255;114;19mElasticSearch Not Encrypted At Rest[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m Check if ElasticSearch encryption is disabled at Rest
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
+
+		004: 
+[38;2;240;173;78m		005: resource "aws_elasticsearch_domain" "es-not-secure-policy" {
+[0m		006:   domain_name = "es-not-secure-policy"
 
 
 
 Results Summary:
-HIGH: 0
-MEDIUM: 4
-LOW: 0
-INFO: 1
-TOTAL: 5
+[38;2;187;33;36mHIGH[0m: 0
+[38;2;255;114;19mMEDIUM[0m: 5
+[38;2;237;213;126mLOW[0m: 1
+[38;2;91;192;222mINFO[0m: 2
+TOTAL: 8
 
-Scan duration: 5.003881761s
+Scan duration: 14.997661508s

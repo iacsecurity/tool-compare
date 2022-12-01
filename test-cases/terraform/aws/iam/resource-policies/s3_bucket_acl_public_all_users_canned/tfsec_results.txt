@@ -1,142 +1,217 @@
 
-  Result 1
+Result #1 HIGH No public access block so not blocking public acls 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:5-8
+────────────────────────────────────────────────────────────────────────────────
+    5    resource "aws_s3_bucket" "public-bucket" {
+    6      bucket = "bucket-with-public-acl-1"
+    7      acl = "public-read"
+    8    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-block-public-acls
+      Impact PUT calls with public ACLs specified can make objects public
+  Resolution Enable blocking any PUT calls with a public ACL specified
 
-  [aws-s3-enable-bucket-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_s3_bucket.public-bucket' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
-  /src/main.tf:5-8
-
-
-       2 |   region = "us-east-1"
-       3 | }
-       4 | 
-       5 | resource "aws_s3_bucket" "public-bucket" {
-       6 |   bucket = "bucket-with-public-acl-1"
-       7 |   acl = "public-read"
-       8 | }
-       9 | 
-
-  Legacy ID:  AWS017
-  Impact:     The bucket objects could be read if compromised
-  Resolution: Configure bucket encryption
-
-  More Info:
-  - https://tfsec.dev/docs/aws/s3/enable-bucket-encryption#aws/s3 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#enable-default-server-side-encryption 
-  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-encryption.html 
-
-  Result 2
-
-  [aws-s3-enable-bucket-logging][[0m[33mMEDIUM[39m[0m] Resource 'aws_s3_bucket.public-bucket' does not have logging enabled.
-  /src/main.tf:5-8
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/block-public-acls/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#block_public_acls
+────────────────────────────────────────────────────────────────────────────────
 
 
-       2 |   region = "us-east-1"
-       3 | }
-       4 | 
-       5 | resource "aws_s3_bucket" "public-bucket" {
-       6 |   bucket = "bucket-with-public-acl-1"
-       7 |   acl = "public-read"
-       8 | }
-       9 | 
+Result #2 HIGH No public access block so not blocking public policies 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:5-8
+────────────────────────────────────────────────────────────────────────────────
+    5    resource "aws_s3_bucket" "public-bucket" {
+    6      bucket = "bucket-with-public-acl-1"
+    7      acl = "public-read"
+    8    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-block-public-policy
+      Impact Users could put a policy that allows public access
+  Resolution Prevent policies that allow public access being PUT
 
-  Legacy ID:  AWS002
-  Impact:     There is no way to determine the access to this bucket
-  Resolution: Add a logging block to the resource to enable access logging
-
-  More Info:
-  - https://tfsec.dev/docs/aws/s3/enable-bucket-logging#aws/s3 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket 
-  - https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerLogs.html 
-
-  Result 3
-
-  [aws-s3-enable-versioning][[0m[33mMEDIUM[39m[0m] Resource 'aws_s3_bucket.public-bucket' does not have versioning enabled
-  /src/main.tf:5-8
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/block-public-policy/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#block_public_policy
+────────────────────────────────────────────────────────────────────────────────
 
 
-       2 |   region = "us-east-1"
-       3 | }
-       4 | 
-       5 | resource "aws_s3_bucket" "public-bucket" {
-       6 |   bucket = "bucket-with-public-acl-1"
-       7 |   acl = "public-read"
-       8 | }
-       9 | 
+Result #3 HIGH Bucket does not have encryption enabled 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:5-8
+────────────────────────────────────────────────────────────────────────────────
+    5    resource "aws_s3_bucket" "public-bucket" {
+    6      bucket = "bucket-with-public-acl-1"
+    7      acl = "public-read"
+    8    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-enable-bucket-encryption
+      Impact The bucket objects could be read if compromised
+  Resolution Configure bucket encryption
 
-  Legacy ID:  AWS077
-  Impact:     Deleted or modified data would not be recoverable
-  Resolution: Enable versioning to protect against accidental/malicious removal or modification
-
-  More Info:
-  - https://tfsec.dev/docs/aws/s3/enable-versioning#aws/s3 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#versioning 
-  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/Versioning.html 
-
-  Result 4
-
-  [aws-s3-no-public-access-with-acl][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'aws_s3_bucket.public-bucket' has an ACL which allows public access.
-  /src/main.tf:7
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/enable-bucket-encryption/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#enable-default-server-side-encryption
+────────────────────────────────────────────────────────────────────────────────
 
 
-       4 | 
-       5 | resource "aws_s3_bucket" "public-bucket" {
-       6 |   bucket = "bucket-with-public-acl-1"
-       7 |   acl = "public-read"    string: "public-read"
-       8 | }
-       9 | 
+Result #4 HIGH No public access block so not ignoring public acls 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:5-8
+────────────────────────────────────────────────────────────────────────────────
+    5    resource "aws_s3_bucket" "public-bucket" {
+    6      bucket = "bucket-with-public-acl-1"
+    7      acl = "public-read"
+    8    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-ignore-public-acls
+      Impact PUT calls with public ACLs specified can make objects public
+  Resolution Enable ignoring the application of public ACLs in PUT calls
 
-  Legacy ID:  AWS001
-  Impact:     The contents of the bucket can be accessed publicly
-  Resolution: Apply a more restrictive bucket ACL
-
-  More Info:
-  - https://tfsec.dev/docs/aws/s3/no-public-access-with-acl#aws/s3 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket 
-  - https://aws.amazon.com/premiumsupport/knowledge-center/secure-s3-resources/ 
-
-  Result 5
-
-  [aws-s3-specify-public-access-block][[0m[33mMEDIUM[39m[0m] Resource aws_s3_bucket.public-bucket has no associated aws_s3_bucket_public_access_block.
-  /src/main.tf:5-8
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/ignore-public-acls/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#ignore_public_acls
+────────────────────────────────────────────────────────────────────────────────
 
 
-       2 |   region = "us-east-1"
-       3 | }
-       4 | 
-       5 | resource "aws_s3_bucket" "public-bucket" {
-       6 |   bucket = "bucket-with-public-acl-1"
-       7 |   acl = "public-read"
-       8 | }
-       9 | 
+Result #5 HIGH No public access block so not restricting public buckets 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:5-8
+────────────────────────────────────────────────────────────────────────────────
+    5    resource "aws_s3_bucket" "public-bucket" {
+    6      bucket = "bucket-with-public-acl-1"
+    7      acl = "public-read"
+    8    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-no-public-buckets
+      Impact Public buckets can be accessed by anyone
+  Resolution Limit the access to public buckets to only the owner or AWS Services (eg; CloudFront)
 
-  Legacy ID:  AWS098
-  Impact:     Public access policies may be applied to sensitive data buckets
-  Resolution: Define a aws_s3_bucket_public_access_block for the given bucket to control public access policies
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/no-public-buckets/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#restrict_public_buckets¡
+────────────────────────────────────────────────────────────────────────────────
 
-  More Info:
-  - https://tfsec.dev/docs/aws/s3/specify-public-access-block#aws/s3 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#bucket 
-  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html 
 
-  times
-  ------------------------------------------
-  disk i/o             45.056125ms
-  parsing HCL          493.292µs
-  evaluating values    1.793125ms
-  running checks       35.62925ms
+Result #6 HIGH Bucket does not encrypt data with a customer managed key. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:5-8
+────────────────────────────────────────────────────────────────────────────────
+    5    resource "aws_s3_bucket" "public-bucket" {
+    6      bucket = "bucket-with-public-acl-1"
+    7      acl = "public-read"
+    8    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-encryption-customer-key
+      Impact Using AWS managed keys does not allow for fine grained control
+  Resolution Enable encryption using customer managed keys
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/encryption-customer-key/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#enable-default-server-side-encryption
+────────────────────────────────────────────────────────────────────────────────
+
+
+Result #7 HIGH Bucket has a public ACL: 'public-read'. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:7
+────────────────────────────────────────────────────────────────────────────────
+    5    resource "aws_s3_bucket" "public-bucket" {
+    6      bucket = "bucket-with-public-acl-1"
+    7  [   acl = "public-read" ("public-read")
+    8    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-no-public-access-with-acl
+      Impact Public access to the bucket can lead to data leakage
+  Resolution Don't use canned ACLs or switch to private acl
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/no-public-access-with-acl/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket
+────────────────────────────────────────────────────────────────────────────────
+
+
+Result #8 MEDIUM Bucket does not have logging enabled 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:5-8
+────────────────────────────────────────────────────────────────────────────────
+    5    resource "aws_s3_bucket" "public-bucket" {
+    6      bucket = "bucket-with-public-acl-1"
+    7      acl = "public-read"
+    8    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-enable-bucket-logging
+      Impact There is no way to determine the access to this bucket
+  Resolution Add a logging block to the resource to enable access logging
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/enable-bucket-logging/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket
+────────────────────────────────────────────────────────────────────────────────
+
+
+Result #9 MEDIUM Bucket does not have versioning enabled 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:5-8
+────────────────────────────────────────────────────────────────────────────────
+    5    resource "aws_s3_bucket" "public-bucket" {
+    6      bucket = "bucket-with-public-acl-1"
+    7      acl = "public-read"
+    8    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-enable-versioning
+      Impact Deleted or modified data would not be recoverable
+  Resolution Enable versioning to protect against accidental/malicious removal or modification
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/enable-versioning/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#versioning
+────────────────────────────────────────────────────────────────────────────────
+
+
+Result #10 LOW Bucket does not have a corresponding public access block. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:5-8
+────────────────────────────────────────────────────────────────────────────────
+    5    resource "aws_s3_bucket" "public-bucket" {
+    6      bucket = "bucket-with-public-acl-1"
+    7      acl = "public-read"
+    8    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-specify-public-access-block
+      Impact Public access policies may be applied to sensitive data buckets
+  Resolution Define a aws_s3_bucket_public_access_block for the given bucket to control public access policies
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/specify-public-access-block/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#bucket
+────────────────────────────────────────────────────────────────────────────────
+
+
+  timings
+  ──────────────────────────────────────────
+  disk i/o             3.719292ms
+  parsing              510.916µs
+  adaptation           119.458µs
+  checks               4.361333ms
+  total                8.710999ms
 
   counts
-  ------------------------------------------
-  files loaded         1
-  blocks               2
-  modules              0
+  ──────────────────────────────────────────
+  modules downloaded   0
+  modules processed    1
+  blocks processed     2
+  files read           1
 
   results
-  ------------------------------------------
-  critical             1
-  high                 1
-  medium               3
-  low                  0
+  ──────────────────────────────────────────
+  passed               2
   ignored              0
+  critical             0
+  high                 7
+  medium               2
+  low                  1
 
-  5 potential problems detected.
+  2 passed, 10 potential problem(s) detected.
 

@@ -1,4 +1,4 @@
-
+[38;2;34;187;51m
                    .0MO.                                    
                    OMMMx                                    
                    ;NMX;                                    
@@ -15,129 +15,173 @@ WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
 WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
-
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+[0m
+Scanning with Keeping Infrastructure as Code Secure v1.6.5
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 1039
 Queries failed to execute: 0
 
 ------------------------------------
 
-Security Group Without Description, Severity: INFO, Results: 1
-Description: It's considered a best practice for AWS Security Group to have a description
-Platform: Terraform
+[38;2;91;192;222mSecurity Group Rule Without Description[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 1
+[1mDescription:[0m It's considered a best practice for AWS Security Group to have a description
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:15
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m15[0m
 
 		014: 
-		015: resource "aws_security_group" "default" {
-		016:   name        = "examplerulename"
+[38;2;240;173;78m		015: resource "aws_security_group" "default" {
+[0m		016:   name        = "examplerulename"
 
 
-Security Group Rules Without Description, Severity: INFO, Results: 2
-Description: It's considered a best practice for all rules in AWS Security Group to have a description
-Platform: Terraform
+[38;2;91;192;222mSecurity Group Rule Without Description[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 2
+[1mDescription:[0m It's considered a best practice for all rules in AWS Security Group to have a description
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:26
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m26[0m
 
 		025: 
-		026:   egress {
-		027:     from_port   = 0
+[38;2;240;173;78m		026:   egress {
+[0m		027:     from_port   = 0
 
 
-	[2]: /src/main.tf:19
+	[38;2;91;192;222m[2]:[0m ../../src/main.tf:[38;2;34;187;51m19[0m
 
 		018: 
-		019:   ingress {
-		020:     from_port   = 443
+[38;2;240;173;78m		019:   ingress {
+[0m		020:     from_port   = 443
 
 
-Resource Not Using Tags, Severity: INFO, Results: 4
-Description: AWS services resource tags are an essential part of managing components
-Platform: Terraform
+[38;2;91;192;222mResource Not Using Tags[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 4
+[1mDescription:[0m AWS services resource tags are an essential part of managing components. As a best practice, the field 'tags' should have additional tags defined other than 'Name'
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:10
-
-		009: 
-		010: resource "aws_vpc" "vpc" {
-		011:   cidr_block = local.cidr_block
-
-
-	[2]: /src/main.tf:38
-
-		037: 
-		038: resource "aws_subnet" "subnet" {
-		039:   vpc_id     = aws_vpc.vpc.id
-
-
-	[3]: /src/main.tf:61
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m61[0m
 
 		060: 
-		061: resource "aws_instance" "ec2" {
-		062:   ami = data.aws_ami.ubuntu.id
+[38;2;240;173;78m		061: resource "aws_instance" "ec2" {
+[0m		062:   ami = data.aws_ami.ubuntu.id
 
 
-	[4]: /src/main.tf:33
+	[38;2;91;192;222m[2]:[0m ../../src/main.tf:[38;2;34;187;51m33[0m
 
 		032: 
-		033:   tags = {
-		034:     Name = "example_rule_with_descriptions"
+[38;2;240;173;78m		033:   tags = {
+[0m		034:     Name = "example_rule_with_descriptions"
 
 
-EC2 Not EBS Optimized, Severity: INFO, Results: 1
-Description: It's considered a best practice for an EC2 instance to use an EBS optimized instance. This provides the best performance for your EBS volumes by minimizing contention between Amazon EBS I/O and other traffic from your instance
-Platform: Terraform
+	[38;2;91;192;222m[3]:[0m ../../src/main.tf:[38;2;34;187;51m38[0m
 
-	[1]: /src/main.tf:61
-
-		060: 
-		061: resource "aws_instance" "ec2" {
-		062:   ami = data.aws_ami.ubuntu.id
+		037: 
+[38;2;240;173;78m		038: resource "aws_subnet" "subnet" {
+[0m		039:   vpc_id     = aws_vpc.vpc.id
 
 
-EC2 Instance Monitoring Disabled, Severity: INFO, Results: 1
-Description: EC2 Instance should have detailed monitoring enabled. With detailed monitoring enabled data is available in 1-minute periods
-Platform: Terraform
-
-	[1]: /src/main.tf:61
-
-		060: 
-		061: resource "aws_instance" "ec2" {
-		062:   ami = data.aws_ami.ubuntu.id
-
-
-VPC FlowLogs Disabled, Severity: MEDIUM, Results: 1
-Description: VPC hasn't got any FlowLog associated
-Platform: Terraform
-
-	[1]: /src/main.tf:10
+	[38;2;91;192;222m[4]:[0m ../../src/main.tf:[38;2;34;187;51m10[0m
 
 		009: 
-		010: resource "aws_vpc" "vpc" {
-		011:   cidr_block = local.cidr_block
+[38;2;240;173;78m		010: resource "aws_vpc" "vpc" {
+[0m		011:   cidr_block = local.cidr_block
 
 
-EC2 Instance Has Public IP, Severity: HIGH, Results: 1
-Description: EC2 Instance should not have a public IP address.
-Platform: Terraform
+[38;2;91;192;222mEC2 Not EBS Optimized[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 1
+[1mDescription:[0m It's considered a best practice for an EC2 instance to use an EBS optimized instance. This provides the best performance for your EBS volumes by minimizing contention between Amazon EBS I/O and other traffic from your instance
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:61
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m61[0m
 
 		060: 
-		061: resource "aws_instance" "ec2" {
-		062:   ami = data.aws_ami.ubuntu.id
+[38;2;240;173;78m		061: resource "aws_instance" "ec2" {
+[0m		062:   ami = data.aws_ami.ubuntu.id
+
+
+[38;2;91;192;222mEC2 Instance Monitoring Disabled[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 1
+[1mDescription:[0m EC2 Instance should have detailed monitoring enabled. With detailed monitoring enabled data is available in 1-minute periods
+[1mPlatform:[0m Terraform
+
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m61[0m
+
+		060: 
+[38;2;240;173;78m		061: resource "aws_instance" "ec2" {
+[0m		062:   ami = data.aws_ami.ubuntu.id
+
+
+[38;2;237;213;126mVPC FlowLogs Disabled[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m Every VPC resource should have an associated Flow Log
+[1mPlatform:[0m Terraform
+
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m10[0m
+
+		009: 
+[38;2;240;173;78m		010: resource "aws_vpc" "vpc" {
+[0m		011:   cidr_block = local.cidr_block
+
+
+[38;2;237;213;126mIAM Access Analyzer Not Enabled[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m IAM Access Analyzer should be enabled and configured to continuously monitor resource permissions
+[1mPlatform:[0m Terraform
+
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m10[0m
+
+		009: 
+[38;2;240;173;78m		010: resource "aws_vpc" "vpc" {
+[0m		011:   cidr_block = local.cidr_block
+
+
+[38;2;237;213;126mEC2 Instance Using Default Security Group[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m EC2 instances should not use default security group(s)
+[1mPlatform:[0m Terraform
+
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m65[0m
+
+		064:   subnet_id     = aws_subnet.subnet.id
+[38;2;240;173;78m		065:   vpc_security_group_ids  = [aws_security_group.default.id]
+[0m		066: 
+
+
+[38;2;255;114;19mVPC Without Network Firewall[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m VPC should have a Network Firewall associated
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m10[0m
+
+		009: 
+[38;2;240;173;78m		010: resource "aws_vpc" "vpc" {
+[0m		011:   cidr_block = local.cidr_block
+
+
+[38;2;255;114;19mSensitive Port Is Exposed To Wide Private Network[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m A sensitive port, such as port 23 or port 110, is open for a wide private network in either TCP or UDP protocol
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m19[0m
+
+		018: 
+[38;2;240;173;78m		019:   ingress {
+[0m		020:     from_port   = 443
+
+
+[38;2;187;33;36mEC2 Instance Has Public IP[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mDescription:[0m EC2 Instance should not have a public IP address.
+[1mPlatform:[0m Terraform
+
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m61[0m
+
+		060: 
+[38;2;240;173;78m		061: resource "aws_instance" "ec2" {
+[0m		062:   ami = data.aws_ami.ubuntu.id
 
 
 
 Results Summary:
-HIGH: 1
-MEDIUM: 1
-LOW: 0
-INFO: 9
-TOTAL: 11
+[38;2;187;33;36mHIGH[0m: 1
+[38;2;255;114;19mMEDIUM[0m: 2
+[38;2;237;213;126mLOW[0m: 3
+[38;2;91;192;222mINFO[0m: 9
+TOTAL: 15
 
-Scan duration: 4.821782527s
+Scan duration: 17.371361216s

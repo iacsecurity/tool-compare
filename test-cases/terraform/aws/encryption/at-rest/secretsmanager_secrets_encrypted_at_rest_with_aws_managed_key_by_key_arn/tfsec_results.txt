@@ -1,46 +1,27 @@
-
-  Result 1
-
-  [aws-ssm-secret-use-customer-key][[0m[97mLOW[39m[0m] Resource 'aws_secretsmanager_secret.test' explicitly uses the default CMK
-  /src/main.tf:11
-
-
-       8 | 
-       9 | resource "aws_secretsmanager_secret" "test" {
-      10 |   name       = "test-cloudrail-1"
-      11 |   kms_key_id = data.aws_kms_key.by_alias.arn    unknown: ???
-      12 | }
-      13 | 
-
-  Legacy ID:  AWS095
-  Impact:     Using AWS managed keys reduces the flexibility and control over the encryption key
-  Resolution: Use customer managed keys
-
-  More Info:
-  - https://tfsec.dev/docs/aws/ssm/secret-use-customer-key#aws/ssm 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/secretsmanager_secret#kms_key_id 
-  - https://docs.aws.amazon.com/kms/latest/developerguide/services-secrets-manager.html#asm-encrypt 
-
-  times
-  ------------------------------------------
-  disk i/o             44.782ms
-  parsing HCL          515.958µs
-  evaluating values    2.868416ms
-  running checks       18.608167ms
+  timings
+  ──────────────────────────────────────────
+  disk i/o             11.068542ms
+  parsing              260.041µs
+  adaptation           79.166µs
+  checks               4.10275ms
+  total                15.510499ms
 
   counts
-  ------------------------------------------
-  files loaded         1
-  blocks               3
-  modules              0
+  ──────────────────────────────────────────
+  modules downloaded   0
+  modules processed    1
+  blocks processed     3
+  files read           1
 
   results
-  ------------------------------------------
+  ──────────────────────────────────────────
+  passed               3
+  ignored              0
   critical             0
   high                 0
   medium               0
-  low                  1
-  ignored              0
+  low                  0
 
-  1 potential problems detected.
+
+No problems detected!
 

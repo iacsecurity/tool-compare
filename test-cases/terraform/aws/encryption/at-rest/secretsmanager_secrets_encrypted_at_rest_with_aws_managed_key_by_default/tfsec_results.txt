@@ -1,47 +1,45 @@
 
-  Result 1
+Result #1 LOW Secret explicitly uses the default key. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:5-7
+────────────────────────────────────────────────────────────────────────────────
+    5    resource "aws_secretsmanager_secret" "test" {
+    6      name = "test-cloudrail"
+    7    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ssm-secret-use-customer-key
+      Impact Using AWS managed keys reduces the flexibility and control over the encryption key
+  Resolution Use customer managed keys
 
-  [aws-ssm-secret-use-customer-key][[0m[97mLOW[39m[0m] Resource 'aws_secretsmanager_secret.test' does not use CMK
-  /src/main.tf:5-7
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ssm/secret-use-customer-key/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/secretsmanager_secret#kms_key_id
+────────────────────────────────────────────────────────────────────────────────
 
 
-       2 |   region = "us-east-1"
-       3 | }
-       4 | 
-       5 | resource "aws_secretsmanager_secret" "test" {
-       6 |   name = "test-cloudrail"
-       7 | }
-       8 | 
-
-  Legacy ID:  AWS095
-  Impact:     Using AWS managed keys reduces the flexibility and control over the encryption key
-  Resolution: Use customer managed keys
-
-  More Info:
-  - https://tfsec.dev/docs/aws/ssm/secret-use-customer-key#aws/ssm 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/secretsmanager_secret#kms_key_id 
-  - https://docs.aws.amazon.com/kms/latest/developerguide/services-secrets-manager.html#asm-encrypt 
-
-  times
-  ------------------------------------------
-  disk i/o             46.968667ms
-  parsing HCL          557.792µs
-  evaluating values    1.894585ms
-  running checks       15.108833ms
+  timings
+  ──────────────────────────────────────────
+  disk i/o             3.164375ms
+  parsing              138.083µs
+  adaptation           60.25µs
+  checks               2.415958ms
+  total                5.778666ms
 
   counts
-  ------------------------------------------
-  files loaded         1
-  blocks               2
-  modules              0
+  ──────────────────────────────────────────
+  modules downloaded   0
+  modules processed    1
+  blocks processed     2
+  files read           1
 
   results
-  ------------------------------------------
+  ──────────────────────────────────────────
+  passed               2
+  ignored              0
   critical             0
   high                 0
   medium               0
   low                  1
-  ignored              0
 
-  1 potential problems detected.
+  2 passed, 1 potential problem(s) detected.
 

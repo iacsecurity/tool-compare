@@ -1,51 +1,73 @@
 
-  Result 1
+Result #1 HIGH Instance does not require IMDS access to require a token 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:17-24
+────────────────────────────────────────────────────────────────────────────────
+   17    resource "aws_instance" "web" {
+   18      ami           = data.aws_ami.ubuntu.id
+   19      instance_type = "t3.micro"
+   20    
+   21      tags = {
+   22        Name = "HelloWorld"
+   23      }
+   24    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ec2-enforce-http-token-imds
+      Impact Instance metadata service can be interacted with freely
+  Resolution Enable HTTP token requirement for IMDS
 
-  [aws-ec2-enforce-http-token-imds][[0m[31mHIGH[39m[0m] Resource 'aws_instance.web' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
-  /src/main.tf:17-24
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/enforce-http-token-imds/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#metadata-options
+────────────────────────────────────────────────────────────────────────────────
 
 
-      14 |   owners = ["099720109477"] # Canonical
-      15 | }
-      16 | 
-      17 | resource "aws_instance" "web" {
-      18 |   ami           = data.aws_ami.ubuntu.id
-      19 |   instance_type = "t3.micro"
-      20 | 
-      21 |   tags = {
-      22 |     Name = "HelloWorld"
-      23 |   }
-      24 | }
+Result #2 HIGH Root block device is not encrypted. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:17-24
+────────────────────────────────────────────────────────────────────────────────
+   17    resource "aws_instance" "web" {
+   18      ami           = data.aws_ami.ubuntu.id
+   19      instance_type = "t3.micro"
+   20    
+   21      tags = {
+   22        Name = "HelloWorld"
+   23      }
+   24    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ec2-enable-at-rest-encryption
+      Impact The block device could be compromised and read from
+  Resolution Turn on encryption for all block devices
 
-  Legacy ID:  AWS079
-  Impact:     Instance metadata service can be interacted with freely
-  Resolution: Enable HTTP token requirement for IMDS
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/enable-at-rest-encryption/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#ebs-ephemeral-and-root-block-devices
+────────────────────────────────────────────────────────────────────────────────
 
-  More Info:
-  - https://tfsec.dev/docs/aws/ec2/enforce-http-token-imds#aws/ec2 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#metadata-options 
-  - https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service 
 
-  times
-  ------------------------------------------
-  disk i/o             48.062125ms
-  parsing HCL          488.875µs
-  evaluating values    3.415583ms
-  running checks       15.2265ms
+  timings
+  ──────────────────────────────────────────
+  disk i/o             3.853542ms
+  parsing              196.749µs
+  adaptation           58.333µs
+  checks               4.693459ms
+  total                8.802083ms
 
   counts
-  ------------------------------------------
-  files loaded         1
-  blocks               2
-  modules              0
+  ──────────────────────────────────────────
+  modules downloaded   0
+  modules processed    1
+  blocks processed     2
+  files read           1
 
   results
-  ------------------------------------------
+  ──────────────────────────────────────────
+  passed               3
+  ignored              0
   critical             0
-  high                 1
+  high                 2
   medium               0
   low                  0
-  ignored              0
 
-  1 potential problems detected.
+  3 passed, 2 potential problem(s) detected.
 

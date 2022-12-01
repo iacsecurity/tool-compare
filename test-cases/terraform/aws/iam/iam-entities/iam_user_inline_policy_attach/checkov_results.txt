@@ -1,19 +1,14 @@
-
-
-       _               _              
-   ___| |__   ___  ___| | _______   __
-  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
- | (__| | | |  __/ (__|   < (_) \ V / 
-  \___|_| |_|\___|\___|_|\_\___/ \_/  
-                                      
-By bridgecrew.io | version: 2.0.358 
-Update available 2.0.358 -> 2.0.359
-Run pip3 install -U checkov to update 
-
-
 terraform scan results:
 
-Passed checks: 4, Failed checks: 1, Skipped checks: 0
+Passed checks: 5, Failed checks: 2, Skipped checks: 0
+
+Check: CKV_AWS_273: "Ensure access is controlled through SSO and not AWS IAM defined users"
+	FAILED for resource: aws_iam_user.user-1
+	File: /main.tf:5-7
+
+		5 | resource "aws_iam_user" "user-1" {
+		6 |   name = "user-1"
+		7 | }
 
 Check: CKV_AWS_40: "Ensure IAM policies are attached only to groups or roles (Reducing access management complexity may in-turn reduce opportunity for a principal to inadvertently receive or retain excessive privileges.)"
 	FAILED for resource: aws_iam_user_policy.policy

@@ -1,19 +1,6 @@
-
-
-       _               _              
-   ___| |__   ___  ___| | _______   __
-  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
- | (__| | | |  __/ (__|   < (_) \ V / 
-  \___|_| |_|\___|\___|_|\_\___/ \_/  
-                                      
-By bridgecrew.io | version: 2.0.358 
-Update available 2.0.358 -> 2.0.359
-Run pip3 install -U checkov to update 
-
-
 terraform scan results:
 
-Passed checks: 11, Failed checks: 20, Skipped checks: 0
+Passed checks: 11, Failed checks: 23, Skipped checks: 0
 
 Check: CKV_AWS_91: "Ensure the ELBv2 (Application/Network) has access logging enabled"
 	FAILED for resource: aws_lb.test
@@ -27,7 +14,6 @@ Check: CKV_AWS_91: "Ensure the ELBv2 (Application/Network) has access logging en
 		53 |   internal = true
 		54 | }
 
-
 Check: CKV_AWS_131: "Ensure that ALB drops HTTP headers"
 	FAILED for resource: aws_lb.test
 	File: /main.tf:49-54
@@ -40,10 +26,10 @@ Check: CKV_AWS_131: "Ensure that ALB drops HTTP headers"
 		53 |   internal = true
 		54 | }
 
-
 Check: CKV_AWS_150: "Ensure that Load Balancer has deletion protection enabled"
 	FAILED for resource: aws_lb.test
 	File: /main.tf:49-54
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_networking_62
 
 		49 | resource "aws_lb" "test" {
 		50 |   name = "test123"
@@ -52,21 +38,17 @@ Check: CKV_AWS_150: "Ensure that Load Balancer has deletion protection enabled"
 		53 |   internal = true
 		54 | }
 
+Check: CKV_AWS_261: "Ensure HTTP HTTPS Target group defines Healthcheck"
+	FAILED for resource: aws_lb_target_group.test
+	File: /main.tf:56-61
+	Guide: https://docs.bridgecrew.io/docs/ensure-aws-kendra-index-server-side-encryption-uses-customer-managed-keys-cmks
 
-Check: CKV_AWS_103: "Ensure that load balancer is using TLS 1.2"
-	FAILED for resource: aws_lb_listener.listener
-	File: /main.tf:67-74
-	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_43
-
-		67 | resource "aws_lb_listener" "listener" {
-		68 |   load_balancer_arn = aws_lb.test.arn
-		69 |   port = 80
-		70 |   default_action {
-		71 |     type             = "forward"
-		72 |     target_group_arn = aws_lb_target_group.test.arn
-		73 |   }
-		74 | }
-
+		56 | resource "aws_lb_target_group" "test" {
+		57 |   port = 80
+		58 |   protocol = "HTTP"
+		59 |   target_type = "instance"
+		60 |   vpc_id = aws_vpc.vpc1.id
+		61 | }
 
 Check: CKV_AWS_2: "Ensure ALB protocol is HTTPS"
 	FAILED for resource: aws_lb_listener.listener
@@ -82,11 +64,10 @@ Check: CKV_AWS_2: "Ensure ALB protocol is HTTPS"
 		73 |   }
 		74 | }
 
-
-Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration EBS is securely encrypted"
+Check: CKV_AWS_126: "Ensure that detailed monitoring is enabled for EC2 instances"
 	FAILED for resource: aws_instance.inst1
 	File: /main.tf:82-87
-	Guide: https://docs.bridgecrew.io/docs/general_13
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-detailed-monitoring-is-enabled-for-ec2-instances
 
 		82 | resource "aws_instance" "inst1" {
 		83 |   vpc_security_group_ids = [aws_default_security_group.dsg.id]
@@ -94,20 +75,6 @@ Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration EBS is sec
 		85 |   ami = data.aws_ami.ubuntu.id
 		86 |   instance_type = "t3.micro"
 		87 | }
-
-
-Check: CKV_AWS_79: "Ensure Instance Metadata Service Version 1 is not enabled"
-	FAILED for resource: aws_instance.inst1
-	File: /main.tf:82-87
-	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_31
-
-		82 | resource "aws_instance" "inst1" {
-		83 |   vpc_security_group_ids = [aws_default_security_group.dsg.id]
-		84 |   subnet_id = aws_subnet.subnet1.id
-		85 |   ami = data.aws_ami.ubuntu.id
-		86 |   instance_type = "t3.micro"
-		87 | }
-
 
 Check: CKV_AWS_135: "Ensure that EC2 is EBS optimized"
 	FAILED for resource: aws_instance.inst1
@@ -121,11 +88,10 @@ Check: CKV_AWS_135: "Ensure that EC2 is EBS optimized"
 		86 |   instance_type = "t3.micro"
 		87 | }
 
-
-Check: CKV_AWS_126: "Ensure that detailed monitoring is enabled for EC2 instances"
+Check: CKV_AWS_79: "Ensure Instance Metadata Service Version 1 is not enabled"
 	FAILED for resource: aws_instance.inst1
 	File: /main.tf:82-87
-	Guide: https://docs.bridgecrew.io/docs/ensure-that-detailed-monitoring-is-enabled-for-ec2-instances
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_31
 
 		82 | resource "aws_instance" "inst1" {
 		83 |   vpc_security_group_ids = [aws_default_security_group.dsg.id]
@@ -134,45 +100,17 @@ Check: CKV_AWS_126: "Ensure that detailed monitoring is enabled for EC2 instance
 		86 |   instance_type = "t3.micro"
 		87 | }
 
-
-Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration EBS is securely encrypted"
-	FAILED for resource: aws_instance.inst2
-	File: /main.tf:95-100
+Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration or instance Elastic Blocks Store is securely encrypted"
+	FAILED for resource: aws_instance.inst1
+	File: /main.tf:82-87
 	Guide: https://docs.bridgecrew.io/docs/general_13
 
-		95  | resource "aws_instance" "inst2" {
-		96  |   vpc_security_group_ids = [aws_default_security_group.dsg.id]
-		97  |   subnet_id = aws_subnet.subnet1.id
-		98  |   ami = data.aws_ami.ubuntu.id
-		99  |   instance_type = "t3.micro"
-		100 | }
-
-
-Check: CKV_AWS_79: "Ensure Instance Metadata Service Version 1 is not enabled"
-	FAILED for resource: aws_instance.inst2
-	File: /main.tf:95-100
-	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_31
-
-		95  | resource "aws_instance" "inst2" {
-		96  |   vpc_security_group_ids = [aws_default_security_group.dsg.id]
-		97  |   subnet_id = aws_subnet.subnet1.id
-		98  |   ami = data.aws_ami.ubuntu.id
-		99  |   instance_type = "t3.micro"
-		100 | }
-
-
-Check: CKV_AWS_135: "Ensure that EC2 is EBS optimized"
-	FAILED for resource: aws_instance.inst2
-	File: /main.tf:95-100
-	Guide: https://docs.bridgecrew.io/docs/ensure-that-ec2-is-ebs-optimized
-
-		95  | resource "aws_instance" "inst2" {
-		96  |   vpc_security_group_ids = [aws_default_security_group.dsg.id]
-		97  |   subnet_id = aws_subnet.subnet1.id
-		98  |   ami = data.aws_ami.ubuntu.id
-		99  |   instance_type = "t3.micro"
-		100 | }
-
+		82 | resource "aws_instance" "inst1" {
+		83 |   vpc_security_group_ids = [aws_default_security_group.dsg.id]
+		84 |   subnet_id = aws_subnet.subnet1.id
+		85 |   ami = data.aws_ami.ubuntu.id
+		86 |   instance_type = "t3.micro"
+		87 | }
 
 Check: CKV_AWS_126: "Ensure that detailed monitoring is enabled for EC2 instances"
 	FAILED for resource: aws_instance.inst2
@@ -186,42 +124,41 @@ Check: CKV_AWS_126: "Ensure that detailed monitoring is enabled for EC2 instance
 		99  |   instance_type = "t3.micro"
 		100 | }
 
-
-Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration EBS is securely encrypted"
-	FAILED for resource: aws_instance.inst3
-	File: /main.tf:108-113
-	Guide: https://docs.bridgecrew.io/docs/general_13
-
-		108 | resource "aws_instance" "inst3" {
-		109 |   vpc_security_group_ids = [aws_default_security_group.dsg.id]
-		110 |   subnet_id = aws_subnet.subnet1.id
-		111 |   ami = data.aws_ami.ubuntu.id
-		112 |   instance_type = "t3.micro"
-		113 | }
-
-Check: CKV_AWS_79: "Ensure Instance Metadata Service Version 1 is not enabled"
-	FAILED for resource: aws_instance.inst3
-	File: /main.tf:108-113
-	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_31
-
-		108 | resource "aws_instance" "inst3" {
-		109 |   vpc_security_group_ids = [aws_default_security_group.dsg.id]
-		110 |   subnet_id = aws_subnet.subnet1.id
-		111 |   ami = data.aws_ami.ubuntu.id
-		112 |   instance_type = "t3.micro"
-		113 | }
-
 Check: CKV_AWS_135: "Ensure that EC2 is EBS optimized"
-	FAILED for resource: aws_instance.inst3
-	File: /main.tf:108-113
+	FAILED for resource: aws_instance.inst2
+	File: /main.tf:95-100
 	Guide: https://docs.bridgecrew.io/docs/ensure-that-ec2-is-ebs-optimized
 
-		108 | resource "aws_instance" "inst3" {
-		109 |   vpc_security_group_ids = [aws_default_security_group.dsg.id]
-		110 |   subnet_id = aws_subnet.subnet1.id
-		111 |   ami = data.aws_ami.ubuntu.id
-		112 |   instance_type = "t3.micro"
-		113 | }
+		95  | resource "aws_instance" "inst2" {
+		96  |   vpc_security_group_ids = [aws_default_security_group.dsg.id]
+		97  |   subnet_id = aws_subnet.subnet1.id
+		98  |   ami = data.aws_ami.ubuntu.id
+		99  |   instance_type = "t3.micro"
+		100 | }
+
+Check: CKV_AWS_79: "Ensure Instance Metadata Service Version 1 is not enabled"
+	FAILED for resource: aws_instance.inst2
+	File: /main.tf:95-100
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_31
+
+		95  | resource "aws_instance" "inst2" {
+		96  |   vpc_security_group_ids = [aws_default_security_group.dsg.id]
+		97  |   subnet_id = aws_subnet.subnet1.id
+		98  |   ami = data.aws_ami.ubuntu.id
+		99  |   instance_type = "t3.micro"
+		100 | }
+
+Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration or instance Elastic Blocks Store is securely encrypted"
+	FAILED for resource: aws_instance.inst2
+	File: /main.tf:95-100
+	Guide: https://docs.bridgecrew.io/docs/general_13
+
+		95  | resource "aws_instance" "inst2" {
+		96  |   vpc_security_group_ids = [aws_default_security_group.dsg.id]
+		97  |   subnet_id = aws_subnet.subnet1.id
+		98  |   ami = data.aws_ami.ubuntu.id
+		99  |   instance_type = "t3.micro"
+		100 | }
 
 Check: CKV_AWS_126: "Ensure that detailed monitoring is enabled for EC2 instances"
 	FAILED for resource: aws_instance.inst3
@@ -234,7 +171,85 @@ Check: CKV_AWS_126: "Ensure that detailed monitoring is enabled for EC2 instance
 		111 |   ami = data.aws_ami.ubuntu.id
 		112 |   instance_type = "t3.micro"
 		113 | }
+Check: CKV_AWS_135: "Ensure that EC2 is EBS optimized"
+	FAILED for resource: aws_instance.inst3
+	File: /main.tf:108-113
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-ec2-is-ebs-optimized
 
+		108 | resource "aws_instance" "inst3" {
+		109 |   vpc_security_group_ids = [aws_default_security_group.dsg.id]
+		110 |   subnet_id = aws_subnet.subnet1.id
+		111 |   ami = data.aws_ami.ubuntu.id
+		112 |   instance_type = "t3.micro"
+		113 | }
+Check: CKV_AWS_79: "Ensure Instance Metadata Service Version 1 is not enabled"
+	FAILED for resource: aws_instance.inst3
+	File: /main.tf:108-113
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_31
+
+		108 | resource "aws_instance" "inst3" {
+		109 |   vpc_security_group_ids = [aws_default_security_group.dsg.id]
+		110 |   subnet_id = aws_subnet.subnet1.id
+		111 |   ami = data.aws_ami.ubuntu.id
+		112 |   instance_type = "t3.micro"
+		113 | }
+Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration or instance Elastic Blocks Store is securely encrypted"
+	FAILED for resource: aws_instance.inst3
+	File: /main.tf:108-113
+	Guide: https://docs.bridgecrew.io/docs/general_13
+
+		108 | resource "aws_instance" "inst3" {
+		109 |   vpc_security_group_ids = [aws_default_security_group.dsg.id]
+		110 |   subnet_id = aws_subnet.subnet1.id
+		111 |   ami = data.aws_ami.ubuntu.id
+		112 |   instance_type = "t3.micro"
+		113 | }
+Check: CKV_AWS_103: "Ensure that load balancer is using at least TLS 1.2"
+	FAILED for resource: aws_lb_listener.listener
+	File: /main.tf:67-74
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_43
+
+		67 | resource "aws_lb_listener" "listener" {
+		68 |   load_balancer_arn = aws_lb.test.arn
+		69 |   port = 80
+		70 |   default_action {
+		71 |     type             = "forward"
+		72 |     target_group_arn = aws_lb_target_group.test.arn
+		73 |   }
+		74 | }
+
+Check: CKV2_AWS_41: "Ensure an IAM role is attached to EC2 instance"
+	FAILED for resource: aws_instance.inst1
+	File: /main.tf:82-87
+
+		82 | resource "aws_instance" "inst1" {
+		83 |   vpc_security_group_ids = [aws_default_security_group.dsg.id]
+		84 |   subnet_id = aws_subnet.subnet1.id
+		85 |   ami = data.aws_ami.ubuntu.id
+		86 |   instance_type = "t3.micro"
+		87 | }
+
+Check: CKV2_AWS_41: "Ensure an IAM role is attached to EC2 instance"
+	FAILED for resource: aws_instance.inst2
+	File: /main.tf:95-100
+
+		95  | resource "aws_instance" "inst2" {
+		96  |   vpc_security_group_ids = [aws_default_security_group.dsg.id]
+		97  |   subnet_id = aws_subnet.subnet1.id
+		98  |   ami = data.aws_ami.ubuntu.id
+		99  |   instance_type = "t3.micro"
+		100 | }
+
+Check: CKV2_AWS_41: "Ensure an IAM role is attached to EC2 instance"
+	FAILED for resource: aws_instance.inst3
+	File: /main.tf:108-113
+
+		108 | resource "aws_instance" "inst3" {
+		109 |   vpc_security_group_ids = [aws_default_security_group.dsg.id]
+		110 |   subnet_id = aws_subnet.subnet1.id
+		111 |   ami = data.aws_ami.ubuntu.id
+		112 |   instance_type = "t3.micro"
+		113 | }
 Check: CKV2_AWS_11: "Ensure VPC flow logging is enabled in all VPCs"
 	FAILED for resource: aws_vpc.vpc1
 	File: /main.tf:26-28
@@ -243,7 +258,6 @@ Check: CKV2_AWS_11: "Ensure VPC flow logging is enabled in all VPCs"
 		26 | resource "aws_vpc" "vpc1" {
 		27 |   cidr_block = "10.10.0.0/16"
 		28 | }
-
 
 Check: CKV2_AWS_20: "Ensure that ALB redirects HTTP requests into HTTPS ones"
 	FAILED for resource: aws_lb.test
@@ -256,15 +270,5 @@ Check: CKV2_AWS_20: "Ensure that ALB redirects HTTP requests into HTTPS ones"
 		52 |   subnets = [aws_subnet.subnet1.id, aws_subnet.subnet2.id]
 		53 |   internal = true
 		54 | }
-
-
-Check: CKV2_AWS_1: "Ensure that all NACL are attached to subnets"
-	FAILED for resource: aws_vpc.vpc1
-	File: /main.tf:26-28
-	Guide: https://docs.bridgecrew.io/docs/ensure-that-all-nacl-are-attached-to-subnets
-
-		26 | resource "aws_vpc" "vpc1" {
-		27 |   cidr_block = "10.10.0.0/16"
-		28 | }
 
 

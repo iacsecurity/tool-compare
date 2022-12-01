@@ -1,4 +1,4 @@
-
+[38;2;34;187;51m
                    .0MO.                                    
                    OMMMx                                    
                    ;NMX;                                    
@@ -15,536 +15,646 @@ WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
 WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
-
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+[0m
+Scanning with Keeping Infrastructure as Code Secure v1.6.5
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 1039
 Queries failed to execute: 0
 
 ------------------------------------
 
-Security Group Without Description, Severity: INFO, Results: 1
-Description: It's considered a best practice for AWS Security Group to have a description
-Platform: Terraform
+[38;2;91;192;222mSecurity Group Rule Without Description[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 1
+[1mDescription:[0m It's considered a best practice for all rules in AWS Security Group to have a description
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:18
-
-		017: 
-		018: resource "aws_security_group" "free" {
-		019:   vpc_id = aws_vpc.external.id
-
-
-Security Group Rules Without Description, Severity: INFO, Results: 1
-Description: It's considered a best practice for all rules in AWS Security Group to have a description
-Platform: Terraform
-
-	[1]: /src/main.tf:21
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
 
 		020: 
-		021:   ingress {
-		022:     from_port = 0
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
 
 
-Resource Not Using Tags, Severity: INFO, Results: 9
-Description: AWS services resource tags are an essential part of managing components
-Platform: Terraform
+[38;2;91;192;222mSecurity Group Rule Without Description[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 1
+[1mDescription:[0m It's considered a best practice for AWS Security Group to have a description
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:18
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m18[0m
 
 		017: 
-		018: resource "aws_security_group" "free" {
-		019:   vpc_id = aws_vpc.external.id
+[38;2;240;173;78m		018: resource "aws_security_group" "free" {
+[0m		019:   vpc_id = aws_vpc.external.id
 
 
-	[2]: /src/main.tf:29
+[38;2;91;192;222mResource Not Using Tags[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 9
+[1mDescription:[0m AWS services resource tags are an essential part of managing components. As a best practice, the field 'tags' should have additional tags defined other than 'Name'
+[1mPlatform:[0m Terraform
 
-		028: 
-		029: resource "aws_route_table" "rt" {
-		030:   vpc_id = aws_vpc.external.id
-
-
-	[3]: /src/main.tf:59
-
-		058: 
-		059: resource "aws_db_subnet_group" free {
-		060:   name = "free"
-
-
-	[4]: /src/main.tf:76
-
-		075: 
-		076: resource "aws_neptune_cluster_instance" "neptune_instance" {
-		077:   count              = 2
-
-
-	[5]: /src/main.tf:66
-
-		065: 
-		066: resource "aws_neptune_cluster" "encrypted_neptune_cluster" {
-		067:   cluster_identifier  = "cloudrail-test-encrypted"
-
-
-	[6]: /src/main.tf:14
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m14[0m
 
 		013: 
-		014: resource "aws_internet_gateway" "igw" {
-		015:   vpc_id = aws_vpc.external.id
+[38;2;240;173;78m		014: resource "aws_internet_gateway" "igw" {
+[0m		015:   vpc_id = aws_vpc.external.id
 
 
-	[7]: /src/main.tf:47
-
-		046: 
-		047: resource "aws_subnet" "free_1" {
-		048:   vpc_id = aws_vpc.external.id
-
-
-	[8]: /src/main.tf:53
-
-		052: 
-		053: resource "aws_subnet" "free_2" {
-		054:   vpc_id = aws_vpc.external.id
-
-
-	[9]: /src/main.tf:9
-
-		008:   enable_dns_hostnames = "true"
-		009:   tags = {
-		010:     Name = "external-vpc"
-
-
-Neptune Logging Is Disabled, Severity: INFO, Results: 1
-Description: Neptune logging should be enabled
-Platform: Terraform
-
-	[1]: /src/main.tf:66
+	[38;2;91;192;222m[2]:[0m ../../src/main.tf:[38;2;34;187;51m66[0m
 
 		065: 
-		066: resource "aws_neptune_cluster" "encrypted_neptune_cluster" {
-		067:   cluster_identifier  = "cloudrail-test-encrypted"
+[38;2;240;173;78m		066: resource "aws_neptune_cluster" "encrypted_neptune_cluster" {
+[0m		067:   cluster_identifier  = "cloudrail-test-encrypted"
 
 
-VPC FlowLogs Disabled, Severity: MEDIUM, Results: 1
-Description: VPC hasn't got any FlowLog associated
-Platform: Terraform
+	[38;2;91;192;222m[3]:[0m ../../src/main.tf:[38;2;34;187;51m53[0m
 
-	[1]: /src/main.tf:5
+		052: 
+[38;2;240;173;78m		053: resource "aws_subnet" "free_2" {
+[0m		054:   vpc_id = aws_vpc.external.id
+
+
+	[38;2;91;192;222m[4]:[0m ../../src/main.tf:[38;2;34;187;51m59[0m
+
+		058: 
+[38;2;240;173;78m		059: resource "aws_db_subnet_group" free {
+[0m		060:   name = "free"
+
+
+	[38;2;91;192;222m[5]:[0m ../../src/main.tf:[38;2;34;187;51m76[0m
+
+		075: 
+[38;2;240;173;78m		076: resource "aws_neptune_cluster_instance" "neptune_instance" {
+[0m		077:   count              = 2
+
+
+	[38;2;91;192;222m[6]:[0m ../../src/main.tf:[38;2;34;187;51m18[0m
+
+		017: 
+[38;2;240;173;78m		018: resource "aws_security_group" "free" {
+[0m		019:   vpc_id = aws_vpc.external.id
+
+
+	[38;2;91;192;222m[7]:[0m ../../src/main.tf:[38;2;34;187;51m47[0m
+
+		046: 
+[38;2;240;173;78m		047: resource "aws_subnet" "free_1" {
+[0m		048:   vpc_id = aws_vpc.external.id
+
+
+	[38;2;91;192;222m[8]:[0m ../../src/main.tf:[38;2;34;187;51m29[0m
+
+		028: 
+[38;2;240;173;78m		029: resource "aws_route_table" "rt" {
+[0m		030:   vpc_id = aws_vpc.external.id
+
+
+	[38;2;91;192;222m[9]:[0m ../../src/main.tf:[38;2;34;187;51m9[0m
+
+		008:   enable_dns_hostnames = "true"
+[38;2;240;173;78m		009:   tags = {
+[0m		010:     Name = "external-vpc"
+
+
+[38;2;91;192;222mNeptune Logging Is Disabled[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 1
+[1mDescription:[0m Neptune logging should be enabled
+[1mPlatform:[0m Terraform
+
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m66[0m
+
+		065: 
+[38;2;240;173;78m		066: resource "aws_neptune_cluster" "encrypted_neptune_cluster" {
+[0m		067:   cluster_identifier  = "cloudrail-test-encrypted"
+
+
+[38;2;237;213;126mVPC FlowLogs Disabled[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m Every VPC resource should have an associated Flow Log
+[1mPlatform:[0m Terraform
+
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
 
 		004: 
-		005: resource "aws_vpc" "external" {
-		006:   cidr_block = "10.1.1.0/24"
+[38;2;240;173;78m		005: resource "aws_vpc" "external" {
+[0m		006:   cidr_block = "10.1.1.0/24"
 
 
-Unrestricted Security Group Ingress, Severity: HIGH, Results: 1
-Description: Security groups allow ingress from 0.0.0.0:0
-Platform: Terraform
+[38;2;237;213;126mIAM Access Analyzer Not Enabled[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m IAM Access Analyzer should be enabled and configured to continuously monitor resource permissions
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:25
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
+
+		004: 
+[38;2;240;173;78m		005: resource "aws_vpc" "external" {
+[0m		006:   cidr_block = "10.1.1.0/24"
+
+
+[38;2;255;114;19mVPC Without Network Firewall[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m VPC should have a Network Firewall associated
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
+
+		004: 
+[38;2;240;173;78m		005: resource "aws_vpc" "external" {
+[0m		006:   cidr_block = "10.1.1.0/24"
+
+
+[38;2;255;114;19mNeptune Cluster With IAM Database Authentication Disabled[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m Neptune Cluster should have IAM Database Authentication enabled
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m66[0m
+
+		065: 
+[38;2;240;173;78m		066: resource "aws_neptune_cluster" "encrypted_neptune_cluster" {
+[0m		067:   cluster_identifier  = "cloudrail-test-encrypted"
+
+
+[38;2;187;33;36mUnrestricted Security Group Ingress[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mDescription:[0m Security groups allow ingress from 0.0.0.0:0
+[1mPlatform:[0m Terraform
+
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m25[0m
 
 		024:     to_port = 64000
-		025:     cidr_blocks = ["0.0.0.0/0"]
-		026:   }
+[38;2;240;173;78m		025:     cidr_blocks = ["0.0.0.0/0"]
+[0m		026:   }
 
 
-Unknown Port Exposed To Internet, Severity: HIGH, Results: 1
-Description: AWS Security Group should not have an unknown port exposed to the entire Internet
-Platform: Terraform
+[38;2;187;33;36mUnknown Port Exposed To Internet[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mDescription:[0m AWS Security Group should not have an unknown port exposed to the entire Internet
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:25
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m25[0m
 
 		024:     to_port = 64000
-		025:     cidr_blocks = ["0.0.0.0/0"]
-		026:   }
+[38;2;240;173;78m		025:     cidr_blocks = ["0.0.0.0/0"]
+[0m		026:   }
 
 
-Sensitive Port Is Exposed To Entire Network, Severity: HIGH, Results: 52
-Description: A sensitive port, such as port 23 or port 110, is open for the whole network in either TCP or UDP protocol
-Platform: Terraform
+[38;2;187;33;36mSensitive Port Is Exposed To Entire Network[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 63
+[1mDescription:[0m A sensitive port, such as port 23 or port 110, is open for the whole network in either TCP or UDP protocol
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:21
-
-		020: 
-		021:   ingress {
-		022:     from_port = 0
-
-
-	[2]: /src/main.tf:21
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
 
 		020: 
-		021:   ingress {
-		022:     from_port = 0
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
 
 
-	[3]: /src/main.tf:21
-
-		020: 
-		021:   ingress {
-		022:     from_port = 0
-
-
-	[4]: /src/main.tf:21
+	[38;2;187;33;36m[2]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
 
 		020: 
-		021:   ingress {
-		022:     from_port = 0
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
 
 
-	[5]: /src/main.tf:21
-
-		020: 
-		021:   ingress {
-		022:     from_port = 0
-
-
-	[6]: /src/main.tf:21
+	[38;2;187;33;36m[3]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
 
 		020: 
-		021:   ingress {
-		022:     from_port = 0
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
 
 
-	[7]: /src/main.tf:21
-
-		020: 
-		021:   ingress {
-		022:     from_port = 0
-
-
-	[8]: /src/main.tf:21
+	[38;2;187;33;36m[4]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
 
 		020: 
-		021:   ingress {
-		022:     from_port = 0
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
 
 
-	[9]: /src/main.tf:21
-
-		020: 
-		021:   ingress {
-		022:     from_port = 0
-
-
-	[10]: /src/main.tf:21
+	[38;2;187;33;36m[5]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
 
 		020: 
-		021:   ingress {
-		022:     from_port = 0
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
 
 
-	[11]: /src/main.tf:21
-
-		020: 
-		021:   ingress {
-		022:     from_port = 0
-
-
-	[12]: /src/main.tf:21
+	[38;2;187;33;36m[6]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
 
 		020: 
-		021:   ingress {
-		022:     from_port = 0
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
 
 
-	[13]: /src/main.tf:21
-
-		020: 
-		021:   ingress {
-		022:     from_port = 0
-
-
-	[14]: /src/main.tf:21
+	[38;2;187;33;36m[7]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
 
 		020: 
-		021:   ingress {
-		022:     from_port = 0
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
 
 
-	[15]: /src/main.tf:21
-
-		020: 
-		021:   ingress {
-		022:     from_port = 0
-
-
-	[16]: /src/main.tf:21
+	[38;2;187;33;36m[8]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
 
 		020: 
-		021:   ingress {
-		022:     from_port = 0
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
 
 
-	[17]: /src/main.tf:21
-
-		020: 
-		021:   ingress {
-		022:     from_port = 0
-
-
-	[18]: /src/main.tf:21
+	[38;2;187;33;36m[9]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
 
 		020: 
-		021:   ingress {
-		022:     from_port = 0
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
 
 
-	[19]: /src/main.tf:21
-
-		020: 
-		021:   ingress {
-		022:     from_port = 0
-
-
-	[20]: /src/main.tf:21
+	[38;2;187;33;36m[10]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
 
 		020: 
-		021:   ingress {
-		022:     from_port = 0
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
 
 
-	[21]: /src/main.tf:21
-
-		020: 
-		021:   ingress {
-		022:     from_port = 0
-
-
-	[22]: /src/main.tf:21
+	[38;2;187;33;36m[11]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
 
 		020: 
-		021:   ingress {
-		022:     from_port = 0
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
 
 
-	[23]: /src/main.tf:21
-
-		020: 
-		021:   ingress {
-		022:     from_port = 0
-
-
-	[24]: /src/main.tf:21
+	[38;2;187;33;36m[12]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
 
 		020: 
-		021:   ingress {
-		022:     from_port = 0
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
 
 
-	[25]: /src/main.tf:21
-
-		020: 
-		021:   ingress {
-		022:     from_port = 0
-
-
-	[26]: /src/main.tf:21
+	[38;2;187;33;36m[13]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
 
 		020: 
-		021:   ingress {
-		022:     from_port = 0
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
 
 
-	[27]: /src/main.tf:21
-
-		020: 
-		021:   ingress {
-		022:     from_port = 0
-
-
-	[28]: /src/main.tf:21
+	[38;2;187;33;36m[14]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
 
 		020: 
-		021:   ingress {
-		022:     from_port = 0
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
 
 
-	[29]: /src/main.tf:21
-
-		020: 
-		021:   ingress {
-		022:     from_port = 0
-
-
-	[30]: /src/main.tf:21
+	[38;2;187;33;36m[15]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
 
 		020: 
-		021:   ingress {
-		022:     from_port = 0
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
 
 
-	[31]: /src/main.tf:21
-
-		020: 
-		021:   ingress {
-		022:     from_port = 0
-
-
-	[32]: /src/main.tf:21
+	[38;2;187;33;36m[16]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
 
 		020: 
-		021:   ingress {
-		022:     from_port = 0
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
 
 
-	[33]: /src/main.tf:21
-
-		020: 
-		021:   ingress {
-		022:     from_port = 0
-
-
-	[34]: /src/main.tf:21
+	[38;2;187;33;36m[17]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
 
 		020: 
-		021:   ingress {
-		022:     from_port = 0
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
 
 
-	[35]: /src/main.tf:21
-
-		020: 
-		021:   ingress {
-		022:     from_port = 0
-
-
-	[36]: /src/main.tf:21
+	[38;2;187;33;36m[18]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
 
 		020: 
-		021:   ingress {
-		022:     from_port = 0
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
 
 
-	[37]: /src/main.tf:21
-
-		020: 
-		021:   ingress {
-		022:     from_port = 0
-
-
-	[38]: /src/main.tf:21
+	[38;2;187;33;36m[19]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
 
 		020: 
-		021:   ingress {
-		022:     from_port = 0
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
 
 
-	[39]: /src/main.tf:21
-
-		020: 
-		021:   ingress {
-		022:     from_port = 0
-
-
-	[40]: /src/main.tf:21
+	[38;2;187;33;36m[20]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
 
 		020: 
-		021:   ingress {
-		022:     from_port = 0
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
 
 
-	[41]: /src/main.tf:21
-
-		020: 
-		021:   ingress {
-		022:     from_port = 0
-
-
-	[42]: /src/main.tf:21
+	[38;2;187;33;36m[21]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
 
 		020: 
-		021:   ingress {
-		022:     from_port = 0
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
 
 
-	[43]: /src/main.tf:21
-
-		020: 
-		021:   ingress {
-		022:     from_port = 0
-
-
-	[44]: /src/main.tf:21
+	[38;2;187;33;36m[22]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
 
 		020: 
-		021:   ingress {
-		022:     from_port = 0
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
 
 
-	[45]: /src/main.tf:21
-
-		020: 
-		021:   ingress {
-		022:     from_port = 0
-
-
-	[46]: /src/main.tf:21
+	[38;2;187;33;36m[23]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
 
 		020: 
-		021:   ingress {
-		022:     from_port = 0
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
 
 
-	[47]: /src/main.tf:21
-
-		020: 
-		021:   ingress {
-		022:     from_port = 0
-
-
-	[48]: /src/main.tf:21
+	[38;2;187;33;36m[24]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
 
 		020: 
-		021:   ingress {
-		022:     from_port = 0
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
 
 
-	[49]: /src/main.tf:21
-
-		020: 
-		021:   ingress {
-		022:     from_port = 0
-
-
-	[50]: /src/main.tf:21
+	[38;2;187;33;36m[25]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
 
 		020: 
-		021:   ingress {
-		022:     from_port = 0
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
 
 
-	[51]: /src/main.tf:21
-
-		020: 
-		021:   ingress {
-		022:     from_port = 0
-
-
-	[52]: /src/main.tf:21
+	[38;2;187;33;36m[26]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
 
 		020: 
-		021:   ingress {
-		022:     from_port = 0
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
 
 
-Security Group With Unrestricted Access To SSH, Severity: HIGH, Results: 1
-Description: SSH' (TCP:22) should not be public in AWS Security Group
-Platform: Terraform
+	[38;2;187;33;36m[27]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
 
-	[1]: /src/main.tf:25
+		020: 
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
 
-		024:     to_port = 64000
-		025:     cidr_blocks = ["0.0.0.0/0"]
-		026:   }
+
+	[38;2;187;33;36m[28]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
+
+		020: 
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
+
+
+	[38;2;187;33;36m[29]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
+
+		020: 
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
+
+
+	[38;2;187;33;36m[30]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
+
+		020: 
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
+
+
+	[38;2;187;33;36m[31]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
+
+		020: 
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
+
+
+	[38;2;187;33;36m[32]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
+
+		020: 
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
+
+
+	[38;2;187;33;36m[33]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
+
+		020: 
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
+
+
+	[38;2;187;33;36m[34]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
+
+		020: 
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
+
+
+	[38;2;187;33;36m[35]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
+
+		020: 
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
+
+
+	[38;2;187;33;36m[36]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
+
+		020: 
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
+
+
+	[38;2;187;33;36m[37]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
+
+		020: 
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
+
+
+	[38;2;187;33;36m[38]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
+
+		020: 
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
+
+
+	[38;2;187;33;36m[39]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
+
+		020: 
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
+
+
+	[38;2;187;33;36m[40]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
+
+		020: 
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
+
+
+	[38;2;187;33;36m[41]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
+
+		020: 
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
+
+
+	[38;2;187;33;36m[42]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
+
+		020: 
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
+
+
+	[38;2;187;33;36m[43]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
+
+		020: 
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
+
+
+	[38;2;187;33;36m[44]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
+
+		020: 
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
+
+
+	[38;2;187;33;36m[45]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
+
+		020: 
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
+
+
+	[38;2;187;33;36m[46]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
+
+		020: 
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
+
+
+	[38;2;187;33;36m[47]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
+
+		020: 
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
+
+
+	[38;2;187;33;36m[48]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
+
+		020: 
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
+
+
+	[38;2;187;33;36m[49]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
+
+		020: 
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
+
+
+	[38;2;187;33;36m[50]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
+
+		020: 
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
+
+
+	[38;2;187;33;36m[51]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
+
+		020: 
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
+
+
+	[38;2;187;33;36m[52]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
+
+		020: 
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
+
+
+	[38;2;187;33;36m[53]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
+
+		020: 
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
+
+
+	[38;2;187;33;36m[54]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
+
+		020: 
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
+
+
+	[38;2;187;33;36m[55]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
+
+		020: 
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
+
+
+	[38;2;187;33;36m[56]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
+
+		020: 
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
+
+
+	[38;2;187;33;36m[57]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
+
+		020: 
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
+
+
+	[38;2;187;33;36m[58]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
+
+		020: 
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
+
+
+	[38;2;187;33;36m[59]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
+
+		020: 
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
+
+
+	[38;2;187;33;36m[60]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
+
+		020: 
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
+
+
+	[38;2;187;33;36m[61]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
+
+		020: 
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
+
+
+	[38;2;187;33;36m[62]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
+
+		020: 
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
+
+
+	[38;2;187;33;36m[63]:[0m ../../src/main.tf:[38;2;34;187;51m21[0m
+
+		020: 
+[38;2;240;173;78m		021:   ingress {
+[0m		022:     from_port = 0
+
+
+[38;2;187;33;36mNeptune Cluster Instance is Publicly Accessible[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mDescription:[0m Neptune Cluster Instance should not be publicly accessible
+[1mPlatform:[0m Terraform
+
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m82[0m
+
+		081:   apply_immediately  = true
+[38;2;240;173;78m		082:   publicly_accessible = true
+[0m		083: }
 
 
 
 Results Summary:
-HIGH: 55
-MEDIUM: 1
-LOW: 0
-INFO: 12
-TOTAL: 68
+[38;2;187;33;36mHIGH[0m: 66
+[38;2;255;114;19mMEDIUM[0m: 2
+[38;2;237;213;126mLOW[0m: 2
+[38;2;91;192;222mINFO[0m: 12
+TOTAL: 82
 
-Scan duration: 5.10516111s
+Scan duration: 15.372236465s

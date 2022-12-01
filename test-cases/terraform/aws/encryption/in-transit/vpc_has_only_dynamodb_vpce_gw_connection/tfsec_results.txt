@@ -1,160 +1,232 @@
 
-  Result 1
+Result #1 CRITICAL Security group rule allows egress to multiple public internet addresses. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:107
+────────────────────────────────────────────────────────────────────────────────
+   98    resource "aws_security_group" "allow-public-outbound-sg" {
+   ..  
+  107  [     cidr_blocks = ["0.0.0.0/0"]
+  ...  
+  110    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ec2-no-public-egress-sgr
+      Impact Your port is egressing data to the internet
+  Resolution Set a more restrictive cidr range
 
-  [aws-dynamodb-enable-recovery][[0m[33mMEDIUM[39m[0m] Resource 'aws_dynamodb_table.basic-dynamodb-table' doesn't have point in time recovery
-  /src/main.tf:143-166
-
-
-     140 |   subnet_id = aws_subnet.private-subnet.id
-     141 | }
-     142 | 
-     143 | resource "aws_dynamodb_table" "basic-dynamodb-table" {
-     144 |   name           = "GameScores"
-     145 |   billing_mode   = "PROVISIONED"
-     146 |   read_capacity  = 5
-     147 |   write_capacity = 5
-     148 |   hash_key       = "UserId"
-     149 |   range_key      = "GameTitle"
-     150 | 
-     151 |   attribute {
-     152 |     name = "UserId"
-     153 |     type = "S"
-     154 |   }
-     155 | 
-     156 |   attribute {
-     157 |     name = "GameTitle"
-     158 |     type = "S"
-     159 |   }
-     160 | 
-     161 |   ttl {
-     162 |     attribute_name = "TimeToExist"
-     163 |     enabled        = false
-     164 |   }
-     165 | 
-     166 | }
-
-  Legacy ID:  AWS086
-  Impact:     Accidental or malicious writes and deletes can't be rolled back
-  Resolution: Enable point in time recovery
-
-  More Info:
-  - https://tfsec.dev/docs/aws/dynamodb/enable-recovery#aws/dynamodb 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table#point_in_time_recovery 
-  - https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/PointInTimeRecovery.html 
-
-  Result 2
-
-  [aws-dynamodb-table-customer-key][[0m[97mLOW[39m[0m] Resource 'aws_dynamodb_table.basic-dynamodb-table' is not using KMS CMK for encryption
-  /src/main.tf:143-166
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/no-public-egress-sgr/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group
+────────────────────────────────────────────────────────────────────────────────
 
 
-     140 |   subnet_id = aws_subnet.private-subnet.id
-     141 | }
-     142 | 
-     143 | resource "aws_dynamodb_table" "basic-dynamodb-table" {
-     144 |   name           = "GameScores"
-     145 |   billing_mode   = "PROVISIONED"
-     146 |   read_capacity  = 5
-     147 |   write_capacity = 5
-     148 |   hash_key       = "UserId"
-     149 |   range_key      = "GameTitle"
-     150 | 
-     151 |   attribute {
-     152 |     name = "UserId"
-     153 |     type = "S"
-     154 |   }
-     155 | 
-     156 |   attribute {
-     157 |     name = "GameTitle"
-     158 |     type = "S"
-     159 |   }
-     160 | 
-     161 |   ttl {
-     162 |     attribute_name = "TimeToExist"
-     163 |     enabled        = false
-     164 |   }
-     165 | 
-     166 | }
+Result #2 HIGH Instance does not require IMDS access to require a token 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:136-141
+────────────────────────────────────────────────────────────────────────────────
+  136    resource "aws_instance" "test" {
+  137      ami = data.aws_ami.ubuntu.id
+  138      instance_type = "t2.micro"
+  139      vpc_security_group_ids = [aws_security_group.allow-public-outbound-sg.id]
+  140      subnet_id = aws_subnet.private-subnet.id
+  141    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ec2-enforce-http-token-imds
+      Impact Instance metadata service can be interacted with freely
+  Resolution Enable HTTP token requirement for IMDS
 
-  Legacy ID:  AWS092
-  Impact:     Using AWS managed keys does not allow for fine grained control
-  Resolution: Enable server side encryption with a customer managed key
-
-  More Info:
-  - https://tfsec.dev/docs/aws/dynamodb/table-customer-key#aws/dynamodb 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table#server_side_encryption 
-  - https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/EncryptionAtRest.html 
-
-  Result 3
-
-  [aws-ec2-enforce-http-token-imds][[0m[31mHIGH[39m[0m] Resource 'aws_instance.test' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
-  /src/main.tf:136-141
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/enforce-http-token-imds/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#metadata-options
+────────────────────────────────────────────────────────────────────────────────
 
 
-     133 |   owners = ["099720109477"] # Canonical
-     134 | }
-     135 | 
-     136 | resource "aws_instance" "test" {
-     137 |   ami = data.aws_ami.ubuntu.id
-     138 |   instance_type = "t2.micro"
-     139 |   vpc_security_group_ids = [aws_security_group.allow-public-outbound-sg.id]
-     140 |   subnet_id = aws_subnet.private-subnet.id
-     141 | }
-     142 | 
-     143 | resource "aws_dynamodb_table" "basic-dynamodb-table" {
-     144 |   name           = "GameScores"
+Result #3 HIGH Root block device is not encrypted. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:136-141
+────────────────────────────────────────────────────────────────────────────────
+  136    resource "aws_instance" "test" {
+  137      ami = data.aws_ami.ubuntu.id
+  138      instance_type = "t2.micro"
+  139      vpc_security_group_ids = [aws_security_group.allow-public-outbound-sg.id]
+  140      subnet_id = aws_subnet.private-subnet.id
+  141    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ec2-enable-at-rest-encryption
+      Impact The block device could be compromised and read from
+  Resolution Turn on encryption for all block devices
 
-  Legacy ID:  AWS079
-  Impact:     Instance metadata service can be interacted with freely
-  Resolution: Enable HTTP token requirement for IMDS
-
-  More Info:
-  - https://tfsec.dev/docs/aws/ec2/enforce-http-token-imds#aws/ec2 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#metadata-options 
-  - https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service 
-
-  Result 4
-
-  [aws-vpc-no-public-egress-sg][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'aws_security_group.allow-public-outbound-sg' defines a fully open egress security group.
-  /src/main.tf:107
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/enable-at-rest-encryption/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#ebs-ephemeral-and-root-block-devices
+────────────────────────────────────────────────────────────────────────────────
 
 
-     104 |     from_port   = 443
-     105 |     to_port     = 443
-     106 |     protocol    = "tcp"
-     107 |     cidr_blocks = ["0.0.0.0/0"]    list: ["0.0.0.0/0"]
-     108 |   }
-     109 | 
-     110 | }
+Result #4 HIGH Subnet associates public IP address. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:13
+────────────────────────────────────────────────────────────────────────────────
+   10    resource "aws_subnet" "public-subnet" {
+   11      vpc_id     = aws_vpc.main.id
+   12      cidr_block = "192.168.100.0/25"
+   13  [   map_public_ip_on_launch = true (true)
+   14    
+   15      tags = {
+   16        Name = "public-subnet"
+   17      }
+   18    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ec2-no-public-ip-subnet
+      Impact The instance is publicly accessible
+  Resolution Set the instance to not be publicly accessible
 
-  Legacy ID:  AWS009
-  Impact:     The port is exposed for egressing data to the internet
-  Resolution: Set a more restrictive cidr range
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/no-public-ip-subnet/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet#map_public_ip_on_launch
+────────────────────────────────────────────────────────────────────────────────
 
-  More Info:
-  - https://tfsec.dev/docs/aws/vpc/no-public-egress-sg#aws/vpc 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
 
-  times
-  ------------------------------------------
-  disk i/o             54.814584ms
-  parsing HCL          546.625µs
-  evaluating values    7.051543ms
-  running checks       38.009375ms
+Result #5 HIGH Table encryption is not enabled. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:143-166
+────────────────────────────────────────────────────────────────────────────────
+  143  ┌ resource "aws_dynamodb_table" "basic-dynamodb-table" {
+  144  │   name           = "GameScores"
+  145  │   billing_mode   = "PROVISIONED"
+  146  │   read_capacity  = 5
+  147  │   write_capacity = 5
+  148  │   hash_key       = "UserId"
+  149  │   range_key      = "GameTitle"
+  150  │ 
+  151  └   attribute {
+  ...  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-dynamodb-enable-at-rest-encryption
+      Impact Data can be freely read if compromised
+  Resolution Enable encryption at rest for DAX Cluster
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/dynamodb/enable-at-rest-encryption/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dax_cluster#server_side_encryption
+────────────────────────────────────────────────────────────────────────────────
+
+
+Result #6 MEDIUM Point-in-time recovery is not enabled. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:143-166
+────────────────────────────────────────────────────────────────────────────────
+  143  ┌ resource "aws_dynamodb_table" "basic-dynamodb-table" {
+  144  │   name           = "GameScores"
+  145  │   billing_mode   = "PROVISIONED"
+  146  │   read_capacity  = 5
+  147  │   write_capacity = 5
+  148  │   hash_key       = "UserId"
+  149  │   range_key      = "GameTitle"
+  150  │ 
+  151  └   attribute {
+  ...  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-dynamodb-enable-recovery
+      Impact Accidental or malicious writes and deletes can't be rolled back
+  Resolution Enable point in time recovery
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/dynamodb/enable-recovery/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table#point_in_time_recovery
+────────────────────────────────────────────────────────────────────────────────
+
+
+Result #7 MEDIUM VPC Flow Logs is not enabled for VPC  
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:5-8
+────────────────────────────────────────────────────────────────────────────────
+    5    resource "aws_vpc" "main" {
+    6      cidr_block = "192.168.100.0/24"
+    7      enable_dns_support = true
+    8    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ec2-require-vpc-flow-logs-for-all-vpcs
+      Impact Without VPC flow logs, you risk not having enough information about network traffic flow to investigate incidents or identify security issues.
+  Resolution Enable flow logs for VPC
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/require-vpc-flow-logs-for-all-vpcs/
+────────────────────────────────────────────────────────────────────────────────
+
+
+Result #8 LOW Security group rule does not have a description. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:103-108
+────────────────────────────────────────────────────────────────────────────────
+   98    resource "aws_security_group" "allow-public-outbound-sg" {
+   99      name        = "allow-public-outbound-sg"
+  100      description = "Allow HTTPS outbound traffic"
+  101      vpc_id      = aws_vpc.main.id
+  102    
+  103  ┌   egress {
+  104  │     from_port   = 443
+  105  │     to_port     = 443
+  106  └     protocol    = "tcp"
+  ...  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ec2-add-description-to-security-group-rule
+      Impact Descriptions provide context for the firewall rule reasons
+  Resolution Add descriptions for all security groups rules
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/add-description-to-security-group-rule/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule
+────────────────────────────────────────────────────────────────────────────────
+
+
+Result #9 LOW Table encryption does not use a customer-managed KMS key. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:143-166
+────────────────────────────────────────────────────────────────────────────────
+  143  ┌ resource "aws_dynamodb_table" "basic-dynamodb-table" {
+  144  │   name           = "GameScores"
+  145  │   billing_mode   = "PROVISIONED"
+  146  │   read_capacity  = 5
+  147  │   write_capacity = 5
+  148  │   hash_key       = "UserId"
+  149  │   range_key      = "GameTitle"
+  150  │ 
+  151  └   attribute {
+  ...  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-dynamodb-table-customer-key
+      Impact Using AWS managed keys does not allow for fine grained control
+  Resolution Enable server side encryption with a customer managed key
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/dynamodb/table-customer-key/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table#server_side_encryption
+────────────────────────────────────────────────────────────────────────────────
+
+
+  timings
+  ──────────────────────────────────────────
+  disk i/o             4.257416ms
+  parsing              2.888126ms
+  adaptation           322.416µs
+  checks               8.245167ms
+  total                15.713125ms
 
   counts
-  ------------------------------------------
-  files loaded         1
-  blocks               16
-  modules              0
+  ──────────────────────────────────────────
+  modules downloaded   0
+  modules processed    1
+  blocks processed     16
+  files read           1
 
   results
-  ------------------------------------------
-  critical             1
-  high                 1
-  medium               1
-  low                  1
+  ──────────────────────────────────────────
+  passed               5
   ignored              0
+  critical             1
+  high                 4
+  medium               2
+  low                  2
 
-  4 potential problems detected.
+  5 passed, 9 potential problem(s) detected.
 

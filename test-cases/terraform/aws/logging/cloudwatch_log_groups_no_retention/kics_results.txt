@@ -1,4 +1,4 @@
-
+[38;2;34;187;51m
                    .0MO.                                    
                    OMMMx                                    
                    ;NMX;                                    
@@ -15,46 +15,57 @@ WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
 WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
-
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+[0m
+Scanning with Keeping Infrastructure as Code Secure v1.6.5
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 1039
 Queries failed to execute: 0
 
 ------------------------------------
 
-CloudWatch Without Retention Period Specified, Severity: MEDIUM, Results: 1
-Description: AWS CloudWatch Log groups should have retention days specified
-Platform: Terraform
+[38;2;237;213;126mIAM Access Analyzer Not Enabled[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m IAM Access Analyzer should be enabled and configured to continuously monitor resource permissions
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:5
-
-		004: 
-		005: resource "aws_cloudwatch_log_group" "yada" {
-		006:   name = "Yada"
-
-
-CloudWatch Log Group Not Encrypted, Severity: HIGH, Results: 1
-Description: AWS CloudWatch Log groups should be encrypted using KMS
-Platform: Terraform
-
-	[1]: /src/main.tf:5
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
 
 		004: 
-		005: resource "aws_cloudwatch_log_group" "yada" {
-		006:   name = "Yada"
+[38;2;240;173;78m		005: resource "aws_cloudwatch_log_group" "yada" {
+[0m		006:   name = "Yada"
+
+
+[38;2;255;114;19mCloudWatch Without Retention Period Specified[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m AWS CloudWatch Log groups should have retention days specified
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
+
+		004: 
+[38;2;240;173;78m		005: resource "aws_cloudwatch_log_group" "yada" {
+[0m		006:   name = "Yada"
+
+
+[38;2;255;114;19mCloudWatch Log Group Without KMS[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m AWS CloudWatch Log groups should be encrypted using KMS
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
+
+		004: 
+[38;2;240;173;78m		005: resource "aws_cloudwatch_log_group" "yada" {
+[0m		006:   name = "Yada"
 
 
 
 Results Summary:
-HIGH: 1
-MEDIUM: 1
-LOW: 0
-INFO: 0
-TOTAL: 2
+[38;2;187;33;36mHIGH[0m: 0
+[38;2;255;114;19mMEDIUM[0m: 2
+[38;2;237;213;126mLOW[0m: 1
+[38;2;91;192;222mINFO[0m: 0
+TOTAL: 3
 
-Scan duration: 4.515989124s
+Scan duration: 16.225692341s

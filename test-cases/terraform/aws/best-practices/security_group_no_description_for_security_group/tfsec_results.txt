@@ -1,120 +1,135 @@
 
-  Result 1
+Result #1 CRITICAL Security group rule allows egress to multiple public internet addresses. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:32
+────────────────────────────────────────────────────────────────────────────────
+   15    resource "aws_security_group" "default" {
+   ..  
+   32  [     cidr_blocks = ["0.0.0.0/0"]
+   ..  
+   38    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ec2-no-public-egress-sgr
+      Impact Your port is egressing data to the internet
+  Resolution Set a more restrictive cidr range
 
-  [aws-vpc-add-decription-to-security-group][[0m[97mLOW[39m[0m] Resource 'aws_security_group.default' should include a description for auditing purposes.
-  /src/main.tf:15-38
-
-
-      12 | 
-      13 | }
-      14 | 
-      15 | resource "aws_security_group" "default" {
-      16 |   name        = "examplerulename"
-      17 |   vpc_id      = aws_vpc.vpc.id
-      18 | 
-      19 |   ingress {
-      20 |     description = "This is an inbound rule for something...."
-      21 |     from_port   = 443
-      22 |     to_port     = 443
-      23 |     protocol    = "tcp"
-      24 |     cidr_blocks = ["10.0.0.0/24"]
-      25 |   }
-      26 | 
-      27 |   egress {
-      28 |     description = "this is an egress rule for something else...."
-      29 |     from_port   = 0
-      30 |     to_port     = 0
-      31 |     protocol    = "-1"
-      32 |     cidr_blocks = ["0.0.0.0/0"]
-      33 |   }
-      34 | 
-      35 |   tags = {
-      36 |     Name = "example_rule_with_descriptions"
-      37 |   }
-      38 | }
-      39 | 
-      40 | resource "aws_subnet" "subnet" {
-      41 |   vpc_id     = aws_vpc.vpc.id
-
-  Legacy ID:  AWS018
-  Impact:     Descriptions provide context for the firewall rule reasons
-  Resolution: Add descriptions for all security groups and rules
-
-  More Info:
-  - https://tfsec.dev/docs/aws/vpc/add-decription-to-security-group#aws/vpc 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule 
-  - https://www.cloudconformity.com/knowledge-base/aws/EC2/security-group-rules-description.html 
-
-  Result 2
-
-  [aws-vpc-no-public-egress-sg][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Resource 'aws_security_group.default' defines a fully open egress security group.
-  /src/main.tf:32
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/no-public-egress-sgr/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group
+────────────────────────────────────────────────────────────────────────────────
 
 
-      29 |     from_port   = 0
-      30 |     to_port     = 0
-      31 |     protocol    = "-1"
-      32 |     cidr_blocks = ["0.0.0.0/0"]    list: ["0.0.0.0/0"]
-      33 |   }
-      34 | 
-      35 |   tags = {
+Result #2 HIGH Instance does not require IMDS access to require a token 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:63-69
+────────────────────────────────────────────────────────────────────────────────
+   63    resource "aws_instance" "ec2" {
+   64      ami = data.aws_ami.ubuntu.id
+   65      instance_type = "t2.micro"
+   66      subnet_id     = aws_subnet.subnet.id
+   67      vpc_security_group_ids  = [aws_security_group.default.id]
+   68    
+   69    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ec2-enforce-http-token-imds
+      Impact Instance metadata service can be interacted with freely
+  Resolution Enable HTTP token requirement for IMDS
 
-  Legacy ID:  AWS009
-  Impact:     The port is exposed for egressing data to the internet
-  Resolution: Set a more restrictive cidr range
-
-  More Info:
-  - https://tfsec.dev/docs/aws/vpc/no-public-egress-sg#aws/vpc 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
-
-  Result 3
-
-  [aws-ec2-enforce-http-token-imds][[0m[31mHIGH[39m[0m] Resource 'aws_instance.ec2' is missing `metadata_options` block - it is required with `http_tokens` set to `required` to make Instance Metadata Service more secure.
-  /src/main.tf:63-69
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/enforce-http-token-imds/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#metadata-options
+────────────────────────────────────────────────────────────────────────────────
 
 
-      60 |   owners = ["099720109477"] # Canonical
-      61 | }
-      62 | 
-      63 | resource "aws_instance" "ec2" {
-      64 |   ami = data.aws_ami.ubuntu.id
-      65 |   instance_type = "t2.micro"
-      66 |   subnet_id     = aws_subnet.subnet.id
-      67 |   vpc_security_group_ids  = [aws_security_group.default.id]
-      68 | 
-      69 | }
-      70 | 
+Result #3 HIGH Root block device is not encrypted. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:63-69
+────────────────────────────────────────────────────────────────────────────────
+   63    resource "aws_instance" "ec2" {
+   64      ami = data.aws_ami.ubuntu.id
+   65      instance_type = "t2.micro"
+   66      subnet_id     = aws_subnet.subnet.id
+   67      vpc_security_group_ids  = [aws_security_group.default.id]
+   68    
+   69    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ec2-enable-at-rest-encryption
+      Impact The block device could be compromised and read from
+  Resolution Turn on encryption for all block devices
 
-  Legacy ID:  AWS079
-  Impact:     Instance metadata service can be interacted with freely
-  Resolution: Enable HTTP token requirement for IMDS
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/enable-at-rest-encryption/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#ebs-ephemeral-and-root-block-devices
+────────────────────────────────────────────────────────────────────────────────
 
-  More Info:
-  - https://tfsec.dev/docs/aws/ec2/enforce-http-token-imds#aws/ec2 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#metadata-options 
-  - https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service 
 
-  times
-  ------------------------------------------
-  disk i/o             60.731417ms
-  parsing HCL          541.917µs
-  evaluating values    4.355501ms
-  running checks       31.786667ms
+Result #4 MEDIUM VPC Flow Logs is not enabled for VPC  
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:10-13
+────────────────────────────────────────────────────────────────────────────────
+   10    resource "aws_vpc" "vpc" {
+   11      cidr_block = local.cidr_block
+   12    
+   13    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ec2-require-vpc-flow-logs-for-all-vpcs
+      Impact Without VPC flow logs, you risk not having enough information about network traffic flow to investigate incidents or identify security issues.
+  Resolution Enable flow logs for VPC
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/require-vpc-flow-logs-for-all-vpcs/
+────────────────────────────────────────────────────────────────────────────────
+
+
+Result #5 LOW Security group explicitly uses the default description. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:15-38
+────────────────────────────────────────────────────────────────────────────────
+   15  ┌ resource "aws_security_group" "default" {
+   16  │   name        = "examplerulename"
+   17  │   vpc_id      = aws_vpc.vpc.id
+   18  │ 
+   19  │   ingress {
+   20  │     description = "This is an inbound rule for something...."
+   21  │     from_port   = 443
+   22  │     to_port     = 443
+   23  └     protocol    = "tcp"
+   ..  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ec2-add-description-to-security-group
+      Impact Descriptions provide context for the firewall rule reasons
+  Resolution Add descriptions for all security groups
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/add-description-to-security-group/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule
+────────────────────────────────────────────────────────────────────────────────
+
+
+  timings
+  ──────────────────────────────────────────
+  disk i/o             3.178958ms
+  parsing              387.584µs
+  adaptation           66.125µs
+  checks               2.475542ms
+  total                6.108209ms
 
   counts
-  ------------------------------------------
-  files loaded         1
-  blocks               7
-  modules              0
+  ──────────────────────────────────────────
+  modules downloaded   0
+  modules processed    1
+  blocks processed     7
+  files read           1
 
   results
-  ------------------------------------------
-  critical             1
-  high                 1
-  medium               0
-  low                  1
+  ──────────────────────────────────────────
+  passed               7
   ignored              0
+  critical             1
+  high                 2
+  medium               1
+  low                  1
 
-  3 potential problems detected.
+  7 passed, 5 potential problem(s) detected.
 

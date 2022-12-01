@@ -1,24 +1,63 @@
 
-  times
-  ------------------------------------------
-  disk i/o             52.041375ms
-  parsing HCL          624.334µs
-  evaluating values    7.544042ms
-  running checks       14.855167ms
+Result #1 MEDIUM VPC Flow Logs is not enabled for VPC  
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:20-23
+────────────────────────────────────────────────────────────────────────────────
+   20    resource "aws_vpc" "vpc1" {
+   21      cidr_block = "10.5.0.0/16"
+   22      enable_dns_hostnames = true
+   23    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ec2-require-vpc-flow-logs-for-all-vpcs
+      Impact Without VPC flow logs, you risk not having enough information about network traffic flow to investigate incidents or identify security issues.
+  Resolution Enable flow logs for VPC
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/require-vpc-flow-logs-for-all-vpcs/
+────────────────────────────────────────────────────────────────────────────────
+
+
+Result #2 MEDIUM VPC Flow Logs is not enabled for VPC  
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:35-38
+────────────────────────────────────────────────────────────────────────────────
+   35    resource "aws_vpc" "vpc2" {
+   36      cidr_block = "10.7.0.0/16"
+   37      enable_dns_hostnames = true
+   38    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ec2-require-vpc-flow-logs-for-all-vpcs
+      Impact Without VPC flow logs, you risk not having enough information about network traffic flow to investigate incidents or identify security issues.
+  Resolution Enable flow logs for VPC
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/require-vpc-flow-logs-for-all-vpcs/
+────────────────────────────────────────────────────────────────────────────────
+
+
+  timings
+  ──────────────────────────────────────────
+  disk i/o             4.388292ms
+  parsing              1.54425ms
+  adaptation           61.167µs
+  checks               2.21175ms
+  total                8.205459ms
 
   counts
-  ------------------------------------------
-  files loaded         1
-  blocks               26
-  modules              0
+  ──────────────────────────────────────────
+  modules downloaded   0
+  modules processed    1
+  blocks processed     26
+  files read           1
 
   results
-  ------------------------------------------
+  ──────────────────────────────────────────
+  passed               6
+  ignored              0
   critical             0
   high                 0
-  medium               0
+  medium               2
   low                  0
-  ignored              0
 
-No problems detected!
+  6 passed, 2 potential problem(s) detected.
 

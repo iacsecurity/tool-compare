@@ -1,102 +1,73 @@
 
-  Result 1
+Result #1 HIGH Cluster does not have encryption enabled. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:5-12
+────────────────────────────────────────────────────────────────────────────────
+    5    resource "aws_redshift_cluster" "default" {
+    6      cluster_identifier = "tf-redshift-cluster"
+    7      database_name      = "mydb"
+    8      master_username    = "foo"
+    9      master_password    = "Mustbe8characters"
+   10      node_type          = "dc1.large"
+   11      cluster_type       = "single-node"
+   12    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-redshift-encryption-customer-key
+      Impact Data may be leaked if infrastructure is compromised
+  Resolution Enable encryption using CMK
 
-  [aws-redshift-non-default-vpc-deployment][[0m[31mHIGH[39m[0m] Resource 'aws_redshift_cluster.default' is being deployed outside of a VPC
-  /src/main.tf:5-12
-
-
-       2 |   region = "us-west-1"
-       3 | }
-       4 | 
-       5 | resource "aws_redshift_cluster" "default" {
-       6 |   cluster_identifier = "tf-redshift-cluster"
-       7 |   database_name      = "mydb"
-       8 |   master_username    = "foo"
-       9 |   master_password    = "Mustbe8characters"
-      10 |   node_type          = "dc1.large"
-      11 |   cluster_type       = "single-node"
-      12 | }
-      13 | 
-
-  Legacy ID:  AWS087
-  Impact:     Redshift cluster does not benefit from VPC security if it is deployed in EC2 classic mode
-  Resolution: Deploy Redshift cluster into a non default VPC
-
-  More Info:
-  - https://tfsec.dev/docs/aws/redshift/non-default-vpc-deployment#aws/redshift 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/redshift_cluster#cluster_subnet_group_name 
-  - https://docs.aws.amazon.com/redshift/latest/mgmt/managing-clusters-vpc.html 
-
-  Result 2
-
-  [general-secrets-sensitive-in-attribute][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Block 'aws_redshift_cluster.default' includes a potentially sensitive attribute which is defined within the project.
-  /src/main.tf:9
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/redshift/encryption-customer-key/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/redshift_cluster#encrypted
+────────────────────────────────────────────────────────────────────────────────
 
 
-       6 |   cluster_identifier = "tf-redshift-cluster"
-       7 |   database_name      = "mydb"
-       8 |   master_username    = "foo"
-       9 |   master_password    = "Mustbe8characters"    string: "Mustbe8characters"
-      10 |   node_type          = "dc1.large"
-      11 |   cluster_type       = "single-node"
-      12 | }
+Result #2 HIGH Cluster is deployed outside of a VPC. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:5-12
+────────────────────────────────────────────────────────────────────────────────
+    5    resource "aws_redshift_cluster" "default" {
+    6      cluster_identifier = "tf-redshift-cluster"
+    7      database_name      = "mydb"
+    8      master_username    = "foo"
+    9      master_password    = "Mustbe8characters"
+   10      node_type          = "dc1.large"
+   11      cluster_type       = "single-node"
+   12    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-redshift-use-vpc
+      Impact Redshift cluster does not benefit from VPC security if it is deployed in EC2 classic mode
+  Resolution Deploy Redshift cluster into a non default VPC
 
-  Legacy ID:  GEN003
-  Impact:     Block attribute could be leaking secrets
-  Resolution: Don't include sensitive data in blocks
-
-  More Info:
-  - https://tfsec.dev/docs/general/secrets/sensitive-in-attribute#general/secrets 
-  - https://www.terraform.io/docs/state/sensitive-data.html 
-
-  Result 3
-
-  [aws-redshift-encryption-customer-key][[0m[31mHIGH[39m[0m] Resource 'aws_redshift_cluster.default' does not have encryption enabled
-  /src/main.tf:5-12
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/redshift/use-vpc/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/redshift_cluster#cluster_subnet_group_name
+────────────────────────────────────────────────────────────────────────────────
 
 
-       2 |   region = "us-west-1"
-       3 | }
-       4 | 
-       5 | resource "aws_redshift_cluster" "default" {
-       6 |   cluster_identifier = "tf-redshift-cluster"
-       7 |   database_name      = "mydb"
-       8 |   master_username    = "foo"
-       9 |   master_password    = "Mustbe8characters"
-      10 |   node_type          = "dc1.large"
-      11 |   cluster_type       = "single-node"
-      12 | }
-      13 | 
-
-  Legacy ID:  AWS094
-  Impact:     Data may be leaked if infrastructure is compromised
-  Resolution: Enable encryption using CMK
-
-  More Info:
-  - https://tfsec.dev/docs/aws/redshift/encryption-customer-key#aws/redshift 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/redshift_cluster#encrypted 
-  - https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-db-encryption.html 
-
-  times
-  ------------------------------------------
-  disk i/o             50.241167ms
-  parsing HCL          556.417µs
-  evaluating values    1.878708ms
-  running checks       28.282167ms
+  timings
+  ──────────────────────────────────────────
+  disk i/o             3.429709ms
+  parsing              354.917µs
+  adaptation           169.208µs
+  checks               5.00475ms
+  total                8.958584ms
 
   counts
-  ------------------------------------------
-  files loaded         1
-  blocks               2
-  modules              0
+  ──────────────────────────────────────────
+  modules downloaded   0
+  modules processed    1
+  blocks processed     2
+  files read           1
 
   results
-  ------------------------------------------
-  critical             1
+  ──────────────────────────────────────────
+  passed               2
+  ignored              0
+  critical             0
   high                 2
   medium               0
   low                  0
-  ignored              0
 
-  3 potential problems detected.
+  2 passed, 2 potential problem(s) detected.
 

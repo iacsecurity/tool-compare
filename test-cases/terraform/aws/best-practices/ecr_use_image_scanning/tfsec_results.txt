@@ -1,94 +1,96 @@
 
-  Result 1
+Result #1 HIGH Repository tags are mutable. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:3
+────────────────────────────────────────────────────────────────────────────────
+    1    resource "aws_ecr_repository" "foo" {
+    2      name                 = "bar"
+    3  [   image_tag_mutability = "MUTABLE"
+    4    
+    5      image_scanning_configuration {
+    6        scan_on_push = false
+    7      }
+    8    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ecr-enforce-immutable-repository
+      Impact Image tags could be overwritten with compromised images
+  Resolution Only use immutable images in ECR
 
-  [aws-ecr-enforce-immutable-repository][[0m[31mHIGH[39m[0m] Resource 'aws_ecr_repository.foo' has `image_tag_mutability` attribute  not set to `IMMUTABLE`
-  /src/main.tf:3
-
-
-       1 | resource "aws_ecr_repository" "foo" {
-       2 |   name                 = "bar"
-       3 |   image_tag_mutability = "MUTABLE"    string: "MUTABLE"
-       4 | 
-       5 |   image_scanning_configuration {
-       6 |     scan_on_push = false
-
-  Legacy ID:  AWS078
-  Impact:     Image tags could be overwritten with compromised images
-  Resolution: Only use immutable images in ECR
-
-  More Info:
-  - https://tfsec.dev/docs/aws/ecr/enforce-immutable-repository#aws/ecr 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecr_repository 
-  - https://sysdig.com/blog/toctou-tag-mutability/ 
-
-  Result 2
-
-  [aws-ecr-repository-customer-key][[0m[97mLOW[39m[0m] Resource 'aws_ecr_repository.foo' does not have CMK encryption configured
-  /src/main.tf:1-8
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ecr/enforce-immutable-repository/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecr_repository
+────────────────────────────────────────────────────────────────────────────────
 
 
-       1 | resource "aws_ecr_repository" "foo" {
-       2 |   name                 = "bar"
-       3 |   image_tag_mutability = "MUTABLE"
-       4 | 
-       5 |   image_scanning_configuration {
-       6 |     scan_on_push = false
-       7 |   }
-       8 | }
-       9 | 
+Result #2 HIGH Image scanning is not enabled. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:6
+────────────────────────────────────────────────────────────────────────────────
+    1    resource "aws_ecr_repository" "foo" {
+    2      name                 = "bar"
+    3      image_tag_mutability = "MUTABLE"
+    4    
+    5      image_scanning_configuration {
+    6  [     scan_on_push = false (false)
+    7      }
+    8    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ecr-enable-image-scans
+      Impact The ability to scan images is not being used and vulnerabilities will not be highlighted
+  Resolution Enable ECR image scanning
 
-  Legacy ID:  AWS093
-  Impact:     Using AWS managed keys does not allow for fine grained control
-  Resolution: Use customer managed keys
-
-  More Info:
-  - https://tfsec.dev/docs/aws/ecr/repository-customer-key#aws/ecr 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecr_repository#encryption_configuration 
-  - https://docs.aws.amazon.com/AmazonECR/latest/userguide/encryption-at-rest.html 
-
-  Result 3
-
-  [aws-ecr-enable-image-scans][[0m[31mHIGH[39m[0m] Resource 'aws_ecr_repository.foo' defines a disabled ECR image scan.
-  /src/main.tf:6
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ecr/enable-image-scans/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecr_repository#image_scanning_configuration
+────────────────────────────────────────────────────────────────────────────────
 
 
-       3 |   image_tag_mutability = "MUTABLE"
-       4 | 
-       5 |   image_scanning_configuration {
-       6 |     scan_on_push = false    bool: false
-       7 |   }
-       8 | }
-       9 | 
+Result #3 LOW Repository is not encrypted using KMS. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:1-8
+────────────────────────────────────────────────────────────────────────────────
+    1    resource "aws_ecr_repository" "foo" {
+    2      name                 = "bar"
+    3      image_tag_mutability = "MUTABLE"
+    4    
+    5      image_scanning_configuration {
+    6        scan_on_push = false
+    7      }
+    8    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-ecr-repository-customer-key
+      Impact Using AWS managed keys does not allow for fine grained control
+  Resolution Use customer managed keys
 
-  Legacy ID:  AWS023
-  Impact:     The ability to scan images is not being used and vulnerabilities will not be highlighted
-  Resolution: Enable ECR image scanning
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ecr/repository-customer-key/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecr_repository#encryption_configuration
+────────────────────────────────────────────────────────────────────────────────
 
-  More Info:
-  - https://tfsec.dev/docs/aws/ecr/enable-image-scans#aws/ecr 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecr_repository#image_scanning_configuration 
-  - https://docs.aws.amazon.com/AmazonECR/latest/userguide/image-scanning.html 
 
-  times
-  ------------------------------------------
-  disk i/o             48.872042ms
-  parsing HCL          602.792µs
-  evaluating values    1.573334ms
-  running checks       30.000583ms
+  timings
+  ──────────────────────────────────────────
+  disk i/o             4.405375ms
+  parsing              97.791µs
+  adaptation           68.709µs
+  checks               2.043542ms
+  total                6.615417ms
 
   counts
-  ------------------------------------------
-  files loaded         1
-  blocks               1
-  modules              0
+  ──────────────────────────────────────────
+  modules downloaded   0
+  modules processed    1
+  blocks processed     1
+  files read           1
 
   results
-  ------------------------------------------
+  ──────────────────────────────────────────
+  passed               2
+  ignored              0
   critical             0
   high                 2
   medium               0
   low                  1
-  ignored              0
 
-  3 potential problems detected.
+  2 passed, 3 potential problem(s) detected.
 

@@ -1,79 +1,55 @@
 
-  Result 1
+Results #1-2 HIGH Root volume does not have encryption enabled. (2 similar results)
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:76-88
+────────────────────────────────────────────────────────────────────────────────
+   76  ┌ resource "aws_workspaces_workspace" "test" {
+   77  │   directory_id = aws_workspaces_directory.test.id
+   78  │   bundle_id    = data.aws_workspaces_bundle.value_windows_10.id
+   79  │   user_name    = "Administrator"
+   80  │ 
+   81  │   workspace_properties {
+   82  │     compute_type_name                         = "VALUE"
+   83  │     user_volume_size_gib                      = 10
+   84  └     root_volume_size_gib                      = 80
+   ..  
+────────────────────────────────────────────────────────────────────────────────
+  Individual Causes
+  - main.tf:76-88 (aws_workspaces_workspace.test) 2 instances
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-workspaces-enable-disk-encryption
+      Impact Data can be freely read if compromised
+  Resolution Root and user volume encryption should be enabled
 
-  [aws-workspace-enable-disk-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_workspaces_workspace.test' should have user volume encryption enabled
-  /src/main.tf:76-88
-
-
-      73 |   policy_arn = "arn:aws:iam::aws:policy/AmazonWorkSpacesSelfServiceAccess"
-      74 | }
-      75 | 
-      76 | resource "aws_workspaces_workspace" "test" {
-      77 |   directory_id = aws_workspaces_directory.test.id
-      78 |   bundle_id    = data.aws_workspaces_bundle.value_windows_10.id
-      79 |   user_name    = "Administrator"
-      80 | 
-      81 |   workspace_properties {
-      82 |     compute_type_name                         = "VALUE"
-      83 |     user_volume_size_gib                      = 10
-      84 |     root_volume_size_gib                      = 80
-      85 |     running_mode                              = "AUTO_STOP"
-      86 |     running_mode_auto_stop_timeout_in_minutes = 60
-      87 |   }
-      88 | }
-      89 | 
-
-  Legacy ID:  AWS084
-  Impact:     Data can be freely read if compromised
-  Resolution: Root and user volume encryption should be enabled
-
-  More Info:
-  - https://tfsec.dev/docs/aws/workspace/enable-disk-encryption#aws/workspace 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/workspaces_workspace#root_volume_encryption_enabled 
-  - https://docs.aws.amazon.com/workspaces/latest/adminguide/encrypt-workspaces.html 
-
-  Result 2
-
-  [general-secrets-sensitive-in-attribute][[0m[1m[31mCRITICAL[39m[0m[39m[0m] Block 'aws_directory_service_directory.test' includes a potentially sensitive attribute which is defined within the project.
-  /src/main.tf:34
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/workspaces/enable-disk-encryption/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/workspaces_workspace#root_volume_encryption_enabled
+────────────────────────────────────────────────────────────────────────────────
 
 
-      31 | 
-      32 | resource "aws_directory_service_directory" "test" {
-      33 |   name     = "corp.notexample.com"
-      34 |   password = "SuperSecretPassw0rd"    string: "SuperSecretPassw0rd"
-      35 |   size     = "Small"
-      36 | 
-      37 |   vpc_settings {
-
-  Legacy ID:  GEN003
-  Impact:     Block attribute could be leaking secrets
-  Resolution: Don't include sensitive data in blocks
-
-  More Info:
-  - https://tfsec.dev/docs/general/secrets/sensitive-in-attribute#general/secrets 
-  - https://www.terraform.io/docs/state/sensitive-data.html 
-
-  times
-  ------------------------------------------
-  disk i/o             54.172249ms
-  parsing HCL          622.458µs
-  evaluating values    4.710542ms
-  running checks       34.794334ms
+  timings
+  ──────────────────────────────────────────
+  disk i/o             3.557541ms
+  parsing              801.624µs
+  adaptation           67.708µs
+  checks               2.089542ms
+  total                6.516415ms
 
   counts
-  ------------------------------------------
-  files loaded         1
-  blocks               12
-  modules              0
+  ──────────────────────────────────────────
+  modules downloaded   0
+  modules processed    1
+  blocks processed     12
+  files read           1
 
   results
-  ------------------------------------------
-  critical             1
-  high                 1
+  ──────────────────────────────────────────
+  passed               2
+  ignored              0
+  critical             0
+  high                 2
   medium               0
   low                  0
-  ignored              0
 
-  2 potential problems detected.
+  2 passed, 2 potential problem(s) detected.
 

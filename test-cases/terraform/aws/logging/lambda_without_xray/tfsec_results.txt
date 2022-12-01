@@ -1,61 +1,52 @@
 
-  Result 1
+Result #1 LOW Function does not have tracing enabled. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:21-39
+────────────────────────────────────────────────────────────────────────────────
+   21  ┌ resource "aws_lambda_function" "test_lambda" {
+   22  │   filename      = "lambda_function_payload.zip"
+   23  │   function_name = "lambda_function_name"
+   24  │   role          = aws_iam_role.iam_for_lambda.arn
+   25  │   handler       = "exports.test"
+   26  │ 
+   27  │   # The filebase64sha256() function is available in Terraform 0.11.12 and later
+   28  │   # For Terraform 0.11.11 and earlier, use the base64sha256() function and the file() function:
+   29  └   # source_code_hash = "${base64sha256(file("lambda_function_payload.zip"))}"
+   ..  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-lambda-enable-tracing
+      Impact Without full tracing enabled it is difficult to trace the flow of logs
+  Resolution Enable tracing
 
-  [aws-lambda-enable-tracing][[0m[97mLOW[39m[0m] Resource 'aws_lambda_function.test_lambda' uses default value for tracing_config.mode
-  /src/main.tf:21-39
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/lambda/enable-tracing/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_function#mode
+────────────────────────────────────────────────────────────────────────────────
 
 
-      18 | EOF
-      19 | }
-      20 | 
-      21 | resource "aws_lambda_function" "test_lambda" {
-      22 |   filename      = "lambda_function_payload.zip"
-      23 |   function_name = "lambda_function_name"
-      24 |   role          = aws_iam_role.iam_for_lambda.arn
-      25 |   handler       = "exports.test"
-      26 | 
-      27 |   # The filebase64sha256() function is available in Terraform 0.11.12 and later
-      28 |   # For Terraform 0.11.11 and earlier, use the base64sha256() function and the file() function:
-      29 |   # source_code_hash = "${base64sha256(file("lambda_function_payload.zip"))}"
-      30 |   source_code_hash = filebase64sha256("lambda_function_payload.zip")
-      31 | 
-      32 |   runtime = "nodejs12.x"
-      33 | 
-      34 |   environment {
-      35 |     variables = {
-      36 |       foo = "bar"
-      37 |     }
-      38 |   }
-      39 | }
-      40 | 
-
-  Impact:     WIthout full tracing enabled it is difficult to trace the flow of logs
-  Resolution: Enable tracing
-
-  More Info:
-  - https://tfsec.dev/docs/aws/lambda/enable-tracing#aws/lambda 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_function#mode 
-
-  times
-  ------------------------------------------
-  disk i/o             50.473458ms
-  parsing HCL          528.125µs
-  evaluating values    12.402751ms
-  running checks       24.565375ms
+  timings
+  ──────────────────────────────────────────
+  disk i/o             4.040416ms
+  parsing              9.44325ms
+  adaptation           68.5µs
+  checks               1.78925ms
+  total                15.341416ms
 
   counts
-  ------------------------------------------
-  files loaded         1
-  blocks               2
-  modules              0
+  ──────────────────────────────────────────
+  modules downloaded   0
+  modules processed    1
+  blocks processed     2
+  files read           1
 
   results
-  ------------------------------------------
+  ──────────────────────────────────────────
+  passed               2
+  ignored              0
   critical             0
   high                 0
   medium               0
   low                  1
-  ignored              0
 
-  1 potential problems detected.
+  2 passed, 1 potential problem(s) detected.
 

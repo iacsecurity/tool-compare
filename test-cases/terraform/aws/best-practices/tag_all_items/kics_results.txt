@@ -1,4 +1,4 @@
-
+[38;2;34;187;51m
                    .0MO.                                    
                    OMMMx                                    
                    ;NMX;                                    
@@ -15,53 +15,90 @@ WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
 WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
+[0m
+Scanning with Keeping Infrastructure as Code Secure v1.6.5
 
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
 
 
+Files scanned: 2
+Parsed files: 2
+Queries loaded: 1039
+Queries failed to execute: 2
 
-Files scanned: 1
-Parsed files: 1
-Queries loaded: 575
-Queries failed to execute: 0
-
+	- sns_topic_not_encrypted:
+		failed to evaluate query: Generic:555:
+		eval_conflict_error: functions must not produce
+		multiple outputs for same inputs
+	- resource_not_using_tags:
+		failed to evaluate query: Generic:555:
+		eval_conflict_error: functions must not produce
+		multiple outputs for same inputs
 ------------------------------------
 
-Resource Not Using Tags, Severity: INFO, Results: 2
-Description: AWS services resource tags are an essential part of managing components
-Platform: Terraform
+[38;2;91;192;222mResource Not Using Tags[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 2
+[1mDescription:[0m AWS services resource tags are an essential part of managing components. As a best practice, the field 'tags' should have additional tags defined other than 'Name'
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:7
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m7[0m
 
 		006:   name              = "sns_not_ecnrypted-1"
-		007:   tags = {
-		008:     Name = "Sns Topic Cloudrail Test"
+[38;2;240;173;78m		007:   tags = {
+[0m		008:     Name = "Sns Topic Cloudrail Test"
 
 
-	[2]: /src/main.tf:14
+	[38;2;91;192;222m[2]:[0m ../../src/main.tf:[38;2;34;187;51m14[0m
 
 		013:   name = "sqs_non_encrypted"
-		014:   tags = {
-		015:     Name = "Sqs Cloudrail Test"
+[38;2;240;173;78m		014:   tags = {
+[0m		015:     Name = "Sqs Cloudrail Test"
 
 
-SQS With SSE Disabled, Severity: HIGH, Results: 1
-Description: Amazon Simple Queue Service (SQS) queue is not protecting the contents of their messages using Server-Side Encryption (SSE)
-Platform: Terraform
+[38;2;237;213;126mIAM Access Analyzer Not Enabled[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m IAM Access Analyzer should be enabled and configured to continuously monitor resource permissions
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:12
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
+
+		004: 
+[38;2;240;173;78m		005: resource "aws_sns_topic" "cloudrail_1" {
+[0m		006:   name              = "sns_not_ecnrypted-1"
+
+
+[38;2;255;114;19mSQS With SSE Disabled[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 2
+[1mDescription:[0m Amazon Simple Queue Service (SQS) queue should protect the contents of their messages using Server-Side Encryption (SSE)
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/plan.json:[38;2;34;187;51m1[0m
+
+[38;2;240;173;78m		001: {
+[0m		002:   "format_version": "0.1",
+		003:   "terraform_version": "0.15.1-dev",
+
+
+	[38;2;255;114;19m[2]:[0m ../../src/main.tf:[38;2;34;187;51m12[0m
 
 		011: 
-		012: resource "aws_sqs_queue" "cloudrail" {
-		013:   name = "sqs_non_encrypted"
+[38;2;240;173;78m		012: resource "aws_sqs_queue" "cloudrail" {
+[0m		013:   name = "sqs_non_encrypted"
+
+
+[38;2;255;114;19mSNS Topic Not Encrypted[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m SNS (Simple Notification Service) Topic should be encrypted
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
+
+		004: 
+[38;2;240;173;78m		005: resource "aws_sns_topic" "cloudrail_1" {
+[0m		006:   name              = "sns_not_ecnrypted-1"
 
 
 
 Results Summary:
-HIGH: 1
-MEDIUM: 0
-LOW: 0
-INFO: 2
-TOTAL: 3
+[38;2;187;33;36mHIGH[0m: 0
+[38;2;255;114;19mMEDIUM[0m: 3
+[38;2;237;213;126mLOW[0m: 1
+[38;2;91;192;222mINFO[0m: 2
+TOTAL: 6
 
-Scan duration: 4.582518356s
+Scan duration: 17.558076174s

@@ -1,19 +1,44 @@
-
-
-       _               _              
-   ___| |__   ___  ___| | _______   __
-  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
- | (__| | | |  __/ (__|   < (_) \ V / 
-  \___|_| |_|\___|\___|_|\_\___/ \_/  
-                                      
-By bridgecrew.io | version: 2.0.358 
-Update available 2.0.358 -> 2.0.359
-Run pip3 install -U checkov to update 
-
-
 terraform scan results:
 
-Passed checks: 4, Failed checks: 9, Skipped checks: 0
+Passed checks: 5, Failed checks: 12, Skipped checks: 0
+
+Check: CKV_AWS_34: "Ensure cloudfront distribution ViewerProtocolPolicy is set to HTTPS"
+	FAILED for resource: aws_cloudfront_distribution.s3_distribution
+	File: /main.tf:14-111
+	Guide: https://docs.bridgecrew.io/docs/networking_32
+
+		Code lines for this resource are too many. Please use IDE of your choice to review the file.
+Check: CKV_AWS_68: "CloudFront Distribution should have WAF enabled"
+	FAILED for resource: aws_cloudfront_distribution.s3_distribution
+	File: /main.tf:14-111
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_27
+
+		Code lines for this resource are too many. Please use IDE of your choice to review the file.
+Check: CKV_AWS_174: "Verify CloudFront Distribution Viewer Certificate is using TLS v1.2"
+	FAILED for resource: aws_cloudfront_distribution.s3_distribution
+	File: /main.tf:14-111
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_networking_63
+
+		Code lines for this resource are too many. Please use IDE of your choice to review the file.
+Check: CKV_AWS_86: "Ensure Cloudfront distribution has Access Logging enabled"
+	FAILED for resource: aws_cloudfront_distribution.s3_distribution
+	File: /main.tf:14-111
+	Guide: https://docs.bridgecrew.io/docs/logging_20
+
+		Code lines for this resource are too many. Please use IDE of your choice to review the file.
+Check: CKV_AWS_18: "Ensure the S3 bucket has access logging enabled"
+	FAILED for resource: aws_s3_bucket.b
+	File: /main.tf:1-8
+	Guide: https://docs.bridgecrew.io/docs/s3_13-enable-logging
+
+		1 | resource "aws_s3_bucket" "b" {
+		2 |   bucket = "mybucket"
+		3 |   acl    = "private"
+		4 | 
+		5 |   tags = {
+		6 |     Name = "My bucket"
+		7 |   }
+		8 | }
 
 Check: CKV_AWS_21: "Ensure all data stored in the S3 bucket have versioning enabled"
 	FAILED for resource: aws_s3_bucket.b
@@ -29,37 +54,17 @@ Check: CKV_AWS_21: "Ensure all data stored in the S3 bucket have versioning enab
 		7 |   }
 		8 | }
 
+Check: CKV2_AWS_32: "Ensure CloudFront distribution has a response headers policy attached"
+	FAILED for resource: aws_cloudfront_distribution.s3_distribution
+	File: /main.tf:14-111
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_networking_65
 
-Check: CKV_AWS_144: "Ensure that S3 bucket has cross-region replication enabled"
-	FAILED for resource: aws_s3_bucket.b
-	File: /main.tf:1-8
-	Guide: https://docs.bridgecrew.io/docs/ensure-that-s3-bucket-has-cross-region-replication-enabled
+		Code lines for this resource are too many. Please use IDE of your choice to review the file.
+Check: CKV2_AWS_42: "Ensure AWS CloudFront distribution uses custom SSL certificate"
+	FAILED for resource: aws_cloudfront_distribution.s3_distribution
+	File: /main.tf:14-111
 
-		1 | resource "aws_s3_bucket" "b" {
-		2 |   bucket = "mybucket"
-		3 |   acl    = "private"
-		4 | 
-		5 |   tags = {
-		6 |     Name = "My bucket"
-		7 |   }
-		8 | }
-
-
-Check: CKV_AWS_18: "Ensure the S3 bucket has access logging enabled"
-	FAILED for resource: aws_s3_bucket.b
-	File: /main.tf:1-8
-	Guide: https://docs.bridgecrew.io/docs/s3_13-enable-logging
-
-		1 | resource "aws_s3_bucket" "b" {
-		2 |   bucket = "mybucket"
-		3 |   acl    = "private"
-		4 | 
-		5 |   tags = {
-		6 |     Name = "My bucket"
-		7 |   }
-		8 | }
-
-
+		Code lines for this resource are too many. Please use IDE of your choice to review the file.
 Check: CKV_AWS_145: "Ensure that S3 buckets are encrypted with KMS by default"
 	FAILED for resource: aws_s3_bucket.b
 	File: /main.tf:1-8
@@ -74,6 +79,19 @@ Check: CKV_AWS_145: "Ensure that S3 buckets are encrypted with KMS by default"
 		7 |   }
 		8 | }
 
+Check: CKV2_AWS_6: "Ensure that S3 bucket has a Public Access block"
+	FAILED for resource: aws_s3_bucket.b
+	File: /main.tf:1-8
+	Guide: https://docs.bridgecrew.io/docs/s3-bucket-should-have-public-access-blocks-defaults-to-false-if-the-public-access-block-is-not-attached
+
+		1 | resource "aws_s3_bucket" "b" {
+		2 |   bucket = "mybucket"
+		3 |   acl    = "private"
+		4 | 
+		5 |   tags = {
+		6 |     Name = "My bucket"
+		7 |   }
+		8 | }
 
 Check: CKV_AWS_19: "Ensure all data stored in the S3 bucket is securely encrypted at rest"
 	FAILED for resource: aws_s3_bucket.b
@@ -89,323 +107,10 @@ Check: CKV_AWS_19: "Ensure all data stored in the S3 bucket is securely encrypte
 		7 |   }
 		8 | }
 
-
-Check: CKV_AWS_34: "Ensure cloudfront distribution ViewerProtocolPolicy is set to HTTPS"
-	FAILED for resource: aws_cloudfront_distribution.s3_distribution
-	File: /main.tf:14-111
-	Guide: https://docs.bridgecrew.io/docs/networking_32
-
-		14  | resource "aws_cloudfront_distribution" "s3_distribution" {
-		15  |   origin {
-		16  |     domain_name = aws_s3_bucket.b.bucket_regional_domain_name
-		17  |     origin_id   = local.s3_origin_id
-		18  | 
-		19  |     s3_origin_config {
-		20  |       origin_access_identity = "origin-access-identity/cloudfront/ABCDEFG1234567"
-		21  |     }
-		22  |   }
-		23  | 
-		24  |   enabled             = true
-		25  |   is_ipv6_enabled     = true
-		26  |   comment             = "Some comment"
-		27  |   default_root_object = "index.html"
-		28  | 
-		29  |   aliases = ["mysite.example.com", "yoursite.example.com"]
-		30  | 
-		31  |   default_cache_behavior {
-		32  |     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
-		33  |     cached_methods   = ["GET", "HEAD"]
-		34  |     target_origin_id = local.s3_origin_id
-		35  | 
-		36  |     forwarded_values {
-		37  |       query_string = false
-		38  | 
-		39  |       cookies {
-		40  |         forward = "none"
-		41  |       }
-		42  |     }
-		43  | 
-		44  |     viewer_protocol_policy = "allow-all"
-		45  |     min_ttl                = 0
-		46  |     default_ttl            = 3600
-		47  |     max_ttl                = 86400
-		48  |   }
-		49  | 
-		50  |   # Cache behavior with precedence 0
-		51  |   ordered_cache_behavior {
-		52  |     path_pattern     = "/content/immutable/*"
-		53  |     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
-		54  |     cached_methods   = ["GET", "HEAD", "OPTIONS"]
-		55  |     target_origin_id = local.s3_origin_id
-		56  | 
-		57  |     forwarded_values {
-		58  |       query_string = false
-		59  |       headers      = ["Origin"]
-		60  | 
-		61  |       cookies {
-		62  |         forward = "none"
-		63  |       }
-		64  |     }
-		65  | 
-		66  |     min_ttl                = 0
-		67  |     default_ttl            = 86400
-		68  |     max_ttl                = 31536000
-		69  |     compress               = true
-		70  |     viewer_protocol_policy = "redirect-to-https"
-		71  |   }
-		72  | 
-		73  |   # Cache behavior with precedence 1
-		74  |   ordered_cache_behavior {
-		75  |     path_pattern     = "/content/*"
-		76  |     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
-		77  |     cached_methods   = ["GET", "HEAD"]
-		78  |     target_origin_id = local.s3_origin_id
-		79  | 
-		80  |     forwarded_values {
-		81  |       query_string = false
-		82  | 
-		83  |       cookies {
-		84  |         forward = "none"
-		85  |       }
-		86  |     }
-		87  | 
-		88  |     min_ttl                = 0
-		89  |     default_ttl            = 3600
-		90  |     max_ttl                = 86400
-		91  |     compress               = true
-		92  |     viewer_protocol_policy = "redirect-to-https"
-		93  |   }
-		94  | 
-		95  |   price_class = "PriceClass_200"
-		96  | 
-		97  |   restrictions {
-		98  |     geo_restriction {
-		99  |       restriction_type = "whitelist"
-		100 |       locations        = ["US", "CA", "GB", "DE"]
-		101 |     }
-		102 |   }
-		103 | 
-		104 |   tags = {
-		105 |     Environment = "production"
-		106 |   }
-		107 | 
-		108 |   viewer_certificate {
-		109 |     cloudfront_default_certificate = true
-		110 |   }
-		111 | }
-
-Check: CKV_AWS_86: "Ensure Cloudfront distribution has Access Logging enabled"
-	FAILED for resource: aws_cloudfront_distribution.s3_distribution
-	File: /main.tf:14-111
-	Guide: https://docs.bridgecrew.io/docs/logging_20
-
-		14  | resource "aws_cloudfront_distribution" "s3_distribution" {
-		15  |   origin {
-		16  |     domain_name = aws_s3_bucket.b.bucket_regional_domain_name
-		17  |     origin_id   = local.s3_origin_id
-		18  | 
-		19  |     s3_origin_config {
-		20  |       origin_access_identity = "origin-access-identity/cloudfront/ABCDEFG1234567"
-		21  |     }
-		22  |   }
-		23  | 
-		24  |   enabled             = true
-		25  |   is_ipv6_enabled     = true
-		26  |   comment             = "Some comment"
-		27  |   default_root_object = "index.html"
-		28  | 
-		29  |   aliases = ["mysite.example.com", "yoursite.example.com"]
-		30  | 
-		31  |   default_cache_behavior {
-		32  |     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
-		33  |     cached_methods   = ["GET", "HEAD"]
-		34  |     target_origin_id = local.s3_origin_id
-		35  | 
-		36  |     forwarded_values {
-		37  |       query_string = false
-		38  | 
-		39  |       cookies {
-		40  |         forward = "none"
-		41  |       }
-		42  |     }
-		43  | 
-		44  |     viewer_protocol_policy = "allow-all"
-		45  |     min_ttl                = 0
-		46  |     default_ttl            = 3600
-		47  |     max_ttl                = 86400
-		48  |   }
-		49  | 
-		50  |   # Cache behavior with precedence 0
-		51  |   ordered_cache_behavior {
-		52  |     path_pattern     = "/content/immutable/*"
-		53  |     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
-		54  |     cached_methods   = ["GET", "HEAD", "OPTIONS"]
-		55  |     target_origin_id = local.s3_origin_id
-		56  | 
-		57  |     forwarded_values {
-		58  |       query_string = false
-		59  |       headers      = ["Origin"]
-		60  | 
-		61  |       cookies {
-		62  |         forward = "none"
-		63  |       }
-		64  |     }
-		65  | 
-		66  |     min_ttl                = 0
-		67  |     default_ttl            = 86400
-		68  |     max_ttl                = 31536000
-		69  |     compress               = true
-		70  |     viewer_protocol_policy = "redirect-to-https"
-		71  |   }
-		72  | 
-		73  |   # Cache behavior with precedence 1
-		74  |   ordered_cache_behavior {
-		75  |     path_pattern     = "/content/*"
-		76  |     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
-		77  |     cached_methods   = ["GET", "HEAD"]
-		78  |     target_origin_id = local.s3_origin_id
-		79  | 
-		80  |     forwarded_values {
-		81  |       query_string = false
-		82  | 
-		83  |       cookies {
-		84  |         forward = "none"
-		85  |       }
-		86  |     }
-		87  | 
-		88  |     min_ttl                = 0
-		89  |     default_ttl            = 3600
-		90  |     max_ttl                = 86400
-		91  |     compress               = true
-		92  |     viewer_protocol_policy = "redirect-to-https"
-		93  |   }
-		94  | 
-		95  |   price_class = "PriceClass_200"
-		96  | 
-		97  |   restrictions {
-		98  |     geo_restriction {
-		99  |       restriction_type = "whitelist"
-		100 |       locations        = ["US", "CA", "GB", "DE"]
-		101 |     }
-		102 |   }
-		103 | 
-		104 |   tags = {
-		105 |     Environment = "production"
-		106 |   }
-		107 | 
-		108 |   viewer_certificate {
-		109 |     cloudfront_default_certificate = true
-		110 |   }
-		111 | }
-
-Check: CKV_AWS_68: "CloudFront Distribution should have WAF enabled"
-	FAILED for resource: aws_cloudfront_distribution.s3_distribution
-	File: /main.tf:14-111
-	Guide: https://docs.bridgecrew.io/docs/bc_aws_general_27
-
-		14  | resource "aws_cloudfront_distribution" "s3_distribution" {
-		15  |   origin {
-		16  |     domain_name = aws_s3_bucket.b.bucket_regional_domain_name
-		17  |     origin_id   = local.s3_origin_id
-		18  | 
-		19  |     s3_origin_config {
-		20  |       origin_access_identity = "origin-access-identity/cloudfront/ABCDEFG1234567"
-		21  |     }
-		22  |   }
-		23  | 
-		24  |   enabled             = true
-		25  |   is_ipv6_enabled     = true
-		26  |   comment             = "Some comment"
-		27  |   default_root_object = "index.html"
-		28  | 
-		29  |   aliases = ["mysite.example.com", "yoursite.example.com"]
-		30  | 
-		31  |   default_cache_behavior {
-		32  |     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
-		33  |     cached_methods   = ["GET", "HEAD"]
-		34  |     target_origin_id = local.s3_origin_id
-		35  | 
-		36  |     forwarded_values {
-		37  |       query_string = false
-		38  | 
-		39  |       cookies {
-		40  |         forward = "none"
-		41  |       }
-		42  |     }
-		43  | 
-		44  |     viewer_protocol_policy = "allow-all"
-		45  |     min_ttl                = 0
-		46  |     default_ttl            = 3600
-		47  |     max_ttl                = 86400
-		48  |   }
-		49  | 
-		50  |   # Cache behavior with precedence 0
-		51  |   ordered_cache_behavior {
-		52  |     path_pattern     = "/content/immutable/*"
-		53  |     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
-		54  |     cached_methods   = ["GET", "HEAD", "OPTIONS"]
-		55  |     target_origin_id = local.s3_origin_id
-		56  | 
-		57  |     forwarded_values {
-		58  |       query_string = false
-		59  |       headers      = ["Origin"]
-		60  | 
-		61  |       cookies {
-		62  |         forward = "none"
-		63  |       }
-		64  |     }
-		65  | 
-		66  |     min_ttl                = 0
-		67  |     default_ttl            = 86400
-		68  |     max_ttl                = 31536000
-		69  |     compress               = true
-		70  |     viewer_protocol_policy = "redirect-to-https"
-		71  |   }
-		72  | 
-		73  |   # Cache behavior with precedence 1
-		74  |   ordered_cache_behavior {
-		75  |     path_pattern     = "/content/*"
-		76  |     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
-		77  |     cached_methods   = ["GET", "HEAD"]
-		78  |     target_origin_id = local.s3_origin_id
-		79  | 
-		80  |     forwarded_values {
-		81  |       query_string = false
-		82  | 
-		83  |       cookies {
-		84  |         forward = "none"
-		85  |       }
-		86  |     }
-		87  | 
-		88  |     min_ttl                = 0
-		89  |     default_ttl            = 3600
-		90  |     max_ttl                = 86400
-		91  |     compress               = true
-		92  |     viewer_protocol_policy = "redirect-to-https"
-		93  |   }
-		94  | 
-		95  |   price_class = "PriceClass_200"
-		96  | 
-		97  |   restrictions {
-		98  |     geo_restriction {
-		99  |       restriction_type = "whitelist"
-		100 |       locations        = ["US", "CA", "GB", "DE"]
-		101 |     }
-		102 |   }
-		103 | 
-		104 |   tags = {
-		105 |     Environment = "production"
-		106 |   }
-		107 | 
-		108 |   viewer_certificate {
-		109 |     cloudfront_default_certificate = true
-		110 |   }
-		111 | }
-
-Check: CKV2_AWS_6: "Ensure that S3 bucket has a Public Access block"
+Check: CKV_AWS_144: "Ensure that S3 bucket has cross-region replication enabled"
 	FAILED for resource: aws_s3_bucket.b
 	File: /main.tf:1-8
-	Guide: https://docs.bridgecrew.io/docs/s3-bucket-should-have-public-access-blocks-defaults-to-false-if-the-public-access-block-is-not-attached
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-s3-bucket-has-cross-region-replication-enabled
 
 		1 | resource "aws_s3_bucket" "b" {
 		2 |   bucket = "mybucket"

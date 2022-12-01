@@ -1,4 +1,4 @@
-
+[38;2;34;187;51m
                    .0MO.                                    
                    OMMMx                                    
                    ;NMX;                                    
@@ -15,57 +15,82 @@ WMMMd    cWMMMX.   KMMMO    kMMMMMWXNMMMMMd .WMMMMWKO0NMMMMl
 WMMMd     ,NMMMN,  KMMMO     'xNMMMMMMMNx,   .l0WMMMMMMMWk, 
 xkkk:      ,kkkkx  okkkl        ;xKXKx;          ;dOKKkc    
 
-
-Scanning with Keeping Infrastructure as Code Secure v1.3.2
+[0m
+Scanning with Keeping Infrastructure as Code Secure v1.6.5
 
 
 
 Files scanned: 1
 Parsed files: 1
-Queries loaded: 575
+Queries loaded: 1039
 Queries failed to execute: 0
 
 ------------------------------------
 
-Resource Not Using Tags, Severity: INFO, Results: 1
-Description: AWS services resource tags are an essential part of managing components
-Platform: Terraform
+[38;2;91;192;222mResource Not Using Tags[0m, Severity: [38;2;91;192;222mINFO[0m, Results: 1
+[1mDescription:[0m AWS services resource tags are an essential part of managing components. As a best practice, the field 'tags' should have additional tags defined other than 'Name'
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:5
-
-		004: 
-		005: resource "aws_rds_cluster" "default" {
-		006:   cluster_identifier  = "cloudrail-test-non-encrypted"
-
-
-RDS Cluster With Backup Disabled, Severity: MEDIUM, Results: 1
-Description: RDS Cluster backup retention period should be specifically defined
-Platform: Terraform
-
-	[1]: /src/main.tf:5
+	[38;2;91;192;222m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
 
 		004: 
-		005: resource "aws_rds_cluster" "default" {
-		006:   cluster_identifier  = "cloudrail-test-non-encrypted"
+[38;2;240;173;78m		005: resource "aws_rds_cluster" "default" {
+[0m		006:   cluster_identifier  = "cloudrail-test-non-encrypted"
 
 
-RDS Storage Not Encrypted, Severity: HIGH, Results: 1
-Description: Check if RDS Cluster Storage isn't encrypted. Happens when 'storage_encrypted' is not set to 'true'
-Platform: Terraform
+[38;2;237;213;126mIAM Access Analyzer Not Enabled[0m, Severity: [38;2;237;213;126mLOW[0m, Results: 1
+[1mDescription:[0m IAM Access Analyzer should be enabled and configured to continuously monitor resource permissions
+[1mPlatform:[0m Terraform
 
-	[1]: /src/main.tf:5
+	[38;2;237;213;126m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
 
 		004: 
-		005: resource "aws_rds_cluster" "default" {
-		006:   cluster_identifier  = "cloudrail-test-non-encrypted"
+[38;2;240;173;78m		005: resource "aws_rds_cluster" "default" {
+[0m		006:   cluster_identifier  = "cloudrail-test-non-encrypted"
+
+
+[38;2;255;114;19mRDS Cluster With Backup Disabled[0m, Severity: [38;2;255;114;19mMEDIUM[0m, Results: 1
+[1mDescription:[0m RDS Cluster backup retention period should be specifically defined
+[1mPlatform:[0m Terraform
+
+	[38;2;255;114;19m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
+
+		004: 
+[38;2;240;173;78m		005: resource "aws_rds_cluster" "default" {
+[0m		006:   cluster_identifier  = "cloudrail-test-non-encrypted"
+
+
+[38;2;187;33;36mRDS Storage Not Encrypted[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mCIS ID:[0m CIS Security - CIS Amazon Web Services Foundations Benchmark v1.4.0 - Rule 2.3.1
+[1mTitle:[0m Ensure that encryption is enabled for RDS Instances
+[1mDescription:[0m Amazon RDS encrypted DB instances use the industry standard AES-256 encryption algorithm to encrypt your data on the server that hosts your Amazon RDS DB instances. After your data is encrypted, Amazon RDS handles authentication of access and decryption of your data transparently with a minimal impact on performance.
+Databases are likely to hold sensitive and critical data, it is highly recommended to implement encryption in order to protect your data from unauthorized access or disclosure. With RDS encryption enabled, the data stored on the instance's underlying storage, the automated backups, read replicas, and snapshots, are all encrypted.
+[1mPlatform:[0m Terraform
+
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m5[0m
+
+		004: 
+[38;2;240;173;78m		005: resource "aws_rds_cluster" "default" {
+[0m		006:   cluster_identifier  = "cloudrail-test-non-encrypted"
+
+
+[38;2;187;33;36mPasswords And Secrets - Generic Password[0m, Severity: [38;2;187;33;36mHIGH[0m, Results: 1
+[1mDescription:[0m Query to find passwords and secrets in infrastructure code.
+[1mPlatform:[0m Common
+
+	[38;2;187;33;36m[1]:[0m ../../src/main.tf:[38;2;34;187;51m12[0m
+
+		011:   master_username     = "administrator"
+[38;2;240;173;78m		012:   master_password     = <SECRET-MASKED-ON-PURPOSE>
+[0m		013:   skip_final_snapshot = true
 
 
 
 Results Summary:
-HIGH: 1
-MEDIUM: 1
-LOW: 0
-INFO: 1
-TOTAL: 3
+[38;2;187;33;36mHIGH[0m: 2
+[38;2;255;114;19mMEDIUM[0m: 1
+[38;2;237;213;126mLOW[0m: 1
+[38;2;91;192;222mINFO[0m: 1
+TOTAL: 5
 
-Scan duration: 4.692190594s
+Scan duration: 14.584190423s

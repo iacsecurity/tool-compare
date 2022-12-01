@@ -1,249 +1,231 @@
 
-  Result 1
+Result #1 HIGH Workgroup does not have encryption configured. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:18-30
+────────────────────────────────────────────────────────────────────────────────
+   18  ┌ resource "aws_athena_workgroup" "cloudrail_wg" {
+   19  │   name = "cloudrail-wg-encrypted-sse-s3"
+   20  │ 
+   21  │   configuration {
+   22  │     enforce_workgroup_configuration    = true
+   23  │     publish_cloudwatch_metrics_enabled = true
+   24  │ 
+   25  │     result_configuration {
+   26  └       output_location = "s3://{aws_s3_bucket.cloudrail_anthena_bucket.bucket}/output/"
+   ..  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-athena-enable-at-rest-encryption
+      Impact Data can be read if the Athena Database is compromised
+  Resolution Enable encryption at rest for Athena databases and workgroup configurations
 
-  [aws-s3-enable-versioning][[0m[33mMEDIUM[39m[0m] Resource 'aws_s3_bucket.cloudrail_anthena_bucket_2' does not have versioning enabled
-  /src/main.tf:32-35
-
-
-      29 |   }
-      30 | }
-      31 | 
-      32 | resource "aws_s3_bucket" "cloudrail_anthena_bucket_2" {
-      33 |   bucket = "cloudrail-wg-encrypted-sse-s3-2"
-      34 |   acl    = "private"
-      35 | }
-      36 | 
-      37 | resource "aws_s3_bucket_public_access_block" "cloudrail_anthena_bucket_2" {
-      38 |   bucket                  = aws_s3_bucket.cloudrail_anthena_bucket_2.id
-
-  Legacy ID:  AWS077
-  Impact:     Deleted or modified data would not be recoverable
-  Resolution: Enable versioning to protect against accidental/malicious removal or modification
-
-  More Info:
-  - https://tfsec.dev/docs/aws/s3/enable-versioning#aws/s3 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#versioning 
-  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/Versioning.html 
-
-  Result 2
-
-  [aws-s3-enable-versioning][[0m[33mMEDIUM[39m[0m] Resource 'aws_s3_bucket.cloudrail_anthena_bucket' does not have versioning enabled
-  /src/main.tf:5-8
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/athena/enable-at-rest-encryption/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/athena_workgroup#encryption_configuration
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/athena_database#encryption_configuration
+────────────────────────────────────────────────────────────────────────────────
 
 
-       2 |   region = "us-east-1"
-       3 | }
-       4 | 
-       5 | resource "aws_s3_bucket" "cloudrail_anthena_bucket" {
-       6 |   bucket = "cloudrail-wg-encrypted-sse-s3"
-       7 |   acl    = "private"
-       8 | }
-       9 | 
-      10 | resource "aws_s3_bucket_public_access_block" "cloudrail_anthena_bucket" {
-      11 |   bucket                  = aws_s3_bucket.cloudrail_anthena_bucket.id
+Result #2 HIGH Bucket does not have encryption enabled 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:32-35
+────────────────────────────────────────────────────────────────────────────────
+   32    resource "aws_s3_bucket" "cloudrail_anthena_bucket_2" {
+   33      bucket = "cloudrail-wg-encrypted-sse-s3-2"
+   34      acl    = "private"
+   35    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-enable-bucket-encryption
+      Impact The bucket objects could be read if compromised
+  Resolution Configure bucket encryption
 
-  Legacy ID:  AWS077
-  Impact:     Deleted or modified data would not be recoverable
-  Resolution: Enable versioning to protect against accidental/malicious removal or modification
-
-  More Info:
-  - https://tfsec.dev/docs/aws/s3/enable-versioning#aws/s3 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#versioning 
-  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/Versioning.html 
-
-  Result 3
-
-  [aws-athena-enable-at-rest-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_athena_workgroup.cloudrail_wg_2' missing encryption configuration block.
-  /src/main.tf:45-57
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/enable-bucket-encryption/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#enable-default-server-side-encryption
+────────────────────────────────────────────────────────────────────────────────
 
 
-      42 |   restrict_public_buckets = true
-      43 | }
-      44 | 
-      45 | resource "aws_athena_workgroup" "cloudrail_wg_2" {
-      46 |   name = "cloudrail-wg-encrypted-sse-s3-2"
-      47 | 
-      48 |   configuration {
-      49 |     enforce_workgroup_configuration    = true
-      50 |     publish_cloudwatch_metrics_enabled = true
-      51 | 
-      52 |     result_configuration {
-      53 |       output_location = "s3://{aws_s3_bucket.cloudrail_anthena_bucket_2.bucket}/output/"
-      54 | 
-      55 |     }
-      56 |   }
-      57 | }
+Result #3 HIGH Bucket does not encrypt data with a customer managed key. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:32-35
+────────────────────────────────────────────────────────────────────────────────
+   32    resource "aws_s3_bucket" "cloudrail_anthena_bucket_2" {
+   33      bucket = "cloudrail-wg-encrypted-sse-s3-2"
+   34      acl    = "private"
+   35    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-encryption-customer-key
+      Impact Using AWS managed keys does not allow for fine grained control
+  Resolution Enable encryption using customer managed keys
 
-  Legacy ID:  AWS059
-  Impact:     Data can be read if the Athena Database is compromised
-  Resolution: Enable encryption at rest for Athena databases and workgroup configurations
-
-  More Info:
-  - https://tfsec.dev/docs/aws/athena/enable-at-rest-encryption#aws/athena 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/athena_workgroup#encryption_configuration 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/athena_database#encryption_configuration 
-  - https://docs.aws.amazon.com/athena/latest/ug/encryption.html 
-
-  Result 4
-
-  [aws-athena-enable-at-rest-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_athena_workgroup.cloudrail_wg' missing encryption configuration block.
-  /src/main.tf:18-30
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/encryption-customer-key/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#enable-default-server-side-encryption
+────────────────────────────────────────────────────────────────────────────────
 
 
-      15 |   restrict_public_buckets = true
-      16 | }
-      17 | 
-      18 | resource "aws_athena_workgroup" "cloudrail_wg" {
-      19 |   name = "cloudrail-wg-encrypted-sse-s3"
-      20 | 
-      21 |   configuration {
-      22 |     enforce_workgroup_configuration    = true
-      23 |     publish_cloudwatch_metrics_enabled = true
-      24 | 
-      25 |     result_configuration {
-      26 |       output_location = "s3://{aws_s3_bucket.cloudrail_anthena_bucket.bucket}/output/"
-      27 | 
-      28 |     }
-      29 |   }
-      30 | }
-      31 | 
-      32 | resource "aws_s3_bucket" "cloudrail_anthena_bucket_2" {
-      33 |   bucket = "cloudrail-wg-encrypted-sse-s3-2"
+Result #4 HIGH Workgroup does not have encryption configured. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:45-57
+────────────────────────────────────────────────────────────────────────────────
+   45  ┌ resource "aws_athena_workgroup" "cloudrail_wg_2" {
+   46  │   name = "cloudrail-wg-encrypted-sse-s3-2"
+   47  │ 
+   48  │   configuration {
+   49  │     enforce_workgroup_configuration    = true
+   50  │     publish_cloudwatch_metrics_enabled = true
+   51  │ 
+   52  │     result_configuration {
+   53  └       output_location = "s3://{aws_s3_bucket.cloudrail_anthena_bucket_2.bucket}/output/"
+   ..  
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-athena-enable-at-rest-encryption
+      Impact Data can be read if the Athena Database is compromised
+  Resolution Enable encryption at rest for Athena databases and workgroup configurations
 
-  Legacy ID:  AWS059
-  Impact:     Data can be read if the Athena Database is compromised
-  Resolution: Enable encryption at rest for Athena databases and workgroup configurations
-
-  More Info:
-  - https://tfsec.dev/docs/aws/athena/enable-at-rest-encryption#aws/athena 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/athena_workgroup#encryption_configuration 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/athena_database#encryption_configuration 
-  - https://docs.aws.amazon.com/athena/latest/ug/encryption.html 
-
-  Result 5
-
-  [aws-s3-enable-bucket-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_s3_bucket.cloudrail_anthena_bucket_2' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
-  /src/main.tf:32-35
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/athena/enable-at-rest-encryption/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/athena_workgroup#encryption_configuration
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/athena_database#encryption_configuration
+────────────────────────────────────────────────────────────────────────────────
 
 
-      29 |   }
-      30 | }
-      31 | 
-      32 | resource "aws_s3_bucket" "cloudrail_anthena_bucket_2" {
-      33 |   bucket = "cloudrail-wg-encrypted-sse-s3-2"
-      34 |   acl    = "private"
-      35 | }
-      36 | 
-      37 | resource "aws_s3_bucket_public_access_block" "cloudrail_anthena_bucket_2" {
-      38 |   bucket                  = aws_s3_bucket.cloudrail_anthena_bucket_2.id
+Result #5 HIGH Bucket does not have encryption enabled 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:5-8
+────────────────────────────────────────────────────────────────────────────────
+    5    resource "aws_s3_bucket" "cloudrail_anthena_bucket" {
+    6      bucket = "cloudrail-wg-encrypted-sse-s3"
+    7      acl    = "private"
+    8    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-enable-bucket-encryption
+      Impact The bucket objects could be read if compromised
+  Resolution Configure bucket encryption
 
-  Legacy ID:  AWS017
-  Impact:     The bucket objects could be read if compromised
-  Resolution: Configure bucket encryption
-
-  More Info:
-  - https://tfsec.dev/docs/aws/s3/enable-bucket-encryption#aws/s3 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#enable-default-server-side-encryption 
-  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-encryption.html 
-
-  Result 6
-
-  [aws-s3-enable-bucket-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_s3_bucket.cloudrail_anthena_bucket' defines an unencrypted S3 bucket (missing server_side_encryption_configuration block).
-  /src/main.tf:5-8
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/enable-bucket-encryption/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#enable-default-server-side-encryption
+────────────────────────────────────────────────────────────────────────────────
 
 
-       2 |   region = "us-east-1"
-       3 | }
-       4 | 
-       5 | resource "aws_s3_bucket" "cloudrail_anthena_bucket" {
-       6 |   bucket = "cloudrail-wg-encrypted-sse-s3"
-       7 |   acl    = "private"
-       8 | }
-       9 | 
-      10 | resource "aws_s3_bucket_public_access_block" "cloudrail_anthena_bucket" {
-      11 |   bucket                  = aws_s3_bucket.cloudrail_anthena_bucket.id
+Result #6 HIGH Bucket does not encrypt data with a customer managed key. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:5-8
+────────────────────────────────────────────────────────────────────────────────
+    5    resource "aws_s3_bucket" "cloudrail_anthena_bucket" {
+    6      bucket = "cloudrail-wg-encrypted-sse-s3"
+    7      acl    = "private"
+    8    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-encryption-customer-key
+      Impact Using AWS managed keys does not allow for fine grained control
+  Resolution Enable encryption using customer managed keys
 
-  Legacy ID:  AWS017
-  Impact:     The bucket objects could be read if compromised
-  Resolution: Configure bucket encryption
-
-  More Info:
-  - https://tfsec.dev/docs/aws/s3/enable-bucket-encryption#aws/s3 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#enable-default-server-side-encryption 
-  - https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-encryption.html 
-
-  Result 7
-
-  [aws-s3-enable-bucket-logging][[0m[33mMEDIUM[39m[0m] Resource 'aws_s3_bucket.cloudrail_anthena_bucket_2' does not have logging enabled.
-  /src/main.tf:32-35
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/encryption-customer-key/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#enable-default-server-side-encryption
+────────────────────────────────────────────────────────────────────────────────
 
 
-      29 |   }
-      30 | }
-      31 | 
-      32 | resource "aws_s3_bucket" "cloudrail_anthena_bucket_2" {
-      33 |   bucket = "cloudrail-wg-encrypted-sse-s3-2"
-      34 |   acl    = "private"
-      35 | }
-      36 | 
-      37 | resource "aws_s3_bucket_public_access_block" "cloudrail_anthena_bucket_2" {
-      38 |   bucket                  = aws_s3_bucket.cloudrail_anthena_bucket_2.id
+Result #7 MEDIUM Bucket does not have logging enabled 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:32-35
+────────────────────────────────────────────────────────────────────────────────
+   32    resource "aws_s3_bucket" "cloudrail_anthena_bucket_2" {
+   33      bucket = "cloudrail-wg-encrypted-sse-s3-2"
+   34      acl    = "private"
+   35    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-enable-bucket-logging
+      Impact There is no way to determine the access to this bucket
+  Resolution Add a logging block to the resource to enable access logging
 
-  Legacy ID:  AWS002
-  Impact:     There is no way to determine the access to this bucket
-  Resolution: Add a logging block to the resource to enable access logging
-
-  More Info:
-  - https://tfsec.dev/docs/aws/s3/enable-bucket-logging#aws/s3 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket 
-  - https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerLogs.html 
-
-  Result 8
-
-  [aws-s3-enable-bucket-logging][[0m[33mMEDIUM[39m[0m] Resource 'aws_s3_bucket.cloudrail_anthena_bucket' does not have logging enabled.
-  /src/main.tf:5-8
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/enable-bucket-logging/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket
+────────────────────────────────────────────────────────────────────────────────
 
 
-       2 |   region = "us-east-1"
-       3 | }
-       4 | 
-       5 | resource "aws_s3_bucket" "cloudrail_anthena_bucket" {
-       6 |   bucket = "cloudrail-wg-encrypted-sse-s3"
-       7 |   acl    = "private"
-       8 | }
-       9 | 
-      10 | resource "aws_s3_bucket_public_access_block" "cloudrail_anthena_bucket" {
-      11 |   bucket                  = aws_s3_bucket.cloudrail_anthena_bucket.id
+Result #8 MEDIUM Bucket does not have versioning enabled 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:32-35
+────────────────────────────────────────────────────────────────────────────────
+   32    resource "aws_s3_bucket" "cloudrail_anthena_bucket_2" {
+   33      bucket = "cloudrail-wg-encrypted-sse-s3-2"
+   34      acl    = "private"
+   35    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-enable-versioning
+      Impact Deleted or modified data would not be recoverable
+  Resolution Enable versioning to protect against accidental/malicious removal or modification
 
-  Legacy ID:  AWS002
-  Impact:     There is no way to determine the access to this bucket
-  Resolution: Add a logging block to the resource to enable access logging
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/enable-versioning/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#versioning
+────────────────────────────────────────────────────────────────────────────────
 
-  More Info:
-  - https://tfsec.dev/docs/aws/s3/enable-bucket-logging#aws/s3 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket 
-  - https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerLogs.html 
 
-  times
-  ------------------------------------------
-  disk i/o             53.307333ms
-  parsing HCL          742.042µs
-  evaluating values    3.66725ms
-  running checks       87.499959ms
+Result #9 MEDIUM Bucket does not have logging enabled 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:5-8
+────────────────────────────────────────────────────────────────────────────────
+    5    resource "aws_s3_bucket" "cloudrail_anthena_bucket" {
+    6      bucket = "cloudrail-wg-encrypted-sse-s3"
+    7      acl    = "private"
+    8    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-enable-bucket-logging
+      Impact There is no way to determine the access to this bucket
+  Resolution Add a logging block to the resource to enable access logging
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/enable-bucket-logging/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket
+────────────────────────────────────────────────────────────────────────────────
+
+
+Result #10 MEDIUM Bucket does not have versioning enabled 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:5-8
+────────────────────────────────────────────────────────────────────────────────
+    5    resource "aws_s3_bucket" "cloudrail_anthena_bucket" {
+    6      bucket = "cloudrail-wg-encrypted-sse-s3"
+    7      acl    = "private"
+    8    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-s3-enable-versioning
+      Impact Deleted or modified data would not be recoverable
+  Resolution Enable versioning to protect against accidental/malicious removal or modification
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/s3/enable-versioning/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#versioning
+────────────────────────────────────────────────────────────────────────────────
+
+
+  timings
+  ──────────────────────────────────────────
+  disk i/o             4.741667ms
+  parsing              290.043µs
+  adaptation           87.959µs
+  checks               5.859625ms
+  total                10.979294ms
 
   counts
-  ------------------------------------------
-  files loaded         1
-  blocks               7
-  modules              0
+  ──────────────────────────────────────────
+  modules downloaded   0
+  modules processed    1
+  blocks processed     7
+  files read           1
 
   results
-  ------------------------------------------
+  ──────────────────────────────────────────
+  passed               14
+  ignored              0
   critical             0
-  high                 4
+  high                 6
   medium               4
   low                  0
-  ignored              0
 
-  8 potential problems detected.
+  14 passed, 10 potential problem(s) detected.
 

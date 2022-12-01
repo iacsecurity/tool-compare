@@ -1,69 +1,6 @@
-
-
-       _               _              
-   ___| |__   ___  ___| | _______   __
-  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
- | (__| | | |  __/ (__|   < (_) \ V / 
-  \___|_| |_|\___|\___|_|\_\___/ \_/  
-                                      
-By bridgecrew.io | version: 2.0.358 
-Update available 2.0.358 -> 2.0.359
-Run pip3 install -U checkov to update 
-
-
 terraform scan results:
 
 Passed checks: 4, Failed checks: 7, Skipped checks: 0
-
-Check: CKV_AWS_21: "Ensure all data stored in the S3 bucket have versioning enabled"
-	FAILED for resource: aws_s3_bucket.hoge
-	File: /main.tf:1-3
-	Guide: https://docs.bridgecrew.io/docs/s3_16-enable-versioning
-
-		1 | resource "aws_s3_bucket" "hoge" {
-		2 |   bucket = "hoge"
-		3 | }
-
-
-Check: CKV_AWS_144: "Ensure that S3 bucket has cross-region replication enabled"
-	FAILED for resource: aws_s3_bucket.hoge
-	File: /main.tf:1-3
-	Guide: https://docs.bridgecrew.io/docs/ensure-that-s3-bucket-has-cross-region-replication-enabled
-
-		1 | resource "aws_s3_bucket" "hoge" {
-		2 |   bucket = "hoge"
-		3 | }
-
-
-Check: CKV_AWS_18: "Ensure the S3 bucket has access logging enabled"
-	FAILED for resource: aws_s3_bucket.hoge
-	File: /main.tf:1-3
-	Guide: https://docs.bridgecrew.io/docs/s3_13-enable-logging
-
-		1 | resource "aws_s3_bucket" "hoge" {
-		2 |   bucket = "hoge"
-		3 | }
-
-
-Check: CKV_AWS_145: "Ensure that S3 buckets are encrypted with KMS by default"
-	FAILED for resource: aws_s3_bucket.hoge
-	File: /main.tf:1-3
-	Guide: https://docs.bridgecrew.io/docs/ensure-that-s3-buckets-are-encrypted-with-kms-by-default
-
-		1 | resource "aws_s3_bucket" "hoge" {
-		2 |   bucket = "hoge"
-		3 | }
-
-
-Check: CKV_AWS_19: "Ensure all data stored in the S3 bucket is securely encrypted at rest"
-	FAILED for resource: aws_s3_bucket.hoge
-	File: /main.tf:1-3
-	Guide: https://docs.bridgecrew.io/docs/s3_14-data-encrypted-at-rest
-
-		1 | resource "aws_s3_bucket" "hoge" {
-		2 |   bucket = "hoge"
-		3 | }
-
 
 Check: CKV_AWS_77: "Ensure Athena Database is encrypted at rest (default is unencrypted)"
 	FAILED for resource: aws_athena_database.hoge
@@ -74,11 +11,55 @@ Check: CKV_AWS_77: "Ensure Athena Database is encrypted at rest (default is unen
 		6 |   name   = "database_name"
 		7 |   bucket = aws_s3_bucket.hoge.bucket
 		8 | }
+Check: CKV_AWS_18: "Ensure the S3 bucket has access logging enabled"
+	FAILED for resource: aws_s3_bucket.hoge
+	File: /main.tf:1-3
+	Guide: https://docs.bridgecrew.io/docs/s3_13-enable-logging
+
+		1 | resource "aws_s3_bucket" "hoge" {
+		2 |   bucket = "hoge"
+		3 | }
+
+Check: CKV_AWS_21: "Ensure all data stored in the S3 bucket have versioning enabled"
+	FAILED for resource: aws_s3_bucket.hoge
+	File: /main.tf:1-3
+	Guide: https://docs.bridgecrew.io/docs/s3_16-enable-versioning
+
+		1 | resource "aws_s3_bucket" "hoge" {
+		2 |   bucket = "hoge"
+		3 | }
+
+Check: CKV_AWS_145: "Ensure that S3 buckets are encrypted with KMS by default"
+	FAILED for resource: aws_s3_bucket.hoge
+	File: /main.tf:1-3
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-s3-buckets-are-encrypted-with-kms-by-default
+
+		1 | resource "aws_s3_bucket" "hoge" {
+		2 |   bucket = "hoge"
+		3 | }
 
 Check: CKV2_AWS_6: "Ensure that S3 bucket has a Public Access block"
 	FAILED for resource: aws_s3_bucket.hoge
 	File: /main.tf:1-3
 	Guide: https://docs.bridgecrew.io/docs/s3-bucket-should-have-public-access-blocks-defaults-to-false-if-the-public-access-block-is-not-attached
+
+		1 | resource "aws_s3_bucket" "hoge" {
+		2 |   bucket = "hoge"
+		3 | }
+
+Check: CKV_AWS_19: "Ensure all data stored in the S3 bucket is securely encrypted at rest"
+	FAILED for resource: aws_s3_bucket.hoge
+	File: /main.tf:1-3
+	Guide: https://docs.bridgecrew.io/docs/s3_14-data-encrypted-at-rest
+
+		1 | resource "aws_s3_bucket" "hoge" {
+		2 |   bucket = "hoge"
+		3 | }
+
+Check: CKV_AWS_144: "Ensure that S3 bucket has cross-region replication enabled"
+	FAILED for resource: aws_s3_bucket.hoge
+	File: /main.tf:1-3
+	Guide: https://docs.bridgecrew.io/docs/ensure-that-s3-bucket-has-cross-region-replication-enabled
 
 		1 | resource "aws_s3_bucket" "hoge" {
 		2 |   bucket = "hoge"

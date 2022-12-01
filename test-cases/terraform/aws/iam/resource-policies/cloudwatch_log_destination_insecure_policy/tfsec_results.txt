@@ -1,56 +1,52 @@
 
-  Result 1
+Result #1 HIGH Stream does not use KMS encryption. 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:49-58
+────────────────────────────────────────────────────────────────────────────────
+   49    resource "aws_kinesis_stream" "kinesis_for_cloudwatch" {
+   50      name             = "kinesis_for_cloudwatch"
+   51      shard_count      = 1
+   52      retention_period = 48
+   53    
+   54      shard_level_metrics = [
+   55        "IncomingBytes",
+   56        "OutgoingBytes",
+   57      ]
+   58    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-kinesis-enable-in-transit-encryption
+      Impact Intercepted data can be read in transit
+  Resolution Enable in transit encryption
 
-  [aws-kinesis-enable-in-transit-encryption][[0m[31mHIGH[39m[0m] Resource 'aws_kinesis_stream.kinesis_for_cloudwatch' defines an unencrypted Kinesis Stream.
-  /src/main.tf:49-58
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/kinesis/enable-in-transit-encryption/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kinesis_stream#encryption_type
+────────────────────────────────────────────────────────────────────────────────
 
 
-      46 |   EOF
-      47 | }
-      48 | 
-      49 | resource "aws_kinesis_stream" "kinesis_for_cloudwatch" {
-      50 |   name             = "kinesis_for_cloudwatch"
-      51 |   shard_count      = 1
-      52 |   retention_period = 48
-      53 | 
-      54 |   shard_level_metrics = [
-      55 |     "IncomingBytes",
-      56 |     "OutgoingBytes",
-      57 |   ]
-      58 | }
-      59 | 
-      60 | resource "aws_cloudwatch_log_destination" "test_destination" {
-      61 |   name       = "test_destination"
-
-  Legacy ID:  AWS024
-  Impact:     Intercepted data can be read in transit
-  Resolution: Enable in transit encryption
-
-  More Info:
-  - https://tfsec.dev/docs/aws/kinesis/enable-in-transit-encryption#aws/kinesis 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kinesis_stream#encryption_type 
-  - https://docs.aws.amazon.com/streams/latest/dev/server-side-encryption.html 
-
-  times
-  ------------------------------------------
-  disk i/o             47.288084ms
-  parsing HCL          644.708µs
-  evaluating values    4.850834ms
-  running checks       20.531708ms
+  timings
+  ──────────────────────────────────────────
+  disk i/o             5.529834ms
+  parsing              561µs
+  adaptation           244.542µs
+  checks               2.443458ms
+  total                8.778834ms
 
   counts
-  ------------------------------------------
-  files loaded         1
-  blocks               9
-  modules              0
+  ──────────────────────────────────────────
+  modules downloaded   0
+  modules processed    1
+  blocks processed     9
+  files read           1
 
   results
-  ------------------------------------------
+  ──────────────────────────────────────────
+  passed               4
+  ignored              0
   critical             0
   high                 1
   medium               0
   low                  0
-  ignored              0
 
-  1 potential problems detected.
+  4 passed, 1 potential problem(s) detected.
 

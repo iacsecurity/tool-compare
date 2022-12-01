@@ -1,60 +1,93 @@
 
-  Result 1
+Results #1-2 HIGH IAM policy document uses wildcarded action 'ec2:Describe*' (2 similar results)
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:17-19
+────────────────────────────────────────────────────────────────────────────────
+    9    resource "aws_iam_policy" "managed-policy" {
+   ..  
+   17  ┌       "Action": [
+   18  │         "ec2:Describe*"
+   19  └       ],
+   ..  
+   26    }
+────────────────────────────────────────────────────────────────────────────────
+  Individual Causes
+  - main.tf:9-26 (aws_iam_policy.managed-policy) 2 instances
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-iam-no-policy-wildcards
+      Impact Overly permissive policies may grant access to sensitive resources
+  Resolution Specify the exact permissions required, and to which resources they should apply instead of using wildcards.
 
-  [aws-iam-no-policy-wildcards][[0m[31mHIGH[39m[0m] Resource 'aws_iam_policy.managed-policy' defines a policy with wildcarded resources.
-  /src/main.tf:12-25
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/iam/no-policy-wildcards/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document
+────────────────────────────────────────────────────────────────────────────────
 
 
-       9 | resource "aws_iam_policy" "managed-policy" {
-      10 |   name        = "managed-policy"
-      11 |   description = "A test policy"
-      12 |   policy      = <<EOF    string: "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Action\": [\n        \"ec2:Describe*\"\n      ],\n      \"Effect\": \"Allow\",\n      \"Resource\": \"*\"\n    }\n  ]\n}\n"
-      13 | {
-      14 |   "Version": "2012-10-17",
-      15 |   "Statement": [
-      16 |     {
-      17 |       "Action": [
-      18 |         "ec2:Describe*"
-      19 |       ],
-      20 |       "Effect": "Allow",
-      21 |       "Resource": "*"
-      22 |     }
-      23 |   ]
-      24 | }
-      25 | EOF
-      26 | }
-      27 | 
-      28 | resource "aws_iam_user_policy_attachment" "managed-policy-attach" {
+Results #3-4 HIGH IAM policy document uses sensitive action 'ec2:Describe*' on wildcarded resource '*' (2 similar results)
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:21
+────────────────────────────────────────────────────────────────────────────────
+    9    resource "aws_iam_policy" "managed-policy" {
+   ..  
+   21  [       "Resource": "*"
+   ..  
+   26    }
+────────────────────────────────────────────────────────────────────────────────
+  Individual Causes
+  - main.tf:9-26 (aws_iam_policy.managed-policy) 2 instances
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-iam-no-policy-wildcards
+      Impact Overly permissive policies may grant access to sensitive resources
+  Resolution Specify the exact permissions required, and to which resources they should apply instead of using wildcards.
 
-  Legacy ID:  AWS099
-  Impact:     Overly permissive policies may grant access to sensitive resources
-  Resolution: Specify the exact permissions required, and to which resources they should apply instead of using wildcards.
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/iam/no-policy-wildcards/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document
+────────────────────────────────────────────────────────────────────────────────
 
-  More Info:
-  - https://tfsec.dev/docs/aws/iam/no-policy-wildcards#aws/iam 
-  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document 
-  - https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html 
 
-  times
-  ------------------------------------------
-  disk i/o             52.666626ms
-  parsing HCL          612.5µs
-  evaluating values    3.668667ms
-  running checks       45.452291ms
+Result #5 LOW One or more policies are attached directly to a user 
+────────────────────────────────────────────────────────────────────────────────
+  main.tf:5-7
+────────────────────────────────────────────────────────────────────────────────
+    5    resource "aws_iam_user" "user-1" {
+    6      name = "user-1"
+    7    }
+────────────────────────────────────────────────────────────────────────────────
+          ID aws-iam-no-user-attached-policies
+      Impact Complex access control is difficult to manage and maintain.
+  Resolution Grant policies at the group level instead.
+
+  More Information
+  - https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/iam/no-user-attached-policies/
+  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user
+────────────────────────────────────────────────────────────────────────────────
+
+
+  timings
+  ──────────────────────────────────────────
+  disk i/o             4.32425ms
+  parsing              276.458µs
+  adaptation           168.75µs
+  checks               4.637833ms
+  total                9.407291ms
 
   counts
-  ------------------------------------------
-  files loaded         1
-  blocks               4
-  modules              0
+  ──────────────────────────────────────────
+  modules downloaded   0
+  modules processed    1
+  blocks processed     4
+  files read           1
 
   results
-  ------------------------------------------
-  critical             0
-  high                 1
-  medium               0
-  low                  0
+  ──────────────────────────────────────────
+  passed               2
   ignored              0
+  critical             0
+  high                 4
+  medium               0
+  low                  1
 
-  1 potential problems detected.
+  2 passed, 5 potential problem(s) detected.
 
